@@ -101,7 +101,6 @@ do
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eTransporter then
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -136,8 +135,7 @@ do
                     Activate( self.activations.BEH_Transport_Pion_Transporter, 1, { self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsATransporter, self._namedParams.mission.avecMateriel_, 2000, } )
 self.done_BEH_Transport_Pion_Transporter = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -152,8 +150,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

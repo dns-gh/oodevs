@@ -62,17 +62,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                    self.ePhaseMission = eProgresser
-                    _continue = false
-                --[[// Progresser jusqu'à zone de débarquement
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
-                    --[[//-----------------------------------------------------------------------------
+--[[// Progresser jusqu'à zone de débarquement
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Spé rens ne pas bouger tant qu'il fait pas nuit
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// ****************************************************************************
@@ -93,7 +84,21 @@ elseif switch_1 == eProgresser then
 ]]--[[//                                                             Fin Modification
 ]]--[[// ****************************************************************************
 ]]--[[// Surveiller
-]]if( self.eEtat == eActionEffectuee ) then
+]]--[[//----------------------------------------------------------------------
+]]--[[// RC + Surveiller (seulement qd installé)
+]]--[[//----------------------------------------------------------------------
+]]--[[//----------------------------------------------------------------------
+]]--[[// Dans cette phase on revient tj à sa position si esquive ou autre
+]]--[[//----------------------------------------------------------------------
+]]--[[// Fin de la mission --> SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eProgresser
+                    _continue = false
+                elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -103,34 +108,24 @@ elseif switch_1 == eProgresser then
                             end
 
                         end
---[[//----------------------------------------------------------------------
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointARenseigner, eProgressionReco, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false--[[// RC + Surveiller (seulement qd installé)
-]]
-                --[[//----------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
-                    --[[//----------------------------------------------------------------------
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    --[[// Dans cette phase on revient tj à sa position si esquive ou autre
-]]--[[//----------------------------------------------------------------------
-]]Activate( self.activations.BEH_Rens_EnSurveillanceDe, 1, { self._namedParams.mission.zoneAObserver_, } )
-                    --[[// Fin de la mission --> SUR ORDRE
-]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointARenseigner ) > 200 ) then
+                    _continue = false
+                elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Rens_EnSurveillanceDe, 1, { self._namedParams.mission.zoneAObserver_, } )
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointARenseigner ) > 200 ) then
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.pointARenseigner, eProgressionReco, eTypeItiMouvement, } )
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

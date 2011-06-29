@@ -197,21 +197,18 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
                  do
                     local _continue = true
                     local switch_1 = missionPion:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" then
                                                     local mission = DEC_GetMission( myself )
                             DEC_Copie_Point( mission.positionImplantation_, self.ptObjImplantation )
                             self.bPresenceContreBatterie = mission.presenceContreBatterie_
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
+                        elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                                                     local mission = DEC_GetMission( myself )
                             self.repObjImplantation = mission.zoneImplantation_
                             self.ptObjImplantation = S_Obj_Position( self.repObjImplantation )
                             self.bPresenceContreBatterie = mission.presenceContreBatterie_
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
             end
@@ -220,13 +217,20 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------		        
-]]if( self.eAction == eActionEffectuee ) then
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Rejoindre la position du site
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Mouvements de sauvegarde.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[//  Fin de mission --> rejoindre plot munition
+]]--[[// -----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -244,10 +248,7 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                     Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelaiPreparation, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// -----------------------------------------------------------------------------
-]]--[[// Rejoindre la position du site
-]]--[[// -----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eRejoindre then
                     if( self.eAction == eActionEnCours ) then
                         do
@@ -283,17 +284,13 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     end
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
-                    --[[// Mouvements de sauvegarde.
-]]if( self.bPresenceContreBatterie or ( myself:GetType() == "SectionASS_LRM" ) ) then
+                    if( self.bPresenceContreBatterie or ( myself:GetType() == "SectionASS_LRM" ) ) then
                         Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, 2.1, { self.ptObjImplantation, } )
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 2, { self.ptObjImplantation, } )
                     _continue = false
-                --[[// -----------------------------------------------------------------------------
-]]--[[//  Fin de mission --> rejoindre plot munition
-]]--[[// -----------------------------------------------------------------------------
-]]                cases_switch_1[3] = true
+                                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then

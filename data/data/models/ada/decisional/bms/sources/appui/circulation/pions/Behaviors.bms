@@ -263,23 +263,19 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
                             local repOrdreRenforcer = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
                             local repOrdreTransferer = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
                             local repOrdreReprendre = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
                             _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )

@@ -200,63 +200,51 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
                             local repOrdreRenforcer = ordre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
                             local repOrdreTransferer = ordre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
                             local repOrdreReprendre = ordre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_RenforcerEnVSRAM" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_RenforcerEnVSRAM" then
                             local repOrdreRenforcer = ordre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrAmbulances_(), } )
                             _continue = false
-                                                cases_switch_1[4] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_TransfererVSRAM" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_TransfererVSRAM" then
                             local repOrdreTransferer = ordre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrAmbulances_(), } )
                             _continue = false
-                                                cases_switch_1[5] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
                             local repOrdreReprendre = ordre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererVSRAM, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrAmbulances_(), } )
                             _continue = false
-                                                cases_switch_1[6] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
                             local repOrderRegimeMaint = ordre
                             DEC_Maintenance_ChangerRegimeTravail( repOrderRegimeMaint:GetorderConduiteModifierRegimeTravailMaintenance_() )
                             _continue = false
-                                                cases_switch_1[7] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
                             local repOrdrePrioriteMain = ordre
                             DEC_Maintenance_ChangerPriorites( repOrdrePrioriteMain:GetorderConduiteModifierPrioritesReparations_() )
                             _continue = false
-                                                cases_switch_1[8] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
                             local repOrdrePrioriteSan = ordre
                             DEC_Sante_ChangerPriorites( repOrdrePrioriteSan:GetorderConduiteModifierPrioritesBlesses_() )
                             _continue = false
-                                                cases_switch_1[9] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
                             local tmp = ordre
                             DEC_Maintenance_ChangerPrioritesTactiques( tmp:GetorderConduiteModifierPrioritesTactiquesReparations_() )
                             _continue = false
-                                                cases_switch_1[10] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
                             local tmp = ordre
                             DEC_Sante_ChangerPrioritesTactiques( tmp:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
                             _continue = false
-                                                cases_switch_1[11] = true
-
+                        
                         else
                             bEstUtilise = false
                             _continue = false

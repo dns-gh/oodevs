@@ -72,12 +72,14 @@ node "MIS_Pion_INF_Barrer"
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
          do
             local _continue = true
-            local switch_1 = --[[//=============================================================================
+--[[//=============================================================================
 ]]--[[// Squelette de la mission
 ]]--[[// 
 ]]--[[//=============================================================================
-]]self.ePhase
-            local cases_switch_1 = {}
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eBarrer then
                     if( self.eCurrentPhase == eFinMission or self.eEtatPhase == eActionHalt ) then
                         do
@@ -103,16 +105,12 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
                     Activate( self.activations.BEH_Mission_Pion_INF_Barrer, 1, emptyTable )
 self.done_BEH_Mission_Pion_INF_Barrer = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------
-]]DEC_Trace( "Mission 'Barrer' : fin" )
+                                DEC_Trace( "Mission 'Barrer' : fin" )
                                                                 do
                                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                                         DEC_RC( eRC_FinMission )
@@ -136,8 +134,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { false, } )
 self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                                 end
             end

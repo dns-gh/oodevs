@@ -98,7 +98,11 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Rejoins une position de replis
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------											
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
                     if( DEC_Nuit() ) then
@@ -136,8 +140,7 @@ self.done_BEH_Eni_Pion_INF_SurveillerSecteur = function( self, _, v ) self.eActi
                     end
 
                     _continue = false
-                --[[// Rejoins une position de replis
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -164,10 +167,7 @@ self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[
                             self.eAction = eActionEnCours
                                                         do
                                 DEC_Trace( "Surveiller : fin de mission" )
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------											
-]]DEC_FinMission()
+                                DEC_FinMission()
                                                                 self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end

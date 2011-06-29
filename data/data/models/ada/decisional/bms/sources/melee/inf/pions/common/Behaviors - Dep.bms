@@ -373,15 +373,17 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Precise Le contact
+]]--[[// On n'a pas repri connaissance de l'ennemi
+]]--[[// dispositif d abordage
+]]--[[// On a perdu le contact sur l'unite ennemi !
+]]--[[// On retourne vers la derniere position ennemi connue				
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindre then
-                    --[[// Precise Le contact
-]]assert( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEni ), "BEH_Dep_Pion_INF_PreciserMaintenirContact" )
+                    assert( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEni ), "BEH_Dep_Pion_INF_PreciserMaintenirContact" )
                     Activate( self.activations.BEH_Dep_Pion_INF_PreciserContact, 1, { self._namedParams.ksEni, F_Pion_GeteNiveauAction( myself ), self._namedParams.bDistTir, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRetrouver then
+                elseif switch_1 == eRetrouver then
                     if( self.ptDest == nil or self.eAction == eActionImpossible ) then
                         do
                             DEC_Trace( "impossible de retrouver l'ennemi" )
@@ -396,8 +398,7 @@ elseif switch_1 == eRetrouver then
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                --[[// On n'a pas repri connaissance de l'ennemi
-]]DEC_Trace( "perte complete de contact sur ennemi" )
+                                DEC_Trace( "perte complete de contact sur ennemi" )
                                                                 self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
@@ -405,17 +406,13 @@ elseif switch_1 == eRetrouver then
                             end
 
                         end
---[[// dispositif d abordage
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptDest, } )
-                    --[[// On a perdu le contact sur l'unite ennemi !
-]]--[[// On retourne vers la derniere position ennemi connue				
-]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, } )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                                 end
             end
@@ -503,7 +500,10 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// On cherche une position d'observation
+]]--[[// Calcul de position d'observation ?
+]]--[[// Observe la direction dangereuse		
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
@@ -516,12 +516,10 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eReconnaitre
-                --[[// On cherche une position d'observation
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eReconnaitre then
-                    --[[// Calcul de position d'observation ?
-]]if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
+                    if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
                         do
                             StartActivateOverride( self, self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
                             if( DEC_Perception_PointEstVisible( self._namedParams.ptObjectif ) ) then
@@ -554,8 +552,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre
                                 cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
-                    --[[// Observe la direction dangereuse		
-]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
                     Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -624,11 +621,13 @@ node "BEH_Progression_Pion_INF_AborderObjectif"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[//On envoie une patrouille en reconnaissance.				
+]]--[[// Voir avec la discretion
+]]--[[// On rejoint le plus rapidement possible			
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
-                    --[[//On envoie une patrouille en reconnaissance.				
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -648,9 +647,7 @@ self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eAction = v[1
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eRejoindre then
-                    --[[// Voir avec la discretion
-]]--[[// On rejoint le plus rapidement possible			
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do

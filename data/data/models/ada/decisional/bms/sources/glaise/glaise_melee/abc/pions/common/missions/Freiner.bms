@@ -81,11 +81,19 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[//---------------------------------------------------------------------
+]]--[[// Progression tactique
+]]--[[//---------------------------------------------------------------------
+]]--[[// Vitesse et direction observation st différentes du default (vers cur)
+]]--[[// Deplacement
+]]--[[//---------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]--[[//---------------------------------------------------------------------
+]]--[[// reprendre sauvegarde
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -101,17 +109,11 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, { eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_Pion_ABC_RejoindreFuseau = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Progression tactique
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
-                    --[[// Vitesse et direction observation st différentes du default (vers cur)
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1.1, emptyTable )
-                    --[[// Deplacement
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -127,17 +129,11 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Fin de la mission
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
-                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )--[[// reprendre sauvegarde
-]]
+                elseif switch_1 == eFinMission then
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

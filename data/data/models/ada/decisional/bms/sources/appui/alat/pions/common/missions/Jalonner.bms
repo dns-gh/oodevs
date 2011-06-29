@@ -86,15 +86,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eJalonner then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnJalonnement, } )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniJalonner, GetMotivation( "MOT_Manoeuvrer" ) * 4, { self._namedParams.mission.ciblesPrioritaires_, self.pointDebutFuseau, } )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_JalonnerGererFeu, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 8, { self.pointDebutFuseau, self._namedParams.mission.ciblesPrioritaires_, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -134,8 +132,7 @@ elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -154,8 +151,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

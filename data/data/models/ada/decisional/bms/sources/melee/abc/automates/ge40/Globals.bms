@@ -156,15 +156,13 @@ do
              do
                 local _continue = true
                 local switch_1 = pion:GetType()
-                local cases_switch_1 = {}
                     if switch_1 == "Escadron_AMX"
                     or switch_1 == "Escadron_XL"
                     or switch_1 == "CompagnieInfanterie_HOT"
                     or switch_1 == "CompagnieInfanterie" then
                         DIA_PushBack( sFiltre, pion )
                         _continue = false
-                                        cases_switch_1[1] = true
-                    end
+                                        end
                 end
 
         end

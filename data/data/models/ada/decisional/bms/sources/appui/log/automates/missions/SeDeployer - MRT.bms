@@ -62,8 +62,18 @@ local emptyTable = emptyTable
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Suivant le type de pions...
+]]--[[// rien
+]]--[[// ordre de création des missions de deploiement
+]]--[[// pion inconnu --> juste deplacement si deploiement vers position
+]]--[[// pas de pions opérationnels
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
                     for _,x in pairs( self.selPions or emptyTable ) do
                     local _continue = true
@@ -71,58 +81,43 @@ do
                             local pion = x
                              do
                                 local _continue = true
-                                local switch_2 = --[[// Suivant le type de pions...
-]]pion:GetType()
-                                local cases_switch_2 = {}
+                                local switch_2 = pion:GetType()
                                     if switch_2 == "GroupeRamassage" then
                                         DIA_PushFront( self.sel_groupeRamassage, pion )
                                         _continue = false
-                                                                        cases_switch_2[1] = true
-elseif switch_2 == "DecontaminationNBC" then
+                                    elseif switch_2 == "DecontaminationNBC" then
                                         DIA_PushFront( self.sel_decontaminationNBC, pion )
                                         _continue = false
-                                                                        cases_switch_2[2] = true
-elseif switch_2 == "SectionTriage" then
+                                    elseif switch_2 == "SectionTriage" then
                                         DIA_PushFront( self.sel_sectionTriage, pion )
                                         _continue = false
-                                                                        cases_switch_2[3] = true
-elseif switch_2 == "ACA" then
+                                    elseif switch_2 == "ACA" then
                                         DIA_PushFront( self.sel_ACA, pion )
                                         _continue = false
-                                                                        cases_switch_2[4] = true
-elseif switch_2 == "UniteSoin" then
+                                    elseif switch_2 == "UniteSoin" then
                                         DIA_PushFront( self.sel_uniteSoin, pion )
                                         _continue = false
-                                                                        cases_switch_2[5] = true
-elseif switch_2 == "UniteSpy" then
+                                    elseif switch_2 == "UniteSpy" then
                                         DIA_PushFront( self.sel_uniteSpy, pion )
                                         _continue = false
-                                                                        cases_switch_2[6] = true
-elseif switch_2 == "PionStock" then
+                                    elseif switch_2 == "PionStock" then
                                         DIA_PushFront( self.sel_pionStock, pion )
                                         _continue = false
-                                                                        cases_switch_2[7] = true
-elseif switch_2 == "PionTransport" then
+                                    elseif switch_2 == "PionTransport" then
                                         DIA_PushFront( self.sel_pionTransport, pion )
                                         _continue = false
-                                                                        cases_switch_2[8] = true
-elseif switch_2 == "GroupeMaintenanceEvacuation" then
+                                    elseif switch_2 == "GroupeMaintenanceEvacuation" then
                                         DIA_PushFront( self.sel_groupeMaintenanceEvacuation, pion )
                                         _continue = false
-                                                                        cases_switch_2[9] = true
-elseif switch_2 == "SectionMaintenance" then
+                                    elseif switch_2 == "SectionMaintenance" then
                                         DIA_PushFront( self.sel_sectionMaintenance, pion )
                                         _continue = false
-                                                                        cases_switch_2[10] = true
-elseif switch_2 == "SectionLOGTC2" then
+                                    elseif switch_2 == "SectionLOGTC2" then
                                         DIA_PushFront( self.sel_sectionLOGTC2, pion )
                                         _continue = false
-                                                                        cases_switch_2[11] = true
-elseif switch_2 == "PionConvoi" then
-                                        _continue = false--[[// rien
-]]
-                                                                        cases_switch_2[12] = true
-
+                                    elseif switch_2 == "PionConvoi" then
+                                        _continue = false
+                                    
                                     else
                                         DIA_PushFront( self.selAutres, pion )
                                         _continue = false
@@ -130,8 +125,7 @@ elseif switch_2 == "PionConvoi" then
                                 end
 
                         end
---[[// ordre de création des missions de deploiement
-]]
+
                     end
 
                     if( #( self.selPions ) ~= 0 ) then
@@ -148,38 +142,28 @@ elseif switch_2 == "PionConvoi" then
                             Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_uniteSoin, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
                             Activate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe, 1, { ePhase_MRT, self.sel_uniteSpy, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
                             Activate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerAListe, 1, { ePhase_MRT, self.sel_sectionMaintenance, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            --[[// pion inconnu --> juste deplacement si deploiement vers position
-]]if( self._namedParams.mission.positionDeploiement_ ~= nil ) then
+                            if( self._namedParams.mission.positionDeploiement_ ~= nil ) then
                                 Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementAListe, 1, { ePhase_MRT, self.selAutres, self._namedParams.mission.positionDeploiement_, } )
                             end
 
                             self.ePhase = eMRT_Valider
                         end
---[[// pas de pions opérationnels
-]]                    else
+                    else
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                     end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Mission impossible
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossible, } )
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Validation
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eMRT_Valider then
+                elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] and not cases_switch_1[2] then
+                
+                else
                                 end
             end
 

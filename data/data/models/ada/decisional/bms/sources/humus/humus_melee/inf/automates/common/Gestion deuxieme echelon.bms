@@ -213,22 +213,20 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositif_"
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eGererPionDetruit then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Si un pion detruit de PE alors relever le pion si possible
 ]]--[[// Puis réévaluation du SE --> donc un pion détruit = réorganisation = delai
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// 1 iteration ou l'on redonne les missions
-]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
-                    self.ePhase = eGererSecondEchelon
-                    _continue = false
-                --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eGererSecondEchelon then
+]]            local switch_1 = self.ePhase
+                if switch_1 == eGererPionDetruit then
+                    Activate( self.activations.BEH_Dispositif_Automate_INF_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
+                    self.ePhase = eGererSecondEchelon
+                    _continue = false
+                elseif switch_1 == eGererSecondEchelon then
                     if( S_Dispositif_Automate_INF_EvtPionDetruit() ) then
                         do
                             DEC_Trace( "------- Evt Attrition ------" )
@@ -240,8 +238,7 @@ elseif switch_1 == eGererSecondEchelon then
 
                     Activate( self.activations.BEH_Dispositif_Automate_INF_GererLeSE_, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -417,22 +414,20 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifStatique_"
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eGererPionDetruit then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Si un pion detruit de PE alors relever le pion si possible
 ]]--[[// Puis réévaluation du SE --> donc un pion détruit = réorganisation = delai
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// 1 iteration ou l'on redonne les missions
-]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
-                    self.ePhase = eGererSecondEchelon
-                    _continue = false
-                --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eGererSecondEchelon then
+]]            local switch_1 = self.ePhase
+                if switch_1 == eGererPionDetruit then
+                    Activate( self.activations.BEH_Dispositif_Automate_INF_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
+                    self.ePhase = eGererSecondEchelon
+                    _continue = false
+                elseif switch_1 == eGererSecondEchelon then
                     if( S_Dispositif_Automate_INF_EvtPionDetruit() ) then
                         do
                             DEC_Trace( "------- Evt Attrition ------" )
@@ -444,8 +439,7 @@ elseif switch_1 == eGererSecondEchelon then
 
                     Activate( self.activations.BEH_Dispositif_Automate_INF_GererLeSEStatique_, 1, { self._namedParams.positionInstallation, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -555,22 +549,20 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifStatiqueSurLima_"
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eGererPionDetruit then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Si un pion detruit de PE alors relever le pion si possible
 ]]--[[// Puis réévaluation du SE --> donc un pion détruit = réorganisation = delai
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// 1 iteration ou l'on redonne les missions
-]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
-                    self.ePhase = eGererSecondEchelon
-                    _continue = false
-                --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eGererSecondEchelon then
+]]            local switch_1 = self.ePhase
+                if switch_1 == eGererPionDetruit then
+                    Activate( self.activations.BEH_Dispositif_Automate_INF_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
+                    self.ePhase = eGererSecondEchelon
+                    _continue = false
+                elseif switch_1 == eGererSecondEchelon then
                     if( S_Dispositif_Automate_INF_EvtPionDetruit() ) then
                         do
                             DEC_Trace( "------- Evt Attrition ------" )
@@ -582,8 +574,7 @@ elseif switch_1 == eGererSecondEchelon then
 
                     Activate( self.activations.BEH_Dispositif_Automate_INF_GererLeSEStatiqueSurLima_, 1, { self._namedParams.lima, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

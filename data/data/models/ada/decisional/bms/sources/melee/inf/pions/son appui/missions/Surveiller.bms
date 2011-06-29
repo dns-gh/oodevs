@@ -75,17 +75,14 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_ExecuterTir" then
                             Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_Decrocher" then
+                        elseif switch_1 == "Rep_OrderConduite_Decrocher" then
                             self.ePhase = eSeReplier
                             self.eAction = eActionEnCours
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
@@ -108,7 +105,13 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// behavior BEH_Horaire_Pion_INF_SurveillerSecteur( eCurrentPhase ) return in eAction;
+]]--[[// Rejoins une position de replis
+]]--[[// dispositif de deplacement					
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------												
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
                     if( self.eAction == eActionEffectuee ) then
@@ -133,19 +136,16 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
                             end
 
                         end
---[[// behavior BEH_Horaire_Pion_INF_SurveillerSecteur( eCurrentPhase ) return in eAction;
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
 self.done_BEH_Eni_Pion_INF_SurveillerSecteur = function( self, _, v ) self.eActionEnnemi = v[1] end
                     Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, 1, emptyTable )
 self.done_BEH_Mission_Pion_INF_SurveillerSecteur = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                --[[// Rejoins une position de replis
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )--[[// dispositif de deplacement					
-]]
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -171,10 +171,7 @@ self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[
                             self.eAction = eActionEnCours
                                                         do
                                 DEC_Trace( "fin de mission" )
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------												
-]]DEC_FinMission()
+                                DEC_FinMission()
                                                                 self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end

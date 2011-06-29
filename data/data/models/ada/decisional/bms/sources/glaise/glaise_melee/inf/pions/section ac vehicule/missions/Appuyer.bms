@@ -88,16 +88,22 @@ local emptyTable = emptyTable
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
          do
             local _continue = true
-            local switch_1 = --[[//=============================================================================
+--[[//=============================================================================
 ]]--[[// Squelette de mission
 ]]--[[//=============================================================================		
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------       
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
                         do
                             Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_TEMPS_PREPARATION_APPUYER(), } )
                                                         do return end
@@ -107,19 +113,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eAppuyer
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Mission
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eAppuyer then
                     Activate( self.activations.BEH_Manoeuvre_Pion_HOT_Appuyer, 1, { self.repAmi, "spontanee", } )
 self.done_BEH_Manoeuvre_Pion_HOT_Appuyer = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------       
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do

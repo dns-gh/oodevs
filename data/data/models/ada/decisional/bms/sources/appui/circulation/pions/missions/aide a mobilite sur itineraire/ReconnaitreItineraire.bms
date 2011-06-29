@@ -52,17 +52,16 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// 2) Progression
+]]--[[// 3) Fin
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "MIS_Pion_LOG_SurveillerItineraire: debut", } )
                     self.ePhase = eProgresser
                     _continue = false
-                --[[// 2) Progression
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -80,14 +79,11 @@ elseif switch_1 == eProgresser then
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                         _continue = false
                     end
-                --[[// 3) Fin
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

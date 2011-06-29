@@ -68,7 +68,6 @@ do
              do
                 local _continue = true
                 local switch_1 = pion:GetType()
-                local cases_switch_1 = {}
                     if switch_1 == "SectionASS_EO"
                     or switch_1 == "GroupeInfanterie_Commando"
                     or switch_1 == "SectionInfanterie_Appui"
@@ -78,16 +77,14 @@ do
                         end
 
                         _continue = false
-                                        cases_switch_1[1] = true
-elseif switch_1 == "SectionInfanterie_HOT"
+                    elseif switch_1 == "SectionInfanterie_HOT"
                     or switch_1 == "SectionInfanterie_MILAN" then
                         if( _returnValue < 800 ) then
                             _returnValue = 800
                         end
 
                         _continue = false
-                                        cases_switch_1[2] = true
-
+                    
                     else
                         if( _returnValue < M_DISTANCE_MIN() ) then
                             _returnValue = M_DISTANCE_MIN()
@@ -121,7 +118,6 @@ do
              do
                 local _continue = true
                 local switch_1 = pion:GetType()
-                local cases_switch_1 = {}
                     if switch_1 == "GroupeInfanterie_Commando"
                     or switch_1 == "SectionInfanterie_Appui"
                     or switch_1 == "SectionInfanterie" then
@@ -130,16 +126,14 @@ do
                         end
 
                         _continue = false
-                                        cases_switch_1[1] = true
-elseif switch_1 == "SectionInfanterie_HOT"
+                    elseif switch_1 == "SectionInfanterie_HOT"
                     or switch_1 == "SectionInfanterie_MILAN" then
                         if( _returnValue < 1500 ) then
                             _returnValue = 1500
                         end
 
                         _continue = false
-                                        cases_switch_1[2] = true
-
+                    
                     else
                         if( _returnValue < M_DISTANCE_MAX() ) then
                             _returnValue = M_DISTANCE_MAX()

@@ -63,16 +63,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//Rejoindre la position donnée par le commandant d'unité
+]]--[[//quand la section est deployée, qu'elle a des ROE tir libre et que les radars sont actifs
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     self.ePhase = eRejoindre
                     _continue = false
-                --[[//Rejoindre la position donnée par le commandant d'unité
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
@@ -92,13 +91,11 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
+                elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
                     Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )
-                    --[[//quand la section est deployée, qu'elle a des ROE tir libre et que les radars sont actifs
-]]if( DEC_Agent_EstInstalle() and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
+                    if( DEC_Agent_EstInstalle() and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
                         do
                             Activate( self.activations.ACT_RC, 1, { eRC_PretAuTir, } )
                             Activate( self.activations.BEH_Eni_Pion_ASA_GererEniDefendreSite, 1, { self._namedParams.mission.site_, } )
@@ -106,8 +103,7 @@ elseif switch_1 == eSurveiller then
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -121,8 +117,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

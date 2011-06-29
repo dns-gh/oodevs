@@ -89,20 +89,17 @@ node "BEH_Info_Pion_RendreCompteSurNBC"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT NBC
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteEtatNbc( myself )
-            local cases_switch_1 = {}
+]]            local switch_1 = F_Pion_GeteEtatNbc( myself )
                 if switch_1 == eEtatNbc_Niv0 then
                     Activate( self.activations.ACT_RC, 1, { eRC_FinAlerteNBCNiveau4, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatNbc_Niv4 then
+                elseif switch_1 == eEtatNbc_Niv4 then
                     Activate( self.activations.ACT_RC, 1, { eRC_AlerteNBCNiveau4, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR CONTAMINATION
@@ -140,25 +137,21 @@ node "BEH_Info_Pion_RendreCompteSurROE"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT NBC
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteConsigneTir( myself )
-            local cases_switch_1 = {}
+]]--[[// Sur ordre
+]]            local switch_1 = F_Pion_GeteConsigneTir( myself )
                 if switch_1 == eEtatROE_TirInterdit then
-                    --[[// Sur ordre
-]]Activate( self.activations.ACT_RC, 1, { eRC_TirInterdit, } )
+                    Activate( self.activations.ACT_RC, 1, { eRC_TirInterdit, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatROE_TirSurRiposte then
+                elseif switch_1 == eEtatROE_TirSurRiposte then
                     Activate( self.activations.ACT_RC, 1, { eRC_TirRestreint, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eEtatROE_TirLibre then
+                elseif switch_1 == eEtatROE_TirLibre then
                     Activate( self.activations.ACT_RC, 1, { eRC_TirLibre, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,
@@ -187,52 +180,41 @@ node "BEH_Info_Pion_RendreCompteSurLima"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT Lima
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteEtatLima( myself )
-            local cases_switch_1 = {}
+]]--[[//rien
+]]--[[// rien
+]]            local switch_1 = F_Pion_GeteEtatLima( myself )
                 if switch_1 == eEtatLima_LD then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LD, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatLima_LCA then
+                elseif switch_1 == eEtatLima_LCA then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LCA, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eEtatLima_LC then
+                elseif switch_1 == eEtatLima_LC then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LC, } )
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eEtatLima_LI then
+                elseif switch_1 == eEtatLima_LI then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LI, } )
                     _continue = false
-                                cases_switch_1[4] = true
-elseif switch_1 == eEtatLima_LIA then
+                elseif switch_1 == eEtatLima_LIA then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LIA, } )
                     _continue = false
-                                cases_switch_1[5] = true
-elseif switch_1 == eEtatLima_LO then
+                elseif switch_1 == eEtatLima_LO then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LO, } )
                     _continue = false
-                                cases_switch_1[6] = true
-elseif switch_1 == eEtatLima_LCAR then
+                elseif switch_1 == eEtatLima_LCAR then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LCAR, } )
                     _continue = false
-                                cases_switch_1[7] = true
-elseif switch_1 == eEtatLima_LR then
+                elseif switch_1 == eEtatLima_LR then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LR, } )
                     _continue = false
-                                cases_switch_1[8] = true
-elseif switch_1 == eEtatLima_Fuseau then
-                    _continue = false--[[//rien
-]]
-                                cases_switch_1[9] = true
-elseif switch_1 == eEtatLima_aucune then
-                    _continue = false--[[// rien
-]]
-                                cases_switch_1[10] = true
-                end
+                elseif switch_1 == eEtatLima_Fuseau then
+                    _continue = false
+                elseif switch_1 == eEtatLima_aucune then
+                    _continue = false
+                                end
             end
 
     end,
@@ -266,26 +248,23 @@ node "BEH_Info_Pion_RendreCompteSurSituationCoordination"
 
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT coordination
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteEtatOrdreCoordination( myself )
-            local cases_switch_1 = {}
+]]--[[// rien
+]]--[[// ordre attendre ou sur LC
+]]            local switch_1 = F_Pion_GeteEtatOrdreCoordination( myself )
                 if switch_1 == eEtatOrdreCoordination_aucun then
-                    _continue = false--[[// rien
-]]
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatOrdreCoordination_Attendre then
+                    _continue = false
+                elseif switch_1 == eEtatOrdreCoordination_Attendre then
                     if( F_Pion_GeteEtatLima( myself ) == eEtatLima_LD ) then
                         Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdreDeboucher, } )
                     else
-                        --[[// ordre attendre ou sur LC
-]]Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )
+                        Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -314,24 +293,20 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT 
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteEtatRadio( myself )
-            local cases_switch_1 = {}
+]]            local switch_1 = F_Pion_GeteEtatRadio( myself )
                 if switch_1 == eEtatRadio_Silence then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadio, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatRadio_SilencePartiel then
+                elseif switch_1 == eEtatRadio_SilencePartiel then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadioPartiel, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eEtatRadio_Ouverte then
+                elseif switch_1 == eEtatRadio_Ouverte then
                     Activate( self.activations.ACT_RC, 1, { eRC_FinSilenceRadio, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,
@@ -360,20 +335,17 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadar"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT 
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteEtatRadar( myself )
-            local cases_switch_1 = {}
+]]            local switch_1 = F_Pion_GeteEtatRadar( myself )
                 if switch_1 == eEtatRadar_Silence then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadar, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatRadar_Ouvert then
+                elseif switch_1 == eEtatRadar_Ouvert then
                     Activate( self.activations.ACT_RC, 1, { eRC_FinSilenceRadar, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -402,22 +374,18 @@ node "BEH_Info_Pion_RendreCompteSurEtatOperationnel"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = F_Pion_GeteEtatDestruction( myself )
-            local cases_switch_1 = {}
+--[[// Rien le pion est totalement mort
+]]--[[// Pion opérationnel
+]]            local switch_1 = F_Pion_GeteEtatDestruction( myself )
                 if switch_1 == eEtatDestruction_Tactique then
                     Activate( self.activations.ACT_RC, 1, { eRC_NonOperationnel, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatDestruction_Total then
-                    _continue = false--[[// Rien le pion est totalement mort
-]]
-                --[[// Pion opérationnel
-]]                cases_switch_1[2] = true
-elseif switch_1 == eEtatDestruction_None then
+                elseif switch_1 == eEtatDestruction_Total then
+                    _continue = false
+                elseif switch_1 == eEtatDestruction_None then
                     Activate( self.activations.ACT_RC, 1, { eRC_Operationnel, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,
@@ -447,16 +415,13 @@ node "BEH_Info_Pion_RendreCompteSurAmbiance"
          do
             local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
-            local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
                     Activate( self.activations.ACT_RC, 1, { eRC_AmbianceSurete, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatAmbiance_Vitesse then
+                elseif switch_1 == eEtatAmbiance_Vitesse then
                     Activate( self.activations.ACT_RC, 1, { eRC_AmbianceVitesse, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -708,43 +673,38 @@ node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Suivant l'état du deplcement
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteEtatDeplacement( myself )
-            local cases_switch_1 = {}
-                if switch_1 == eEtatDeplacement_aucun then
-                    _continue = false--[[// Pas d'instance de deplacement
+]]--[[// Pas d'instance de deplacement
 ]]--[[// rien
-]]
-                --[[// Pas d'instance de deplacement
-]]                cases_switch_1[1] = true
-elseif switch_1 == eEtatDeplacement_EnCours then
-                    _continue = false--[[// rien
-]]
-                --[[//-----------------------------------------------------------------------------
+]]--[[// Pas d'instance de deplacement
+]]--[[// rien
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Si en poste devant obstacle (CR detection d'un obstacle qd inconnu fait 
 ]]--[[// dans le moteur)
 ]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eEtatDeplacement_PosteFaceAObstacle then
-                    --[[// On se contente de recuperer l'objet pour faire le RC
-]]local tmp = false
+]]--[[// On se contente de recuperer l'objet pour faire le RC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Cas de la reco d'un point 
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = F_Pion_GeteEtatDeplacement( myself )
+                if switch_1 == eEtatDeplacement_aucun then
+                    _continue = false
+                elseif switch_1 == eEtatDeplacement_EnCours then
+                    _continue = false
+                elseif switch_1 == eEtatDeplacement_PosteFaceAObstacle then
+                    local tmp = false
                     tmp = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
                     self.repObjet = tmp.second.first
                     self.rDist = tmp.second.second
                     tmp = tmp.first
                     Activate( self.activations.ACT_RC_SurObjet, 1, { eRC_EnPosteFaceAObstacle, self.repObjet, } )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Cas de la reco d'un point 
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[3] = true
-elseif switch_1 == eEtatDeplacement_EnReco then
+                elseif switch_1 == eEtatDeplacement_EnReco then
                     Activate( self.activations.ACT_RC, 1, { eRC_ReconnaissancePoint, } )
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,
@@ -848,25 +808,21 @@ node "BEH_Info_RenseignerSurROE"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder en permanance les ROE 
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteConsigneTir( myself )
-            local cases_switch_1 = {}
+]]--[[// Sur ordre
+]]            local switch_1 = F_Pion_GeteConsigneTir( myself )
                 if switch_1 == eEtatROE_TirInterdit then
-                    --[[// Sur ordre
-]]Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirInterdit, } )
+                    Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirInterdit, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatROE_TirSurRiposte then
+                elseif switch_1 == eEtatROE_TirSurRiposte then
                     Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirSurRiposte, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eEtatROE_TirLibre then
+                elseif switch_1 == eEtatROE_TirLibre then
                     Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirLibre, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder en permanance les ROE Population
@@ -874,22 +830,18 @@ elseif switch_1 == eEtatROE_TirLibre then
 ]]
          do
             local _continue = true
-            local switch_1 = F_Pion_GeteConsigneTirPopulation( myself )
-            local cases_switch_1 = {}
+--[[// Sur ordre
+]]            local switch_1 = F_Pion_GeteConsigneTirPopulation( myself )
                 if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
-                    --[[// Sur ordre
-]]Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_EmploiForceInterdit, } )
+                    Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_EmploiForceInterdit, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                     Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
                     Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_ArmesLetalesAutorisees, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,
@@ -925,22 +877,19 @@ node "BEH_Info_RenseignerSurEtatDec"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Interpretation de l'envie du pion: sauvegarde ou poursuite mission
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_GeteEtatDec( myself )
-            local cases_switch_1 = {}
+]]--[[// fixe / esquive
+]]            local switch_1 = F_Pion_GeteEtatDec( myself )
                 if switch_1 == eEtatDec_Sauvegarde then
-                    --[[// fixe / esquive
-]]Activate( self.activations.ACT_Info_EtatDec, 1, { eEtatCombatDeRencontre_Esquive, } )
+                    Activate( self.activations.ACT_Info_EtatDec, 1, { eEtatCombatDeRencontre_Esquive, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatDec_RAS
+                elseif switch_1 == eEtatDec_RAS
                 or switch_1 == eEtatDec_Continu then
                     Activate( self.activations.ACT_Info_EtatDec, 1, { eEtatCombatDeRencontre_PoursuiteMission, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -969,22 +918,18 @@ node "BEH_Info_RenseignerSurEtatOperationnel"
         local Activate = Activate
          do
             local _continue = true
-            local switch_1 = F_Pion_GeteEtatDestruction( myself )
-            local cases_switch_1 = {}
+--[[// Pion opérationnel
+]]            local switch_1 = F_Pion_GeteEtatDestruction( myself )
                 if switch_1 == eEtatDestruction_Tactique then
                     Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_DetruitTactiquement, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatDestruction_Total then
+                elseif switch_1 == eEtatDestruction_Total then
                     Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_DetruitTotalement, } )
                     _continue = false
-                --[[// Pion opérationnel
-]]                cases_switch_1[2] = true
-elseif switch_1 == eEtatDestruction_None then
+                elseif switch_1 == eEtatDestruction_None then
                     Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_Operationnel, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

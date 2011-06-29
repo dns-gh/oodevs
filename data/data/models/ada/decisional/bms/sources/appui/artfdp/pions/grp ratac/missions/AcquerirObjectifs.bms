@@ -53,12 +53,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eMettreEnOeuvre then
                     Activate( self.activations.BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), emptyTable )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -71,8 +69,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -109,14 +106,12 @@ node "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission"
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                     self.ePhase = eRejoindre
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -130,8 +125,7 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.positionDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eDeployer then
+                elseif switch_1 == eDeployer then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     local eNiveauInstallation = DEC_Agent_NiveauInstallation()
@@ -140,8 +134,7 @@ elseif switch_1 == eDeployer then
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

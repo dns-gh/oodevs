@@ -130,23 +130,19 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             DEC_Trace( "======= Ordre --> Stationnement =====" )
                             UpdateStateVariable( "VE_Stationner", 1 - GetStateVariable( "VE_Stationner" ) )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
+                        elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "======= Ordre --> Fin du Stationnement =====" )
                             UpdateStateVariable( "VE_Stationner", 0 - GetStateVariable( "VE_Stationner" ) )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
+                        elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
                             local ordreAtt = repOrdre
                             S_ChangerAttitude( ordreAtt:GetorderConduitePopulationChangerAttitude_() )
                             _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
@@ -515,28 +511,23 @@ node "BEH_Pop_DiminueAgressivite"
                 DEC_Trace( " == UPDATE population attitude" )
                  do
                     local _continue = true
-                    local switch_1 = self.attitude
-                    local cases_switch_1 = {}
+--[[/*NOTHING*/]]                    local switch_1 = self.attitude
                         if switch_1 == eAttitudePopulation_Calme then
-                                                    --[[/*NOTHING*/]]DEC_Trace( "=== was Calme ===" )
+                                                    DEC_Trace( "=== was Calme ===" )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == eAttitudePopulation_Agitee then
+                        elseif switch_1 == eAttitudePopulation_Agitee then
                                                     DEC_Trace( "=== was Agitee ===" )
                             S_ChangerAttitude( eAttitudePopulation_Calme )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eAttitudePopulation_Excitee then
+                        elseif switch_1 == eAttitudePopulation_Excitee then
                                                     DEC_Trace( "=== was Excitee ===" )
                             S_ChangerAttitude( eAttitudePopulation_Agitee )
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == eAttitudePopulation_Agressive then
+                        elseif switch_1 == eAttitudePopulation_Agressive then
                                                     DEC_Trace( "=== was Agressive ===" )
                             S_ChangerAttitude( eAttitudePopulation_Excitee )
                             _continue = false
-                                                cases_switch_1[4] = true
-                        end
+                                                end
                     end
 
             end

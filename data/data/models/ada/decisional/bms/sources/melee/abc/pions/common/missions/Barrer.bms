@@ -70,17 +70,19 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// 2) Progression tactique
+]]--[[// force de 1.
+]]--[[// 4) Qd prêt Barrer la direction dangereuse
+]]--[[// MAJ VE_Courage pour tenir
+]]--[[// 5) Fin de la mission de reconnaissance SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_Info_Trace, 1, { "Hold position mission begining", } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Hold position mission begining", } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// 2) Progression tactique
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -92,30 +94,23 @@ elseif switch_1 == eProgresser then
                             end
 
                         end
---[[// force de 1.
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionInstallation_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// 4) Qd prêt Barrer la direction dangereuse
-]]                cases_switch_1[2] = true
-elseif switch_1 == eBarrer then
+                elseif switch_1 == eBarrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieTenir, 1, emptyTable )--[[// MAJ VE_Courage pour tenir
-]]
+                    Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieTenir, 1, emptyTable )
                     Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, emptyTable )
                     Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                --[[// 5) Fin de la mission de reconnaissance SUR ORDRE
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

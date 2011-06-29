@@ -56,13 +56,22 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------	        
-]]if( self.eAction == eActionEffectuee ) then
+]]--[[// action ACT_RC_PreparationMission( rDelaiPreparation );
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Rejoindre la position du site
+]]--[[// ------------------------------------------------------------------------
+]]--[[// On fait une reconnaissance de la position lorsque l'on arrive
+]]--[[// a proximite
+]]--[[// On s'oriente vers la direction dangereuse
+]]--[[// ------------------------------------------------------------------------
+]]--[[//  Fin de mission --> rejoindre plot munition
+]]--[[// ------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == ePreparerMission then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -73,18 +82,13 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
                             end
 
                         end
---[[// action ACT_RC_PreparationMission( rDelaiPreparation );
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.2, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelaiPreparation, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// ------------------------------------------------------------------------
-]]--[[// Rejoindre la position du site
-]]--[[// ------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -96,9 +100,7 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[// On fait une reconnaissance de la position lorsque l'on arrive
-]]--[[// a proximite
-]]if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.positionDeploiement_, 800 ) ) then
+                    if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.positionDeploiement_, 800 ) ) then
                         Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, { self.mission.positionDeploiement_, } )
 self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, _, v ) self.eActionReco = v[1] end
                     end
@@ -106,8 +108,7 @@ self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.positionDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eDeployer then
+                elseif switch_1 == eDeployer then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -118,24 +119,20 @@ elseif switch_1 == eDeployer then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
-                    --[[// On s'oriente vers la direction dangereuse
-]]Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.mission.dirDangereuse_, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.mission.dirDangereuse_, } )
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eType_ZoneImplantation
-                        local cases_switch_2 = {}
                             if switch_2 == eTypeObjectZoneImplantationCanon then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                 _continue = false
-                                                        cases_switch_2[1] = true
-elseif switch_2 == eTypeObjectZoneImplantationLRM then
+                            elseif switch_2 == eTypeObjectZoneImplantationLRM then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
 self.done_BEH_Pion_ASS_Installer_ZoneImplantationLRM = function( self, _, v ) self.eAction = v[1] end
                                 _continue = false
-                                                        cases_switch_2[2] = true
-
+                            
                             else
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationSimple, 1.1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
@@ -144,11 +141,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                         end
 
                     _continue = false
-                --[[// ------------------------------------------------------------------------
-]]--[[//  Fin de mission --> rejoindre plot munition
-]]--[[// ------------------------------------------------------------------------
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do

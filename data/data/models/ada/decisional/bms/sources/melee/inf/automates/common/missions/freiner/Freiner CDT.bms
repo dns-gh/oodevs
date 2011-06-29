@@ -345,21 +345,18 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.pPion:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
                                                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "SectionInfanterie"
+                        elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_MILAN"
                         or switch_1 == "SectionInfanterie_HOT"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
                                                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
             end

@@ -38,148 +38,112 @@ includedFiles["sources/glaise/glaise_common/Fonctions - RC.bms"] = true
      do
         local _continue = true
         local switch_1 = eSituationMission
-        local cases_switch_1 = {}
             if switch_1 == eEtatPhaseMission_DebutMission then
                 _returnValue = eRC_DebutMission
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eEtatPhaseMission_PreparationMission then
+            elseif switch_1 == eEtatPhaseMission_PreparationMission then
                 _returnValue = eRC_PreparationMission
                 _continue = false
-                        cases_switch_1[2] = true
-elseif switch_1 == eEtatPhaseMission_RejointUnite then
+            elseif switch_1 == eEtatPhaseMission_RejointUnite then
                 _returnValue = eRC_RejointUnite
                 _continue = false
-                        cases_switch_1[3] = true
-elseif switch_1 == eEtatPhaseMission_ProgressionSurAxe then
+            elseif switch_1 == eEtatPhaseMission_ProgressionSurAxe then
                 _returnValue = eRC_ProgressionSurAxe
                 _continue = false
-                        cases_switch_1[4] = true
-elseif switch_1 == eEtatPhaseMission_ProgressionVersLocalisation then
+            elseif switch_1 == eEtatPhaseMission_ProgressionVersLocalisation then
                 _returnValue = eRC_ProgressionVersPosition
                 _continue = false
-                        cases_switch_1[5] = true
-elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
+            elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
                 _returnValue = eRC_ArriveSurPosition
                 _continue = false
-                        cases_switch_1[6] = true
-elseif switch_1 == eEtatPhaseMission_ReconnaissanceLocalisation then
+            elseif switch_1 == eEtatPhaseMission_ReconnaissanceLocalisation then
                 _returnValue = eRC_ReconnaissancePoint
                 _continue = false
-                        cases_switch_1[7] = true
-elseif switch_1 == eEtatPhaseMission_EscorteUnite then
+            elseif switch_1 == eEtatPhaseMission_EscorteUnite then
                 _returnValue = eRC_EscorteUnite
                 _continue = false
-                        cases_switch_1[8] = true
-elseif switch_1 == eEtatPhaseMission_Reconnaissance then
+            elseif switch_1 == eEtatPhaseMission_Reconnaissance then
                 _returnValue = eRC_ReconnaissancePoint
                 _continue = false
-                        cases_switch_1[9] = true
-elseif switch_1 == eEtatPhaseMission_DispositifInstalle then
+            elseif switch_1 == eEtatPhaseMission_DispositifInstalle then
                 _returnValue = eRC_DispositifInstalle
                 _continue = false
-                        cases_switch_1[10] = true
-elseif switch_1 == eEtatPhaseMission_EnControleZone then
+            elseif switch_1 == eEtatPhaseMission_EnControleZone then
                 _returnValue = eRC_DebutControleZone
                 _continue = false
-                        cases_switch_1[11] = true
-elseif switch_1 == eEtatPhaseMission_EnSurveillance then
+            elseif switch_1 == eEtatPhaseMission_EnSurveillance then
                 _returnValue = eRC_DebutSurveillance
                 _continue = false
-                        cases_switch_1[12] = true
-elseif switch_1 == eEtatPhaseMission_EnFreinage then
+            elseif switch_1 == eEtatPhaseMission_EnFreinage then
                 _returnValue = eRC_EnFreinage
                 _continue = false
-                        cases_switch_1[13] = true
-elseif switch_1 == eEtatPhaseMission_EnJalonnement then
+            elseif switch_1 == eEtatPhaseMission_EnJalonnement then
                 _returnValue = eRC_EnJalonnement
                 _continue = false
-                        cases_switch_1[14] = true
-elseif switch_1 == eEtatPhaseMission_EnPosition then
+            elseif switch_1 == eEtatPhaseMission_EnPosition then
                 _returnValue = eRC_EnPosition
                 _continue = false
-                        cases_switch_1[15] = true
-elseif switch_1 == eEtatPhaseMission_FinMission then
+            elseif switch_1 == eEtatPhaseMission_FinMission then
                 _returnValue = eRC_FinMission
                 _continue = false
-                        cases_switch_1[16] = true
-elseif switch_1 == eEtatPhaseMission_MissionImpossible then
+            elseif switch_1 == eEtatPhaseMission_MissionImpossible then
                 _returnValue = eRC_MissionImpossible
                 _continue = false
-                        cases_switch_1[17] = true
-elseif switch_1 == eEtatPhaseMission_InstallationDispositif then
+            elseif switch_1 == eEtatPhaseMission_InstallationDispositif then
                 _returnValue = eRC_DebutInstallation
                 _continue = false
-                        cases_switch_1[18] = true
-elseif switch_1 == eEtatPhaseMission_InstallationSurZoneImplantation then
+            elseif switch_1 == eEtatPhaseMission_InstallationSurZoneImplantation then
                 _returnValue = eRC_InstallationSurZoneImplantation
                 _continue = false
-                        cases_switch_1[19] = true
-elseif switch_1 == eEtatPhaseMission_PretPourConduiteTir then
+            elseif switch_1 == eEtatPhaseMission_PretPourConduiteTir then
                 _returnValue = eRC_PretPourConduiteTir
                 _continue = false
-                        cases_switch_1[20] = true
-elseif switch_1 == eEtatPhaseMission_SuitUnite then
+            elseif switch_1 == eEtatPhaseMission_SuitUnite then
                 _returnValue = eRC_SuitUnite
                 _continue = false
-                        cases_switch_1[21] = true
-elseif switch_1 == eEtatPhaseMission_EnAppui then
+            elseif switch_1 == eEtatPhaseMission_EnAppui then
                 _returnValue = eRC_EnAppui
                 _continue = false
-                        cases_switch_1[22] = true
-elseif switch_1 == eEtatPhaseMission_Decroche then
+            elseif switch_1 == eEtatPhaseMission_Decroche then
                 _returnValue = eRC_Decroche
                 _continue = false
-                        cases_switch_1[23] = true
-elseif switch_1 == eEtatPhaseMission_AttenteTransporteur then
+            elseif switch_1 == eEtatPhaseMission_AttenteTransporteur then
                 _returnValue = eRC_EnAttenteTransporteurs
                 _continue = false
-                        cases_switch_1[24] = true
-elseif switch_1 == eEtatPhaseMission_TransportEnCours then
+            elseif switch_1 == eEtatPhaseMission_TransportEnCours then
                 _returnValue = eRC_TransportEnCours
                 _continue = false
-                        cases_switch_1[25] = true
-elseif switch_1 == eEtatPhaseMission_TransportEmbarquement then
+            elseif switch_1 == eEtatPhaseMission_TransportEmbarquement then
                 _returnValue = eRC_TransportEmbarquement
                 _continue = false
-                        cases_switch_1[26] = true
-elseif switch_1 == eEtatPhaseMission_TransportDebarquement then
+            elseif switch_1 == eEtatPhaseMission_TransportDebarquement then
                 _returnValue = eRC_TransportDebarquement
                 _continue = false
-                        cases_switch_1[27] = true
-elseif switch_1 == eEtatPhaseMission_EnExfiltration then
+            elseif switch_1 == eEtatPhaseMission_EnExfiltration then
                 _returnValue = eRC_EnExfiltration
                 _continue = false
-                        cases_switch_1[28] = true
-elseif switch_1 == eEtatPhaseMission_EnInfiltration then
+            elseif switch_1 == eEtatPhaseMission_EnInfiltration then
                 _returnValue = eRC_EnInfiltration
                 _continue = false
-                        cases_switch_1[29] = true
-elseif switch_1 == eEtatPhaseMission_AttenteConditionFavorablePourInfiltration then
+            elseif switch_1 == eEtatPhaseMission_AttenteConditionFavorablePourInfiltration then
                 _returnValue = eRC_AttenteConditionFavorablePourInfiltration
                 _continue = false
-                        cases_switch_1[30] = true
-elseif switch_1 == eEtatPhaseMission_EnAttaque then
+            elseif switch_1 == eEtatPhaseMission_EnAttaque then
                 _returnValue = eRC_Assaut
                 _continue = false
-                        cases_switch_1[31] = true
-elseif switch_1 == eEtatPhaseMission_EnCouverture then
+            elseif switch_1 == eEtatPhaseMission_EnCouverture then
                 _returnValue = eRC_EnCouverture
                 _continue = false
-                        cases_switch_1[32] = true
-elseif switch_1 == eEtatPhaseMission_EnEclairage then
+            elseif switch_1 == eEtatPhaseMission_EnEclairage then
                 _returnValue = eRC_EnEclairage
                 _continue = false
-                        cases_switch_1[33] = true
-elseif switch_1 == eEtatPhaseMission_EnFranchissement then
+            elseif switch_1 == eEtatPhaseMission_EnFranchissement then
                 _returnValue = eRC_EnCoursDeFranchissement
                 _continue = false
-                        cases_switch_1[34] = true
-elseif switch_1 == eEtatPhaseMission_None then
+            elseif switch_1 == eEtatPhaseMission_None then
                 _returnValue = eNbr
                 _continue = false
-                        cases_switch_1[35] = true
-
+            
             else
                 DEC_Trace( "! **** Manque_RC --> " .. EnumToString( eSituationMission, E_EtatPion_PhaseMission ) )
                 _returnValue = eNbr

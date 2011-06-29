@@ -71,25 +71,22 @@ do
                 local bEstUtilise = true
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[//-----------------------------------------------------------------------------
+]]--[[// Sinon...
+]]--[[//-----------------------------------------------------------------------------
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, emptyTable )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, emptyTable )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel, emptyTable )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, emptyTable )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, emptyTable )
                             _continue = false
-                        --[[//-----------------------------------------------------------------------------
-]]--[[// Sinon...
-]]--[[//-----------------------------------------------------------------------------
-]]                        cases_switch_1[2] = true
-
+                        
                         else
                             bEstUtilise = false
                             _continue = false
@@ -145,24 +142,21 @@ do
                 local bEstUtilise = true
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[//-----------------------------------------------------------------------------
+]]--[[// Sinon...
+]]--[[//-----------------------------------------------------------------------------
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, emptyTable )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, emptyTable )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, emptyTable )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, emptyTable )
                             _continue = false
-                        --[[//-----------------------------------------------------------------------------
-]]--[[// Sinon...
-]]--[[//-----------------------------------------------------------------------------
-]]                        cases_switch_1[2] = true
-
+                        
                         else
                             bEstUtilise = false
                             _continue = false

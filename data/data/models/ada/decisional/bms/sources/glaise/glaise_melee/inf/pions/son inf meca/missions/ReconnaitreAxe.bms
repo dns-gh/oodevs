@@ -76,7 +76,7 @@ node "MIS_Pion_INF_ReconnaitreAxe"
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
          do
             local _continue = true
-            local switch_1 = --[[//=============================================================================
+--[[//=============================================================================
 ]]--[[// Mission de Reconnaissance
 ]]--[[//
 ]]--[[// 1) preparation
@@ -84,7 +84,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 ]]--[[//    - retour sur l axe de progression si ce dernier a été quitte
 ]]--[[// 3) fin mission
 ]]--[[//=============================================================================
-]]self.ePhase
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
@@ -108,10 +111,7 @@ self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPha
                 end
                 if cases_switch_1[1] or switch_1 == eFinMission then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do

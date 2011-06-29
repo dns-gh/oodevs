@@ -49,13 +49,16 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvementrmm/M
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eDonnerMission then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission SeDeplacer aux pions
 ]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Validation 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Fin MRT
+]]            local switch_1 = self.ePhase
+                if switch_1 == eDonnerMission then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -71,19 +74,14 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvementrmm/M
 self.done_BEH_Automate_MRT_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
                         _continue = false
                     end
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Validation 
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eTerminerMission then
-                    --[[//Fin MRT
-]]DEC_MRT_Valide()
+                elseif switch_1 == eTerminerMission then
+                    DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] then
+                
+                else
                                 end
             end
 

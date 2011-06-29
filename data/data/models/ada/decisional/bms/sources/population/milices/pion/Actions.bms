@@ -55,7 +55,9 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
 
          do
             local _continue = true
-            local switch_1 = self.eEtatObjet
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]--[[// Pas de delais de reorganisation du chantier
+]]            local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
@@ -63,8 +65,7 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
 elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "fin realisation" )
                     DEC_RC( eRC_FinTravaux )
-                    --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]self.actionID = DEC_StopAction( self.actionID )
+                    self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
@@ -80,8 +81,7 @@ elseif switch_1 == eActionObjetTerminee then
                     do return end
 
                     _continue = false
-                --[[// Pas de delais de reorganisation du chantier
-]]                end
+                                end
             end
 
         if( self.bSuspendu ) then
@@ -160,7 +160,8 @@ elseif switch_1 == eActionObjetTerminee then
 
          do
             local _continue = true
-            local switch_1 = self.eEtatObjet
+--[[// Pas de delais de reorganisation du chantier
+]]            local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
@@ -194,8 +195,7 @@ elseif switch_1 == eActionObjetTerminee then
                     do return end
 
                     _continue = false
-                --[[// Pas de delais de reorganisation du chantier
-]]                end
+                                end
             end
 
         if( self.bSuspendu ) then
@@ -272,12 +272,11 @@ elseif switch_1 == eActionObjetTerminee then
 
          do
             local _continue = true
-            local switch_1 = self.eEtatObjet
-            local cases_switch_1 = {}
+--[[// Pas de delais de reorganisation du chantier
+]]            local switch_1 = self.eEtatObjet
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionObjetTerminee then
+                elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "preparation : fin" )
                     DEC_RC( eRC_FinTravaux )
                     self.actionID = DEC_StopAction( self.actionID )
@@ -294,8 +293,7 @@ elseif switch_1 == eActionObjetTerminee then
                     do return end
 
                     _continue = false
-                --[[// Pas de delais de reorganisation du chantier
-]]                end
+                                end
             end
 
         if( self.bSuspendu ) then
@@ -405,12 +403,11 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.eEtatObjet
-            local cases_switch_1 = {}
+--[[// Pas de delais de reorganisation du chantier
+]]            local switch_1 = self.eEtatObjet
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionObjetTerminee then
+                elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "destruction : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionEffectuee )
@@ -426,8 +423,7 @@ elseif switch_1 == eActionObjetTerminee then
                     do return end
 
                     _continue = false
-                --[[// Pas de delais de reorganisation du chantier
-]]                end
+                                end
             end
 
         if( self.bSuspendu ) then

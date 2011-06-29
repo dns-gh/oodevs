@@ -236,15 +236,14 @@ do
                             do
                                  do
                                     local _continue = true
-                                    local switch_1 = DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) )
-                                    local cases_switch_1 = {}
-                                        if switch_1 == eTypePointCCT
-                                        or switch_1 == eTypePointBond then
-                                                                                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// On arrive devant un changement de compartiment terrain ou limite
 ]]--[[// de bond
 ]]--[[//-----------------------------------------------------------------------------
-]]if( meleeInfPionsCommon() ) then
+]]                                    local switch_1 = DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) )
+                                        if switch_1 == eTypePointCCT
+                                        or switch_1 == eTypePointBond then
+                                                                                    if( meleeInfPionsCommon() ) then
                                                 do
                                                     if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                                         do
@@ -257,8 +256,7 @@ do
                                             end
 
                                             _continue = false
-                                                                                cases_switch_1[1] = true
-elseif switch_1 == eTypePointParticulier then
+                                        elseif switch_1 == eTypePointParticulier then
                                             do
                                                 pointVar = DEC_GetDestPoint( repAvantPt )
                                                 if( appuiGeniePions() ) then
@@ -294,8 +292,7 @@ if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                             end
 
                                             _continue = false
-                                                                                cases_switch_1[2] = true
-                                        end
+                                                                                end
                                     end
 
                             end
@@ -740,60 +737,60 @@ node "BEH_Dep_Suivre"
 
          do
             local _continue = true
-            local switch_1 = --[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]--[[// Rejoindre l'ami. A la fin si l'ami, n'est pas la, le rejoindre à
 ]]--[[// nouveaux etc.
 ]]--[[//---------------------------------------------------------------------
-]]self.eComportement
-            local cases_switch_1 = {}
-                if switch_1 == eCreerItineraire then
-                    --[[//-----------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------
 ]]--[[// 1) Creer l'itineraire et mettre à jour la position amie
 ]]--[[//-----------------------------------------------------------------
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
+]]--[[//-----------------------------------------------------------------
+]]--[[// 3) Rejoindre la position amie
+]]--[[//-----------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Si on a fini de parcourir l'itineraire on recalcul l'itineraire
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement vers l'unite
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Aller au plus vite
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// L'unité se rapproche
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// En parallèle, surveiller que l'on est pas près de cette unite.
+]]--[[// Dans ce cas on est prêt pour l'intervention
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.eComportement
+            local cases_switch_1 = {}
+                if switch_1 == eCreerItineraire then
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
                         do return end
                     end
 
                     self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
                     self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
                     self.eComportement = eRejoindre
-                --[[//-----------------------------------------------------------------
-]]--[[// 3) Rejoindre la position amie
-]]--[[//-----------------------------------------------------------------
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eRejoindre then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Si on a fini de parcourir l'itineraire on recalcul l'itineraire
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                             self.eComportement = eCreerItineraire
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Deplacement vers l'unite
-]]--[[//-----------------------------------------------------------------------------
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_Progresser, 1, { self.itVersAmi, eProgressionDirect, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
-                    --[[// Aller au plus vite
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// L'unité se rapproche
-]]--[[//-----------------------------------------------------------------------------
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
                         self.eEtat = eActionEffectuee
                     end
 
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// En parallèle, surveiller que l'on est pas près de cette unite.
-]]--[[// Dans ce cas on est prêt pour l'intervention
-]]--[[//-----------------------------------------------------------------------------
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
                         do
                             Activate( self.activations.ACT_Dep_SePoster, 1.5, emptyTable )
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
@@ -858,75 +855,75 @@ node "BEH_Dep_Suivre_Elastique"
 
          do
             local _continue = true
-            local switch_1 = --[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]--[[// Rejoindre l'ami. A la fin si l'ami, n'est pas la, le rejoindre à
 ]]--[[// nouveaux etc.
 ]]--[[//---------------------------------------------------------------------
-]]self.eComportement
-            local cases_switch_1 = {}
-                if switch_1 == eCreerItineraire then
-                    --[[//-----------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------
 ]]--[[// 1) Creer l'itineraire et mettre à jour la position amie
 ]]--[[//-----------------------------------------------------------------
-]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin ) ) then
+]]--[[//-----------------------------------------------------------------
+]]--[[// 3) Rejoindre la position amie
+]]--[[//-----------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Si on a fini de parcourir l'itineraire on recalcul l'itineraire
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// L'unité se rapproche
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement vers l'unite
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Aller au plus vite
+]]--[[// L'unite suivit se rapproche
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// En parallèle, surveiller que l'on est pas près de cette unite.
+]]--[[// Dans ce cas on est prêt pour l'intervention
+]]--[[//-----------------------------------------------------------------------------                
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Obstacles
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.eComportement
+            local cases_switch_1 = {}
+                if switch_1 == eCreerItineraire then
+                    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin ) ) then
                         do return end
                     end
 
                     self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
                     self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
                     self.eComportement = eRejoindre
-                --[[//-----------------------------------------------------------------
-]]--[[// 3) Rejoindre la position amie
-]]--[[//-----------------------------------------------------------------
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eRejoindre then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Si on a fini de parcourir l'itineraire on recalcul l'itineraire
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                             self.eComportement = eCreerItineraire
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// L'unité se rapproche
-]]--[[//-----------------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( self.bEnAttente ) then
                         self.bEnAttente = S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMax )
                     end
 
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Deplacement vers l'unite
-]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Dep_Progresser, 1, { self.itVersAmi, eProgressionDirect, } )
+                    Activate( self.activations.BEH_Dep_Progresser, 1, { self.itVersAmi, eProgressionDirect, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
-                    --[[// Aller au plus vite
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                    --[[// L'unite suivit se rapproche
-]]--[[//-----------------------------------------------------------------------------
-]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin - 200 ) ) then
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin - 200 ) ) then
                         self.eEtat = eActionEffectuee
                     end
 
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// En parallèle, surveiller que l'on est pas près de cette unite.
-]]--[[// Dans ce cas on est prêt pour l'intervention
-]]--[[//-----------------------------------------------------------------------------                
-]]self.bEnAttente = self.bEnAttente or S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin )
+                    self.bEnAttente = self.bEnAttente or S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin )
                     if( self.bEnAttente ) then
                         do
                             Activate( self.activations.ACT_Dep_SePoster, 1.5, emptyTable )
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Obstacles
-]]--[[//-----------------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( self.eEtatObstacle == eActionEffectuee ) then
                         do

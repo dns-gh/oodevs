@@ -50,7 +50,6 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
          do
             local _continue = true
             local switch_1 = self.eEtatConstruction
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionEffectuee )
@@ -58,14 +57,14 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation then
+                if switch_1 == eActionObjetManqueDotation then
                     DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionObjetImpossible then
+                if switch_1 == eActionObjetImpossible then
                     DEC_StopAction( self.actionCreerPlot )
                     DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> objet impossible " )
                                         self:SendFeedback( eActionImpossible )
@@ -73,7 +72,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
                     do return end
 
                                 end
-                if cases_switch_1[3] or switch_1 == eActionObjetPasDeCapacite then
+                if switch_1 == eActionObjetPasDeCapacite then
                     DEC_StopAction( self.actionCreerPlot )
                     DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> pas de capacite " )
                                         self:SendFeedback( eActionImpossible )

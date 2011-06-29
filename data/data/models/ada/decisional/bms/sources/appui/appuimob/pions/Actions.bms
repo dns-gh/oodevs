@@ -104,18 +104,17 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
          do
             local _continue = true
             local switch_1 = self.eActionTransport
-            local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                                         self:SendFeedback( eActionEnCours )
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionTransport_Finished then
+                if switch_1 == eActionTransport_Finished then
                                         self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                if switch_1 == eActionTransport_Impossible then
                     DEC_Trace( "Erreur durant le transport" )
                                         self:SendFeedback( eActionImpossible )
                     do return end
@@ -180,18 +179,17 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
          do
             local _continue = true
             local switch_1 = self.eActionTransport
-            local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                                         self:SendFeedback( eActionEnCours )
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionTransport_Finished then
+                if switch_1 == eActionTransport_Finished then
                                         self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                if switch_1 == eActionTransport_Impossible then
                     DEC_Trace( "Erreur durant le transport" )
                                         self:SendFeedback( eActionImpossible )
                     do return end

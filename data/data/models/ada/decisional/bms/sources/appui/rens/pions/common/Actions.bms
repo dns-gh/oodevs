@@ -1,6 +1,9 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
 
+include "bit.lua"
+
+
 
 
 
@@ -308,7 +311,8 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
     end,
 
     select = function( self )
-                self.localisation = self.localisation or DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), DEC_GetMission( myself ).radius_ or 25000 )
+                self.mission = self.mission or DEC_GetMission( myself )
+        self.localisation = self.localisation or DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), self.mission.radius_ or 25000 )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------		        		

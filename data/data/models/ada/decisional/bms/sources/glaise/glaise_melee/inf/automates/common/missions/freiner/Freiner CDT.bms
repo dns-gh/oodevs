@@ -74,20 +74,18 @@ do
                 local bEstUtilise = true
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
-                        if switch_1 == "Rep_OrderConduite_Decrocher" then
-                            Activate( self.activations.BEH_Conduite_Automate_INF_Freiner_RompreContact, 1, emptyTable )--[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Fin de mission ( On peut aussi débrayer l'automate )
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Fait decrocher le premier echelon
-]]
-                            _continue = false
-                        --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Sinon...
 ]]--[[//-----------------------------------------------------------------------------
-]]                        cases_switch_1[1] = true
-
+]]                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_Decrocher" then
+                            Activate( self.activations.BEH_Conduite_Automate_INF_Freiner_RompreContact, 1, emptyTable )
+                            _continue = false
+                        
                         else
                             bEstUtilise = false
                             _continue = false
@@ -251,21 +249,18 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.pPion:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
                                                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "SectionInfanterie"
+                        elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_MILAN"
                         or switch_1 == "SectionInfanterie_HOT"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
                                                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
             end
@@ -335,12 +330,10 @@ do
                  do
                     local _continue = true
                     local switch_1 = F_Pion_GeteEtatLima( pPion )
-                    local cases_switch_1 = {}
                         if switch_1 == eEtatLima_LCAR then
                             Activate( self.activations.BEH_Situation_Automate_INF_Freiner_SurLCAR, 1, { pPion, } )
                             _continue = false
-                                                cases_switch_1[1] = true
-                        end
+                                                end
                     end
 
             end

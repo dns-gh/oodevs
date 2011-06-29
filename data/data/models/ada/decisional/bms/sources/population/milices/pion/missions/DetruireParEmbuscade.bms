@@ -75,18 +75,20 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Decrocher sur ordre ou non
+]]--[[// Ambiance vitesse ( itineraire reconnu )
+]]--[[// action ACT_Misc_Pion_Ambiance( eEtatAmbiance_Vitesse );
+]]--[[// Se Replier
+]]--[[// behavior BEH_Manoeuvre_RompreContact() return in eAction;
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSeMettreEnPlace then
                      do
                         local _continue = true
                         local switch_2 = self.eCurrentPhase
-                        local cases_switch_2 = {}
                             if switch_2 == eSurveiller then
                                 self.rAct = 1
                                 _continue = false
-                                                        cases_switch_2[1] = true
-elseif switch_2 == eFinMission then
+                            elseif switch_2 == eFinMission then
                                 self.eAction = eActionEnCours
                                 self.ePhase = eRompreContact
                                                                 do return end
@@ -119,9 +121,7 @@ self.done_BEH_Eni_Pion_Milice_DetruireEmbuscade = function( self, _, v ) self.eA
                     Activate( self.activations.BEH_Mission_Pion_Milice_DetruireEmbuscade, self.rAct * GetMotivation( "MOT_Mission" ), { self._namedParams.mission, } )
 self.done_BEH_Mission_Pion_Milice_DetruireEmbuscade = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                --[[// Decrocher sur ordre ou non
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRompreContact then
+                elseif switch_1 == eRompreContact then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -132,17 +132,12 @@ elseif switch_1 == eRompreContact then
                             end
 
                         end
---[[// Ambiance vitesse ( itineraire reconnu )
-]]--[[// action ACT_Misc_Pion_Ambiance( eEtatAmbiance_Vitesse );
-]]--[[// Se Replier
-]]--[[// behavior BEH_Manoeuvre_RompreContact() return in eAction;
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionRegroupement_, eProgressionDefaut, eTypeItiRepli, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -155,8 +150,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end
@@ -227,11 +221,18 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// On rejoint la position d'embuscade
+]]--[[// behavior BEH_Mot_Pion_Embarquer();
+]]--[[// Rejoins une position d'observation de la position a Barrer
+]]--[[// Rejoins la position d'enbuscade et prepare le terrain
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]--[[// On fait en sorte de ne pas etre vu
+]]--[[// Surveille la position
+]]--[[// detection par l'eni
+]]--[[// Formation
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindre then
-                    --[[// On rejoint la position d'embuscade
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -242,21 +243,15 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
                             end
 
                         end
---[[// behavior BEH_Mot_Pion_Embarquer();
-]]--[[// Rejoins une position d'observation de la position a Barrer
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionEmbuscade_, true, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// Rejoins la position d'enbuscade et prepare le terrain
-]]                cases_switch_1[1] = true
-elseif switch_1 == eInstallerDispositif then
+                elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]--[[// On fait en sorte de ne pas etre vu
-]]
+                    StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -274,18 +269,13 @@ elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc, 1, { self.ptEmbuscade, self.mission.positionRegroupement_, } )
 self.done_BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// Surveille la position
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
+                elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.ACT_Dep_Pion_MILICE_ActiverFurtivite, 1, { 0.5, } )
-                    --[[// detection par l'eni
-]]Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptEmbuscade, } )
-                    --[[// Formation
-]]Activate( self.activations.ACT_Obs_ObserverZone, 1, { self.ptEmbuscade, 1000, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptEmbuscade, } )
+                    Activate( self.activations.ACT_Obs_ObserverZone, 1, { self.ptEmbuscade, 1000, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

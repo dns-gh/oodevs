@@ -61,11 +61,13 @@ local emptyTable = emptyTable
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]--[[//controle des creations de mission
+]]--[[//Defendre site à partir de position calculées
+]]--[[//Le pc va toujours stationner au centre de la site défendue
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
-                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eEtatMissionsDefendreSite == eActionImpossible ) then
+                    if( self.eEtatMissionsDefendreSite == eActionImpossible ) then
                         do
                             DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                             self.ePhase = eMRT_Valider
@@ -80,21 +82,17 @@ local emptyTable = emptyTable
                                                         do return end
 
                         end
---[[//controle des creations de mission
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listeSectionsHawk ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsDefendreSite = v[1] end
-                    --[[//Defendre site à partir de position calculées
-]]if( not DIA_IsListEmpty( self.listeSectionsHawk ) ) then
+                    if( not DIA_IsListEmpty( self.listeSectionsHawk ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe, 1, { ePhase_MRT, self.listeSectionsHawk, self._namedParams.mission.positionsSections_, self._namedParams.mission.zone_, } )
                     end
 
-                    --[[//Le pc va toujours stationner au centre de la site défendue
-]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreSite, } )
+                    Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreSite, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_Trace( "MISSION IMPOSSIBLE" )
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )
@@ -102,14 +100,14 @@ elseif switch_1 == eMRT_MissionImpossible then
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                if switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] then
+                
+                else
                                 end
             end
 

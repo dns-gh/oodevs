@@ -64,27 +64,27 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[// 1) Prepa
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                    Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_NBC_ReconnaitreAxe", } )
-                    self.ePhaseMission = eProgresser
-                    _continue = false
-                --[[// 2) Progression tactique
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                    --[[//---------------------------------------------------------------------
+--[[// 1) Prepa
+]]--[[// 2) Progression tactique
+]]--[[//---------------------------------------------------------------------
 ]]--[[// Faire des mesures
 ]]--[[//---------------------------------------------------------------------
 ]]--[[// Poste pour mesure donc en comptète avec deplacement
-]]Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, emptyTable )
-                    --[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
 ]]--[[// Deplacement
 ]]--[[//---------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+]]--[[// force de 1.
+]]--[[// 4) Fin de la mission de reconnaissance
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_NBC_ReconnaitreAxe", } )
+                    self.ePhaseMission = eProgresser
+                    _continue = false
+                elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                    Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, emptyTable )
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -94,20 +94,16 @@ elseif switch_1 == eProgresser then
                             end
 
                         end
---[[// force de 1.
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// 4) Fin de la mission de reconnaissance
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

@@ -50,17 +50,18 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Rejoindre la zone
+]]--[[// Commettre les exactions
+]]--[[//choisir une population et la rejoindre, en même temps agresser toute population ennemie à portée
+]]--[[// Fin --> sur ordre
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_ExecuteBombingAttack: start **", } )
                     self.ePhaseMission = eAborderObjectif
                     _continue = false
-                --[[// Rejoindre la zone
-]]                cases_switch_1[1] = true
-elseif switch_1 == eAborderObjectif then
+                elseif switch_1 == eAborderObjectif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
                     if( not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.mission.location_, 100 ) ) then
                         Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, { self._namedParams.mission.location_, } )
@@ -69,16 +70,11 @@ elseif switch_1 == eAborderObjectif then
                     end
 
                     _continue = false
-                --[[// Commettre les exactions
-]]                cases_switch_1[2] = true
-elseif switch_1 == eNettoyer then
+                elseif switch_1 == eNettoyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
-                    --[[//choisir une population et la rejoindre, en même temps agresser toute population ennemie à portée
-]]Activate( self.activations.BEH_Eni_Pion_ASY_ExecuteBombingAttackAt, 1, { self._namedParams.mission.location_, } )
+                    Activate( self.activations.BEH_Eni_Pion_ASY_ExecuteBombingAttackAt, 1, { self._namedParams.mission.location_, } )
                     _continue = false
-                --[[// Fin --> sur ordre
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                                         Halt( self )
                     do return end

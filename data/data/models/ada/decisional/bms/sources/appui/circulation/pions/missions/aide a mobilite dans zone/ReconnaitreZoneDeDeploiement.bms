@@ -51,16 +51,16 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// 2) Progression jusqu'au point à reconnaitre
+]]--[[// Se poster => Changement uniquement sur ordres !
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eRejoindrePosition
                     _continue = false
-                --[[// 2) Progression jusqu'au point à reconnaitre
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindrePosition then
+                elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -77,9 +77,7 @@ elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pt, eProgressionReco, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Se poster => Changement uniquement sur ordres !
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSePoster then
+                elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -97,14 +95,11 @@ elseif switch_1 == eSePoster then
 self.done_ACT_Obs_ObserverZone = function( self, _, v ) self.eEtat = v[1] end
                         _continue = false
                     end
-                --[[// Fin de la mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

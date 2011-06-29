@@ -59,7 +59,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// behavior BEH_Pion_Emergency_Riot( mission.position, eProgressionDefaut, eTypeItiMouvement ) return in eAction : strength = DIA_GetMotivation( MOT_Mission );
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( self.eAction == eActionEnCours ) then
@@ -76,8 +77,7 @@ self.done_BEH_Pion_Emergency_GartherPeople = function( self, _, v ) self.eAction
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eReconnaitre then
-                    --[[// behavior BEH_Pion_Emergency_Riot( mission.position, eProgressionDefaut, eTypeItiMouvement ) return in eAction : strength = DIA_GetMotivation( MOT_Mission );
-]]Activate( self.activations.ACT_Pion_Emergency_Influence, 1, { "riot", GetMotivation( "MOT_Mission" ), } )
+                    Activate( self.activations.ACT_Pion_Emergency_Influence, 1, { "riot", GetMotivation( "MOT_Mission" ), } )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )

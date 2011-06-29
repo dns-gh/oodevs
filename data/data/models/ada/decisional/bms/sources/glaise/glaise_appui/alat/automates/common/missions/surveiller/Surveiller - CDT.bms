@@ -86,8 +86,20 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// adaptation du dispositif pour la mission
+]]--[[//decoupage de la zone en autant de sous zones a affecter à chacun 
+]]--[[//des pions.
+]]--[[// Surveiller : ordre de creation des missions
+]]--[[// mission stationner à tous les autres
+]]--[[// controle sur le dispositif courant
+]]--[[// Gestion des releves - listeSurveillerPrec peut contenir des
+]]--[[// unités détruites
+]]--[[// Gestion Coordination Ravitaillement
+]]--[[// Gestion de la coordination des feux
+]]--[[// ravitaillements et IMEX
+]]--[[// mission stationner à tous les pions qui peuvent surveiller et qui
+]]--[[// ne stationnent pas ou qui ne surveillent pas
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSurveiller then
                     if( DIA_IsListEmpty( self.listeSurveillerOperationnels ) ) then
                         do
@@ -95,8 +107,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
                                                         do return end
 
                         end
---[[// adaptation du dispositif pour la mission
-]]                    end
+                    end
 
                     if( #( self.listePeutFaireSurveiller ) ~= self.fNbPeutSurveillerPrec ) then
                         do
@@ -113,42 +124,30 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
                                     DIA_PushBack( listePionsSurveillerCDT, x )
                                                                         nbPionsPouvantSurveiller = nbPionsPouvantSurveiller - 1
                                 end
---[[//decoupage de la zone en autant de sous zones a affecter à chacun 
-]]--[[//des pions.
-]]
+
                             end
 
                             self.localisationsASurveiller = S_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePionsSurveillerCDT ) )
-                            --[[// Surveiller : ordre de creation des missions
-]]if( not DIA_IsListEmpty( listePionsSurveillerCDT ) ) then
+                            if( not DIA_IsListEmpty( listePionsSurveillerCDT ) ) then
                                 Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe, 1, { ePhase_CDT, listePionsSurveillerCDT, self.localisationsASurveiller, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, self._namedParams.mission.ambianceMission_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ravitaillementDebutMission_, } )
                             end
 
-                            --[[// mission stationner à tous les autres
-]]if( #( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ) ) ~= 0 ) then
+                            if( #( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ) ) ~= 0 ) then
                                 Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ), self._namedParams.mission.pointLogistique_, } )
                             end
 
                         end
---[[// controle sur le dispositif courant
-]]                    else
+                    else
 do
-                            --[[// Gestion des releves - listeSurveillerPrec peut contenir des
-]]--[[// unités détruites
-]]Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeSurveillerPrec, self.listeStationner, } )
+                            Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeSurveillerPrec, self.listeStationner, } )
                             self.listeSurveillerPrec = self.listeSurveiller
-                            --[[// Gestion Coordination Ravitaillement
-]]if( not DIA_IsListEmpty( self.listePeutFaireSurveiller ) ) then
+                            if( not DIA_IsListEmpty( self.listePeutFaireSurveiller ) ) then
                                 Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePeutFaireSurveiller, } )
                             end
 
-                            --[[// Gestion de la coordination des feux
-]]Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeSurveillerOperationnels, 0, } )
-                            --[[// ravitaillements et IMEX
-]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointLogistique_, self._namedParams.mission.porteeAction_, true, } )
-                            --[[// mission stationner à tous les pions qui peuvent surveiller et qui
-]]--[[// ne stationnent pas ou qui ne surveillent pas
-]]if( #( self.listePionsPourStationner ) ~= 0 ) then
+                            Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeSurveillerOperationnels, 0, } )
+                            Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointLogistique_, self._namedParams.mission.porteeAction_, true, } )
+                            if( #( self.listePionsPourStationner ) ~= 0 ) then
                                 Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, self.listePionsPourStationner, self._namedParams.mission.pointLogistique_, } )
                             end
 
@@ -157,13 +156,11 @@ do
 
                     self.fNbPeutSurveillerPrec = #( self.listePeutFaireSurveiller )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

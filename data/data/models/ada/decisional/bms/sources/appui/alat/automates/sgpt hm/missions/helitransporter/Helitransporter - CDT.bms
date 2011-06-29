@@ -153,8 +153,10 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Synchronisation des unites qui ont la mission de transport.
+]]--[[// CDT des missions d'héliportage
+]]--[[// ravitaillements et IMEX
+]]            local switch_1 = self.ePhase
                 if switch_1 == eTransporter then
                     if( self.helitransportInit and DIA_IsListEmpty( self.listeHeliporter ) ) then
                         do
@@ -162,25 +164,20 @@ do
                                                         do return end
 
                         end
---[[// Synchronisation des unites qui ont la mission de transport.
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ALAT_HM_SynchroniserTransport, 1, { self.listeHeliporter, } )
-                    --[[// CDT des missions d'héliportage
-]]if( not DIA_IsListEmpty( self.listePourHeliportage ) and not gestionCDTMissionsTransport ) then
+                    if( not DIA_IsListEmpty( self.listePourHeliportage ) and not gestionCDTMissionsTransport ) then
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe, 1, { ePhase_CDT, self.listePourHeliportage, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self._namedParams.mission.plotsRavitaillement_, self.listePionsAHeliporter, self._namedParams.mission.avecMateriel_, } )
                     end
 
-                    --[[// ravitaillements et IMEX
-]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

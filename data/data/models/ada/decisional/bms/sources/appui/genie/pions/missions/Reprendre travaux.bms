@@ -71,16 +71,17 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progression 
+]]--[[// Reprise des travaux
+]]--[[// Si sauvegarde
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Progression 
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.ptObst ) < 800 ) then
                         self.ePhaseMission = eRealiserObstacle
@@ -88,12 +89,9 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionReco, eTypeItiMouvement, } )
                     _continue = false
-                --[[// Reprise des travaux
-]]                cases_switch_1[2] = true
-elseif switch_1 == eRealiserObstacle then
+                elseif switch_1 == eRealiserObstacle then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    --[[// Si sauvegarde
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.ptObst ) > 800 ) then
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.ptObst ) > 800 ) then
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.ptObst, eProgressionReco, eTypeItiMouvement, } )
                     end
 
@@ -118,14 +116,11 @@ elseif switch_1 == eRealiserObstacle then
                     Activate( self.activations.BEH_Objet_Pion_GEN_ReprendreTravaux, 1, { self._namedParams.mission.travail_, } )
 self.done_BEH_Objet_Pion_GEN_ReprendreTravaux = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin de la mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

@@ -119,48 +119,44 @@ node "BEH_Mot_AffecterVariablesDEtat"
 
          do
             local _continue = true
-            local switch_1 = --[[////////////// FIN OPTIM  /////////////////////
+--[[////////////// FIN OPTIM  /////////////////////
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction du moral...
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_FacteurHumain_Moral()
-            local cases_switch_1 = {}
-                if switch_1 == eMoral_Fanatique then
-                    --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Fanatique --> esquive sur PAP, pas de ralentissement
 ]]--[[//-----------------------------------------------------------------------------
-]]SetStateVariable( "VE_RapFor", 0 )
-                    _continue = false
-                --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Moral bon --> esquive sur PAP et effet rapFor défavorable --> ralentissement
 ]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMoral_Moyen
-                or switch_1 == eMoral_Bon then
-                    --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction de la mission...  --> idem moral mauvais
 ]]--[[//-----------------------------------------------------------------------------
-]]if( DEC_GetMission( myself ) == nil ) then
+]]--[[// Par défaut ...
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = DEC_FacteurHumain_Moral()
+                if switch_1 == eMoral_Fanatique then
+                    SetStateVariable( "VE_RapFor", 0 )
+                    _continue = false
+                elseif switch_1 == eMoral_Moyen
+                or switch_1 == eMoral_Bon then
+                    if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                             _continue = false
                         end
---[[// Par défaut ...
-]]                    end
+                    end
 
                         if _continue then
                         SetStateVariable( "VE_RapFor", 0 )
                         _continue = false
                     end
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eMoral_Mauvais then
+                elseif switch_1 == eMoral_Mauvais then
                     SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

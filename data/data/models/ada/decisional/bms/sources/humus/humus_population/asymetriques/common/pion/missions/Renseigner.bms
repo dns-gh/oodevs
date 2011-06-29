@@ -48,17 +48,16 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Partager connaissance
+]]--[[// Fin
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_Renseigner:debut **", } )
                     self.ePhaseMission = eTransmettreInformations
                     _continue = false
-                --[[// Partager connaissance
-]]                cases_switch_1[1] = true
-elseif switch_1 == eTransmettreInformations then
+                elseif switch_1 == eTransmettreInformations then
                     if( self.eEtatDelai == eActionDebut ) then
                         do
                             Activate( self.activations.ACT_RC, 1, { eRC_DebutLiaison, } )
@@ -78,9 +77,7 @@ do
                     end
 
                     _continue = false
-                --[[// Fin
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                                         Halt( self )
                     do return end

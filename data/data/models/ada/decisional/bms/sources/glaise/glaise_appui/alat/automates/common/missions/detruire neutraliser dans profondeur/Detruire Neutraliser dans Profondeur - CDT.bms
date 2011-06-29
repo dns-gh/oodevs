@@ -92,41 +92,38 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( buffer ), self.listeHMLog )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Condition d'arret
+]]--[[// Detruire : ordre de creation des missions
+]]--[[// Couvrir : ordre de creation des missions
+]]--[[// Gestion de la coordination des feux
+]]--[[// recompletements et IMEX
+]]--[[// -----------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eDetruire then
-                    --[[// Condition d'arret
-]]if( DIA_IsListEmpty( self.listeDetruire ) ) then
+                    if( DIA_IsListEmpty( self.listeDetruire ) ) then
                         do
                             self.ePhase = eSExfiltrer
                                                         do return end
 
                         end
---[[// Detruire : ordre de creation des missions
-]]                    end
+                    end
 
                     if( not DIA_IsListEmpty( self.listeDetruire ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, self._namedParams.mission.ambianceMission_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, self._namedParams.mission.neutraliser_, self.ravitaillementDebutMission, } )
                     end
 
-                    --[[// Couvrir : ordre de creation des missions
-]]if( not DIA_IsListEmpty( self.listeCouverture ) and not DIA_IsListEmpty( self.listeDetruire ) ) then
+                    if( not DIA_IsListEmpty( self.listeCouverture ) and not DIA_IsListEmpty( self.listeDetruire ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe, 1, { ePhase_CDT, self.listeCouverture, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, self._namedParams.mission.ambianceMission_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, self.listeDetruire, self._namedParams.mission.directionEnnemi_, 60, self.ravitaillementDebutMission, } )
                     end
 
-                    --[[// Gestion de la coordination des feux
-]]Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeDetruire, 0.3, } )
-                    --[[// recompletements et IMEX
-]]--[[// -----------------------
-]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, false, } )
+                    Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeDetruire, 0.3, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, false, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

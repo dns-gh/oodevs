@@ -63,7 +63,6 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     if( DEC_Geometrie_EstPointDansLocalisation( DEC_Agent_Position(), self._namedParams.mission.area_ ) ) then
                         Activate( self.activations.BEH_Pion_Emergency_OrganiseSupply, 1.1, { self._namedParams.mission.area_, } )
@@ -74,8 +73,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -88,8 +86,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

@@ -50,11 +50,9 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions - Transport.bm
          do
             local _continue = true
             local switch_1 = self.eEtat_EmbDeb
-            local cases_switch_1 = {}
                 if switch_1 == eActionEmbDeb_EnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+                elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Embarquement : ignore transporteur" )
                     DEC_StopAction( self.actionID )
@@ -63,7 +61,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
+                if switch_1 == eActionEmbDeb_Termine then
                     DEC_Message( eRC_EmbarkmentFinished )
                     DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionEffectuee )

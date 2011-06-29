@@ -172,22 +172,19 @@ node "ACT_MOT_Automate_ASS_DemandeAppliqerFeux"
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.pASS:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "SectionASS_Tir" then
                                                     local section = self._namedParams.pASS
                             section:Setmunitions_( self._namedParams.order:Getmunitions_() )
                             section:SetnbIT_( self._namedParams.order:GetnbIT_() )
                             section:Setcible_( self._namedParams.position )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "SectionASS_LRM" then
+                        elseif switch_1 == "SectionASS_LRM" then
                                                     local section = self._namedParams.pASS
                             section:Setmunitions_( self._namedParams.order:Getmunitions_() )
                             section:SetnbIT_( self._namedParams.order:GetnbIT_() )
                             section:Setcible_( self._namedParams.position )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
                 self._namedParams.pASS:SetStateVariable( "VE_AppliquerLesFeux", 1 )

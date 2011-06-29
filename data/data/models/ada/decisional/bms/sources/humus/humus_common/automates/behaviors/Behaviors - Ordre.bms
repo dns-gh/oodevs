@@ -64,8 +64,10 @@ do
                 local repOrdre = ordre
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[// Cas des LC
+]]--[[// Cast
+]]--[[//eAmbianceMission_Vitesse
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_Interrompre" then
                             DEC_Trace( "$ --- ORDRE Interruption mission ---$" )
                             Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, emptyTable )
@@ -78,30 +80,24 @@ do
                             g_bOrdreAnibas = true
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Deboucher"
+                        elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
                             g_bOrdreAnibas = false
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, emptyTable )
-                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )--[[// Cas des LC
-]]
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
+                        elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
                             DEC_Trace( "======= Ordre --> Changer ambiance =====" )
-                            --[[// Cast
-]]local ordreAmbiance = repOrdre
+                            local ordreAmbiance = repOrdre
                             if( ordreAmbiance:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete ) then
                                 Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, emptyTable )
                             else
-                                Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, emptyTable )--[[//eAmbianceMission_Vitesse
-]]
+                                Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, emptyTable )
                             end
 
                             _continue = false
-                                                cases_switch_1[4] = true
-
+                        
                         else
                             _continue = false
                                                 end

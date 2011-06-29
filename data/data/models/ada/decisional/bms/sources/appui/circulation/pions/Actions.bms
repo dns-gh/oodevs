@@ -84,11 +84,9 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionObjetTerminee then
+                elseif switch_1 == eActionObjetTerminee then
                     DEC_RC( eRC_FinTravaux )
                                         self:SendFeedback( eActionEffectuee )
                     do return end
@@ -103,7 +101,7 @@ elseif switch_1 == eActionObjetTerminee then
                     do return end
 
                                 end
-                if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
+                if switch_1 == eActionObjetImpossible then
                                         self:SendFeedback( eActionImpossible )
                     do return end
 

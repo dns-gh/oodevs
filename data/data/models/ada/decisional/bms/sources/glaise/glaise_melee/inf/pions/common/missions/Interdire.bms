@@ -60,13 +60,27 @@ local emptyTable = emptyTable
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eSeMettreEnPlace then
-                    --[[//------------------------------------------------------------------
+--[[//------------------------------------------------------------------
 ]]--[[// On va se mettre en position en restant sur nos garde
 ]]--[[//------------------------------------------------------------------
-]]if( S_Tir_EstAPortee_DebarquePt( self.mission.pointAInterdire_ ) ) then
+]]--[[// Rejoins une position d'observation de la position a Barrer
+]]--[[//------------------------------------------------------------------
+]]--[[//  On verifie les alentours, et on attend de debusquer un ennemi
+]]--[[//------------------------------------------------------------------
+]]--[[// Si on est dans cette phase et que la fin de mission arrive : pas d'ennemis
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]--[[// On surveille la zone en meme temps que l'on prepare
+]]--[[// On fait d'abord debarquer				
+]]--[[// Prepare la mission d'interdiction
+]]--[[// action ACT_RC( eRC_FinInstallation );
+]]--[[//------------------------------------------------------------------
+]]--[[//  On se met en position de tir 
+]]--[[//------------------------------------------------------------------
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_DispositifInstalle );
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_Tenir );
+]]            local switch_1 = self.ePhase
+                if switch_1 == eSeMettreEnPlace then
+                    if( S_Tir_EstAPortee_DebarquePt( self.mission.pointAInterdire_ ) ) then
                         self.eAction = eActionEffectuee
                     end
 
@@ -84,25 +98,14 @@ local emptyTable = emptyTable
                     end
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
-                    --[[// Rejoins une position d'observation de la position a Barrer
-]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointAInterdire_, false, } )
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointAInterdire_, false, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//------------------------------------------------------------------
-]]--[[//  On verifie les alentours, et on attend de debusquer un ennemi
-]]--[[//------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eInstallerDispositif then
-                    --[[// Si on est dans cette phase et que la fin de mission arrive : pas d'ennemis
-]]Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                elseif switch_1 == eInstallerDispositif then
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]--[[// On surveille la zone en meme temps que l'on prepare
-]]--[[// On fait d'abord debarquer				
-]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointAInterdire_, self.mission.preparerTerrain_, } )
-                    --[[// Prepare la mission d'interdiction
-]]--[[// action ACT_RC( eRC_FinInstallation );
-]]if( self.eAction == eActionEffectuee ) then
+                    StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointAInterdire_, self.mission.preparerTerrain_, } )
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -118,18 +121,11 @@ elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//------------------------------------------------------------------
-]]--[[//  On se met en position de tir 
-]]--[[//------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
-                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_DispositifInstalle );
-]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_Tenir );
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 1.5, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

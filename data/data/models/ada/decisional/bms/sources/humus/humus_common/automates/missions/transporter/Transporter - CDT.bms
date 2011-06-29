@@ -97,19 +97,17 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// donner les missions de transport
+]]--[[//quand plus aucun pion n'a de mission
+]]            local switch_1 = self.ePhase
                 if switch_1 == eTransporter then
-                    --[[// donner les missions de transport
-]]if( not DIA_IsListEmpty( self.listePourTransport ) and not gestionCDTMissionsTransport ) then
+                    if( not DIA_IsListEmpty( self.listePourTransport ) and not gestionCDTMissionsTransport ) then
                         Activate( self.activations.BEH_Medo_Automate_AssignerMissionsTransporterAListe, 1, { ePhase_CDT, self.listePourTransport, self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsATransporter, self._namedParams.mission.avecMateriel_, } )
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
-                    --[[//quand plus aucun pion n'a de mission
-]]local plusDeMissions = true
+                elseif switch_1 == eFinMission then
+                    local plusDeMissions = true
                     for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                     local _continue = true
 do
@@ -129,8 +127,7 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

@@ -71,7 +71,14 @@ node "BEH_Mission_Pion_INF_Freiner"
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// eEtatPhaseMission_EnPosition
+]]--[[// Attendre de se degager ...								
+]]--[[// Sur LCAR				
+]]--[[// Arrete de decrocher ( si 2 LCAR sont proches )
+]]--[[// On se deplace
+]]--[[// Rmque : Ce comportement ne se trouve pas dans Progresser, 
+]]--[[// 		   car sinon il induit une boucle dans le graphe DIA				
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
@@ -88,9 +95,7 @@ node "BEH_Mission_Pion_INF_Freiner"
                                 cases_switch_1[1] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_EnSurveillance, } )
-                    --[[// eEtatPhaseMission_EnPosition
-]]--[[// Attendre de se degager ...								
-]]if( F_Pion_GeteEtatLima( myself ) ~= eEtatLima_LCAR ) then
+                    if( F_Pion_GeteEtatLima( myself ) ~= eEtatLima_LCAR ) then
                         StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, emptyTable )
                     end
 
@@ -110,24 +115,19 @@ elseif switch_1 == eSurveiller then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
-                    --[[// Sur LCAR				
-]]if( F_Pion_GeteEtatLima( myself ) == eEtatLima_LCAR ) then
+                    if( F_Pion_GeteEtatLima( myself ) == eEtatLima_LCAR ) then
                         do
-                            --[[// Arrete de decrocher ( si 2 LCAR sont proches )
-]]if( self.ePhase == eFreiner ) then
+                            if( self.ePhase == eFreiner ) then
                                 StopActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, emptyTable )
                             end
 
                             self.ePhase = eSurveiller
                         end
---[[// On se deplace
-]]                    else
+                    else
                         self.ePhase = eFreiner
                     end
 
-                    --[[// Rmque : Ce comportement ne se trouve pas dans Progresser, 
-]]--[[// 		   car sinon il induit une boucle dans le graphe DIA				
-]]Activate( self.activations.BEH_Lima_GererLCAR, 2, { not DEC_Agent_AutomateEstEmbraye(), myself.bFreiner_EnTete_, } )
+                    Activate( self.activations.BEH_Lima_GererLCAR, 2, { not DEC_Agent_AutomateEstEmbraye(), myself.bFreiner_EnTete_, } )
                     Activate( self.activations.BEH_Lima_GererLR, 2, emptyTable )
                     Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 2, emptyTable )
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionDirect, eTypeItiRepli, } )

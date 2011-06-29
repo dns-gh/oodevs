@@ -56,23 +56,20 @@ include "bit.lua"
             do
                  do
                     local _continue = true
-                    local switch_1 = --[[// On ajoute l'appui			
-]]self._namedParams.pPion:GetType()
-                    local cases_switch_1 = {}
+--[[// On ajoute l'appui			
+]]                    local switch_1 = self._namedParams.pPion:GetType()
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
                                                     Activate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, pAAppuyer, eEtatEchelon_Second, } )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "SectionInfanterie"
+                        elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_MILAN"
                         or switch_1 == "SectionInfanterie_HOT"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
                                                     Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, pAAppuyer, eEtatEchelon_Second, } )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
             end
@@ -163,10 +160,9 @@ do
                 local x_pion = x
                  do
                     local _continue = true
-                    local switch_1 = --[[// Situation Ennemi
+--[[// Situation Ennemi
 ]]--[[// --------------------------------------------------------------------
-]]F_Pion_GeteEtatSituationEnnemi( x_pion )
-                    local cases_switch_1 = {}
+]]                    local switch_1 = F_Pion_GeteEtatSituationEnnemi( x_pion )
                         if switch_1 == eEtatSituationEnnemi_EniSurObjectif then
                             if( S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Semparer" ) ) then
                                 do
@@ -186,22 +182,19 @@ if( self._namedParams.bReduire ) then
                             end
 
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == eEtatSituationEnnemi_PriseContact then
+                        elseif switch_1 == eEtatSituationEnnemi_PriseContact then
                             if( self._namedParams.bReduire ) then
                                 StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact, 1, { x_pion, } )
                             end
 
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eEtatSituationEnnemi_PretPourConduiteTir then
+                        elseif switch_1 == eEtatSituationEnnemi_PretPourConduiteTir then
                             if( self._namedParams.bReduire and S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Fixer" ) ) then
                                 StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { x_pion, } )
                             end
 
                             _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
             end

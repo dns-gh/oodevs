@@ -85,12 +85,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eCouvrir then
                     Activate( self.activations.BEH_Mission_Pion_VAB_Couvrir, GetMotivation( "MOT_Mission" ), emptyTable )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -110,8 +108,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
 self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                                 end
             end
@@ -165,7 +162,9 @@ node "BEH_Mission_Pion_VAB_Couvrir"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// S'il est inoffensif et que l'on est deja en train de le traiter, 
+]]--[[// ne rien faire
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
@@ -194,9 +193,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir = function( self, _, v ) s
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnCouverture, } )
                     Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 2.5, } )
                     Activate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointCouverture_, false, } )
-                    --[[// S'il est inoffensif et que l'on est deja en train de le traiter, 
-]]--[[// ne rien faire
-]]if( self.repAmi ~= nil and F_Pion_GeteniEnCours( self.repAmi ) ~= nil ) then
+                    if( self.repAmi ~= nil and F_Pion_GeteniEnCours( self.repAmi ) ~= nil ) then
                         Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, -1 * GetMotivation( "MOT_ManoeuvrerSurEnis" ), { F_Pion_GeteniEnCours( self.repAmi ), true, } )
                     end
 
@@ -275,7 +272,9 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// On cherche une position d'observation
+]]--[[// Calcul de position d'observation ?
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
@@ -290,13 +289,11 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
                     StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiAppui, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre = v[1] end
                     self.ePhase = eReconnaitre
-                --[[// On cherche une position d'observation
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[// Calcul de position d'observation ?
-]]if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
+                    if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
                         do
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.5, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )

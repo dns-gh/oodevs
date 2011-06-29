@@ -60,8 +60,9 @@ node "MIS_Automate_MRT_LOG_TransporterUnites"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Transporter : controle de creation mission
+]]--[[// Transporter : ordre de creation des missions
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
                     if( self.eEtatMissionsTransporter == eActionImpossible ) then
                         do
@@ -78,16 +79,13 @@ node "MIS_Automate_MRT_LOG_TransporterUnites"
                                                         do return end
 
                         end
---[[// Transporter : controle de creation mission
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listePourTransport ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsTransporter = v[1] end
-                    --[[// Transporter : ordre de creation des missions
-]]Activate( self.activations.BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe, 1, { ePhase_MRT, self.listePourTransport, self._namedParams.mission.pointRendezVous_, self._namedParams.mission.pointDestination_, self.listePionsATransporter, } )
+                    Activate( self.activations.BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe, 1, { ePhase_MRT, self.listePourTransport, self._namedParams.mission.pointRendezVous_, self._namedParams.mission.pointDestination_, self.listePionsATransporter, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_Trace( "MISSION IMPOSSIBLE" )
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )

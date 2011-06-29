@@ -214,13 +214,12 @@ do
 ]]local pointLima = pointABC
                          do
                             local _continue = true
-                            local switch_1 = pointLima:GetnTypeLima_()
-                            local cases_switch_1 = {}
-                                if switch_1 == eTypeLima_LIA then
-                                                                    --[[//-------------------------------------------------------------
+--[[//-------------------------------------------------------------
 ]]--[[// Passage sur la ligne de coordination fixée par le capitaine
 ]]--[[//-------------------------------------------------------------
-]]if( not DEC_GetMissionLimaFlag( DEC_GetLimaPoint( pointLima ) ) ) then
+]]                            local switch_1 = pointLima:GetnTypeLima_()
+                                if switch_1 == eTypeLima_LIA then
+                                                                    if( not DEC_GetMissionLimaFlag( DEC_GetLimaPoint( pointLima ) ) ) then
                                         do
                                             DEC_SetMissionLimaFlag( DEC_GetLimaPoint( pointLima ), true )
                                             Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LIA, } )
@@ -229,8 +228,7 @@ do
 
                                     DEC_RemoveFromCategory( "points_interressants", pointLima )
                                     _continue = false
-                                                                cases_switch_1[1] = true
-                                end
+                                                                end
                             end
 
                     end

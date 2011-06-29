@@ -54,7 +54,7 @@ node "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux"
         Activate( self.activations.ACT_Tir_ChangerConsignePopulation, 1, { eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux, } )
         Activate( self.activations.ACT_RC, 1, { eRC_MaintienADistanceParMoyensNonLetaux, } )
     end,
-    
+
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_GererROEArmesLetalesAutorisees
 ]]--[[//
@@ -132,39 +132,33 @@ do
                         local bEstUtilise = true
                          do
                             local _continue = true
-                            local switch_1 = repOrdre:GetType()
-                            local cases_switch_1 = {}
+--[[// cast
+]]--[[// TIR INTERDIT POP
+]]--[[// TIR SOMMATION POP
+]]--[[// TIR NEUTRALISATION POP
+]]                            local switch_1 = repOrdre:GetType()
                                 if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
-                                                                    --[[// cast
-]]local ordreROE = ordre
+                                                                    local ordreROE = ordre
                                      do
                                         local _continue = true
                                         local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
-                                        local cases_switch_2 = {}
                                             if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
-                                                                                            --[[// TIR INTERDIT POP
-]]DEC_Trace( " === ORDRE --> ROE POPULATION: EMPLOI FORCE INTERDIT" )
+                                                                                            DEC_Trace( " === ORDRE --> ROE POPULATION: EMPLOI FORCE INTERDIT" )
                                                 Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, emptyTable )
                                                 _continue = false
-                                            --[[// TIR SOMMATION POP
-]]                                            cases_switch_2[1] = true
-elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                                            elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                                                                                             DEC_Trace( " === ORDRE --> ROE POPULATION: MAINTIEN A DISTANCE PAR MOYENS NON LETAUX" )
                                                 Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
                                                 _continue = false
-                                            --[[// TIR NEUTRALISATION POP
-]]                                            cases_switch_2[2] = true
-elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                                            elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
                                                                                             DEC_Trace( " === ORDRE --> ROE POPULATION: ARMES LETALES AUTORISEES" )
                                                 Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, emptyTable )
                                                 _continue = false
-                                                                                        cases_switch_2[4] = true
-                                            end
+                                                                                        end
                                         end
 
                                     _continue = false
-                                                                cases_switch_1[1] = true
-
+                                
                                 else
                                                                     bEstUtilise = false
                                     _continue = false

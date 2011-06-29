@@ -55,22 +55,53 @@ local emptyTable = emptyTable
         self.selINF = self.selINF or {}
          do
             local _continue = true
-            local switch_1 = --[[// =============================================================================
+--[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[// 1) Vérifier les moyens, des renforts éventuels
 ]]--[[// 2) Déterminer les échelons
 ]]--[[// $$$$ MIA 2004-10-01: les missions du deuxieme échelon sont données dans la conduite
 ]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
 ]]--[[// =============================================================================                                  
-]]self.ePhase
-            local cases_switch_1 = {}
+]]--[[// On ne traite pas les pions non opérationnels
+]]--[[// NBC
+]]--[[// MELEE
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 1) Assigner les missions
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]--[[// ePhase = eMRT_MissionImpossible;
+]]--[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]--[[//-----------------------------------------------------------------------------
+]]--[[// ReconnaitreAxe (des itineraires)
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ReconnaitreDesSitesROTA
+]]--[[// MISSIONS ASSIGNEES DS CONDUITE
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ASSIGNEES DS CONDUITE
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ArmerUnSiteDeDecontamination 
+]]--[[// Missions données dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ASSIGNEES DS CONDUITE, juste creation du site
+]]--[[// HACK
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// DecontaminerUneZone
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ReconnaitreZone 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 2) Validation MRT
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_DeterminerEchelonsGlobals then
                     for _,x in pairs( selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
-                            --[[// On ne traite pas les pions non opérationnels
-]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                            if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
                                 do
                                     DEC_Trace( "Attention " .. DEC_GetSzName( pion ) .. " n'est pas opérationnel" )
                                     DIA_PushFront( self.selABC_NonPrevus, pion )
@@ -82,38 +113,29 @@ do
                                  do
                                     local _continue = true
                                     local switch_2 = pion:GetType()
-                                    local cases_switch_2 = {}
                                         if switch_2 == "Patrouille_NBC_Reco" then
-                                            --[[// NBC
-]]DIA_PushFront( self.selABC_NBC_Reco, pion )
+                                            DIA_PushFront( self.selABC_NBC_Reco, pion )
                                             _continue = false
-                                                                                cases_switch_2[1] = true
-elseif switch_2 == "Equipe_NBC_Dec" then
+                                        elseif switch_2 == "Equipe_NBC_Dec" then
                                             DIA_PushFront( self.selABC_NBC_Dec, pion )
                                             _continue = false
-                                                                                cases_switch_2[2] = true
-elseif switch_2 == "Patrouille_NBC_RE" then
+                                        elseif switch_2 == "Patrouille_NBC_RE" then
                                             DIA_PushFront( self.selABC_NBC_RE, pion )
                                             _continue = false
-                                        --[[// MELEE
-]]                                        cases_switch_2[3] = true
-elseif switch_2 == "Patrouille_EI"
+                                        elseif switch_2 == "Patrouille_EI"
                                         or switch_2 == "Patrouille_EI_Milan" then
                                             DIA_PushFront( self.selABC_PEcl, pion )
                                             _continue = false
-                                                                                cases_switch_2[4] = true
-elseif switch_2 == "Peloton_XL"
+                                        elseif switch_2 == "Peloton_XL"
                                         or switch_2 == "Peloton_AMX" then
                                             DIA_PushFront( self.selABC_Blindes, pion )
                                             _continue = false
-                                                                                cases_switch_2[5] = true
-elseif switch_2 == "SectionInfanterie"
+                                        elseif switch_2 == "SectionInfanterie"
                                         or switch_2 == "SectionInfanterie_HOT"
                                         or switch_2 == "SectionInfanterie_MILAN" then
                                             DIA_PushFront( self.selINF, pion )
                                             _continue = false
-                                                                                cases_switch_2[6] = true
-
+                                        
                                         else
                                             DIA_PushFront( self.selABC_NonPrevus, pion )
                                             _continue = false
@@ -127,15 +149,10 @@ elseif switch_2 == "SectionInfanterie"
 
                     self.ePhase = eMRT_AssignerMissions
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 1) Assigner les missions
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]if( self.eEtat == eActionImpossible ) then
+                elseif switch_1 == eMRT_AssignerMissions then
+                    if( self.eEtat == eActionImpossible ) then
                         do
-                            --[[// ePhase = eMRT_MissionImpossible;
-]]DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                            DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                             self.ePhase = eMRT_Valider
                                                         do return end
 
@@ -148,17 +165,13 @@ elseif switch_1 == eMRT_AssignerMissions then
                                                         do return end
 
                         end
---[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]                    end
+                    end
 
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eType
-                        local cases_switch_2 = {}
                             if switch_2 == "T_Mission_Automate_NBC_ReconnaitreUnAxe" then
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// ReconnaitreAxe (des itineraires)
-]]--[[//-----------------------------------------------------------------------------
-]]if( DIA_IsListEmpty( self.selABC_NBC_Reco ) ) then
+                                if( DIA_IsListEmpty( self.selABC_NBC_Reco ) ) then
                                     do
                                         DEC_Trace( "--- Pas de pions de reconnaissance ---" )
                                         self.ePhase = eMRT_MissionImpossible
@@ -169,12 +182,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_NBC_AssignerReconnaitreA, 1, { self.selABC_NBC_Reco, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// ReconnaitreDesSitesROTA
-]]--[[// MISSIONS ASSIGNEES DS CONDUITE
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[1] = true
-elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" then
+                            elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" then
                                 if( DIA_IsListEmpty( self.selABC_NBC_RE ) ) then
                                     do
                                         DEC_Trace( "--- Pas de pions ROTA ---" )
@@ -182,17 +190,11 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" then
                                                                                 do return end
 
                                     end
---[[// ASSIGNEES DS CONDUITE
-]]                                end
+                                end
 
                                 self.ePhase = eMRT_Valider
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// ArmerUnSiteDeDecontamination 
-]]--[[// Missions données dans la conduite
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[2] = true
-elseif switch_2 == "T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" then
+                            elseif switch_2 == "T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" then
                                 if( DIA_IsListEmpty( self.selABC_NBC_Dec ) ) then
                                     do
                                         DEC_Trace( "--- Pas de pions de decontamination ---" )
@@ -200,21 +202,15 @@ elseif switch_2 == "T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" then
                                                                                 do return end
 
                                     end
---[[// ASSIGNEES DS CONDUITE, juste creation du site
-]]                                end
+                                end
 
                                 local mission = DEC_GetMission( myself )
-                                --[[// HACK
-]]local pointTemp = S_Geometrie_BarycentreZone( mission.site_ )
+                                local pointTemp = S_Geometrie_BarycentreZone( mission.site_ )
                                 local siteDec = DEC_Geometrie_ConvertirPointEnLocalisation( pointTemp )
                                 DEC_CreerObjetSansDelais( S_TypeObject_ToString( eTypeObjectSiteDecontamination ), siteDec )
                                 self.ePhase = eMRT_Valider
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// DecontaminerUneZone
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[3] = true
-elseif switch_2 == "T_Mission_Automate_NBC_DecontaminerUneZone" then
+                            elseif switch_2 == "T_Mission_Automate_NBC_DecontaminerUneZone" then
                                 if( DIA_IsListEmpty( self.selABC_NBC_Dec ) ) then
                                     do
                                         DEC_Trace( "--- Pas de pions de reconnaissance ---" )
@@ -226,11 +222,7 @@ elseif switch_2 == "T_Mission_Automate_NBC_DecontaminerUneZone" then
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA, 1, { self.selABC_NBC_Dec, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// ReconnaitreZone 
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[4] = true
-elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
+                            elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
                                 if( DIA_IsListEmpty( self.selABC_NBC_Reco ) ) then
                                     do
                                         DEC_Trace( "--- Pas de pions de reconnaissance ---" )
@@ -242,33 +234,25 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA, 1, { self.selABC_NBC_Reco, } )
                                 _continue = false
-                                                        cases_switch_2[5] = true
-                            end
+                                                        end
                         end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Mission impossible
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 2) Validation MRT
-]]--[[//-----------------------------------------------------------------------------
-]]                end
-                if cases_switch_1[3] or switch_1 == eMRT_Valider then
+                                end
+                if switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] and not cases_switch_1[2] then
+                
+                else
                                 end
             end
 

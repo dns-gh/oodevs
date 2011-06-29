@@ -46,8 +46,15 @@ local emptyTable = emptyTable
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Rejoins une position d'observation de la position a Barrer
+]]--[[// Lorsque la preparation est terminee, on reste en Attente	
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );				
+]]--[[// detectabilite tres faible
+]]--[[// vulnerabilite faible								
+]]--[[// Temps de mise en place du dispositif
+]]--[[// action ACT_RC( eRC_DispositifInstalle );
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_Tenir );
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSeMettreEnPlace then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -63,19 +70,13 @@ local emptyTable = emptyTable
                     end
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
-                    --[[// Rejoins une position d'observation de la position a Barrer
-]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionABarrer_, true, } )
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionABarrer_, true, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eInstallerDispositif then
-                    --[[// Lorsque la preparation est terminee, on reste en Attente	
-]]Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                elseif switch_1 == eInstallerDispositif then
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );				
-]]--[[// detectabilite tres faible
-]]--[[// vulnerabilite faible								
-]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.positionABarrer_, false, } )
+                    StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.positionABarrer_, false, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -87,21 +88,16 @@ elseif switch_1 == eInstallerDispositif then
                             end
 
                         end
---[[// Temps de mise en place du dispositif
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
-                    --[[// action ACT_RC( eRC_DispositifInstalle );
-]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_Tenir );
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DispositifInstalle, } )
+                elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DispositifInstalle, } )
                     Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 1.5, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

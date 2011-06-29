@@ -76,15 +76,13 @@ do
                 local bDel = true
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[// ordre non reconnu a ce niveau
+]]--[[// on ne le detruit pas
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_Decrocher" then
                             SetStateVariable( "VE_SePoster", 0 )
                             _continue = false
-                        --[[// ordre non reconnu a ce niveau
-]]--[[// on ne le detruit pas
-]]                        cases_switch_1[1] = true
-
+                        
                         else
                             bDel = false
                         end
@@ -107,7 +105,8 @@ do
 ]]
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Fin de mission
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eFreiner then
                     if( self.ePhaseMission ~= eFinMission ) then
@@ -120,8 +119,7 @@ self.done_BEH_Mission_Pion_INF_Freiner = function( self, _, v ) self.ePhaseMissi
                         self.ePhase = eFinMission
                     end
 
-                --[[// Fin de mission
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do

@@ -438,18 +438,15 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
          do
             local _continue = true
             local switch_1 = self._namedParams.eFormationTir
-            local cases_switch_1 = {}
                 if switch_1 == eFormationTir_Debarque then
                     Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Debarque, 1, { self._namedParams.ksEni, } )
 self.done_BEH_Tir_Pion_INF_FaireFeu_Debarque = function( self, _, v ) self.eAction_Tir = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFormationTir_Embarque then
+                elseif switch_1 == eFormationTir_Embarque then
                     Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Embarque, 1, { self._namedParams.ksEni, } )
 self.done_BEH_Tir_Pion_INF_FaireFeu_Embarque = function( self, _, v ) self.eAction_Tir = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                     Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu, 1, { self._namedParams.ksEni, } )
 self.done_BEH_Tir_Pion_INF_FaireFeu = function( self, _, v ) self.eAction_Tir = v[1] end

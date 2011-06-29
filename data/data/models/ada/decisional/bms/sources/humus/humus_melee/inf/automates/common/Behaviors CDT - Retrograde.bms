@@ -75,15 +75,20 @@ include "bit.lua"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Calcul le point de regroupement
+]]--[[// ------------------------------------------------------------
+]]--[[// Pas de point de regroupement trouve				
+]]--[[// Fait rompre les pions par etape
+]]--[[// ------------------------------------------------------------
+]]--[[// Recupere le point de regroupement
+]]--[[// TODO : Delete pt
+]]--[[// On prend un pion a chaque phase
+]]--[[// Demande aux pions qui interdisent de rompre le contact									
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePhase_Decroche then
                     DEC_Trace( "Processus de rupture de contact : en cours [Decroche]" )
-                    --[[// Calcul le point de regroupement
-]]--[[// ------------------------------------------------------------
-]]DEC_Trace( FloatToString( #( self.sPion_PE ) ) .. " pions pris en compte." )
-                    --[[// Pas de point de regroupement trouve				
-]]self.ptRgpt_Bary = S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
+                    DEC_Trace( FloatToString( #( self.sPion_PE ) ) .. " pions pris en compte." )
+                    self.ptRgpt_Bary = S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
                     if( #( self.sPion_PE ) > 0 ) then
                         self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneRegroupement_, #( self.sPion_PE ), self.eCodeLoc )
                         self.eCodeLoc = self.lstLocRgpt.second
@@ -96,12 +101,9 @@ include "bit.lua"
                         do return end
                     end
 
-                    --[[// Fait rompre les pions par etape
-]]--[[// ------------------------------------------------------------
-]]self.ePhase = ePhase_RompreContact
+                    self.ePhase = ePhase_RompreContact
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_Attente then
+                elseif switch_1 == ePhase_Attente then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -114,32 +116,26 @@ elseif switch_1 == ePhase_Attente then
                     Activate( self.activations.ACT_Misc_Delai, 1, { 1, M_DELAI_ROMPRE_CONTACT(), } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == ePhase_RompreContact then
-                    --[[// Recupere le point de regroupement
-]]local ptRgrpt = nil
+                elseif switch_1 == ePhase_RompreContact then
+                    local ptRgrpt = nil
                     if( eNoError == self.eCodeLoc and #( self.lstLocRgpt ) > self.rItLoc ) then
                         do
-                            --[[// TODO : Delete pt
-]]ptRgrpt = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.lstLocRgpt, self.rItLoc ) )
+                            ptRgrpt = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.lstLocRgpt, self.rItLoc ) )
                         end
                     else
                         ptRgrpt = self.ptRgpt_Bary
                     end
 
-                    --[[// On prend un pion a chaque phase
-]]local pionPE = DIA_GetAt( self.sPion_PE, self.rItLoc )
+                    local pionPE = DIA_GetAt( self.sPion_PE, self.rItLoc )
                                         self.rItLoc = self.rItLoc + 1
                     if( F_Pion_GeteEtatDestruction( pionPE ) == eEtatDestruction_Total ) then
                         do return end
                     end
 
-                    --[[// Demande aux pions qui interdisent de rompre le contact									
-]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
+                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
                     self.ePhase = ePhase_Attente
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

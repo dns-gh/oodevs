@@ -73,16 +73,19 @@ node "MIS_Pion_INF_Eclairer"
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
          do
             local _continue = true
-            local switch_1 = --[[//=============================================================================
+--[[//=============================================================================
 ]]--[[// Squelette de Reconnaissance
 ]]--[[//=============================================================================		
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eReconnaitre then
-                    --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Progession
 ]]--[[//-----------------------------------------------------------------------------
-]]if( self.eCurrentPhase ~= eFinMission ) then
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eReconnaitre then
+                    if( self.eCurrentPhase ~= eFinMission ) then
                         do
                             Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPhase = v[1] end
@@ -92,10 +95,7 @@ self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPha
                         self.ePhase = eFinMission
                     end
 
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do

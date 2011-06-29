@@ -94,7 +94,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Gestion des ennemis
+]]--[[//-------------------------------------------------------------------------	
+]]--[[// Ennemi propre a la section
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
@@ -111,11 +114,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 end
                 if cases_switch_1[1] or switch_1 == eAppuyer then
                     Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self.repAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
-                    --[[// Gestion des ennemis
-]]--[[//-------------------------------------------------------------------------	
-]]local rMotivation = GetMotivation( "MOT_ManoeuvrerSurEnis" ) * S_Force_Pion_INF_DistanceAppuisEnnemis( self.repAmi, M_DISTANCE_SUIVI_MAX() )
-                    --[[// Ennemi propre a la section
-]]Activate( self.activations.BEH_Eni_Pion_VAB_Appuyer, rMotivation, { self.repAmi, } )
+                    local rMotivation = GetMotivation( "MOT_ManoeuvrerSurEnis" ) * S_Force_Pion_INF_DistanceAppuisEnnemis( self.repAmi, M_DISTANCE_SUIVI_MAX() )
+                    Activate( self.activations.BEH_Eni_Pion_VAB_Appuyer, rMotivation, { self.repAmi, } )
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then

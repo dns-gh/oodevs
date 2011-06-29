@@ -94,11 +94,16 @@ node "BEH_Mission_Pion_HUMUS_Harceler"
 
                  do
                     local _continue = true
-                    local switch_1 = self.ePhase
+--[[// Se mettre en position en restant sur ses gardes
+]]--[[// Aborder Objectif
+]]--[[// Temps de mise en place du dispositif
+]]--[[// Ensemble du dispositif installé, surveiller la zone
+]]--[[// Surveille secteur			
+]]--[[// behavior BEH_Pion_INF_Detruire_Harceler( mission.zone_, mission.natureObjectif_ ) : strength = 2;
+]]                    local switch_1 = self.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == eSeMettreEnPlace then
-                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// Se mettre en position en restant sur ses gardes
-]]
+                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                             if( self.eAction == eActionEffectuee ) then
                                 do
                                     self.eAction = eActionEnCours
@@ -115,8 +120,7 @@ node "BEH_Mission_Pion_HUMUS_Harceler"
                             Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointObjectif_, false, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
-                        --[[// Aborder Objectif
-]]                        cases_switch_1[1] = true
+                                                cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                             Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
@@ -156,22 +160,18 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                                     end
 
                                 end
---[[// Temps de mise en place du dispositif
-]]                            end
+                            end
 
                             Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                                                         self:SendFeedback( self.ePhase )
                             do return end
 
-                        --[[// Ensemble du dispositif installé, surveiller la zone
-]]                        end
+                                                end
                         if cases_switch_1[3] or switch_1 == eSurveiller then
-                            --[[// Surveille secteur			
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
                             Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
-                            _continue = false--[[// behavior BEH_Pion_INF_Detruire_Harceler( mission.zone_, mission.natureObjectif_ ) : strength = 2;
-]]
+                            _continue = false
                                                 cases_switch_1[4] = true
 
                         else
@@ -230,7 +230,6 @@ node "BEH_Pion_INF_Detruire_Harceler"
                  do
                     local _continue = true
                     local switch_1 = eCodeLocRgpt
-                    local cases_switch_1 = {}
                         if switch_1 == eError_PionsPasDansMemeFuseau
                         or switch_1 == eError_LocalisationPasDansFuseau then
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
@@ -245,11 +244,9 @@ node "BEH_Pion_INF_Detruire_Harceler"
                         elseif switch_1 == eWarning_DecoupageIncomplet then
                                                     DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eNoError then
+                        elseif switch_1 == eNoError then
                                                     _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
                 self.ptRegroupement = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.selPointsAttente, self.nPos ) )

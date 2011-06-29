@@ -105,25 +105,28 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]--[[// 1) Preparation de la mission
 ]]--[[//---------------------------------------------------------------------
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+]]--[[//---------------------------------------------------------------------
+]]--[[// Progression tactique
+]]--[[//---------------------------------------------------------------------
+]]--[[// Relever l'unite à bonne distance
+]]--[[// se dépecher
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Releve
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// cas particulier
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_ABC_ReleverUnite: debut", } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** Relève de " .. self._namedParams.mission.uniteARelever_:GetszName_() .. " **", } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Progression tactique
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
-                    --[[// Relever l'unite à bonne distance
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.positionPionARelever ) < M_MODELE_PION_ABC_DISTANCE_RELEVE() ) then
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.positionPionARelever ) < M_MODELE_PION_ABC_DISTANCE_RELEVE() ) then
                         do
                             self.ePhaseMission = eRelever
                                                         do return end
@@ -132,22 +135,15 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionPionARelever, eProgressionDirect, eTypeItiMouvement, } )
-                    --[[// se dépecher
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Releve
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eRelever then
+                elseif switch_1 == eRelever then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** Releve de l'unité **", } )
                     Activate( self.activations.ACT_Misc_ReleverUnite, 1, { self._namedParams.mission.uniteARelever_, } )
-                    --[[// cas particulier
-]]DEC_RC( eRC_Releve, self._namedParams.mission.uniteARelever_ )
+                    DEC_RC( eRC_Releve, self._namedParams.mission.uniteARelever_ )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

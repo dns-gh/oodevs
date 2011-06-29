@@ -66,52 +66,43 @@ do
                 local repOrdre = x
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[// TIR LIBRE
+]]--[[// TIR SUR RIPOSTE
+]]--[[// TIR INTERDIT
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_ChangerReglesEngagement" then
                             local ordreROE = repOrdre
                              do
                                 local _continue = true
                                 local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagement_()
-                                local cases_switch_2 = {}
                                     if switch_2 == eEtatROE_TirLibre then
-                                        --[[// TIR LIBRE
-]]DEC_Trace( " === Frag Order --> ROE FREE FIRE" )
+                                        DEC_Trace( " === Frag Order --> ROE FREE FIRE" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                                         _continue = false
-                                    --[[// TIR SUR RIPOSTE
-]]                                    cases_switch_2[1] = true
-elseif switch_2 == eEtatROE_TirSurRiposte then
+                                    elseif switch_2 == eEtatROE_TirSurRiposte then
                                         DEC_Trace( " === Frag Order --> ROE RETURN OF FIRE" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                                         _continue = false
-                                    --[[// TIR INTERDIT
-]]                                    cases_switch_2[2] = true
-elseif switch_2 == eEtatROE_TirInterdit then
+                                    elseif switch_2 == eEtatROE_TirInterdit then
                                         DEC_Trace( " === Frag Order --> ROE FORBIDDEN FIRE" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )
                                         _continue = false
-                                                                        cases_switch_2[3] = true
-                                    end
+                                                                        end
                                 end
 
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_InterdireMunition" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_InterdireMunition" then
                             local ordreInterdireMun = repOrdre
                             Activate( self.activations.ACT_Maj_Pion_InterdireMunition, 1, { ordreInterdireMun, } )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserMunition" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserMunition" then
                             local ordreAutoriserMun = repOrdre
                             Activate( self.activations.ACT_Maj_Pion_AutoriserMunition, 1, { ordreAutoriserMun, } )
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserToutesMunitions" then
+                        elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserToutesMunitions" then
                             Activate( self.activations.ACT_Maj_Pion_AutoriserToutesMunitions, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[4] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )

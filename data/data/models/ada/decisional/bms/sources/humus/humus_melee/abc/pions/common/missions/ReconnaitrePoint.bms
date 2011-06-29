@@ -84,22 +84,24 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progression tactique et reconnaissance du point
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Progression
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Changement d'ambiance
+]]--[[// Abordage du point
+]]--[[// Abordage et reconnaissance du point
+]]--[[// Fin de la mission de reconnaissance
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_ABC_ReconnaitreUnPoint: debut **", } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_ABC_ReconnaitreUnPoint: debut **", } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Progression tactique et reconnaissance du point
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Progression
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -113,20 +115,16 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointAReconnaitre_, eProgressionDefaut, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
-                    --[[// Changement d'ambiance
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POUR_SURETE() ) then
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POUR_SURETE() ) then
                         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
                     end
 
-                    --[[// Abordage du point
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POSITION_OBSERVATION() ) then
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POSITION_OBSERVATION() ) then
                         self.ePhaseMission = eReconnaitre
                     end
 
                     _continue = false
-                --[[// Abordage et reconnaissance du point
-]]                cases_switch_1[2] = true
-elseif switch_1 == eReconnaitre then
+                elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -144,9 +142,8 @@ elseif switch_1 == eReconnaitre then
 self.done_BEH_Obs_Pion_ABC_ReconnaitrePointMission = function( self, _, v ) self.eEtat = v[1] end
                                         do return end
 
-                --[[// Fin de la mission de reconnaissance
-]]                end
-                if cases_switch_1[3] or switch_1 == eFinMission then
+                                end
+                if switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
@@ -156,8 +153,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     end
 
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

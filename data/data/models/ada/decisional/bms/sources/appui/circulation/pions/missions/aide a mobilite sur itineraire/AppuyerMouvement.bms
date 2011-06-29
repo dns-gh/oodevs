@@ -52,45 +52,40 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         Activate( self.activations.ACT_Dep_ModulationVitesse, 2, { 1, } )
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// Progression vers l'unité à appuyer
+]]--[[// Renforcement si à distance
+]]--[[//rejoint l'unité
+]]--[[// On renforce l'unité
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "MIS_Pion_LOG_AppuyerMouvement: debut", } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Progression vers l'unité à appuyer
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[// Renforcement si à distance
-]]if( DEC_Geometrie_Distance( self._namedParams.mission.uniteAAppuyer_:DEC_Agent_Position(), myself:DEC_Agent_Position() ) < 1000 ) then
+                    if( DEC_Geometrie_Distance( self._namedParams.mission.uniteAAppuyer_:DEC_Agent_Position(), myself:DEC_Agent_Position() ) < 1000 ) then
                         do
                             self.ePhaseMission = eRenforcer
                             _continue = false
                         end
---[[//rejoint l'unité
-]]                    end
+                    end
 
                         if _continue then
                         Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mission.uniteAAppuyer_, 0, } )
                         _continue = false
                     end
-                --[[// On renforce l'unité
-]]                cases_switch_1[2] = true
-elseif switch_1 == eRenforcer then
+                elseif switch_1 == eRenforcer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.ACT_Misc_Pion_AppuyerMvtDe, 1, { self._namedParams.mission.uniteAAppuyer_, } )
                     _continue = false
-                --[[// Fin de la mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

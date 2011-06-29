@@ -67,17 +67,17 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// Déplacement initial
+]]--[[// Sécurisation
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     DEC_Trace( "** MIS_Pion_SecuriserZone **" )
                     self.ePhase = eProgresser
                     _continue = false
-                --[[// Déplacement initial
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( not DEC_Geometrie_EstPointDansLocalisation( DEC_Agent_Position(), self._namedParams.mission.zone_ ) ) then
                         Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self.objectif, eProgressionDefaut, eTypeItiMouvement, } )
@@ -86,15 +86,11 @@ elseif switch_1 == eProgresser then
                     end
 
                     _continue = false
-                --[[// Sécurisation
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSecuriser then
+                elseif switch_1 == eSecuriser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Pop_Pion_SecuriserPopulationDans, 1, { self._namedParams.mission.zone_, } )
                     _continue = false
-                --[[// Fin mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                                         Halt( self )

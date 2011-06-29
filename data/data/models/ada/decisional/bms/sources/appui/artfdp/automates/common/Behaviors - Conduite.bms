@@ -90,16 +90,14 @@ do
                 local x_pion = x
                  do
                     local _continue = true
-                    local switch_1 = --[[// Situation Mission
+--[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
-]]F_Pion_GeteEtatPhaseMission( x_pion )
-                    local cases_switch_1 = {}
+]]                    local switch_1 = F_Pion_GeteEtatPhaseMission( x_pion )
                         if switch_1 == eEtatPhaseMission_None
                         or switch_1 == eEtatPhaseMission_FinMission then
                                                         rN_Fin = rN_Fin + 1
                             _continue = false
-                                                cases_switch_1[1] = true
-                        end
+                                                end
                     end
 
             end

@@ -137,8 +137,14 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
+]]--[[//si pas d'unités prete sur position, on ne commence pas à s'organiser
+]]--[[//des que j'ai des unites pretes et à bonne distance du pion, alors, je
+]]--[[//les met dans la liste
+]]--[[//se poser pour embarquement
+]]--[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
+]]--[[//se poser pour embarquement
+]]            local switch_1 = self.ePhase
                 if switch_1 == eTransporterAllerEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
@@ -179,20 +185,17 @@ do
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
-                    --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
-]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, } )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eAttendre then
+                elseif switch_1 == eAttendre then
                     if( myself.bEnPhaseRavitaillement_ ) then
                         self.ePhase = eTransporterAllerEmbarquer
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
-                    for _,x in pairs( --[[//si pas d'unités prete sur position, on ne commence pas à s'organiser
-]]self.listeUnitesPretes or emptyTable ) do
+                    for _,x in pairs( self.listeUnitesPretes or emptyTable ) do
                     local _continue = true
 do
                             if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
@@ -209,12 +212,9 @@ do
 
                     self.ePhase = eTransporterEmbarquer
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eTransporterEmbarquer then
+                elseif switch_1 == eTransporterEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
-                    for _,x in pairs( --[[//des que j'ai des unites pretes et à bonne distance du pion, alors, je
-]]--[[//les met dans la liste
-]]self.listeUnitesPretes or emptyTable ) do
+                    for _,x in pairs( self.listeUnitesPretes or emptyTable ) do
                     local _continue = true
 do
                             if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) <= M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
@@ -222,8 +222,7 @@ do
                             end
 
                         end
---[[//se poser pour embarquement
-]]
+
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
@@ -263,8 +262,7 @@ do
                     Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eTransporterAllerDebarquer then
+                elseif switch_1 == eTransporterAllerDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -296,15 +294,12 @@ elseif switch_1 == eTransporterAllerDebarquer then
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
-                    --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
-]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, } )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-elseif switch_1 == eTransporterDebarquer then
+                elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )--[[//se poser pour embarquement
-]]
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -337,8 +332,7 @@ elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[5] = true
-                end
+                                end
             end
 
     end,
@@ -392,11 +386,11 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//rejoindre le pion
+]]--[[//aller au tc2 et y déposer les humains blessés
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindre then
-                    --[[//rejoindre le pion
-]]if( not DEC_NecessiteEvacuationBlesses( self._namedParams.pion ) ) then
+                    if( not DEC_NecessiteEvacuationBlesses( self._namedParams.pion ) ) then
                         do
                             myself.bEnCoursExtractionPersonnel_ = false
                                                         self:SendFeedback( eActionEffectuee )
@@ -422,9 +416,7 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.pointEmbarquement, eProgressionDefaut, self._namedParams.ePathType, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[//aller au tc2 et y déposer les humains blessés
-]]                cases_switch_1[1] = true
-elseif switch_1 == eExtraire then
+                elseif switch_1 == eExtraire then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -445,8 +437,7 @@ elseif switch_1 == eExtraire then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, { self._namedParams.TC2, eProgressionDefaut, self._namedParams.ePathType, 6000, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

@@ -110,7 +110,11 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Rejoins une position de replis
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------					
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eBarrer then
                     if( self.eCurrentPhase == eFinMission or self.eEtatPhase == eActionHalt ) then
@@ -137,8 +141,7 @@ do
                     Activate( self.activations.BEH_Mission_Pion_INF_Barrer, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_Barrer = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                --[[// Rejoins une position de replis
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -165,10 +168,7 @@ self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[
                             self.eAction = eActionEnCours
                                                         do
                                 DEC_Trace( "fin de mission" )
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------					
-]]DEC_FinMission()
+                                DEC_FinMission()
                                                                 self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end

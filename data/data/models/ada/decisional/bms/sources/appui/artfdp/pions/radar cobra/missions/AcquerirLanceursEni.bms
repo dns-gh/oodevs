@@ -53,12 +53,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eMettreEnOeuvre then
                     Activate( self.activations.BEH_Pion_ASS_AcquerirLanceursEni_Mission, GetMotivation( "MOT_Mission" ), emptyTable )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -71,8 +69,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -111,16 +108,19 @@ node "BEH_Pion_ASS_AcquerirLanceursEni_Mission"
         self.ptObj_Installation = self.ptObj_Installation or S_Obj_Position( self.mission.zoneImplantation_ )
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Preparation de la mission
+]]--[[// Rejoindre la position du site
+]]--[[// On fait une reconnaissance de la position lorsque l'on arrive
+]]--[[// a proximite
+]]--[[//  Fin de mission --> rejoindre plot munition
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                     self.ePhase = eRejoindre
                     _continue = false
-                --[[// Rejoindre la position du site
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eRejoindre then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -132,9 +132,7 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[// On fait une reconnaissance de la position lorsque l'on arrive
-]]--[[// a proximite
-]]if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptObj_Installation, 800 ) ) then
+                    if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptObj_Installation, 800 ) ) then
                         Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, { self.ptObj_Installation, } )
 self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, _, v ) self.eActionReco = v[1] end
                     end
@@ -149,8 +147,7 @@ elseif switch_1 == eDeployer then
                     Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 1, { self.ptObj_Installation, } )
                     Activate( self.activations.BEH_Obs_Pion_ASS_TirIndirect_DansZones, 1, { self.mission.zonesAObserver_, self.mission.menanceRoem_, } )
                     _continue = false
-                --[[//  Fin de mission --> rejoindre plot munition
-]]                cases_switch_1[3] = true
+                                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then

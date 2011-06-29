@@ -61,15 +61,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Stationner
+]]--[[// Fin mission // Sur ordre
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     DEC_Trace( "** MIS_Pion_Stationner **" )
                     self.ePhase = eProgresser
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -86,20 +86,15 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointAttente_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Stationner
-]]                cases_switch_1[2] = true
-elseif switch_1 == eAttendre then
+                elseif switch_1 == eAttendre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                --[[// Fin mission // Sur ordre
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

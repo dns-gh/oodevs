@@ -91,8 +91,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//Supression de la localisation courante
+]]--[[//sauf si c'est la dernière
+]]--[[//on prend la localisation la plus proche qui sera forcement la suivante
+]]--[[//avec notre algo
+]]--[[//supprimer toutes les localisations situées avant la localisations
+]]--[[//courante
+]]--[[//si on a percu un ennemi dans le fuseau, passage en première allure
+]]--[[// si l'agent n'est pas dans son fuseau ou s'il n'est pas dans une zone non reconnue
+]]            local switch_1 = self.ePhase
                 if switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Reconnaissance, } )
                     if( self.eEtat == eActionEffectuee ) then
@@ -100,17 +107,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                             self.eEtat = eActionEnCours
                                                         do
                                 self.recoEnCours = false
-                                --[[//Supression de la localisation courante
-]]--[[//sauf si c'est la dernière
-]]if( #( self.listeLocalisationsATraiter ) > 1 ) then
+                                if( #( self.listeLocalisationsATraiter ) > 1 ) then
 if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, self.localisationCourante ) ) then
                                         DEC_UserTypeList_Remove( self.listeLocalisationsATraiter, self.localisationCourante )
                                     end
                                 end
 
-                                --[[//on prend la localisation la plus proche qui sera forcement la suivante
-]]--[[//avec notre algo
-]]self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisationsATraiter )
+                                self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisationsATraiter )
                             end
 
                         end
@@ -144,9 +147,7 @@ do
                             end
 
                         end
---[[//supprimer toutes les localisations situées avant la localisations
-]]--[[//courante
-]]
+
                     end
 
                     if( self.nouvelleLocalisation ~= nil ) then
@@ -178,16 +179,14 @@ do
                         self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisationsATraiter )
                     end
 
-                    --[[//si on a percu un ennemi dans le fuseau, passage en première allure
-]]if( not DIA_IsListEmpty( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau() ) ) then
+                    if( not DIA_IsListEmpty( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau() ) ) then
                         StartActivateOverride( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, GetMotivation( "MOT_Manoeuvrer" ) * 4, emptyTable )
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointFinFuseau, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self.pointFinFuseau, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
-                    --[[// si l'agent n'est pas dans son fuseau ou s'il n'est pas dans une zone non reconnue
-]]if( ( not DEC_Geometrie_EstPointDansFuseau( myself:DEC_Agent_Position() ) or ( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Surete ) ) and not self.recoEnCours ) then
+                    if( ( not DEC_Geometrie_EstPointDansFuseau( myself:DEC_Agent_Position() ) or ( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Surete ) ) and not self.recoEnCours ) then
                         do
                             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ) * 2, { self.pointFinFuseau, eProgressionDefaut, eTypeItiReconnaissance, } )
                         end
@@ -205,8 +204,7 @@ self.done_BEH_Obs_Pion_ALAT_ReconnaitreZone = function( self, _, v ) self.eEtat 
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
@@ -248,8 +246,7 @@ elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -270,8 +267,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

@@ -48,8 +48,16 @@ include "bit.lua"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// si on a un changement de mission et qu'on est en cours de ravitaillement
+]]--[[// relancer le calcul du chemin pour prendre en compte les nouvelles
+]]--[[// limites tactiques
+]]--[[// si l'agent est à moins de 1000m du plot de ravitaillement, ne
+]]--[[// pas se déplacer
+]]--[[//rejoindre le plot de ravitaillement selectionné
+]]--[[//rejoindre le TC2 si on en a un
+]]--[[// si l'agent est à moins de 1000m du TC2, ne pas se déplacer
+]]--[[//empeche le pion de se déplacer pendant son ravitaillement
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindre then
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -74,10 +82,7 @@ include "bit.lua"
                             do return end
 
                         end
---[[// si on a un changement de mission et qu'on est en cours de ravitaillement
-]]--[[// relancer le calcul du chemin pour prendre en compte les nouvelles
-]]--[[// limites tactiques
-]]                    end
+                    end
 
                     self.missionPrec = self.missionPrec or DEC_GetMission( myself )
                     if( DEC_GetMission( myself ) ~= self.missionPrec ) then
@@ -91,29 +96,24 @@ include "bit.lua"
                     if( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) ) then
                         do
                             DEC_Copie_Point( S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( myself.plotRavitaillementAssigne_ ) ), self.positionPlotRavitaillement )
-                            --[[// si l'agent est à moins de 1000m du plot de ravitaillement, ne
-]]--[[// pas se déplacer
-]]if( DEC_Geometrie_Distance( self.positionPlotRavitaillement, myself:DEC_Agent_Position() ) <= 1000 ) then
+                            if( DEC_Geometrie_Distance( self.positionPlotRavitaillement, myself:DEC_Agent_Position() ) <= 1000 ) then
                                 do
                                     self.eEtat = eActionEffectuee
                                                                         do return end
 
                                 end
---[[//rejoindre le plot de ravitaillement selectionné
-]]                            end
+                            end
 
                             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.positionPlotRavitaillement, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                         end
---[[//rejoindre le TC2 si on en a un
-]]                    else
+                    else
 do
                             if( pionTC2 == nil ) then
                                 do return end
                             end
 
-                            --[[// si l'agent est à moins de 1000m du TC2, ne pas se déplacer
-]]if( DEC_Geometrie_Distance( pionTC2:DEC_Agent_Position(), myself:DEC_Agent_Position() ) <= 1000 ) then
+                            if( DEC_Geometrie_Distance( pionTC2:DEC_Agent_Position(), myself:DEC_Agent_Position() ) <= 1000 ) then
                                 do
                                     self.eEtat = eActionEffectuee
                                                                         do return end
@@ -127,8 +127,7 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = 
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRecompleter then
+                elseif switch_1 == eRecompleter then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -164,11 +163,9 @@ self.done_BEH_Log_Pion_ALAT_SeRecompleterSurPlot = function( self, _, v ) self.e
 self.done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2 = function( self, _, v ) self.eEtat = v[1] end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )--[[//empeche le pion de se déplacer pendant son ravitaillement
-]]
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

@@ -73,11 +73,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[//Début de la mission Rezzou
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]--[[// On se replie sur la zone de regroupement, on rend compte et on tombe en garde
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
-                    --[[//Début de la mission Rezzou
-]]if( self.ePhaseMission ~= eSeReplier ) then
+                    if( self.ePhaseMission ~= eSeReplier ) then
                         do
                             if( DEC_Nuit() ) then
                                 Activate( self.activations.ACT_Info_Trace, 1, { "Il fait nuit, l'unité s'arrête", } )
@@ -109,11 +113,7 @@ elseif switch_1 == eSeReplier then
                     Activate( self.activations.BEH_Manoeuvre_Pion_INF_SeReplier, 1, { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_INF_SeReplier = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de la mission
-]]--[[// On se replie sur la zone de regroupement, on rend compte et on tombe en garde
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do

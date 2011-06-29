@@ -96,7 +96,9 @@ do
 ]]
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Posture discret lors des deplacements
+]]--[[// Rejoins la position de replis
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
                     if( self.ePhaseMission == eFinMission ) then
@@ -120,8 +122,7 @@ do
                         Activate( self.activations.ACT_Dep_Pion_INF_ActiverFurtivite, 2, { 0.05, } )
                     end
 
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// Posture discret lors des deplacements
-]]
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -137,8 +138,7 @@ do
                     Activate( self.activations.BEH_Mission_Pion_INF_DetruireParCoupDeMain, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_DetruireParCoupDeMain = function( self, _, v ) self.ePhaseMission = v[1] end
                     _continue = false
-                --[[// Rejoins la position de replis
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( self.eAction == eActionEffectuee ) then
                         do

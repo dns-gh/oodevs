@@ -61,7 +61,6 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     if( self.eAction == eActionEnCours ) then
                         do
@@ -76,12 +75,10 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     self.ePhase = eDeployer
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eDeployer then
+                elseif switch_1 == eDeployer then
                     Activate( self.activations.BEH_Pion_Emergency_EvacuateArea, 1, { self._namedParams.mission.area_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -94,8 +91,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

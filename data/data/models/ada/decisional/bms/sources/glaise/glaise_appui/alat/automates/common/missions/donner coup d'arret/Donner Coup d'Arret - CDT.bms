@@ -86,11 +86,21 @@ do
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//condition d'arret
+]]--[[//ROE pour le pion le plus en arrière
+]]--[[//les unites passent toutes en tir libre
+]]--[[//les unites font mouvement vers le point de regrouppement si
+]]--[[//elles ont fait feu                            
+]]--[[//passer en tir restreint
+]]--[[//pas de traitement des ROE de l'unité la plus en arrière
+]]--[[//les autres unités sont postées et en tir restreint
+]]--[[// pas de coordination nécessaire dans cette mission
+]]--[[// les unités sur coté droit et gauche n'ont pas d'intention d'ouvrir
+]]--[[// le feu tant que les pions de reference n'ont pas frappé l'enneni
+]]--[[// ravitaillements et IMEX
+]]            local switch_1 = self.ePhase
                 if switch_1 == eDetruire then
-                    --[[//condition d'arret
-]]if( DIA_IsListEmpty( self.listeDetruire ) ) then
+                    if( DIA_IsListEmpty( self.listeDetruire ) ) then
                         do
                             self.ePhase = eSExfiltrer
                                                         do return end
@@ -98,8 +108,7 @@ do
                         end
                     else
 do
-                            --[[//ROE pour le pion le plus en arrière
-]]local pionArriere = DEC_Geometrie_PionDerriere( self.listeDetruire, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                            local pionArriere = DEC_Geometrie_PionDerriere( self.listeDetruire, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { pionArriere, } )
                             for _,x in pairs( self.listeDetruire or emptyTable ) do
                             local _continue = true
@@ -107,15 +116,11 @@ do
                                     local pionDEC = x
                                     if( self.CoupArretDebute ) then
                                         do
-                                            --[[//les unites passent toutes en tir libre
-]]Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { x, } )
+                                            Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { x, } )
                                             Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { x, } )
-                                            --[[//les unites font mouvement vers le point de regrouppement si
-]]--[[//elles ont fait feu                            
-]]if( F_Pion_GeteEtatFeu( pionDEC ) == eEtatFeu_Executer ) then
+                                            if( F_Pion_GeteEtatFeu( pionDEC ) == eEtatFeu_Executer ) then
                                                 do
-                                                    --[[//passer en tir restreint
-]]Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirRestreint, 1, { x, } )
+                                                    Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirRestreint, 1, { x, } )
                                                     Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, x, self._namedParams.mission.pointRegroupement_, eEtatEchelon_Premier, } )
                                                 end
                                             end
@@ -123,14 +128,12 @@ do
                                         end
                                     else
 do
-                                            --[[//pas de traitement des ROE de l'unité la plus en arrière
-]]if( x == pionArriere ) then
+                                            if( x == pionArriere ) then
                                                 _continue = false
                                             end
 
                                                 if _continue then
-                                                --[[//les autres unités sont postées et en tir restreint
-]]if( F_Pion_GeteEtatPhaseMission( pionDEC ) == eEtatPhaseMission_EnPosition ) then
+                                                if( F_Pion_GeteEtatPhaseMission( pionDEC ) == eEtatPhaseMission_EnPosition ) then
                                                     Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { x, } )
                                                 end
 
@@ -144,22 +147,16 @@ do
                             end
 
                         end
---[[// pas de coordination nécessaire dans cette mission
-]]--[[// les unités sur coté droit et gauche n'ont pas d'intention d'ouvrir
-]]--[[// le feu tant que les pions de reference n'ont pas frappé l'enneni
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeDetruire, 0, } )
-                    --[[// ravitaillements et IMEX
-]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

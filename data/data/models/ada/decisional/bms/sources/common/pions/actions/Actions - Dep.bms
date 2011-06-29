@@ -40,60 +40,54 @@ includedFiles["sources/common/pions/actions/Actions - Dep.bms"] = true
 
          do
             local _continue = true
-            local switch_1 = self.eEtatDeplacement
-            local cases_switch_1 = {}
-                if switch_1 == eEtatActionDeplacement_EnCours then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Deplacement en cours
 ]]--[[//-----------------------------------------------------------------------------
-]]F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnCours )
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Plus de carburant
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin déplacement
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// REPRISE QD PERTE DE FOCUS
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Autres cas
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Si on n'a pas la possibilité de se deplacer ( neutralisé, decollage non fait )
+]]--[[//si on a deja un StartDeplacement en cours
+]]            local switch_1 = self.eEtatDeplacement
+                if switch_1 == eEtatActionDeplacement_EnCours then
+                    F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnCours )
                     do
                     end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Plus de carburant
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
+                elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
                     DEC_PauseAction( self.actionDeplacement )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Fin déplacement
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eEtatActionDeplacement_Termine then
+                elseif switch_1 == eEtatActionDeplacement_Termine then
                     self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// REPRISE QD PERTE DE FOCUS
-]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eEtatActionDeplacement_Pause then
+                elseif switch_1 == eEtatActionDeplacement_Pause then
                     DEC_ReprendAction( self.actionDeplacement )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Autres cas
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[4] = true
-elseif switch_1 == eEtatActionDeplacement_NonAutorise then
+                elseif switch_1 == eEtatActionDeplacement_NonAutorise then
                     do
                     end
---[[// Si on n'a pas la possibilité de se deplacer ( neutralisé, decollage non fait )
-]]
+
                     _continue = false
-                                cases_switch_1[5] = true
-elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
+                elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
                     do
                     end
---[[//si on a deja un StartDeplacement en cours
-]]
+
                     _continue = false
-                                cases_switch_1[6] = true
-                end
+                                end
             end
 
     end,

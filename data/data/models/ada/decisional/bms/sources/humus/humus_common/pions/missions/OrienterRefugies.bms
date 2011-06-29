@@ -63,24 +63,22 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             do
                  do
                     local _continue = true
-                    local switch_1 = self.ePhase
-                    local cases_switch_1 = {}
+--[[// Récuperer les réfugies et aller les déposer dans le camp
+]]--[[// Fin mission
+]]                    local switch_1 = self.ePhase
                         if switch_1 == ePreparerMission then
                                                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                             self.ePhase = eEmbarquer
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == eEmbarquer then
+                        elseif switch_1 == eEmbarquer then
                                                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                            --[[// Récuperer les réfugies et aller les déposer dans le camp
-]]if( S_Liste_RefugiesTousEmbarques( self._namedParams.mission.refugies_ ) ) then
+                            if( S_Liste_RefugiesTousEmbarques( self._namedParams.mission.refugies_ ) ) then
                                 self.ePhase = eDebarquer
                             end
 
                             Activate( self.activations.BEH_Dep_Pion_AllerRecupererRefugies, 1, { self._namedParams.mission.refugies_, } )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eDebarquer then
+                        elseif switch_1 == eDebarquer then
                             if( S_Misc_Pion_RefugiesTousDebarquesDansCamp( self._namedParams.mission.refugies_, self._namedParams.mission.campRefugies_ ) ) then
                                 self.ePhase = eFinMission
                             end
@@ -100,14 +98,11 @@ elseif switch_1 == eDebarquer then
                             Activate( self.activations.BEH_Dep_Pion_AllerDebarquerRefugies, 1, { self._namedParams.mission.refugies_, self._namedParams.mission.campRefugies_, } )
 self.done_BEH_Dep_Pion_AllerDebarquerRefugies = function( self, _, v ) self.eEtat = v[1] end
                             _continue = false
-                        --[[// Fin mission
-]]                        cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                        elseif switch_1 == eFinMission then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                             Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[4] = true
-                        end
+                                                end
                     end
 
             end

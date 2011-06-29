@@ -48,14 +48,27 @@ node "BEH_Medo_Automate_PreparerMission_RecoEtDeploiement"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_SelectionnerPions then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------						
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
-]]self.selPions_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Le fuseau de la compagnie est coupe en DEUX
+]]--[[//le pion en appui utilise le fuseau de la compagnie
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// scinde la reco en 2 ou 3 suivant le nombre de fuseaux selectionnes
+]]--[[// Floor( DIA_Size( selPions_ASS_Reco ) / 3 );
+]]--[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On verifie juste que la batterie peut effectuer la mission
+]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
+]]--[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
+]]--[[// Assigne la mission au pc
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_SelectionnerPions then
+                    self.selPions_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
                     if( #( self.selPions_ASS_Reco ) == 0 ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
@@ -68,20 +81,13 @@ node "BEH_Medo_Automate_PreparerMission_RecoEtDeploiement"
 
                     self.ePhase = eMRT_AffecterFuseaux
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AffecterFuseaux then
-                    local sVide = {}--[[//-----------------------------------------------------------------------------
-]]--[[//Le fuseau de la compagnie est coupe en DEUX
-]]--[[//le pion en appui utilise le fuseau de la compagnie
-]]--[[//-----------------------------------------------------------------------------
-]]
+                elseif switch_1 == eMRT_AffecterFuseaux then
+                    local sVide = {}
                     local sFuseau = {}
                     local sFuseau_2 = {}
                     local sFuseau_3 = {}
-                    --[[// scinde la reco en 2 ou 3 suivant le nombre de fuseaux selectionnes
-]]local rN_ParFuseau = 0
-                    --[[// Floor( DIA_Size( selPions_ASS_Reco ) / 3 );
-]]rN_ParFuseau = 2
+                    local rN_ParFuseau = 0
+                    rN_ParFuseau = 2
                     if( self.eActionMRT == eActionEffectuee ) then
                         do
                             self.eActionMRT = eActionEnCours
@@ -117,16 +123,9 @@ self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActio
 self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActionMRT = v[1] end
                     end
 
-                    _continue = false--[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
-]]
-                                cases_switch_1[2] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------
-]]--[[// On verifie juste que la batterie peut effectuer la mission
-]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
-]]                    self:SendFeedback( eActionEffectuee )
+                    _continue = false
+                elseif switch_1 == eMRT_AssignerMissions then
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -158,12 +157,9 @@ elseif switch_1 == eMRT_AssignerMissions then
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { 1, } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
-                    --[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
-]]--[[// Assigne la mission au pc
-]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
+                    Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,
@@ -203,14 +199,27 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_SelectionnerPions then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------						
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
-]]self.selPions_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Le fuseau de la compagnie est coupe en DEUX
+]]--[[//le pion en appui utilise le fuseau de la compagnie
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// scinde la reco en 2 ou 3 suivant le nombre de fuseaux selectionnes
+]]--[[// Floor( DIA_Size( selPions_ASS_Reco ) / 3 );
+]]--[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On verifie juste que la batterie peut effectuer la mission
+]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
+]]--[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
+]]--[[// Assigne la mission au pc
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_SelectionnerPions then
+                    self.selPions_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
                     if( #( self.selPions_ASS_Reco ) == 0 ) then
                         do
                             DEC_Trace( "First echelon units is empty" )
@@ -223,19 +232,12 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
 
                     self.ePhase = eMRT_AffecterFuseaux
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AffecterFuseaux then
-                    local sVide = {}--[[//-----------------------------------------------------------------------------
-]]--[[//Le fuseau de la compagnie est coupe en DEUX
-]]--[[//le pion en appui utilise le fuseau de la compagnie
-]]--[[//-----------------------------------------------------------------------------
-]]
+                elseif switch_1 == eMRT_AffecterFuseaux then
+                    local sVide = {}
                     local sFuseau = {}
                     local sFuseau_2 = {}
                     local sFuseau_3 = {}
-                    --[[// scinde la reco en 2 ou 3 suivant le nombre de fuseaux selectionnes
-]]--[[// Floor( DIA_Size( selPions_ASS_Reco ) / 3 );
-]]local rN_ParFuseau = 2
+                    local rN_ParFuseau = 2
                     if( self.eActionMRT == eActionEffectuee ) then
                         do
                             self.eActionMRT = eActionEnCours
@@ -271,16 +273,9 @@ self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActio
 self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActionMRT = v[1] end
                     end
 
-                    _continue = false--[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
-]]
-                                cases_switch_1[2] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------
-]]--[[// On verifie juste que la batterie peut effectuer la mission
-]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
-]]                    self:SendFeedback( eActionEffectuee )
+                    _continue = false
+                elseif switch_1 == eMRT_AssignerMissions then
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -312,12 +307,9 @@ elseif switch_1 == eMRT_AssignerMissions then
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { 1, } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
-                    --[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
-]]--[[// Assigne la mission au pc
-]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
+                    Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

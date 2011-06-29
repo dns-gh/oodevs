@@ -53,11 +53,9 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/grp mortier/Actions.bms"] =
          do
             local _continue = true
             local switch_1 = self.eEtat_EmbDeb
-            local cases_switch_1 = {}
                 if switch_1 == eActionEmbDeb_EnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+                elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     DEC_StopAction( self.actionID )
@@ -66,7 +64,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
+                if switch_1 == eActionEmbDeb_Termine then
                     DEC_Message( eRC_DisembarkmentFinished )
                     DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionEffectuee )
@@ -166,7 +164,6 @@ node "ACT_Tir_Pion_INF_TirCouverture"
          do
             local _continue = true
             local switch_1 = self.eTir
-            local cases_switch_1 = {}
                 if switch_1 == eActionTirIndirect_Impossible then
                     do
                     end
@@ -177,7 +174,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
+                if switch_1 == eActionTirIndirect_Termine then
                     do
                     end
 
@@ -196,7 +193,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
+                if switch_1 == eActionTirIndirect_NoAmmo then
                     do
                     end
 
@@ -224,7 +221,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do return end
 
                                 end
-                if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
+                if switch_1 == eActionTirIndirect_PasDeCapacite then
                     do
                     end
 
@@ -243,7 +240,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do return end
 
                                 end
-                if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then
+                if switch_1 == eActionTirIndirect_EnCours then
                     if( self.bPremierCoupPartie ) then
                         do
                             if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -260,8 +257,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     _continue = false
-                                cases_switch_1[5] = true
-                end
+                                end
             end
 
                 self:SendFeedback( eActionEnCours )
@@ -330,8 +326,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
         myself.eEtatTir_Indirect_ = self.eTir
          do
             local _continue = true
-            local switch_1 = self.eTir
-            local cases_switch_1 = {}
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
+]]            local switch_1 = self.eTir
                 if switch_1 == eActionTirIndirect_Impossible then
                     do
                     end
@@ -342,7 +338,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
+                if switch_1 == eActionTirIndirect_Termine then
                     do
                     end
 
@@ -361,27 +357,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
-                    do
-                    end
---[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]
-                    do
-                        if( not DEC_Agent_AutomateEstEmbraye() ) then
-                            DEC_RC( eRC_TirAnnule )
-                        else
-                            DEC_Message( eRC_TirAnnule )
-                        end
-
-                    end
-
-                    DEC_StopAction( self.actionID )
-                                        self:SendFeedback( eActionImpossible )
-                    Halt( self )
-                    do return end
-
-                                end
-                if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
+                if switch_1 == eActionTirIndirect_NoAmmo then
                     do
                     end
 
@@ -400,7 +376,26 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do return end
 
                                 end
-                if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then
+                if switch_1 == eActionTirIndirect_PasDeCapacite then
+                    do
+                    end
+
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_TirAnnule )
+                        else
+                            DEC_Message( eRC_TirAnnule )
+                        end
+
+                    end
+
+                    DEC_StopAction( self.actionID )
+                                        self:SendFeedback( eActionImpossible )
+                    Halt( self )
+                    do return end
+
+                                end
+                if switch_1 == eActionTirIndirect_EnCours then
                     if( self.bPremierCoupPartie ) then
                         do
                             if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -417,8 +412,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     _continue = false
-                                cases_switch_1[5] = true
-                end
+                                end
             end
 
                 self:SendFeedback( eActionEnCours )

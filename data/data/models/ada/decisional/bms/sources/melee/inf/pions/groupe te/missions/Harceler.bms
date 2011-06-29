@@ -69,7 +69,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Rejoins la position de replis
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
                     if( self.ePhaseMission == eFinMission ) then
@@ -83,8 +84,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.BEH_Mission_Pion_INF_Harceler, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_Harceler = function( self, _, v ) self.ePhaseMission = v[1] end
                     _continue = false
-                --[[// Rejoins la position de replis
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2, emptyTable )

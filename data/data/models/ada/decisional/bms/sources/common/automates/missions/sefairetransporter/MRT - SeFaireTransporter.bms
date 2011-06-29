@@ -108,16 +108,19 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Vérif et assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_SelectionnerPions then
-                    --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( #( self.selPions ) == 0 ) then
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigne les missions
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_SelectionnerPions then
+                    if( #( self.selPions ) == 0 ) then
                         do
                                                         self:SendFeedback( eActionImpossible )
                             Halt( self )
@@ -128,11 +131,7 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
 
                     self.ePhase = eMRT_AssignerMissions
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AssignerMissions then
+                elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eActionMRT == eActionImpossible ) then
                         do
                                                         do
@@ -162,10 +161,8 @@ elseif switch_1 == eMRT_AssignerMissions then
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                     Activate( self.activations.BEH_Medo_Automate_FaireTransporter_DansZone, 1, { self.selPions, self._namedParams.Zone, } )
 self.done_BEH_Medo_Automate_FaireTransporter_DansZone = function( self, _, v ) self.eActionMRT = v[1] end
-                    _continue = false--[[// Assigne les missions
-]]
-                                cases_switch_1[2] = true
-                end
+                    _continue = false
+                                end
             end
 
     end,

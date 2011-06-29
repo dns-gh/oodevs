@@ -547,7 +547,6 @@ node "ACT_GTIA_AssignerMissionRetrograde"
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.typeMission
-                    local cases_switch_1 = {}
                         if switch_1 == "T_Mission_Automate_FaireMouvement" then
                             local dest = DEC_Geometrie_CalculerPointArrivee()
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -555,26 +554,22 @@ node "ACT_GTIA_AssignerMissionRetrograde"
                             DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                             DEC_DonnerMissionAutomate_Mission( missionPion )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "T_Mission_Automate_ABC_Freiner" then
+                        elseif switch_1 == "T_Mission_Automate_ABC_Freiner" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                             DEC_DonnerMissionAutomate_Mission( missionPion )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "T_Mission_Automate_ABC_Jalonner" then
+                        elseif switch_1 == "T_Mission_Automate_ABC_Jalonner" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                             DEC_DonnerMissionAutomate_Mission( missionPion )
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == "T_Mission_Automate_INF_Freiner" then
+                        elseif switch_1 == "T_Mission_Automate_INF_Freiner" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                             DEC_DonnerMissionAutomate_Mission( missionPion )
                             _continue = false
-                                                cases_switch_1[4] = true
-                        end
+                                                end
                     end
 
             end

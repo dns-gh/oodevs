@@ -80,17 +80,18 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission.
+]]--[[// 2) Progression tactique
+]]--[[// force de 1.
+]]--[[// 4) Puis on observe la zone souhaitée.
+]]--[[// Fin mission  --> sur ordre
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission.
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_ControlerSecteur **", } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// 2) Progression tactique
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -102,27 +103,21 @@ elseif switch_1 == eProgresser then
                             end
 
                         end
---[[// force de 1.
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObs, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// 4) Puis on observe la zone souhaitée.
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
+                elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Pion_ABC_InstallerDispositifPourControleDe, 1, { self._namedParams.mission.zone_, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                --[[// Fin mission  --> sur ordre
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

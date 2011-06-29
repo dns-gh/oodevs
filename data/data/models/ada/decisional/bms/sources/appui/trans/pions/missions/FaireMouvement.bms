@@ -59,13 +59,11 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eCreerItineraire then
                     self.it = DEC_CreerItineraireListe( self._namedParams.mission.itineraire_, eTypeItiMouvement )
                     self.ePhase = eProgresser
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -82,12 +80,10 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
 self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

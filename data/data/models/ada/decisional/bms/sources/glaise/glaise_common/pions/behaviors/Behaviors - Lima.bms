@@ -46,26 +46,27 @@ do
 ]]local pointLima = pointABC
                          do
                             local _continue = true
-                            local switch_1 = DEC_GetTypeLimaPoint( pointLima )
-                            local cases_switch_1 = {}
-                                if switch_1 == eTypeLima_LC then
-                                                                    --[[//-------------------------------------------------------------
+--[[//-------------------------------------------------------------
 ]]--[[// Passage sur la ligne de coordination fixée par le capitaine
 ]]--[[//-------------------------------------------------------------
-]]local lima = DEC_GetLimaPoint( pointLima )
-                                    if( not DEC_GetMissionLimaFlag( lima ) ) then
-                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_SePosterSurLC, 1, { lima, } )
-                                    end
-
-                                    _continue = false
-                                --[[//-------------------------------------------------------------
+]]--[[//-------------------------------------------------------------
 ]]--[[// Passage sur la ligne dechangement d'attitude fixée par 
 ]]--[[// le capitaine
 ]]--[[// Le poste sur la LCA inclus un changement de dispositif 
 ]]--[[// -->dispositif surete
 ]]--[[//-------------------------------------------------------------
-]]                                cases_switch_1[1] = true
-elseif switch_1 == eTypeLima_LCA then
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Ligne de deboucher pour attaquer
+]]--[[//-----------------------------------------------------------------------------
+]]                            local switch_1 = DEC_GetTypeLimaPoint( pointLima )
+                                if switch_1 == eTypeLima_LC then
+                                                                    local lima = DEC_GetLimaPoint( pointLima )
+                                    if( not DEC_GetMissionLimaFlag( lima ) ) then
+                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_SePosterSurLC, 1, { lima, } )
+                                    end
+
+                                    _continue = false
+                                elseif switch_1 == eTypeLima_LCA then
                                     local lima = DEC_GetLimaPoint( pointLima )
                                     if( not DEC_GetMissionLimaFlag( lima ) ) then
                                         do
@@ -145,11 +146,7 @@ if( meleeInfPionsCommon() ) then
                                     end
 
                                     _continue = false
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// Ligne de deboucher pour attaquer
-]]--[[//-----------------------------------------------------------------------------
-]]                                cases_switch_1[2] = true
-elseif switch_1 == eTypeLima_LD then
+                                elseif switch_1 == eTypeLima_LD then
                                     local lima = DEC_GetLimaPoint( pointLima )
                                     if( not DEC_GetMissionLimaFlag( lima ) ) then
                                         do
@@ -165,8 +162,7 @@ if( meleeInfPionsCommon() ) then
                                     end
 
                                     _continue = false
-                                                                cases_switch_1[3] = true
-                                end
+                                                                end
                             end
 
                         Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )

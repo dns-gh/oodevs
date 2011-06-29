@@ -89,7 +89,6 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Decrocher" then
                             DEC_Trace( "Traite ordre: rompre contact" )
                             if( self.ePhase == eFinMission ) then
@@ -99,8 +98,7 @@ do
                             end
 
                             _continue = false
-                                                cases_switch_1[1] = true
-
+                        
                         else
                             bEstUtilise = false
                             _continue = false
@@ -125,7 +123,10 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRompreContact then
                     if( self.eAction == eActionImpossible ) then
@@ -170,10 +171,7 @@ self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPha
 
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do

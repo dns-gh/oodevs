@@ -98,13 +98,11 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdreCond:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_AppliquerFeux" then
                             local repOrdre_Tir = repOrdreCond
                             StartActivateOverride( self, self.activations.BEH_Ordre_Pion_Mortier_AppliquerLesFeux, 10, { repOrdre_Tir:Getcible_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:Getmunitions_(), } )
                             _continue = false
-                                                cases_switch_1[1] = true
-
+                        
                         else
                             bEstUtilise = false
                         end
@@ -127,13 +125,19 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+]]--[[//-------------------------------------------------------------------------	
+]]--[[// Mission
+]]--[[//-------------------------------------------------------------------------	
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
                         do
                             Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_TEMPS_PREPARATION_APPUYER(), } )
                                                         do return end
@@ -143,18 +147,12 @@ do
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eAppuyer
-                --[[//-------------------------------------------------------------------------	
-]]--[[// Mission
-]]--[[//-------------------------------------------------------------------------	
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eAppuyer then
                     Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self.repAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do

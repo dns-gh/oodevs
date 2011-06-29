@@ -77,7 +77,6 @@ node "BEH_Dep_Pion_ALAT_Voler"
          do
             local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
-            local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
@@ -87,8 +86,7 @@ node "BEH_Dep_Pion_ALAT_Voler"
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatAmbiance_Vitesse then
+                elseif switch_1 == eEtatAmbiance_Vitesse then
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
                         Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllure, 1, emptyTable )
                     else
@@ -96,8 +94,7 @@ elseif switch_1 == eEtatAmbiance_Vitesse then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -483,9 +480,8 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
          do
             local _continue = true
-            local switch_1 = --[[// gestion de l'état du calcul de l'itineraire
-]]DEC_Itineraire_Etat( self.itineraire )
-            local cases_switch_1 = {}
+--[[// gestion de l'état du calcul de l'itineraire
+]]            local switch_1 = DEC_Itineraire_Etat( self.itineraire )
                 if switch_1 == eItineraire_Valide
                 or switch_1 == eItineraire_Partiel then
                     if( not self.initialisationOK ) then
@@ -496,25 +492,23 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eItineraire_Invalide then
+                elseif switch_1 == eItineraire_Invalide then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
+                if switch_1 == eItineraire_CalculEnCours then
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eItineraire_Impossible then
+                elseif switch_1 == eItineraire_Impossible then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[4] or switch_1 == eItineraire_Annule then
+                if switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

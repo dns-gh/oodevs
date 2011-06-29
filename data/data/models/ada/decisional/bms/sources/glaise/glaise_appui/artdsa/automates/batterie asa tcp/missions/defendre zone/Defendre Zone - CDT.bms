@@ -39,19 +39,16 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa tcp/mis
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.mission.modeDeploiement_
-                    local cases_switch_1 = {}
                         if switch_1 == deploiementNasseTroisSections
                         or switch_1 == deploiementNasseQuatreSections
                         or switch_1 == deploiementDoubleRideau then
                                                     DEC_ListePoints_PushBack( self.listePositionsPourSectionsRestantes, self.barycentreLocalisation )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == deploiementOmnidirectionnelEnCarreAutourZone
+                        elseif switch_1 == deploiementOmnidirectionnelEnCarreAutourZone
                         or switch_1 == deploiementOmnidirectionnelEnTriangleAutourZone then
                                                     DEC_ListePoints_PushBack( self.listePositionsPourSectionsRestantes, self.pointDevantDispositif )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe, 1, { ePhase_CDT, self.listeSectionsRestantes, self.listePositionsPourSectionsRestantes, self._namedParams.mission.zone_, eEtatDeploiement_omnidirectionnel, } )

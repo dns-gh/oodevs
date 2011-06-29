@@ -71,16 +71,13 @@ do
                          do
                             local _continue = true
                             local switch_1 = repOrdre:GetType()
-                            local cases_switch_1 = {}
                                 if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
                                                                     SetStateVariable( "VE_NiveauNBC", 4 )
                                     _continue = false
-                                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
+                                elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
                                                                     SetStateVariable( "VE_NiveauNBC", 0 )
                                     _continue = false
-                                                                cases_switch_1[2] = true
-
+                                
                                 else
                                                                     bEstUtilise = false
                                     _continue = false

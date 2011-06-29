@@ -73,14 +73,23 @@ local emptyTable = emptyTable
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_AssignerMissions then
-                    --[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
 ]]--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
+]]--[[//liste des pions qui ne sont pas dans la liste "listePionsPourMission"
+]]--[[// controle de creation des missions de construction de zone à mobilité améliorée
+]]--[[// ordre de creation des missions
+]]--[[// ordre de création des missions de renforcement
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_AssignerMissions then
+                    if( self.eEtatMissionAppuyer == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
                                                         do return end
@@ -94,39 +103,28 @@ local emptyTable = emptyTable
                                                         do return end
 
                         end
---[[//liste des pions qui ne sont pas dans la liste "listePionsPourMission"
-]]                    end
+                    end
 
                     local listePourRenforcement = S_Cherche_Automate_Filtre_PionNonDansListe( selPions, self.listePionsPourMission )
-                    --[[// controle de creation des missions de construction de zone à mobilité améliorée
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listePionsPourMission ) + #( listePourRenforcement ), } )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listePionsPourMission ) + #( listePourRenforcement ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionAppuyer = v[1] end
-                    --[[// ordre de creation des missions
-]]if( #( self.listePionsPourMission ) ~= 0 ) then
+                    if( #( self.listePionsPourMission ) ~= 0 ) then
                         Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe, 1, { ePhase_MRT, self.listePionsPourMission, self.listobj, } )
                     end
 
-                    --[[// ordre de création des missions de renforcement
-]]if( #( listePourRenforcement ) ~= 0 ) then
+                    if( #( listePourRenforcement ) ~= 0 ) then
                         Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe, 1, { ePhase_MRT, listePourRenforcement, self.pion, } )
                     end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Mission impossible
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Validation
-]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_Valider then
+                elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )

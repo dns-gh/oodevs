@@ -41,18 +41,15 @@ includedFiles["sources/humus/humus_common/automates/actions/medo/Actions - Medo 
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionEnRenfort, "T_Mission_Pion_GEN_Renforcer" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionEnRenfort, "T_Mission_Pion_GEN_Renforcer" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -125,18 +122,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_DegagerObstacles" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_DegagerObstacles" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -208,18 +202,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ContournerObstacles" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ContournerObstacles" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -291,18 +282,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreZone" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreZone" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -374,18 +362,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_OuvrirItineraire" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_OuvrirItineraire" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -457,18 +442,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RetablirItineraire" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RetablirItineraire" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -540,18 +522,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -625,18 +604,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end
@@ -710,18 +686,15 @@ elseif switch_1 == ePhase_CDT then
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.ePhase
-                    local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RealiserTravauxContreMobilite" )
                             self.missionPion = misMRT
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == ePhase_CDT then
+                        elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RealiserTravauxContreMobilite" )
                             self.missionPion = misCDT
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                             assert( false, "parametre invalide : ePhase" )
                         end

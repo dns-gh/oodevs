@@ -89,13 +89,11 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdreCond:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Decrocher" then
                             self.ePhase = eRompreContact
                             self.eAction = eActionEnCours
                             _continue = false
-                                                cases_switch_1[1] = true
-
+                        
                         else
                             bEstUtilise = false
                         end
@@ -121,11 +119,16 @@ do
 ]]
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// eInterdire
+]]--[[//------------------------------------------------------------------
+]]--[[//  Fin de mission
+]]--[[//------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSeMettreEnPlace then
-                    --[[// eInterdire
-]]if( self.eCurrentPhase == eFinMission ) then
+                    if( self.eCurrentPhase == eFinMission ) then
                         do
                             self.ePhase = eFinMission
                                                         do return end
@@ -136,8 +139,7 @@ do
                     Activate( self.activations.BEH_Mission_Pion_VAB_Recueillir, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_Recueillir = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRompreContact then
+                elseif switch_1 == eRompreContact then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -153,15 +155,8 @@ elseif switch_1 == eRompreContact then
                     Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//------------------------------------------------------------------
-]]--[[//  Fin de mission
-]]--[[//------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eAction == eActionEffectuee ) then
+                elseif switch_1 == eFinMission then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -180,8 +175,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
 self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end
@@ -238,13 +232,23 @@ node "BEH_Mission_Pion_VAB_Recueillir"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eSeMettreEnPlace then
-                    --[[//------------------------------------------------------------------
+--[[//------------------------------------------------------------------
 ]]--[[// On va se mettre en position en restant sur nos garde
 ]]--[[//------------------------------------------------------------------
-]]if( self.eAction == eActionImpossible ) then
+]]--[[//------------------------------------------------------------------
+]]--[[//  On verifie les alentours, et on attend de debusquer un ennemi
+]]--[[//------------------------------------------------------------------
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]--[[// On surveille la zone en meme temps que l'on prepare
+]]--[[// On fait d'abord debarquer				
+]]--[[// Prepare la mission d'interdiction
+]]--[[//------------------------------------------------------------------
+]]--[[//  On se met en position de tir 
+]]--[[//------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    if( self.eAction == eActionImpossible ) then
                         do
                             DEC_Trace( "pas de position valide" )
                             DEC_Warning( eRC_MissionImpossible )
@@ -273,20 +277,13 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
                         end
                     end
 
-                --[[//------------------------------------------------------------------
-]]--[[//  On verifie les alentours, et on attend de debusquer un ennemi
-]]--[[//------------------------------------------------------------------
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]--[[// On surveille la zone en meme temps que l'on prepare
-]]--[[// On fait d'abord debarquer				
-]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.ptMission, false, } )
-                    --[[// Prepare la mission d'interdiction
-]]if( self.eAction == eActionEffectuee ) then
+                    StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.ptMission, false, } )
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -304,10 +301,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     StartActivateOverride( self, self.activations.BEH_RC_Pion_VAB_SurveillerPIA, 1, emptyTable )
                     _continue = false
-                --[[//------------------------------------------------------------------
-]]--[[//  On se met en position de tir 
-]]--[[//------------------------------------------------------------------
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnRecueil, } )
                     _continue = false

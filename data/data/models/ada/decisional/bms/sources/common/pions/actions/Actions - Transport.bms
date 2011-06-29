@@ -49,14 +49,12 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
          do
             local _continue = true
             local switch_1 = self.eEtatTransport
-            local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                     do
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionTransport_Finished then
+                elseif switch_1 == eActionTransport_Finished then
                     do
                     end
 
@@ -138,14 +136,12 @@ elseif switch_1 == eActionTransport_Finished then
          do
             local _continue = true
             local switch_1 = self.eEtatTransport
-            local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                     do
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionTransport_Finished then
+                elseif switch_1 == eActionTransport_Finished then
                     do
                     end
 

@@ -81,8 +81,15 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// gestion des pions qui sont en reserve : mission suivre le pion
+]]--[[// operationnel le plus en arriere
+]]--[[// gestion des releves - listeFreinerPrec peut contenir des pions
+]]--[[// ayant la mission freiner détruits
+]]--[[// coordination des feux
+]]--[[// gestion étalement du dispositif
+]]--[[// coordination des ravitaillements
+]]--[[// ravitaillements et IMEX
+]]            local switch_1 = self.ePhase
                 if switch_1 == eFreiner then
                     if( DIA_IsListEmpty( self.listeFreinerOperationnels ) ) then
                         do
@@ -90,40 +97,30 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
                                                         do return end
 
                         end
---[[// gestion des pions qui sont en reserve : mission suivre le pion
-]]--[[// operationnel le plus en arriere
-]]                    end
+                    end
 
                     if( not DIA_IsListEmpty( self.listeFreinerOperationnels ) ) then
                         do
                             local pionASuivre = DEC_Geometrie_PionDerriere( self.listeFreinerOperationnels, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                             Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_CDT, self.listeReserve, pionASuivre, } )
                         end
---[[// gestion des releves - listeFreinerPrec peut contenir des pions
-]]--[[// ayant la mission freiner détruits
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeFreinerPrec, self.listeSuivre, } )
                     self.listeFreinerPrec = self.listeFreiner
-                    --[[// coordination des feux
-]]Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeFreinerOperationnels, 0, } )
-                    --[[// gestion étalement du dispositif
-]]Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, 1, { self.listeFreinerOperationnels, 15000, } )
-                    --[[// coordination des ravitaillements
-]]if( not DIA_IsListEmpty( self.listePeutFaireFreiner ) ) then
+                    Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeFreinerOperationnels, 0, } )
+                    Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, 1, { self.listeFreinerOperationnels, 15000, } )
+                    if( not DIA_IsListEmpty( self.listePeutFaireFreiner ) ) then
                         Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePeutFaireFreiner, } )
                     end
 
-                    --[[// ravitaillements et IMEX
-]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, false, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, false, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

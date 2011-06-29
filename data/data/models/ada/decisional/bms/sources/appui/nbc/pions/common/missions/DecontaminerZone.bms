@@ -65,22 +65,22 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Prepa
+]]--[[// 2) Progression jusqu'au point à reconnaitre
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Progresser vers le center de la zone
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 3) Decontamination (joue un délai de decontamination)
+]]--[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Prepa
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Aera decontamination mission begining", } )
                     self.ePhaseMission = eRejoindrePosition
                     _continue = false
-                --[[// 2) Progression jusqu'au point à reconnaitre
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindrePosition then
+                elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Progresser vers le center de la zone
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -95,9 +95,7 @@ elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionDansZone, eProgressionReco, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// 3) Decontamination (joue un délai de decontamination)
-]]                cases_switch_1[2] = true
-elseif switch_1 == eReconnaitre then
+                elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
                         do
@@ -107,14 +105,11 @@ elseif switch_1 == eReconnaitre then
                     end
 
                     _continue = false
-                --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

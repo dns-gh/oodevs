@@ -239,8 +239,14 @@ node "BEH_Dep_Pion_ASA_RejoindreParItineraire"
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
          do
             local _continue = true
-            local switch_1 = DEC_Itineraire_Etat( self.itineraire )
-            local cases_switch_1 = {}
+--[[//si j'ai un itineraire valide
+]]--[[//si je suis entre distanceMin et distanceMax
+]]--[[//La Variable d'etat VE_SePoster est modifiée par l'automate
+]]--[[//elle vaut 0 quand l'automate n'a pas donné l'ordre SePoster
+]]--[[// Evaluation de la progression
+]]--[[//penalite
+]]--[[//succes
+]]            local switch_1 = DEC_Itineraire_Etat( self.itineraire )
                 if switch_1 == eItineraire_Valide
                 or switch_1 == eItineraire_Partiel then
                     if( DEC_Itineraire_Etat( self.itineraire ) == eItineraire_Partiel ) then
@@ -252,24 +258,17 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                             self.pointEffectifARejoindre = DEC_Itineraire_DernierPoint( self.itineraire )
                             self.initialisationOK = true
                         end
---[[//si j'ai un itineraire valide
-]]                    end
+                    end
 
                     if( self.pointEffectifARejoindre ~= nil ) then
                         do
-                            --[[//si je suis entre distanceMin et distanceMax
-]]local distance = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointEffectifARejoindre )
-                            --[[//La Variable d'etat VE_SePoster est modifiée par l'automate
-]]--[[//elle vaut 0 quand l'automate n'a pas donné l'ordre SePoster
-]]if( ( distance >= self._namedParams.distanceMin ) and ( distance <= self._namedParams.distanceMax ) and not DEC_Agent_AutomateEstEmbraye() ) then
+                            local distance = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointEffectifARejoindre )
+                            if( ( distance >= self._namedParams.distanceMin ) and ( distance <= self._namedParams.distanceMax ) and not DEC_Agent_AutomateEstEmbraye() ) then
                                 do
-                                    --[[// Evaluation de la progression
-]]--[[//penalite
-]]if( not DEC_Itineraire_EstEnMouvementSur( self.itineraire ) ) then
+                                    if( not DEC_Itineraire_EstEnMouvementSur( self.itineraire ) ) then
                                         self.forceDelai = Min( 1, self.forceDelai + self._namedParams.forceDelaiPenalite )
                                     else
-                                        --[[//succes
-]]self.forceDelai = Max( 0, self.forceDelai - self._namedParams.forceDelaiSucces )
+                                        self.forceDelai = Max( 0, self.forceDelai - self._namedParams.forceDelaiSucces )
                                     end
 
                                     if( self.forceDelai >= 1 ) then
@@ -289,21 +288,19 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eItineraire_Invalide then
+                elseif switch_1 == eItineraire_Invalide then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ASA_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
+                if switch_1 == eItineraire_CalculEnCours then
                     do
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eItineraire_Impossible then
+                elseif switch_1 == eItineraire_Impossible then
                     do
                     end
 
@@ -313,7 +310,7 @@ elseif switch_1 == eItineraire_Impossible then
                     do return end
 
                                 end
-                if cases_switch_1[4] or switch_1 == eItineraire_Annule then
+                if switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ASA_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

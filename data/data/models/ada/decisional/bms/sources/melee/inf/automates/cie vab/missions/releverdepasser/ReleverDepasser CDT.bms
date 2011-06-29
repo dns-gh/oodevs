@@ -110,8 +110,8 @@ node "BEH_Conduite_Automate_INF_Relever"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Freiner ? 
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindre then
                     if( self.eActionReleve == eActionEffectuee ) then
                         do
@@ -128,8 +128,7 @@ node "BEH_Conduite_Automate_INF_Relever"
                     Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, { self.rN_PE, } )
 self.done_BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide = function( self, _, v ) self.eActionReleve = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRelever then
+                elseif switch_1 == eRelever then
                     if( self.eActionReleve == eActionEffectuee ) then
                         do
                             self.eActionReleve = eActionEnCours
@@ -142,13 +141,10 @@ elseif switch_1 == eRelever then
                     Activate( self.activations.BEH_Conduite_Automate_INF_Relever_AssignerReleve, 1, { self.mission.compagnie_, } )
 self.done_BEH_Conduite_Automate_INF_Relever_AssignerReleve = function( self, _, v ) self.eActionReleve = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
-                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, emptyTable )--[[// Freiner ? 
-]]
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

@@ -111,7 +111,20 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// ************************************************************
+]]--[[//                                          Test s'il fait nuit
+]]--[[//       Si c'est le cas alors la section d'infanterie se repli
+]]--[[//                   Les armées HUMUS ne combattent pas de nuit
+]]--[[// ------------------------------------------------------------
+]]--[[//                                          23/09/2008 16:16:02
+]]--[[// ************************************************************
+]]--[[//			if(  eAction == eActionEffectuee )    {         eAction=eActionEnCours;         { ePhase = eSeReplier; return; }     }						
+]]--[[//			behavior BEH_Mission_Pion_INF_Barrer() return in eCurrentPhase : strength = DIA_GetMotivation( MOT_Mission );
+]]--[[// Rejoins une position de replis
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------					
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eBarrer then
                     DEC_Trace( "DEBUT DE LA MISSION ----------------------- BARRER DIRECTION" )
@@ -126,14 +139,7 @@ do
 
                     if( self.eCurrentPhase ~= eSeReplier ) then
                         do
-                            --[[// ************************************************************
-]]--[[//                                          Test s'il fait nuit
-]]--[[//       Si c'est le cas alors la section d'infanterie se repli
-]]--[[//                   Les armées HUMUS ne combattent pas de nuit
-]]--[[// ------------------------------------------------------------
-]]--[[//                                          23/09/2008 16:16:02
-]]--[[// ************************************************************
-]]if( DEC_Nuit() ) then
+                            if( DEC_Nuit() ) then
                                 do
                                     Activate( self.activations.ACT_Info_Trace, 1, { "Il fait nuit, l'unité s'arrête", } )
                                 end
@@ -158,15 +164,12 @@ self.done_BEH_Mission_Pion_INF_Barrer = function( self, _, v ) self.eCurrentPhas
 
                             _continue = false
                         end
---[[//			if(  eAction == eActionEffectuee )    {         eAction=eActionEnCours;         { ePhase = eSeReplier; return; }     }						
-]]--[[//			behavior BEH_Mission_Pion_INF_Barrer() return in eCurrentPhase : strength = DIA_GetMotivation( MOT_Mission );
-]]                    end
+                    end
 
                         if _continue then
                         _continue = false
                     end
-                --[[// Rejoins une position de replis
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -193,10 +196,7 @@ self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[
                             self.eAction = eActionEnCours
                                                         do
                                 DEC_Trace( "fin de mission" )
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------					
-]]DEC_FinMission()
+                                DEC_FinMission()
                                                                 self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end

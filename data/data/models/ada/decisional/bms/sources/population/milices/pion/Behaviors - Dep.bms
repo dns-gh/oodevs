@@ -148,20 +148,23 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// On cherche une position d'observation
+]]--[[// Calcul de position d'observation ?
+]]--[[// Observe la direction dangereuse		
+]]--[[// Encore d'actualite ?
+]]--[[// $$$$ Penser au debarquement pr les VAB/MILAN				
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                     StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre = v[1] end
                     self.ePhase = eReconnaitre
-                --[[// On cherche une position d'observation
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[// Calcul de position d'observation ?
-]]if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
+                    if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
                         do
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.5, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
@@ -189,12 +192,9 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre
                                 cases_switch_1[2] = true
                 end
                 if cases_switch_1[2] or switch_1 == eSurveiller then
-                    --[[// Observe la direction dangereuse		
-]]local mission = DEC_GetMission( myself )
+                    local mission = DEC_GetMission( myself )
                     Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-                    --[[// Encore d'actualite ?
-]]--[[// $$$$ Penser au debarquement pr les VAB/MILAN				
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -293,11 +293,12 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eActionRejoindre 
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// On cherche une position d'observation
+]]--[[// $$$$ Penser au debarquement pr les VAB/MILAN
+]]--[[// Observe la direction dangereuse				action ACT_Misc_Pion_DelaiInstallation( eNiveauInstallation_Poste ) return in  
+]]            local switch_1 = self.ePhase
                 if switch_1 == eReconnaitre then
-                    --[[// On cherche une position d'observation
-]]if( S_Geometrie_EstProchePosition( self._namedParams.ptEmbuscade, DEC_Agent_Position(), 600 ) ) then
+                    if( S_Geometrie_EstProchePosition( self._namedParams.ptEmbuscade, DEC_Agent_Position(), 600 ) ) then
                         do
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptEmbuscade, } )
                             if( DEC_Perception_PointEstVisible( self._namedParams.ptEmbuscade ) ) then
@@ -314,12 +315,10 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eActionRejoindre 
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eSurveiller then
+                if switch_1 == eSurveiller then
                     Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Position atteinte", } )
-                    --[[// $$$$ Penser au debarquement pr les VAB/MILAN
-]]--[[// Observe la direction dangereuse				action ACT_Misc_Pion_DelaiInstallation( eNiveauInstallation_Poste ) return in  
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = eRejoindre
@@ -333,8 +332,7 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                                 end
             end

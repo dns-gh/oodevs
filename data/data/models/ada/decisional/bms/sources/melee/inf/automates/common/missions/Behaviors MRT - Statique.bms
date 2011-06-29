@@ -77,24 +77,42 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_SelectionnerPions then
-                    self.ePhase = eMRT_AssignerMissions
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------								
-]]DEC_Trace( "Selection des composantes pion : Infanterie" )
-                    --[[// Selection les types de composantes
-]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie" )
+]]--[[// Selection les types de composantes
+]]--[[// Dans les missions retrograde, tout les pions ABC sont en appuis
+]]--[[// Determine les echelons	
+]]--[[// Determine les echelons	
+]]--[[// Selection des composantes
+]]--[[// 
+]]--[[// L'execution de la mission necessite la presence d'un 1er ech
+]]--[[/* MIA ADA
+			//-----------------------------------------------------------------------------
+			//Le fuseau de la compagnie est coupe en DEUX
+			//le pion en appui utilise le fuseau de la compagnie
+			//-----------------------------------------------------------------------------
+			if(  eActionMRT == eActionEffectuee )    {         eActionMRT=eActionEnCours;         { ePhase = eMRT_AssignerMissions; return; }     }
+			action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;
+			*/]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------				
+]]--[[// if ( eTypeMission != T_Mission_Automate_INF_DonnerCoupArret )
+]]--[[//	eValidationMRT == eActionEffectuee;
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// DEFENDRE
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_SelectionnerPions then
+                    self.ePhase = eMRT_AssignerMissions
+                    DEC_Trace( "Selection des composantes pion : Infanterie" )
+                    local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie" )
                     local sUnites_HOT = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie_HOT" )
                     local sUnites_MILAN = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie_MILAN" )
                     local sUnites_ABC = S_Cherche_Automate_Filtre_TypePion_ABC( self.selPions )
                     self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeInfanterie_Mortier" )
-                    --[[// Dans les missions retrograde, tout les pions ABC sont en appuis
-]]S_Automate_ValideEchelonPion( sUnites_ABC, self.lstPionsAttaque, 0, self.lstPionsAppui )
-                    --[[// Determine les echelons	
-]]local rN_PE_AC = 0
+                    S_Automate_ValideEchelonPion( sUnites_ABC, self.lstPionsAttaque, 0, self.lstPionsAppui )
+                    local rN_PE_AC = 0
                     local rN_PE = 0
                     local rN_SE = 0
                     local rN_Appui = 0
@@ -113,8 +131,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                             end
                             if cases_switch_2[1] or switch_2 == "T_Mission_Automate_INF_Interdire"
                             or switch_2 == "T_Mission_Automate_INF_Couvrir" then
-                                --[[// Determine les echelons	
-]]rN_Appui = #( sUnites_MILAN ) + #( sUnites_ABC )
+                                rN_Appui = #( sUnites_MILAN ) + #( sUnites_ABC )
                                 rN_PE_AC = #( sUnites_INF ) + #( sUnites_MILAN )
                                 rN_PE = Max( #( sUnites_HOT ), #( sUnites_INF ) )
                                 if( self._namedParams.rN_Position ~= 0 ) then
@@ -134,8 +151,7 @@ if( rN_Appui > 0 ) then
                                 end
 
                                 rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
-                                --[[// Selection des composantes
-]]DEC_Trace( "Selection des composantes pion" )
+                                DEC_Trace( "Selection des composantes pion" )
                                 self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
                                 self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
                                 self.selPions_PE_MILAN = S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsAttaque, rN_PE_AC, self.lstPionsAppui )
@@ -143,9 +159,7 @@ if( rN_Appui > 0 ) then
                                                         cases_switch_2[2] = true
                             end
                         end
---[[// 
-]]--[[// L'execution de la mission necessite la presence d'un 1er ech
-]]
+
                     if( #( self.lstPionsAttaque ) == 0 ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
@@ -158,22 +172,10 @@ if( rN_Appui > 0 ) then
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AffecterFuseaux then
+                elseif switch_1 == eMRT_AffecterFuseaux then
                     self.ePhase = eMRT_AssignerMissions
-                    _continue = false--[[/* MIA ADA
-			//-----------------------------------------------------------------------------
-			//Le fuseau de la compagnie est coupe en DEUX
-			//le pion en appui utilise le fuseau de la compagnie
-			//-----------------------------------------------------------------------------
-			if(  eActionMRT == eActionEffectuee )    {         eActionMRT=eActionEnCours;         { ePhase = eMRT_AssignerMissions; return; }     }
-			action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;
-			*/]]--[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------				
-]]
-                                cases_switch_1[2] = true
-elseif switch_1 == eMRT_AssignerMissions then
+                    _continue = false
+                elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eActionMRT == eActionImpossible ) then
                         do
                                                         do
@@ -216,7 +218,6 @@ self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) sel
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eTypeMission
-                        local cases_switch_2 = {}
                             if switch_2 == "T_Mission_Automate_INF_DefendreFerme"
                             or switch_2 == "T_Mission_Automate_INF_Tenir" then
                                 local mission = DEC_GetMission( myself )
@@ -224,15 +225,13 @@ self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) sel
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_HOT, mission.position_, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_MILAN, mission.position_, } )
                                 _continue = false
-                                                        cases_switch_2[1] = true
-elseif switch_2 == "T_Mission_Automate_INF_BarrerDirection" then
+                            elseif switch_2 == "T_Mission_Automate_INF_BarrerDirection" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, 1, { self.selPions_PE_INF, mission.position_, mission.preparerTerrain_, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_HOT, mission.position_, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_MILAN, mission.position_, } )
                                 _continue = false
-                                                        cases_switch_2[2] = true
-elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
+                            elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                                 if( self.limaLCAR == nil ) then
                                     do
                                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
@@ -247,8 +246,7 @@ elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_HOT, self.limaLCAR, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_MILAN, self.limaLCAR, } )
                                 _continue = false
-                                                        cases_switch_2[3] = true
-elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
+                            elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
                                 local mission = DEC_GetMission( myself )
                                 if( self.limaLR == nil ) then
                                     do
@@ -264,26 +262,22 @@ elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_HOT, self.limaLR, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_MILAN, self.limaLR, } )
                                 _continue = false
-                                                        cases_switch_2[4] = true
-elseif switch_2 == "T_Mission_Automate_INF_Couvrir" then
+                            elseif switch_2 == "T_Mission_Automate_INF_Couvrir" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints, 1, { self.selPions_PE_INF, mission.objectifs_, false, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, 1, { self.selPions_PE_HOT, mission.objectifs_, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, 1, { self.selPions_PE_MILAN, mission.objectifs_, } )
                                 _continue = false
-                                                        cases_switch_2[5] = true
-elseif switch_2 == "T_Mission_Automate_INF_Surveiller" then
+                            elseif switch_2 == "T_Mission_Automate_INF_Surveiller" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Zone, 1, { self.lstPionsAttaque, mission.zone_, } )
                                 _continue = false
-                                                        cases_switch_2[6] = true
-elseif switch_2 == "T_Mission_Automate_INF_Interdire" then
+                            elseif switch_2 == "T_Mission_Automate_INF_Interdire" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints, 1, { self.lstPionsAttaque, mission.pointsAInterdire_, mission.preparerTerrain_, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerCouvrir, 1, { self.lstPionsAttaque, self.lstPionsAppui, } )
                                 _continue = false
-                                                        cases_switch_2[7] = true
-
+                            
                             else
                                 DEC_Trace( "Mission Inconnue" )
                                                                 self:SendFeedback( eActionImpossible )
@@ -296,12 +290,9 @@ elseif switch_2 == "T_Mission_Automate_INF_Interdire" then
                     Activate( self.activations.BEH_Medo_Automate_INF_AssignerMission_PC, 1, { self.lstPionsAttaque, self.lstPionsAppui, } )
 self.done_BEH_Medo_Automate_INF_AssignerMission_PC = function( self, _, v ) self.eActionMRT = v[1] end
                     Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
-                    --[[// if ( eTypeMission != T_Mission_Automate_INF_DonnerCoupArret )
-]]Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
-                    _continue = false--[[//	eValidationMRT == eActionEffectuee;
-]]
-                                cases_switch_1[3] = true
-elseif switch_1 == eMRT_RetablirFuseau then
+                    Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
+                    _continue = false
+                elseif switch_1 == eMRT_RetablirFuseau then
                     if( self.eValidationMRT == eActionEffectuee ) then
                         do
                             self.eValidationMRT = eActionEnCours
@@ -317,17 +308,13 @@ elseif switch_1 == eMRT_RetablirFuseau then
 
                     for _,x_pion in pairs( self.lstPionsAttaque or emptyTable ) do
                     local _continue = true
-                        --[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, { x_pion, } )
+                        Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, { x_pion, } )
 self.done_ACT_Medo_Automate_AffecterFuseaux_Compagnie = function( self, _, v ) self.eValidationMRT = v[1] end
 
                     end
 
-                    _continue = false--[[// DEFENDRE
-]]
-                --[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[4] = true
-                end
+                    _continue = false
+                                end
             end
 
     end,

@@ -90,7 +90,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// -> Gestion l'ennemi
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
                     do
@@ -98,8 +99,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            --[[// -> Gestion l'ennemi
-]]Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
+                            Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
                             Activate( self.activations.BEH_Mission_Pion_VAB_RecoPoint, GetMotivation( "MOT_Mission" ), { self.pt, } )
 self.done_BEH_Mission_Pion_VAB_RecoPoint = function( self, _, v ) self.eCurrentPhase = v[1] end
                                                         do return end
@@ -196,18 +196,18 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//Rejoint position d'observation sur objectif
+]]--[[/* M_MAX_DIST_CAPTEUR() */]]--[[//Observation de l'objectif
+]]--[[//Rejoinds l'objectif a pied
+]]--[[// Nettoyage de la position
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindre then
-                    --[[//Rejoint position d'observation sur objectif
-]]--[[/* M_MAX_DIST_CAPTEUR() */]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.pt, 5000 ) and DEC_Perception_PointEstVisible( self._namedParams.pt ) ) then
+                    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.pt, 5000 ) and DEC_Perception_PointEstVisible( self._namedParams.pt ) ) then
                         self.ePhase = eObserver
                     end
 
                     _continue = false
-                --[[//Observation de l'objectif
-]]                cases_switch_1[1] = true
-elseif switch_1 == eObserver then
+                elseif switch_1 == eObserver then
                     StartActivateOverride( self, self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
@@ -220,17 +220,13 @@ elseif switch_1 == eObserver then
                     Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1.1, { self._namedParams.pt, S_Delai_INF_RecoDebarque( self._namedParams.pt ), } )
 self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//Rejoinds l'objectif a pied
-]]                cases_switch_1[2] = true
-elseif switch_1 == eRejoindreAssaut then
+                elseif switch_1 == eRejoindreAssaut then
                     if( S_Tir_EstAPortee_DebarquePt( self._namedParams.pt ) ) then
                         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
                     end
 
                     _continue = false
-                --[[// Nettoyage de la position
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFouiller then
+                elseif switch_1 == eFouiller then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -244,8 +240,7 @@ elseif switch_1 == eFouiller then
                     Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_DELAI_NETTOYAGE_RECO(), "fouille de la position", } )
 self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
                 self:SendFeedback( self.ePhase )

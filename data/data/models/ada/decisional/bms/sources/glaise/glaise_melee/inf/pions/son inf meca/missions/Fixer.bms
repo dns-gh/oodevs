@@ -103,7 +103,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eFixer then
                     if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
@@ -124,10 +127,7 @@ self.done_BEH_Mission_Pion_VAB_Fixer = function( self, _, v ) self.eCurrentPhase
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eFinMission then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -224,19 +224,17 @@ node "BEH_Mission_Pion_VAB_Fixer"
 self.done_BEH_Dep_Pion_INF_PreciserMaintenirContact = function( self, _, v ) self.eActionPreciser = v[1] end
          do
             local _continue = true
-            local switch_1 = S_Eni_NiveauPerceptionGTIA( self.ksMission )
-            local cases_switch_1 = {}
-                if switch_1 == eReconnu
-                or switch_1 == eIdentifie then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Unites reconnues/identifiees
 ]]--[[//-----------------------------------------------------------------------------				
-]]Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { S_Eni_Position( self.ksMission ), } )
+]]            local switch_1 = S_Eni_NiveauPerceptionGTIA( self.ksMission )
+                if switch_1 == eReconnu
+                or switch_1 == eIdentifie then
+                    Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { S_Eni_Position( self.ksMission ), } )
                     Activate( self.activations.BEH_Eni_Pion_VAB_Fixer, 2 * S_Force_DangerSur( self.ksMission ), { self.ksMission, } )
 self.done_BEH_Eni_Pion_VAB_Fixer = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-
+                
                 else
                     --[[// Si on n'a pas retrouve la connaissance
 ]]if( DEC_ConnaissanceAgent_EstValide( self.ksMission ) and S_Geometrie_EstProchePosition( DEC_Agent_Position(), S_Eni_Position( self.ksMission ), M_DISTANCE_FIXER_SECURITE() ) ) then

@@ -71,13 +71,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[//If there are no fire in the selected area, mission is aborted
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSelectionnerFeuAEteindre then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                     self.fireKnowledge = S_Obj_Emergency_ObtenirObjetProche( self._namedParams.mission.position_, eTypeObjectDynamicFire, 500 )
-                    --[[//If there are no fire in the selected area, mission is aborted
-]]if( DEC_ConnaissanceObjet_EstValide( self.fireKnowledge ) ) then
+                    if( DEC_ConnaissanceObjet_EstValide( self.fireKnowledge ) ) then
                         do
                             self.ePhase = eRejoindrePosition
                             self.firePosition = S_Obj_Position( self.fireKnowledge )

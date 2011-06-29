@@ -30,23 +30,19 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
                             local repOrderRegimeMaint = ordre
                             DEC_Maintenance_ChangerRegimeTravail( repOrderRegimeMaint:GetorderConduiteModifierRegimeTravailMaintenance_() )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
                             local repOrdrePrioriteMain = ordre
                             DEC_Maintenance_ChangerPriorites( repOrdrePrioriteMain:GetorderConduiteModifierPrioritesReparations_() )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
                             local repOrdrePrioriteSan = ordre
                             DEC_Sante_ChangerPriorites( repOrdrePrioriteSan:GetorderConduiteModifierPrioritesBlesses_() )
                             _continue = false
-                                                cases_switch_1[3] = true
-
+                        
                         else
                             bEstUtilise = false
                             _continue = false

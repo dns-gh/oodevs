@@ -56,8 +56,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// quand on stationne, on débarque les passagers
+]]            local switch_1 = self.ePhase
                 if switch_1 == eProgresser then
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -76,10 +76,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointAttente_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
-                    --[[// quand on stationne, on débarque les passagers
-]]if( self.eEtat == eActionEffectuee ) then
+                elseif switch_1 == eFinMission then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             DEC_Transport_Annuler()
                                                         do return end
@@ -91,8 +89,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

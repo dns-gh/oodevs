@@ -60,18 +60,20 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]
          do
             local _continue = true
-            local switch_1 = --[[//=============================================================================
+--[[//=============================================================================
 ]]--[[// Calcule it et progression
 ]]--[[//=============================================================================
-]]self.ePhase
+]]--[[// 1) Preparation de la mission
+]]--[[// Deplacement
+]]--[[// Attendre le transport
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eProgresser
                     _continue = false
-                --[[// Deplacement
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
@@ -89,14 +91,12 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Attendre le transport
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
 elseif switch_1 == eAttendre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                --[[// Fin mission
-]]                cases_switch_1[3] = true
+                                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     if( DEC_Agent_EstTransporte() ) then
                         do return end

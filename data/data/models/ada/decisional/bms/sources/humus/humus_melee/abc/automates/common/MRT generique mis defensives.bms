@@ -42,7 +42,7 @@ local emptyTable = emptyTable
         self.selABC_NonPrevus = self.selABC_NonPrevus or {}
          do
             local _continue = true
-            local switch_1 = --[[// =============================================================================
+--[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[// 1) Vérifier les moyens, des renforts éventuels
 ]]--[[// 2) Déterminer les échelons
@@ -50,18 +50,54 @@ local emptyTable = emptyTable
 ]]--[[// $$$$ MIA 2004-10-01: les missions du deuxieme échelon sont données dans la conduite
 ]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
 ]]--[[// =============================================================================                                  
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_DeterminerEchelonsGlobals then
-                    for _,x in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Verification des moyens
 ]]--[[//-----------------------------------------------------------------------------
-]]selPions or emptyTable ) do
+]]--[[// On ne traite pas les pions non opérationnels
+]]--[[// Si pas de pions capable de faire la mission...mission impossible
+]]--[[// que de l'éclairage --> on peut qd même faire certaines missions
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 1) Assigner les missions
+]]--[[//// $$$$ MIA 04-02-06: TEMP A REFAIRE L'ECHELONNEMENT AVEC P ECL
+]]--[[//// $$$$ MIA 04-02-06: GENERICITE ++
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]--[[// ePhase = eMRT_MissionImpossible;
+]]--[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]--[[// Suivant le type de mission...
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Armer point controle
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// CONTROLER
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ReconnaitrePoint
+]]--[[// SPE EEI, les patrouille n'ont pas cette mission donc 
+]]--[[// on leur donne Eclairer vers le point
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// COUP D'ARRET
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Spé mission à cause LR et LIA
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// RENSEIGNER SECTEUR --> donner eclairer plutôt...aller dans la zone...
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Surveiller secteur
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//action ACT_RC_Automate( eRC_MissionImpossible );
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 2) Validation MRT
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_DeterminerEchelonsGlobals then
+                    for _,x in pairs( selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
-                            --[[// On ne traite pas les pions non opérationnels
-]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                            if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
                                 do
                                     DEC_Trace( DEC_GetSzName( pion ) .. " non operationnal" )
                                     DIA_PushFront( self.selABC_SE, pion )
@@ -73,12 +109,10 @@ do
                                  do
                                     local _continue = true
                                     local switch_2 = pion:GetType()
-                                    local cases_switch_2 = {}
                                         if switch_2 == "Patrouille_EI" then
                                             DIA_PushFront( self.selABC_PEcl, pion )
                                             _continue = false
-                                                                                cases_switch_2[1] = true
-
+                                        
                                         else
                                             DIA_PushFront( self.selABC_NonPrevus, pion )
                                             _continue = false
@@ -87,8 +121,7 @@ do
 
                             end
                         end
---[[// Si pas de pions capable de faire la mission...mission impossible
-]]
+
                     end
 
                     if( DIA_IsListEmpty( self.selABC_PEcl ) ) then
@@ -98,22 +131,14 @@ do
                                                         do return end
 
                         end
---[[// que de l'éclairage --> on peut qd même faire certaines missions
-]]                    end
+                    end
 
                     self.ePhase = eMRT_AssignerMissions
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 1) Assigner les missions
-]]--[[//// $$$$ MIA 04-02-06: TEMP A REFAIRE L'ECHELONNEMENT AVEC P ECL
-]]--[[//// $$$$ MIA 04-02-06: GENERICITE ++
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]if( self.eEtat == eActionImpossible ) then
+                elseif switch_1 == eMRT_AssignerMissions then
+                    if( self.eEtat == eActionImpossible ) then
                         do
-                            --[[// ePhase = eMRT_MissionImpossible;
-]]DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
+                            DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                             self.ePhase = eMRT_Valider
                                                         do return end
 
@@ -126,101 +151,63 @@ elseif switch_1 == eMRT_AssignerMissions then
                                                         do return end
 
                         end
---[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]--[[// Suivant le type de mission...
-]]                    end
+                    end
 
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eType
-                        local cases_switch_2 = {}
                             if switch_2 == "T_Mission_Automate_ABC_ArmerPointDeControle" then
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// Armer point controle
-]]--[[//-----------------------------------------------------------------------------
-]]local mission = DEC_GetMission( myself )
+                                local mission = DEC_GetMission( myself )
                                 local pointTemp = S_Geometrie_BarycentreZone( mission.zoneDeControle_ )
                                 local zoneControle = DEC_Geometrie_ConvertirPointEnLocalisation( pointTemp )
                                 DEC_CreerObjetSansDelais( S_TypeObject_ToString( eTypeObjectPosteControle ), zoneControle )
                                 self.ePhase = eMRT_Valider
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// CONTROLER
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[1] = true
-elseif switch_2 == "T_Mission_Automate_ABC_Controler" then
+                            elseif switch_2 == "T_Mission_Automate_ABC_Controler" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PEcl ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerControlerZoneA, 1, { self.selABC_PEcl, mission.zoneAControler_, eEtatEchelon_Eclairage, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// ReconnaitrePoint
-]]--[[// SPE EEI, les patrouille n'ont pas cette mission donc 
-]]--[[// on leur donne Eclairer vers le point
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[2] = true
-elseif switch_2 == "T_Mission_Automate_ABC_ReconnaitrePoint" then
+                            elseif switch_2 == "T_Mission_Automate_ABC_ReconnaitrePoint" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PEcl ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.pointAReconnaitre_, eEtatEchelon_Eclairage, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// COUP D'ARRET
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[3] = true
-elseif switch_2 == "T_Mission_Automate_ABC_RecueillirUnite" then
-                                --[[// Spé mission à cause LR et LIA
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PEcl ), } )
+                            elseif switch_2 == "T_Mission_Automate_ABC_RecueillirUnite" then
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PEcl ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, eEtatEchelon_Eclairage, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// RENSEIGNER SECTEUR --> donner eclairer plutôt...aller dans la zone...
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[4] = true
-elseif switch_2 == "T_Mission_Automate_ABC_RenseignerSur" then
+                            elseif switch_2 == "T_Mission_Automate_ABC_RenseignerSur" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PEcl ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneARenseigner_, eEtatEchelon_Eclairage, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// Surveiller secteur
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[5] = true
-elseif switch_2 == "T_Mission_Automate_ABC_Surveiller" then
+                            elseif switch_2 == "T_Mission_Automate_ABC_Surveiller" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PEcl ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneInstallation_, eEtatEchelon_Eclairage, } )
                                 _continue = false
-                                                        cases_switch_2[6] = true
-                            end
+                                                        end
                         end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Mission impossible
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     Activate( self.activations.ACT_Info_Trace, 1, { "MISSION IMPOSSIBLE", } )
-                    --[[//action ACT_RC_Automate( eRC_MissionImpossible );
-]]Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                    Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 2) Validation MRT
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[3] = true
-elseif switch_1 == eMRT_Valider then
+                elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then
+                
+                else
                                 end
             end
 

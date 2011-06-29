@@ -125,39 +125,33 @@ do
                 local repOrdre = x
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[// cast
+]]--[[// TIR INTERDIT POP
+]]--[[// TIR SOMMATION POP
+]]--[[// TIR NEUTRALISATION POP
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
-                            --[[// cast
-]]local ordreROE = repOrdre
+                            local ordreROE = repOrdre
                              do
                                 local _continue = true
                                 local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
-                                local cases_switch_2 = {}
                                     if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
-                                        --[[// TIR INTERDIT POP
-]]DEC_Trace( " === Frag order --> POPULATION ROE: USE OF FORCE FORBIDDEN" )
+                                        DEC_Trace( " === Frag order --> POPULATION ROE: USE OF FORCE FORBIDDEN" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, emptyTable )
                                         _continue = false
-                                    --[[// TIR SOMMATION POP
-]]                                    cases_switch_2[1] = true
-elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                                    elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                                         DEC_Trace( " === Frag order --> POPULATION ROE: KEEP DISTANCE WITH NON LETHAL MEANS" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
                                         _continue = false
-                                    --[[// TIR NEUTRALISATION POP
-]]                                    cases_switch_2[2] = true
-elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                                    elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
                                         DEC_Trace( " === Frag order --> POPULATION ROE: ENABLE LETHAL WEAPONS" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, emptyTable )
                                         _continue = false
-                                                                        cases_switch_2[4] = true
-                                    end
+                                                                        end
                                 end
 
                             _continue = false
-                                                cases_switch_1[1] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )

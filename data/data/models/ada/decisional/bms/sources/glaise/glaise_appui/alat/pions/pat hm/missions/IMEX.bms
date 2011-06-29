@@ -102,19 +102,26 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         Activate( self.activations.ACT_Maj_Pion_ALAT_ParametresRecompletement, 1, { self._namedParams.mission.porteeAction_, ePolyvalent, } )
          do
             local _continue = true
-            local switch_1 = --[[//Corps de la mission
+--[[//Corps de la mission
 ]]--[[//-------------------
-]]self.ePhase
-            local cases_switch_1 = {}
+]]--[[// test pour savoir si on doit ravitailler
+]]--[[//on regarde dans la direction de deplacement
+]]--[[//desactivation de la gestion des alarmes sanitaires vers les TC2
+]]--[[//si on a un ennemi detruit tactique ou detruit physique
+]]--[[//=> hélitransporter les humains au TC2               
+]]--[[//si pas de pion a couvrir, aller se ravitailler
+]]--[[//on ne couvre pas les unites qui se ravitaillements.
+]]--[[//MAJ de l'objectif d'esquive dans ce comportement
+]]--[[//on se met à 7000 mètre du pion le plus en arriere par rapport
+]]--[[//a la direction dangereuse
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                    --[[// test pour savoir si on doit ravitailler
-]]if( not self._namedParams.mission.ravitaillementDebutMission_ ) then
+                    if( not self._namedParams.mission.ravitaillementDebutMission_ ) then
                         self.eEtat = eActionEffectuee
                     end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )--[[//on regarde dans la direction de deplacement
-]]
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -148,37 +155,27 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, 1, emptyTable )
 self.done_BEH_Log_Pion_ALAT_Recompletement = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eAppuyer then
+                elseif switch_1 == eAppuyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
-                    for _,x in pairs( --[[//desactivation de la gestion des alarmes sanitaires vers les TC2
-]]self.listePionsAPotentiellementExtraire or emptyTable ) do
+                    for _,x in pairs( self.listePionsAPotentiellementExtraire or emptyTable ) do
                     local _continue = true
                         Activate( self.activations.ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire, 1, { x, } )
 
                     end
 
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
-                    --[[//si on a un ennemi detruit tactique ou detruit physique
-]]--[[//=> hélitransporter les humains au TC2               
-]]Activate( self.activations.Pion_ALAT_IMEX_GererTransport, GetMotivation( "MOT_Manoeuvrer" ) * 2, { pionTC2, self.listePionsAPotentiellementExtraire, eTypeItiInfiltration, } )
-                    --[[//si pas de pion a couvrir, aller se ravitailler
-]]--[[//on ne couvre pas les unites qui se ravitaillements.
-]]if( DIA_IsListEmpty( self.listePionsASuivre ) and not myself.bEnCoursExtractionPersonnel_ ) then
+                    Activate( self.activations.Pion_ALAT_IMEX_GererTransport, GetMotivation( "MOT_Manoeuvrer" ) * 2, { pionTC2, self.listePionsAPotentiellementExtraire, eTypeItiInfiltration, } )
+                    if( DIA_IsListEmpty( self.listePionsASuivre ) and not myself.bEnCoursExtractionPersonnel_ ) then
                         Halt( self )
                         do return end
                     end
 
-                    --[[//MAJ de l'objectif d'esquive dans ce comportement
-]]--[[//on se met à 7000 mètre du pion le plus en arriere par rapport
-]]--[[//a la direction dangereuse
-]]if( not DIA_IsListEmpty( self.listePionsASuivre ) ) then
+                    if( not DIA_IsListEmpty( self.listePionsASuivre ) ) then
                         Activate( self.activations.BEH_Dep_Pion_ALAT_Suivre, GetMotivation( "MOT_Manoeuvrer" ), { DEC_Geometrie_PionDerriere( self.listePionsASuivre, DEC_GetDirectionDanger( self._namedParams.mission ) ), 7000, eProgressionDefaut, eTypeItiInfiltration, } )
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
@@ -218,8 +215,7 @@ elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -240,8 +236,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

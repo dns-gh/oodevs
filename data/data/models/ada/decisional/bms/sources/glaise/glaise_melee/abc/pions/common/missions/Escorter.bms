@@ -86,50 +86,51 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// Progression tactique
+]]--[[// Aller au plus vite
+]]--[[// se dépecher
+]]--[[// Escvorter l'unite à bonne distance
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Rejoindre unite
+]]--[[//-----------------------------------------------------------------------------      
+]]--[[// Escorte
+]]--[[// Objectif de l'unité escorté                
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Reconnaissance sur l'axe 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Obstacle
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Escort mission beginig", } )
                     self.ePhaseMission = eRejoindre
                     _continue = false
-                --[[// Progression tactique
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
-                    --[[// Aller au plus vite
-]]--[[// se dépecher
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                    --[[// Escvorter l'unite à bonne distance
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < 200 ) then
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < 200 ) then
                         do
                             self.ePhaseMission = eProgresser
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Rejoindre unite
-]]--[[//-----------------------------------------------------------------------------      
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, 50, } )
                     _continue = false
-                --[[// Escorte
-]]                cases_switch_1[2] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
-                    --[[// Objectif de l'unité escorté                
-]]if( F_Pion_GetitMvt( self._namedParams.pionAmi ) == nil ) then
+                    if( F_Pion_GetitMvt( self._namedParams.pionAmi ) == nil ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for friendly unit to have a mission", } )
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Reconnaissance sur l'axe 
-]]--[[//-----------------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -145,20 +146,14 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_Progresser, 1, { F_Pion_GetitMvt( self._namedParams.pionAmi ), eProgressionReco, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Obstacle
-]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
+                    Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
                     _continue = false
-                --[[// Fin de la mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { self._namedParams.pionAmi, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end
@@ -277,23 +272,33 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// Progression tactique
+]]--[[// Aller au plus vite
+]]--[[// se dépecher
+]]--[[// Escorter l'unite à bonne distance
+]]--[[// Escorte
+]]--[[// IL FAUT QUE L'AUTOMATE QUE L'ON ESCORTE AIT LA MISSION 'FAIRE MOUVEMENT'
+]]--[[// On prend un pion l'itineraire d'un pion au hasard dans l'automate
+]]--[[// Objectif de l'unité escortée    
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Reconnaissance sur l'axe 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Obstacle
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]--[[// PC
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Company escort mission begining", } )
                     self.ePhaseMission = eRejoindre
                     _continue = false
-                --[[// Progression tactique
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
-                    --[[// Aller au plus vite
-]]--[[// se dépecher
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                    --[[// Escorter l'unite à bonne distance
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), pionASuivre:DEC_Agent_Position() ) < 200 ) then
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), pionASuivre:DEC_Agent_Position() ) < 200 ) then
                         do
                             self.ePhaseMission = eProgresser
                                                         do return end
@@ -303,23 +308,15 @@ elseif switch_1 == eRejoindre then
 
                     Activate( self.activations.BEH_Dep_Suivre, 1, { pionASuivre, 50, } )
                     _continue = false
-                --[[// Escorte
-]]                cases_switch_1[2] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
-                    --[[// IL FAUT QUE L'AUTOMATE QUE L'ON ESCORTE AIT LA MISSION 'FAIRE MOUVEMENT'
-]]--[[// On prend un pion l'itineraire d'un pion au hasard dans l'automate
-]]--[[// Objectif de l'unité escortée    
-]]if( pionTemoin == nil or F_Pion_GetitMvt( pionTemoin ) == nil ) then
+                    if( pionTemoin == nil or F_Pion_GetitMvt( pionTemoin ) == nil ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escortée doit avoir un objectif **** ", } )
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Reconnaissance sur l'axe 
-]]--[[//-----------------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -335,27 +332,20 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_Progresser, 1, { F_Pion_GetitMvt( pionTemoin ), eProgressionReco, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Obstacle
-]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
+                    Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
                     _continue = false
-                --[[// Fin de la mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     for _,pion in pairs( listePionsAmis or emptyTable ) do
                     local _continue = true
                         StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { pion, } )
 
                     end
 
-                    --[[// PC
-]]StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
+                    StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

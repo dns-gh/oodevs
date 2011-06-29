@@ -102,7 +102,6 @@ do
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eTransporter then
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -136,8 +135,7 @@ do
                     Activate( self.activations.BEH_Transport_Pion_ALAT_HM_Helitransporter, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsAHeliporter, self._namedParams.mission.avecMateriel_, eTypeItiInfiltration, } )
 self.done_BEH_Transport_Pion_ALAT_HM_Helitransporter = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
@@ -175,8 +173,7 @@ elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -198,8 +195,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

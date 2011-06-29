@@ -67,30 +67,26 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation mission
+]]--[[// Se diriger vers les ZR 
+]]--[[// données doctrine
+]]--[[// Fin de la mission Sur ordre ou si plus d'autonomie
+]]--[[// données doctrine
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eSurveiller
                     _continue = false
-                --[[// Se diriger vers les ZR 
-]]                cases_switch_1[1] = true
-elseif switch_1 == eSurveiller then
+                elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_Info_Trace, 1, { "Vertical take off", } )
-                    --[[// données doctrine
-]]Activate( self.activations.BEH_Dep_Pion_RENS_MonterA, 1.1, { 3000, } )
+                    Activate( self.activations.BEH_Dep_Pion_RENS_MonterA, 1.1, { 3000, } )
                     Activate( self.activations.BEH_Obs_Pion_Rens_Radint_RenseignerDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
                     _continue = false
-                --[[// Fin de la mission Sur ordre ou si plus d'autonomie
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    --[[// données doctrine
-]]StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
+                    StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

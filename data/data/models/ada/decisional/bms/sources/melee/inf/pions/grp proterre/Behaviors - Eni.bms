@@ -215,48 +215,48 @@ self.done_BEH_Dep_Pion_INF_AborderEnnemi = function( self, _, v ) self.eActionDe
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Rejoindre base d'assaut
+]]--[[// la section rejoint la base d'assaut            
+]]--[[// stop behavior BEH_Pion_INF_TirCouverture_Fixe( ksEni );
+]]--[[// Détruire l'eni : on lance l'assaut
+]]--[[// if ( DEC_Agent_EstEmbarque() )
+]]--[[// On fait en sorte de ne pas etre vu
+]]--[[// mise en place du dispositif d' assaut
+]]--[[// Ennemi detruit on nettoie la position
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Gere la prise de contact avec l'ennemi :
+]]--[[//		- Precise le contact
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
-                    --[[// Rejoindre base d'assaut
-]]if( S_Tir_EstAPortee( self._namedParams.ksEni, rPH ) or S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
+                    if( S_Tir_EstAPortee( self._namedParams.ksEni, rPH ) or S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
                         self.ePhase = eRejoindreAssaut
                     else
                         do return end
---[[// la section rejoint la base d'assaut            
-]]                    end
+                    end
 
-                --[[// stop behavior BEH_Pion_INF_TirCouverture_Fixe( ksEni );
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eRejoindreAssaut then
                     if( S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
                         do
-                            --[[// Détruire l'eni : on lance l'assaut
-]]DEC_Trace( "base d'assaut atteinte - lance l'assaut" )
-                            --[[// if ( DEC_Agent_EstEmbarque() )
-]]Activate( self.activations.ACT_Tir_FumigeneVersEni, 1, { self._namedParams.ksEni, } )
+                            DEC_Trace( "base d'assaut atteinte - lance l'assaut" )
+                            Activate( self.activations.ACT_Tir_FumigeneVersEni, 1, { self._namedParams.ksEni, } )
                             self.ePhase = eDetruire
                         end
---[[// On fait en sorte de ne pas etre vu
-]]                    end
+                    end
 
                                 cases_switch_1[2] = true
                 end
                 if cases_switch_1[2] or switch_1 == eDetruire then
-                    --[[// mise en place du dispositif d' assaut
-]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.1, emptyTable )
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// Ennemi detruit on nettoie la position
-]]
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.1, emptyTable )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eNettoyer then
-                    _continue = false--[[// ----------------------------------------------------------------------------
-]]
-                --[[// Gere la prise de contact avec l'ennemi :
-]]--[[//		- Precise le contact
-]]                cases_switch_1[4] = true
+                    _continue = false
+                                cases_switch_1[4] = true
 
                 else
                 --[[// 		- Si l'ennemi est detruit, nettoie la position
@@ -488,7 +488,6 @@ node "BEH_Eni_Pion_INF_GererContactEni"
          do
             local _continue = true
             local switch_1 = F_Pion_GeteTypeContact( myself )
-            local cases_switch_1 = {}
                 if switch_1 == eTypeContact_Offensif then
                     Activate( self.activations.BEH_Feu_Pion_VAB_Detruire_SurEni, 1, { self._namedParams.ksEni, true, } )
                     if( S_Misc_EstMissionAffectee( "T_Mission_Pion_INF_Fixer" ) ) then
@@ -496,16 +495,13 @@ node "BEH_Eni_Pion_INF_GererContactEni"
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eTypeContact_Defensif then
+                elseif switch_1 == eTypeContact_Defensif then
                     Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, 1, { self._namedParams.ksEni, false, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eTypeContact_Appui then
+                elseif switch_1 == eTypeContact_Appui then
                     Activate( self.activations.BEH_Feu_Pion_INF_TirAppui, 1, { self._namedParams.ksEni, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                     Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, 1, { self._namedParams.ksEni, true, } )
                 end

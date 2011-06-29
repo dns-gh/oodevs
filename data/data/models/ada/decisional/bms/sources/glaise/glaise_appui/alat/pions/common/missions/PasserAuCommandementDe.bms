@@ -47,11 +47,12 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Progression jusqu'au lieu de rendez-vous
+]]--[[// Renforce l'unité amie
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindrePosition then
-                    --[[// Progression jusqu'au lieu de rendez-vous
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -69,8 +70,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                         _continue = false
                     end
-                --[[// Renforce l'unité amie
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eSeMettreEnPlace then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
                     if( DEC_Pion_ChangeAutomate( self._namedParams.mission.automate_ ) ) then

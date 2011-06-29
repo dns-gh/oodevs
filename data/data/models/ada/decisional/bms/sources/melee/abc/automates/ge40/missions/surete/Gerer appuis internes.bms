@@ -151,24 +151,21 @@ node "ACT_GTIA_AssignerMissionAppuyerPourSurete"
 ]]self.bMissionAssignee = true
                          do
                             local _continue = true
-                            local switch_1 = self._namedParams.typeMission
-                            local cases_switch_1 = {}
+--[[// Utilisées dans les missions d'appuis
+]]                            local switch_1 = self._namedParams.typeMission
                                 if switch_1 == "T_Mission_Automate_ABC_Semparer" then
-                                                                    --[[// Utilisées dans les missions d'appuis
-]]local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionAppui, self._namedParams.typeMission )
-                                    DEC_AssignMissionParameter( missionPion, "objectif_", self._namedParams.zone )
-                                    DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                                    DEC_DonnerMissionAutomate_Mission( missionPion )
-                                    _continue = false
-                                                                cases_switch_1[1] = true
-elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionAppui, self._namedParams.typeMission )
                                     DEC_AssignMissionParameter( missionPion, "objectif_", self._namedParams.zone )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[2] = true
-                                end
+                                elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
+                                                                    local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionAppui, self._namedParams.typeMission )
+                                    DEC_AssignMissionParameter( missionPion, "objectif_", self._namedParams.zone )
+                                    DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                    DEC_DonnerMissionAutomate_Mission( missionPion )
+                                    _continue = false
+                                                                end
                             end
 
                     end

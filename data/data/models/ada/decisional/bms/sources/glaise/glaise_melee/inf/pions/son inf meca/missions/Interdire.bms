@@ -78,13 +78,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 ]]
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eSeMettreEnPlace then
-                    --[[//------------------------------------------------------------------	
+--[[//------------------------------------------------------------------	
 ]]--[[// Interdire
 ]]--[[//------------------------------------------------------------------
-]]if( self.eCurrentPhase == eFinMission ) then
+]]--[[//------------------------------------------------------------------
+]]--[[//  Fin de mission
+]]--[[//------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eSeMettreEnPlace then
+                    if( self.eCurrentPhase == eFinMission ) then
                         do
                             self.ePhase = eFinMission
                                                         do return end
@@ -95,11 +97,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
                     Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_Interdire = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                --[[//------------------------------------------------------------------
-]]--[[//  Fin de mission
-]]--[[//------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -119,8 +117,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
 self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                                 end
             end

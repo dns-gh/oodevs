@@ -62,11 +62,16 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// On va se mettre en position en restant sur nos garde
+]]--[[// Rejoins une position d'observation de la position a Barrer
+]]--[[// Prepare la mission de surveillance
+]]--[[// On desactive la sauvegarde pendant la phase de surveillance
+]]--[[// Se tourne vers les ennemis
+]]--[[// Reste discret
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
-                    --[[// On va se mettre en position en restant sur nos garde
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -80,8 +85,7 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
                     end
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
-                    --[[// Rejoins une position d'observation de la position a Barrer
-]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionInstallation_, false, } )
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionInstallation_, false, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
@@ -112,8 +116,7 @@ self.done_BEH_Progression_Pion_INF_AborderObjectif = function( self, _, v ) self
                     StartActivateOverride( self, self.activations.BEH_Obj_RejoindreEmbossements, 1.2, emptyTable )
                     StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                     StartActivateOverride( self, self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
-                    --[[// Prepare la mission de surveillance
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -133,12 +136,9 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                                 cases_switch_1[3] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[// On desactive la sauvegarde pendant la phase de surveillance
-]]
-                    --[[// Se tourne vers les ennemis
-]]Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( self.mission ), } )
-                    --[[// Reste discret
-]]Activate( self.activations.ACT_Dep_Pion_INF_ActiverFurtivite, 1.2, { 0.1, } )
+                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( self.mission ), } )
+                    Activate( self.activations.ACT_Dep_Pion_INF_ActiverFurtivite, 1.2, { 0.1, } )
                     Activate( self.activations.ACT_Obs_ObserverZone, 1, { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), } )
                     if( not S_Geometrie_EstProchePosition( self.ptMission, DEC_Agent_Position(), 1000 ) ) then
                         do

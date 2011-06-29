@@ -85,32 +85,37 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = --[[//=============================================================================
+--[[//=============================================================================
 ]]--[[// SQUELETTE DE LA MISSION
 ]]--[[//
 ]]--[[// strength = 1
 ]]--[[//
 ]]--[[//=============================================================================
-]]self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// 1) Preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.ACT_Info_Trace, 1, { "MIS_Pion_ABC_Couvrir: debut", } )
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 2) Progression tactique
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Progresser
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 3) couvrir face a la direction dangereuse
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ VE_Courage pour tenir
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 4) Fin de la mission 
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_Info_Trace, 1, { "MIS_Pion_ABC_Couvrir: debut", } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 2) Progression tactique
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Progresser
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -126,28 +131,18 @@ elseif switch_1 == eProgresser then
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 3) couvrir face a la direction dangereuse
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eCouvrir then
+                elseif switch_1 == eCouvrir then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieTenir, 1, emptyTable )--[[// MAJ VE_Courage pour tenir
-]]
+                    Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieTenir, 1, emptyTable )
                     Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, emptyTable )
                     Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 4) Fin de la mission 
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

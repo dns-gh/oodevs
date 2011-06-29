@@ -58,11 +58,18 @@ local emptyTable = emptyTable
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]--[[// Attaquer : controle de creation mission
+]]--[[// Attaquer Aeromobile : ordre de creation des missions
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 3. Mission impossible
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// 3. Validation
+]]--[[//---------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
-                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eEtatMissionsAttaquer == eActionImpossible ) then
+                    if( self.eEtatMissionsAttaquer == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
                                                         do return end
@@ -76,32 +83,23 @@ local emptyTable = emptyTable
                                                         do return end
 
                         end
---[[// Attaquer : controle de creation mission
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listeAttaquer ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsAttaquer = v[1] end
-                    --[[// Attaquer Aeromobile : ordre de creation des missions
-]]if( not DIA_IsListEmpty( self.listeAttaquer ) ) then
+                    if( not DIA_IsListEmpty( self.listeAttaquer ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAListe, 1, { ePhase_MRT, self.listeAttaquer, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.unitesAAttaquer_, } )
                     end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 3. Mission impossible
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
-                --[[//---------------------------------------------------------------------
-]]--[[// 3. Validation
-]]--[[//---------------------------------------------------------------------
-]]                end
-                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                                end
+                if switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )

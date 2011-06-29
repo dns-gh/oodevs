@@ -62,11 +62,19 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Infiltration
+]]--[[// Infiltration au plus près dans un rayon de 500m autour du lieu de l'attentat
+]]--[[// Declenchement de l'attentat
+]]--[[// Attentat effectué, on s'exfiltre
+]]--[[//execution à portée
+]]--[[//rejoindre la population si elle est dans un rayon de 500m
+]]--[[//on s'est trop eloigné du lieu de l'attentat   
+]]--[[// Rejoindre la position de repli
+]]--[[// Fin
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreAttentatContrePopulation:debut **", } )
                     self.ePhaseMission = eSInfiltrer
                     if( false == DEC_HasDotation( self._namedParams.mission.dotation_ ) ) then
@@ -88,9 +96,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     _continue = false
-                --[[// Infiltration
-]]                cases_switch_1[1] = true
-elseif switch_1 == eSInfiltrer then
+                elseif switch_1 == eSInfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -108,9 +114,7 @@ elseif switch_1 == eSInfiltrer then
                     Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, 1, { self._namedParams.mission.itineraire_, } )
 self.done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// Infiltration au plus près dans un rayon de 500m autour du lieu de l'attentat
-]]                cases_switch_1[2] = true
-elseif switch_1 == eAborderObjectif then
+                elseif switch_1 == eAborderObjectif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -128,11 +132,8 @@ elseif switch_1 == eAborderObjectif then
                     Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, { self.objectif, } )
 self.done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// Declenchement de l'attentat
-]]                cases_switch_1[3] = true
-elseif switch_1 == eAgirSurEni then
-                    --[[// Attentat effectué, on s'exfiltre
-]]if( self.eAction == eActionEffectuee ) then
+                elseif switch_1 == eAgirSurEni then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -153,22 +154,19 @@ elseif switch_1 == eAgirSurEni then
                             self.ePhaseMission = eSExfiltrer
                             _continue = false
                         end
---[[//execution à portée
-]]                    end
+                    end
 
                         if _continue then
                         if( DEC_Geometrie_Distance( DEC_Agent_Position(), pointPopu ) <= 10 ) then
                             Activate( self.activations.ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation, 1, { self._namedParams.mission.populationCible_, self._namedParams.mission.suicide_, self._namedParams.mission.dotation_, } )
 self.done_ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation = function( self, _, v ) self.eAction = v[1] end
                         else
---[[//rejoindre la population si elle est dans un rayon de 500m
-]]if( DEC_Geometrie_Distance( self.lieuAttentat, pointPopu ) < 500 ) then
+if( DEC_Geometrie_Distance( self.lieuAttentat, pointPopu ) < 500 ) then
                                 do
                                     self.objectif = pointPopu
                                     self.ePhaseMission = eAborderObjectif
                                 end
---[[//on s'est trop eloigné du lieu de l'attentat   
-]]                            else
+                            else
 if( DEC_Geometrie_Distance( self.lieuAttentat, DEC_Agent_Position() ) > 10 ) then
                                     do
                                         self.objectif = self.lieuAttentat
@@ -181,9 +179,7 @@ if( DEC_Geometrie_Distance( self.lieuAttentat, DEC_Agent_Position() ) > 10 ) the
                         DEC_DebugAffichePoint( self.lieuAttentat )
                         _continue = false
                     end
-                --[[// Rejoindre la position de repli
-]]                cases_switch_1[4] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     if( self._namedParams.mission.suicide_ ) then
                         do
                             self.ePhaseMission = eFinMission
@@ -208,9 +204,7 @@ elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, { self._namedParams.mission.pointRepli_, } )
 self.done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// Fin
-]]                cases_switch_1[5] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                                         Halt( self )
                     do return end

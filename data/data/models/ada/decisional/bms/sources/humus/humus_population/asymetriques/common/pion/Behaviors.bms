@@ -329,18 +329,15 @@ node "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees"
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.typeAttentat
-                    local cases_switch_1 = {}
                         if switch_1 == etypeAttentat_assasinatOfficier then
                                                     Activate( self.activations.ACT_Eni_Pion_ASY_AssassinerOfficier, 1, { self._namedParams.repEni, } )
 self.done_ACT_Eni_Pion_ASY_AssassinerOfficier = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == etypeAttentat_destructionComposanteMajeure then
+                        elseif switch_1 == etypeAttentat_destructionComposanteMajeure then
                                                     Activate( self.activations.ACT_Eni_Pion_ASY_DetruireComposanteMajeure, 1, { self._namedParams.repEni, } )
 self.done_ACT_Eni_Pion_ASY_DetruireComposanteMajeure = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
                                 self:SendFeedback( self.eAction )

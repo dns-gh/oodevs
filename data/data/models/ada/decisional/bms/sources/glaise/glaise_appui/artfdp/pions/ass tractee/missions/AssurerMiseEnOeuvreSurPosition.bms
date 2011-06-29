@@ -70,14 +70,12 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 ]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
          do
             local _continue = true
-            local switch_1 = --[[//---------------------------------------------------------------------
-]]self.ePhase
-            local cases_switch_1 = {}
+--[[//---------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSeMettreEnOeuvreSurZoneDeDeploiement then
                     Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_TRF1(), } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -90,8 +88,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

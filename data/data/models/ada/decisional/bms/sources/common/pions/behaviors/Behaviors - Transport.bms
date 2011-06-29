@@ -73,8 +73,13 @@ include "Common/Pions/Actions/Actions - Transport.bms"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// RC sur les unités qui ont la mission se faire transporter mais qui sont encore trop
+]]--[[// loin pour être embarquer. Il faudra les attendre
+]]--[[// si on est à plus de "distanceEmbarquement" de l'unité à transporter,
+]]--[[// attendre pour embarquer
+]]--[[// embarquement des que les unités sont pretes et a distance inf
+]]--[[// à distanceEmbarquement
+]]            local switch_1 = self.ePhase
                 if switch_1 == eTransporterAllerEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
@@ -107,8 +112,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eTransporterEmbarquer then
+                elseif switch_1 == eTransporterEmbarquer then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -132,18 +136,14 @@ elseif switch_1 == eTransporterEmbarquer then
                             do return end
 
                         end
---[[// RC sur les unités qui ont la mission se faire transporter mais qui sont encore trop
-]]--[[// loin pour être embarquer. Il faudra les attendre
-]]                    end
+                    end
 
                     local attendreUnites = false
                     self.listeUnitesPretes = {}
                     for _,x in pairs( self.listeUnitesMissionTransporter or emptyTable ) do
                     local _continue = true
 do
-                            --[[// si on est à plus de "distanceEmbarquement" de l'unité à transporter,
-]]--[[// attendre pour embarquer
-]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) > self._namedParams.distanceEmbarquement ) then
+                            if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) > self._namedParams.distanceEmbarquement ) then
                                 do
                                     attendreUnites = true
                                     Activate( self.activations.ACT_RC_SurPion, 1, { eRC_UniteTropDistante, x, } )
@@ -168,9 +168,7 @@ do
                             end
 
                         end
---[[// embarquement des que les unités sont pretes et a distance inf
-]]--[[// à distanceEmbarquement
-]]
+
                     end
 
                     if( ( #( self.listeUnitesPretes ) ~= 0 ) and not attendreUnites ) then
@@ -183,8 +181,7 @@ self.done_ACT_Transport_Pion_TransportEmbarquer = function( self, _, v ) self.eE
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eTransporterAllerDebarquer then
+                elseif switch_1 == eTransporterAllerDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -219,8 +216,7 @@ elseif switch_1 == eTransporterAllerDebarquer then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eTransporterDebarquer then
+                elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -253,8 +249,7 @@ elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_TransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

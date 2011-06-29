@@ -57,16 +57,17 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progression
+]]--[[// Reconnaisance
+]]--[[// On a arrive dans la zone
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eProgresser
                     _continue = false
-                --[[// Progression
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -83,12 +84,9 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptZone, eProgressionReco, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Reconnaisance
-]]                cases_switch_1[2] = true
-elseif switch_1 == eReconnaitre then
+                elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    --[[// On a arrive dans la zone
-]]if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), self._namedParams.mis.zone_ ) ) then
+                    if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), self._namedParams.mis.zone_ ) ) then
                         do
                             Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { M_Dep_Pion_GEN_AMBIANCE_ENI(), } )
                             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
@@ -110,14 +108,11 @@ elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, { self.ptZone, } )
 self.done_ACT_Obs_ReconnaitrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin de la mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

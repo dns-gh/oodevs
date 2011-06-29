@@ -275,23 +275,19 @@ do
                 local pion = x
                  do
                     local _continue = true
-                    local switch_1 = F_Pion_GeteConsigneTir( pion )
-                    local cases_switch_1 = {}
+--[[// MIA : ????? devrait pas exister!
+]]                    local switch_1 = F_Pion_GeteConsigneTir( pion )
                         if switch_1 == eEtatROE_None
                         or switch_1 == eEtatROE_TirLibre then
-                            --[[// MIA : ????? devrait pas exister!
-]]Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TirLibre, pion, nbrePions, } )
+                            Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TirLibre, pion, nbrePions, } )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == eEtatROE_TirSurRiposte then
+                        elseif switch_1 == eEtatROE_TirSurRiposte then
                             Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TirRestreint, pion, nbrePions, } )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eEtatROE_TirInterdit then
+                        elseif switch_1 == eEtatROE_TirInterdit then
                             Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TirInterdit, pion, nbrePions, } )
                             _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
             end
@@ -674,25 +670,21 @@ do
                         Activate( self.activations.ACT_RC_Automate_SurLima, 1, { self._namedParams.eTypeLima, } )
                          do
                             local _continue = true
-                            local switch_1 = --[[// cas particuliers
-]]self._namedParams.eTypeLima
-                            local cases_switch_1 = {}
+--[[// cas particuliers
+]]--[[// Passage sur  LCA une seule fois! mais pas forcément en même temps
+]]                            local switch_1 = self._namedParams.eTypeLima
                                 if switch_1 == eTypeLima_LC then
                                                                     Activate( self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdrePoursuivre, } )
                                     _continue = false
-                                                                cases_switch_1[1] = true
-elseif switch_1 == eTypeLima_LD then
+                                elseif switch_1 == eTypeLima_LD then
                                                                     Activate( self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdreDeboucher, } )
                                     _continue = false
-                                                                cases_switch_1[2] = true
-elseif switch_1 == eTypeLima_LCA
+                                elseif switch_1 == eTypeLima_LCA
                                 or switch_1 == eTypeLima_LIA
                                 or switch_1 == eTypeLima_LR then
                                                                     StartActivateOverride( self, self.activations.ACT_RC_Automate_SurLima, 1, { self._namedParams.eTypeLima, } )
-                                    _continue = false--[[// Passage sur  LCA une seule fois! mais pas forcément en même temps
-]]
-                                                                cases_switch_1[3] = true
-                                end
+                                    _continue = false
+                                                                end
                             end
 
                     end

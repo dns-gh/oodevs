@@ -31,33 +31,27 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
                             local repOrderRegimeMaint = repOrdre
                             DEC_Maintenance_ChangerRegimeTravail( repOrderRegimeMaint:GetorderConduiteModifierRegimeTravailMaintenance_() )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
                             local repOrdrePrioriteMain = repOrdre
                             DEC_Maintenance_ChangerPriorites( repOrdrePrioriteMain:GetorderConduiteModifierPrioritesReparations_() )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
                             local repOrdrePrioriteSan = repOrdre
                             DEC_Sante_ChangerPriorites( repOrdrePrioriteSan:GetorderConduiteModifierPrioritesBlesses_() )
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
                             local repOrdrePrioriteTactiqueMain = repOrdre
                             DEC_Maintenance_ChangerPrioritesTactiques( repOrdrePrioriteTactiqueMain:GetorderConduiteModifierPrioritesTactiquesReparations_() )
                             _continue = false
-                                                cases_switch_1[4] = true
-elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
+                        elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
                             local repOrdrePrioriteTactiqueSan = repOrdre
                             DEC_Sante_ChangerPrioritesTactiques( repOrdrePrioriteTactiqueSan:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
                             _continue = false
-                                                cases_switch_1[5] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )

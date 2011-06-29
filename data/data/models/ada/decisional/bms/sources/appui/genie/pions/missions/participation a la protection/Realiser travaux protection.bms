@@ -57,16 +57,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progression tactique
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Progression tactique
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -80,14 +79,11 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_GEN_AllerFaireTravauxSur, 1, { self._namedParams.mission.travaux_, } )
 self.done_BEH_Dep_GEN_AllerFaireTravauxSur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin de la mission
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,
@@ -305,16 +301,19 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
         self.ePhase = self.ePhase or eRealiserObstacle
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------
+--[[//-----------------------------------------------------------------
 ]]--[[// Realisation obstacle et valorisation
 ]]--[[//-----------------------------------------------------------------
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eRealiserObstacle then
-                    --[[//-----------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------
 ]]--[[// Construction
 ]]--[[//-----------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+]]--[[//-----------------------------------------------------------------
+]]--[[// Valorisation si obsqtacle
+]]--[[//-----------------------------------------------------------------
+]]--[[// Valorisation
+]]            local switch_1 = self.ePhase
+                if switch_1 == eRealiserObstacle then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -329,19 +328,14 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
                     Activate( self.activations.ACT_Obj_Pion_GEN_RealiserTravaux, 1, { self._namedParams.objet, } )
 self.done_ACT_Obj_Pion_GEN_RealiserTravaux = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[//-----------------------------------------------------------------
-]]--[[// Valorisation si obsqtacle
-]]--[[//-----------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eValoriserObstacle then
+                elseif switch_1 == eValoriserObstacle then
                     if( not DEC_Agent_PeutValoriserObjet( myself.objMisEnCours_ ) ) then
                         self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
                     end
 
-                    --[[// Valorisation
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -357,8 +351,7 @@ elseif switch_1 == eValoriserObstacle then
                     Activate( self.activations.ACT_Obj_Pion_GEN_ValoriserObstacle, 1, { myself.objMisEnCours_, } )
 self.done_ACT_Obj_Pion_GEN_ValoriserObstacle = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

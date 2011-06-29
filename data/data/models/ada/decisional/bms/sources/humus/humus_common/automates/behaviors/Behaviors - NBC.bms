@@ -97,20 +97,17 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Mettre tenue NBC ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, emptyTable )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, emptyTable )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
+                        elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Enlever tenue NBC ---$" )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, emptyTable )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )

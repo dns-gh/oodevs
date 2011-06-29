@@ -139,14 +139,28 @@ node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eSuivreUnite then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Suivi de l'unite soutenue
 ]]--[[//-----------------------------------------------------------------------------	            	            
 ]]--[[// On fait ralentir l'unite en avance afin de pouvoir la couvrir
-]]if( myself:GetType() == "SectionInfanterie_MILAN" or myself:GetType() == "SectionInfanterie_HOT" ) then
+]]--[[// deplacement sur la position courante de l'unite soutenue
+]]--[[// effectue
+]]--[[// la section est proche de la section soutenue
+]]--[[// on observe l'eni
+]]--[[// on rejoint la position d'appui a couvert
+]]--[[// Lorsque la section appuyee s'est trop deplacee
+]]--[[// la section est trop loin pour appuyer
+]]--[[// elle doit re suivre l'unite appuyee
+]]--[[// Si l'unite appuye traite un ennemi mais qu'elle n'intervient
+]]--[[// pas encore dessus, on se repositionne
+]]--[[// on observe la direction dangereuse
+]]--[[// la section debarque		
+]]--[[// on indique a l'unites appuyee que la section
+]]--[[// est en position d'appui
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSuivreUnite then
+                    if( myself:GetType() == "SectionInfanterie_MILAN" or myself:GetType() == "SectionInfanterie_HOT" ) then
                         do
                             if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                 Activate( self.activations.ACT_Ordre_Pion_INF_AC_FaireRalentir, 1, { self._namedParams.tAmi, } )
@@ -156,15 +170,12 @@ node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
                     end
 
                     Activate( self.activations.ACT_RC, 1, { eRC_SuitUnite, } )
-                    --[[// deplacement sur la position courante de l'unite soutenue
-]]--[[// effectue
-]]if( rDist < self._namedParams.rDist_SuiviMin ) then
+                    if( rDist < self._namedParams.rDist_SuiviMin ) then
                         do
                             if( self._namedParams.tAmi:DEC_Agent_EstEnMouvement() ) then
                                 self.ePhase = eAttendre
                             else
-                                --[[// la section est proche de la section soutenue
-]]self.ePhase = eAppuyer
+                                self.ePhase = eAppuyer
                             end
 
                         end
@@ -198,10 +209,8 @@ self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] en
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eAppuyer then
-                    --[[// on observe l'eni
-]]Activate( self.activations.ACT_RC, 1, { eRC_PasseEnAppui, } )
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// on rejoint la position d'appui a couvert
-]]
+                    Activate( self.activations.ACT_RC, 1, { eRC_PasseEnAppui, } )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( rDist > self._namedParams.rDist_SuiviMax ) then
                         do
                             self.ePhase = eSuivreUnite
@@ -232,19 +241,14 @@ self.done_BEH_Dep_Pion_INF_RejoindrePositionAppui = function( self, _, v ) self.
                                 cases_switch_1[3] = true
                 end
                 if cases_switch_1[3] or switch_1 == eSePoster then
-                    --[[// Lorsque la section appuyee s'est trop deplacee
-]]if( rDist > self._namedParams.rDist_SuiviMax ) then
+                    if( rDist > self._namedParams.rDist_SuiviMax ) then
                         do
                             if( not DEC_ConnaissanceAgent_EstValide( F_Pion_GeteniEnCours( self._namedParams.tAmi ) ) ) then
-                                --[[// la section est trop loin pour appuyer
-]]--[[// elle doit re suivre l'unite appuyee
-]]self.ePhase = eSuivreUnite
+                                self.ePhase = eSuivreUnite
                             else
 if( not S_Geometrie_EstProchePosition( DEC_ConnaissanceAgent_Position( F_Pion_GeteniEnCours( self._namedParams.tAmi ) ), self._namedParams.tAmi:DEC_Agent_Position(), self._namedParams.rDist_SuiviMax ) ) then
                                     do
-                                        --[[// Si l'unite appuye traite un ennemi mais qu'elle n'intervient
-]]--[[// pas encore dessus, on se repositionne
-]]self.ePhase = eAppuyer
+                                        self.ePhase = eAppuyer
                                         DEC_Trace( "Ennemi en Cours mais unite eloignee" )
                                     end
                                 end
@@ -264,17 +268,13 @@ if( not S_Geometrie_EstProchePosition( DEC_ConnaissanceAgent_Position( F_Pion_Ge
 
                     Activate( self.activations.ACT_RC, 1, { eRC_EnAppui, } )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
-                    --[[// on observe la direction dangereuse
-]]local mission = DEC_GetMission( myself )
+                    local mission = DEC_GetMission( myself )
                     Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-                    --[[// la section debarque		
-]]if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                    if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                     end
 
-                    Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )--[[// on indique a l'unites appuyee que la section
-]]--[[// est en position d'appui
-]]
+                    Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
 

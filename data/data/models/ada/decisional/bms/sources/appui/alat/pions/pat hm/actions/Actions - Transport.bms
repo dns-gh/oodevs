@@ -40,18 +40,16 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
          do
             local _continue = true
             local switch_1 = self.eEtatTransport
-            local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionTransport_Finished then
+                elseif switch_1 == eActionTransport_Finished then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                if switch_1 == eActionTransport_Impossible then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -113,18 +111,16 @@ elseif switch_1 == eActionTransport_Finished then
          do
             local _continue = true
             local switch_1 = self.eEtatTransport
-            local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionTransport_Finished then
+                elseif switch_1 == eActionTransport_Finished then
                     DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                if switch_1 == eActionTransport_Impossible then
                     DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

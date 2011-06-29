@@ -33,7 +33,9 @@ local emptyTable = emptyTable
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// dispositif de deplacement
+]]--[[// Progression sur l'itineraire
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
@@ -50,12 +52,10 @@ local emptyTable = emptyTable
                             end
 
                         end
---[[// dispositif de deplacement
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
-                    --[[// Progression sur l'itineraire
-]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eAction = v[1] end
                     Activate( self.activations.BEH_Lima_GererLimas, 1.5, emptyTable )
                     _continue = false

@@ -317,43 +317,43 @@ self.done_BEH_Dep_Pion_INF_AborderEnnemi = function( self, _, v ) self.eActionDe
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Distance de tir atteinte ( VAB ), on fixe
+]]--[[// Rejoindre base d'assaut
+]]--[[// la section rejoint la base d'assaut            
+]]--[[// stop behavior BEH_Pion_INF_TirCouverture_Fixe( ksEni );
+]]--[[// Détruire l'eni : on lance l'assaut
+]]--[[// if ( DEC_Agent_EstEmbarque() )
+]]--[[// On fait en sorte de ne pas etre vu
+]]--[[// mise en place du dispositif d' assaut
+]]--[[// Ennemi detruit on nettoie la position
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
-                    --[[// Distance de tir atteinte ( VAB ), on fixe
-]]if( S_Tir_EstAPortee( self._namedParams.ksEni, rPH ) or S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
+                    if( S_Tir_EstAPortee( self._namedParams.ksEni, rPH ) or S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
                         self.ePhase = eRejoindreAssaut
                     else
                         do return end
                     end
 
-                --[[// Rejoindre base d'assaut
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eRejoindreAssaut then
                     if( S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
                         do
-                            --[[// la section rejoint la base d'assaut            
-]]--[[// stop behavior BEH_Pion_INF_TirCouverture_Fixe( ksEni );
-]]DEC_Trace( "base d'assaut atteinte - lance l'assaut" )
+                            DEC_Trace( "base d'assaut atteinte - lance l'assaut" )
                             Activate( self.activations.ACT_Tir_FumigeneVersEni, 1, { self._namedParams.ksEni, } )
                             self.ePhase = eDetruire
                         end
                     end
 
-                --[[// Détruire l'eni : on lance l'assaut
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
                 end
                 if cases_switch_1[2] or switch_1 == eDetruire then
-                    --[[// if ( DEC_Agent_EstEmbarque() )
-]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.1, emptyTable )
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// On fait en sorte de ne pas etre vu
-]]
-                    --[[// mise en place du dispositif d' assaut
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.1, emptyTable )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
                     _continue = false
-                --[[// Ennemi detruit on nettoie la position
-]]                cases_switch_1[3] = true
+                                cases_switch_1[3] = true
 elseif switch_1 == eNettoyer then
                     _continue = false
                                 cases_switch_1[4] = true
@@ -435,18 +435,22 @@ self.done_BEH_Dep_Pion_INF_AborderEnnemi = function( self, _, v ) self.eActionDe
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Distance de tir atteinte ( Mitrailleuse coaxiale BTR 60 PB ), on fixe
+]]--[[// Rejoindre base d'assaut
+]]--[[// Détruire l'ennemi : on lance l'assaut sans débarquer
+]]--[[// On fait en sorte de ne pas être vu
+]]--[[//Mise en place du dispositif d'assaut
+]]--[[// Ennemi détruit ; on nettoie la position
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
-                    --[[// Distance de tir atteinte ( Mitrailleuse coaxiale BTR 60 PB ), on fixe
-]]if( S_Tir_EstAPortee( self._namedParams.ksEni, rPH ) or S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
+                    if( S_Tir_EstAPortee( self._namedParams.ksEni, rPH ) or S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
                         self.ePhase = eRejoindreAssaut
                     else
                         do return end
                     end
 
-                --[[// Rejoindre base d'assaut
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eRejoindreAssaut then
                     if( S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
@@ -457,17 +461,13 @@ self.done_BEH_Dep_Pion_INF_AborderEnnemi = function( self, _, v ) self.eActionDe
                         end
                     end
 
-                --[[// Détruire l'ennemi : on lance l'assaut sans débarquer
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
                 end
                 if cases_switch_1[2] or switch_1 == eDetruire then
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// On fait en sorte de ne pas être vu
-]]
-                    --[[//Mise en place du dispositif d'assaut
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
                     _continue = false
-                --[[// Ennemi détruit ; on nettoie la position
-]]                cases_switch_1[3] = true
+                                cases_switch_1[3] = true
 elseif switch_1 == eNettoyer then
                     _continue = false
                                 cases_switch_1[4] = true

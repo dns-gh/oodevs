@@ -79,22 +79,33 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Prepa
+]]--[[// 2) Progression jusqu'au point à reconnaitre
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Progresser vers le center de la zone
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Faire des mesures
+]]--[[//---------------------------------------------------------------------
+]]--[[//behavior BEH_Nbc_Pion_FaireDesMesures() : strength = 1.1; // Poste pour mesure donc en comptète avec deplacement
+]]--[[// Se poster
+]]--[[//---------------------------------------------------------------------
+]]--[[// Si site reconnu fin de mission
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Reconnaître le site
+]]--[[//---------------------------------------------------------------------
+]]--[[// return in pas nécéssaire
+]]--[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Prepa
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA", } )
                     self.ePhaseMission = eRejoindrePosition
                     _continue = false
-                --[[// 2) Progression jusqu'au point à reconnaitre
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindrePosition then
+                elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Progresser vers le center de la zone
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -108,29 +119,17 @@ elseif switch_1 == eRejoindrePosition then
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionROTA, eProgressionReco, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false--[[//---------------------------------------------------------------------
-]]--[[// Faire des mesures
-]]--[[//---------------------------------------------------------------------
-]]--[[//behavior BEH_Nbc_Pion_FaireDesMesures() : strength = 1.1; // Poste pour mesure donc en comptète avec deplacement
-]]
-                --[[// Se poster
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSePoster then
+                    _continue = false
+                elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    local eValidite = nil--[[//---------------------------------------------------------------------
-]]--[[// Si site reconnu fin de mission
-]]--[[//---------------------------------------------------------------------
-]]
+                    local eValidite = nil
                     if( DEC_ConnaissanceObjet_EstReconnu( self._namedParams.mission.siteROTA_, eValidite ) ) then
                         do
                             self.ePhaseMission = eFinMission
                                                         do return end
 
                         end
---[[//---------------------------------------------------------------------
-]]--[[// Reconnaître le site
-]]--[[//---------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -142,20 +141,16 @@ elseif switch_1 == eSePoster then
                             end
 
                         end
---[[// return in pas nécéssaire
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Pion_Nbc_ReconnaitreSiteROTA, 1, { self._namedParams.mission.siteROTA_, } )
 self.done_BEH_Pion_Nbc_ReconnaitreSiteROTA = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

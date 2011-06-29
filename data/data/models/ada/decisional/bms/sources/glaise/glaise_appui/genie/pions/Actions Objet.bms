@@ -96,7 +96,6 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     DEC_Trace( "  fin travaux " )
                     do
@@ -217,7 +216,6 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -232,7 +230,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                if switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible de contruire l'objet" )
@@ -381,7 +379,6 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -396,7 +393,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                if switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible de valoriser l'objet" )
@@ -499,7 +496,6 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -514,13 +510,12 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                if switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible de détruire l'objet" )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
@@ -614,7 +609,6 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -629,13 +623,12 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
+                if switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "contournement impossible " )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
@@ -730,7 +723,6 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -745,13 +737,12 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
+                if switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "contournement impossible " )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu

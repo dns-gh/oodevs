@@ -63,14 +63,12 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     self.ePhase = eRejoindre
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -90,8 +88,7 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
+                elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
                     Activate( self.activations.BEH_Eni_Pion_ASA_GererEniDefendreZone, 1, { self._namedParams.mission.zone_, } )
@@ -112,8 +109,7 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -127,8 +123,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

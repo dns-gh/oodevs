@@ -83,45 +83,39 @@ do
                         local bEstUtilise = true
                          do
                             local _continue = true
-                            local switch_1 = repOrdre:GetType()
-                            local cases_switch_1 = {}
+--[[// cast
+]]--[[// TIR LIBRE
+]]--[[// TIR SUR RIPOSTE
+]]--[[// TIR INTERDIT
+]]                            local switch_1 = repOrdre:GetType()
                                 if switch_1 == "Rep_OrderConduite_ChangerReglesEngagement" then
-                                                                    --[[// cast
-]]local ordreROE = ordre
+                                                                    local ordreROE = ordre
                                      do
                                         local _continue = true
                                         local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagement_()
-                                        local cases_switch_2 = {}
                                             if switch_2 == eEtatROE_TirLibre then
-                                                                                            --[[// TIR LIBRE
-]]DEC_Trace( " === ORDRE --> ROE TIR LIBRE" )
+                                                                                            DEC_Trace( " === ORDRE --> ROE TIR LIBRE" )
                                                 StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
                                                 StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, emptyTable )
                                                 StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, emptyTable )
                                                 _continue = false
-                                            --[[// TIR SUR RIPOSTE
-]]                                            cases_switch_2[1] = true
-elseif switch_2 == eEtatROE_TirSurRiposte then
+                                            elseif switch_2 == eEtatROE_TirSurRiposte then
                                                                                             DEC_Trace( " === ORDRE --> ROE TIR SUR RIPOSTE" )
                                                 StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                                                 StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, emptyTable )
                                                 StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, emptyTable )
                                                 _continue = false
-                                            --[[// TIR INTERDIT
-]]                                            cases_switch_2[2] = true
-elseif switch_2 == eEtatROE_TirInterdit then
+                                            elseif switch_2 == eEtatROE_TirInterdit then
                                                                                             DEC_Trace( " === ORDRE --> ROE TIR INTERDIT" )
                                                 StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, 1, emptyTable )
                                                 StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, emptyTable )
                                                 StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, emptyTable )
                                                 _continue = false
-                                                                                        cases_switch_2[3] = true
-                                            end
+                                                                                        end
                                         end
 
                                     _continue = false
-                                                                cases_switch_1[1] = true
-
+                                
                                 else
                                                                     bEstUtilise = false
                                     _continue = false

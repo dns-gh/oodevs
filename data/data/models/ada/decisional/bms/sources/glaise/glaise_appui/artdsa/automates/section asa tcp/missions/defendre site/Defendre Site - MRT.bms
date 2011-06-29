@@ -50,7 +50,6 @@ do
                              do
                                 local _continue = true
                                 local switch_1 = self._namedParams.mission.modeDeploiement_
-                                local cases_switch_1 = {}
                                     if switch_1 == deploiementOmnidirectionnelEnCarreAutourZone then
                                         for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
@@ -68,8 +67,7 @@ do
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementASAOmni( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() * 0.707 )
                                         _continue = false
-                                                                        cases_switch_1[1] = true
-elseif switch_1 == deploiementOmnidirectionnelEnTriangleAutourZone then
+                                    elseif switch_1 == deploiementOmnidirectionnelEnTriangleAutourZone then
                                         for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
@@ -86,8 +84,7 @@ do
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementASAOmni( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, ( M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() / 2 ) * 1.155 )
                                         _continue = false
-                                                                        cases_switch_1[2] = true
-elseif switch_1 == deploiementNasseTroisSections then
+                                    elseif switch_1 == deploiementNasseTroisSections then
                                         for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
@@ -104,8 +101,7 @@ do
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
                                         _continue = false
-                                                                        cases_switch_1[3] = true
-elseif switch_1 == deploiementNasseQuatreSections then
+                                    elseif switch_1 == deploiementNasseQuatreSections then
                                         for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
@@ -122,13 +118,11 @@ do
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
                                         _continue = false
-                                                                        cases_switch_1[4] = true
-elseif switch_1 == deploiementDoubleRideau then
+                                    elseif switch_1 == deploiementDoubleRideau then
                                         self.listeSectionMistralPourMissionDefendreSite = self.listeSectionMistral
                                         self.listePoints = DEC_Geometrie_PosDeploiementDoubleRideau( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                                         _continue = false
-                                                                        cases_switch_1[5] = true
-elseif switch_1 == deploiementSimpleRideau then
+                                    elseif switch_1 == deploiementSimpleRideau then
                                         for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
@@ -145,8 +139,7 @@ do
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
                                         _continue = false
-                                                                        cases_switch_1[6] = true
-                                    end
+                                                                        end
                                 end
 
                         end
@@ -165,11 +158,13 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]--[[//controle des creations de missions
+]]--[[//Defendre zone à partir de positions calculées
+]]--[[//Le pc va toujours stationner au centre de la zone défendue
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
-                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eEtatMissionsDefendreSite == eActionImpossible ) then
+                    if( self.eEtatMissionsDefendreSite == eActionImpossible ) then
                         do
                             DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                             self.ePhase = eMRT_Valider
@@ -184,21 +179,17 @@ do
                                                         do return end
 
                         end
---[[//controle des creations de missions
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listeSectionMistral ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsDefendreSite = v[1] end
-                    --[[//Defendre zone à partir de positions calculées
-]]if( not DIA_IsListEmpty( self.listeSectionMistralPourMissionDefendreSite ) ) then
+                    if( not DIA_IsListEmpty( self.listeSectionMistralPourMissionDefendreSite ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe, 1, { ePhase_MRT, self.listeSectionMistralPourMissionDefendreSite, self.listePoints, self._namedParams.mission.zone_, eEtatDeploiement_omnidirectionnel, } )
                     end
 
-                    --[[//Le pc va toujours stationner au centre de la zone défendue
-]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
+                    Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_Trace( "MISSION IMPOSSIBLE" )
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )
@@ -206,14 +197,14 @@ elseif switch_1 == eMRT_MissionImpossible then
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                if switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] then
+                
+                else
                                 end
             end
 

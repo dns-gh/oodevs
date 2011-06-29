@@ -337,11 +337,9 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
          do
             local _continue = true
             local switch_1 = self.eEtatObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionObjetTerminee then
+                elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "fin realisation" )
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -454,7 +452,8 @@ node "ACT_Obj_Pion_INF_RealiserObjet"
 
          do
             local _continue = true
-            local switch_1 = self.eEtatObjet
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]            local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
@@ -486,8 +485,7 @@ elseif switch_1 == eActionObjetTerminee then
                     _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "realisation objet : manque dotation" )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]                cases_switch_1[4] = true
+                                cases_switch_1[4] = true
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     DEC_StopAction( self.actionID )
@@ -567,11 +565,9 @@ elseif switch_1 == eActionObjetTerminee then
          do
             local _continue = true
             local switch_1 = self.eEtatObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionObjetTerminee then
+                elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "destruction : fin" )
                     DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionEffectuee )

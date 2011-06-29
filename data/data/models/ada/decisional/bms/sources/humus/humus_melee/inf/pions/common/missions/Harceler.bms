@@ -87,11 +87,18 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             do
                  do
                     local _continue = true
-                    local switch_1 = self.ePhase
-                    local cases_switch_1 = {}
+--[[// Se mettre en position en restant sur ses gardes
+]]--[[//Déplacement vers la zone de regroupement
+]]--[[// Attendre pour poursuivre la mission
+]]--[[//Le pion est en attente de l'ordre de conduite Poursuivre qui provoque le changement de mission et la fin de l'attente :
+]]--[[//	- F_Pion_GeteEtatPhaseMission( myself ) devient eEtatPhaseMission_ProgressionVersLocalisation
+]]--[[//  - DIA_GetInternalState( VE_SePoster) passe de 2 à 0
+]]--[[//Fin de la posture
+]]--[[//Rapport de force favorable ou neutre => continuer la mission
+]]--[[//Rapport de force défavorable ou neutre => se replier
+]]                    local switch_1 = self.ePhase
                         if switch_1 == eSeMettreEnPlace then
-                                                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// Se mettre en position en restant sur ses gardes
-]]
+                                                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                             if( self.eAction == eActionEffectuee ) then
                                 do
@@ -103,15 +110,12 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                                     end
 
                                 end
---[[//Déplacement vers la zone de regroupement
-]]                            end
+                            end
 
                             Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
-                        --[[// Attendre pour poursuivre la mission
-]]                        cases_switch_1[1] = true
-elseif switch_1 == eAttendre then
+                        elseif switch_1 == eAttendre then
                             Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_AttenteConditionFavorablePourInfiltration, } )
                             if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -120,17 +124,13 @@ elseif switch_1 == eAttendre then
                                     self.poursuivreMission = true
                                     F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_ProgressionVersLocalisation )
                                 end
---[[//Le pion est en attente de l'ordre de conduite Poursuivre qui provoque le changement de mission et la fin de l'attente :
-]]--[[//	- F_Pion_GeteEtatPhaseMission( myself ) devient eEtatPhaseMission_ProgressionVersLocalisation
-]]--[[//  - DIA_GetInternalState( VE_SePoster) passe de 2 à 0
-]]                            end
+                            end
 
                             if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_AttenteConditionFavorablePourInfiltration and GetStateVariable( "VE_SePoster" ) == 2 ) then
                                 self.poursuivreMission = true
                             end
 
-                            --[[//Fin de la posture
-]]if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_ProgressionVersLocalisation and GetStateVariable( "VE_SePoster" ) == 0 and self.poursuivreMission ) then
+                            if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_ProgressionVersLocalisation and GetStateVariable( "VE_SePoster" ) == 0 and self.poursuivreMission ) then
                                 do
                                     self.eAction = eActionEffectuee
                                     self.ePhase = eRejoindre
@@ -138,20 +138,17 @@ elseif switch_1 == eAttendre then
                             end
 
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eRejoindre then
+                        elseif switch_1 == eRejoindre then
                             if( self.eCurrentPhase ~= eSeReplier ) then
                                 do
                                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                                    --[[//Rapport de force favorable ou neutre => continuer la mission
-]]if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
+                                    if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
                                         do
                                             Activate( self.activations.BEH_Eni_Pion_VAB_Semparer, 1, emptyTable )
                                             Activate( self.activations.BEH_Mission_Pion_VAB_Semparer, 1, emptyTable )
 self.done_BEH_Mission_Pion_VAB_Semparer = function( self, _, v ) self.eCurrentPhase = v[1] end
                                         end
---[[//Rapport de force défavorable ou neutre => se replier
-]]                                    else
+                                    else
 do
                                             DEC_Trace( "Rapport de force défavorable - Repli sur la zone de regroupement" )
                                             self.ePhase = eSeReplier
@@ -166,14 +163,13 @@ do
                             end
 
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == eSeReplier then
+                        elseif switch_1 == eSeReplier then
                                                         self:SendFeedback( eSeReplier )
                             Halt( self )
                             do return end
 
-                        end
-                        if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then
+                        
+                        else
                                                 end
                     end
 
@@ -353,13 +349,27 @@ node "BEH_Mission_Pion_VAB_Semparer"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//Rejoindre l'objectif
+]]--[[// On ne se rapproche pas trop pour éviter de se faire prendre à parti
+]]--[[//Progression directe vers la zone d'attente
+]]--[[// Si la reconnaissance renvoie eActionEffectuee, on n'a pas rencontre d'enis, 
+]]--[[// sinon eActionHalt
+]]--[[//On envoie une patrouille en reconnaissance.
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rejoint l'objectif pour s'en emparer
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// L'objectif est libre, on peut le rejoindre ..		
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Normalement, on est sur la position
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Une fois sur place, on fouille les lieux		
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Peut-être embarquer avant
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindrePosition then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//Rejoindre l'objectif
-]]
-                    --[[// On ne se rapproche pas trop pour éviter de se faire prendre à parti
-]]if( S_EstADistanceTir_Pt( self.pointCentreLocalisation ) ) then
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
+                    if( S_EstADistanceTir_Pt( self.pointCentreLocalisation ) ) then
                         self.eAction = eActionEffectuee
                     end
 
@@ -374,14 +384,12 @@ node "BEH_Mission_Pion_VAB_Semparer"
                             end
 
                         end
---[[//Progression directe vers la zone d'attente
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointCentreLocalisation, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eObserver then
+                elseif switch_1 == eObserver then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
                     if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
@@ -390,9 +398,7 @@ elseif switch_1 == eObserver then
                             do return end
 
                         end
---[[// Si la reconnaissance renvoie eActionEffectuee, on n'a pas rencontre d'enis, 
-]]--[[// sinon eActionHalt
-]]                    end
+                    end
 
                     if( self.eAction == eActionHalt ) then
                         do
@@ -415,17 +421,12 @@ elseif switch_1 == eObserver then
                             end
 
                         end
---[[//On envoie une patrouille en reconnaissance.
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, { self.pointCentreLocalisation, } )
 self.done_BEH_Obs_Pion_INF_EnReconnaissance = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// On rejoint l'objectif pour s'en emparer
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eRejoindreAssaut then
+                elseif switch_1 == eRejoindreAssaut then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         do
@@ -440,11 +441,7 @@ elseif switch_1 == eRejoindreAssaut then
                     end
 
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// L'objectif est libre, on peut le rejoindre ..		
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[3] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( not S_EstADistanceTir_Pt( self.pointCentreLocalisation ) ) then
                         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
@@ -468,23 +465,17 @@ elseif switch_1 == eRejoindre then
                             end
 
                         end
---[[// Normalement, on est sur la position
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointCentreLocalisation, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Une fois sur place, on fouille les lieux		
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[4] = true
-elseif switch_1 == eFouiller then
+                elseif switch_1 == eFouiller then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                     if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
-                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//Peut-être embarquer avant
-]]
+                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                             self.ePhase = eRejoindreAssaut
                                                         do return end
 
@@ -507,8 +498,7 @@ elseif switch_1 == eFouiller then
                     Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_TEMPS_FOUILLE(), "fouille des lieux ... ", } )
 self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[5] = true
-
+                
                 else
                                 end
             end

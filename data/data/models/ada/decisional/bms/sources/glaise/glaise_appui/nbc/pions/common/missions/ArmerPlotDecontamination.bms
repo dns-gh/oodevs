@@ -67,17 +67,26 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparer mission
+]]--[[// 2) Rejoindre la position
+]]--[[// 3) Qd prêt Barrer la direction dangereuse
+]]--[[//---------------------------------------------------------------------
+]]--[[// Tester la saturation du site
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Rejoindre le site
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Animer le site
+]]--[[//---------------------------------------------------------------------
+]]--[[// 4) Fin de la mission de reconnaissance SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparer mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_NBC_Animer Site: debut", } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// 2) Rejoindre la position
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) < 300 ) then
                         self.ePhaseMission = eAnimer
@@ -85,9 +94,7 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionSiteDecontamination_, eProgressionBond, eTypeItiMouvement, } )
                     _continue = false
-                --[[// 3) Qd prêt Barrer la direction dangereuse
-]]                cases_switch_1[2] = true
-elseif switch_1 == eAnimer then
+                elseif switch_1 == eAnimer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     self.siteDecontamination = S_Nbc_ObtenirSiteSur( self._namedParams.mission.positionSiteDecontamination_ )
                     if( self.siteDecontamination == nil ) then
@@ -96,10 +103,7 @@ elseif switch_1 == eAnimer then
                                                         do return end
 
                         end
---[[//---------------------------------------------------------------------
-]]--[[// Tester la saturation du site
-]]--[[//---------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.siteDecontamination ) ) then
                         do
@@ -108,28 +112,19 @@ elseif switch_1 == eAnimer then
                                                         do return end
 
                         end
---[[//---------------------------------------------------------------------
-]]--[[// Rejoindre le site
-]]--[[//---------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) > 300 ) then
                         self.ePhaseMission = eProgresser
                     end
 
-                    --[[//---------------------------------------------------------------------
-]]--[[// Animer le site
-]]--[[//---------------------------------------------------------------------
-]]Activate( self.activations.BEH_Pion_NBC_AnimerSite, 1, { self.siteDecontamination, } )
+                    Activate( self.activations.BEH_Pion_NBC_AnimerSite, 1, { self.siteDecontamination, } )
                     _continue = false
-                --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

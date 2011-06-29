@@ -58,37 +58,38 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == eSeFaireDecontaminer then
-                    --[[// Fin contamination
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[//---------------------------------------------------------------------
+--[[// Fin contamination
+]]--[[//---------------------------------------------------------------------
 ]]--[[// Fin contamination
 ]]--[[//---------------------------------------------------------------------
-]]if( not DEC_Agent_EstContamine() ) then
+]]--[[//---------------------------------------------------------------------
+]]--[[// Rejoindre le site
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
+]]--[[//---------------------------------------------------------------------
+]]--[[// Fin decontamination
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == eSeFaireDecontaminer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( not DEC_Agent_EstContamine() ) then
                         do
                             DEC_Trace( "---- Unite decontaminee ----" )
                             self.ePhaseMission = eFinDecontamination
                                                         do return end
 
                         end
---[[//---------------------------------------------------------------------
-]]--[[// Rejoindre le site
-]]--[[//---------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 0 ) then
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.positionSite, eProgressionDirect, eTypeItiMouvement, } )
                     end
 
-                    --[[//---------------------------------------------------------------------
-]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
-]]--[[//---------------------------------------------------------------------
-]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
+                    Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
                     _continue = false
-                --[[// Fin decontamination
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
 elseif switch_1 == eFinDecontamination then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
@@ -106,8 +107,7 @@ elseif switch_1 == eFinDecontamination then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointArrivee_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin mission
-]]                cases_switch_1[2] = true
+                                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )

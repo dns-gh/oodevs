@@ -104,8 +104,13 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Gestion des releves - listeJalonnerPrec peut contenir des unités
+]]--[[// détruites
+]]--[[// coordination des ravitaillements
+]]--[[// Coordination des feux
+]]--[[// gestion etalement du dispositif
+]]--[[// ravitaillements et IMEX
+]]            local switch_1 = self.ePhase
                 if switch_1 == eJalonner then
                     if( DIA_IsListEmpty( self.listeJalonnerOperationnels ) ) then
                         do
@@ -120,31 +125,23 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
                             local pionASuivre = DEC_Geometrie_PionDerriere( self.listeJalonnerOperationnels, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                             Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_CDT, self.listeReserve, pionASuivre, } )
                         end
---[[// Gestion des releves - listeJalonnerPrec peut contenir des unités
-]]--[[// détruites
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeJalonnerPrec, self.listePeutRelever, } )
                     self.listeJalonnerPrec = self.listeJalonner
-                    --[[// coordination des ravitaillements
-]]if( not DIA_IsListEmpty( self.listePeutFaireJalonner ) ) then
+                    if( not DIA_IsListEmpty( self.listePeutFaireJalonner ) ) then
                         Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePeutFaireJalonner, } )
                     end
 
-                    --[[// Coordination des feux
-]]Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeJalonnerOperationnels, 0, } )
-                    --[[// gestion etalement du dispositif
-]]Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, 1, { self.listeJalonnerOperationnels, 15000, } )
-                    --[[// ravitaillements et IMEX
-]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, false, } )
+                    Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeJalonnerOperationnels, 0, } )
+                    Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, 1, { self.listeJalonnerOperationnels, 15000, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, false, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

@@ -107,7 +107,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePrendreContact then
                     if( self.eCurrentPhase ~= eFinMission ) then
@@ -123,10 +126,7 @@ self.done_BEH_Mission_Pion_VAB_PrendrePreciserContact = function( self, _, v ) s
 
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do

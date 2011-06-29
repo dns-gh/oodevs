@@ -62,34 +62,31 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         Activate( self.activations.ACT_Maj_Pion_ALAT_ParametresRecompletement, 1, { eMoyennePortee, ePolyvalent, } )
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Rejoindre le site
+]]--[[// -----------------
+]]--[[// Demander à se faire decontminer (se mettre en liste d'attente)
+]]--[[// -------------------------------------------------------------
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
                     self.ePhaseMission = eSeFaireDecontaminer
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSeFaireDecontaminer then
+                elseif switch_1 == eSeFaireDecontaminer then
                     if( not DEC_Agent_EstContamine() ) then
                         do
                             self.ePhaseMission = eFinDecontamination
                                                         do return end
 
                         end
---[[// Rejoindre le site
-]]--[[// -----------------
-]]                    end
+                    end
 
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 100 ) then
                         Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self.positionSite, eProgressionDefaut, eTypeItiInfiltration, } )
                     end
 
-                    --[[// Demander à se faire decontminer (se mettre en liste d'attente)
-]]--[[// -------------------------------------------------------------
-]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
+                    Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinDecontamination then
+                elseif switch_1 == eFinDecontamination then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -106,8 +103,7 @@ elseif switch_1 == eFinDecontamination then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointArrivee_, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -128,8 +124,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

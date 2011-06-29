@@ -49,11 +49,11 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]--[[// Assigner interdire franchissement
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
-                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eValidationMRT == eActionImpossible ) then
+                    if( self.eValidationMRT == eActionImpossible ) then
                         do
                             DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                             self.ePhase = eMRT_Valider
@@ -68,22 +68,20 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
                                                         do return end
 
                         end
---[[// Assigner interdire franchissement
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listePions ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                     Activate( self.activations.BEH_Mission_Automate_AssignerCanaliserPopulationsAListe, 1, { ePhase_MRT, self.listePions, self._namedParams.mission.zones_, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                if switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )

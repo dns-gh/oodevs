@@ -181,12 +181,10 @@ function S_DistanceInstallationObstacle( )
      do
         local _continue = true
         local switch_1 = mission:GetType()
-        local cases_switch_1 = {}
             if switch_1 == "T_Mission_Pion_INF_ControlerSecteur" then
                 _returnValue = 1500
                 _continue = false
-                        cases_switch_1[1] = true
-
+            
             else
                 _returnValue = 300
                         end

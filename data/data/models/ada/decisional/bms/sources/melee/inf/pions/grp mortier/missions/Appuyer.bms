@@ -108,17 +108,14 @@ do
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eAppuyer
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eAppuyer then
+                elseif switch_1 == eAppuyer then
                     Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self.repAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -147,8 +144,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { false, } )
 self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

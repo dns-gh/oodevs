@@ -57,31 +57,25 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
                             SetStateVariable( "VE_SilenceRadioPartiel", 0 )
                             SetStateVariable( "VE_SilenceRadio", 4 )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadioPartiel" then
+                        elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadioPartiel" then
                             SetStateVariable( "VE_SilenceRadio", 0 )
                             SetStateVariable( "VE_SilenceRadioPartiel", 4 )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
                             SetStateVariable( "VE_SilenceRadio", 0 )
                             SetStateVariable( "VE_SilenceRadioPartiel", 0 )
                             _continue = false
-                                                cases_switch_1[3] = true
-elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
+                        elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
                             SetStateVariable( "VE_SilenceRadar", 4 )
                             _continue = false
-                                                cases_switch_1[4] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
                             SetStateVariable( "VE_SilenceRadar", 0 )
                             _continue = false
-                                                cases_switch_1[5] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )

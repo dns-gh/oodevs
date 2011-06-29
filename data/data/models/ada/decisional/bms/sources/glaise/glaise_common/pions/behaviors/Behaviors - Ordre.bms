@@ -51,42 +51,39 @@ do
                 local repOrdre = ordre
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
-                        if switch_1 == "Rep_OrderConduite_Interrompre" then
-                            --[[// ----------------------------------------------------------------------------
+--[[// ----------------------------------------------------------------------------
 ]]--[[// Fin mission
 ]]--[[// ----------------------------------------------------------------------------
-]]DEC_Trace( "======= Ordre --> Interruption mission =====" )
-                            --[[// poursuivre si en poste
-]]SetStateVariable( "VE_SePoster", 0 )
+]]--[[// poursuivre si en poste
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Attendre (coordination)
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Poursuivre (coordination)
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Inconnu (dans la cadre de ce comportement, peut être pris en compte patr 
+]]--[[// un autre comportement ( ex: NBC)
+]]--[[// ----------------------------------------------------------------------------
+]]                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_Interrompre" then
+                            DEC_Trace( "======= Ordre --> Interruption mission =====" )
+                            SetStateVariable( "VE_SePoster", 0 )
                             Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
                                                         self:SendFeedback( eActionHalt )
                             do return end
 
-                        --[[// ----------------------------------------------------------------------------
-]]--[[// Attendre (coordination)
-]]--[[// ----------------------------------------------------------------------------
-]]                        end
-                        if cases_switch_1[1] or switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                                                end
+                        if switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             DEC_Trace( "======= Ordre --> ATTENDRE =====" )
                             SetStateVariable( "VE_SePoster", 2 )
                             _continue = false
-                        --[[// ----------------------------------------------------------------------------
-]]--[[// Poursuivre (coordination)
-]]--[[// ----------------------------------------------------------------------------
-]]                        cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Deboucher"
+                        elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "======= Ordre --> POURSUIVRE =====" )
                             SetStateVariable( "VE_SePoster", 0 )
                             _continue = false
-                        --[[// ----------------------------------------------------------------------------
-]]--[[// Inconnu (dans la cadre de ce comportement, peut être pris en compte patr 
-]]--[[// un autre comportement ( ex: NBC)
-]]--[[// ----------------------------------------------------------------------------
-]]                        cases_switch_1[3] = true
-
+                        
                         else
                             _continue = false
                                                 end

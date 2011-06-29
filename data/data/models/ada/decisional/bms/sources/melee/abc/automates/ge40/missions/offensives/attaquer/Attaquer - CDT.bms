@@ -577,7 +577,6 @@ node "ACT_GTIA_AssignerMission"
                          do
                             local _continue = true
                             local switch_1 = self._namedParams.typeMission
-                            local cases_switch_1 = {}
                                 if switch_1 == "T_Mission_Automate_FaireMouvement" then
                                                                     local dest = DEC_Geometrie_CalculerPointArrivee()
                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -585,60 +584,51 @@ node "ACT_GTIA_AssignerMission"
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[1] = true
-elseif switch_1 == "T_Mission_Automate_SoutenirEnMesureDe" then
+                                elseif switch_1 == "T_Mission_Automate_SoutenirEnMesureDe" then
                                                                     local dest = DEC_Geometrie_CalculerPointArrivee()
                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_Copie_PointDansListePoints_Mission( dest, missionPion, "itineraire_" )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[2] = true
-elseif switch_1 == "T_Mission_Automate_ABC_Eclairer" then
+                                elseif switch_1 == "T_Mission_Automate_ABC_Eclairer" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[3] = true
-elseif switch_1 == "T_Mission_Automate_ABC_Reconnaitre" then
+                                elseif switch_1 == "T_Mission_Automate_ABC_Reconnaitre" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[4] = true
-elseif switch_1 == "T_Mission_Automate_INF_ReconnaissanceOffensive" then
+                                elseif switch_1 == "T_Mission_Automate_INF_ReconnaissanceOffensive" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[5] = true
-elseif switch_1 == "T_Mission_Automate_ABC_Attaquer" then
+                                elseif switch_1 == "T_Mission_Automate_ABC_Attaquer" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[6] = true
-elseif switch_1 == "T_Mission_Automate_INF_PrendrePreciserMaintenirContact" then
+                                elseif switch_1 == "T_Mission_Automate_INF_PrendrePreciserMaintenirContact" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[7] = true
-elseif switch_1 == "T_Mission_Automate_ABC_Semparer" then
+                                elseif switch_1 == "T_Mission_Automate_ABC_Semparer" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_AssignMissionParameter( missionPion, "objectif_", DEC_Objectif_Localisation( self._namedParams.objectif ) )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[8] = true
-elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
+                                elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignMissionParameter( missionPion, "objectif_", DEC_Objectif_Localisation( self._namedParams.objectif ) )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[9] = true
-                                end
+                                                                end
                             end
 
                     end

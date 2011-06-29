@@ -130,65 +130,56 @@ do
                 local x_pion = x
                  do
                     local _continue = true
-                    local switch_1 = --[[// Situation Mission
+--[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
-]]F_Pion_GeteEtatPhaseMission( x_pion )
-                    local cases_switch_1 = {}
+]]--[[// On reassigne la mission Appuye
+]]                    local switch_1 = F_Pion_GeteEtatPhaseMission( x_pion )
                         if switch_1 == eEtatPhaseMission_FinMission then
                              do
                                 local _continue = true
                                 local switch_2 = F_Pion_GetmissionPrecedente( x_pion )
-                                local cases_switch_2 = {}
                                     if switch_2 == "T_Mission_Pion_INF_Harceler"
                                     or switch_2 == "T_Mission_Pion_INF_ControlerSecteur" then
                                         StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1, { x_pion, } )
                                         _continue = false
-                                                                        cases_switch_2[1] = true
-elseif switch_2 == "T_Mission_Pion_INF_DetruireEmbuscade"
+                                    elseif switch_2 == "T_Mission_Pion_INF_DetruireEmbuscade"
                                     or switch_2 == "T_Mission_Pion_INF_Reduire" then
                                         if( #( selEnTete ) <= 0 ) then
                                             do return end
                                         end
 
                                         local pPion = DIA_GetAt( selEnTete, 0 )
-                                        --[[// On reassigne la mission Appuye
-]]Activate( self.activations.ACT_Info_Trace, 1, { "Mission finie: Reassigne appuyer/soutenir", } )
+                                        Activate( self.activations.ACT_Info_Trace, 1, { "Mission finie: Reassigne appuyer/soutenir", } )
                                          do
                                             local _continue = true
                                             local switch_3 = x_pion:GetType()
-                                            local cases_switch_3 = {}
                                                 if switch_3 == "Peloton_AMX"
                                                 or switch_3 == "Peloton_XL" then
                                                     Activate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, x_pion, pPion, eEtatEchelon_Second, } )
                                                     _continue = false
-                                                                                                cases_switch_3[1] = true
-elseif switch_3 == "SectionInfanterie"
+                                                elseif switch_3 == "SectionInfanterie"
                                                 or switch_3 == "SectionInfanterie_MILAN"
                                                 or switch_3 == "SectionInfanterie_HOT"
                                                 or switch_3 == "SectionInfanterie_Appui"
                                                 or switch_3 == "GroupeInfanterie_Mortier" then
                                                     Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, x_pion, pPion, eEtatEchelon_Second, } )
                                                     _continue = false
-                                                                                                cases_switch_3[2] = true
-                                                end
+                                                                                                end
                                             end
 
                                         _continue = false
-                                                                        cases_switch_2[2] = true
-                                    end
+                                                                        end
                                 end
 
                             F_Pion_SeteEtatEchelon( x_pion, eEtatEchelon_Second )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
+                        elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
                             if( S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Harceler" ) ) then
                                 StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, 1, emptyTable )
                             end
 
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 --[[// Situation Info
 ]]--[[// --------------------------------------------------------------------

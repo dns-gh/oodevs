@@ -83,10 +83,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         Activate( self.activations.ACT_Maj_Pion_ALAT_ParametresRecompletement, 1, { self._namedParams.mission.porteeAction_, ePolyvalent, } )
          do
             local _continue = true
-            local switch_1 = --[[//Corps de la mission
+--[[//Corps de la mission
 ]]--[[//-------------------
-]]self.ePhase
-            local cases_switch_1 = {}
+]]--[[//permet de sortir du fuseau
+]]--[[//modélise le chargement du plot de ravitaillement
+]]--[[//ainsi que le recompletement
+]]--[[//se ravitailler sur le TC2
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
                     if( self.eEtat == eActionEffectuee ) then
@@ -116,17 +119,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { pionTC2:DEC_Agent_Position(), } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )--[[//permet de sortir du fuseau
-]]
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, { pionTC2, eProgressionDefaut, eTypeItiInfiltration, 6000, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eAttendre then
+                elseif switch_1 == eAttendre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
-                    --[[//modélise le chargement du plot de ravitaillement
-]]--[[//ainsi que le recompletement
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -154,15 +153,13 @@ elseif switch_1 == eAttendre then
                             do return end
 
                         end
---[[//se ravitailler sur le TC2
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "Ravitaillement et Embarquement du plot de Ravitaillement", } )
                     Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurTC2, 1, emptyTable )
 self.done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2 = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eHelitransporter then
+                elseif switch_1 == eHelitransporter then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -195,8 +192,7 @@ elseif switch_1 == eHelitransporter then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.mission.pointDebarquement_, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eDebarquer then
+                elseif switch_1 == eDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -225,8 +221,7 @@ elseif switch_1 == eDebarquer then
                     Activate( self.activations.ACT_Log_Pion_ALAT_RealiserPlotLogistique, 1, { myself:DEC_Agent_Position(), } )
 self.done_ACT_Log_Pion_ALAT_RealiserPlotLogistique = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
@@ -266,8 +261,7 @@ elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.positionRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[5] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -288,8 +282,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[6] = true
-                end
+                                end
             end
 
     end,

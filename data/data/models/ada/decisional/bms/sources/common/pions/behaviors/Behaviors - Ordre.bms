@@ -50,28 +50,25 @@ do
                 local repOrdre = x
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[// poursuivre si en poste
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_Interrompre" then
                             DEC_Trace( "======= Frag order --> Stop mission =====" )
-                            --[[// poursuivre si en poste
-]]SetStateVariable( "VE_SePoster", 0 )
+                            SetStateVariable( "VE_SePoster", 0 )
                                                         self:SendFeedback( eActionHalt )
                             do return end
 
                                                 end
-                        if cases_switch_1[1] or switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                        if switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             DEC_Trace( "======= Frag order --> WAIT =====" )
                             SetStateVariable( "VE_SePoster", 2 )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Deboucher"
+                        elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "======= Frag order --> RESUME =====" )
                             SetStateVariable( "VE_SePoster", 0 )
                             _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )

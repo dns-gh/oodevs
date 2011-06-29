@@ -102,7 +102,6 @@ end
      do
         local _continue = true
         local switch_1 = type
-        local cases_switch_1 = {}
             if switch_1 == eFranchissement_Continu then
                 if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PAA() * #( selPAA ) ) ) then
                     _returnValue = true
@@ -121,15 +120,13 @@ end
                 end
 
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eFranchissement_Discontinu then
+            elseif switch_1 == eFranchissement_Discontinu then
                 if( #( selMLF ) + #( selEFA ) + #( selPFM ) == 0 ) then
                     _returnValue = false
                 end
 
                 _continue = false
-                        cases_switch_1[2] = true
-
+            
             else
                 _returnValue = true
             end

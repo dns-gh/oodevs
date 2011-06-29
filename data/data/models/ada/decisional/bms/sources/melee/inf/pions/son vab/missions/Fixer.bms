@@ -214,15 +214,13 @@ self.done_BEH_Dep_Pion_INF_PreciserMaintenirContact = function( self, _, v ) sel
          do
             local _continue = true
             local switch_1 = DEC_ConnaissanceAgent_NiveauPerceptionMax( self.ksMission )
-            local cases_switch_1 = {}
                 if switch_1 == eReconnu
                 or switch_1 == eIdentifie then
                     Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self.ksMission ), } )
                     Activate( self.activations.BEH_Eni_Pion_VAB_Fixer, 2 * S_Force_DangerSur( self.ksMission ), { self.ksMission, } )
 self.done_BEH_Eni_Pion_VAB_Fixer = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-
+                
                 else
                     --[[// Si on n'a pas retrouve la connaissance
 ]]if( DEC_ConnaissanceAgent_EstValide( self.ksMission ) and S_Geometrie_EstProchePosition( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self.ksMission ), M_DISTANCE_FIXER_SECURITE() ) ) then

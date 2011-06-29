@@ -55,13 +55,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             do
                  do
                     local _continue = true
-                    local switch_1 = self.ePhaseMission
-                    local cases_switch_1 = {}
+--[[// Pas de progression juste assurer la liaison radio
+]]--[[// A moins de 50km assurer la liaison radio
+]]--[[// Fin de la mission --> SUR ORDRE
+]]                    local switch_1 = self.ePhaseMission
                         if switch_1 == eAttendre then
-                                                    --[[// Pas de progression juste assurer la liaison radio
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                            --[[// A moins de 50km assurer la liaison radio
-]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.ami_:DEC_Agent_Position() ) < 50000 ) then
+                                                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                            if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.ami_:DEC_Agent_Position() ) < 50000 ) then
                                 do
                                     Activate( self.activations.ACT_Info_Trace, 1, { "Unite à distance de liaison", } )
                                     Activate( self.activations.ACT_Pion_Rens_AssurerLaLiaisonAvec, 1, { self._namedParams.mission.ami_, } )
@@ -69,14 +69,11 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                             end
 
                             _continue = false
-                        --[[// Fin de la mission --> SUR ORDRE
-]]                        cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                        elseif switch_1 == eFinMission then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                             Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[2] = true
-
+                        
                         else
                                                 end
                     end

@@ -41,14 +41,12 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Tir.bms"] = 
 
          do
             local _continue = true
-            local switch_1 = self.eTir
-            local cases_switch_1 = {}
+--[[// Debug
+]]            local switch_1 = self.eTir
                 if switch_1 == eActionTirDirect_Impossible then
-                    --[[// Debug
-]]DEC_Trace( "Tir impossible" )
+                    DEC_Trace( "Tir impossible" )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionTirDirect_NoAmmo
+                elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_NoCapacity
                 or switch_1 == eActionTirDirect_EnemyDestroyed
                 or switch_1 == eActionTirDirect_Finished then
@@ -63,8 +61,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_Running then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,
@@ -122,17 +119,15 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 
          do
             local _continue = true
-            local switch_1 = --[[// --------------------------------------------------------------------- 
+--[[// --------------------------------------------------------------------- 
 ]]--[[// Retour tir --> debug
 ]]--[[// ---------------------------------------------------------------------
-]]self.eTir
-            local cases_switch_1 = {}
+]]--[[// Debug
+]]            local switch_1 = self.eTir
                 if switch_1 == eActionTirDirect_Impossible then
-                    --[[// Debug
-]]DEC_Trace( "Tir impossible" )
+                    DEC_Trace( "Tir impossible" )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionTirDirect_NoAmmo
+                elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_NoCapacity
                 or switch_1 == eActionTirDirect_EnemyDestroyed
                 or switch_1 == eActionTirDirect_Finished then
@@ -146,8 +141,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_Running then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

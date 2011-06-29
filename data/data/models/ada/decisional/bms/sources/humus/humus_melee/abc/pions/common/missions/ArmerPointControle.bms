@@ -82,17 +82,25 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// 3) Qd prêt Barrer la direction dangereuse
+]]--[[//---------------------------------------------------------------------
+]]--[[// Tester la saturation du site
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Rejoindre le site
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Animer le site
+]]--[[//---------------------------------------------------------------------
+]]--[[// 4) Fin de la mission de reconnaissance SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Arming check point mission begining", } )
                     self.ePhaseMission = eAnimer
                     _continue = false
-                --[[// 3) Qd prêt Barrer la direction dangereuse
-]]                cases_switch_1[1] = true
-elseif switch_1 == eAnimer then
+                elseif switch_1 == eAnimer then
                     self.posteControle = S_Objet_Pion_ABC_ObtenirSiteSur( self._namedParams.mission.pointDeControle_ )
                     if( self.posteControle == nil ) then
                         do
@@ -100,10 +108,7 @@ elseif switch_1 == eAnimer then
                                                         do return end
 
                         end
---[[//---------------------------------------------------------------------
-]]--[[// Tester la saturation du site
-]]--[[//---------------------------------------------------------------------
-]]                    end
+                    end
 
                     if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.posteControle ) ) then
                         do
@@ -114,10 +119,7 @@ elseif switch_1 == eAnimer then
                     end
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "Site OK ", } )
-                    --[[//---------------------------------------------------------------------
-]]--[[// Rejoindre le site
-]]--[[//---------------------------------------------------------------------
-]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.pointDeControle_ ) > 300 ) then
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.pointDeControle_ ) > 300 ) then
                         do
                             Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self._namedParams.mission.pointDeControle_, eProgressionDefaut, eTypeItiMouvement, } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
@@ -126,19 +128,13 @@ elseif switch_1 == eAnimer then
                         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
                     end
 
-                    --[[//---------------------------------------------------------------------
-]]--[[// Animer le site
-]]--[[//---------------------------------------------------------------------
-]]Activate( self.activations.ACT_Pion_ABC_AnimerSite, 1, { self.posteControle, } )
+                    Activate( self.activations.ACT_Pion_ABC_AnimerSite, 1, { self.posteControle, } )
                     _continue = false
-                --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

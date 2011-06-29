@@ -81,8 +81,10 @@ do
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSeMettreEnPlace then
                     if( self.eCurrentPhase == eFinMission ) then
                         do
@@ -95,8 +97,7 @@ do
                     Activate( self.activations.BEH_Mission_Pion_VAB_OrganiserUnCheckPoint, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_OrganiserUnCheckPoint = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRompreContact then
+                elseif switch_1 == eRompreContact then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -112,16 +113,12 @@ elseif switch_1 == eRompreContact then
                     Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------
-]]DEC_Trace( "mission MIS_Pion_INF_OrganiserUnCheckPoint : fin" )
+                                DEC_Trace( "mission MIS_Pion_INF_OrganiserUnCheckPoint : fin" )
                                 DEC_FinMission()
                                                                 self:SendFeedback( eActionEffectuee )
                                 Halt( self )
@@ -136,8 +133,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
 self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end
@@ -176,11 +172,15 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// On va se mettre en position en restant sur nos garde
+]]--[[// On surveille la zone en meme temps que l'on prepare
+]]--[[// On fait d'abord debarquer				
+]]--[[// Demander aux appuis de se mettre en place.
+]]--[[// preparation 5min
+]]--[[// On surveille jusqu'a la fin...
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSeMettreEnPlace then
-                    --[[// On va se mettre en position en restant sur nos garde
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -197,17 +197,12 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointInstallation_, true, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eInstallerDispositif then
+                elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    --[[// On surveille la zone en meme temps que l'on prepare
-]]--[[// On fait d'abord debarquer				
-]]StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_InstallerCheckPoint, 1.1, { self.mission.pointInstallation_, } )
+                    StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_InstallerCheckPoint, 1.1, { self.mission.pointInstallation_, } )
                     StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointInstallation_, false, } )
-                    --[[// Demander aux appuis de se mettre en place.
-]]--[[// preparation 5min
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -223,13 +218,10 @@ elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// On surveille jusqu'a la fin...
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
+                elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

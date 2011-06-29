@@ -58,19 +58,19 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progression
+]]--[[// Progression
+]]--[[// Nettoyage obstacle si possible
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Progression
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                    --[[// Progression
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -84,17 +84,13 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiDeminage, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
-                    --[[// Nettoyage obstacle si possible
-]]Activate( self.activations.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, 2, emptyTable )
+                    Activate( self.activations.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, 2, emptyTable )
                     _continue = false
-                --[[// Fin de la mission
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

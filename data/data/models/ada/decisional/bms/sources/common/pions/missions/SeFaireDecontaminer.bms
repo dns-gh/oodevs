@@ -69,22 +69,28 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// Fin contamination
+]]--[[//---------------------------------------------------------------------
+]]--[[// Rejoindre le site
+]]--[[//---------------------------------------------------------------------
+]]--[[// Décontamination
+]]--[[// Fin contamination
+]]--[[// Si sauvegarde (pour toujours être à coté du site de décontamination)
+]]--[[//---------------------------------------------------------------------
+]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
+]]--[[//---------------------------------------------------------------------
+]]--[[// Fin decontamination
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     DEC_Trace( "** MIS_Pion_SeFaireDecontaminer **" )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Fin contamination
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[//---------------------------------------------------------------------
-]]--[[// Rejoindre le site
-]]--[[//---------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -99,33 +105,24 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionSite, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Décontamination
-]]                cases_switch_1[2] = true
-elseif switch_1 == eAttendre then
+                elseif switch_1 == eAttendre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    --[[// Fin contamination
-]]if( not DEC_Agent_EstContamine() ) then
+                    if( not DEC_Agent_EstContamine() ) then
                         do
                             DEC_Trace( "---- Unite decontaminee ----" )
                             self.ePhaseMission = eRejoindre
                                                         do return end
 
                         end
---[[// Si sauvegarde (pour toujours être à coté du site de décontamination)
-]]                    end
+                    end
 
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 100 ) then
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.positionSite, eProgressionDirect, eTypeItiMouvement, } )
                     end
 
-                    --[[//---------------------------------------------------------------------
-]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
-]]--[[//---------------------------------------------------------------------
-]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
+                    Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
                     _continue = false
-                --[[// Fin decontamination
-]]                cases_switch_1[3] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -142,14 +139,11 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointArrivee_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin mission
-]]                cases_switch_1[4] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[5] = true
-                end
+                                end
             end
 
     end,

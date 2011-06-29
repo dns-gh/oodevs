@@ -37,11 +37,13 @@ includedFiles["sources/appui/trans/automates/missions/commander/Commander - MRT.
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]--[[// controle de creation mission
+]]--[[// ordre de creation des missions
+]]--[[//DEC_RC( eRC_MissionImpossible );
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
-                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eEtatMissionCommander == eActionImpossible ) then
+                    if( self.eEtatMissionCommander == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
                                                         do return end
@@ -55,21 +57,17 @@ includedFiles["sources/appui/trans/automates/missions/commander/Commander - MRT.
                                                         do return end
 
                         end
---[[// controle de creation mission
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( selPions ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionCommander = v[1] end
-                    --[[// ordre de creation des missions
-]]if( #( selPions ) ~= 0 ) then
+                    if( #( selPions ) ~= 0 ) then
                         Activate( self.activations.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe, 1, { ePhase_MRT, selPions, self.ptDest, } )
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
-                    --[[//DEC_RC( eRC_MissionImpossible );
-]]                    self:SendFeedback( eActionImpossible )
+                elseif switch_1 == eMRT_MissionImpossible then
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 

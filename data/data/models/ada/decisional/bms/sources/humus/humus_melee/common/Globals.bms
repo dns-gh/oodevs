@@ -507,7 +507,6 @@ do
              do
                 local _continue = true
                 local switch_1 = pion:GetType()
-                local cases_switch_1 = {}
                     if switch_1 == "SectionInfanterie"
                     or switch_1 == "SectionInfanterie_HOT"
                     or switch_1 == "SectionInfanterie_MILAN"
@@ -518,8 +517,7 @@ do
                     or switch_1 == "GroupeInfanterie_Mortier" then
                                                 _returnValue = _returnValue + 1
                         _continue = false
-                                        cases_switch_1[1] = true
-                    end
+                                        end
                 end
 
         end
@@ -633,23 +631,19 @@ function S_Automate_INF_UniteMission_Appuyer( pPionAppui )
      do
         local _continue = true
         local switch_1 = mission:GetType()
-        local cases_switch_1 = {}
             if switch_1 == "T_Mission_Pion_ABC_Soutenir" then
                 local missionABC = DEC_GetMission( pPionAppui )
                 _returnValue = missionABC.uniteASoutenir_
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == "T_Mission_Pion_ABC_Appuyer" then
+            elseif switch_1 == "T_Mission_Pion_ABC_Appuyer" then
                 local missionABC = DEC_GetMission( pPionAppui )
                 _returnValue = missionABC.uniteAAppuyer_
                 _continue = false
-                        cases_switch_1[2] = true
-elseif switch_1 == "T_Mission_Pion_INF_Appuyer" then
+            elseif switch_1 == "T_Mission_Pion_INF_Appuyer" then
                 local missionINF = DEC_GetMission( pPionAppui )
                 _returnValue = missionINF.uniteAAppuyer_
                 _continue = false
-                        cases_switch_1[3] = true
-            end
+                        end
         end
 
     do return _returnValue end
@@ -789,11 +783,9 @@ do
              do
                 local _continue = true
                 local switch_1 = pion:GetType()
-                local cases_switch_1 = {}
                     if switch_1 == "GroupeInfanterie_Mortier" then
                         _continue = false
-                                        cases_switch_1[1] = true
-
+                    
                     else
                         DIA_PushBack( selTemp, pion )
                     end
@@ -982,7 +974,6 @@ do
              do
                 local _continue = true
                 local switch_1 = F_Pion_GeteEtatPhaseMission( pionOrdre )
-                local cases_switch_1 = {}
                     if switch_1 == eEtatPhaseMission_RejointFuseau then
                         _returnValue = true
                                                 do return _returnValue end
@@ -993,7 +984,6 @@ do
              do
                 local _continue = true
                 local switch_1 = F_Pion_GeteEtatLima( pionOrdre )
-                local cases_switch_1 = {}
                     if switch_1 == eEtatLima_Fuseau then
                         _returnValue = true
                                                 do return _returnValue end

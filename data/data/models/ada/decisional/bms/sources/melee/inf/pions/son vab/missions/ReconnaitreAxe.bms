@@ -69,7 +69,24 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// Ajout MIA ADA    
+]]--[[// Ajout MIA ADA
+]]--[[/*  // Virer MIA ADA
+			if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        								{										
+									DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
+									DEC_FinMission();
+									halt( eActionEffectuee );
+								}
+							  
+    }
+			action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_FinMission );
+			behavior BEH_Poste_Pion_INF_TomberEnGarde( true ) return in eAction;
+			*/]]--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[//						Gestion de l'ennemi
+]]--[[//	
+]]--[[//=============================================================================
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
                     if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
@@ -92,26 +109,9 @@ self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPha
                 end
                 if cases_switch_1[1] or switch_1 == eFinMission then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
-                    --[[// Ajout MIA ADA    
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )--[[// Ajout MIA ADA
-]]
-                    _continue = false--[[/*  // Virer MIA ADA
-			if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        								{										
-									DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
-									DEC_FinMission();
-									halt( eActionEffectuee );
-								}
-							  
-    }
-			action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_FinMission );
-			behavior BEH_Poste_Pion_INF_TomberEnGarde( true ) return in eAction;
-			*/]]--[[//=============================================================================
-]]--[[//=============================================================================
-]]--[[//						Gestion de l'ennemi
-]]--[[//	
-]]--[[//=============================================================================
-]]
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else

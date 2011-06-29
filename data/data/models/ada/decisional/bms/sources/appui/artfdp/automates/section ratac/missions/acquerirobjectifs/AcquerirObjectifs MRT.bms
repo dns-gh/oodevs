@@ -118,14 +118,19 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_SelectionnerPions then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------						
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
-]]self.selPions_ASS_RATAC = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeASS_RATAC" )
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On verifie juste que la batterie peut effectuer la mission
+]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
+]]--[[// Assigne la mission au pc
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_SelectionnerPions then
+                    self.selPions_ASS_RATAC = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeASS_RATAC" )
                     if( #( self.selPions_ASS_RATAC ) == 0 ) then
                         do
                             DEC_Trace( "First echelon is empty" )
@@ -138,14 +143,8 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
 
                     self.ePhase = eMRT_AssignerMissions
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------
-]]--[[// On verifie juste que la batterie peut effectuer la mission
-]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
-]]if( self.eValidationMRT == eActionImpossible ) then
+                elseif switch_1 == eMRT_AssignerMissions then
+                    if( self.eValidationMRT == eActionImpossible ) then
                         do
                                                         do
                                 DEC_Trace( "eValidationMRT == eActionImpossible" )
@@ -175,11 +174,9 @@ elseif switch_1 == eMRT_AssignerMissions then
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                     Activate( self.activations.BEH_Medo_Automate_ASS_AcquerirObjectifs, 1, { self.selPions_ASS_RATAC, self.mission.zonesAObserver_, self.mission.positionsDeploiement_, } )
 self.done_BEH_Medo_Automate_ASS_AcquerirObjectifs = function( self, _, v ) self.eActionMRT = v[1] end
-                    --[[// Assigne la mission au pc
-]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_RATAC, } )
+                    Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_RATAC, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

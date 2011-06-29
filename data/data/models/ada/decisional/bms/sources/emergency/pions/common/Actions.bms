@@ -34,12 +34,10 @@ node "ACT_Pion_Emergency_BlockRoad"
          do
             local _continue = true
             local switch_1 = self.eEtatInfluence
-            local cases_switch_1 = {}
                 if switch_1 == eActionInfluence_EnCours
                 or switch_1 == eActionInfluence_Terminee then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionInfluence_Impossible then
+                elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -113,12 +111,10 @@ node "ACT_Pion_Emergency_Influence"
          do
             local _continue = true
             local switch_1 = self.eEtatInfluence
-            local cases_switch_1 = {}
                 if switch_1 == eActionInfluence_EnCours
                 or switch_1 == eActionInfluence_Terminee then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionInfluence_Impossible then
+                elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -185,12 +181,10 @@ node "ACT_Pion_Emergency_InfluenceInArea"
          do
             local _continue = true
             local switch_1 = self.eEtatInfluence
-            local cases_switch_1 = {}
                 if switch_1 == eActionInfluence_EnCours
                 or switch_1 == eActionInfluence_Terminee then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionInfluence_Impossible then
+                elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                     DEC_Trace( "influence impossible." )
                                         self:SendFeedback( eActionImpossible )
@@ -265,12 +259,10 @@ node "ACT_Pion_Emergency_TriggerActivity"
          do
             local _continue = true
             local switch_1 = self.eEtatInfluence
-            local cases_switch_1 = {}
                 if switch_1 == eActionInfluence_EnCours
                 or switch_1 == eActionInfluence_Terminee then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionInfluence_Impossible then
+                elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -336,12 +328,10 @@ node "ACT_Pion_Emergency_TriggerActivityInArea"
          do
             local _continue = true
             local switch_1 = self.eEtatInfluence
-            local cases_switch_1 = {}
                 if switch_1 == eActionInfluence_EnCours
                 or switch_1 == eActionInfluence_Terminee then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionInfluence_Impossible then
+                elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -415,12 +405,10 @@ node "ACT_Pion_Emergency_UnloadActivity"
          do
             local _continue = true
             local switch_1 = self.eEtatInfluence
-            local cases_switch_1 = {}
                 if switch_1 == eActionInfluence_EnCours
                 or switch_1 == eActionInfluence_Terminee then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionInfluence_Impossible then
+                elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -514,7 +502,8 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
 
          do
             local _continue = true
-            local switch_1 = self.eEtatObjet
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]            local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
@@ -546,8 +535,7 @@ elseif switch_1 == eActionObjetTerminee then
                     _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "object construction: not enough issue" )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]                cases_switch_1[4] = true
+                                cases_switch_1[4] = true
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
@@ -639,11 +627,9 @@ node "ACT_Obj_Pion_Emergency_Supply"
          do
             local _continue = true
             local switch_1 = self.eEtatObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionObjetTerminee then
+                elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "object supply: end" )
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -714,11 +700,9 @@ node "ACT_Obj_Pion_Emergency_Distribute"
          do
             local _continue = true
             local switch_1 = self.eEtatObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionObjetTerminee then
+                elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "object distribution: end" )
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -799,12 +783,10 @@ node "ACT_Obj_Pion_Emergency_ExtinguishFire"
          do
             local _continue = true
             local switch_1 = self.eEtatAction
-            local cases_switch_1 = {}
                 if switch_1 == eActionInfluence_EnCours
                 or switch_1 == eActionInfluence_Terminee then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionInfluence_Impossible then
+                elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

@@ -61,16 +61,24 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progresser jusqu'à zone de débarquement
+]]--[[// eAppuyer
+]]--[[//---------------------------------------------------------------------
+]]--[[// Apres avoir deposer le Brod --> Brouillage // MIA amélioration
+]]--[[// --> order de conduite brouiller
+]]--[[// halt seule
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Deposer le Brod
+]]--[[//---------------------------------------------------------------------
+]]--[[// Fin de la mission --> SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Progresser jusqu'à zone de débarquement
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -87,16 +95,9 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// eAppuyer
-]]                cases_switch_1[2] = true
-elseif switch_1 == eAppuyer then
+                elseif switch_1 == eAppuyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    --[[//---------------------------------------------------------------------
-]]--[[// Apres avoir deposer le Brod --> Brouillage // MIA amélioration
-]]--[[// --> order de conduite brouiller
-]]--[[// halt seule
-]]--[[//---------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -107,17 +108,12 @@ elseif switch_1 == eAppuyer then
                             end
 
                         end
---[[//---------------------------------------------------------------------
-]]--[[// Deposer le Brod
-]]--[[//---------------------------------------------------------------------
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Objet_Rens_DeposerBrouilleur, 1, emptyTable )
 self.done_BEH_Objet_Rens_DeposerBrouilleur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin de la mission --> SUR ORDRE
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do return end
@@ -126,8 +122,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointRegroupement_, eProgressionReco, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

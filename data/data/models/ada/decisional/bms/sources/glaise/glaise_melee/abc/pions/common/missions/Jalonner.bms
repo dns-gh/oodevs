@@ -91,13 +91,31 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// 1) Preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 2) Jalonner l'eni
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Comportement par défaut: déplacement vers le second echelon
+]]--[[// La reaction face à l'eni consiste à freiner ce deplacement en fonction des
+]]--[[// mvts de l'eni.
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//=============================================================================
+]]--[[// Activer par automate
+]]--[[//=============================================================================
+]]--[[// MIA à remplacer par une motivation
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Jalonner les enis
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 4) Fin de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// reprendre sauvegarde
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_ABC_Jalonner:debut **", } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -114,18 +132,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, { eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_Pion_ABC_RejoindreFuseau = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 2) Jalonner l'eni
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eJalonner then
+                elseif switch_1 == eJalonner then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnJalonnement, } )
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Comportement par défaut: déplacement vers le second echelon
-]]--[[// La reaction face à l'eni consiste à freiner ce deplacement en fonction des
-]]--[[// mvts de l'eni.
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -141,30 +150,17 @@ elseif switch_1 == eJalonner then
 self.done_BEH_Lima_Pion_ABC_Jalonner_GererLimas = function( self, _, v ) self.eEtatRecueil = v[1] end
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
-                    --[[//=============================================================================
-]]--[[// Activer par automate
-]]--[[//=============================================================================
-]]--[[// MIA à remplacer par une motivation
-]]if( myself.bOrdreDecrocher_ or self.eEtatRecueil == eActionEffectuee ) then
+                    if( myself.bOrdreDecrocher_ or self.eEtatRecueil == eActionEffectuee ) then
                         do return end
                     end
 
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Jalonner les enis
-]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Eni_Pion_ABC_JalonnerLesGros, 1.1, emptyTable )
+                    Activate( self.activations.BEH_Eni_Pion_ABC_JalonnerLesGros, 1.1, emptyTable )
                     _continue = false
-                --[[//-----------------------------------------------------------------------------
-]]--[[// 4) Fin de la mission
-]]--[[//-----------------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
-                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )--[[// reprendre sauvegarde
-]]
+                elseif switch_1 == eFinMission then
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end
@@ -308,35 +304,33 @@ do
 ]]local pointLima = pointABC
                          do
                             local _continue = true
-                            local switch_1 = pointLima:GetnTypeLima_()
-                            local cases_switch_1 = {}
-                                if switch_1 == eTypeLima_LC then
-                                                                    --[[//-------------------------------------------------------------
+--[[//-------------------------------------------------------------
 ]]--[[// Passage sur la ligne de coordination fixée par le capitaine
 ]]--[[//-------------------------------------------------------------
-]]if( not DEC_GetMissionLimaFlag( DEC_GetLimaPoint( pointLima ) ) ) then
+]]--[[// DEC_RC( eRC_SurLima, eTypeLima_LC );
+]]--[[//-------------------------------------------------------------
+]]--[[// Passage sur LIA --> decrocher
+]]--[[//-------------------------------------------------------------
+]]--[[// DEC_RC( eRC_SurLima, eTypeLima_LIA );
+]]                            local switch_1 = pointLima:GetnTypeLima_()
+                                if switch_1 == eTypeLima_LC then
+                                                                    if( not DEC_GetMissionLimaFlag( DEC_GetLimaPoint( pointLima ) ) ) then
                                         do
                                             DEC_SetMissionLimaFlag( DEC_GetLimaPoint( pointLima ), true )
-                                            --[[// DEC_RC( eRC_SurLima, eTypeLima_LC );
-]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LC, } )
+                                            Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LC, } )
                                             DEC_Trace( "Passage LC" )
                                         end
                                     end
 
                                     DEC_RemoveFromCategory( "points_interressants", pointLima )
                                     _continue = false
-                                --[[//-------------------------------------------------------------
-]]--[[// Passage sur LIA --> decrocher
-]]--[[//-------------------------------------------------------------
-]]                                cases_switch_1[1] = true
-elseif switch_1 == eTypeLima_LR
+                                elseif switch_1 == eTypeLima_LR
                                 or switch_1 == eTypeLima_LIA then
                                     if( not DEC_GetMissionLimaFlag( DEC_GetLimaPoint( pointLima ) ) ) then
                                         do
                                             DEC_SetMissionLimaFlag( DEC_GetLimaPoint( pointLima ), true )
                                             Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LIA, } )
-                                            --[[// DEC_RC( eRC_SurLima, eTypeLima_LIA );
-]]DEC_Trace( "Passage LIA" )
+                                            DEC_Trace( "Passage LIA" )
                                                                                         self:SendFeedback( eActionEffectuee )
                                             do return end
 
@@ -345,8 +339,7 @@ elseif switch_1 == eTypeLima_LR
 
                                     DEC_RemoveFromCategory( "points_interressants", pointLima )
                                     _continue = false
-                                                                cases_switch_1[2] = true
-                                end
+                                                                end
                             end
 
                     end

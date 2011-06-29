@@ -59,16 +59,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation mission
+]]--[[// Surveiller
+]]--[[// Fin de la mission --> SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eSurveiller
                     _continue = false
-                --[[// Surveiller
-]]                cases_switch_1[1] = true
-elseif switch_1 == eSurveiller then
+                elseif switch_1 == eSurveiller then
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     if( self._namedParams.bEcouteRadar ) then
                         Activate( self.activations.BEH_Rens_EnEcouteRadarSur, 1, { self._namedParams.mission.zone_, } )
@@ -77,14 +76,11 @@ elseif switch_1 == eSurveiller then
                     end
 
                     _continue = false
-                --[[// Fin de la mission --> SUR ORDRE
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

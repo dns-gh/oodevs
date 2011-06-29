@@ -87,13 +87,19 @@ node "BEH_Mission_Pion_INF_Harceler"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eSeMettreEnPlace then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//------------------------------------------------------------------
+--[[//------------------------------------------------------------------
 ]]--[[// On va se mettre en position en restant sur nos garde
 ]]--[[//------------------------------------------------------------------
-]]
+]]--[[// Aborder Objectif
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]--[[// Temps de mise en place du dispositif
+]]--[[// L'ensemble du dispositif est installe, on surveiller la zone
+]]--[[// Surveille secteur			
+]]--[[// action ACT_Pion_VAB_ControleZone( mission.zone_, M_CAPACITE_SURVEILLANCE(), false );				
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -112,8 +118,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
-                    --[[// Aborder Objectif
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -137,8 +142,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                 if cases_switch_1[2] or switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.zone_, } )
+                    StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.zone_, } )
                     StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
@@ -152,22 +156,18 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                             end
 
                         end
---[[// Temps de mise en place du dispositif
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                                         self:SendFeedback( self.ePhase )
                     do return end
 
-                --[[// L'ensemble du dispositif est installe, on surveiller la zone
-]]                end
+                                end
                 if cases_switch_1[3] or switch_1 == eSurveiller then
-                    --[[// Surveille secteur			
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
-                    --[[// action ACT_Pion_VAB_ControleZone( mission.zone_, M_CAPACITE_SURVEILLANCE(), false );				
-]]Activate( self.activations.BEH_Pion_INF_Detruire_Harceler, 2, { self.mission.zone_, self.mission.natureObjectif_, } )
+                    Activate( self.activations.BEH_Pion_INF_Detruire_Harceler, 2, { self.mission.zone_, self.mission.natureObjectif_, } )
                     _continue = false
                                 cases_switch_1[4] = true
 
@@ -218,7 +218,6 @@ node "BEH_Pion_INF_Detruire_Harceler"
                  do
                     local _continue = true
                     local switch_1 = eCodeLocRgpt
-                    local cases_switch_1 = {}
                         if switch_1 == eError_PionsPasDansMemeFuseau
                         or switch_1 == eError_LocalisationPasDansFuseau then
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
@@ -233,11 +232,9 @@ node "BEH_Pion_INF_Detruire_Harceler"
                         elseif switch_1 == eWarning_DecoupageIncomplet then
                                                     DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eNoError then
+                        elseif switch_1 == eNoError then
                                                     _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
                 self.ptRegroupement = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.selPointsAttente, self.nPos ) )

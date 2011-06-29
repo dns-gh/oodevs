@@ -123,16 +123,17 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progression vers position
+]]--[[// Mettre en oeuvre
+]]--[[//action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]--[[// Fin de la mission de reconnaissance
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Progression vers position
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -149,11 +150,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.positionDeploiement, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Mettre en oeuvre
-]]                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
-                    --[[//action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]if( self.eEtat == eActionEffectuee ) then
+                elseif switch_1 == eSurveiller then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -168,14 +166,11 @@ elseif switch_1 == eSurveiller then
                     Activate( self.activations.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC, 1, { self.pionDrone, } )
 self.done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin de la mission de reconnaissance
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

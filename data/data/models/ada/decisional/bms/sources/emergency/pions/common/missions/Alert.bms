@@ -58,7 +58,6 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DeploiementSurPosition, } )
@@ -74,8 +73,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.BEH_Dep_Pion_Emergency_OrganizeAlert, 1, { self._namedParams.mission.zones_, } )
 self.done_BEH_Dep_Pion_Emergency_OrganizeAlert = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -88,8 +86,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -224,11 +221,11 @@ node "ACT_Info_ReportPhase"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// switch from begin to end part of the locations list
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eDeployer then
-                    --[[// switch from begin to end part of the locations list
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do

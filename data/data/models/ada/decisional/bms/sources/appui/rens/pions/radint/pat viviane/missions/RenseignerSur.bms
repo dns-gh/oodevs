@@ -74,19 +74,26 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation mission
+]]--[[// Se diriger vers les ZR 
+]]--[[// Observation
+]]--[[// Prendre des photos pd 5 min
+]]--[[// Rester sur palce dans la cas du Cougar
+]]--[[// données doctrine
+]]--[[// Delai mise en place
+]]--[[// Progression
+]]--[[// Decrocher
+]]--[[// Fin de la mission Sur ordre ou si plus d'autonomie
+]]--[[// Developpement photos
+]]--[[// données doctrine
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
                     _continue = false
-                --[[// Se diriger vers les ZR 
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    --[[// Observation
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
@@ -100,25 +107,18 @@ elseif switch_1 == eProgresser then
 
                     if( DEC_Perception_PointEstVisible( self.positionObservation ) ) then
                         do
-                            --[[// Prendre des photos pd 5 min
-]]Activate( self.activations.BEH_Obs_Pion_Rens_Radint_RenseignerDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
+                            Activate( self.activations.BEH_Obs_Pion_Rens_Radint_RenseignerDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
                             Activate( self.activations.ACT_Info_Trace, 1, { "Vertical take off", } )
-                            --[[// Rester sur palce dans la cas du Cougar
-]]Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
-                            --[[// données doctrine
-]]Activate( self.activations.BEH_Dep_Pion_RENS_MonterA, 1.1, { 3000, } )
-                            --[[// Delai mise en place
-]]Activate( self.activations.ACT_Misc_Delai, 1, { 1, 5, } )
+                            Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
+                            Activate( self.activations.BEH_Dep_Pion_RENS_MonterA, 1.1, { 3000, } )
+                            Activate( self.activations.ACT_Misc_Delai, 1, { 1, 5, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                         end
---[[// Progression
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObservation, eProgressionDirect, eTypeItiMouvement, } )
                     _continue = false
-                --[[// Decrocher
-]]                cases_switch_1[2] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -135,21 +135,16 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionInitiale, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin de la mission Sur ordre ou si plus d'autonomie
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
                         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     end
 
                     Activate( self.activations.BEH_Connaissance_Rens_ExploiterRens, 1, emptyTable )
-self.done_BEH_Connaissance_Rens_ExploiterRens = function( self, _, v ) self.eEtat = v[1] end--[[// Developpement photos
-]]
-                    --[[// données doctrine
-]]StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
+self.done_BEH_Connaissance_Rens_ExploiterRens = function( self, _, v ) self.eEtat = v[1] end
+                    StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

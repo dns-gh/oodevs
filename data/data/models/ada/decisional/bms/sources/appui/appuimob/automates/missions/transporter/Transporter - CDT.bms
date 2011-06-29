@@ -56,14 +56,12 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[//quand plus aucun pion n'a de mission
+]]            local switch_1 = self.ePhase
                 if switch_1 == eTransporter then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
-                    --[[//quand plus aucun pion n'a de mission
-]]local plusDeMissions = true
+                elseif switch_1 == eFinMission then
+                    local plusDeMissions = true
                     for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                     local _continue = true
 do
@@ -83,8 +81,7 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

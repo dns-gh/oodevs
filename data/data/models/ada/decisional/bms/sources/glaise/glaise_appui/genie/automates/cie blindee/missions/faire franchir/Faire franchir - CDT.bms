@@ -311,38 +311,35 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
 
          do
             local _continue = true
-            local switch_1 = --[[//-------------------------------------------------------------------------
+--[[//-------------------------------------------------------------------------
 ]]--[[// Renforcement des sites un par un
 ]]--[[//-------------------------------------------------------------------------
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eDeterminerSite then
-                    --[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
 ]]--[[// Sites
 ]]--[[//-------------------------------------------------------------------------
-]]local conSite = DIA_GetAt( g_selConnaissanceObs, self.rIterateur )
+]]--[[// Renforcement si reconnu
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Vérification iteration
+]]--[[//-------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eDeterminerSite then
+                    local conSite = DIA_GetAt( g_selConnaissanceObs, self.rIterateur )
                     local rTailleSite = DEC_ConnaissanceObjet_LargeurSiteFranchissement( conSite:Getobstacle_() )
-                    --[[// Renforcement si reconnu
-]]if( rTailleSite > 0 and not conSite:GetbEstRenforce_() ) then
+                    if( rTailleSite > 0 and not conSite:GetbEstRenforce_() ) then
                         Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour, 1, { conSite, rTailleSite, } )
                     end
 
                                         self.rIterateur = self.rIterateur + 1
                     self.ePhase = eAttendre
                     _continue = false
-                --[[//-------------------------------------------------------------------------
-]]--[[// Vérification iteration
-]]--[[//-------------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eAttendre then
+                elseif switch_1 == eAttendre then
                     if( self.rIterateur == #( g_selConnaissanceObs ) ) then
                         self.rIterateur = 0
                     end
 
                     self.ePhase = eDeterminerSite
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -652,28 +649,24 @@ do
                 local repOrdre = x
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
+--[[// Mise en attente de la progression
+]]--[[// ordre de poursuivre -> on reprend la progression
+]]--[[// la section n est plus en attente d'ordre
+]]--[[// Cas des LC
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_Interrompre" then
                             bOrdreConduiteInterrompre = true
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
-                            --[[// Mise en attente de la progression
-]]DEC_Trace( "$ --- ORDRE Attendre ---$" )
+                        elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                            DEC_Trace( "$ --- ORDRE Attendre ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
-                            --[[// ordre de poursuivre -> on reprend la progression
-]]--[[// la section n est plus en attente d'ordre
-]]DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
+                        elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
+                            DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, emptyTable )
-                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )--[[// Cas des LC
-]]
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )

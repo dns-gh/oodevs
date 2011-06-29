@@ -251,7 +251,6 @@ do
                                  do
                                     local _continue = true
                                     local switch_1 = DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) )
-                                    local cases_switch_1 = {}
                                         if switch_1 == eTypePointCCT
                                         or switch_1 == eTypePointBond then
                                                                                     if( meleeInfPionsCommon() ) then
@@ -267,8 +266,7 @@ do
                                             end
 
                                             _continue = false
-                                                                                cases_switch_1[1] = true
-elseif switch_1 == eTypePointParticulier then
+                                        elseif switch_1 == eTypePointParticulier then
                                             do
                                                 pointVar = DEC_GetDestPoint( repAvantPt )
                                                 if( appuiGeniePions() ) then
@@ -304,8 +302,7 @@ if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                             end
 
                                             _continue = false
-                                                                                cases_switch_1[2] = true
-                                        end
+                                                                                end
                                     end
 
                             end
@@ -705,16 +702,15 @@ node "BEH_Dep_Suivre"
         self.recalculerItineraire = self.recalculerItineraire or false
          do
             local _continue = true
-            local switch_1 = self.eComportement
-            local cases_switch_1 = {}
+--[[// Aller au plus vite
+]]            local switch_1 = self.eComportement
                 if switch_1 == eCreerItineraire then
                     self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
                     self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
                     self.eComportement = eRejoindre
                     self.recalculerItineraire = false
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eRejoindre then
+                elseif switch_1 == eRejoindre then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -726,8 +722,7 @@ elseif switch_1 == eRejoindre then
 
                     Activate( self.activations.BEH_Dep_Progresser, 1, { self.itVersAmi, eProgressionDirect, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
-                    --[[// Aller au plus vite
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
                         do
                             Activate( self.activations.ACT_Dep_SePoster, 1.5, emptyTable )
@@ -748,8 +743,7 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                                 end
             end
@@ -878,7 +872,8 @@ node "BEH_Dep_Suivre_Elastique"
 
          do
             local _continue = true
-            local switch_1 = self.eComportement
+--[[// Aller au plus vite
+]]            local switch_1 = self.eComportement
             local cases_switch_1 = {}
                 if switch_1 == eCreerItineraire then
                     if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin ) ) then
@@ -906,8 +901,7 @@ node "BEH_Dep_Suivre_Elastique"
 
                     Activate( self.activations.BEH_Dep_Progresser, 1, { self.itVersAmi, eProgressionDirect, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
-                    --[[// Aller au plus vite
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin - 200 ) ) then
                         self.eEtat = eActionEffectuee
                     end

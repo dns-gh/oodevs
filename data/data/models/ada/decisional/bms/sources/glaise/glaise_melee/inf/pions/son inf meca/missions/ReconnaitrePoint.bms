@@ -96,7 +96,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 ]]
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// -> Gestion l'ennemi
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//  7) Mission terminée
+]]--[[//  on leve le dispositif ou non suivant la presence d'ennemi
+]]--[[//  dans la zone
+]]--[[//----------------------------------------------------------------------------- 
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
                     do
@@ -104,8 +110,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            --[[// -> Gestion l'ennemi
-]]Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
+                            Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
                             Activate( self.activations.BEH_Mission_Pion_VAB_RecoPoint, GetMotivation( "MOT_Mission" ), { self.pt, } )
 self.done_BEH_Mission_Pion_VAB_RecoPoint = function( self, _, v ) self.eCurrentPhase = v[1] end
                                                         do return end
@@ -118,12 +123,7 @@ self.done_BEH_Mission_Pion_VAB_RecoPoint = function( self, _, v ) self.eCurrentP
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eFinMission then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[//  7) Mission terminée
-]]--[[//  on leve le dispositif ou non suivant la presence d'ennemi
-]]--[[//  dans la zone
-]]--[[//----------------------------------------------------------------------------- 
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
@@ -215,25 +215,29 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eRejoindre then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[//  1) Rejoint position d'observation sur objectif
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Arrive sur une position d'observation, debarque
 ]]--[[// ------------------------------------------------------------				
-]]--[[/* M_MAX_DIST_CAPTEUR() */]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.pt, 5000 ) and DEC_Perception_PointEstVisible( self._namedParams.pt ) ) then
+]]--[[/* M_MAX_DIST_CAPTEUR() */]]--[[//-----------------------------------------------------------------------------
+]]--[[//  3) Observation de l'objectif
+]]--[[//-----------------------------------------------------------------------------                
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//  4) Rejoinds l'objectif a pied
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//  6) Nettoyage de la position
+]]--[[//----------------------------------------------------------------------------- 								
+]]            local switch_1 = self.ePhase
+                if switch_1 == eRejoindre then
+                    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.pt, 5000 ) and DEC_Perception_PointEstVisible( self._namedParams.pt ) ) then
                         self.ePhase = eObserver
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eObserver then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[//  3) Observation de l'objectif
-]]--[[//-----------------------------------------------------------------------------                
-]]StartActivateOverride( self, self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
+                elseif switch_1 == eObserver then
+                    StartActivateOverride( self, self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -245,22 +249,14 @@ elseif switch_1 == eObserver then
                     Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1.1, { self._namedParams.pt, S_Delai_INF_RecoDebarque( self._namedParams.pt ), } )
 self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eRejoindreAssaut then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[//  4) Rejoinds l'objectif a pied
-]]--[[//-----------------------------------------------------------------------------
-]]if( S_Tir_EstAPortee_DebarquePt( self._namedParams.pt ) ) then
+                elseif switch_1 == eRejoindreAssaut then
+                    if( S_Tir_EstAPortee_DebarquePt( self._namedParams.pt ) ) then
                         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eFouiller then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[//  6) Nettoyage de la position
-]]--[[//----------------------------------------------------------------------------- 								
-]]if( self.eAction == eActionEffectuee ) then
+                elseif switch_1 == eFouiller then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         self:SendFeedback( eFinMission )
@@ -273,8 +269,7 @@ elseif switch_1 == eFouiller then
                     Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_DELAI_NETTOYAGE_RECO(), "fouille de la position", } )
 self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
                 self:SendFeedback( self.ePhase )

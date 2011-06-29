@@ -54,15 +54,17 @@ node "MIS_Pion_INF_EscorterUnite"
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_MANOEUVRE(), } )
          do
             local _continue = true
-            local switch_1 = --[[//=============================================================================
+--[[//=============================================================================
 ]]--[[// Squelette de la mission
 ]]--[[// 
 ]]--[[//=============================================================================
-]]self.ePhase
-            local cases_switch_1 = {}
+]]--[[// eDefendre
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
                 if switch_1 == eSeMettreEnPlace then
-                    --[[// eDefendre
-]]if( self.eCurrentPhase == eFinMission ) then
+                    if( self.eCurrentPhase == eFinMission ) then
                         do
                             self.ePhase = eFinMission
                                                         do return end
@@ -73,16 +75,12 @@ node "MIS_Pion_INF_EscorterUnite"
                     Activate( self.activations.BEH_Mission_Pion_VAB_EscorterUnConvoi, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_EscorterUnConvoi = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// On rend compte de la mission
-]]--[[//-----------------------------------------------------------------------------
-]]DEC_Trace( "Mission 'Escorter un convoi' : fin" )
+                                DEC_Trace( "Mission 'Escorter un convoi' : fin" )
                                 DEC_FinMission()
                                                                 self:SendFeedback( eActionEffectuee )
                                 Halt( self )
@@ -97,8 +95,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
 self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                 --[[// Phase critique // 
 ]]                end
@@ -146,15 +143,23 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[// Aller au plus vite			
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
-                --[[//---------------------------------------------------------------------
+--[[// Aller au plus vite			
+]]--[[//---------------------------------------------------------------------
 ]]--[[// Progression tactique
 ]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[1] = true
+]]--[[// Escvorter l'unite à bonne distance
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Rejoindre unite
+]]--[[//-----------------------------------------------------------------------------      
+]]--[[// Objectif de l'unité escorté                
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Reconnaissance sur l'axe 
+]]--[[//-----------------------------------------------------------------------------	        
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eRejoindre then
                     if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
@@ -162,17 +167,13 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
-                    --[[// Escvorter l'unite à bonne distance
-]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.pionConvoi:DEC_Agent_Position(), 200 ) ) then
+                    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.pionConvoi:DEC_Agent_Position(), 200 ) ) then
                         do
                             self.ePhase = eEscorter
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Rejoindre unite
-]]--[[//-----------------------------------------------------------------------------      
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Dep_Suivre, 1, { self.pionConvoi, 50, } )
                     _continue = false
@@ -180,17 +181,13 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
 elseif switch_1 == eEscorter then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** Escorte de l'unité **", } )
-                    --[[// Objectif de l'unité escorté                
-]]if( self.pionConvoi:GetitMvt_() == nil ) then
+                    if( self.pionConvoi:GetitMvt_() == nil ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escorter doit avoir un objectif **** ", } )
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Reconnaissance sur l'axe 
-]]--[[//-----------------------------------------------------------------------------	        
-]]                    end
+                    end
 
                     if( self.eAction == eActionEffectuee ) then
                         do

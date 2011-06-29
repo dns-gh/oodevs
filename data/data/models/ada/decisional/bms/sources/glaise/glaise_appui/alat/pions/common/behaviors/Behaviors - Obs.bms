@@ -39,7 +39,6 @@ local emptyTable = emptyTable
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     Activate( self.activations.ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus, 1, { self._namedParams.zone, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
@@ -72,8 +71,7 @@ if( x == y ) then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSePoster then
+                elseif switch_1 == eSePoster then
                     if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
                         self:SendFeedback( eActionEffectuee )
                         Halt( self )
@@ -81,8 +79,7 @@ elseif switch_1 == eSePoster then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

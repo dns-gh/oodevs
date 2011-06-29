@@ -152,8 +152,8 @@ node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
 ]]self.bMissionAssignee = true
                  do
                     local _continue = true
-                    local switch_1 = self._namedParams.typeMission
-                    local cases_switch_1 = {}
+--[[//Position
+]]                    local switch_1 = self._namedParams.typeMission
                         if switch_1 == "T_Mission_Automate_ABC_Tenir" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
@@ -172,8 +172,7 @@ node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
                                 DEC_DonnerMissionAutomate_Mission( missionPion )
                                 _continue = false
                             end
-                                                cases_switch_1[1] = true
-elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
+                        elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( lima, 100, 1 )
@@ -182,8 +181,7 @@ elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                                     DEC_Trace( "Mission impossible, position impossible INF" )
                                     _continue = false
                                 end
---[[//Position
-]]                            end
+                            end
 
                                 if _continue then
                                 local positionATenir = DEC_Geometrie_CreerLocalisationCercle( DEC_ListePoints_GetAt( listePositions, 0 ), 4000 )
@@ -192,8 +190,7 @@ elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                                 DEC_DonnerMissionAutomate_Mission( missionPion )
                                 _continue = false
                             end
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
             end

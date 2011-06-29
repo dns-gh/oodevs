@@ -147,37 +147,34 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Cree un poste de controle				
+]]--[[// Si on arrive a retrouver la connaissance de l'objet construit, 
+]]--[[// on active le poste
+]]--[[// ============================================================================
+]]--[[// BEH_Obj_Pion_VAB_NettoyerObstacle
+]]--[[//
+]]--[[// Nettoie un obstacle construit proche de la position actuelle
+]]            local switch_1 = self.ePhase
                 if switch_1 == eInstallerDispositif then
-                    --[[// Cree un poste de controle				
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.ksPosteControle = S_Obj_ObtenirObjetProcheDe( self.locPtCheckPoint, eTypeObjectPosteControle, 500 )
                             self.ePhase = eAnimer
                                                         do return end
 
                         end
---[[// Si on arrive a retrouver la connaissance de l'objet construit, 
-]]--[[// on active le poste
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Obj_Pion_INF_RealiserObjet, 1, { eTypeObjectPosteControle, self.locPtCheckPoint, } )
 self.done_ACT_Obj_Pion_INF_RealiserObjet = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eAnimer then
+                elseif switch_1 == eAnimer then
                     if( DEC_ConnaissanceObjet_EstValide( self.ksPosteControle ) ) then
-                        --[[// ============================================================================
-]]Activate( self.activations.ACT_Obj_Pion_AnimerSite, 1, { self.ksPosteControle, } )
+                        Activate( self.activations.ACT_Obj_Pion_AnimerSite, 1, { self.ksPosteControle, } )
                     end
 
-                    _continue = false--[[// BEH_Obj_Pion_VAB_NettoyerObstacle
-]]
-                --[[//
-]]--[[// Nettoie un obstacle construit proche de la position actuelle
-]]                cases_switch_1[2] = true
-                end
+                    _continue = false
+                                end
             end
 --[[// ============================================================================
 ]]

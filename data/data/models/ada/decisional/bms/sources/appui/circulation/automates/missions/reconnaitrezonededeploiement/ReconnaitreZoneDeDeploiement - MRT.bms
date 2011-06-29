@@ -53,14 +53,21 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonededep
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_AssignerMissions then
-                    --[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
 ]]--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
+]]--[[// controle de creation mission
+]]--[[// ordre de creation des missions
+]]--[[//---------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_AssignerMissions then
+                    if( self.eEtatMissionAppuyer == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_Valider
                                                         do return end
@@ -74,31 +81,22 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonededep
                                                         do return end
 
                         end
---[[// controle de creation mission
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( listePions ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionAppuyer = v[1] end
-                    --[[// ordre de creation des missions
-]]if( #( listePions ) ~= 0 ) then
+                    if( #( listePions ) ~= 0 ) then
                         Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe, 1, { ePhase_MRT, listePions, self.listeLoclisations, } )
                     end
 
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Mission impossible
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Validation
-]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_Valider then
+                elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )

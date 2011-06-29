@@ -60,17 +60,16 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// Deplacement: DEUX TYPES -- > deplacement seul vers point arrivee ou suivre unite si escorter
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Moving mission begining ", } )
                     self.ePhase = eProgresser
                     _continue = false
-                --[[// Deplacement: DEUX TYPES -- > deplacement seul vers point arrivee ou suivre unite si escorter
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -87,14 +86,11 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin mission
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

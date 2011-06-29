@@ -50,13 +50,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// Distance --> déploiement 'sur place'
+]]--[[// Progression tactique
+]]--[[// Deploiement
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                    --[[// Distance --> déploiement 'sur place'
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.positionDeploiement_ ) < 1000 ) then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.positionDeploiement_ ) < 1000 ) then
                         do
                             self.ePhaseMission = eDeployer
                                                         do return end
@@ -80,9 +82,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                     Activate( self.activations.ACT_RC_PreparationMission, 1, { M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), } )
                     _continue = false
-                --[[// Progression tactique
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
+                elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -99,19 +99,14 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Deploiement
-]]                cases_switch_1[2] = true
-elseif switch_1 == eDeployer then
+                elseif switch_1 == eDeployer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Pion_Trans_InstallerDispositif, 1, emptyTable )
                     _continue = false
-                --[[// Fin mission
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     _continue = false
-                                cases_switch_1[4] = true
-
+                
                 else
                                 end
             end

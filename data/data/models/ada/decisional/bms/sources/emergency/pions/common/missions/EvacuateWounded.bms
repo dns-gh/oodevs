@@ -63,7 +63,6 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     local wounded = self._namedParams.mission.wounded_
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
@@ -76,8 +75,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eDeterminerSite then
+                elseif switch_1 == eDeterminerSite then
                     self.positionHopital = nil
                     self.hopital = DEC_DeterminerHopital( self._namedParams.mission.wounded_, self._namedParams.mission.hospitals_ )
                     if( self.hopital == nil ) then
@@ -99,8 +97,7 @@ elseif switch_1 == eDeterminerSite then
                         self.ePhase = eTransporter
                         _continue = false
                     end
-                                cases_switch_1[2] = true
-elseif switch_1 == eTransporter then
+                elseif switch_1 == eTransporter then
                     Activate( self.activations.ACT_RC, 1, { eRC_TransportEnCours, } )
                     if( self.positionHopital == nil ) then
                         do
@@ -119,8 +116,7 @@ elseif switch_1 == eTransporter then
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eDebarquer then
+                elseif switch_1 == eDebarquer then
                     Activate( self.activations.ACT_RC, 1, { eRC_TransportDebarquement, } )
                     if( not DEC_CanHospitalTreatWound( self._namedParams.mission.wounded_, self.hopital ) ) then
                         do
@@ -136,12 +132,10 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[4] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.garage_, eProgressionDirect, eTypeItiMouvement, } )
                     _continue = false
-                                cases_switch_1[5] = true
-                end
+                                end
             end
 
     end,

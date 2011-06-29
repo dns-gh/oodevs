@@ -102,7 +102,6 @@ node "BEH_Dep_Pion_AIR_Voler"
          do
             local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
-            local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
@@ -112,8 +111,7 @@ node "BEH_Dep_Pion_AIR_Voler"
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatAmbiance_Vitesse then
+                elseif switch_1 == eEtatAmbiance_Vitesse then
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
                         Activate( self.activations.BEH_Dep_Pion_AIR_TroisiemeAllure, 1, emptyTable )
                     else
@@ -121,8 +119,7 @@ elseif switch_1 == eEtatAmbiance_Vitesse then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -492,12 +489,13 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
          do
             local _continue = true
-            local switch_1 = DEC_Itineraire_Etat( self.itineraire )
-            local cases_switch_1 = {}
+--[[// prise en compte des penalités
+]]--[[//penalite
+]]--[[//succes
+]]            local switch_1 = DEC_Itineraire_Etat( self.itineraire )
                 if switch_1 == eItineraire_Valide
                 or switch_1 == eItineraire_Partiel then
-                    --[[// prise en compte des penalités
-]]if( DEC_Itineraire_Etat( self.itineraire ) == eItineraire_Partiel ) then
+                    if( DEC_Itineraire_Etat( self.itineraire ) == eItineraire_Partiel ) then
                         Activate( self.activations.ACT_Info_Trace, 1, { "ATTENTION : Itineraire Partiel", } )
                     end
 
@@ -514,12 +512,10 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                             local coordinationAutomate = DEC_Agent_AutomateEstEmbraye() and ( DIA_IsListEmpty( myself.listePionsCoordination_ ) )
                             if( ( distance >= self._namedParams.distanceMin ) and ( distance <= self._namedParams.distanceMax ) and not coordinationAutomate ) then
                                 do
-                                    --[[//penalite
-]]if( not DEC_Itineraire_EstEnMouvementSur( self.itineraire ) ) then
+                                    if( not DEC_Itineraire_EstEnMouvementSur( self.itineraire ) ) then
                                         self.forceDelai = Min( 1, self.forceDelai + self._namedParams.forceDelaiPenalite )
                                     else
-                                        --[[//succes
-]]self.forceDelai = Max( 0, self.forceDelai - self._namedParams.forceDelaiSucces )
+                                        self.forceDelai = Max( 0, self.forceDelai - self._namedParams.forceDelaiSucces )
                                     end
 
                                     if( self.forceDelai >= 1 ) then
@@ -539,8 +535,7 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eItineraire_Invalide then
+                elseif switch_1 == eItineraire_Invalide then
                     do
                     end
 
@@ -550,13 +545,12 @@ elseif switch_1 == eItineraire_Invalide then
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
+                if switch_1 == eItineraire_CalculEnCours then
                     do
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eItineraire_Impossible then
+                elseif switch_1 == eItineraire_Impossible then
                     do
                     end
 
@@ -566,7 +560,7 @@ elseif switch_1 == eItineraire_Impossible then
                     do return end
 
                                 end
-                if cases_switch_1[4] or switch_1 == eItineraire_Annule then
+                if switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

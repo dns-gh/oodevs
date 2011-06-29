@@ -192,13 +192,12 @@ do
                 local repOrdre = ordre
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
-                        if switch_1 == "Rep_OrderConduite_RecupererTransporteurs" then
-                            for _,x_pion in pairs( --[[// ----------------------------------------------------------------------------
+--[[// ----------------------------------------------------------------------------
 ]]--[[// Fin mission
 ]]--[[// ----------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() or emptyTable ) do
+]]                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_RecupererTransporteurs" then
+                            for _,x_pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                             local _continue = true
                                 DEC_CDT_DonneOrdreConduiteAPion( x_pion, Rep_OrderConduite_RecupererTransporteurs )
 
@@ -206,8 +205,7 @@ do
 
                             Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
                             _continue = false
-                                                cases_switch_1[1] = true
-                        end
+                                                end
                     end
 
             end

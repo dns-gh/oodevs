@@ -87,7 +87,10 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 ]]
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------   
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eDetruire then
                     if( self.eCurrentPhase ~= eFinMission ) then
@@ -104,10 +107,7 @@ self.done_BEH_Mission_Pion_VAB_Reduire = function( self, _, v ) self.eCurrentPha
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eFinMission then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Fin de mission
-]]--[[//-----------------------------------------------------------------------------   
-]]if( self.eAction == eActionEffectuee ) then
+                    if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do

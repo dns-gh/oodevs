@@ -107,22 +107,24 @@ node "BEH_Medo_Automate_Emergency_PrepareMission_Alert"
         self.lstLocalisations = self.lstLocalisations or {}
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_SelectionnerPions then
-                    --[[//----------------------------------------------------------------------
+]]--[[//----------------------------------------------------------------------
 ]]--[[// Decoupage de la zone a alerter
 ]]--[[//----------------------------------------------------------------------
-]]local selTmp = DEC_Automate_PionsAvecPC()
+]]--[[// float sizeArea = 800000; // 5 x 400m²
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_SelectionnerPions then
+                    local selTmp = DEC_Automate_PionsAvecPC()
                     local sizePions = #( selTmp )
                     DEC_Trace( "Assess zones status" )
                     if( #( self._namedParams.mission.zones_ ) == 1 ) then
                         do
-                            --[[// float sizeArea = 800000; // 5 x 400m²
-]]local eCodeLoc = eNoError
+                            local eCodeLoc = eNoError
                             local zone = DEC_UserTypeList_GetAt( self._namedParams.mission.zones_, 0 )
                             self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( zone, sizePions, eCodeLoc )
                             eCodeLoc = self.lstLocalisations.second
@@ -130,7 +132,6 @@ node "BEH_Medo_Automate_Emergency_PrepareMission_Alert"
                              do
                                 local _continue = true
                                 local switch_2 = eCodeLoc
-                                local cases_switch_2 = {}
                                     if switch_2 == eError_PionsPasDansMemeFuseau
                                     or switch_2 == eError_LocalisationPasDansFuseau then
                                                                             DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLoc, E_LocalisationFunctionsReturnCode ) )
@@ -146,11 +147,9 @@ node "BEH_Medo_Automate_Emergency_PrepareMission_Alert"
                                     elseif switch_2 == eWarning_DecoupageIncomplet then
                                                                             DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( eCodeLoc, E_LocalisationFunctionsReturnCode ) )
                                         _continue = false
-                                                                        cases_switch_2[2] = true
-elseif switch_2 == eNoError then
+                                    elseif switch_2 == eNoError then
                                                                             _continue = false
-                                                                        cases_switch_2[3] = true
-                                    end
+                                                                        end
                                 end
 
                         end
@@ -181,12 +180,8 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eActionMRT == eActionImpossible ) then
+                elseif switch_1 == eMRT_AssignerMissions then
+                    if( self.eActionMRT == eActionImpossible ) then
                         do
                                                         do
                             end
@@ -225,8 +220,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                     Activate( self.activations.BEH_Medo_Automate_Emergency_AssignAlert, 1, { self.pions, self.lstLocalisations, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

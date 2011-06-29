@@ -53,7 +53,6 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -71,8 +70,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.BEH_Dep_Pion_AIR_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, 0, 0, 0, 0, } )
 self.done_BEH_Dep_Pion_AIR_RejoindreParItineraire = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -92,8 +90,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, emptyTable )
 self.done_BEH_Dep_Pion_AIR_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

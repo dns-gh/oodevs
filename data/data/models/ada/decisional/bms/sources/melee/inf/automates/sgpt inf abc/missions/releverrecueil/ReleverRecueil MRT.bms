@@ -123,17 +123,25 @@ node "BEH_Medo_Automate_INF_ReleverEnRecueillant"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_SelectionnerPions then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Regarde le nombre de localisation				
 ]]--[[// Premier Echelon
-]]local rN_PE = 3
-                    --[[// Second Echelon
-]]local rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
+]]--[[// Second Echelon
+]]--[[// 
+]]--[[// L'execution de la mission necessite la presence d'un 1er ech
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Le fuseau de la compagnie est coupe en DEUX
+]]--[[//le pion en appui utilise le fuseau de la compagnie
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_SelectionnerPions then
+                    local rN_PE = 3
+                    local rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
                     DEC_Trace( "Selection des composantes pion" )
                     for _,x in pairs( self.selPions or emptyTable ) do
                     local _continue = true
@@ -142,7 +150,6 @@ do
                              do
                                 local _continue = true
                                 local switch_2 = pion:GetType()
-                                local cases_switch_2 = {}
                                     if switch_2 == "SectionInfanterie" then
                                         if( #( self.lstPionsAttaque ) < rN_PE ) then
                                             DIA_PushBack( self.lstPionsAttaque, pion )
@@ -153,8 +160,7 @@ if( #( self.lstPionsAppui ) < rN_SE ) then
                                         end
 
                                         _continue = false
-                                                                        cases_switch_2[1] = true
-elseif switch_2 == "SectionInfanterie_MILAN"
+                                    elseif switch_2 == "SectionInfanterie_MILAN"
                                     or switch_2 == "SectionInfanterie_HOT"
                                     or switch_2 == "Peloton_AMX"
                                     or switch_2 == "Peloton_XL" then
@@ -163,8 +169,7 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                                         end
 
                                         _continue = false
-                                                                        cases_switch_2[2] = true
-                                    end
+                                                                        end
                                 end
 
                             if( #( self.lstPionsAttaque ) >= rN_PE and #( self.lstPionsAppui ) >= rN_SE ) then
@@ -172,9 +177,7 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                             end
 
                         end
---[[// 
-]]--[[// L'execution de la mission necessite la presence d'un 1er ech
-]]
+
                     end
 
                     if( #( self.lstPionsAttaque ) == 0 ) then
@@ -189,13 +192,8 @@ elseif switch_2 == "SectionInfanterie_MILAN"
 
                     self.ePhase = eMRT_AffecterFuseaux
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AffecterFuseaux then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[//Le fuseau de la compagnie est coupe en DEUX
-]]--[[//le pion en appui utilise le fuseau de la compagnie
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eActionMRT == eActionEffectuee ) then
+                elseif switch_1 == eMRT_AffecterFuseaux then
+                    if( self.eActionMRT == eActionEffectuee ) then
                         do
                             self.eActionMRT = eActionEnCours
                                                         do
@@ -210,12 +208,8 @@ elseif switch_1 == eMRT_AffecterFuseaux then
                     Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { self.lstPionsAttaque, } )
 self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActionMRT = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eActionMRT == eActionImpossible ) then
+                elseif switch_1 == eMRT_AssignerMissions then
+                    if( self.eActionMRT == eActionImpossible ) then
                         do
                                                         do
                             end
@@ -258,8 +252,7 @@ self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) sel
                     Activate( self.activations.BEH_Medo_Automate_INF_OrganiserMissions_ReleverEnRecueillant, 1, { self.lstPionsAttaque, self.lstPionsAppui, } )
 self.done_BEH_Medo_Automate_INF_OrganiserMissions_ReleverEnRecueillant = function( self, _, v ) self.eActionMRT = v[1] end
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
     end,

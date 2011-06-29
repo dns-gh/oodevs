@@ -354,21 +354,18 @@ do
                  do
                     local _continue = true
                     local switch_1 = pion:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
                             bInconnue = false
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "SectionInfanterie"
+                        elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_MILAN"
                         or switch_1 == "SectionInfanterie_HOT"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
                             bInconnue = false
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 --[[// On donne la mission suivre 
 ]]--[[//		si le pion n'est pas connu
@@ -415,21 +412,18 @@ do
                  do
                     local _continue = true
                     local switch_1 = pion:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
                             bInconnue = false
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "SectionInfanterie"
+                        elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_MILAN"
                         or switch_1 == "SectionInfanterie_HOT"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
                             bInconnue = false
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 --[[// On donne la mission suivre 
 ]]--[[//		si le pion n'est pas connu

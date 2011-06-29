@@ -134,13 +134,11 @@ do
                      do
                         local _continue = true
                         local switch_1 = pion:GetType()
-                        local cases_switch_1 = {}
                             if switch_1 == "Peloton_AMX"
                             or switch_1 == "Peloton_XL" then
                                                             DIA_PushFront( listePionDeSoutien, pion )
                                 _continue = false
-                                                        cases_switch_1[1] = true
-                            end
+                                                        end
                         end
 
                 end

@@ -126,16 +126,13 @@ node "BEH_Eni_Pion_INF_GererContactEni"
          do
             local _continue = true
             local switch_1 = F_Pion_GeteTypeContact( myself )
-            local cases_switch_1 = {}
                 if switch_1 == eTypeContact_Defensif then
                     Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, 1, { self._namedParams.ksEni, false, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eTypeContact_Appui then
+                elseif switch_1 == eTypeContact_Appui then
                     Activate( self.activations.BEH_Feu_Pion_INF_TirAppui, 1, { self._namedParams.ksEni, } )
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                     Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, 1, { self._namedParams.ksEni, true, } )
                 end

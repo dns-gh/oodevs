@@ -106,13 +106,15 @@ do
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true
-            local switch_1 = --[[// phases mission
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eAppuyer then
-                    --[[//Tir sur riposte si est unites a appuyer sont dans une position
+--[[// phases mission
+]]--[[//Tir sur riposte si est unites a appuyer sont dans une position
 ]]--[[//favorable, sinon, tir libre.
-]]local bBesoinAppuisFeu = false
+]]--[[// missions
+]]--[[//pas de coordination des feux dans cette mission
+]]--[[// IMEX et ravitaillements
+]]            local switch_1 = self.ePhase
+                if switch_1 == eAppuyer then
+                    local bBesoinAppuisFeu = false
                     for _,x in pairs( self.listePionsAAppuyer or emptyTable ) do
                     local _continue = true
 do
@@ -135,8 +137,7 @@ do
                             Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                             Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
                         end
---[[// missions
-]]                    end
+                    end
 
                     if( not DIA_IsListEmpty( self.listeDetruire ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
@@ -146,8 +147,7 @@ do
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe, 1, { ePhase_CDT, self.listeAppuyer, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, self.listePionsAAppuyer, } )
                     end
 
-                    --[[//pas de coordination des feux dans cette mission
-]]if( not DIA_IsListEmpty( self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours ) ) then
+                    if( not DIA_IsListEmpty( self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours ) ) then
                         Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours, 0, } )
                     end
 
@@ -155,16 +155,13 @@ do
                         Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePionsPourMissionAppuyerOuDetruire, } )
                     end
 
-                    --[[// IMEX et ravitaillements
-]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSExfiltrer then
+                elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

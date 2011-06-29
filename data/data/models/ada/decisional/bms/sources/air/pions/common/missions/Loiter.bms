@@ -59,16 +59,14 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         Activate( self.activations.BEH_Pion_JOINT_AIR_GererOrdre_AppliquerFeux, 10, emptyTable )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// behavior BEH_Eni_Pion_AIR_EffectuerRaid( mission.zoneCible_ ) : strength = DIA_GetMotivation( MOT_ManoeuvrerSurEnis );
+]]            local switch_1 = self.ePhase
                 if switch_1 == eDetruire then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAttaque, } )
                     Activate( self.activations.BEH_Dep_Pion_AIR_Voler, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_ProgressionSur, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, } )
-                    _continue = false--[[// behavior BEH_Eni_Pion_AIR_EffectuerRaid( mission.zoneCible_ ) : strength = DIA_GetMotivation( MOT_ManoeuvrerSurEnis );
-]]
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                    _continue = false
+                elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -88,8 +86,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, emptyTable )
 self.done_BEH_Dep_Pion_AIR_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

@@ -39,11 +39,12 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]--[[// Reconnaitre le contour ennemi : controle de creation mission
+]]--[[// Reconnaitre le contour ennemi : ordre de creation des missions
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_AssignerMissions then
-                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
-]]if( self.eEtatMissionsAllerSeRecompleter == eActionImpossible ) then
+                    if( self.eEtatMissionsAllerSeRecompleter == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
                                                         do return end
@@ -57,26 +58,23 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
                                                         do return end
 
                         end
---[[// Reconnaitre le contour ennemi : controle de creation mission
-]]                    end
+                    end
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selPions ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsAllerSeRecompleter = v[1] end
-                    --[[// Reconnaitre le contour ennemi : ordre de creation des missions
-]]if( not DIA_IsListEmpty( self.selPions ) ) then
+                    if( not DIA_IsListEmpty( self.selPions ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe, 1, { ePhase_MRT, self.selPions, self._namedParams.mission.plotsRavitaillement_, } )
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_MissionImpossible then
+                elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                if switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )

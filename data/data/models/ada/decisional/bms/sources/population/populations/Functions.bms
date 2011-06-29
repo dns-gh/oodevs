@@ -30,7 +30,6 @@ includedFiles["sources/population/populations/Functions.bms"] = true
 ]]--[[// il y a 12 ticks entre deux tirs ( 2 minutes )
 ]]--[[// Le tir interdit n'a pas d'effet
 ]]--[[// La sommation est 4 fois moins efficace que la neutralisation
-]]--[[// la dissuasion est 2 fois moins efficace que la neutralisation
 ]]--[[// Une population agitee est 4 fois plus facile à dominer qu'une population agressive
 ]]--[[// Une population excitee est 2 fois plus facile à dominer qu'une population agressive
 ]]--[[// Un tir sur une population calme
@@ -49,7 +48,6 @@ includedFiles["sources/population/populations/Functions.bms"] = true
 ]]--[[//annule et diminue l'evolution naturelle
 ]]--[[// Le tir interdit n'a pas d'effet
 ]]--[[// La sommation est 4 fois moins efficace que la neutralisation
-]]--[[// la dissuasion est 2 fois moins efficace que la neutralisation
 ]]--[[// Une population agitee est 4 fois plus facile à dominer qu'une population agressive
 ]]--[[// Une population excitee est 2 fois plus facile à dominer qu'une population agressive
 ]]--[[// Un tir sur une population calme
@@ -91,7 +89,6 @@ includedFiles["sources/population/populations/Functions.bms"] = true
 ]]--[[//===============================================================================
 ]]--[[// Le tir interdit n'a pas d'effet
 ]]--[[// La sommation est 4 fois moins efficace que la neutralisation
-]]--[[// la dissuasion est 2 fois moins efficace que la neutralisation
 ]]--[[// Une population agitee est 4 fois plus facile à dominer qu'une population agressive
 ]]--[[// Une population excitee est 2 fois plus facile à dominer qu'une population agressive
 ]]--[[// Un tir sur une population calme
@@ -123,35 +120,28 @@ includedFiles["sources/population/populations/Functions.bms"] = true
      do
         local _continue = true
         local switch_1 = roe
-        local cases_switch_1 = {}
             if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
                 rValeurNominale = 0
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+            elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rValeurNominale = rValeurNominale / 4
                 _continue = false
-                        cases_switch_1[2] = true
-        end
+                        end
         end
 
      do
         local _continue = true
         local switch_1 = DEC_Population_Attitude()
-        local cases_switch_1 = {}
             if switch_1 == eAttitudePopulation_Agitee then
                 rValeurNominale = rValeurNominale * 4
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eAttitudePopulation_Excitee then
+            elseif switch_1 == eAttitudePopulation_Excitee then
                 rValeurNominale = rValeurNominale * 2
                 _continue = false
-                        cases_switch_1[2] = true
-elseif switch_1 == eAttitudePopulation_Calme then
+            elseif switch_1 == eAttitudePopulation_Calme then
                 rValeurNominale = -1
                 _continue = false
-                        cases_switch_1[3] = true
-            end
+                        end
         end
 
     _returnValue = Max( -0.2, rValeurNominale )
@@ -164,35 +154,28 @@ function S_EffetSecurisationSurDomination( roe )
      do
         local _continue = true
         local switch_1 = roe
-        local cases_switch_1 = {}
             if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
                 rValeurNominale = 0
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+            elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rValeurNominale = rValeurNominale / 4
                 _continue = false
-                        cases_switch_1[2] = true
-        end
+                        end
         end
 
      do
         local _continue = true
         local switch_1 = DEC_Population_Attitude()
-        local cases_switch_1 = {}
             if switch_1 == eAttitudePopulation_Agitee then
                 rValeurNominale = rValeurNominale * 4
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eAttitudePopulation_Excitee then
+            elseif switch_1 == eAttitudePopulation_Excitee then
                 rValeurNominale = rValeurNominale * 2
                 _continue = false
-                        cases_switch_1[2] = true
-elseif switch_1 == eAttitudePopulation_Calme then
+            elseif switch_1 == eAttitudePopulation_Calme then
                 rValeurNominale = -0.005
                 _continue = false
-                        cases_switch_1[3] = true
-            end
+                        end
         end
 
     _returnValue = Max( -0.2, rValeurNominale )
@@ -204,23 +187,22 @@ function S_IntensiteDegradationsInstallations( )
      do
         local _continue = true
         local switch_1 = DEC_Population_Attitude()
-        local cases_switch_1 = {}
             if switch_1 == eAttitudePopulation_Calme then
                 _returnValue = 0
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[1] or switch_1 == eAttitudePopulation_Agitee then
+            if switch_1 == eAttitudePopulation_Agitee then
                 _returnValue = 0.001
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[2] or switch_1 == eAttitudePopulation_Excitee then
+            if switch_1 == eAttitudePopulation_Excitee then
                 _returnValue = 0.01
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[3] or switch_1 == eAttitudePopulation_Agressive then
+            if switch_1 == eAttitudePopulation_Agressive then
                 _returnValue = 0.02
                                 do return _returnValue end
 
@@ -236,23 +218,22 @@ function S_IntensiteManifestationSurPions( )
      do
         local _continue = true
         local switch_1 = DEC_Population_Attitude()
-        local cases_switch_1 = {}
             if switch_1 == eAttitudePopulation_Calme then
                 _returnValue = 0.01
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[1] or switch_1 == eAttitudePopulation_Agitee then
+            if switch_1 == eAttitudePopulation_Agitee then
                 _returnValue = 0.01
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[2] or switch_1 == eAttitudePopulation_Excitee then
+            if switch_1 == eAttitudePopulation_Excitee then
                 _returnValue = 1
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[3] or switch_1 == eAttitudePopulation_Agressive then
+            if switch_1 == eAttitudePopulation_Agressive then
                 _returnValue = 1
                                 do return _returnValue end
 
@@ -268,23 +249,22 @@ function S_IntensiteExactionsSurPions( )
      do
         local _continue = true
         local switch_1 = DEC_Population_Attitude()
-        local cases_switch_1 = {}
             if switch_1 == eAttitudePopulation_Calme then
                 _returnValue = 0.01
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[1] or switch_1 == eAttitudePopulation_Agitee then
+            if switch_1 == eAttitudePopulation_Agitee then
                 _returnValue = 0.01
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[2] or switch_1 == eAttitudePopulation_Excitee then
+            if switch_1 == eAttitudePopulation_Excitee then
                 _returnValue = 1
                                 do return _returnValue end
 
                         end
-            if cases_switch_1[3] or switch_1 == eAttitudePopulation_Agressive then
+            if switch_1 == eAttitudePopulation_Agressive then
                 _returnValue = 1
                                 do return _returnValue end
 
@@ -304,20 +284,16 @@ function S_AggraveAttitudeAttrition( ve_morts )
              do
                 local _continue = true
                 local switch_1 = DEC_Population_Attitude()
-                local cases_switch_1 = {}
                     if switch_1 == eAttitudePopulation_Agitee then
                                             retour = eAttitudePopulation_Excitee
                         _continue = false
-                                        cases_switch_1[1] = true
-elseif switch_1 == eAttitudePopulation_Excitee then
+                    elseif switch_1 == eAttitudePopulation_Excitee then
                                             retour = eAttitudePopulation_Agressive
                         _continue = false
-                                        cases_switch_1[2] = true
-elseif switch_1 == eAttitudePopulation_Calme then
+                    elseif switch_1 == eAttitudePopulation_Calme then
                                             retour = eAttitudePopulation_Agitee
                         _continue = false
-                                        cases_switch_1[3] = true
-                    end
+                                        end
                 end
 
             DEC_RC( eRC_AggravationAttitude )
@@ -335,44 +311,37 @@ function S_AggraveAttitudeTirDirect( roe )
      do
         local _continue = true
         local switch_1 = roe
-        local cases_switch_1 = {}
             if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
                 rRoe_value = 0
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+            elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rRoe_value = 1
                 _continue = false
-                        cases_switch_1[2] = true
-        end
+                        end
         end
 
      do
         local _continue = true
         local switch_1 = retour
-        local cases_switch_1 = {}
             if switch_1 == eAttitudePopulation_Agitee then
                 if( rRoe_value > 1 ) then
                     retour = eAttitudePopulation_Excitee
                 end
 
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eAttitudePopulation_Excitee then
+            elseif switch_1 == eAttitudePopulation_Excitee then
                 if( rRoe_value > 2 ) then
                     retour = eAttitudePopulation_Agressive
                 end
 
                 _continue = false
-                        cases_switch_1[2] = true
-elseif switch_1 == eAttitudePopulation_Calme then
+            elseif switch_1 == eAttitudePopulation_Calme then
                 if( rRoe_value > 0 ) then
                     retour = eAttitudePopulation_Agitee
                 end
 
                 _continue = false
-                        cases_switch_1[3] = true
-            end
+                        end
         end
 
     _returnValue = retour
@@ -387,24 +356,19 @@ function S_ChangerAttitude( eNouvelleAttitude )
              do
                 local _continue = true
                 local switch_1 = eNouvelleAttitude
-                local cases_switch_1 = {}
                     if switch_1 == eAttitudePopulation_Calme then
                                             DEC_RC( eRC_AttitudePopulation, eAttitudePopulation_Calme )
                         _continue = false
-                                        cases_switch_1[1] = true
-elseif switch_1 == eAttitudePopulation_Agitee then
+                    elseif switch_1 == eAttitudePopulation_Agitee then
                                             DEC_RC( eRC_AttitudePopulation, eAttitudePopulation_Agitee )
                         _continue = false
-                                        cases_switch_1[2] = true
-elseif switch_1 == eAttitudePopulation_Excitee then
+                    elseif switch_1 == eAttitudePopulation_Excitee then
                                             DEC_RC( eRC_AttitudePopulation, eAttitudePopulation_Excitee )
                         _continue = false
-                                        cases_switch_1[3] = true
-elseif switch_1 == eAttitudePopulation_Agressive then
+                    elseif switch_1 == eAttitudePopulation_Agressive then
                                             DEC_RC( eRC_AttitudePopulation, eAttitudePopulation_Agressive )
                         _continue = false
-                                        cases_switch_1[4] = true
-                    end
+                                        end
                 end
 
             _returnValue = true

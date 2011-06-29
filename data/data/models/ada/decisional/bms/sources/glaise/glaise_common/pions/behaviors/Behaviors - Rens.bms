@@ -67,24 +67,19 @@ do
                          do
                             local _continue = true
                             local switch_1 = repOrdre:GetType()
-                            local cases_switch_1 = {}
                                 if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
                                                                     SetStateVariable( "VE_SilenceRadio", 4 )
                                     _continue = false
-                                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                                elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
                                                                     SetStateVariable( "VE_SilenceRadio", 0 )
                                     _continue = false
-                                                                cases_switch_1[2] = true
-elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
+                                elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
                                                                     SetStateVariable( "VE_SilenceRadar", 4 )
                                     _continue = false
-                                                                cases_switch_1[3] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                                elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
                                                                     SetStateVariable( "VE_SilenceRadar", 0 )
                                     _continue = false
-                                                                cases_switch_1[4] = true
-
+                                
                                 else
                                                                     bEstUtilise = false
                                     _continue = false

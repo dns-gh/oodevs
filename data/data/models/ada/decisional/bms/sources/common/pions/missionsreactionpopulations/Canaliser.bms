@@ -73,17 +73,17 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// 1) Preparation de la mission
+]]--[[// 2) Rejoindre la localisation
+]]--[[// 2) Animer la canalisation
+]]--[[// 3) Fin de la mission de reconnaissance SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// 1) Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Canalizing population mission begining", } )
                     self.ePhaseMission = eAborderObjectif
                     _continue = false
-                --[[// 2) Rejoindre la localisation
-]]                cases_switch_1[1] = true
-elseif switch_1 == eAborderObjectif then
+                elseif switch_1 == eAborderObjectif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) <= 100 ) then
                         self.ePhaseMission = eAnimer
@@ -92,9 +92,7 @@ elseif switch_1 == eAborderObjectif then
                     end
 
                     _continue = false
-                --[[// 2) Animer la canalisation
-]]                cases_switch_1[2] = true
-elseif switch_1 == eAnimer then
+                elseif switch_1 == eAnimer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
                     if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) > 100 ) then
                         do
@@ -112,16 +110,14 @@ elseif switch_1 == eAnimer then
 self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePreparation = v[1] end
                         _continue = false
                     end
-                --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                                         Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then
+                
+                else
                                 end
             end
 

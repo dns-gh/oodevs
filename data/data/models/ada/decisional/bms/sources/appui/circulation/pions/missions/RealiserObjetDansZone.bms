@@ -48,18 +48,22 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Progression
+]]--[[//MAJ phase mission          
+]]--[[// Realisation des travaux
+]]--[[// si l'agent est à plus de 500m de la zone
+]]--[[//si l'objet est pas créé
+]]--[[// si imposible de créer l'objet                    
+]]--[[// using actuator deplacement
+]]--[[// Fin mission sur ordre
+]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eProgresser
                     _continue = false
-                --[[// Progression
-]]                cases_switch_1[1] = true
-elseif switch_1 == eProgresser then
-                    --[[//MAJ phase mission          
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtatDefaut == eActionEffectuee ) then
                         do
                             self.eEtatDefaut = eActionEnCours
@@ -75,22 +79,17 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionInstallation, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtatDefaut = v[1] end
                     _continue = false
-                --[[// Realisation des travaux
-]]                cases_switch_1[2] = true
-elseif switch_1 == eRealiserTravaux then
+                elseif switch_1 == eRealiserTravaux then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    --[[// si l'agent est à plus de 500m de la zone
-]]if( not S_Geometrie_EstProchePosition( myself:DEC_Agent_Position(), self.positionInstallation, 500 ) ) then
+                    if( not S_Geometrie_EstProchePosition( myself:DEC_Agent_Position(), self.positionInstallation, 500 ) ) then
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.positionInstallation, eProgressionDefaut, eTypeItiMouvement, } )
                     end
 
-                    --[[//si l'objet est pas créé
-]]if( self.eEtat == eActionEffectuee ) then
+                    if( self.eEtat == eActionEffectuee ) then
                         do return end
                     end
 
-                    --[[// si imposible de créer l'objet                    
-]]if( self.eEtat == eActionImpossible ) then
+                    if( self.eEtat == eActionImpossible ) then
                         do
                                                         do
                                 if( DEC_ConnaissanceObjet_EstValide( myself.objMisEnCours_ ) ) then
@@ -108,15 +107,12 @@ elseif switch_1 == eRealiserTravaux then
                             do return end
 
                         end
---[[// using actuator deplacement
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Obj_Pion_LOG_RealiserTravaux, 1, { self._namedParams.zone, self._namedParams.eTypeObjet, } )
 self.done_ACT_Obj_Pion_LOG_RealiserTravaux = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
-                --[[// Fin mission sur ordre
-]]                cases_switch_1[3] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     if( DEC_ConnaissanceObjet_EstValide( myself.objMisEnCours_ ) ) then
@@ -124,8 +120,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

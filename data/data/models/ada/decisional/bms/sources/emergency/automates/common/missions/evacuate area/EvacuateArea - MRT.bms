@@ -105,11 +105,13 @@ node "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea"
         self.pions = self.pions or {}
          do
             local _continue = true
-            local switch_1 = --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
-]]self.ePhase
-            local cases_switch_1 = {}
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------				
+]]            local switch_1 = self.ePhase
                 if switch_1 == eMRT_SelectionnerPions then
                     self.ePhase = eMRT_AssignerMissions
                     local selTmp = DEC_Automate_PionsSansPC()
@@ -129,12 +131,8 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AssignerMissions then
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------				
-]]if( self.eActionMRT == eActionImpossible ) then
+                elseif switch_1 == eMRT_AssignerMissions then
+                    if( self.eActionMRT == eActionImpossible ) then
                         do
                                                         do
                             end
@@ -174,12 +172,10 @@ self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) sel
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eTypeMission
-                        local cases_switch_2 = {}
                             if switch_2 == "T_Mission_Automate_INF_Controler" then
                                 Activate( self.activations.BEH_Medo_Automate_Emergency_EvacuateArea, 1, { self.pions, } )
                                 _continue = false
-                                                        cases_switch_2[1] = true
-
+                            
                             else
                                 DEC_Trace( "Mission Inconnue" )
                                                                 self:SendFeedback( eActionImpossible )
@@ -190,8 +186,7 @@ self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) sel
                         end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,
@@ -235,7 +230,6 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
                  do
                     local _continue = true
                     local switch_1 = self.eCodeLoc
-                    local cases_switch_1 = {}
                         if switch_1 == eError_PionsPasDansMemeFuseau
                         or switch_1 == eError_LocalisationPasDansFuseau then
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
@@ -251,11 +245,9 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
                         elseif switch_1 == eWarning_DecoupageIncomplet then
                                                     DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
                             _continue = false
-                                                cases_switch_1[2] = true
-elseif switch_1 == eNoError then
+                        elseif switch_1 == eNoError then
                                                     _continue = false
-                                                cases_switch_1[3] = true
-                        end
+                                                end
                     end
 
                 local rIt = 0

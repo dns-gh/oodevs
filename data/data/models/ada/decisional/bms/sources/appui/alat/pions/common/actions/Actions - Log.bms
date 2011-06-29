@@ -40,7 +40,6 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
          do
             local _continue = true
             local switch_1 = self.eEtatConstruction
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionEffectuee )
@@ -48,21 +47,21 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation then
+                if switch_1 == eActionObjetManqueDotation then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionObjetImpossible then
+                if switch_1 == eActionObjetImpossible then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[3] or switch_1 == eActionObjetPasDeCapacite then
+                if switch_1 == eActionObjetPasDeCapacite then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

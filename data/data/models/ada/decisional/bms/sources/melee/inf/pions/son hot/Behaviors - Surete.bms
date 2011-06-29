@@ -206,23 +206,20 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// on indique a l'unites appuyee que la section
+]]--[[// est en position d'appui
+]]            local switch_1 = self.ePhase
                 if switch_1 == eAppuyer then
                     Activate( self.activations.ACT_RC, 1, { eRC_PasseEnAppui, } )
                     StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eSePoster then
+                elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_RC, 1, { eRC_EnAppui, } )
                     local mission = DEC_GetMission( myself )
                     Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-                    Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )--[[// on indique a l'unites appuyee que la section
-]]--[[// est en position d'appui
-]]
+                    Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[2] = true
-
+                
                 else
                                 end
             end

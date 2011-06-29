@@ -74,7 +74,6 @@ include "bit.lua"
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     DEC_Trace( "  end of works " )
                     do
@@ -195,7 +194,6 @@ include "bit.lua"
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -210,7 +208,7 @@ include "bit.lua"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                if switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible to build the object" )
@@ -359,7 +357,6 @@ include "bit.lua"
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -374,7 +371,7 @@ include "bit.lua"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                if switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible to improve the object" )
@@ -477,7 +474,6 @@ include "bit.lua"
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -492,13 +488,12 @@ include "bit.lua"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                if switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible to remove the object" )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
@@ -603,7 +598,6 @@ include "bit.lua"
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -618,13 +612,12 @@ include "bit.lua"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
+                if switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "Impossible to bypass" )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
@@ -719,7 +712,6 @@ include "bit.lua"
          do
             local _continue = true
             local switch_1 = self.eActionObjet
-            local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -734,13 +726,12 @@ include "bit.lua"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
+                if switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "impossible obstacle creation" )
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu

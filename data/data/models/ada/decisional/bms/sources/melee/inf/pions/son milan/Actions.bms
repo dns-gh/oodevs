@@ -46,11 +46,9 @@ includedFiles["sources/melee/inf/pions/son milan/Actions.bms"] = true
          do
             local _continue = true
             local switch_1 = self.eEtat_EmbDeb
-            local cases_switch_1 = {}
                 if switch_1 == eActionEmbDeb_EnCours then
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+                elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
@@ -59,7 +57,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
+                if switch_1 == eActionEmbDeb_Termine then
                     DEC_Message( eRC_DisembarkmentFinished )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionEffectuee )
@@ -142,8 +140,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
          do
             local _continue = true
-            local switch_1 = self.eTir
-            local cases_switch_1 = {}
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
+]]            local switch_1 = self.eTir
                 if switch_1 == eActionTirDirect_EnemyDestroyed then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
@@ -155,7 +153,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
+                if switch_1 == eActionTirDirect_Impossible then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
                     end
@@ -166,7 +164,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
+                if switch_1 == eActionTirDirect_Finished then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
                     end
@@ -177,19 +175,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
-                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                    do
-                    end
---[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]
-                    self.actionID = DEC_StopAction( self.actionID )
-                                        self:SendFeedback( eActionImpossible )
-                    Halt( self )
-                    do return end
-
-                                end
-                if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
+                if switch_1 == eActionTirDirect_NoAmmo then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
                     end
@@ -200,14 +186,24 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
+                if switch_1 == eActionTirDirect_NoCapacity then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self:SendFeedback( eActionImpossible )
+                    Halt( self )
+                    do return end
+
+                                end
+                if switch_1 == eActionTirDirect_Running then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
                     do
                     end
 
                     _continue = false
-                                cases_switch_1[6] = true
-                end
+                                end
             end
 
                 self:SendFeedback( eActionEnCours )
@@ -280,8 +276,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
          do
             local _continue = true
-            local switch_1 = self.eTir
-            local cases_switch_1 = {}
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
+]]            local switch_1 = self.eTir
                 if switch_1 == eActionTirDirect_EnemyDestroyed then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
@@ -293,7 +289,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
+                if switch_1 == eActionTirDirect_Impossible then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
                     end
@@ -304,7 +300,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
+                if switch_1 == eActionTirDirect_Finished then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
                     end
@@ -315,19 +311,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
-                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                    do
-                    end
---[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]
-                    self.actionID = DEC_StopAction( self.actionID )
-                                        self:SendFeedback( eActionImpossible )
-                    Halt( self )
-                    do return end
-
-                                end
-                if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
+                if switch_1 == eActionTirDirect_NoAmmo then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                     do
                     end
@@ -338,14 +322,24 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do return end
 
                                 end
-                if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
+                if switch_1 == eActionTirDirect_NoCapacity then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self:SendFeedback( eActionImpossible )
+                    Halt( self )
+                    do return end
+
+                                end
+                if switch_1 == eActionTirDirect_Running then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
                     do
                     end
 
                     _continue = false
-                                cases_switch_1[6] = true
-                end
+                                end
             end
 
                 self:SendFeedback( eActionEnCours )

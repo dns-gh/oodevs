@@ -45,16 +45,22 @@ local emptyTable = emptyTable
 ]]
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//-----------------------------------------------------------------------------
+--[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+]]--[[// Force 1.5 pour etre superieur a l'envie de rejoindre son fuseau
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Progression sur l'itineraire
+]]--[[//-----------------------------------------------------------------------------								
+]]--[[// dispositif de deplacement
+]]--[[// Progression sur l'itineraire
+]]--[[// $$$$GGR : phase dans laquelle on ne fait rien
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
                         do
-                            --[[// Force 1.5 pour etre superieur a l'envie de rejoindre son fuseau
-]]Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1.2, { M_TEMPS_PREPARATION_MISSION_RECO(), } )
+                            Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1.2, { M_TEMPS_PREPARATION_MISSION_RECO(), } )
                                                         do return end
 
                         end
@@ -62,10 +68,7 @@ local emptyTable = emptyTable
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eProgresser
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Progression sur l'itineraire
-]]--[[//-----------------------------------------------------------------------------								
-]]                cases_switch_1[1] = true
+                                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
@@ -77,19 +80,16 @@ local emptyTable = emptyTable
                             end
 
                         end
---[[// dispositif de deplacement
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
-                    --[[// Progression sur l'itineraire
-]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eAction = v[1] end
                     Activate( self.activations.BEH_Lima_GererLimas, 1.5, emptyTable )
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    _continue = false--[[// $$$$GGR : phase dans laquelle on ne fait rien
-]]
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

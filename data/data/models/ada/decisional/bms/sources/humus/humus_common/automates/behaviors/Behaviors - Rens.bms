@@ -67,20 +67,17 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, emptyTable )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, emptyTable )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, emptyTable )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
@@ -123,20 +120,17 @@ do
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, emptyTable )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, emptyTable )
                             _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, emptyTable )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, emptyTable )
                             _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                                                end
                     end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )

@@ -37,7 +37,6 @@ local emptyTable = emptyTable
          do
             local _continue = true
             local switch_1 = self._namedParams.typeDeploiement
-            local cases_switch_1 = {}
                 if switch_1 == eEtatDeploiement_directionnel then
                     local mission = DEC_GetMission( myself )
                     if( DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( self._namedParams.ennemi, DEC_GetDirectionDanger( mission ), M_DOCTRINE_PION_ASA_MISTRAL_ANGLE_OUVERTURE_DIRECTIONEL() ) ) then
@@ -51,8 +50,7 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eEtatDeploiement_omnidirectionnel then
+                elseif switch_1 == eEtatDeploiement_omnidirectionnel then
                     if( distance >= 3000 ) then
                         do
                             Activate( self.activations.BEH_Eni_Pion_ASA_InterceptionBalistique_Direct, 1, { self._namedParams.ennemi, self._namedParams.niveauPerception, 0.34, self._namedParams.pH, self._namedParams.vitesseProjectile, self._namedParams.sePosterEnAttendant, } )
@@ -64,8 +62,7 @@ do
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

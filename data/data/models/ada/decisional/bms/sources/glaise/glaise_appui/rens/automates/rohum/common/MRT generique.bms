@@ -41,7 +41,7 @@ include "bit.lua"
 ]]
          do
             local _continue = true
-            local switch_1 = --[[// =============================================================================
+--[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[// 1) Vérifier les moyens, des renforts éventuels
 ]]--[[// 2) Déterminer les échelons
@@ -49,18 +49,42 @@ include "bit.lua"
 ]]--[[// $$$$ MIA 2004-10-01: les missions du deuxieme échelon sont données dans la conduite
 ]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
 ]]--[[// =============================================================================                                  
-]]self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eMRT_DeterminerEchelonsGlobals then
-                    for _,x in pairs( --[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
 ]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
 ]]--[[//---------------------------------------------------------------------
-]]selPions or emptyTable ) do
+]]--[[// On ne traite pas les pions non opérationnels
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible si pas de premier echelon
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]--[[// ePhase = eMRT_MissionImpossible;
+]]--[[// Suivant le type de mission...
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renseigner Sur
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// SExfiltrer
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Orienter/Guider
+]]--[[// Seulement pour pions infiltration
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/*
+                    behavior BEH_Medo_Automate_ControleCreationMission( DIA_Size( sel_Infiltration ) + DIA_Size( sel_Radar ) ) return in eEtat;
+                    behavior BEH_Medo_Automate_RENS_ROHUM_AssignerGuiderA( sel_Infiltration, eEtatEchelon_Premier );
+                    */// A FAIRE
+]]--[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMRT_DeterminerEchelonsGlobals then
+                    for _,x in pairs( selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
-                            --[[// On ne traite pas les pions non opérationnels
-]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                            if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
                                 do
                                     DEC_Trace( "Attention " .. DEC_GetSzName( pion ) .. " n'est pas opérationnel" )
                                     DIA_PushFront( self.sel_NonPrevu, pion )
@@ -72,19 +96,16 @@ do
                                  do
                                     local _continue = true
                                     local switch_2 = pion:GetType()
-                                    local cases_switch_2 = {}
                                         if switch_2 == "Patrouille_RBRR_Blindee"
                                         or switch_2 == "Patrouille_RBRR_Moto"
                                         or switch_2 == "Patrouille_RBRR_Nautique"
                                         or switch_2 == "Patrouille_URH" then
                                             DIA_PushFront( self.sel_Infiltration, pion )
                                             _continue = false
-                                                                                cases_switch_2[1] = true
-elseif switch_2 == "Patrouille_RBRR_RASIT" then
+                                        elseif switch_2 == "Patrouille_RBRR_RASIT" then
                                             DIA_PushFront( self.sel_Radar, pion )
                                             _continue = false
-                                                                                cases_switch_2[2] = true
-
+                                        
                                         else
                                             DIA_PushFront( self.sel_NonPrevu, pion )
                                             _continue = false
@@ -93,10 +114,7 @@ elseif switch_2 == "Patrouille_RBRR_RASIT" then
 
                             end
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Mission impossible si pas de premier echelon
-]]--[[//-----------------------------------------------------------------------------
-]]
+
                     end
 
                     if( DIA_IsListEmpty( self.sel_Infiltration ) and DIA_IsListEmpty( self.sel_Radar ) ) then
@@ -110,15 +128,10 @@ elseif switch_2 == "Patrouille_RBRR_RASIT" then
 
                     self.ePhase = eMRT_AssignerMissions
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// Assignation des missions
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eMRT_AssignerMissions then
+                elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eEtat == eActionImpossible ) then
                         do
-                            --[[// ePhase = eMRT_MissionImpossible;
-]]DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
+                            DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                             self.ePhase = eMRT_Valider
                                                         do return end
 
@@ -131,60 +144,37 @@ elseif switch_1 == eMRT_AssignerMissions then
                                                         do return end
 
                         end
---[[// Suivant le type de mission...
-]]                    end
+                    end
 
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eType
-                        local cases_switch_2 = {}
                             if switch_2 == "T_Mission_Automate_RENS_ROHUM_RenseignerSur" then
-                                --[[//-----------------------------------------------------------------------------
-]]--[[// Renseigner Sur
-]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.sel_Infiltration ) + #( self.sel_Radar ), } )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.sel_Infiltration ) + #( self.sel_Radar ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { self.sel_Infiltration, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { self.sel_Radar, eEtatEchelon_Premier, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// SExfiltrer
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[1] = true
-elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_SExfiltrer" then
+                            elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_SExfiltrer" then
                                 Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.sel_Infiltration ) + #( self.sel_Radar ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { self.sel_Infiltration, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { self.sel_Radar, eEtatEchelon_Premier, } )
                                 _continue = false
-                            --[[//-----------------------------------------------------------------------------
-]]--[[// Orienter/Guider
-]]--[[// Seulement pour pions infiltration
-]]--[[//-----------------------------------------------------------------------------
-]]                            cases_switch_2[2] = true
-elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_OrienterGuider" then
-                                _continue = false--[[/*
-                    behavior BEH_Medo_Automate_ControleCreationMission( DIA_Size( sel_Infiltration ) + DIA_Size( sel_Radar ) ) return in eEtat;
-                    behavior BEH_Medo_Automate_RENS_ROHUM_AssignerGuiderA( sel_Infiltration, eEtatEchelon_Premier );
-                    */// A FAIRE
-]]
-                                                        cases_switch_2[3] = true
-                            end
+                            elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_OrienterGuider" then
+                                _continue = false
+                                                        end
                         end
---[[//---------------------------------------------------------------------
-]]
+
                     _continue = false
-                --[[// Validation
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eMRT_Valider then
+                elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
-                end
-                if not cases_switch_1[1] and not cases_switch_1[2] then
+                
+                else
                                 end
             end
 

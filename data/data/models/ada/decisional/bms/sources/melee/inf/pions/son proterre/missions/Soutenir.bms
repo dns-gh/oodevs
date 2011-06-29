@@ -135,72 +135,68 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = --[[//=========================================================================
+--[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
 ]]--[[//
 ]]--[[// strength = 1
 ]]--[[//	
 ]]--[[//=========================================================================
-]]self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
 ]]--[[// 1) Preparation de la mission
 ]]--[[// On ne s'occupe pas des fuseaux, ce sont ceux de l'unité soutenue
 ]]--[[//---------------------------------------------------------------------
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                    Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. DEC_GetSzName( self._namedParams.pionAmi ) .. " **", } )
-                    self.ePhaseMission = eSuivreUnite
-                    _continue = false
-                --[[//---------------------------------------------------------------------
+]]--[[//---------------------------------------------------------------------
 ]]--[[// 2) Suivre l'unité, être prêt à passer en appui 
 ]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[1] = true
-elseif switch_1 == eSuivreUnite then
-                    --[[// Modulation vitesse --> rapide
-]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
-                    --[[//-----------------------------------------------------------------------------
+]]--[[// Modulation vitesse --> rapide
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Deactive sauvegarde pd mission, essaye à tout prix de soutenir si l'ami, lui,
 ]]--[[// doit tenir...
 ]]--[[//-----------------------------------------------------------------------------
-]]local mission = DEC_GetMission( self._namedParams.pionAmi )
-                    if( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Barrer" ) then
-                        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[//Modifié par LLS 28/02/2007
+]]--[[//Modifié par LLS 28/02/2007
 ]]--[[//behavior BEH_Eni_Pion_INF_DesactiveSauvegarde();
-]]
-                    end
-
-                    --[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Passer en appui des que possible
 ]]--[[//-----------------------------------------------------------------------------
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < M_MODELE_PION_INF_DISTANCE_DEBUT_APPUI() ) then
+]]--[[//behavior BEH_Dep_Pion_INF_Appuyer( pionAmi );
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Suivre unite ami en mesure de passer en appui
+]]--[[//-----------------------------------------------------------------------------   
+]]--[[//---------------------------------------------------------------------
+]]--[[// 3) Fin mission sur ordre
+]]--[[//---------------------------------------------------------------------
+]]--[[//M_CheckInvalidPhase( "BEH_Mission_Pion_INF_SoutenirUneUnite", ePhaseMission )
+]]--[[//Modifié par LLS le 28/02/2007
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. DEC_GetSzName( self._namedParams.pionAmi ) .. " **", } )
+                    self.ePhaseMission = eSuivreUnite
+                    _continue = false
+                elseif switch_1 == eSuivreUnite then
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
+                    local mission = DEC_GetMission( self._namedParams.pionAmi )
+                    if( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Barrer" ) then
+                        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
+                    end
+
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < M_MODELE_PION_INF_DISTANCE_DEBUT_APPUI() ) then
                         do
-                            --[[//behavior BEH_Dep_Pion_INF_Appuyer( pionAmi );
-]]Activate( self.activations.BEH_Dep_Pion_MILAN_Appuyer, 1, { self._namedParams.pionAmi, } )
+                            Activate( self.activations.BEH_Dep_Pion_MILAN_Appuyer, 1, { self._namedParams.pionAmi, } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
                                                         do return end
 
                         end
---[[//-----------------------------------------------------------------------------
-]]--[[// Suivre unite ami en mesure de passer en appui
-]]--[[//-----------------------------------------------------------------------------   
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
                     Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, M_MODELE_PION_INF_DISTANCE_MIN_SUIVRE(), } )
                     _continue = false
-                --[[//---------------------------------------------------------------------
-]]--[[// 3) Fin mission sur ordre
-]]--[[//---------------------------------------------------------------------
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                --[[//M_CheckInvalidPhase( "BEH_Mission_Pion_INF_SoutenirUneUnite", ePhaseMission )
-]]--[[//Modifié par LLS le 28/02/2007
-]]                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

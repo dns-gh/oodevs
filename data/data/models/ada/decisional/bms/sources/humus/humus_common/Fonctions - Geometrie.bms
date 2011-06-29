@@ -125,30 +125,25 @@ function S_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections )
      do
         local _continue = true
         local switch_1 = eError
-        local cases_switch_1 = {}
             if switch_1 == eNoError then
                 _returnValue = listeLocalisationBuffer
                 _continue = false
-                        cases_switch_1[1] = true
-elseif switch_1 == eError_PionsPasDansMemeFuseau then
+            elseif switch_1 == eError_PionsPasDansMemeFuseau then
                 do
                 end
 
                 _continue = false
-                        cases_switch_1[2] = true
-elseif switch_1 == eError_LocalisationPasDansFuseau then
+            elseif switch_1 == eError_LocalisationPasDansFuseau then
                 do
                 end
 
                 _continue = false
-                        cases_switch_1[3] = true
-elseif switch_1 == eWarning_DecoupageIncomplet then
+            elseif switch_1 == eWarning_DecoupageIncomplet then
                 do
                 end
 
                 _continue = false
-                        cases_switch_1[4] = true
-            end
+                        end
         end
 
     do return _returnValue end

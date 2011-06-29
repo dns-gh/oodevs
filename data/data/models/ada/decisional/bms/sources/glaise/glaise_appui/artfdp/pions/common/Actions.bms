@@ -73,7 +73,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
 
          do
             local _continue = true
-            local switch_1 = self.eEtatObjet
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]            local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
                     _continue = false
@@ -105,8 +106,7 @@ elseif switch_1 == eActionObjetTerminee then
                     _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "realisation objet : manque dotation" )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]                cases_switch_1[4] = true
+                                cases_switch_1[4] = true
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
@@ -219,8 +219,9 @@ node "ACT_Tir_Pion_ASS_SurPosition"
         myself.eEtatTir_Indirect_ = self.eTir
          do
             local _continue = true
-            local switch_1 = self.eTir
-            local cases_switch_1 = {}
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );                
+]]--[[// {	if( ! DEC_Agent_AutomateEstEmbraye() )	    DEC_RC(  eRC_TirAnnule  );    else        DEC_Message(  eRC_TirAnnule  );}
+]]            local switch_1 = self.eTir
                 if switch_1 == eActionTirIndirect_Impossible then
                     DEC_Trace( "fire on: disabled knowledge" )
                     self.actionID = DEC_StopAction( self.actionID )
@@ -229,7 +230,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     do return end
 
                                 end
-                if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
+                if switch_1 == eActionTirIndirect_Termine then
                     DEC_Trace( "Tirer Sur: tir termine" )
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -246,11 +247,10 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     do return end
 
                                 end
-                if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
+                if switch_1 == eActionTirIndirect_NoAmmo then
                     DEC_Trace( "fire on: no more ammunition" )
                     do
-                        --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );                
-]]if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
                             DEC_RC( eRC_TirExecute )
                         else
                             DEC_Message( eRC_TirExecute )
@@ -266,15 +266,14 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                         end
 
                     end
---[[// {	if( ! DEC_Agent_AutomateEstEmbraye() )	    DEC_RC(  eRC_TirAnnule  );    else        DEC_Message(  eRC_TirAnnule  );}
-]]
+
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
-                if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
+                if switch_1 == eActionTirIndirect_PasDeCapacite then
                     DEC_Trace( "Tirer Sur: pas de capacite" )
                     DEC_RC( eRC_TirAnnule )
                     self.actionID = DEC_StopAction( self.actionID )
@@ -283,7 +282,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     do return end
 
                                 end
-                if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then
+                if switch_1 == eActionTirIndirect_EnCours then
                     if( self.bPremierCoupPartie ) then
                         do
                             if( not DEC_Agent_AutomateEstEmbraye() ) then
@@ -298,8 +297,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     self.bPremierCoupPartie = ModuleBegins()
                     DEC_Trace( "Tirer Sur: tir en cours ..." )
                     _continue = false
-                                cases_switch_1[5] = true
-                end
+                                end
             end
 
                 self:SendFeedback( eActionEnCours )

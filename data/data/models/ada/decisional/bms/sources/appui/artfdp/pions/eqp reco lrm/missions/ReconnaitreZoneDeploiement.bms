@@ -59,13 +59,11 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
          do
             local _continue = true
             local switch_1 = self.ePhase
-            local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
                     Activate( self.activations.BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission, GetMotivation( "MOT_Mission" ), { eTypeObjectZoneImplantationLRM, M_DELAI_PREPARATION_RECO_LRM(), } )
 self.done_BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -78,8 +76,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[2] = true
-                end
+                                end
             end
 
     end,

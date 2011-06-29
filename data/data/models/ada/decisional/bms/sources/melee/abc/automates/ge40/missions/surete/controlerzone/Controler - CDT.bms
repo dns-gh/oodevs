@@ -534,7 +534,6 @@ node "ACT_GTIA_AssignerMissionSurete"
                          do
                             local _continue = true
                             local switch_1 = self._namedParams.typeMission
-                            local cases_switch_1 = {}
                                 if switch_1 == "T_Mission_Automate_FaireMouvement" then
                                                                     local dest = S_Geometrie_BarycentreZone( self._namedParams.zone )
                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -542,8 +541,7 @@ node "ACT_GTIA_AssignerMissionSurete"
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[1] = true
-elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
+                                elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
                                                                     local centre = S_Geometrie_BarycentreZone( self._namedParams.zone )
                                     local position = DEC_Geometrie_CreerLocalisationCercle( centre, 500 )
                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -551,23 +549,20 @@ elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[2] = true
-elseif switch_1 == "T_Mission_Automate_ABC_Controler" then
+                                elseif switch_1 == "T_Mission_Automate_ABC_Controler" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_AssignMissionParameter( missionPion, "zoneAControler_", self._namedParams.zone )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[3] = true
-elseif switch_1 == "T_Mission_Automate_INF_Controler" then
+                                elseif switch_1 == "T_Mission_Automate_INF_Controler" then
                                                                     local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                                     DEC_AssignMissionParameter( missionPion, "zone_", self._namedParams.zone )
                                     DEC_AssignMissionParameter( missionPion, "preparerTerrain_", ( not self.mission.delaisCourts_ ) )
                                     DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                                     DEC_DonnerMissionAutomate_Mission( missionPion )
                                     _continue = false
-                                                                cases_switch_1[4] = true
-                                end
+                                                                end
                             end
 
                     end

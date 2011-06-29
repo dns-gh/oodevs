@@ -72,28 +72,24 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
-            local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
+--[[// Preparation de la mission
+]]--[[// Surveiller 
+]]--[[//action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );// sert à rien car on est déjà sur place
+]]--[[// Fin de la mission --> SUR ORDRE
+]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
-                    --[[// Preparation de la mission
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eSurveiller
                     _continue = false
-                --[[// Surveiller 
-]]                cases_switch_1[1] = true
-elseif switch_1 == eSurveiller then
-                    --[[//action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );// sert à rien car on est déjà sur place
-]]Activate( self.activations.BEH_Rens_EnSurveillanceRadarDe, 1, { self._namedParams.mission.zoneAObserver_, } )
+                elseif switch_1 == eSurveiller then
+                    Activate( self.activations.BEH_Rens_EnSurveillanceRadarDe, 1, { self._namedParams.mission.zoneAObserver_, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.1, { self.pointARenseigner, } )
                     _continue = false
-                --[[// Fin de la mission --> SUR ORDRE
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
-                                cases_switch_1[3] = true
-
+                
                 else
                                 end
             end

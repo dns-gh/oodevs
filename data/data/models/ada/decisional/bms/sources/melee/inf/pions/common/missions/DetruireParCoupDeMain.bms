@@ -74,11 +74,17 @@ include "bit.lua"
 
          do
             local _continue = true
-            local switch_1 = self.ePhase
+--[[// On va se mettre en position en restant sur nos garde
+]]--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]--[[// Temps de mise en place du dispositif
+]]--[[// Posture discret
+]]--[[// Se replier a chaque fois sur une position differente
+]]--[[// Lorsque DetruireParCoupDeMain ne fait plus rien, progresser
+]]--[[// prend le pas
+]]            local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// On va se mettre en position en restant sur nos garde
-]]
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -121,8 +127,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                 if cases_switch_1[2] or switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointRegroupement_, false, } )
+                    StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointRegroupement_, false, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -135,8 +140,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                             end
 
                         end
---[[// Temps de mise en place du dispositif
-]]                    end
+                    end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
@@ -146,8 +150,7 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                                 end
                 if cases_switch_1[3] or switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// Posture discret
-]]
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( self.eActionDeplacement == eActionEffectuee ) then
                         do
                             self.eActionDeplacement = eActionEnCours
@@ -160,10 +163,7 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                             end
 
                         end
---[[// Se replier a chaque fois sur une position differente
-]]--[[// Lorsque DetruireParCoupDeMain ne fait plus rien, progresser
-]]--[[// prend le pas
-]]                    end
+                    end
 
                     if( self.eActionDeplacement ~= eActionImpossible ) then
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1.5, { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, } )
@@ -376,19 +376,15 @@ node "BEH_Pion_INF_Detruire_CoupDeMain"
          do
             local _continue = true
             local switch_1 = self._namedParams.eNatureObjectif
-            local cases_switch_1 = {}
                 if switch_1 == eNatureObjectif_ElementTerrain then
                     Activate( self.activations.BEH_Obj_Pion_INF_Detruire_ElementsTerrain, 2, { self._namedParams.zone, } )
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eNatureObjectif_Objets then
+                elseif switch_1 == eNatureObjectif_Objets then
                     Activate( self.activations.BEH_Obj_Pion_INF_Detruire_Objets, 2, { self._namedParams.zone, } )
                     _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == eNatureObjectif_ElementMobile then
+                elseif switch_1 == eNatureObjectif_ElementMobile then
                     _continue = false
-                                cases_switch_1[3] = true
-                end
+                                end
             end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
@@ -507,8 +503,8 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
         self.ptObj = self.ptObj or S_Geometrie_BarycentreZone( self._namedParams.zoneObj )
          do
             local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
+--[[// ============================================================================
+]]            local switch_1 = self.ePhase
                 if switch_1 == eRejoindrePointChantier then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -526,9 +522,7 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObj, eProgressionDirect, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
-                --[[// ============================================================================
-]]                cases_switch_1[1] = true
-                end
+                                end
             end
 --[[// BEH_Obj_Pion_VAB_DetruireObjet
 ]]
