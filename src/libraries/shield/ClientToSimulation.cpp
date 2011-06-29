@@ -137,17 +137,6 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgSetAutomatMode& from
 // Name: ClientToSimulation::Convert
 // Created: MCO 2010-11-25
 // -----------------------------------------------------------------------------
-void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitCreationRequest& from, sword::UnitCreationRequest* to )
-{
-    CONVERT_ID( type );
-    CONVERT_ID( superior );
-    CONVERT_CB( position, ConvertCoordLatLong );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientToSimulation::Convert
-// Created: MCO 2010-11-25
-// -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& from, sword::UnitMagicAction* to )
 {
     CONVERT_CB( tasker, ConvertTasker );
@@ -252,6 +241,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgMagicAction& from, s
 {
     CONVERT_ENUM( type, ( MsgsClientToSim::MsgMagicAction::global_weather, sword::MagicAction::global_weather )
                         ( MsgsClientToSim::MsgMagicAction::local_weather, sword::MagicAction::local_weather )
+                        ( MsgsClientToSim::MsgMagicAction::local_weather_destruction, sword::MagicAction::local_weather_destruction )
                         ( MsgsClientToSim::MsgMagicAction::change_diplomacy, sword::MagicAction::change_diplomacy )
                         ( MsgsClientToSim::MsgMagicAction::create_knowledge_group, sword::MagicAction::create_knowledge_group )
                         ( MsgsClientToSim::MsgMagicAction::change_resource_network_properties, sword::MagicAction::change_resource_network_properties )

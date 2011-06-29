@@ -21,91 +21,6 @@ namespace
         FillCoordLatLong( l->mutable_coordinates()->add_elem() );
         FillCoordLatLong( l->mutable_coordinates()->add_elem() );
     }
-    template< typename L >
-    void FillTacticalLine( L* l )
-    {
-        l->set_name( "name" );
-        FillLocation( l->mutable_geometry() );
-        l->mutable_diffusion()->mutable_automat()->set_id( 12 );
-        l->mutable_diffusion()->mutable_formation()->set_id( 13 );
-    }
-    template< typename I >
-    void FillShieldIntelligence( I* i )
-    {
-        i->set_name( "name" );
-        i->set_nature( "nature" );
-        i->set_level( Common::ii );
-        i->set_embarked( true );
-        FillCoordLatLong( i->mutable_location() );
-        i->set_diplomacy( Common::friend_diplo );
-        i->mutable_formation()->set_id( 77 );
-    }
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    FillTacticalLine( content.mutable_limit_creation_request()->mutable_tactical_line() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { limit_creation_request { tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_update_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    content.mutable_limit_update_request()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_limit_update_request()->mutable_tactical_line() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { limit_update_request { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_destruction_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    content.mutable_limit_destruction_request()->mutable_id()->set_id( 12 );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { limit_destruction_request { id { id: 12 } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( lima_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    FillTacticalLine( content.mutable_lima_creation_request()->mutable_tactical_line() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { phase_line_creation_request { tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( lima_update_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    content.mutable_lima_update_request()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_lima_update_request()->mutable_tactical_line() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { phase_line_update_request { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( lima_destruction_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    content.mutable_lima_destruction_request()->mutable_id()->set_id( 12 );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { phase_line_destruction_request { id { id: 12 } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( intelligence_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    FillShieldIntelligence( content.mutable_intelligence_creation_request()->mutable_intelligence() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { intelligence_creation_request { intelligence { name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friendly formation { id: 77 } } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( intelligence_update_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    content.mutable_intelligence_update_request()->mutable_intelligence()->set_id( 12 );
-    FillShieldIntelligence( content.mutable_intelligence_update_request() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { intelligence_update_request { intelligence { id: 12 } formation { id: 77 } name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friendly } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( intelligence_destruction_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    content.mutable_intelligence_destruction_request()->mutable_id()->set_id( 12 );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { intelligence_destruction_request { id { id: 12 } } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( shape_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
@@ -138,16 +53,16 @@ BOOST_FIXTURE_TEST_CASE( shape_destruction_request_from_client_is_converted, Con
 
 BOOST_FIXTURE_TEST_CASE( marker_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
-    FillMarker( content.mutable_marker_creation_request()->mutable_marker() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { marker_creation_request { marker { name: \"name\" description: \"description\" parent { id: 23 } number: \"number\" } } }" ) );
+    FillShieldMarker( content.mutable_marker_creation_request()->mutable_marker() );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { marker_creation_request { marker { name: \"name\" description: \"description\" parent { id: 23 } number: \"information\" } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( marker_update_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
     content.mutable_marker_update_request()->mutable_marker()->set_id( 17 );
-    FillMarker( content.mutable_marker_update_request() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { marker_update_request { marker { id: 17 } name: \"name\" number: \"number\" description: \"description\" parent { id: 23 } } }" ) );
+    FillShieldMarker( content.mutable_marker_update_request() );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { marker_update_request { marker { id: 17 } name: \"name\" number: \"information\" description: \"description\" parent { id: 23 } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 

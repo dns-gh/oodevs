@@ -33,7 +33,6 @@ message UnitKnowledgeId                    { required uint32              id = 1
 message UnitKnowledgeIdList                { repeated UnitKnowledgeId   elem = 1; }
 message UrbanObjectKnowledgeId             { required uint32              id = 1; }
 message ClientObjectId                     { required uint32              id = 1; }
-message PlannedWorkId                      { required uint32              id = 1; }
 message PopulationId                       { required uint32              id = 1; }
 message PopulationIdList                   { repeated uint32              id = 1; }
 
@@ -53,7 +52,6 @@ message ParentEntity {
 
 // messenger entities
 message DrawingId             { required uint32  id = 1; }
-message IntelligenceId        { required uint32  id = 1; }
 message TacticalLineId        { required uint32  id = 1; }
 message MarkerId              { required uint32  id = 1; }
 
@@ -67,6 +65,7 @@ message WeatherId             { required uint32 id = 1; }
 message MaintenanceRequestId  { required uint32 id = 1; }
 message MedicalRequestId      { required uint32 id = 1; }
 message SupplyRequestId       { required uint32 id = 1; }
+message FuneralRequestId      { required uint32 id = 1; }
 
 // Static types & categories
 message AutomatType           { required uint32 id = 1; }
@@ -299,21 +298,21 @@ enum EnumUnitMorale {
    mauvais                                          = 3;
 }
 
-enum EnumUnitStress {
-   calm                                             = 0;
-   worried                                          = 1;
-   stressed                                         = 2;
-}
-
 enum EnumUnitExperience {
    veteran                                          = 0;
    experimente                                      = 1;
    conscrit                                         = 2;
 }
 
+enum EnumUnitStress {
+   calm                                             = 0;
+   worried                                          = 1;
+   stressed                                         = 2;
+}
+
 enum EnumHumanRank {
    officier                                         = 0;
-   sous_officer                                     = 1;
+   sous_officier                                    = 1;
    mdr                                              = 2;
 }
 
@@ -459,7 +458,6 @@ message MsgPlannedWork {
    optional float                             densite             = 4;
    optional AutomatId                         tc2                 = 5;
    optional int32                             activity_time       = 6;
-   optional PlannedWorkId                     planned_work        = 7;
 }
 
 message MsgPlannedWorkList {
@@ -499,20 +497,6 @@ message MsgLimaOrder {
 
 message MsgLimasOrder {
    repeated MsgLimaOrder elem = 1;
-}
-
-message MsgIntelligence {
-   required string          name      = 1;
-   required string          nature    = 2;
-   required EnumNatureLevel level     = 3;
-   required bool            embarked  = 4;
-   required MsgCoordLatLong location  = 5;
-   required EnumDiplomacy   diplomacy = 6;
-   required FormationId     formation = 7;
-}
-
-message MsgIntelligenceList {
-   repeated MsgIntelligence elem = 1;
 }
 
 message MsgChangeDiplomacy {
@@ -589,22 +573,21 @@ message MsgMissionParameter {
         optional AutomatIdList               automatList                 = 30;
         optional UnitKnowledgeIdList         unitKnowledgeList           = 31;
         optional ObjectKnowledgeIdList       objectKnowledgeList         = 32;
-        optional MsgPlannedWorkList          plannedWorkList             = 33;
-        optional EquipmentType               equipmentType               = 34;
-        optional FireId                      tirIndirect                 = 35;
-        optional string                      aCharStr                    = 36;
-        optional MsgMissionObjective         missionObjective            = 37;
-        optional MsgMissionObjectiveList     missionObjectiveList        = 38;
-        optional MsgIntelligenceList         intelligenceList            = 39;
-        optional ObjectId                    object                      = 40;
-        optional PartyId                     party                       = 41;
-        optional FormationId                 formation                   = 42;
-        optional uint32                      identifier                  = 43;
-        optional int32                       quantity                    = 44;
-        optional KnowledgeGroupId            knowledgeGroup              = 45;
-        optional Extension                   extensionList               = 46;
-        repeated Value                       list                        = 47;
-        optional int32                       external_identifier         = 48;
+        optional EquipmentType               equipmentType               = 33;
+        optional FireId                      tirIndirect                 = 34;
+        optional string                      aCharStr                    = 35;
+        optional MsgMissionObjective         missionObjective            = 36;
+        optional MsgMissionObjectiveList     missionObjectiveList        = 37;
+        optional ObjectId                    object                      = 38;
+        optional PartyId                     party                       = 39;
+        optional FormationId                 formation                   = 40;
+        optional uint32                      identifier                  = 41;
+        optional int32                       quantity                    = 42;
+        optional KnowledgeGroupId            knowledgeGroup              = 43;
+        optional Extension                   extensionList               = 44;
+        repeated Value                       list                        = 45;
+        //
+        optional int32                       external_identifier         = 46;
     }
     optional bool  null_value       = 1;
     repeated Value value   = 2;
@@ -655,14 +638,9 @@ message ClientObjectProperty {
     required Value value = 2;
 }
 
-message MsgTacticalLine {
-    message Diffusion {
-       optional AutomatId   automat   = 1;
-       optional FormationId formation = 2;
-    }
-    required string      name      = 1;
-    required MsgLocation geometry  = 2;
-    required Diffusion   diffusion = 3;
+message Diffusion {
+   optional AutomatId   automat   = 1;
+   optional FormationId formation = 2;
 }
 
 message MsgShape {
@@ -724,7 +702,7 @@ message ObjectAttributeConstruction {
    optional int32        percentage     = 4;
 }
 
-message ObjectAttributeMine {
+message ObjectAttributeValorisation {
    optional ResourceType resource       = 1;
    optional int32        dotation_nbr   = 2;
    optional float        density        = 3;
@@ -868,7 +846,7 @@ message ObjectAttributeNBCType {
 message ObjectAttributes {
    optional ObjectAttributeConstruction      construction        = 1;
    optional ObjectAttributeObstacle          obstacle            = 2;
-   optional ObjectAttributeMine              mine                = 3;
+   optional ObjectAttributeValorisation      valorisation        = 3;
    optional ObjectAttributeActivityTime      activity_time       = 4;
    optional ObjectAttributeBypass            bypass              = 5;
    optional ObjectAttributeLogistic          logistic            = 6;
@@ -882,7 +860,7 @@ message ObjectAttributes {
    optional ObjectAttributeStock             stock               = 14;
    optional ObjectAttributeNBCType           nbc_agent           = 15;   
    optional ObjectAttributeEffectDelay       effect_delay        = 16;
-   optional ObjectAttributeResourceNetwork   resource_networks   = 17;     //not in scipio V1.stab
+   optional ObjectAttributeResourceNetwork   resource_networks   = 17;
    optional ObjectAttributeBurn              burn                = 18;
    optional ObjectAttributeBurnSurface       burn_surface        = 19;
    optional ObjectAttributeLodging           lodging             = 20;
@@ -892,7 +870,7 @@ message MsgMarker {
     required string                             name                = 1;
     required string                             description         = 2;
     optional MarkerId                           parent              = 3;
-    optional string                             number	            = 4;
+    optional string                             optional_information = 4;
 }
 
 // weather

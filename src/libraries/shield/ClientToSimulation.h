@@ -41,7 +41,6 @@ public:
     static void Convert( const Common::MsgCrowdOrder& from, sword::CrowdOrder* to );
     static void Convert( const MsgsClientToSim::MsgFragOrder& from, sword::FragOrder* to );
     static void Convert( const MsgsClientToSim::MsgSetAutomatMode& from, sword::SetAutomatMode* to );
-    static void Convert( const MsgsClientToSim::MsgUnitCreationRequest& from, sword::UnitCreationRequest* to );
     static void Convert( const MsgsClientToSim::MsgUnitMagicAction& from, sword::UnitMagicAction* to );
     static void Convert( const MsgsClientToSim::MsgObjectMagicAction& from, sword::ObjectMagicAction* to );
     static void Convert( const MsgsClientToSim::MsgKnowledgeMagicAction& from, sword::KnowledgeMagicAction* to );

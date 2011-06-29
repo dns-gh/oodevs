@@ -29,7 +29,7 @@ using namespace shield;
 
 #define CONVERT_RANK( from_field, to_field ) \
         CONVERT_ENUM_TO( from_field, to_field, ( sword::officer, Common::officier ) \
-                                     ( sword::sub_officer, Common::sous_officer ) \
+                                     ( sword::sub_officer, Common::sous_officier ) \
                                      ( sword::trooper, Common::mdr ) )
 
 #define CONVERT_UNIT_ACTION_ACK( from_field, to_field ) \
@@ -1256,7 +1256,7 @@ namespace
     {
         CONVERT_CB( construction, ConvertObjectAttributeConstruction );
         CONVERT_CB( obstacle, ConvertObjectAttributeObstacle );
-        CONVERT_CB( mine, ConvertObjectAttributeMine );
+        CONVERT_CB_TO( mine, valorisation, ConvertObjectAttributeMine );
         if( from.has_activity_time() )
             to->mutable_activity_time()->set_value( from.activity_time().value() );
         if( from.has_bypass() )

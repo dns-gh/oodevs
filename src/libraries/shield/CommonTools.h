@@ -101,17 +101,6 @@ namespace shield
         CONVERT_ID( formation );
     }
     template< typename From, typename To >
-    void ConvertIntelligence( const From& from, To* to )
-    {
-        CONVERT( name );
-        CONVERT( nature );
-        ConvertNatureLevel( from, to );
-        CONVERT( embarked );
-        CONVERT_CB( location, ConvertCoordLatLong );
-        CONVERT_DIPLOMACY( diplomacy, diplomacy );
-        CONVERT_ID( formation );
-    }
-    template< typename From, typename To >
     void ConvertProfileDescription( const From& from, To* to )
     {
         CONVERT( login );
@@ -124,13 +113,6 @@ namespace shield
     {
         CONVERT_ID( automat );
         CONVERT_ID( formation );
-    }
-    template< typename From, typename To >
-    void ConvertTacticalLine( const From& from, To* to )
-    {
-        to->mutable_tactical_line()->set_name( from.tactical_line().name() );
-        ConvertLocation( from.tactical_line().geometry(), to->mutable_tactical_line()->mutable_geometry() );
-        ConvertDiffusion( from.tactical_line().diffusion(), to->mutable_tactical_line()->mutable_diffusion() );
     }
     template< typename From, typename To >
     void ConvertColor( const From& from, To* to )
@@ -153,7 +135,11 @@ namespace shield
         CONVERT( name );
         CONVERT( description );
         CONVERT_ID( parent );
-        CONVERT( number );
+#ifdef SHIELD_SIMULATION
+        CONVERT_TO( number, optional_information );
+#else
+        CONVERT_TO( optional_information, number );
+#endif
     }
     template< typename From, typename To >
     void ConvertPropertyValue( const From& from, To* to )
@@ -201,7 +187,6 @@ namespace shield
         CONVERT_ID_TO( tc2, combat_train );
 #endif
         CONVERT( activity_time );
-        CONVERT_ID( planned_work );
     }
     template< typename From, typename To >
     void ConvertLogMedicalPriorities( const From& from, To* to )
@@ -286,7 +271,6 @@ namespace shield
         CONVERT_LIST( automatlist, elem, ConvertIdentifier );
         CONVERT_LIST( unitknowledgelist, elem, ConvertIdentifier );
         CONVERT_LIST( objectknowledgelist, elem, ConvertIdentifier );
-        CONVERT_LIST( plannedworklist, elem, ConvertPlannedWork );
         CONVERT_ID( equipmenttype );
 #ifdef SHIELD_CLIENT
         CONVERT_ID_TO( tirindirect, indirectfire );
@@ -297,7 +281,6 @@ namespace shield
         CONVERT_CB( missionobjective, ConvertObjective );
         CONVERT_LIST( missionobjectivelist, elem, ConvertObjective );
         CONVERT_LIST( phaseline, elem, ConvertLimaOrder );
-        CONVERT_LIST( intelligencelist, elem, ConvertIntelligence );
         CONVERT_ID( object );
         CONVERT_ID( party );
         CONVERT_ID( formation );

@@ -11,50 +11,6 @@ package MsgsClientToMessenger;
 
 import "Common.proto";
 
-// Phase lines
-message MsgLimaCreationRequest {
-   required Common.MsgTacticalLine tactical_line = 1;
-}
-message MsgLimaUpdateRequest {
-   required Common.TacticalLineId  id   = 1;
-   optional Common.MsgTacticalLine tactical_line = 2;
-}
-message MsgLimaDestructionRequest {
-   required Common.TacticalLineId id = 1;
-}
-
-// Limits
-message MsgLimitCreationRequest {
-   required Common.MsgTacticalLine tactical_line = 1;
-}
-message MsgLimitUpdateRequest {
-   required Common.TacticalLineId  id   = 1;
-   optional Common.MsgTacticalLine tactical_line = 2;
-}
-message MsgLimitDestructionRequest {
-   required Common.TacticalLineId id = 1;
-}
-
-// Intelligences
-message MsgIntelligenceCreationRequest {
-   required Common.MsgIntelligence intelligence = 1;
-}
-
-message MsgIntelligenceUpdateRequest {
-    required Common.IntelligenceId  intelligence    = 1;
-    optional Common.FormationId     formation       = 2;
-    optional string                 name            = 3;
-    optional string                 nature          = 4;
-    optional Common.EnumNatureLevel level           = 5;
-    optional bool                   embarked        = 6;
-    optional Common.MsgCoordLatLong location        = 7;
-    optional Common.EnumDiplomacy   diplomacy       = 8;
-}
-
-message MsgIntelligenceDestructionRequest {
-    required Common.IntelligenceId id = 1;
-}
-
 // Drawings
 message MsgShapeCreationRequest {
     required Common.MsgShape shape = 1;
@@ -79,7 +35,7 @@ message MsgMarkerCreationRequest {
 message MsgMarkerUpdateRequest {
     required Common.MarkerId           marker      = 1;
     optional string                    name        = 2;
-    optional string                    number      = 3;
+    optional string                    optional_information	= 3;
     optional string                    description = 4;
     optional Common.MarkerId           parent      = 5;
 }
@@ -109,24 +65,15 @@ message MsgClientObjectDestructionRequest {
 
 message MsgClientToMessenger {
     message Content {
-        optional MsgLimitCreationRequest           limit_creation_request            = 1;
-        optional MsgLimitDestructionRequest        limit_destruction_request         = 2;
-        optional MsgLimitUpdateRequest             limit_update_request              = 3;
-        optional MsgLimaCreationRequest            lima_creation_request             = 4;
-        optional MsgLimaDestructionRequest         lima_destruction_request          = 5;
-        optional MsgLimaUpdateRequest              lima_update_request               = 6;
-        optional MsgIntelligenceCreationRequest    intelligence_creation_request     = 7;
-        optional MsgIntelligenceUpdateRequest      intelligence_update_request       = 8;
-        optional MsgIntelligenceDestructionRequest intelligence_destruction_request  = 9;
-        optional MsgShapeCreationRequest           shape_creation_request            = 10;
-        optional MsgShapeDestructionRequest        shape_destruction_request         = 11;
-        optional MsgShapeUpdateRequest             shape_update_request              = 12;
-        optional MsgMarkerCreationRequest          marker_creation_request              = 14;
-        optional MsgMarkerUpdateRequest            marker_update_request                = 15;
-        optional MsgMarkerDestructionRequest       marker_destruction_request           = 16;
-        optional MsgClientObjectCreationRequest    client_object_creation_request    = 17;
-        optional MsgClientObjectUpdateRequest      client_object_update_request      = 18;
-        optional MsgClientObjectDestructionRequest client_object_destruction_request = 19;
+        optional MsgShapeCreationRequest           shape_creation_request            = 1;
+        optional MsgShapeDestructionRequest        shape_destruction_request         = 2;
+        optional MsgShapeUpdateRequest             shape_update_request              = 3;
+        optional MsgMarkerCreationRequest          marker_creation_request           = 4;
+        optional MsgMarkerUpdateRequest            marker_update_request             = 5;
+        optional MsgMarkerDestructionRequest       marker_destruction_request        = 6;
+        optional MsgClientObjectCreationRequest    client_object_creation_request    = 7;
+        optional MsgClientObjectUpdateRequest      client_object_update_request      = 8;
+        optional MsgClientObjectDestructionRequest client_object_destruction_request = 9;
     }
     optional int32   context = 1;
     required Content message = 2;

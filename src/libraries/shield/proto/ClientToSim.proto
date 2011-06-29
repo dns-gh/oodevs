@@ -30,12 +30,6 @@ message MsgSetAutomatMode {
    required Common.EnumAutomatMode mode     = 2;
 }
 
-message MsgUnitCreationRequest {
-   required Common.UnitType        type     = 1;
-   required Common.AutomatId       superior = 2;
-   required Common.MsgCoordLatLong position = 3;
-}
-
 // Magic Action
 message MsgUnitMagicAction {
    enum Type {
@@ -104,29 +98,30 @@ message MsgObjectMagicAction {
    }
    
    enum Attribute {
-        construction       = 0;
-        obstacle           = 1;
-        mine               = 2;
-        activity_time      = 3;
-        bypass             = 4;
-        logistic           = 5;
-        nbc                = 6;
-        crossing_site      = 7;
-        supply_route       = 8;
-        toxic_cloud        = 9;
-        fire               = 10;
-        medical_treatment  = 11;
-        interaction_height = 12;
-        stock              = 13;
-        nbc_agent          = 14;
-        effect_delay       = 15;
-        flood              = 16;
-        burn_surface       = 17;
-        structural_state   = 18;
-        infrastructure     = 19;
-        usages             = 20;
-        lodging            = 21;
-        altitude_modifier  = 22;
+        construction          = 0;
+        obstacle              = 1;
+        valorisation          = 2;
+        activity_time         = 3;
+        bypass                = 4;
+        logistic              = 5;
+        nbc                   = 6;
+        crossing_site         = 7;
+        supply_route          = 8;
+        toxic_cloud           = 9;
+        fire                  = 10;
+        medical_treatment     = 11;
+        interaction_height    = 12;
+        stock                 = 13;
+        nbc_agent             = 14;
+        effect_delay          = 15;
+        flood                 = 16;
+        burn_surface          = 17;
+        structural_state      = 18;
+        infrastructure        = 19;
+        usages                = 20;
+        lodging               = 21;
+        trafficability        = 22;
+        underground           = 23;
    }
    
    required Common.ObjectId             object     = 1;
@@ -138,10 +133,11 @@ message MsgMagicAction {
    enum Type {
         global_weather                      = 0;
         local_weather                       = 1;
-        change_diplomacy                    = 2;
-        create_knowledge_group              = 3;
-        change_resource_network_properties  = 4;
-        create_fire_order_on_location       = 5;
+        local_weather_destruction           = 2;
+        change_diplomacy                    = 3;
+        create_knowledge_group              = 4;
+        change_resource_network_properties  = 5;
+        create_fire_order_on_location       = 6;
     }
    required Type                        type       = 1;
    required Common.MsgMissionParameters parameters = 2;
@@ -177,13 +173,12 @@ message MsgClientToSim {
        optional Common.MsgCrowdOrder                   crowd_order                          = 11;
        optional MsgFragOrder                           frag_order                           = 12;
        optional MsgSetAutomatMode                      set_automat_mode                     = 13;
-       optional MsgUnitCreationRequest                 unit_creation_request                = 14;
-       optional MsgUnitMagicAction                     unit_magic_action                    = 15;
-       optional MsgObjectMagicAction                   object_magic_action                  = 16;
-       optional MsgKnowledgeMagicAction                knowledge_magic_action               = 17;
-       optional MsgMagicAction                         magic_action                         = 18;
-       optional MsgControlCheckPointListRequest        control_checkpoint_list_request      = 19;
-       optional MsgControlCheckPointDeleteRequest      control_checkpoint_delete_request    = 20;
+       optional MsgUnitMagicAction                     unit_magic_action                    = 14;
+       optional MsgObjectMagicAction                   object_magic_action                  = 15;
+       optional MsgKnowledgeMagicAction                knowledge_magic_action               = 16;
+       optional MsgMagicAction                         magic_action                         = 17;
+       optional MsgControlCheckPointListRequest        control_checkpoint_list_request      = 18;
+       optional MsgControlCheckPointDeleteRequest      control_checkpoint_delete_request    = 19;
     }
     optional int32   context = 1;
     required Content message = 2;

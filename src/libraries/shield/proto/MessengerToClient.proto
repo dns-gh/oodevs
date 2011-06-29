@@ -11,96 +11,6 @@ package MsgsMessengerToClient;
 
 import "Common.proto";
 
-message TacticalLineAck {
-    enum ErrorCode {
-        no_error                    = 0;
-        error_invalid_id            = 1;
-        error_invalid_geometry      = 2;
-        error_invalid_lima_function = 3;
-        error_invalid_diffusion     = 4;
-    }
-}
-
-// Limits
-message MsgLimitCreation {
-    required Common.TacticalLineId  id   = 1;
-    required Common.MsgTacticalLine tactical_line = 2;
-}
-message MsgLimitUpdate {
-    required Common.TacticalLineId  id   = 1;
-    required Common.MsgTacticalLine tactical_line = 2;
-}
-message MsgLimitDestruction {
-    required Common.TacticalLineId id = 1;
-}
-message MsgLimitCreationRequestAck {
-    optional TacticalLineAck.ErrorCode error_code = 1;
-}
-message MsgLimitUpdateRequestAck {
-    optional TacticalLineAck.ErrorCode error_code = 1;
-}
-message MsgLimitDestructionRequestAck {
-    optional TacticalLineAck.ErrorCode error_code = 1;
-}
-
-// Phase lines
-message MsgLimaCreation {
-    required Common.TacticalLineId  id   = 1;
-    required Common.MsgTacticalLine tactical_line = 2;
-}
-message MsgLimaDestruction {
-    required Common.TacticalLineId id = 1;
-}
-message MsgLimaUpdate {
-    required Common.TacticalLineId  id   = 1;
-    required Common.MsgTacticalLine tactical_line = 2;
-}
-message MsgLimaCreationRequestAck {
-    optional TacticalLineAck.ErrorCode error_code = 1;
-}
-message MsgLimaUpdateRequestAck {
-    optional TacticalLineAck.ErrorCode error_code = 1;
-}
-message MsgLimaDestructionRequestAck {
-    optional TacticalLineAck.ErrorCode error_code = 1;
-}
-
-// Intelligences
-message MsgIntelligenceCreation {
-   required Common.IntelligenceId  id           = 1;
-   required Common.MsgIntelligence intelligence = 2;
-}
-message MsgIntelligenceUpdate {
-   required Common.IntelligenceId  id        = 1;
-   optional Common.FormationId     formation = 2;
-   optional string                 name      = 3;
-   optional string                 nature    = 4;
-   optional Common.EnumNatureLevel level     = 5;
-   optional bool                   embarked  = 6;
-   optional Common.MsgCoordLatLong location  = 7;
-   optional Common.EnumDiplomacy   diplomacy = 8;
-}
-message MsgIntelligenceDestruction {
-   required Common.IntelligenceId id = 1;
-}
-message IntelligenceRequestAck {
-    enum ErrorCode {
-        no_error                = 0;
-        error_invalid_oid       = 1;
-        error_invalid_geometry  = 2;
-        error_invalid_formation = 3;
-    }
-}
-message MsgIntelligenceCreationRequestAck {
-    optional IntelligenceRequestAck.ErrorCode error_code = 1;
-}
-message MsgIntelligenceUpdateRequestAck {
-    optional IntelligenceRequestAck.ErrorCode error_code = 1;
-}
-message MsgIntelligenceDestructionRequestAck {
-    optional IntelligenceRequestAck.ErrorCode error_code = 1;
-}
-
 // Drawing/shapes
 message MsgShapeCreation {
    required Common.DrawingId id    = 1;
@@ -144,12 +54,12 @@ message MsgMarkerCreation {
 }
 
 message MsgMarkerUpdate {
-    required Common.MarkerId            marker      = 1;
-    required Common.MsgDateTime         date        = 2;
-    optional string                     name        = 3; 
-    optional string                     description = 4;
-    optional Common.MarkerId            parent      = 5; 
-    optional string                     number	    = 6;
+    required Common.MarkerId            marker               = 1;
+    required Common.MsgDateTime         date                 = 2;
+    optional string                     name                 = 3; 
+    optional string                     description          = 4;
+    optional Common.MarkerId            parent               = 5; 
+    optional string                     optional_information = 6;
 }
 
 message MsgMarkerDestruction {
@@ -220,39 +130,24 @@ message MsgClientObjectDestructionRequestAck {
 // message container
 message MsgMessengerToClient {
     message Content {
-        optional MsgLimitCreation                       limit_creation                          = 1;
-        optional MsgLimitUpdate                         limit_update                            = 2;
-        optional MsgLimitDestruction                    limit_destruction                       = 3;
-        optional MsgLimitCreationRequestAck             limit_creation_request_ack              = 4;
-        optional MsgLimitDestructionRequestAck          limit_destruction_request_ack           = 5;
-        optional MsgLimitUpdateRequestAck               limit_update_request_ack                = 6;
-        optional MsgLimaCreation                        lima_creation                           = 7;
-        optional MsgLimaUpdate                          lima_update                             = 8;
-        optional MsgLimaDestruction                     lima_destruction                        = 9;
-        optional MsgLimaCreationRequestAck              lima_creation_request_ack               = 10;
-        optional MsgLimaDestructionRequestAck           lima_destruction_request_ack            = 11;
-        optional MsgLimaUpdateRequestAck                lima_update_request_ack                 = 12;
-        optional MsgIntelligenceCreation                intelligence_creation                   = 13;
-        optional MsgIntelligenceUpdate                  intelligence_update                     = 14;
-        optional MsgIntelligenceDestruction             intelligence_destruction                = 15;
-        optional MsgIntelligenceCreationRequestAck      intelligence_creation_request_ack       = 16;
-        optional MsgIntelligenceUpdateRequestAck        intelligence_update_request_ack         = 17;
-        optional MsgIntelligenceDestructionRequestAck   intelligence_destruction_request_ack    = 18;
-        optional MsgShapeCreation                       shape_creation                          = 19;
-        optional MsgShapeUpdate                         shape_update                            = 20;
-        optional MsgShapeDestruction                    shape_destruction                       = 21;
-        optional MsgShapeCreationRequestAck             shape_creation_request_ack              = 22;
-        optional MsgShapeDestructionRequestAck          shape_destruction_request_ack           = 23;
-        optional MsgShapeUpdateRequestAck               shape_update_request_ack                = 24;
-        optional MsgMarkerCreation                      marker_creation                           = 26;
-        optional MsgMarkerUpdate                        marker_update                             = 27;
-        optional MsgMarkerDestruction                   marker_destruction                        = 28;
-        optional MsgClientObjectCreation                client_object_creation                  = 29;
-        optional MsgClientObjectUpdate                  client_object_update                    = 30;
-        optional MsgClientObjectDestruction             client_object_destruction               = 31;
-        optional MsgClientObjectCreationRequestAck      client_object_creation_ack              = 32;
-        optional MsgClientObjectUpdateRequestAck        client_object_update_ack                = 33;
-        optional MsgClientObjectDestructionRequestAck   client_object_destruction_ack           = 34;
+        optional MsgShapeCreation                       shape_creation                          = 1;
+        optional MsgShapeUpdate                         shape_update                            = 2;
+        optional MsgShapeDestruction                    shape_destruction                       = 3;
+        optional MsgShapeCreationRequestAck             shape_creation_request_ack              = 4;
+        optional MsgShapeDestructionRequestAck          shape_destruction_request_ack           = 5;
+        optional MsgShapeUpdateRequestAck               shape_update_request_ack                = 6;
+        optional MsgMarkerCreation                      marker_creation                         = 7;
+        optional MsgMarkerUpdate                        marker_update                           = 8;
+        optional MsgMarkerDestruction                   marker_destruction                      = 9;
+        optional MsgClientObjectCreation                client_object_creation                  = 10;
+        optional MsgClientObjectUpdate                  client_object_update                    = 11;
+        optional MsgClientObjectDestruction             client_object_destruction               = 12;
+        optional MsgClientObjectCreationRequestAck      client_object_creation_ack              = 13;
+        optional MsgClientObjectUpdateRequestAck        client_object_update_ack                = 14;
+        optional MsgClientObjectDestructionRequestAck   client_object_destruction_ack           = 15;
+        optional MsgMarkerCreationRequestAck            marker_creation_ack                     = 16;
+        optional MsgMarkerUpdateRequestAck              marker_update_ack                       = 17;
+        optional MsgMarkerDestructionRequestAck         marker_destruction_ack                  = 18;   
     }
     optional int32   context = 1;
     required Content message = 2;

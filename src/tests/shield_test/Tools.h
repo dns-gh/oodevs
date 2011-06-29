@@ -170,7 +170,15 @@ namespace shield
         m->set_name( "name" );
         m->set_description( "description" );
         m->mutable_parent()->set_id( 23 );
-        m->set_number( "number" );
+        m->set_number( "information" );
+    }
+    template< typename M >
+    void FillShieldMarker( M* m )
+    {
+        m->set_name( "name" );
+        m->set_description( "description" );
+        m->mutable_parent()->set_id( 23 );
+        m->set_optional_information( "information" );
     }
     template< typename P >
     void FillProperty( P* p )

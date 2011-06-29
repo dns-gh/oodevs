@@ -21,17 +21,6 @@ namespace shield
         FillCoordLatLong( l->mutable_coordinates()->add_elem() );
         FillCoordLatLong( l->mutable_coordinates()->add_elem() );
     }
-    template< typename I >
-    void FillIntelligence( I* i )
-    {
-        i->set_name( "name" );
-        i->set_nature( "nature" );
-        i->set_level( sword::ii );
-        i->set_embarked( true );
-        FillCoordLatLong( i->mutable_location() );
-        i->set_diplomacy( sword::friendly );
-        i->mutable_formation()->set_id( 77 );
-    }
     template< typename P >
     void FillProfile( P* p )
     {

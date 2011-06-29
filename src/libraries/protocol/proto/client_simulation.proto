@@ -216,10 +216,11 @@ message MagicAction {
    enum Type {
         global_weather                     = 0; //!< A global weather magic action
         local_weather                      = 1; //!< A local weather magic action
-        change_diplomacy                   = 2; //!< A change diplomacy magic action
-        create_knowledge_group             = 3; //!< A create knowledge magic action
-        change_resource_network_properties = 4; //!< A change resource network properties magic action
-        create_fire_order_on_location      = 5; //!< A fire order on location magic action
+        local_weather_destruction          = 2; //!< A local weather destruction magic action
+        change_diplomacy                   = 3; //!< A change diplomacy magic action
+        create_knowledge_group             = 4; //!< A create knowledge magic action
+        change_resource_network_properties = 5; //!< A change resource network properties magic action
+        create_fire_order_on_location      = 6; //!< A fire order on location magic action
     }
     required Type              type       = 1; //!< The type of magic action
     required MissionParameters parameters = 2; //!< The parameters of the magic action

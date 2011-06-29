@@ -24,117 +24,6 @@ namespace
     }
 }
 
-BOOST_FIXTURE_TEST_CASE( limit_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_limit_creation()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_limit_creation()->mutable_tactical_line() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { limit_creation { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_update_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_limit_update()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_limit_update()->mutable_tactical_line() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { limit_update { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_destruction_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_limit_destruction()->mutable_id()->set_id( 12 );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { limit_destruction { id { id: 12 } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_creation_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_limit_creation_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { limit_creation_request_ack { error_code: error_invalid_geometry } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_destruction_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_limit_destruction_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { limit_destruction_request_ack { error_code: error_invalid_geometry } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( limit_update_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_limit_update_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { limit_update_request_ack { error_code: error_invalid_geometry } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( phase_line_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_phase_line_creation()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_phase_line_creation()->mutable_tactical_line() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_creation { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( phase_line_update_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_phase_line_update()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_phase_line_update()->mutable_tactical_line() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_update { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( phase_line_destruction_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_phase_line_destruction()->mutable_id()->set_id( 12 );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_destruction { id { id: 12 } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( phase_line_creation_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_phase_line_creation_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_creation_request_ack { error_code: error_invalid_geometry } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( phase_line_destruction_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_phase_line_destruction_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_destruction_request_ack { error_code: error_invalid_geometry } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( phase_line_update_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_phase_line_update_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_update_request_ack { error_code: error_invalid_geometry } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( intelligence_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_intelligence_creation()->mutable_id()->set_id( 12 );
-    FillIntelligence( content.mutable_intelligence_creation()->mutable_intelligence() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { intelligence_creation { id { id: 12 } intelligence { name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friend_diplo formation { id: 77 } } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( intelligence_update_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_intelligence_update()->mutable_id()->set_id( 12 );
-    FillIntelligence( content.mutable_intelligence_update() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { intelligence_update { id { id: 12 } formation { id: 77 } name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friend_diplo } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( intelligence_destruction_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
-{
-    content.mutable_intelligence_destruction()->mutable_id()->set_id( 12 );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { intelligence_destruction { id { id: 12 } } }" ) );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
-}
-
 BOOST_FIXTURE_TEST_CASE( shape_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
     content.mutable_shape_creation()->mutable_id()->set_id( 12 );
@@ -198,7 +87,7 @@ BOOST_FIXTURE_TEST_CASE( marker_creation_to_client_is_converted, ContextFixture<
     content.mutable_marker_creation()->mutable_marker()->set_id( 17 );
     content.mutable_marker_creation()->mutable_date()->set_data( "data" );
     FillMarker( content.mutable_marker_creation()->mutable_definition() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { marker_creation { marker { id: 17 } definition { name: \"name\" description: \"description\" parent { id: 23 } number: \"number\" } date { data: \"data\" } } }" ) );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { marker_creation { marker { id: 17 } definition { name: \"name\" description: \"description\" parent { id: 23 } optional_information: \"information\" } date { data: \"data\" } } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
@@ -207,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( marker_update_to_client_is_converted, ContextFixture< s
     content.mutable_marker_update()->mutable_marker()->set_id( 17 );
     content.mutable_marker_update()->mutable_date()->set_data( "data" );
     FillMarker( content.mutable_marker_update() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { marker_update { marker { id: 17 } date { data: \"data\" } name: \"name\" description: \"description\" parent { id: 23 } number: \"number\" } }" ) );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { marker_update { marker { id: 17 } date { data: \"data\" } name: \"name\" description: \"description\" parent { id: 23 } optional_information: \"information\" } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
