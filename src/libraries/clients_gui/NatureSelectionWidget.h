@@ -13,6 +13,15 @@
 #include <qlistview.h>
 #include "clients_kernel/SymbolVisitor_ABC.h"
 
+namespace tools
+{
+    class Loader_ABC;
+}
+namespace xml
+{
+    class xistream;
+}
+
 namespace gui
 {
 
@@ -30,7 +39,7 @@ class NatureSelectionWidget : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             NatureSelectionWidget( QWidget* parent, const std::string& symbolFile );
+    NatureSelectionWidget( QWidget* parent, const tools::Loader_ABC& loader );
     virtual ~NatureSelectionWidget();
     //@}
 
@@ -60,6 +69,7 @@ private:
     virtual void EndCategory();
     virtual void AddChoice( kernel::SymbolRule* rule, const std::string& name, const std::string& value );
     virtual void startDrag();
+    void LoadSymbols( xml::xistream& xis );
     //@}
 
 private:

@@ -76,7 +76,7 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
     }
     if( config )
     {
-        NatureSelectionWidget* nature = new NatureSelectionWidget( this, config->GetOptionalPhysicalChildFile( "symbols" ) );
+        NatureSelectionWidget* nature = new NatureSelectionWidget( this, config->GetLoader() );
         connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
         connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
     }
@@ -230,7 +230,7 @@ void IntelligencesPanel::Load( const tools::ExerciseConfig& config )
 {
     symbolFactory_->Load( config );
 
-    NatureSelectionWidget* nature = new NatureSelectionWidget( this, config.GetOptionalPhysicalChildFile( "symbols" ) );
+    NatureSelectionWidget* nature = new NatureSelectionWidget( this, config.GetLoader() );
     connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
     connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
 }

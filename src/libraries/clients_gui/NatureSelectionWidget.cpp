@@ -11,6 +11,8 @@
 #include "NatureSelectionWidget.h"
 #include "moc_NatureSelectionWidget.cpp"
 #include "clients_kernel/SymbolRule.h"
+#include "tools/Loader_ABC.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -19,7 +21,7 @@ using namespace gui;
 // Name: NatureSelectionWidget constructor
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const std::string& symbolFile )
+NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const tools::Loader_ABC& loader )
     : QListView( parent )
     , category_( 0 )
     , current_ ( 0 )
@@ -28,12 +30,7 @@ NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const std::string
     header()->hide();
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
-    xml::xifstream xis( symbolFile );
-    xis >> xml::start( "app6" )
-            >> xml::start( "symbols" )
-                >> xml::start( "choice" );
-    kernel::SymbolRule root( xis );
-    root.Accept( *this );
+    loader.LoadOptionalPhysicalFile( "symbols", boost::bind( &NatureSelectionWidget::LoadSymbols, this, _1 ) );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
 }
 
@@ -44,6 +41,19 @@ NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const std::string
 NatureSelectionWidget::~NatureSelectionWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NatureSelectionWidget::LoadSymbols
+// Created: LDC 2011-06-29
+// -----------------------------------------------------------------------------
+void NatureSelectionWidget::LoadSymbols( xml::xistream& xis )
+{
+    xis >> xml::start( "app6" )
+            >> xml::start( "symbols" )
+                >> xml::start( "choice" );
+    kernel::SymbolRule root( xis );
+    root.Accept( *this );
 }
 
 // -----------------------------------------------------------------------------
