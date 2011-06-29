@@ -20,12 +20,18 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Appuyer Sur Position"/>
-        <mission name="MELEE Barrer"/>
+        <mission name="MELEE Barrer">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Boucler"/>
-        <mission name="MELEE Controler"/>
+        <mission name="MELEE Controler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Detruire"/>
-        <mission name="MELEE Defendre"/>
+        <mission name="MELEE Defendre">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
@@ -33,10 +39,16 @@
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
         </mission>
-        <mission name="MELEE Harceler"/>
+        <mission name="MELEE Harceler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Illuminer"/>
-        <mission name="MELEE Intercepter"/>
-        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Intercepter">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE Interdire">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="MELEE Reconnaitre"/>
@@ -145,12 +157,16 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="MELEE Barrer"/>
+        <mission name="MELEE Barrer">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="MELEE Controler"/>
+        <mission name="MELEE Controler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
@@ -159,7 +175,9 @@
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Fouiller"/>
         <mission name="MELEE Freiner"/>
-        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Interdire">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Jalonner">
           <fragorder name="Decrocher"/>
         </mission>
@@ -171,7 +189,9 @@
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
-        <mission name="MELEE Tenir"/>
+        <mission name="MELEE Tenir">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="STABILISATION Canaliser foules"/>
         <mission name="STABILISATION Controler foule"/>
         <mission name="STABILISATION Interdire foule"/>
@@ -215,7 +235,9 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Controler"/>
+        <mission name="MELEE Controler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Fouiller"/>
@@ -272,12 +294,18 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Boucler"/>
-        <mission name="MELEE Barrer"/>
+        <mission name="MELEE Barrer">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="MELEE Controler"/>
-        <mission name="MELEE Defendre"/>
+        <mission name="MELEE Controler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE Defendre">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
@@ -496,16 +524,30 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE ActiverObstacles"/>
         <mission name="GENIE Appui Mobilite"/>
-        <mission name="GENIE Contourner obstacle"/>
-        <mission name="GENIE Degager Obstacles"/>
+        <mission name="GENIE Contourner obstacle">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="GENIE Degager Obstacles">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="GENIE Depolluer zone"/>
         <mission name="GENIE OuvrirItineraire"/>
-        <mission name="GENIE Realiser Camps"/>
-        <mission name="GENIE Realiser Travaux"/>
+        <mission name="GENIE Realiser Camps">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="GENIE Realiser Travaux">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="GENIE Reconnaitre Site de franchissement"/>
-        <mission name="GENIE Reparer"/>
-        <mission name="GENIE Reprendre Travaux"/>
-        <mission name="GENIE Retablir Itineraire"/>
+        <mission name="GENIE Reparer">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="GENIE Reprendre Travaux">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="GENIE Retablir Itineraire">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="Animer"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
@@ -551,8 +593,12 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="GENIE Realiser Camps"/>
-        <mission name="GENIE Reparer"/>
+        <mission name="GENIE Realiser Camps">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="GENIE Reparer">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
         <mission name="Produire"/>
@@ -11798,4 +11844,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3623438473" -->
+<!-- signature="1540946640" -->
