@@ -94,7 +94,7 @@ void Affinities::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( "adhesions" );
         for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         {
-            if ( model_.teams_.FindTeam( it->first ) )
+            if( model_.teams_.FindTeam( it->first ) )
             {
                 xos << xml::start( "adhesion" )
                     << xml::attribute( "party", it->first )

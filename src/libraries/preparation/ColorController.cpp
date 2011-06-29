@@ -43,7 +43,7 @@ QColor ColorController::Apply( const kernel::Entity_ABC& entity, const QColor& b
 {
     CIT_Colors it = colors_.find( entity.GetId() );
     if( it != colors_.end() )
-        return it->second; 
+        return it->second;
     return base;
 }
 
@@ -133,7 +133,7 @@ void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
         controllers_.controller_.Update( *pTactical );
         if( const kernel::CommunicationHierarchies* pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
-        else if(  const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
+        else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
     }
 }

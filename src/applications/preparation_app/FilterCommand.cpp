@@ -53,7 +53,6 @@ FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& c
     ComputePath();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: FilterCommand destructor
 // Created: ABR 2011-06-17
@@ -161,7 +160,7 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
     grid->addWidget( new QLabel( ( command_ + argumentsLine_ ).c_str(), widget, "FilterCommand_CommandLabel" ), 0, 1 );
 
     grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Path:" ), widget, "FilterCommand_PathTitle" ), 1, 0 );
-    grid->addWidget( ( path_.empty() ) 
+    grid->addWidget( ( path_.empty() )
         ? new QLabel( "<font color=\"#FF0000\">" + tools::translate( "FilterCommand", "File not found, move your binary to the filters directory, or update the $PATH environment variable." ) + "</font>", widget, "FilterCommand_PathLabel" )
         : new QLabel( path_.c_str(), widget, "FilterCommand_PathLabel" ), 1, 1 );
 
@@ -181,9 +180,9 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
 void FilterCommand::Execute()
 {
     assert( !path_.empty() );
-    boost::shared_ptr< frontend::SpawnCommand > command( 
+    boost::shared_ptr< frontend::SpawnCommand > command(
         new frontend::SpawnCommand( config_, ( bfs::path( bfs::path( path_, bfs::native ) / bfs::path( command_, bfs::native ) ).string() + argumentsLine_ ).c_str(), true ) );
-    boost::shared_ptr< frontend::ProcessWrapper > process( 
+    boost::shared_ptr< frontend::ProcessWrapper > process(
         new frontend::ProcessWrapper( *this, command ) );
     process->StartAndBlockMainThread();
 }

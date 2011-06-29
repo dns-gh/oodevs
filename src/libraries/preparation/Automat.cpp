@@ -89,7 +89,7 @@ const AutomatType& Automat::GetType() const
 void Automat::Rename( const QString& name )
 {
     QString id = QString( "[%1]" ).arg( id_ );
-    if ( !name.endsWith( id ))
+    if( !name.endsWith( id ))
         name_ = name + " " +  id;
     else
         name_ = name;

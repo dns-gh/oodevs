@@ -71,5 +71,4 @@ private:
     //@}
 };
 
-
 #endif // _ColorController_h

@@ -162,17 +162,17 @@ void ScoreVariableCreationWizard::OnChangeName()
         variableName = name_->text();
     }
 
-    if ( parameter_ )
+    if( parameter_ )
     {
         if( type_->GetValue() == "unit" )
         {
             static_cast< actions::gui::ParamAgent* >( parameter_.get() )->SetName( variableName );
         }
-        else if ( type_->GetValue() == "unit list" )
+        else if( type_->GetValue() == "unit list" )
         {
             static_cast< actions::gui::ParamAgentList* >( parameter_.get() )->SetName( variableName );
         }
-        else if ( type_->GetValue() == "zone" )
+        else if( type_->GetValue() == "zone" )
         {
             static_cast< actions::gui::ParamLocation* >( parameter_.get() )->SetName( variableName );
         }
