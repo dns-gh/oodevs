@@ -133,7 +133,7 @@
     <name>Urban</name>
     <message>
         <source>Urban block[%1]</source>
-        <translation>Bloc urbain</translation>
+        <translation>Bloc urbain[%1]</translation>
     </message>
 </context>
 <context>
