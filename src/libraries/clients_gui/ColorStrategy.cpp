@@ -249,7 +249,7 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
 {
-    ApplyColor( ApplyModifiers( line, FindBaseColor( line ) ) );
+    ApplyColor( ApplyModifiers( line, FindSuperiorColor( line, colorController_, FindBaseColor( line ) ) ) );
 }
 
 // -----------------------------------------------------------------------------

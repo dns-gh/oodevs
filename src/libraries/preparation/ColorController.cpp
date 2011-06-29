@@ -91,6 +91,14 @@ void ColorController::Remove( const kernel::Entity_ABC& entity )
     {
         QColor color = it->second;
         RemoveSubordinate( entity, color );
+        if( const kernel::TacticalHierarchies* pHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+            if( const kernel::Entity_ABC* pSuperior = pHierarchies->GetSuperior() )
+                if( const kernel::Color_ABC* pColor = pSuperior->Retrieve< kernel::Color_ABC >() )
+                    if( pColor->IsOverride() )
+                    {
+                        const kernel::Color_ABC::T_Color newColor = pColor->GetColor();
+                        Add( entity, QColor( newColor.get< 0 >(), newColor.get< 1 >(), newColor.get< 2 >() ) );
+                    }
         UpdateHierarchies( entity );
     }
 }
