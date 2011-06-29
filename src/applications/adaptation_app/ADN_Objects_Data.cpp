@@ -384,14 +384,18 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
         ammoCategory_ = ptrAmmo;
         useAmmo_ = ( pCategory->strName_.GetData() == "munition" );
     }
+    else if ( xis.has_attribute( "category" ) )
+        useAmmo_ = false;       
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream& xos )
 {
     if( useAmmo_.GetData() == true )
         xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
-    else
+    else if ( category_.GetData() )
         xos << xml::attribute( "category", category_.GetData()->strName_ );
+    else
+        xos << xml::attribute( "category", "" );
 }
 //@}
 
