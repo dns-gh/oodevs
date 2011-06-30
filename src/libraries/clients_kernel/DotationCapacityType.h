@@ -15,7 +15,7 @@
 namespace xml
 {
     class xistream;
-};
+}
 
 namespace kernel
 {
