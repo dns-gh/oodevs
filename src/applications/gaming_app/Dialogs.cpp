@@ -33,7 +33,6 @@
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
-#include "gaming/StaticModel.h"
 #include "gaming/TeamsModel.h"
 
 // -----------------------------------------------------------------------------

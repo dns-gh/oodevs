@@ -98,7 +98,7 @@ void AutomatsLayer::NotifySelected( const kernel::Automat_ABC* automat )
 bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
     bool ret = gui::AutomatsLayer::HandleMousePress( event, point );
-    if( !ret && selected_ 
+    if( !ret && selected_
         && event && event->button() == Qt::LeftButton && ( event->state() & Qt::ShiftButton ) )
         return true;
     return ret;

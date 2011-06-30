@@ -30,7 +30,6 @@
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 
-
 using namespace actions;
 using namespace kernel;
 
@@ -63,7 +62,6 @@ KnowledgeGroupMagicOrdersInterface::~KnowledgeGroupMagicOrdersInterface()
 {
     controllers_.Unregister( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupMagicOrdersInterface::NotifyContextMenu
@@ -123,7 +121,7 @@ void KnowledgeGroupMagicOrdersInterface::OnAddKnowledgeInGroup()
 {
     if( selectedEntity_ )
     {
-        if ( pAddKnowledgeDialog_ )
+        if( pAddKnowledgeDialog_ )
             pAddKnowledgeDialog_->Show( selectedEntity_ );
     }
 }

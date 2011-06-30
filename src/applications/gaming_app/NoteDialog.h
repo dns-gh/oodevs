@@ -71,5 +71,4 @@ private:
     //@}
 };
 
-
 #endif // __NoteDialog_h_

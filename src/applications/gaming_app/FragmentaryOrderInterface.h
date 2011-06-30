@@ -60,5 +60,4 @@ private:
     //@}
 };
 
-
 #endif // __FragmentaryOrderInterface_h_

@@ -51,4 +51,3 @@ void SimulationLighting::NotifyUpdated( const kernel::ModelLoaded& model )
     SetLatitude( latitude_ );
 }
 
-

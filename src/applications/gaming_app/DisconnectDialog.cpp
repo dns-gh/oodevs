@@ -37,7 +37,6 @@ DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
     connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog destructor
 // Created:  NLD 2002-01-03

@@ -108,14 +108,14 @@ void KnowledgeAddInGroupDialog::Show( kernel::SafePointer< kernel::KnowledgeGrou
 // -----------------------------------------------------------------------------
 void KnowledgeAddInGroupDialog::OnAccept()
 {
-    if ( !pSelectedTarget_ )
-    {   
+    if( !pSelectedTarget_ )
+    {
         pTargetNameTitle_->setText( "<font color=\"#FF0000\">" + tr( "Target: " ) + "</font>" );
         return;
     }
-    
+
     kernel::E_PerceptionResult selectedPerception = static_cast< kernel::E_PerceptionResult > ( pPerceptionCombo_->currentItem() + 1 );
-  
+
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_add_knowledge" );
     KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedKnowledgeGroup_, actionType, controllers_.controller_, true );
     action->Rename( tools::translate( "gaming_app::Action", "Knowledge Group Add knowledge" ) );
@@ -147,11 +147,11 @@ void KnowledgeAddInGroupDialog::Close()
     pTempTarget_ = 0;
     pSelectedTarget_ = 0;
 
-    if ( pPerceptionCombo_ )
+    if( pPerceptionCombo_ )
         pPerceptionCombo_->setCurrentItem( 0 );
-    if ( pTargetNameTitle_ )
+    if( pTargetNameTitle_ )
         pTargetNameTitle_->setText(  tr( "Target: " ) );
-    if ( pTargetName_ )
+    if( pTargetName_ )
         pTargetName_->setText( "---" );
 
     hide();
@@ -190,7 +190,7 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Population_ABC&
 // -----------------------------------------------------------------------------
 void KnowledgeAddInGroupDialog::InsertInMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if ( !this->isHidden() )
+    if( !this->isHidden() )
     {
         pTempTarget_ = &entity;
         menu.InsertItem( "Command", tr( "Add to knowledge group" ), this, SLOT( SetTarget() ) );
@@ -203,11 +203,11 @@ void KnowledgeAddInGroupDialog::InsertInMenu( const kernel::Entity_ABC& entity, 
 // -----------------------------------------------------------------------------
 void KnowledgeAddInGroupDialog::SetTarget()
 {
-    if ( pTempTarget_ )
+    if( pTempTarget_ )
     {
         pSelectedTarget_ = pTempTarget_;
         pTargetName_->setText( QString( pSelectedTarget_->GetName() ) );
-        if ( pTargetNameTitle_ )
+        if( pTargetNameTitle_ )
             pTargetNameTitle_->setText( tr( "Target: " ) );
     }
 }

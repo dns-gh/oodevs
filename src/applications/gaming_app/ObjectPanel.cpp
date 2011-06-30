@@ -119,7 +119,6 @@ ObjectPanel::~ObjectPanel()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::OnApply
 // Created: AGE 2006-09-08

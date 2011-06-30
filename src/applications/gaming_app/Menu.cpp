@@ -60,7 +60,6 @@ namespace
         OptionMenu< T >* menu_;
     };
 
-
     void Populate( OptionMenu< kernel::TristateOption >& menu )
     {
         menu.AddItem( kernel::TristateOption::AutoName(), kernel::TristateOption::Auto() );

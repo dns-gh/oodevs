@@ -432,7 +432,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer_ABC& contour              = *new gui::ContourLinesLayer( controllers_ );
-    
+
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );         elevation2d         .SetPasses( "main,composition,miniviews" );
@@ -672,7 +672,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
                 .arg( profile_ )
                 .arg( simulation.GetSimulationHost().c_str() )
                 .arg( ExtractExerciceName( config_.GetExerciseFile() ));
-            if ( onPlanif_ )
+            if( onPlanif_ )
               setCaption( planifName_ + modePlanif );
             else
              setCaption( planifName_ );
@@ -682,7 +682,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     else
     {
         planifName_ = appName + tr( " - Not connected" ) ;
-        if ( onPlanif_ )
+        if( onPlanif_ )
             setCaption( planifName_ + modePlanif );
         else
             setCaption( planifName_ );
@@ -731,7 +731,6 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
     return "\\\\" + server + "\\" + drive + '$' + path;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MainWindow::OnNameChanged
 // Created: HBD 2010-09-23
@@ -739,7 +738,7 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
 void MainWindow::OnNameChanged()
 {
     onPlanif_ = !onPlanif_;
-    if ( onPlanif_ )
+    if( onPlanif_ )
         setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
     else
         setCaption( planifName_ );

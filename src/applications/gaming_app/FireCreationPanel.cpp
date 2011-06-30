@@ -124,7 +124,7 @@ FireCreationPanel::~FireCreationPanel()
 // -----------------------------------------------------------------------------
 void FireCreationPanel::RegisterIfNeeded()
 {
-    if ( !isLocationRegistered_ )
+    if( !isLocationRegistered_ )
     {
         controllers_.Register( *locationCreator_ );
         isLocationRegistered_ = true;
@@ -137,7 +137,7 @@ void FireCreationPanel::RegisterIfNeeded()
 // -----------------------------------------------------------------------------
 void FireCreationPanel::UnregisterIfNeeded()
 {
-    if ( locationCreator_ && isLocationRegistered_ )
+    if( locationCreator_ && isLocationRegistered_ )
     {
         controllers_.Unregister( *locationCreator_ );
         isLocationRegistered_ = false;
@@ -200,7 +200,7 @@ void FireCreationPanel::Commit()
 {
     if( CheckValidity() )
     {
-        if ( IsStrikeOnLocation() )
+        if( IsStrikeOnLocation() )
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order_on_location" );
             MagicAction* action = new MagicAction( actionType, controllers_.controller_, tools::translate( "FireCreationPanel", "Strike order on location" ), true );
@@ -329,7 +329,7 @@ void FireCreationPanel::Reset()
     selectedTarget_ = 0;
     potentialReporter_ = 0;
     selectedReporter_ = 0;
-    if ( location_ )
+    if( location_ )
     {
         delete location_;
         location_ = 0;
@@ -360,7 +360,7 @@ void FireCreationPanel::OnTypeChanged()
     Reset();
     UpdateCommitButton();
 
-    if ( IsStrikeOnLocation() )
+    if( IsStrikeOnLocation() )
     {
         locationTitle_->show();
         locationBox_->show();

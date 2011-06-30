@@ -16,7 +16,6 @@
 #include "gaming/AvailableProfile.h"
 #include "tools/ElementObserver_ABC.h"
 
-
 namespace kernel
 {
     class Entity_ABC;

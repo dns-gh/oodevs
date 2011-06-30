@@ -79,7 +79,6 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     controllers_.Register( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel destructor
 // Created: APE 2004-05-03

@@ -83,7 +83,6 @@ QListViewItem* NotesPanel::FindItem( unsigned int parent ) const
     return it->first;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::FindParentItem
 // Created: HBD 2010-02-22
@@ -117,7 +116,6 @@ void NotesPanel::NotifyCreated( const Note& element )
     itemsList_[ item ] = &element;
     Display( element, item );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::NotifyUpdated

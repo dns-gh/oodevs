@@ -187,7 +187,7 @@ void MedicalCapacityUpdateDialog::InitializeCapacities()
     typedef std::vector< MedicalTreatmentCapacity >::const_iterator CIT_MedicalCapacities;
     std::map< int, MedicalTreatmentCapacity > capacities;
     const MedicalTreatmentAttribute* att = static_cast< const MedicalTreatmentAttribute* >( selected_->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() );
-    if ( att )
+    if( att )
     {
         att->FillCapacities( capacities );
         referenceID_->setText( QString( att->GetReferenceId().c_str() ) );
@@ -196,13 +196,13 @@ void MedicalCapacityUpdateDialog::InitializeCapacities()
     // clear vbox children
     if( capacities_.empty() )
     {
-        for ( std::map< int, MedicalTreatmentCapacity >::const_iterator it = capacities.begin(); it != capacities.end(); ++it )
+        for( std::map< int, MedicalTreatmentCapacity >::const_iterator it = capacities.begin(); it != capacities.end(); ++it )
             capacities_.push_back( new Capacity( vbox_, it->second ) );
     }
     else
     {
         boost::ptr_vector< Capacity >::iterator itCapa = capacities_.begin();
-        for ( std::map< int, MedicalTreatmentCapacity >::const_iterator it = capacities.begin(); it != capacities.end() && itCapa != capacities_.end(); ++it, ++itCapa )
+        for( std::map< int, MedicalTreatmentCapacity >::const_iterator it = capacities.begin(); it != capacities.end() && itCapa != capacities_.end(); ++it, ++itCapa )
             itCapa->Update( it->second );
     }
 

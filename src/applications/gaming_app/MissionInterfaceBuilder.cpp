@@ -93,7 +93,6 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["resourcetype"]        = &MissionInterfaceBuilder::BuildDotation;
     builderFunctors_["natureatlas"]         = &MissionInterfaceBuilder::BuildAtlasNature;
 
-
     builderFunctors_["boolean"]             = &MissionInterfaceBuilder::BuildBoolean;
     builderFunctors_["heading"]             = &MissionInterfaceBuilder::BuildDirection;
     builderFunctors_["integer"]             = &MissionInterfaceBuilder::BuildNumeric;

@@ -146,7 +146,6 @@ void UrbanKnowledgePanel::Display( const Automat_ABC* agent, Displayer_ABC& disp
     displayer.Display( agent );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UrbanKnowledgePanel::Select
 // Created: MGD 2009-12-10
@@ -192,7 +191,6 @@ void UrbanKnowledgePanel::OnSelectionChanged( QListViewItem* i )
         subSelected_ = 0;
     else
         subSelected_ = item->GetValue< const UrbanKnowledge_ABC >();
-
 
     if( subSelected_ )
     {
