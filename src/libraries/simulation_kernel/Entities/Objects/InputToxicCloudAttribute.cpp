@@ -10,21 +10,19 @@
 #include "simulation_kernel_pch.h"
 #include "InputToxicCloudAttribute.h"
 #include "MIL_AgentServer.h"
-#include "MIL_NbcAgentType.h"
 #include "MIL_ToxicEffectManipulator.h"
 #include "NBCAttribute.h"
-#include "Object.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
+#include "MIL_Object_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/Protocol.h"
 #include <geodata/Feature_ABC.h>
 #include <geodata/FeatureHandler_ABC.h>
-#include <geodata/Primitive_ABC.h>
 #include <gdal_ogr/gdal_ogr_lib.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+
 
 namespace bpt = boost::posix_time;
 
