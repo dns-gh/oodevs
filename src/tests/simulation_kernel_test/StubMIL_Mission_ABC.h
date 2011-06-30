@@ -22,6 +22,7 @@ public:
     {
         return false;
     }
+    virtual void Send() const {};
     virtual void Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const
     {
         const MIL_ParameterType_ABC* pType = MIL_ParameterType_ABC::Find( "string" );

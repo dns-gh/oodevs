@@ -22,6 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MissionController )
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
 MissionController::MissionController()
+    : loaded_( false )
 {
     // NOTHING
 }
@@ -43,6 +44,7 @@ void MissionController::load( MIL_CheckPointInArchive& file, const unsigned int 
 {
     file >> boost::serialization::base_object< MissionController_ABC >( *this )
          >> missions_;
+    loaded_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,4 +92,16 @@ void MissionController::Initialize( AgentFactory_ABC& factory )
             pion->GetOrderManager().ReplaceMission( mission.second );
             pion->Register( *this );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionController::SendFullState
+// Created: LGY 2011-06-30
+// -----------------------------------------------------------------------------
+void MissionController::SendFullState()
+{
+    if( loaded_ )
+        BOOST_FOREACH( const T_Missions::value_type& mission, missions_ )
+            if( mission.second )
+                 mission.second->Send();
 }

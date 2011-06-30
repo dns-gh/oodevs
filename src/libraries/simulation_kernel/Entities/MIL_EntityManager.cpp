@@ -779,6 +779,7 @@ void MIL_EntityManager::Clean()
 void MIL_EntityManager::SendStateToNewClient() const
 {
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendCreation, _1 ) );
+    missionController_->SendFullState();
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendFullState, _1 ) );
     pObjectManager_->SendCreation();
     pObjectManager_->SendFullState();

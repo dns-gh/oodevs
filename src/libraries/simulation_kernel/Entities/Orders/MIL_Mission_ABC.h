@@ -58,6 +58,8 @@ public:
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate&  GetAutomate() const;
 
+    virtual void Send() const = 0;
+
     const   std::string&   GetName              () const;
     const   MT_Vector2D&   GetDirDanger         () const;
     const   MIL_Fuseau&    GetFuseau            () const;

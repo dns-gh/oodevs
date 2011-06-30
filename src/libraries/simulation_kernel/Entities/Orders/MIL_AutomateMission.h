@@ -49,6 +49,8 @@ public:
     virtual bool                 IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
     boost::shared_ptr< MIL_Mission_ABC > CreateCopy  ( MIL_Automate& target ) const;
     virtual void                 AffectDirection     ( const MT_Vector2D& direction );
+
+    virtual void Send() const;
     //@}
 
 private:
@@ -67,7 +69,6 @@ private:
 
     //! @name Network
     //@{
-    void Send() const;
     static void SendNoMission( const MIL_Automate& automate );
     //@}
 

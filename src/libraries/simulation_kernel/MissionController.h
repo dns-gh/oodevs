@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void Initialize( AgentFactory_ABC& factory );
+    virtual void SendFullState();
     virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission );
     //@}
@@ -57,6 +58,7 @@ private:
     //! @name Member data
     //@{
     T_Missions missions_;
+    bool loaded_;
     //@}
 };
 
