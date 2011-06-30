@@ -58,7 +58,7 @@ public:
 
     void Update( const sword::MarkerUpdateRequest& message, const std::string& currentTime );
 
-    virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher, unsigned int context = 0 ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher, bool stateParent ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;

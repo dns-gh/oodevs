@@ -59,7 +59,7 @@ public:
     //! @name Network operations
     //@{
     void UpdateOnNetwork();
-    void SendStateToNewClient();
+    void SendStateToNewClient( unsigned int nCtx = 0 );
     //@}
 
 private:

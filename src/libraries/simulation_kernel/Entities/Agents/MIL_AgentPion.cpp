@@ -627,7 +627,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const M
 // Name: MIL_AgentPion::SendCreation
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SendCreation() const
+void MIL_AgentPion::SendCreation( unsigned int nCtx ) const
 {
     assert( pType_ );
     client::UnitCreation creationMsg;
@@ -637,14 +637,14 @@ void MIL_AgentPion::SendCreation() const
     creationMsg().mutable_automat()->set_id( GetAutomate().GetID() );
     creationMsg().set_pc( bIsPC_ );
     pColor_->SendFullState( creationMsg );
-    creationMsg.Send( NET_Publisher_ABC::Publisher() );
+    creationMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::SendFullState
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SendFullState() const
+void MIL_AgentPion::SendFullState( unsigned int nCtx ) const
 {
     client::UnitAttributes msg;
     msg().mutable_unit()->set_id( GetID() );
@@ -652,18 +652,18 @@ void MIL_AgentPion::SendFullState() const
         msg().set_critical_intelligence( criticalIntelligence_ );
     pAffinities_->SendFullState( msg );
     pExtensions_->SendFullState( msg );
-    msg.Send( NET_Publisher_ABC::Publisher() );
-    GetRole< network::NET_RolePion_Dotations >().SendFullState();
+    msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    GetRole< network::NET_RolePion_Dotations >().SendFullState( nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::SendKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SendKnowledge() const
+void MIL_AgentPion::SendKnowledge( unsigned int nCtx ) const
 {
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->SendFullState();
+    pKnowledgeBlackBoard_->SendFullState( nCtx );
 }
 
 // -----------------------------------------------------------------------------

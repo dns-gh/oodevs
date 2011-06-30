@@ -94,6 +94,7 @@ message ProfileUpdateRequestAck {
     }
     required string    login      = 1; //!< Login provided on profile update request
     required ErrorCode error_code = 2; //!< Reason for the failure of a profile update operation
+    optional int32 context  = 3; //!< This context allows the client application to put an unique identifier, thus allowing to track response     
 }
 
 /** @struct ProfileUpdate

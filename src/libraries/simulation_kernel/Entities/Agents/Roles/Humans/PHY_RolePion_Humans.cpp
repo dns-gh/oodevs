@@ -539,10 +539,10 @@ void PHY_RolePion_Humans::SendChangedState() const
 // Name: PHY_RolePion_Humans::SendFullState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendFullState() const
+void PHY_RolePion_Humans::SendFullState( unsigned int context ) const
 {
     for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
-        (**it).SendFullState();
+        (**it).SendFullState( context );
 }
 
 // -----------------------------------------------------------------------------

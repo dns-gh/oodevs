@@ -75,9 +75,9 @@ void NET_RolePion_Dotations::serialize( Archive& file, const unsigned int )
 // Name: NET_RolePion_Dotations::SendMsgUnitAttributes
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnMsg ) const
+void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnMsg, unsigned int context ) const
 {
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
 
     if( asnMsg().has_reinforcements()  && asnMsg().reinforcements().elem_size() > 0 )
         asnMsg().mutable_reinforcements()->Clear();
@@ -108,7 +108,7 @@ void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnM
 // Name: NET_RolePion_Dotations::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendChangedState() const
+void NET_RolePion_Dotations::SendChangedState( unsigned int context ) const
 {
     // UnitAttributes message
     if( bExternalMustUpdateData_
@@ -130,7 +130,7 @@ void NET_RolePion_Dotations::SendChangedState() const
             bLastStateNeutralized_              = bIsNeutralized;
         }
         pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendChangedState, msg );
-        SendMsgUnitAttributes( msg );
+        SendMsgUnitAttributes( msg, context );
     }
 
     // 'standalones' messages
@@ -141,7 +141,7 @@ void NET_RolePion_Dotations::SendChangedState() const
 // Name: NET_RolePion_Dotations::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendFullState() const
+void NET_RolePion_Dotations::SendFullState( unsigned int context ) const
 {
     // UnitAttributes
     client::UnitAttributes msg;
@@ -149,10 +149,10 @@ void NET_RolePion_Dotations::SendFullState() const
     msg().set_dead( bLastStateDead_ = pion_.IsDead() );
     msg().set_neutralized( bLastStateNeutralized_ = pion_.IsNeutralized() );
     pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendFullState, msg );
-    SendMsgUnitAttributes( msg );
+    SendMsgUnitAttributes( msg, context );
 
     // 'standalones' messages
-    pion_.Apply( &network::NetworkMessageSender_ABC::SendFullState );
+    pion_.Apply( &network::NetworkMessageSender_ABC::SendFullState, context );
 }
 
 // -----------------------------------------------------------------------------

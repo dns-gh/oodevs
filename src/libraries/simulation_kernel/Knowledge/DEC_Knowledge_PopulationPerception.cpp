@@ -279,12 +279,12 @@ void DEC_Knowledge_PopulationPerception::UpdateOnNetwork() const
 // Name: DEC_Knowledge_PopulationPerception::SendStateToNewClient
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationPerception::SendStateToNewClient() const
+void DEC_Knowledge_PopulationPerception::SendStateToNewClient( unsigned int nCtx ) const
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        it->second->SendStateToNewClient();
+        it->second->SendStateToNewClient( nCtx );
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
-        it->second->SendStateToNewClient();
+        it->second->SendStateToNewClient( nCtx );
 }
 
 // -----------------------------------------------------------------------------

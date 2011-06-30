@@ -92,7 +92,7 @@ public:
     //! @name Network
     //@{
     void SendCreation( unsigned int context = 0 ) const;
-    void SendFullState() const;
+    void SendFullState( unsigned int context = 0 ) const;
     void UpdateNetwork() const;
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
     //@}

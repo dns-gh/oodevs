@@ -557,12 +557,12 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, d
 // Name: MIL_PopulationFlow::SendCreation
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SendCreation() const
+void MIL_PopulationFlow::SendCreation( unsigned int context ) const
 {
     client::CrowdFlowCreation asnMsg;
     asnMsg().mutable_flow()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------

@@ -821,7 +821,7 @@ namespace
 // Name: PHY_RolePionLOG_Medical::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendFullState() const
+void PHY_RolePionLOG_Medical::SendFullState( unsigned int context ) const
 {
     client::LogMedicalState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
@@ -844,7 +844,7 @@ void PHY_RolePionLOG_Medical::SendFullState() const
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
     ExecuteOnComponentsAndLendedComponents( predicate3, composanteUse );
     SendComposanteUse( composanteUse, *asn().mutable_doctors() );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), context );
     if( asn().priorities().elem_size() > 0 )
         asn().mutable_priorities()->Clear();
     if( asn().tactical_priorities().elem_size() > 0 )

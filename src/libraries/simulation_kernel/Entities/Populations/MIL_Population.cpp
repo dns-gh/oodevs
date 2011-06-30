@@ -152,7 +152,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 // Name: MIL_Population constructor
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult )
+MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context )
     : MIL_Entity_ABC( name )
     , pType_                      ( &type )
     , nID_                        ( idManager_.GetFreeId() )
@@ -177,7 +177,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
-    SendCreation();
+    SendCreation( context );
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
     concentrations_.push_back( pConcentration );
     pArmy_->RegisterPopulation( *this );
@@ -1235,7 +1235,7 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicA
 // Name: MIL_Population::SendCreation
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_Population::SendCreation() const
+void MIL_Population::SendCreation( unsigned int context ) const
 {
     client::CrowdCreation asnMsg;
     asnMsg().mutable_crowd()->set_id( nID_ );
@@ -1245,15 +1245,15 @@ void MIL_Population::SendCreation() const
     asnMsg().mutable_repartition()->set_male( static_cast< float >( rMale_ ) );
     asnMsg().mutable_repartition()->set_female( static_cast< float >( rFemale_ ) );
     asnMsg().mutable_repartition()->set_children( static_cast< float >( rChildren_ ) );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SendCreation();
+        ( **it ).SendCreation( context );
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        ( **it ).SendCreation();
+        ( **it ).SendCreation( context );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SendCreation();
+        ( **it ).SendCreation( context );
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        ( **it ).SendCreation();
+        ( **it ).SendCreation( context );
 }
 
 // -----------------------------------------------------------------------------

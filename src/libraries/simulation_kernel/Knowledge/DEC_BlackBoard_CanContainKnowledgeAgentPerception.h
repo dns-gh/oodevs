@@ -69,6 +69,17 @@ public:
             fct( knowledge );
         }
     }
+
+    template < class BinaryFunction, class Parameter >
+    void ApplyOnKnowledgesAgentPerception( BinaryFunction& fct, Parameter param ) const
+    {
+        for( CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
+        {
+            DEC_Knowledge_AgentPerception& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge, param );
+        }
+    }
     //@}
 
 private:

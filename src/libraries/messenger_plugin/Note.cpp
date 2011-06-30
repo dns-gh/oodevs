@@ -82,7 +82,7 @@ void Note::Update( const sword::MarkerUpdateRequest& message, const std::string&
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
+void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher, unsigned int context ) const
 {
     messenger::MarkerCreation message;
     message().mutable_marker()->set_id( id_ );
@@ -91,6 +91,7 @@ void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_definition()->set_description( description_ );
     message().mutable_definition()->set_number( number_ );
     message().mutable_definition()->mutable_parent()->set_id( parent_ );
+    message().set_context( context );
     message.Send( publisher );
 }
 

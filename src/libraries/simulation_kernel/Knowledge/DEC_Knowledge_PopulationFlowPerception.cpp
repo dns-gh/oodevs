@@ -208,7 +208,7 @@ void DEC_Knowledge_PopulationFlowPerception::UpdateOnNetwork() const
 // Name: DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
+void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient( unsigned int nCtx ) const
 {
     assert( pPopulationKnowledge_ );
     assert( pPopulationFlowPerceived_ );
@@ -217,7 +217,7 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
     asn().mutable_detected_crowd()->set_id( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
     asn().mutable_detected_flow()->set_id( pPopulationFlowPerceived_->GetID() );
     NET_ASN_Tools::WritePath( shape_, *asn().mutable_visible_flow() );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), nCtx );
     asn().clear_visible_flow();
 }
 

@@ -466,7 +466,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
 // Name: PHY_RolePionLOG_Supply::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::SendFullState() const
+void PHY_RolePionLOG_Supply::SendFullState( unsigned int context ) const
 {
     client::LogSupplyState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
@@ -485,7 +485,7 @@ void PHY_RolePionLOG_Supply::SendFullState() const
     assert( pStocks_ );
     pStocks_->SendFullState( asn );
 
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), context );
 
     if( asn().transporters().elem_size() > 0 )
         asn().mutable_transporters()->Clear();

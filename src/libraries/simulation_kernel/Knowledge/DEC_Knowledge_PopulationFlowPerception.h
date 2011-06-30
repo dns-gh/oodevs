@@ -66,7 +66,7 @@ public:
     //! @name Network operations
     //@{
     void UpdateOnNetwork() const;
-    void SendStateToNewClient() const;
+    void SendStateToNewClient( unsigned int nCtx = 0) const;
     //@}
 
 private:

@@ -94,12 +94,14 @@ void TacticalLinesModel::Write( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitCreationRequest& asn )
 {
+    unsigned int nCtx = asn.has_context()? asn.context() : 0;
     plugins::messenger::LimitCreationRequestAck ack ;
     ack().set_error_code( sword::TacticalLineAck::no_error );
     std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), asn ) );
     limits_.Register( limit->GetID(), *limit );
     limit->SendCreation( clients_ );
     limit.release();
+    ack().set_context( nCtx );
     ack.Send( publisher );
 }
 
@@ -148,12 +150,14 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineCreationRequest& asn )
 {
-    plugins::messenger::PhaseLineCreationAck ack ;
+    unsigned int nCtx = asn.has_context()? asn.context() : 0;
+    plugins::messenger::PhaseLineCreationAck ack;
     ack().set_error_code( sword::TacticalLineAck::no_error );
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), asn ) );
     limas_.Register( lima->GetID(), *lima );
     lima->SendCreation( clients_ );
     lima.release();
+    ack().set_context( nCtx );
     ack.Send( publisher );
 }
 

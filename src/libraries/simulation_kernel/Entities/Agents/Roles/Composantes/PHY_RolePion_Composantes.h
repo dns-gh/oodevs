@@ -223,7 +223,7 @@ public:
     virtual void SendFullState   ( client::UnitAttributes& message ) const;
 
     virtual void SendChangedState() const;
-    virtual void SendFullState   () const;
+    virtual void SendFullState   ( unsigned int context ) const;
     //@}
 
     //! @name PHY_RoleInterface_ActiveProtection

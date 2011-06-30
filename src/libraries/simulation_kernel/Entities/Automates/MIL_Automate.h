@@ -190,14 +190,14 @@ public:
     //! @name Network
     //@{
             void SendCreation                      ( unsigned int context = 0 ) const;
-    virtual void SendFullState                     () const;
-            void SendKnowledge                     () const;
+    virtual void SendFullState                     ( unsigned int context = 0 ) const;
+            void SendKnowledge                     ( unsigned int context = 0 ) const;
 
             void OnReceiveOrder                ( const sword::AutomatOrder&                 msg );
             void OnReceiveFragOrder            ( const sword::FragOrder&           msg );
             void OnReceiveSetAutomateMode      ( const sword::SetAutomatMode&      msg );
-            void OnReceiveUnitCreationRequest  ( const sword::UnitCreationRequest& msg );
-            void OnReceiveUnitCreationRequest  ( const sword::UnitMagicAction&     msg );
+            void OnReceiveUnitCreationRequest  ( const sword::UnitCreationRequest& msg, unsigned int nCtx );
+            void OnReceiveUnitCreationRequest  ( const sword::UnitMagicAction&     msg, unsigned int nCtx );
             void OnReceiveUnitMagicAction      ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveMagicActionMoveTo    ( const sword::UnitMagicAction&     msg );
             void OnReceiveChangeKnowledgeGroup ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
@@ -216,7 +216,7 @@ public:
 
     //! @name Dynamic pions
     //@{
-    MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition );
+    MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, unsigned int nCtx = 0 );
     void           DestroyPion( MIL_AgentPion& pion );
     //@}
 

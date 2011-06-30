@@ -85,7 +85,7 @@ public:
     virtual void SendChangedState ( client::UnitAttributes& asn ) const;
     virtual void SendFullState    ( client::UnitAttributes& asn ) const;
     virtual void SendChangedState () const;
-    virtual void SendFullState    () const;
+    virtual void SendFullState    ( unsigned int context ) const;
     //@}
 
 private:

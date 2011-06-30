@@ -52,6 +52,7 @@ message MsgProfileUpdateRequestAck {
     }
     required string    login      = 1;
     required ErrorCode error_code = 2;
+    optional int32 context        = 3;
 }
 
 message MsgProfileUpdate {

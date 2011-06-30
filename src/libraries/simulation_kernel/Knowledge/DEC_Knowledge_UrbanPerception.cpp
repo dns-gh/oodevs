@@ -140,13 +140,13 @@ void DEC_Knowledge_UrbanPerception::UpdateOnNetwork()
 // Name: DEC_Knowledge_UrbanPerception::SendStateToNewClient
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_UrbanPerception::SendStateToNewClient()
+void DEC_Knowledge_UrbanPerception::SendStateToNewClient( unsigned int nCtx )
 {
     client::UrbanDetection message;
     message().mutable_observer()->set_id( perceiver_.GetID() );
     message().mutable_object()->set_id( nUrbanObjectId_ );
     message().set_visibility( sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
-    message.Send( NET_Publisher_ABC::Publisher() );
+    message.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------

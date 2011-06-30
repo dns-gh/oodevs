@@ -92,7 +92,7 @@ public:
     //! @name Network
     //@{
     virtual void SendChangedState() const;
-    virtual void SendFullState   () const;
+    virtual void SendFullState   ( unsigned int context ) const;
     //@}
 
 private:

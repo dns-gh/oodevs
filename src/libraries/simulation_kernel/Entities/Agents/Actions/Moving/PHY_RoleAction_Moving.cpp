@@ -244,25 +244,25 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const double rTime, cons
 // Name: PHY_RoleAction_Moving::SendEnvironmentType
 // Created: SBO 2005-06-15
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendEnvironmentType() const
+void PHY_RoleAction_Moving::SendEnvironmentType( unsigned int context ) const
 {
     client::UnitEnvironmentType asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
     SerializeEnvironmentType( asn() );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::SendCurrentPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendCurrentPath() const
+void PHY_RoleAction_Moving::SendCurrentPath( unsigned int context ) const
 {
     client::UnitPathFind asnMsg;
     asnMsg().mutable_unit()->set_id( pion_.GetID() );
     if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
         return;
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
     asnMsg().mutable_path()->Clear();
 }
 
@@ -270,10 +270,10 @@ void PHY_RoleAction_Moving::SendCurrentPath() const
 // Name: PHY_RoleAction_Moving::SendFullState
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendFullState() const
+void PHY_RoleAction_Moving::SendFullState( unsigned int context ) const
 {
-    SendCurrentPath();
-    SendEnvironmentType();
+    SendCurrentPath( context );
+    SendEnvironmentType( context );
 }
 
 // -----------------------------------------------------------------------------

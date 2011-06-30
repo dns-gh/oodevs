@@ -167,9 +167,11 @@ void RightsPlugin::OnReceiveProfileCreationRequest( ClientPublisher_ABC& client,
 // -----------------------------------------------------------------------------
 void RightsPlugin::OnReceiveProfileUpdateRequest( ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message )
 {
+    unsigned int nCtx = message.has_context()? message.context() : 0;
     authentication::ProfileUpdateRequestAck ack;
     ack().set_error_code( profiles_->Update( message ) );
     ack().set_login( message.login() );
+    ack().set_context( nCtx );
     ack.Send( client );
 }
 

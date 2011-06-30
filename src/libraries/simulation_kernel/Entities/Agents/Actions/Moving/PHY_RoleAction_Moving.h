@@ -90,7 +90,7 @@ public:
     //! @name Network
     //@{
     virtual void SendChangedState() const;
-    virtual void SendFullState   () const;
+    virtual void SendFullState   ( unsigned int context ) const;
     //@}
 
     //! @name Tools
@@ -133,8 +133,8 @@ private:
 
     //! @name Network
     //@{
-    void SendCurrentPath() const;
-    void SendEnvironmentType() const;
+    void SendCurrentPath( unsigned int context = 0 ) const;
+    void SendEnvironmentType( unsigned int context = 0 ) const;
     //@}
 
     //! @name Tools

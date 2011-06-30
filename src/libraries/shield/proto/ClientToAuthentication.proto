@@ -25,6 +25,7 @@ message MsgProfileCreationRequest {
 message MsgProfileUpdateRequest {
     required string login = 1;
     required MsgsAuthenticationToClient.MsgProfile profile = 2;
+    optional int32 context  = 3;
 }
 
 message MsgProfileDestructionRequest {

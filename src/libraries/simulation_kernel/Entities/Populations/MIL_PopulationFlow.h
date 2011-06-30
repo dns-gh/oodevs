@@ -65,7 +65,7 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation() const;
+    void SendCreation( unsigned int context = 0 ) const;
     void SendFullState() const;
     void SendChangedState() const;
     //@}

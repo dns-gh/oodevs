@@ -71,7 +71,7 @@ public:
     //! @name Network
     //@{
     void SendChangedState() const;
-    void SendFullState() const;
+    void SendFullState( unsigned int context ) const;
     void Clean();
     //@}
 

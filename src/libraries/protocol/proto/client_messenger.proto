@@ -25,6 +25,7 @@ package sword;
 */
 message PhaseLineCreationRequest {
     required TacticalLine tactical_line = 1; //!< The phase line data to use for creation @see TacticalLine
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
 }
 
 /** @struct PhaseLineUpdateRequest
@@ -56,6 +57,7 @@ message PhaseLineDestructionRequest {
 */
 message LimitCreationRequest {
     required TacticalLine tactical_line = 1; //!< The limit data to use for creation @see TacticalLine
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
 }
 
 /** @struct LimitUpdateRequest
@@ -127,6 +129,7 @@ message IntelligenceDestructionRequest {
 */
 message ShapeCreationRequest {
     required Shape shape = 1; //!< The shape data to use for creation @see Shape
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response      
 }
 
 /** @struct ShapeUpdateRequest
@@ -165,6 +168,7 @@ message ShapeDestructionRequest {
 */
 message MarkerCreationRequest {
     required Marker marker = 1; //!< The marker data to use for creation @see Marker
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
 }
 
 /** @struct MarkerUpdateRequest

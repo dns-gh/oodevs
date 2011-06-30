@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual MIL_Population& Create( xml::xistream& xis, MIL_Army_ABC& army ) = 0;
-    virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& formation, UrbanObjectWrapper* pUrbanObject = 0 ) = 0;
+    virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& formation, UrbanObjectWrapper* pUrbanObject, unsigned int context ) = 0;
     MIL_Population* FindByUrbanObject( UrbanObjectWrapper* urbanObject ) const;
     //@}
 

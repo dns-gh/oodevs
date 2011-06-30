@@ -672,7 +672,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
 // Name: PHY_RolePionLOG_Maintenance::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::SendFullState() const
+void PHY_RolePionLOG_Maintenance::SendFullState( unsigned int context ) const
 {
     client::LogMaintenanceState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
@@ -707,7 +707,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
 
         SendComposanteUse( composanteUse, *asn().mutable_repairers(), pWorkRate_ );
     }
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------

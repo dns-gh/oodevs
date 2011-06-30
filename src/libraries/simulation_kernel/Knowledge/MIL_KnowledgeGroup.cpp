@@ -541,14 +541,14 @@ void MIL_KnowledgeGroup::MoveKnowledgeGroup( MIL_KnowledgeGroup *newParent )
 // Name: MIL_KnowledgeGroup::SendKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SendKnowledge() const
+void MIL_KnowledgeGroup::SendKnowledge( unsigned int context ) const
 {
     assert( knowledgeBlackBoard_ );
-    knowledgeBlackBoard_->SendFullState();
+    knowledgeBlackBoard_->SendFullState( context );
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).SendKnowledge();
+        (**it).SendKnowledge( context );
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
-        (**it).SendKnowledge(); // LTO
+        (**it).SendKnowledge( context ); // LTO
 }
 
 // -----------------------------------------------------------------------------

@@ -180,14 +180,14 @@ void DEC_Knowledge_PopulationConcentrationPerception::UpdateOnNetwork() const
 // Name: DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() const
+void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient( unsigned int nCtx ) const
 {
     client::CrowdConcentrationDetection asn;
     asn().mutable_observer()->set_id( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
     asn().mutable_detected_crowd()->set_id( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
     asn().mutable_detected_concentration()->set_id( pPopulationConcentrationPerceived_->GetID() );
     asn().set_visibility( sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------

@@ -212,7 +212,7 @@ bool PHY_MedicalHumanState::IsInAmbulance() const
 // Name: PHY_MedicalHumanState::SendFullState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_MedicalHumanState::SendFullState() const
+void PHY_MedicalHumanState::SendFullState( unsigned int context ) const
 {
     assert( pHuman_ );
     assert( pPion_ );
@@ -235,7 +235,7 @@ void PHY_MedicalHumanState::SendFullState() const
     asn().set_nbc_contaminated( pHuman_->IsContaminated() );
     asn().set_diagnosed( bDiagnosed_ );
 
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------

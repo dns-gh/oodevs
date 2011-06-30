@@ -97,8 +97,8 @@ public:
     void CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
-    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
-    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name );
+    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx );
+    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx );
     void CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     void CreateUrbanObject( const urban::TerrainObject_ABC& object );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType );
@@ -213,7 +213,7 @@ private:
     // LTO end
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
     void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx );
-    void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army );
+    void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army, unsigned int context );
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
     //@}
 

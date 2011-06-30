@@ -66,6 +66,17 @@ public:
             fct( knowledge );
         }
     }
+
+    template < class BinaryFunction, class Parameter >
+    void ApplyOnKnowledgesUrbanPerception( BinaryFunction& fct, Parameter param ) const
+    {
+        for( CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); )
+        {
+            DEC_Knowledge_UrbanPerception& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge, param );
+        }
+    }
     //@}
 
 private:

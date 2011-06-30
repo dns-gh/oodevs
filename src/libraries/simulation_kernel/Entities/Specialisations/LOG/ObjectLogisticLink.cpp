@@ -79,7 +79,7 @@ double ObjectLogisticLink::GetQuota( const PHY_DotationCategory& ) const
 // Name: ObjectLogisticLink::SendFullState
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void ObjectLogisticLink::SendFullState() const
+void ObjectLogisticLink::SendFullState( unsigned int /*context*/ ) const
 {
     // NOTHING
 }

@@ -164,9 +164,9 @@ double LogisticLink::GetQuota( const PHY_DotationCategory& dotationCategory ) co
 // Name: LogisticLink::SendFullState
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void LogisticLink::SendFullState() const
+void LogisticLink::SendFullState( unsigned int context ) const
 {
-    SendQuotas();
+    SendQuotas( context );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ void LogisticLink::SendChangedState() const
 // Name: LogisticLink::SendQuotas
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void LogisticLink::SendQuotas() const
+void LogisticLink::SendQuotas( unsigned int context ) const
 {
     if( quotas_.empty() )
         return;
@@ -203,7 +203,7 @@ void LogisticLink::SendQuotas() const
         dotQuota.set_quantity( (unsigned int)it->second.quota_ );
     }
 
-    message.Send( NET_Publisher_ABC::Publisher() );
+    message.Send( NET_Publisher_ABC::Publisher(), context );
 
     if( message().quotas().elem_size() > 0 )
         message().mutable_quotas()->Clear();

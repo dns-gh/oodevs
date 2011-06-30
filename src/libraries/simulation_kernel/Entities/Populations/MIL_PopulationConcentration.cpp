@@ -275,13 +275,13 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& 
 // Name: MIL_PopulationConcentration::SendCreation
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::SendCreation() const
+void MIL_PopulationConcentration::SendCreation(  unsigned int context ) const
 {
     client::CrowdConcentrationCreation asnMsg;
     asnMsg().mutable_concentration()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
     NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------

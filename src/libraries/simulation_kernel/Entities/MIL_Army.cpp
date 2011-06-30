@@ -633,7 +633,7 @@ void MIL_Army::SendCreation() const
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1, 0 ) );
-    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1 ) );
+    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1, 0 ) );
     tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::SendCreation, _1 ) );
 }
 
@@ -653,7 +653,7 @@ void MIL_Army::SendFullState() const
     }
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendFullState();
-    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1, 0 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendFullState, _1 ) );
     tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::SendFullState, _1 ) );
 }
@@ -665,9 +665,9 @@ void MIL_Army::SendFullState() const
 void MIL_Army::SendKnowledge() const
 {
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->SendFullState();
+    pKnowledgeBlackBoard_->SendFullState( 0 );
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->SendKnowledge();
+        itKnowledgeGroup->second->SendKnowledge( 0 );
 }
 
 // -----------------------------------------------------------------------------

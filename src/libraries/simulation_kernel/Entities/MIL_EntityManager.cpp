@@ -502,14 +502,14 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // Name: MIL_EntityManager::CreatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
-    pPion->SendCreation ();
-    pPion->SendFullState();
-    pPion->SendKnowledge();
+    pPion->SendCreation ( nCtx );
+    pPion->SendFullState( nCtx );
+    pPion->SendKnowledge( nCtx );
     return *pPion;
 }
 
@@ -517,14 +517,14 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // Name: MIL_EntityManager::CreatePion
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition, name );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
-    pPion->SendCreation ();
-    pPion->SendFullState();
-    pPion->SendKnowledge();
+    pPion->SendCreation ( nCtx );
+    pPion->SendFullState( nCtx );
+    pPion->SendKnowledge( nCtx );
     return *pPion;
 }
 
@@ -862,7 +862,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::unit_creation :
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
-                pAutomate->OnReceiveUnitCreationRequest( message );
+                pAutomate->OnReceiveUnitCreationRequest( message, nCtx );
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
@@ -909,9 +909,9 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
-                ProcessCrowdCreationRequest( message, pFormation->GetArmy() );
+                ProcessCrowdCreationRequest( message, pFormation->GetArmy(), nCtx );
             else if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
-                ProcessCrowdCreationRequest( message, *pArmy );
+                ProcessCrowdCreationRequest( message, *pArmy, nCtx );
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
@@ -1013,7 +1013,7 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
 // Name: MIL_EntityManager::ProcessCrowdCreationRequest
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message, MIL_Army_ABC& army )
+void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message, MIL_Army_ABC& army, unsigned int context )
 {
     client::MagicActionAck ack;
     ack().set_error_code( MagicActionAck::no_error );
@@ -1034,12 +1034,12 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
         ack().set_error_code( MagicActionAck::error_invalid_parameter );
         return;
     }
-    ack.Send( NET_Publisher_ABC::Publisher() );
+    ack.Send( NET_Publisher_ABC::Publisher(), context );
     MT_Vector2D point;
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
     int number = static_cast< int >( parameters.elem( 2 ).value().Get( 0 ).areal() );
     std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 3 ).value().Get( 0 ).acharstr() : std::string();
-    populationFactory_->Create( type, point, number, name, army );
+    populationFactory_->Create( type, point, number, name, army, 0, context );
 }
 
 // -----------------------------------------------------------------------------
@@ -1172,7 +1172,7 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
         MIL_Automate* pAutomate = FindAutomate( message.superior().id() );
         if( !pAutomate )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
-        pAutomate->OnReceiveUnitCreationRequest( message );
+        pAutomate->OnReceiveUnitCreationRequest( message, nCtx );
     }
     catch( NET_AsnException< UnitActionAck_ErrorCode >& e )
     {
@@ -1286,7 +1286,7 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
                 resendMessage().mutable_knowledge_group()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).knowledgegroup().id() );
             if( message.parameters().elem( 1 ).value_size() == 1 && message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
                 resendMessage().mutable_party()->set_id( message.parameters().elem( 1 ).value().Get( 0 ).party().id() );
-            resendMessage.Send( NET_Publisher_ABC::Publisher() );
+            resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
         }
     }
 }
@@ -1356,7 +1356,7 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
             resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
         else if( message.type() == UnitMagicAction::change_automat_superior )
             resendMessage().mutable_superior()->mutable_automat()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
-        resendMessage.Send( NET_Publisher_ABC::Publisher() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
 }
 
@@ -1385,7 +1385,7 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& messag
         client::UnitChangeSuperior resendMessage;
         resendMessage().mutable_unit()->set_id ( message.tasker().unit().id() );
         resendMessage().mutable_parent()->set_id ( message.parameters().elem( 0 ).value().Get(0).automat().id() );
-        resendMessage.Send( NET_Publisher_ABC::Publisher() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
 }
 
@@ -2079,7 +2079,7 @@ void MIL_EntityManager::SetToTasker( Tasker& tasker, unsigned int id ) const
 // -----------------------------------------------------------------------------
 MIL_Population* MIL_EntityManager::CreateCrowd( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
 {
-    return &populationFactory_->Create( type, point, number, name, army, pUrbanObject );
+    return &populationFactory_->Create( type, point, number, name, army, pUrbanObject, 0 );
 }
 
 // -----------------------------------------------------------------------------

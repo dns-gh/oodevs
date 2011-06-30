@@ -424,7 +424,7 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 // Name: MIL_Automate::CreatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition )
+MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, unsigned int nCtx )
 {
     for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
     {
@@ -438,7 +438,7 @@ MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT
             return pion;
         }
     }
-    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition, nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -886,16 +886,16 @@ void MIL_Automate::SendCreation( unsigned int context ) const
         message().mutable_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
     message.Send( NET_Publisher_ABC::Publisher(), context );
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
-        ( **it ).SendCreation();
+        ( **it ).SendCreation( context );
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        ( **it ).SendCreation();
+        ( **it ).SendCreation( context );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::SendFullState
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_Automate::SendFullState() const
+void MIL_Automate::SendFullState( unsigned int contex ) const
 {
     client::AutomatAttributes message;
     message().mutable_automat()->set_id( nID_ );
@@ -913,19 +913,19 @@ void MIL_Automate::SendFullState() const
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).SendFullState();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        ( **it ).SendFullState();
+        ( **it ).SendFullState( contex );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::SendKnowledge
 // Created: NLD 2006-10-13
 // -----------------------------------------------------------------------------
-void MIL_Automate::SendKnowledge() const
+void MIL_Automate::SendKnowledge( unsigned int context ) const
 {
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->SendFullState();
+    pKnowledgeBlackBoard_->SendFullState( context );
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        ( **it ).SendKnowledge();
+        ( **it ).SendKnowledge( context );
 }
 
 // -----------------------------------------------------------------------------
@@ -953,21 +953,21 @@ void MIL_Automate::OnReceiveSetAutomateMode( const sword::SetAutomatMode& asnMsg
 // Name: MIL_Automate::OnReceiveUnitCreationRequest
 // Created: AGE 2007-06-18
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationRequest& msg )
+void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationRequest& msg, unsigned int nCtx )
 {
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( msg.type().id() );
     if( !pType )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
     MT_Vector2D position;
     NET_ASN_Tools::ReadPoint( msg.position(), position );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, nCtx ); // Auto-registration
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveUnitCreationRequest
 // Created: JSR 2010-04-16
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg )
+void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx )
 {
     if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
@@ -999,7 +999,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
         if ( msg.parameters().elem_size() >= 3 )
         {
             std::string name = msg.parameters().elem( 2 ).value().Get( 0 ).acharstr();
-            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name ); // Auto-registration
+            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name, nCtx ); // Auto-registration
 
             if ( msg.parameters().elem_size() >= 4 )
             {
@@ -1009,7 +1009,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
             }
         }
         else
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
+            MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, nCtx ); // Auto-registration
     }
     catch( ... )
     {

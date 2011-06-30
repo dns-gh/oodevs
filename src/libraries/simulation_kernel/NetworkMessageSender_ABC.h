@@ -30,7 +30,7 @@ public:
     //! @name Operations
     //@{
     virtual void SendChangedState() const = 0;
-    virtual void SendFullState   () const = 0;
+    virtual void SendFullState   ( unsigned int context ) const = 0;
     //@}
 };
 

@@ -68,6 +68,17 @@ public:
             fct( knowledge );
         }
     }
+
+    template < class BinaryFunction, class Parameter >
+    void ApplyOnKnowledgesPopulationPerception( BinaryFunction& fct, Parameter param ) const
+    {
+        for( CIT_KnowledgePopulationPerceptionMap itKnowledge = knowledgePopulationPerceptionMap_.begin(); itKnowledge != knowledgePopulationPerceptionMap_.end(); )
+        {
+            DEC_Knowledge_PopulationPerception& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge, param );
+        }
+    }
     //@}
 
 private:

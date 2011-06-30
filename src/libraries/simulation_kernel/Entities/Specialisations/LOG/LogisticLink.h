@@ -61,7 +61,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState   () const;
+    virtual void SendFullState   ( unsigned int context = 0 ) const;
     virtual void SendChangedState() const;
 
     virtual void OnReceiveChangeQuotas( const sword::MissionParameter& message );
@@ -72,7 +72,7 @@ private:
     //@{
     void WriteQuotas( xml::xostream& xos ) const;
     void ReadQuota( xml::xistream& xis );
-    void SendQuotas() const;
+    void SendQuotas( unsigned int context = 0 ) const;
     //@}
 
 public:

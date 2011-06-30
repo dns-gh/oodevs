@@ -992,10 +992,10 @@ void PHY_RolePion_Composantes::SendChangedState() const
 // Name: PHY_RolePion_Composantes::SendFullState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendFullState() const
+void PHY_RolePion_Composantes::SendFullState( unsigned int context ) const
 {
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        ( **it ).SendFullState();
+        ( **it ).SendFullState( context );
 }
 
 // -----------------------------------------------------------------------------

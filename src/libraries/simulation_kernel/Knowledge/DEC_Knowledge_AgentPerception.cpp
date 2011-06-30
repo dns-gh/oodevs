@@ -172,14 +172,14 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
 // Name: DEC_Knowledge_AgentPerception::SendStateToNewClient
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
+void DEC_Knowledge_AgentPerception::SendStateToNewClient( unsigned int nCtx ) const
 {
     client::UnitDetection asn;
     asn().mutable_observer()->set_id( pAgentPerceiving_->GetID() );
     asn().mutable_detected_unit()->set_id( pAgentPerceived_->GetID() );
     asn().set_current_visibility( bRecordModeEnabled_ ? sword::UnitVisibility::recorded : sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
     asn().set_max_visibility( sword::UnitVisibility::Level( pMaxPerceptionLevel_->GetID() ) );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------

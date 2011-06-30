@@ -62,7 +62,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg );
+    virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned int context );
     //@}
 
 private:

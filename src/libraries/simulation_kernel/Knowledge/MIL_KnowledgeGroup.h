@@ -146,7 +146,7 @@ public:
     //@{
     void SendCreation ( unsigned int context = 0 ) const;
     void SendFullState() const;
-    void SendKnowledge() const;
+    void SendKnowledge( unsigned int context ) const;
     // LTO begin
     void UpdateKnowledgeGroup();
     void MoveKnowledgeGroup( MIL_KnowledgeGroup *newParent );

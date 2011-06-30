@@ -116,6 +116,7 @@ message LimitCreationRequestAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response        
 }
 
 /** @struct LimitUpdateRequestAck
@@ -213,6 +214,7 @@ message PhaseLineCreationAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
 }
 
 /** @struct PhaseLineUpdateRequestAck
@@ -501,6 +503,7 @@ message ShapeCreationRequestAck {
         @bug should not be required
     */
     required ShapeRequestAck.ErrorCode error_code = 1;
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
 }
 
 /** @struct ShapeUpdateRequestAck
@@ -555,7 +558,8 @@ message MarkerCreation {
         @brief Date and time of marker creation.
         @see DateTime
     */
-    required DateTime date       = 3;
+    required DateTime date  = 3;
+    optional int32 context  = 4; //!< This context allows the client application to put an unique identifier, thus allowing to track response        
 }
 
 /** @struct MarkerUpdate
@@ -657,6 +661,7 @@ message MarkerCreationRequestAck {
         @bug should not be required
     */
     required MarkerRequestAck.ErrorCode error_code = 1;
+    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
 }
 
 /** @struct MarkerUpdateRequestAck

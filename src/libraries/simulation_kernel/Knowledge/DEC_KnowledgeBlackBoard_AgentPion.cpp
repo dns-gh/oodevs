@@ -126,16 +126,16 @@ void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const unsig
 // Name: DEC_KnowledgeBlackBoard_AgentPion::SendFullState
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_AgentPion::SendFullState() const
+void DEC_KnowledgeBlackBoard_AgentPion::SendFullState( unsigned int nCtx ) const
 {
-    std::const_mem_fun_ref_t< void, DEC_Knowledge_AgentPerception > functorAgent = std::mem_fun_ref( &DEC_Knowledge_AgentPerception::SendStateToNewClient );
-    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functorAgent );
-    std::const_mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > functorObject = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::SendStateToNewClient );
-    pKnowledgeObjectPerceptionContainer_->ApplyOnKnowledgesObjectPerception( functorObject );
-    std::const_mem_fun_ref_t< void, DEC_Knowledge_PopulationPerception > functorPopulation = std::mem_fun_ref( &DEC_Knowledge_PopulationPerception::SendStateToNewClient );
-    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( functorPopulation );
-    std::mem_fun_ref_t< void, DEC_Knowledge_UrbanPerception > functorUrban = std::mem_fun_ref( &DEC_Knowledge_UrbanPerception::SendStateToNewClient );
-    pKnowledgeUrbanPerceptionContainer_->ApplyOnKnowledgesUrbanPerception    ( functorUrban );
+    std::const_mem_fun1_ref_t< void, DEC_Knowledge_AgentPerception, unsigned int > functorAgent = std::mem_fun_ref( &DEC_Knowledge_AgentPerception::SendStateToNewClient );
+    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functorAgent, nCtx );
+    std::const_mem_fun1_ref_t< void, DEC_Knowledge_ObjectPerception, unsigned int > functorObject = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::SendStateToNewClient );
+    pKnowledgeObjectPerceptionContainer_->ApplyOnKnowledgesObjectPerception( functorObject, nCtx );
+    std::const_mem_fun1_ref_t< void, DEC_Knowledge_PopulationPerception, unsigned int > functorPopulation = std::mem_fun_ref( &DEC_Knowledge_PopulationPerception::SendStateToNewClient );
+    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( functorPopulation, nCtx );
+    std::mem_fun1_ref_t< void, DEC_Knowledge_UrbanPerception, unsigned int > functorUrban = std::mem_fun_ref( &DEC_Knowledge_UrbanPerception::SendStateToNewClient );
+    pKnowledgeUrbanPerceptionContainer_->ApplyOnKnowledgesUrbanPerception( functorUrban, nCtx );
 }
 
 // -----------------------------------------------------------------------------

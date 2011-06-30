@@ -47,7 +47,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState   () const;
+    virtual void SendFullState   ( unsigned int context ) const;
     virtual void SendChangedState() const;
     //@}
 

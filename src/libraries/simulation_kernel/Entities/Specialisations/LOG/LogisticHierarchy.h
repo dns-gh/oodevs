@@ -67,14 +67,14 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState   () const;
+    virtual void SendFullState   ( unsigned int context = 0 ) const;
     virtual void SendChangedState() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void SendLinks() const;
+    void SendLinks( unsigned int context ) const;
     //@}
 
 public:

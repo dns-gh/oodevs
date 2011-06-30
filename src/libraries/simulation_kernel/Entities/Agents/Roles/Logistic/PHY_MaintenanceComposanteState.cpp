@@ -175,7 +175,7 @@ const MIL_Automate& PHY_MaintenanceComposanteState::GetAutomate() const
 // Name: PHY_MaintenanceComposanteState::SendFullState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceComposanteState::SendFullState() const
+void PHY_MaintenanceComposanteState::SendFullState( unsigned int context ) const
 {
     assert( pPion_ );
     SendMsgCreation();
@@ -190,7 +190,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
         asn().mutable_provider()->set_id( 0 );
         asn().set_state( sword::LogMaintenanceHandlingUpdate::finished );
     }
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------

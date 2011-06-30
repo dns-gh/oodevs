@@ -142,6 +142,7 @@ void DrawingsModel::Save( const std::string& directory ) const
 // -----------------------------------------------------------------------------
 void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeCreationRequest& message )
 {
+    unsigned int nCtx = message.has_context()? message.context() : 0;
     plugins::messenger::ShapeCreationRequestAck ack ;
     ack().set_error_code( sword::ShapeRequestAck::no_error );
     try
@@ -155,6 +156,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     {
         ack().set_error_code( sword::ShapeRequestAck::error_invalid_oid ); // $$$$ SBO 2008-06-09:
     }
+    ack().set_context( nCtx );
     ack.Send( publisher );
 }
 

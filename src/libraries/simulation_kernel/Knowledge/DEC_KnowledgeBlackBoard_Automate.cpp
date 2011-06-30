@@ -119,7 +119,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopu
 // Name: DEC_KnowledgeBlackBoard_Automate::SendFullState
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_Automate::SendFullState() const
+void DEC_KnowledgeBlackBoard_Automate::SendFullState( unsigned int /*context*/ ) const
 {
 //    knowledgeRapForGlobal_;
 }

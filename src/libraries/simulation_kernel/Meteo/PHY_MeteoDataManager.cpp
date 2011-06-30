@@ -101,14 +101,14 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg )
+void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned int context )
 {
     if( msg.type() == sword::MagicAction::global_weather )
     {
         assert( pGlobalMeteo_ );
         pGlobalMeteo_->Update( msg.parameters() );
         client::ControlGlobalWeatherAck reply;
-        reply.Send( NET_Publisher_ABC::Publisher() );
+        reply.Send( NET_Publisher_ABC::Publisher(), context );
     }
     else if( msg.type() == sword::MagicAction::local_weather )
     {
@@ -130,7 +130,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg )
             static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
         }
         client::ControlLocalWeatherAck replyMsg;
-        replyMsg.Send( NET_Publisher_ABC::Publisher() );
+        replyMsg.Send( NET_Publisher_ABC::Publisher(), context );
     }
 }
 

@@ -44,8 +44,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState() const;
-    void SendFullState   () const;
+    void SendChangedState( unsigned int context = 0 ) const;
+    void SendFullState   ( unsigned int context ) const;
     void Clean();
     //@}
 
@@ -57,7 +57,7 @@ public:
 private:
     //! @name Tools
     //@{
-    void SendMsgUnitAttributes( client::UnitAttributes& asnMsg ) const;
+    void SendMsgUnitAttributes( client::UnitAttributes& asnMsg, unsigned int context ) const;
     //@}
 
 private:

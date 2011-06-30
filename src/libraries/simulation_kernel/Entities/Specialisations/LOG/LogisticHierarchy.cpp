@@ -303,13 +303,13 @@ void LogisticHierarchy::WriteODB( xml::xostream& xos ) const
 // Name: LogisticHierarchy::SendFullState
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void LogisticHierarchy::SendFullState() const
+void LogisticHierarchy::SendFullState( unsigned int context ) const
 {
     // Links creation
-    SendLinks();
+    SendLinks( context );
 
     // Links attributes
-    std::for_each( superiorLinks_.begin(), superiorLinks_.end(), boost::bind( &LogisticLink_ABC::SendFullState, _1 ) );
+    std::for_each( superiorLinks_.begin(), superiorLinks_.end(), boost::bind( &LogisticLink_ABC::SendFullState, _1, context ));
 }
 
 // -----------------------------------------------------------------------------
@@ -332,13 +332,13 @@ void LogisticHierarchy::SendChangedState() const
 // Name: LogisticHierarchy::SendLinks
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void LogisticHierarchy::SendLinks() const
+void LogisticHierarchy::SendLinks( unsigned int context ) const
 {
     client::ChangeLogisticLinks message;
     owner_->Serialize( *message().mutable_requester() );
     BOOST_FOREACH( boost::shared_ptr< LogisticLink_ABC > link, superiorLinks_ )
         link->GetSuperior().Serialize( *message().add_superior() );
-    message.Send( NET_Publisher_ABC::Publisher() );
+    message.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------

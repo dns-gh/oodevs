@@ -131,9 +131,9 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation() const;
-    void SendFullState() const;
-    void SendKnowledge() const;
+    void SendCreation( unsigned int nCtx ) const;
+    void SendFullState( unsigned int nCtx ) const;
+    void SendKnowledge( unsigned int nCtx ) const;
 
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn );

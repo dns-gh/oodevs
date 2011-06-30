@@ -53,7 +53,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState() const = 0;
+    virtual void SendFullState( unsigned int nCtx ) const = 0;
     virtual void SendChangedState() const = 0;
     //@}
 
