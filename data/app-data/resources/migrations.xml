@@ -97,6 +97,7 @@
     <upgrade schema="schemas/4.2.1/physical/Fires.xsd" apply="schemas/4.2.2/xsl/fires_4.2.1-4.2.2.xsl"/>
     <upgrade schema="schemas/4.2.1/physical/Models.xsd" apply="schemas/4.2.2/xsl/models_4.2.1-4.2.2.xsl"/>
     <upgrade schema="schemas/4.2.1/exercise/orders.xsd" apply="schemas/4.2.2/xsl/orders_4.2.1-4.2.2.xsl"/>
+    <upgrade schema="schemas/4.2.1/exercise/weather.xsd" apply="schemas/4.2.2/xsl/weather_4.2.1-4.2.2.xsl"/>
   </migration>
   <migration from="4.2.2" to="4.3.0">
     <upgrade schema="schemas/4.2.2/physical/Inhabitants.xsd" apply="schemas/4.3.0/xsl/inhabitants_4.2.2-4.3.0.xsl"/>
