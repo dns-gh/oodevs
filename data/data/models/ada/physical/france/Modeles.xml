@@ -548,6 +548,9 @@
         <mission name="GENIE Retablir Itineraire">
           <fragorder name="Abandonner travaux"/>
         </mission>
+        <mission name="GENIE Valoriser">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="Animer"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
@@ -11844,4 +11847,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1540946640" -->
+<!-- signature="0005992920" -->

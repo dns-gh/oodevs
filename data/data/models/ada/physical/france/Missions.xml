@@ -2119,6 +2119,7 @@
         </choice>
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.stabilisation.tasks.Boucler" dia-type="france.military.platoon.stabilisation.tasks.Boucler" id="2102" name="MELEE Boucler" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2145,6 +2146,7 @@
         </choice>
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Interdire" dia-type="france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2165,6 +2167,7 @@
         </choice>
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="true" type="Boolean"/>
       <parameter dia-name="threats" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2186,6 +2189,7 @@
         </choice>
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.ContreAttaquer" dia-type="france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="MELEE Contre Attaquer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2266,6 +2270,7 @@
         </choice>
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Intercepter" dia-type="france.military.platoon.combat.tasks.Intercepter" id="2128" name="MELEE Intercepter" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2286,6 +2291,7 @@
         </choice>
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Relever" dia-type="france.military.platoon.combat.tasks.Relever" id="2105" name="MELEE Relever" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2373,6 +2379,15 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="false" type="Boolean"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Valoriser" dia-type="france.military.platoon.combat.support.engineer.tasks.Valoriser" id="5010" name="GENIE Valoriser">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="GENIE Reprendre Travaux">
@@ -2386,6 +2401,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="false" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" dia-type="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" id="2050" name="GENIE Realiser Camps">
@@ -2443,16 +2459,15 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Sites de franchissement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="objective" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.EquiperExploiter" dia-type="france.military.platoon.combat.support.engineer.tasks.EquiperExploiter" id="2121" name="GENIE Equiper Exploiter Site Franchissement">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.EquiperExploiterSite" dia-type="france.military.platoon.combat.support.engineer.tasks.EquiperExploiterSite" id="2121" name="GENIE Equiper Exploiter Site Franchissement">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="siteFranchissement_" name="Site franchissement" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="typePontage_" name="Type de pontage" optional="false" type="Enumeration">
+      <parameter dia-name="siteFranchissement" name="Site franchissement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="typePontage" name="Type pontage" optional="false" type="Enumeration">
         <value id="0" name="continu"/>
         <value id="1" name="discontinu"/>
       </parameter>
@@ -2496,6 +2511,7 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="Point"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.OrganiserAccueilColonneRefugies" dia-type="france.military.platoon.tasks.OrganiserAccueilColonneRefugies" id="2127" name="MELEE Organiser Accueil Colonne Refugies" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2762,6 +2778,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+      <parameter dia-name="withImprovement" name="Valoriser" optional="false" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Produire" dia-type="france.military.platoon.combat.support.engineer.tasks.Produire" id="2145" name="Produire">
@@ -4856,4 +4873,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="4085994968" -->
+<!-- signature="2487451348" -->
