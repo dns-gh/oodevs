@@ -29,16 +29,6 @@ const MIL_Report* MIL_Report::Find( unsigned int nID )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Report::Send
-// Created: NLD 2006-12-06
-// -----------------------------------------------------------------------------
-template< typename T > inline
-void MIL_Report::Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
-{
-    DoSend( sender.GetID(), nType, diaParameters );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Report::PostEvent
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------

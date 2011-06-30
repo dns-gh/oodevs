@@ -11,11 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Report.h"
+#include "Entities/MIL_Formation.h"
+#include "MIL_MissionParameter_ABC.h"
+#include "MIL_ParameterType_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "MIL_ParameterType_ABC.h"
-#include "MIL_MissionParameter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_Report::T_ReportMap      MIL_Report::reports_;
@@ -168,18 +169,15 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
 // Name: MIL_Report::DoSend
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
+bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
     if( params.size() != parameters_.size() )
     {
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
         return false;
     }
-    client::Report message;
     message().mutable_report()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeId() ); // descending order
     message().mutable_type()->set_id( nID_ );
-    // $$$$ _RC_ PHC 2010-07-07: Besoin de récuperer model...
-    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), nSenderId );
     message().set_category( sword::Report::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *message().mutable_time() );
     for( unsigned int i = 0; i < parameters_.size(); ++i )
@@ -190,6 +188,72 @@ bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, std::vector< boos
         if( !params[ i ]->ToElement( *paramProtobuff.mutable_value()->Add() ) )
             return false;
     }
-    message.Send( NET_Publisher_ABC::Publisher() );
     return true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::Send
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+
+template<>
+void MIL_Report::Send< MIL_Automate >( const MIL_Automate& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
+{
+    client::Report message;
+    if( DoSend( message, nType, diaParameters ) )
+    {
+        message().mutable_source()->mutable_automat()->set_id( sender.GetID() );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
+}
+
+template<>
+void MIL_Report::Send< MIL_Population >( const MIL_Population& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
+{
+    client::Report message;
+    if( DoSend( message, nType, diaParameters ) )
+    {
+        message().mutable_source()->mutable_crowd()->set_id( sender.GetID() );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
+}
+
+template<>
+void MIL_Report::Send<  MIL_Agent_ABC >( const MIL_Agent_ABC& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
+{
+    client::Report message;
+    if( DoSend( message, nType, diaParameters ) )
+    {
+        message().mutable_source()->mutable_unit()->set_id( sender.GetID() );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
+}
+
+template<>
+void MIL_Report::Send<  MIL_AgentPion >( const MIL_AgentPion& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
+{
+    MIL_Report::Send< MIL_Agent_ABC >( sender, nType, diaParameters );
+}
+
+template<>
+void MIL_Report::Send< MIL_Formation >( const MIL_Formation& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
+{
+    client::Report message;
+    if( DoSend( message, nType, diaParameters ) )
+    {
+        message().mutable_source()->mutable_formation()->set_id( sender.GetID() );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
+}
+
+template<>
+void MIL_Report::Send< DEC_Decision_ABC >( const DEC_Decision_ABC& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
+{
+    client::Report message;
+    if( DoSend( message, nType, diaParameters ) )
+    {        
+        MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), sender.GetID() );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
 }

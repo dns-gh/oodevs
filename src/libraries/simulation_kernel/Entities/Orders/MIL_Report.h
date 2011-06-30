@@ -18,6 +18,11 @@ namespace xml
     class xistream;
 }
 
+namespace client
+{
+    class Report;
+}
+
 class MIL_ParameterType_ABC;
 class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
@@ -522,7 +527,7 @@ private:
     template< typename T >
     static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
 
-    bool DoSend( unsigned int nSenderID, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
+    bool DoSend( client::Report& message, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
     //@}
 
     //! @name Helpers

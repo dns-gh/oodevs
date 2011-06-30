@@ -376,7 +376,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
 
         if( stock.rVolume_ > stockCapacity.rVolume_ || stock.rWeight_ > stockCapacity.rWeight_ )
         {
-            MIL_Report::PostEvent( pRoleSupply_->GetPion(), MIL_Report::eReport_StockCapacityExceeded );
+            MIL_Report::PostEvent<MIL_Agent_ABC>( pRoleSupply_->GetPion(), MIL_Report::eReport_StockCapacityExceeded );
             return;
         }
     }

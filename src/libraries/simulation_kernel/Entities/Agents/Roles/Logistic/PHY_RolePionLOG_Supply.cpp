@@ -286,7 +286,7 @@ void PHY_RolePionLOG_Supply::StartUsingForLogistic( PHY_ComposantePion& composan
     composante.StartUsingForLogistic();
 
     if( PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( rTransporterRatio, GetConvoyTransportersAvailabilityRatio() ) )
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_ConvoyTransporterResourcesLevelReached );
+        MIL_Report::PostEvent< MIL_Agent_ABC >( pion_, MIL_Report::eReport_ConvoyTransporterResourcesLevelReached );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
 void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
     if( bNewNeed )
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded, dotationCategory );
+        MIL_Report::PostEvent< MIL_Agent_ABC >( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded, dotationCategory );
 
     pion_.GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }
