@@ -56,9 +56,9 @@ SymbolFactory::~SymbolFactory()
 void SymbolFactory::ReadSymbols( xml::xistream& xis )
 {
     xis >> xml::start( "app6" );
-        symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
-        levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
-        ReadRule( xis, "automats", automatSymbol_ );
+    symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
+    levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
+    ReadRule( xis, "automats", automatSymbol_ );
     xis >> xml::end;
 }
 
@@ -71,8 +71,7 @@ void SymbolFactory::Load( const tools::ExerciseConfig& config )
     currentChain_.clear();
     currentSymbol_.clear();
     availableSymbols_.clear();
-
-    config.GetLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
+    config.GetLoader().LoadOptionalPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
     ListSymbols();
     initialized_ = true;
 }
@@ -231,13 +230,4 @@ bool SymbolFactory::IsThisChainAvailable( const std::string& chain ) const
 SymbolRule* SymbolFactory::GetSymbolRule() const
 {
     return symbolRule_.get();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolFactory::GetLevelRule
-// Created: ABR 2011-05-26
-// -----------------------------------------------------------------------------
-SymbolRule* SymbolFactory::GetLevelRule() const
-{
-    return levelRule_.get();
 }
