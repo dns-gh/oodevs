@@ -19,6 +19,7 @@ ADN_Connector_ABC::ADN_Connector_ABC( const char* szName )
     : ADN_Ref_ABC ( szName )
     , bConnecting_( false )
     , bAutoClear_ ( false )
+    , bAutoHide_  ( false )
 {
     // NOTHING
 }

@@ -229,6 +229,8 @@ void ADN_Weapons_GUI::Build()
 
     // Direct group
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Direct fire" ), pGroup );
+    pDirectGroup->GetConnector().bAutoHide_ = true;
+    pDirectGroup->setCheckable( false );
     vInfosConnectors[eDirect] = &pDirectGroup->GetConnector();
 
     ADN_Graph* pGraph = new ADN_Graph( pDirectGroup );
@@ -278,6 +280,8 @@ void ADN_Weapons_GUI::Build()
 
     // Indirect group
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ), pGroup );
+    pIndirectGroup->GetConnector().bAutoHide_ = true;
+    pIndirectGroup->setCheckable( false );
     vInfosConnectors[eIndirect] = &pIndirectGroup->GetConnector();
 
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Average speed" ), vInfosConnectors[eAverageSpeed], tr( "km/h" ), eGreaterEqualZero );

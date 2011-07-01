@@ -144,7 +144,11 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
         pResult = pWeapon->CreateCopy();
     }
     else
+    {
         pResult = new ADN_Weapons_Data::WeaponInfos();
+        pResult->bDirect_ = ammo.bDirect_.GetData() && pLauncher->bDirect_.GetData();
+        pResult->bIndirect_ = ammo.bIndirect_.GetData() && pLauncher->bIndirect_.GetData();
+    }
 
     pResult->ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
     pResult->ptrLauncher_ = pLauncher;

@@ -45,7 +45,10 @@ template <class T>
 void ADN_Connector_Bool<T>::SetDataPrivate(void *data)
 {
     assert(data);
+    pGfx_->setHidden( false );
     pGfx_->setChecked(*(bool*)data);
+    if( bAutoHide_ && !*(bool*)data )
+        pGfx_->setHidden( true );
 }
 
 

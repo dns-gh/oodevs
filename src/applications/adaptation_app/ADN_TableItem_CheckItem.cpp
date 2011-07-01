@@ -146,6 +146,14 @@ void ADN_TableItem_CheckItem::setChecked( bool b )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_TableItem_CheckItem::setHidden
+// Created: MCO 2011-07-01
+// -----------------------------------------------------------------------------
+void ADN_TableItem_CheckItem::setHidden( bool )
+{
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_TableItem_CheckItem::DoValueChanged
 // Created: AGN 2004-03-10
 // -----------------------------------------------------------------------------

@@ -44,6 +44,8 @@ public:
     bool IsAutoClear();
     //@}
 
+    bool bAutoHide_;
+
 public slots:
    void SetData( void* pData );
 
