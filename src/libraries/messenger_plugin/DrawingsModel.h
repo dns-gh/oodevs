@@ -12,24 +12,32 @@
 
 #include "tools/Resolver.h"
 #include "dispatcher/Registrable_ABC.h"
-#include "dispatcher/Position.h"
-#include "protocol/Protocol.h"
+#include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
+
+namespace dispatcher
+{
+    class ClientPublisher_ABC;
+    class Config;
+}
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
 }
 
+namespace sword
+{
+    class Diffusion;
+    class ShapeCreationRequest;
+    class ShapeDestructionRequest;
+    class ShapeUpdateRequest;
+}
+
 namespace xml
 {
     class xistream;
     class xisubstream;
-}
-
-namespace dispatcher
-{
-    class ClientPublisher_ABC;
-    class Config;
 }
 
 namespace plugins
@@ -48,6 +56,7 @@ namespace messenger
 // =============================================================================
 class DrawingsModel : public tools::Resolver< Drawing >
                     , public dispatcher::Registrable_ABC
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -72,17 +81,13 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DrawingsModel( const DrawingsModel& );            //!< Copy constructor
-    DrawingsModel& operator=( const DrawingsModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Load( const dispatcher::Config& config );
     void ReadShapes( xml::xisubstream xis );
-    void ReadShape( xml::xistream& xis );
+    void ReadAutomat( xml::xistream& xis );
+    void ReadFormation( xml::xistream& xis );
+    void ReadShape( xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion );
     virtual void RegisterIn( directia::brain::Brain& brain );
     void ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name );
     boost::shared_ptr< DrawingProxy > CreateDrawing( const std::string& name );

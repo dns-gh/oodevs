@@ -40,7 +40,7 @@ DrawingProxy::~DrawingProxy()
 // -----------------------------------------------------------------------------
 dispatcher::Zone DrawingProxy::GetCoordinates()
 {
-    return dispatcher::ToZone( drawing_->points_, drawing_->converter_ );
+    return dispatcher::ToZone( drawing_->GetPoints(), drawing_->GetConverter() );
 }
 
 // -----------------------------------------------------------------------------

@@ -26,7 +26,7 @@ class DrawingsModel : public gui::DrawerModel
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawingsModel( kernel::Controllers& controllers, const DrawingFactory& factory );
+             DrawingsModel( kernel::Controllers& controllers, const DrawingFactory& factory, const kernel::EntityResolver_ABC& resolver );
     virtual ~DrawingsModel();
     //@}
 
@@ -35,13 +35,6 @@ public:
     void Create( const sword::ShapeCreation& message );
     void Update( const sword::ShapeUpdate& message );
     void Delete( const sword::ShapeDestruction& message );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DrawingsModel( const DrawingsModel& );            //!< Copy constructor
-    DrawingsModel& operator=( const DrawingsModel& ); //!< Assignment operator
     //@}
 
 private:

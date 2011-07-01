@@ -128,6 +128,7 @@ namespace shield
         CONVERT_CB( color, ConvertColor );
         CONVERT( pattern );
         CONVERT_LIST( points, elem, ConvertCoordLatLong );
+        CONVERT_CB( diffusion, ConvertDiffusion);
     }
     template< typename From, typename To >
     void ConvertMarker( const From& from, To* to )

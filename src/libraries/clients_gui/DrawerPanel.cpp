@@ -165,8 +165,8 @@ void DrawerPanel::AfterSelection()
 {
     if( selectedEntity_ )
         parentLabel_->setText( selectedEntity_->GetName() );
-    else if( selectedDrawing_ )
-        parentLabel_->setText( selectedDrawing_->GetParentName() );
+    else if( selectedDrawing_ && selectedDrawing_->GetDiffusionEntity() )
+        parentLabel_->setText( selectedDrawing_->GetDiffusionEntity()->GetName() );
     else
         parentLabel_->setText( "---" );
 }

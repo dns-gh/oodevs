@@ -117,7 +117,7 @@ void TacticalLine_ABC::WriteGeometry( sword::Location& location ) const
 // Name: TacticalLine_ABC::WriteDiffusion
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteDiffusion( sword::TacticalLine::Diffusion& diffusion ) const
+void TacticalLine_ABC::WriteDiffusion( sword::Diffusion& diffusion ) const
 {
     // $$$$ SBO 2006-11-06: visitor or something
     static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );

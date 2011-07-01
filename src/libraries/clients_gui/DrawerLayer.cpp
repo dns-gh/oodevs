@@ -13,6 +13,7 @@
 #include "DrawerLayer.h"
 #include "moc_DrawerLayer.cpp"
 #include "Tools.h"
+#include "clients_kernel/Controller.h"
 
 using namespace gui;
 
@@ -21,7 +22,7 @@ using namespace gui;
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
+                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC& filter )
     : EntityLayer< Drawing_ABC >( controllers, tools, strategy, view, profile, filter )
     , parameters_( parameters )
     , tools_     ( tools )
@@ -67,8 +68,12 @@ void DrawerLayer::OnEditDrawing()
 // -----------------------------------------------------------------------------
 void DrawerLayer::OnDeleteDrawing()
 {
-    delete selected_;
-    selected_ = 0;
+    if( selected_ )
+    {
+        controllers_.controller_.Delete( *const_cast< Drawing_ABC* >( selected_ ) );
+        delete selected_;
+        selected_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -85,8 +90,11 @@ void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
 // Name: DrawerLayer::ShouldDisplay
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-bool DrawerLayer::ShouldDisplay( const kernel::Entity_ABC& )
+bool DrawerLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
+    const kernel::Entity_ABC* diffusion = static_cast< const Drawing_ABC& >( entity ).GetDiffusionEntity();
+    if( diffusion )
+        return EntityLayer< Drawing_ABC >::ShouldDisplay( *diffusion );
     return true;
 }
 
@@ -106,7 +114,8 @@ void DrawerLayer::NotifySelected( const Drawing_ABC* selected )
 // -----------------------------------------------------------------------------
 void DrawerLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& )
 {
-    static_cast< const Drawing_ABC& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
+    if( ShouldDisplay( entity ) )
+        static_cast< const Drawing_ABC& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
 }
 
 // -----------------------------------------------------------------------------

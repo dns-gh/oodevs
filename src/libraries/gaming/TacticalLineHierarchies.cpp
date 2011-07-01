@@ -19,10 +19,9 @@ using namespace kernel;
 // Name: TacticalLineHierarchies constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder
-                                                 , const sword::TacticalLine::Diffusion& message
-                                                , const tools::Resolver_ABC< Automat_ABC >& automats
-                                                , const tools::Resolver_ABC< Formation_ABC >& formations )
+TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder, const sword::Diffusion& message,
+                                                  const tools::Resolver_ABC< Automat_ABC >& automats,
+                                                  const tools::Resolver_ABC< Formation_ABC >& formations )
     : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
     , controller_( controller )
     , automats_  ( automats )
@@ -60,7 +59,7 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
 // Name: TacticalLineHierarchies::Update
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::Update( const sword::TacticalLine::Diffusion& message )
+void TacticalLineHierarchies::Update( const sword::Diffusion& message )
 {
     superiorIsAutomat_ = message.has_automat();
     if( superiorIsAutomat_ )
@@ -91,7 +90,7 @@ void TacticalLineHierarchies::DoUpdate( const sword::LimitUpdate& message )
 // Name: TacticalLineHierarchies::WriteTo
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::WriteTo( sword::TacticalLine::Diffusion& message ) const
+void TacticalLineHierarchies::WriteTo( sword::Diffusion& message ) const
 {
     if( !GetSuperior() )
         throw std::runtime_error( __FUNCTION__ );

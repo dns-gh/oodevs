@@ -17,7 +17,6 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -64,26 +63,17 @@ namespace
 // Name: DrawerShape constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis,
-                          const DrawingTypes& types, kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter,
-                          const kernel::EntityResolver_ABC& resolver )
+DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
+                          kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter )
     : kernel::EntityImplementation< Drawing_ABC >( controllers.controller_, id, ReadStyle( xis, types ).GetName() )
     , controller_         ( controllers.controller_ )
     , style_              ( ReadStyle( xis, types ) )
     , location_           ( proxy )
     , color_              ( ReadColor( xis ) )
-    , entity_             ( controllers )
+    , entity_             ( controllers, entity )
     , drawer_             ( new SvgLocationDrawer( style_ ) )
     , coordinateConverter_( coordinateConverter )
 {
-    unsigned long parentId = 0;
-    xis >> xml::optional >> xml::attribute( "parent", parentId );
-    if( parentId )
-    {
-        entity_ = resolver.FindAutomat( parentId );
-        if( !entity_ )
-            entity_ = resolver.FindFormation( parentId );
-    }
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
     location.release();
@@ -111,12 +101,12 @@ QColor DrawerShape::GetColor() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerShape::GetParentName
-// Created: JSR 2011-06-28
+// Name: DrawerShape::GetDiffusionEntity
+// Created: JSR 2011-06-30
 // -----------------------------------------------------------------------------
-QString DrawerShape::GetParentName() const
+const kernel::Entity_ABC* DrawerShape::GetDiffusionEntity() const
 {
-    return entity_ ? entity_->GetName() : "---"; 
+    return entity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +115,7 @@ QString DrawerShape::GetParentName() const
 // -----------------------------------------------------------------------------
 void DrawerShape::Create()
 {
-    controller_.Create( (Drawing_ABC&)*this );
+    controller_.Create( *static_cast< Drawing_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,8 +244,6 @@ void DrawerShape::Serialize( xml::xostream& xos ) const
     {
         xos << xml::start( "shape" )
                 << xml::attribute( "color", color_.name() );
-        if( entity_ )
-            xos << xml::attribute( "parent", entity_->GetId() );
         style_.Serialize( xos );
         XmlSerializer serializer( xos, coordinateConverter_ );
         location_.Accept( serializer );

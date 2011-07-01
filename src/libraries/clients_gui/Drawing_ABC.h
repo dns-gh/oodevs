@@ -48,7 +48,7 @@ public:
     //! @name Accessors
     //@{
     virtual QColor GetColor() const = 0;
-    virtual QString GetParentName() const = 0;
+    virtual const kernel::Entity_ABC* GetDiffusionEntity() const = 0;
     //@}
 
     //! @name Operations
@@ -59,6 +59,8 @@ public:
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+
+    virtual void NotifyDestruction() const = 0;
 
     virtual void ChangeColor( const QColor& color ) = 0;
     virtual void Edit( ParametersLayer& parameters ) = 0;

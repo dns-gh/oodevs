@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLine_ABC( unsigned int id, const sword::TacticalLine& asn );
-             TacticalLine_ABC( unsigned int id, xml::xistream&, const sword::TacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( unsigned int id, xml::xistream&, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -53,7 +53,7 @@ public:
     //! @name Accessors
     //@{
     unsigned int GetID() const;
-    const sword::TacticalLine_Diffusion& GetDiffusion() const { return diffusion_; }
+    const sword::Diffusion& GetDiffusion() const { return diffusion_; }
     //@}
 
 protected:
@@ -90,7 +90,7 @@ private:
     const unsigned int id_;
     std::string strName_;
     T_PositionVector geometry_;
-    sword::TacticalLine_Diffusion diffusion_;
+    sword::Diffusion diffusion_;
     //@}
 
 

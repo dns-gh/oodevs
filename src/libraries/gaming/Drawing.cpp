@@ -12,7 +12,9 @@
 #include "clients_gui/DrawingTypes.h"
 #include "clients_gui/DrawingCategory.h"
 #include "clients_gui/DrawingTemplate.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/LocationProxy.h"
 #include "protocol/Protocol.h"
@@ -21,8 +23,7 @@
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-// TODO PAS BON -> mettre l'entity du message
-Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& message, const gui::DrawingTypes& types, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& message, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
     : gui::DrawerShape( controllers, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ), entity, proxy, converter )
     , publisher_    ( publisher )
     , converter_    ( converter )
@@ -38,8 +39,8 @@ Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& 
 // -----------------------------------------------------------------------------
 Drawing::Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
     : gui::DrawerShape( controllers, 0, style, color, entity, proxy, converter )
-    , publisher_( publisher )
-    , converter_( converter )
+    , publisher_    ( publisher )
+    , converter_    ( converter )
     , publishUpdate_( true )
 {
     // NOTHING
@@ -49,10 +50,10 @@ Drawing::Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& 
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controllers& controllers, xml::xistream& xis, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& resolver )
-    : gui::DrawerShape( controllers, 0, xis, types, proxy, converter, resolver )
-    , publisher_( publisher )
-    , converter_( converter )
+Drawing::Drawing( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+    : gui::DrawerShape( controllers, 0, xis, entity, types, proxy, converter )
+    , publisher_    ( publisher )
+    , converter_    ( converter )
     , publishUpdate_( true )
 {
     Create();
@@ -81,6 +82,17 @@ void Drawing::SetLocation( const sword::CoordLatLongList& list )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Drawing::NotifyDestruction
+// Created: JSR 2011-06-30
+// -----------------------------------------------------------------------------
+void Drawing::NotifyDestruction() const
+{
+    plugins::messenger::ShapeDestructionRequest message;
+    message().mutable_id()->set_id( GetId() );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Drawing::Create
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
@@ -92,6 +104,13 @@ void Drawing::Create()
     message().mutable_shape()->mutable_color()->set_green( color_.green() );
     message().mutable_shape()->mutable_color()->set_blue( color_.blue() );
     message().mutable_shape()->set_pattern( style_.GetName().ascii() );
+    if( entity_ )
+    {
+        if( entity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
+            message().mutable_shape()->mutable_diffusion()->mutable_automat()->set_id( entity_->GetId() );
+        else if( entity_->GetTypeName() == kernel::Formation_ABC::typeName_ )
+            message().mutable_shape()->mutable_diffusion()->mutable_formation()->set_id( entity_->GetId() );
+    }
     SerializeLocation( *message().mutable_shape()->mutable_points() );
     message.Send( publisher_ );
     delete this;

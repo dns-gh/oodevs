@@ -24,7 +24,6 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class EntityResolver_ABC;
     class LocationProxy;
     class CoordinateConverter_ABC;
 }
@@ -47,17 +46,17 @@ class DrawerShape : public kernel::EntityImplementation< Drawing_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color,
-                          const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
-             DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const DrawingTypes& types, kernel::LocationProxy& location,
-                          const kernel::CoordinateConverter_ABC& coordinateConverter, const kernel::EntityResolver_ABC& resolver );
+             DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
+                          kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
+             DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
+                          kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
     virtual ~DrawerShape();
     //@}
 
     //! @name Accessors
     //@{
     virtual QColor GetColor() const;
-    virtual QString GetParentName() const;
+    virtual const kernel::Entity_ABC* GetDiffusionEntity() const;
     //@}
 
     //! @name Operations
@@ -74,6 +73,8 @@ public:
     virtual void ChangeColor( const QColor& color );
     virtual void Edit( ParametersLayer& parameters );
     virtual void Serialize( xml::xostream& xos ) const;
+
+    virtual void NotifyDestruction() const {}
 
     virtual const kernel::Location_ABC& GetLocation() const;
     //@}

@@ -13,19 +13,16 @@
 #include "Drawing.h"
 #include "DrawingProxy.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Position.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include <tools/XmlCrc32Signature.h>
 #include <directia/brain/Brain.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 
-using namespace sword;
-using namespace sword;
 using namespace plugins::messenger;
 namespace bfs = boost::filesystem;
 
@@ -102,20 +99,69 @@ void DrawingsModel::Load( const dispatcher::Config& config )
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadShapes( xml::xisubstream xis )
 {
+    boost::optional< sword::Diffusion > diffusion;
     xis >> xml::start( "shapes" )
-            >> xml::list( "shape", *this, &DrawingsModel::ReadShape );
+            >> xml::list( "automat"  , *this, &DrawingsModel::ReadAutomat )
+            >> xml::list( "formation", *this, &DrawingsModel::ReadFormation )
+            >> xml::list( "shape"    , *this, &DrawingsModel::ReadShape, diffusion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsModel::ReadAutomat
+// Created: JSR 2011-06-29
+// -----------------------------------------------------------------------------
+void DrawingsModel::ReadAutomat( xml::xistream& xis )
+{
+    sword::Diffusion msg;
+    msg.mutable_automat()->set_id( xis.attribute< unsigned int >( "id" ) );
+    boost::optional< sword::Diffusion > diffusion = msg;
+    xis >> xml::list( "shape", *this, &DrawingsModel::ReadShape, diffusion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsModel::ReadFormation
+// Created: JSR 2011-06-29
+// -----------------------------------------------------------------------------
+void DrawingsModel::ReadFormation( xml::xistream& xis )
+{
+    sword::Diffusion msg;
+    msg.mutable_formation()->set_id( xis.attribute< unsigned int >( "id" ) );
+    boost::optional< sword::Diffusion > diffusion = msg;
+    xis >> xml::list( "shape", *this, &DrawingsModel::ReadShape, diffusion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel::ReadShape
 // Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-void DrawingsModel::ReadShape( xml::xistream& xis )
+void DrawingsModel::ReadShape( xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion )
 {
-    std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), xis, converter_ ) );
+    std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), xis, diffusion, converter_ ) );
     drawing->SendCreation( clients_ );
     Register( drawing->GetId(), *drawing );
     drawing.release();
+}
+
+namespace
+{
+    typedef std::set< const Drawing* > T_Drawings;
+    typedef std::map< unsigned long, T_Drawings > T_DrawingsMap;
+    
+    void SerializeDrawings( xml::xostream& xos, const T_Drawings& drawings )
+    {
+        std::for_each( drawings.begin(), drawings.end(), boost::bind( &Drawing::Serialize, _1, boost::ref( xos ) ) );
+    }
+
+    void SerializeDrawingsMap( xml::xostream& xos, const T_DrawingsMap& map, const std::string& tag )
+    {
+        for( T_DrawingsMap::const_iterator it = map.begin(); it != map.end(); ++it )
+        {
+            xos << xml::start( tag )
+                << xml::attribute( "id", it->first );
+            SerializeDrawings( xos, it->second );
+            xos << xml::end;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -124,14 +170,36 @@ void DrawingsModel::ReadShape( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DrawingsModel::Save( const std::string& directory ) const
 {
+    T_DrawingsMap formationMap;
+    T_DrawingsMap automatMap;
+    T_Drawings notDiffused;
+    tools::Iterator< const Drawing& > it = CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Drawing& drawing = it.NextElement();
+        const boost::optional< sword::Diffusion >& diffusion = drawing.GetDiffusion();
+        if( diffusion )
+        {
+            if( diffusion->has_formation() )
+                formationMap[ diffusion->formation().id() ].insert( &drawing );
+            else if( diffusion->has_automat() )
+                automatMap[ diffusion->automat().id() ].insert( &drawing );
+            else
+                notDiffused.insert( &drawing );
+        }
+        else
+            notDiffused.insert( &drawing );
+    }
+
     std::string filename = ( bfs::path( directory, bfs::native ) / bfs::path( "drawings.xml", bfs::native ) ).native_file_string();
     {
         xml::xofstream xos( filename );
         xos << xml::start( "shapes" )
             << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
             << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/drawings.xsd" );
-        std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing::Serialize
-                     , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
+        SerializeDrawingsMap( xos, formationMap, "formation" );
+        SerializeDrawingsMap( xos, automatMap, "automat" );
+        SerializeDrawings( xos, notDiffused );
     }
     tools::WriteXmlCrc32Signature( filename );
 }
@@ -262,6 +330,7 @@ void DrawingsModel::Publish( const Drawing& drawing )
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name )
 {
+    boost::optional< sword::Diffusion > diffusion;
     if( xis.attribute( "name", "" ) == name )
-        result.reset( new Drawing( idManager_.NextId(), xis, converter_ ) );
+        result.reset( new Drawing( idManager_.NextId(), xis, diffusion, converter_ ) );
 }

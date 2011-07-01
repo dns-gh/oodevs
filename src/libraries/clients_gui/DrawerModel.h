@@ -23,6 +23,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class EntityResolver_ABC;
 }
 
 namespace tools
@@ -50,7 +51,7 @@ class DrawerModel : public tools::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerModel( kernel::Controllers& controllers, const DrawingFactory_ABC& factory );
+             DrawerModel( kernel::Controllers& controllers, const DrawingFactory_ABC& factory, const kernel::EntityResolver_ABC& resolver );
     virtual ~DrawerModel();
     //@}
 
@@ -68,7 +69,9 @@ private:
     //! @name Helpers
     //@{
     void ReadShapes( xml::xistream& xis );
-    void ReadShape( xml::xistream& xis );
+    void ReadFormation( xml::xistream& xis );
+    void ReadAutomat( xml::xistream& xis );
+    void ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity );
     virtual void NotifyCreated( const Drawing_ABC& );
     virtual void NotifyDeleted( const Drawing_ABC& );
     //@}
@@ -78,6 +81,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const DrawingFactory_ABC& factory_;
+    const kernel::EntityResolver_ABC& resolver_;
     //@}
 };
 

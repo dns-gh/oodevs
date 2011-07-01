@@ -9,6 +9,9 @@
 
 #include "gaming_pch.h"
 #include "DrawingFactory.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "DrawingPositions.h"
 #include "Drawing.h"
 
@@ -41,9 +44,16 @@ DrawingFactory::~DrawingFactory()
 // -----------------------------------------------------------------------------
 gui::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& message ) const
 {
+    const kernel::Entity_ABC* diffusionEntity = 0;
+    if( message.shape().has_diffusion() )
+    {
+        if( message.shape().diffusion().has_automat() )
+            diffusionEntity = resolver_.FindAutomat( message.shape().diffusion().automat().id() );
+        else if( message.shape().diffusion().has_formation() )
+            diffusionEntity = resolver_.FindFormation( message.shape().diffusion().formation().id() );
+    }
     DrawingPositions* location = new DrawingPositions( converter_, message );
-// TODO pas bon : passer l'entité du message
-    gui::Drawing_ABC* drawing = new Drawing( controllers_, message, types_, 0, *location, publisher_, converter_ );
+    gui::Drawing_ABC* drawing = new Drawing( controllers_, message, diffusionEntity, types_, *location, publisher_, converter_ );
     drawing->Attach< kernel::Positions >( *location );
     return drawing;
 }
@@ -64,9 +74,9 @@ gui::Drawing_ABC* DrawingFactory::CreateShape( const gui::DrawingTemplate& style
 // Name: DrawingFactory::CreateShape
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-gui::Drawing_ABC* DrawingFactory::CreateShape( xml::xistream& xis ) const
+gui::Drawing_ABC* DrawingFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const
 {
     DrawingPositions location;
-    new Drawing( controllers_, xis, types_, location, publisher_, converter_, resolver_ );
+    new Drawing( controllers_, xis, entity, types_, location, publisher_, converter_ );
     return 0;
 }

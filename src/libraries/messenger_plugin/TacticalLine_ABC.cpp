@@ -30,7 +30,7 @@ TacticalLine_ABC::TacticalLine_ABC( unsigned int id, const sword::TacticalLine& 
 // Name: TacticalLine_ABC constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( unsigned int id, xml::xistream& xis, const sword::TacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter)
+TacticalLine_ABC::TacticalLine_ABC( unsigned int id, xml::xistream& xis, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter)
     : id_       ( id ),
       diffusion_( diffusion )
 {

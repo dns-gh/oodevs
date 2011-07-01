@@ -11,7 +11,10 @@
 #include "DrawerModel.h"
 #include "DrawingFactory_ABC.h"
 #include "DrawerShape.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
@@ -23,9 +26,10 @@ using namespace gui;
 // Name: DrawerModel constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerModel::DrawerModel( kernel::Controllers& controllers, const DrawingFactory_ABC& factory )
+DrawerModel::DrawerModel( kernel::Controllers& controllers, const DrawingFactory_ABC& factory, const kernel::EntityResolver_ABC& resolver )
     : controllers_( controllers )
     , factory_    ( factory )
+    , resolver_   ( resolver )
 {
     controllers_.Register( *this );
 }
@@ -61,22 +65,66 @@ void DrawerModel::Load( const std::string& filename )
 // -----------------------------------------------------------------------------
 void DrawerModel::ReadShapes( xml::xistream& xis )
 {
-    xis  >> xml::list( "shape", *this, &DrawerModel::ReadShape );
+    xis >> xml::list( "formation", *this, &DrawerModel::ReadFormation )
+        >> xml::list( "automat", *this, &DrawerModel::ReadAutomat )
+        >> xml::list( "shape", boost::bind( &DrawerModel::ReadShape, this, _1, static_cast< const kernel::Entity_ABC* >( 0 ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerModel::ReadFormation
+// Created: JSR 2011-06-29
+// -----------------------------------------------------------------------------
+void DrawerModel::ReadFormation( xml::xistream& xis )
+{
+    const kernel::Entity_ABC* formation = resolver_.FindFormation( xis.attribute< unsigned int >( "id" ) );
+    xis >> xml::list( "shape", *this, &DrawerModel::ReadShape, formation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerModel::ReadAutomat
+// Created: JSR 2011-06-29
+// -----------------------------------------------------------------------------
+void DrawerModel::ReadAutomat( xml::xistream& xis )
+{
+    const kernel::Entity_ABC* automat = resolver_.FindAutomat( xis.attribute< unsigned int >( "id" ) );
+    xis >> xml::list( "shape", *this, &DrawerModel::ReadShape, automat );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::ReadShape
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::ReadShape( xml::xistream& xis )
+void DrawerModel::ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity )
 {
     try
     {
-        factory_.CreateShape( xis );
+        factory_.CreateShape( xis, diffusionEntity );
     }
     catch( ... )
     {
         // $$$$ SBO 2008-06-04: invalid drawing
+    }
+}
+
+namespace
+{
+    typedef std::set< const Drawing_ABC* > T_Drawings;
+    typedef std::map< unsigned long, T_Drawings > T_DrawingsMap;
+    
+    void SerializeDrawings( xml::xostream& xos, const T_Drawings& drawings )
+    {
+        std::for_each( drawings.begin(), drawings.end(), boost::bind( &Drawing_ABC::Serialize, _1, boost::ref( xos ) ) );
+    }
+
+    void SerializeDrawingsMap( xml::xostream& xos, const T_DrawingsMap& map, const std::string& tag )
+    {
+        for( T_DrawingsMap::const_iterator it = map.begin(); it != map.end(); ++it )
+        {
+            xos << xml::start( tag )
+                << xml::attribute( "id", it->first );
+            SerializeDrawings( xos, it->second );
+            xos << xml::end;
+        }
     }
 }
 
@@ -86,10 +134,33 @@ void DrawerModel::ReadShape( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DrawerModel::Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
+    T_DrawingsMap formationMap;
+    T_DrawingsMap automatMap;
+    T_Drawings notDiffused;
+    tools::Iterator< const Drawing_ABC& > it = CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Drawing_ABC& drawing = it.NextElement();
+        const kernel::Entity_ABC* diffusionEntity = drawing.GetDiffusionEntity();
+        if( diffusionEntity )
+        {
+            if( diffusionEntity->GetTypeName() == kernel::Formation_ABC::typeName_ )
+                formationMap[ diffusionEntity->GetId() ].insert( &drawing );
+            else if( diffusionEntity->GetTypeName() == kernel::Automat_ABC::typeName_ )
+                automatMap[ diffusionEntity->GetId() ].insert( &drawing );
+            else
+                notDiffused.insert( &drawing );
+        }
+        else
+            notDiffused.insert( &drawing );
+    }
+
     xml::xofstream xos( filename );
     xos << xml::start( "shapes" );
     schemaWriter.WriteExerciseSchema( xos, "drawings" );
-    std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing_ABC::Serialize, boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
+    SerializeDrawingsMap( xos, formationMap, "formation" );
+    SerializeDrawingsMap( xos, automatMap, "automat" );
+    SerializeDrawings( xos, notDiffused );
     xos << xml::end;
 }
 
@@ -135,5 +206,7 @@ Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& co
 // -----------------------------------------------------------------------------
 void DrawerModel::Delete( unsigned long id )
 {
+    if( const Drawing_ABC* drawing = Find( id ) )
+        drawing->NotifyDestruction();
     Remove( id );
 }

@@ -21,7 +21,7 @@
 
 namespace
 {
-    const Entity_ABC* ResolveSuperior( const Model& model, const sword::TacticalLine::Diffusion& message )
+    const Entity_ABC* ResolveSuperior( const Model& model, const sword::Diffusion& message )
     {
         if( message.has_automat() )
             return model.ResolveAutomat( message.automat().id() );

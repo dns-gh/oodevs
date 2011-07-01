@@ -9,9 +9,9 @@
 
 #include "messenger_plugin_pch.h"
 #include "Drawing.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/bind.hpp>
 #pragma warning( push )
 #pragma warning( disable : 4996 )
@@ -32,20 +32,23 @@ Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const
     , color_    ( QColor( asn.shape().color().red(), asn.shape().color().green(), asn.shape().color().blue() ).name().ascii() )
     , pattern_  ( asn.shape().pattern() )
 {
+    if( asn.shape().has_diffusion() )
+        diffusion_ = asn.shape().diffusion();
     for( int i = 0; i < asn.shape().points().elem_size(); ++i )
-        points_.push_back( asn.shape().points().elem(i) );
+        points_.push_back( asn.shape().points().elem( i ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Drawing constructor
 // Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-Drawing::Drawing( unsigned int id, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion, const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , id_       ( id )
     , category_ ( xis.attribute< std::string >( "category" ) )
     , color_    ( xis.attribute< std::string >( "color" ) )
     , pattern_  ( xis.attribute< std::string >( "template" ) )
+    , diffusion_( diffusion )
 {
     xis >> xml::list( "point", *this, &Drawing::ReadPoint );
 }
@@ -61,6 +64,7 @@ Drawing::Drawing( unsigned int id, const Drawing& rhs )
     , color_    ( rhs.color_ )
     , pattern_  ( rhs.pattern_ )
     , points_   ( rhs.points_ )
+    , diffusion_( rhs.diffusion_ )
 {
     // NOTHING
 }
@@ -104,6 +108,33 @@ unsigned long Drawing::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: std::vector< sword::CoordLatLong >& Drawing::GetPoints
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+const std::vector< sword::CoordLatLong >& Drawing::GetPoints() const
+{
+    return points_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::GetConverter
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+const kernel::CoordinateConverter_ABC& Drawing::GetConverter() const
+{
+    return converter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::optional< sword::Diffusion >& Drawing::GetDiffusion
+// Created: JSR 2011-06-30
+// -----------------------------------------------------------------------------
+const boost::optional< sword::Diffusion >& Drawing::GetDiffusion() const
+{
+    return diffusion_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Drawing::Update
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
@@ -138,8 +169,10 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->mutable_color()->set_green( color.green() );
     message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( pattern_ );
-    ::sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
-    for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
+    if( diffusion_ )
+        *message().mutable_shape()->mutable_diffusion() = *diffusion_;
+    sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
+    for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
         *points->add_elem() = *iter;        //const_cast< CoordLatLong* >( &points_.front() );
     message.Send( publisher );
 }
@@ -160,7 +193,7 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->mutable_color()->set_green( color.green() );
     message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( pattern_ );
-    for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
+    for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
         *message().mutable_shape()->mutable_points()->add_elem() = *iter;
     message.Send( publisher );
 }

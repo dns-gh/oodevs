@@ -19,7 +19,6 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class EntityResolver_ABC;
 }
 
 namespace gui
@@ -46,24 +45,19 @@ class Drawing : public gui::DrawerShape
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& asn, const gui::DrawingTypes& types, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& asn, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
              Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
-             Drawing( kernel::Controllers& controllers, xml::xistream& xis, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& resolver );
+             Drawing( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Drawing();
     //@}
 
     //! @name Operations
     //@{
     virtual void DoUpdate( const sword::ShapeUpdate& message );
+    virtual void NotifyDestruction() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Drawing( const Drawing& );            //!< Copy constructor
-    Drawing& operator=( const Drawing& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Create();

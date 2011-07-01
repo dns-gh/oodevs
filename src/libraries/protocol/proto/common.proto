@@ -936,17 +936,18 @@ message ClientObjectProperty {
     required Value  value = 2; //!< The property value
 }
 
+/** @struct Diffusion
+    @brief Defines the diffusion of a tactical line or a shape
+*/
+message Diffusion {
+   optional AutomatId   automat   = 1; //!< The automat identifier
+   optional FormationId formation = 2; //!< The formation identifier
+}
+
 /** @struct TacticalLine
     @brief Defines a tactical line
 */
 message TacticalLine {
-    /** @struct Diffusion
-        @brief Defines the diffusion of a tactical line
-    */
-    message Diffusion {
-       optional AutomatId   automat   = 1; //!< The automat identifier
-       optional FormationId formation = 2; //!< The formation identifier
-    }
     required string    name      = 1; //!< The name
     required Location  geometry  = 2; //!< The geometry
     required Diffusion diffusion = 3; //!< The diffusion
@@ -956,10 +957,11 @@ message TacticalLine {
     @brief Defines a shape
 */
 message Shape {
-   required string           category = 1; //!< The category
-   required RgbColor         color    = 2; //!< The color
-   required string           pattern  = 3; //!< The pattern
-   required CoordLatLongList points   = 4; //!< The coordinates
+   required string           category  = 1; //!< The category
+   required RgbColor         color     = 2; //!< The color
+   required string           pattern   = 3; //!< The pattern
+   required CoordLatLongList points    = 4; //!< The coordinates
+   optional Diffusion        diffusion = 5; //!< The Diffusion
 }
 
 /** @struct ChatTarget

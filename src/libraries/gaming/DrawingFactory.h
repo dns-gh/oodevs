@@ -10,9 +10,7 @@
 #ifndef __DrawingFactory_h_
 #define __DrawingFactory_h_
 
-
 #include "clients_gui/DrawingFactory_ABC.h"
-#include "protocol/MessengerSenders.h"
 
 namespace kernel
 {
@@ -24,6 +22,11 @@ namespace kernel
 namespace gui
 {
     class DrawingTypes;
+}
+
+namespace sword
+{
+    class ShapeCreation;
 }
 
 class Publisher_ABC;
@@ -46,7 +49,7 @@ public:
     //! @name Operations
     //@{
     virtual gui::Drawing_ABC* CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
-    virtual gui::Drawing_ABC* CreateShape( xml::xistream& xis ) const;
+    virtual gui::Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
     //@}
 
     //! @name Operations

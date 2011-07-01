@@ -34,7 +34,7 @@ class DrawerLayer : public QObject
                   , public EntityLayer< Drawing_ABC >
                   , public kernel::ContextMenuObserver_ABC< Drawing_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

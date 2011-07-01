@@ -16,8 +16,8 @@
 // Name: DrawingsModel constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-DrawingsModel::DrawingsModel( kernel::Controllers& controllers, const DrawingFactory& factory )
-    : gui::DrawerModel( controllers, factory )
+DrawingsModel::DrawingsModel( kernel::Controllers& controllers, const DrawingFactory& factory, const kernel::EntityResolver_ABC& resolver )
+    : gui::DrawerModel( controllers, factory, resolver )
     , factory_( factory )
 {
     // NOTHING

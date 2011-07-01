@@ -1,28 +1,23 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-01-14 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Orders/Fuseau.cpp $
-// $Author: Jvt $
-// $Modtime: 16/05/05 14:55 $
-// $Revision: 17 $
-// $Workfile: Fuseau.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "messenger_plugin_pch.h"
 #include "TacticalLinesModel.h"
-#include "TacticalLine_ABC.h"
 #include "Limit.h"
 #include "Lima.h"
 #include "IdManager.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "tools/Iterator.h"
-#include "protocol/Protocol.h"
 #include "protocol/MessengerSenders.h"
+#include "tools/Iterator.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
-using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesModel constructor
@@ -50,7 +45,7 @@ TacticalLinesModel::~TacticalLinesModel()
 // Name: TacticalLinesModel::CreateLimit
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLimit( xml::xistream& xis, const TacticalLine_Diffusion& diffusion)
+void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& diffusion)
 {
     std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), xis, diffusion, converter_ ) );
     limits_.Register( limit->GetID(), *limit );
@@ -61,7 +56,7 @@ void TacticalLinesModel::ReadLimit( xml::xistream& xis, const TacticalLine_Diffu
 // Name: TacticalLinesModel::CreateLima
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLima( xml::xistream& xis, const TacticalLine_Diffusion& diffusion)
+void TacticalLinesModel::ReadLima( xml::xistream& xis, const sword::Diffusion& diffusion)
 {
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), xis, diffusion, converter_ ) );
     limas_.Register( lima->GetID(), *lima );

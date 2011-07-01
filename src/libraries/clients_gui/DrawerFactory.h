@@ -16,7 +16,6 @@ namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
-    class EntityResolver_ABC;
 }
 
 namespace gui
@@ -34,14 +33,14 @@ class DrawerFactory : public DrawingFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerFactory( kernel::Controllers& controllers, const DrawingTypes& types, const kernel::CoordinateConverter_ABC& coordinateConverter, const kernel::EntityResolver_ABC& resolver );
+             DrawerFactory( kernel::Controllers& controllers, const DrawingTypes& types, const kernel::CoordinateConverter_ABC& coordinateConverter );
     virtual ~DrawerFactory();
     //@}
 
     //! @name Operations
     //@{
     virtual Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
-    virtual Drawing_ABC* CreateShape( xml::xistream& xis ) const;
+    virtual Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
     //@}
 
 private:
@@ -50,7 +49,6 @@ private:
     kernel::Controllers& controllers_;
     const DrawingTypes& types_;
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
-    const kernel::EntityResolver_ABC& resolver_;
     //@}
 
 private:

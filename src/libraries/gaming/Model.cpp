@@ -98,7 +98,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , folk_( *new FolkModel( controllers.controller_ ) )
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
-    , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
+    , drawings_( *new DrawingsModel( controllers, drawingFactory_, *this ) )
     , scoreDefinitions_( *new ScoreDefinitions( staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
     , urbanBlockDetectionMap_( *new UrbanBlockDetectionMap( controllers, static_.detection_ ) )

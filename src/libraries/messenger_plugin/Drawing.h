@@ -10,8 +10,9 @@
 #ifndef __Drawing_h_
 #define __Drawing_h_
 
-#include <geometry/Types.h>
-#include "protocol/Protocol.h"
+#include "protocol/protocol.h"
+#include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 
 namespace xml
 {
@@ -40,13 +41,13 @@ namespace messenger
 */
 // Created: SBO 2008-06-06
 // =============================================================================
-class Drawing
+class Drawing : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
-             Drawing( unsigned int id, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, const Drawing& rhs );
     virtual ~Drawing();
     //@}
@@ -54,6 +55,10 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
+    const std::vector< sword::CoordLatLong >& GetPoints() const;
+    const kernel::CoordinateConverter_ABC& GetConverter() const;
+    const boost::optional< sword::Diffusion >& GetDiffusion() const;
+
     void Update( const sword::ShapeUpdateRequest& asn );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -64,12 +69,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Drawing( const Drawing& );            //!< Copy constructor
-    Drawing& operator=( const Drawing& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
@@ -79,9 +78,10 @@ private:
     //! @name Helpers
     //@{
     typedef std::vector< sword::CoordLatLong > T_Points;
+    typedef T_Points::const_iterator         CIT_Points;
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
@@ -90,6 +90,7 @@ public:
     std::string color_;
     std::string pattern_;
     T_Points points_;
+    boost::optional< sword::Diffusion > diffusion_;
     //@}
 };
 
