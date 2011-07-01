@@ -10,7 +10,6 @@
 #ifndef __PerceptionMap_h_
 #define __PerceptionMap_h_
 
-
 #include "Perception.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"

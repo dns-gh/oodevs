@@ -286,7 +286,6 @@ bool Profile::CanDoMagic( const Entity_ABC& entity ) const
     return simulation_ && supervision_ && CanBeOrdered( entity );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter::IsChildOfCommunicationHierarchy
 // Created: SBO 2007-11-15

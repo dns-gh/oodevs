@@ -31,14 +31,13 @@ namespace log_tools
         return google::protobuf::internal::NameOfEnum( enumDesc, error );
     }
 
-
     void LogAcknowledge( kernel::Logger_ABC& logger, const std::string& messageName );
     void LogAcknowledge( kernel::Logger_ABC& logger, const char* messageName );
     bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const std::string& errorMessage, const std::string& messageName );
     bool CheckAcknowledge( kernel::Logger_ABC& logger, const kernel::Entity_ABC& entity, int errorCode, const std::string& errorMessage, const std::string& messageName );
 
     template< typename T >
-    bool LogAcknowledge( kernel::Logger_ABC& logger, const T& logMessage ) 
+    bool LogAcknowledge( kernel::Logger_ABC& logger, const T& logMessage )
     {
         return LogAcknowledge( logger, 0, logMessage );
     }

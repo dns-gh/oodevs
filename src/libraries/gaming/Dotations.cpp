@@ -65,7 +65,7 @@ void Dotations::DoUpdate( const sword::UnitAttributes& message )
 
     uint nSize = message.resource_dotations().elem_size();
     std::vector< Dotation > differences; differences.reserve( nSize );
-    while ( nSize > 0 )
+    while( nSize > 0 )
     {
         const sword::ResourceDotations_ResourceDotation& value = message.resource_dotations().elem( --nSize );
         Dotation previous( resolver_.Get( value.type().id() ) );

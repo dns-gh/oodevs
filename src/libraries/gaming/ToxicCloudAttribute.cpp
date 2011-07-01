@@ -62,7 +62,7 @@ void ToxicCloudAttribute::UpdateTexture() const
 {
     static const float step = 510. / 2.; // meters
     const float range = ( 1.f + float( boundaries_.second - boundaries_.first ) ) / float( boundaries_.second + boundaries_.first );
-    for ( CIT_QuantityCloud it = cloud_.begin(); it != cloud_.end(); ++it )
+    for( CIT_QuantityCloud it = cloud_.begin(); it != cloud_.end(); ++it )
     {
         const geometry::Point2f& p = it->first;
         glColor4d( std::min( 1., 2. * it->second * range ), std::max( 0., 2. * ( 1.f - it->second * range ) ), 0., 0.5f );

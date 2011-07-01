@@ -53,7 +53,6 @@ public:
     void Update( VisionMap& map );
     //@}
 
-
 private:
     //! @name Copy/Assignment
     //@{

@@ -44,7 +44,7 @@ QColor ColorController::Apply( const kernel::Entity_ABC& entity, const QColor& b
 {
     CIT_Colors it = colors_.find( entity.GetId() );
     if( it != colors_.end() )
-        return it->second; 
+        return it->second;
     return base;
 }
 

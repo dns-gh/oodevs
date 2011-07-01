@@ -55,7 +55,7 @@ void Equipments::DoUpdate( const sword::UnitAttributes& message )
 
     std::vector< Equipment > differences;
     uint nSize = message.equipment_dotations().elem_size();
-    while ( nSize > 0 )
+    while( nSize > 0 )
     {
         const sword::EquipmentDotations_EquipmentDotation& value = message.equipment_dotations().elem( --nSize );
         Equipment previous( resolver_.Get( value.type().id() ) );

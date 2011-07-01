@@ -10,7 +10,6 @@
 #ifndef __Troops_h_
 #define __Troops_h_
 
-
 #include "HierarchicExtension_ABC.h"
 #include "Humans.h"
 #include "clients_kernel/Updatable_ABC.h"

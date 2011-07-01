@@ -105,7 +105,7 @@ void MissionParameters::Draw( const geometry::Point2f& where, const kernel::View
     if( !elements_.empty() && tools.ShouldDisplay( "MissionParameters" ) )
     {
         Action_ABC* action = ( --elements_.end() )->second;
-        if ( action )
+        if( action )
             action->Draw( where, viewport, tools );
     }
 }

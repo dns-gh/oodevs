@@ -21,7 +21,6 @@
 #ifndef __Attr_Def_h_
 #define __Attr_Def_h_
 
-
 enum E_UnitVisType
 {
     eVisTypeInvisible  = 0,
@@ -29,7 +28,6 @@ enum E_UnitVisType
     eVisTypeRecognized = 2,
     eVisTypeIdentified = 3
 };
-
 
 enum E_PerceptionState // Utilisé pour les objets
 {

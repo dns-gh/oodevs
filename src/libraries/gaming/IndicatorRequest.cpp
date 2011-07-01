@@ -98,7 +98,7 @@ void IndicatorRequest::Update( const sword::PlotResult& message )
     {
         done_ = true;
         result_.resize( message.values_size() );
-        for ( int i = 0; i < message.values_size(); ++i )
+        for( int i = 0; i < message.values_size(); ++i )
             result_[i] = message.values(i);
         if( message.has_begin_tick() )
             firstTick_ = message.begin_tick();

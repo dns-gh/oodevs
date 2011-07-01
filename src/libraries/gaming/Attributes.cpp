@@ -201,15 +201,15 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_critical_intelligence() )
         criticalIntelligence_ = message.critical_intelligence();
 
-    if ( message.has_refugees_satisfaction() )
+    if( message.has_refugees_satisfaction() )
     {
-        if ( message.refugees_satisfaction().has_lodging() )
+        if( message.refugees_satisfaction().has_lodging() )
             fRefugeesLodgingSatisfactionPercent_ = 100.0f * message.refugees_satisfaction().lodging();
 
-        if ( message.refugees_satisfaction().has_safety() )
+        if( message.refugees_satisfaction().has_safety() )
             fRefugeesSecuritySatisfactionPercent_ = 100.0f * message.refugees_satisfaction().safety();
 
-        if ( message.refugees_satisfaction().has_access_to_health_care() )
+        if( message.refugees_satisfaction().has_access_to_health_care() )
             fRefugeesHealthSatisfactionPercent_ = 100.0f * message.refugees_satisfaction().access_to_health_care();
     }
 
@@ -244,7 +244,6 @@ void Attributes::Display( Displayer_ABC& displayer ) const
                     .Add( ")" ).End();
     displayer.Group( tools::translate( "Attributes", "Stances" ) )
                 .Display( tools::translate( "Attributes", "Setup state:" ), nInstallationState_ * Units::percentage );
-
 
     displayer.Group( tools::translate( "Attributes", "Communications" ) )
                 .Display( tools::translate( "Attributes", "Jammed:" ), bCommJammed_ )

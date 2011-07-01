@@ -85,5 +85,4 @@ public:
     //@}
 };
 
-
 #endif // __SupplyStates_h_

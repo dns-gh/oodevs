@@ -17,7 +17,6 @@
 #include "Simulation.h"
 #include "clients_kernel/ObjectTypes.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: FireResultFactory constructor
 // Created: AGE 2006-03-10

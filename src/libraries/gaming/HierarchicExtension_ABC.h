@@ -10,7 +10,6 @@
 #ifndef __HierarchicExtension_ABC_h_
 #define __HierarchicExtension_ABC_h_
 
-
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"

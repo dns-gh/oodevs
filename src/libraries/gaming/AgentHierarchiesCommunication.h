@@ -61,6 +61,4 @@ private:
     const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_;
 };
 
-
-
 #endif // __AgentHierarchiesCommunication_h_

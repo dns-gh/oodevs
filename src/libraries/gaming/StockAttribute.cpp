@@ -85,4 +85,3 @@ void StockAttribute::DoUpdate( const sword::ObjectUpdate& message )
     UpdateData( message.attributes() );
 }
 
-

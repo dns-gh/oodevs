@@ -87,7 +87,6 @@ void LodgingAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) cons
     Display( displayer );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LodgingAttribute::DisplayInTooltip
 // Created: MMC 2011-05-04

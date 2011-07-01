@@ -20,7 +20,6 @@ namespace sword
     class AutomatCreation;
 }
 
-
 namespace kernel
 {
     class KnowledgeGroup_ABC;

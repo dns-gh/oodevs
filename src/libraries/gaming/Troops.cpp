@@ -134,7 +134,7 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
 int Troops::GetTotalHumans() const
 {
     int nbrHumans  = 0;
-    for ( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ) ; ++i )
+    for( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ) ; ++i )
     {
         nbrHumans += ( humans_[ i ].officers_ + humans_[ i ].subOfficers_ + humans_[ i ].troopers_ );
     }

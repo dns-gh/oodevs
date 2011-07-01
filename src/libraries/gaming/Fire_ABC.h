@@ -10,7 +10,6 @@
 #ifndef __Fire_ABC_h_
 #define __Fire_ABC_h_
 
-
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "protocol/Protocol.h"

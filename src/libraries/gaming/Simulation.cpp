@@ -187,7 +187,7 @@ void Simulation::BeginCheckPoint()
 void Simulation::EndCheckPoint( const sword::ControlCheckPointSaveEnd& message )
 {
     checkPoint_.start_ = false;
-    if ( message.has_name() )
+    if( message.has_name() )
         checkPoint_.name_ = message.name();
     else
         checkPoint_.name_ = "";

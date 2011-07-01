@@ -10,7 +10,6 @@
 #ifndef __HumanFactors_h_
 #define __HumanFactors_h_
 
-
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Types.h"

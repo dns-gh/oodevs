@@ -94,8 +94,6 @@ private:
     typedef T_QuantityCloud::const_iterator                         CIT_QuantityCloud;
     //@}
 
-
-
 public:
     //! @name Member data
     //@{

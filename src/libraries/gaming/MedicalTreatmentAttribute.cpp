@@ -99,11 +99,11 @@ namespace
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::UpdateData( const sword::ObjectAttributeMedicalTreatment& message )
 {
-    if ( message.has_doctors() )
+    if( message.has_doctors() )
         doctors_ = message.doctors();
-    if ( message.has_available_doctors() )
+    if( message.has_available_doctors() )
         availableDoctors_ = message.available_doctors();
-    if ( message.has_external_reference_id() )
+    if( message.has_external_reference_id() )
         referenceID_ = message.external_reference_id();
     if( message.has_facility_status() )
         status_ = message.facility_status();
@@ -113,7 +113,7 @@ void MedicalTreatmentAttribute::UpdateData( const sword::ObjectAttributeMedicalT
         if( capacity.has_type_id() )
         {
             const kernel::MedicalTreatmentType* type = resolver_.Find( capacity.type_id() );
-            if ( !type )
+            if( !type )
                 throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
             ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() ] );
         }
@@ -161,7 +161,7 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
     for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
     {
-        if ( it->second.type_ )
+        if( it->second.type_ )
             displayer.Display( std::string( it->second.name_ + ": " ).c_str(),
                            std::string( boost::lexical_cast<std::string>( it->second.available_ ) + " (" + boost::lexical_cast<std::string>( it->second.baseline_ ) + ")" ) );
     }

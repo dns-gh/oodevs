@@ -15,7 +15,6 @@ namespace kernel
     class MedicalTreatmentType;
 }
 
-
 // =============================================================================
 /** @class  MedicalTreatmentCapacity
     @brief  MedicalTreatmentCapacity
@@ -32,7 +31,5 @@ struct MedicalTreatmentCapacity
     std::string name_;
     const kernel::MedicalTreatmentType* type_;
 };
-
-
 
 #endif // __MedicalTreatmentCapacity_h_

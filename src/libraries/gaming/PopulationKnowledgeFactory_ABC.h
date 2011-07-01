@@ -18,7 +18,6 @@ namespace kernel
     class PopulationKnowledge_ABC;
 }
 
-
 // =============================================================================
 /** @class  PopulationKnowledgeFactory_ABC
     @brief  PopulationKnowledgeFactory_ABC

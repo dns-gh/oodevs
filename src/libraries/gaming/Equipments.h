@@ -10,7 +10,6 @@
 #ifndef __Equipments_h_
 #define __Equipments_h_
 
-
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/Protocol.h"

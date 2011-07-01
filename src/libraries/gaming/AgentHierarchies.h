@@ -162,7 +162,6 @@ std::string AgentHierarchies< I >::GetLevel() const
     return level_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchies::GetAutomatResolver
 // Created: FDS 2010-03-29

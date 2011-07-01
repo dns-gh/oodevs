@@ -25,7 +25,6 @@
 
 using namespace kernel;
 
-
 namespace kernel
 {
     class Agent_ABC;

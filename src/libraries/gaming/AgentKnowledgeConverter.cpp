@@ -45,7 +45,7 @@ AgentKnowledgeConverter::~AgentKnowledgeConverter()
 const AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, const kernel::Entity_ABC& owner ) const
 {
     T_Knowledges::const_iterator it = agents_.find( FindKnowledgeGroup( owner ) );
-    if ( it == agents_.end() )
+    if( it == agents_.end() )
         return 0;
     const T_KnowledgeMap& knowledges = it->second;
     for( T_KnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
@@ -61,7 +61,7 @@ const AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, 
 const PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long id, const kernel::Entity_ABC& owner ) const
 {
     T_PopulationKnowledges::const_iterator it = populations_.find( FindKnowledgeGroup( owner ) );
-    if ( it == populations_.end() )
+    if( it == populations_.end() )
         return 0;
     const T_PopulationKnowledgeMap& knowledges = it->second;
     for( T_PopulationKnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
@@ -89,10 +89,10 @@ const AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const AgentKnowledge_AB
 const AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const Agent_ABC& base, const Entity_ABC& owner ) const
 {
     T_Knowledges::const_iterator it = agents_.find( FindKnowledgeGroup( owner ) );
-    if ( it == agents_.end() )
+    if( it == agents_.end() )
         return 0;
     T_KnowledgeMap::const_iterator itMap = it->second.find( &base );
-    if ( itMap == it->second.end() )
+    if( itMap == it->second.end() )
         return 0;
     return itMap->second;
 }
@@ -116,10 +116,10 @@ const PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const PopulationKn
 const PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const Population_ABC& base, const Entity_ABC& owner ) const
 {
     T_PopulationKnowledges::const_iterator it = populations_.find( FindKnowledgeGroup( owner ) );
-    if ( it == populations_.end() )
+    if( it == populations_.end() )
         return 0;
     T_PopulationKnowledgeMap::const_iterator itMap = it->second.find( &base );
-    if ( itMap == it->second.end() )
+    if( itMap == it->second.end() )
         return 0;
     return itMap->second;
 }

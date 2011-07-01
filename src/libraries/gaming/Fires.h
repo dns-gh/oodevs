@@ -10,7 +10,6 @@
 #ifndef __Fires_h_
 #define __Fires_h_
 
-
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"

@@ -580,7 +580,7 @@ void AgentServerMsgMgr::OnReceiveUnitPathFind( const sword::UnitPathFind& messag
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveUnitMagicActionAck( const sword::UnitMagicActionAck& message, unsigned long /*nCtx*/ )
-{ 
+{
     CheckAcknowledge( logger_, message );
 }
 
@@ -840,7 +840,7 @@ void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& 
         if( CheckAcknowledge( logger_, agent, message ) )
             agent.Update( message );
     }
-    else if ( message.tasker().has_crowd() )
+    else if( message.tasker().has_crowd() )
     {
         CheckAcknowledge( logger_, GetModel().agents_.GetPopulation( message.tasker().crowd().id() ), message );
     }
@@ -1293,7 +1293,6 @@ void AgentServerMsgMgr::OnReceiveChangeDiplomacy( const sword::ChangeDiplomacy& 
     GetModel().teams_.GetTeam( message.party1().id() ).Update( message );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnPopulationCreation
 // Created: SLG 2010-12-01
@@ -1610,7 +1609,6 @@ void AgentServerMsgMgr::OnReceiveMsgAarIndicator( const sword::Indicator& messag
 {
     GetModel().scores_.Update( message );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgTextMessage
