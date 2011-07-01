@@ -72,6 +72,8 @@ public:
     static void F_Pion_SetpionEnEscorte( DEC_Decision_ABC* pPion, DEC_Decision_ABC* value );
     static bool F_Pion_GetNewEscorted( DEC_Decision_ABC* pPion );
     static void F_Pion_SetNewEscorted( DEC_Decision_ABC* pPion, bool value );
+    static bool F_Pion_GetNeedReinforcement( DEC_Decision_ABC* pPion );
+    static void F_Pion_SetNeedReinforcement( DEC_Decision_ABC* pPion, bool value );
     static boost::shared_ptr< DEC_Path_ABC > F_Pion_GetitMvt( DEC_Decision_ABC* pPion );
     static void F_Pion_SetitMvt( DEC_Decision_ABC* pPion, const boost::shared_ptr< DEC_Path_ABC >& value );
     static boost::shared_ptr< MT_Vector2D > F_Pion_GetobjectifEsquive( DEC_Decision_ABC* pPion );

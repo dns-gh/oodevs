@@ -68,6 +68,8 @@ void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
     brain[ "F_Pion_SetbPasserSurLC" ] = &F_Pion_SetbPasserSurLC;
     brain[ "F_Pion_GetNewEscorted" ] = &F_Pion_GetNewEscorted;
     brain[ "F_Pion_SetNewEscorted" ] = &F_Pion_SetNewEscorted;
+    brain[ "F_Pion_GetNeedReinforcement" ] = &F_Pion_GetNeedReinforcement;
+    brain[ "F_Pion_SetNeedReinforcement" ] = &F_Pion_SetNeedReinforcement;
     brain[ "F_Pion_GetpionEnEscorte" ] = &F_Pion_GetpionEnEscorte;
     brain[ "F_Pion_SetpionEnEscorte" ] = &F_Pion_SetpionEnEscorte;
     brain[ "F_Pion_GetitMvt" ] = &F_Pion_GetitMvt;
@@ -539,6 +541,24 @@ bool DEC_CommunicationFunctions::F_Pion_GetNewEscorted( DEC_Decision_ABC* pPion 
 void DEC_CommunicationFunctions::F_Pion_SetNewEscorted( DEC_Decision_ABC* pPion, bool value )
 {
     pPion->SetVariable( "g_bNewEscorted" ,value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_CommunicationFunctions::F_Pion_GetNeedReinforcement
+// Created: LMT 2011-06-28
+// -----------------------------------------------------------------------------
+bool DEC_CommunicationFunctions::F_Pion_GetNeedReinforcement( DEC_Decision_ABC* pPion )
+{
+    return pPion->GetVariable< bool >( "g_needReinforcement" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_CommunicationFunctions::F_Pion_SetNeedReinforcement
+// Created: LMT 2011-06-28
+// -----------------------------------------------------------------------------
+void DEC_CommunicationFunctions::F_Pion_SetNeedReinforcement( DEC_Decision_ABC* pPion, bool value )
+{
+    pPion->SetVariable( "g_needReinforcement" ,value );
 }
 
 // -----------------------------------------------------------------------------
