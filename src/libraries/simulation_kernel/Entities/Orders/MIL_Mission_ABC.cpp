@@ -114,7 +114,7 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
     for( MIL_OrderType_ABC::CIT_MissionParameterVector it = parameterTypes.begin(); it != parameterTypes.end(); ++it, ++i )
     {
         const MIL_OrderTypeParameter& parameterType = **it;
-        if( parameters.elem_size() < i )
+        if( parameters.elem_size() <= i )
             throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
         try
         {
