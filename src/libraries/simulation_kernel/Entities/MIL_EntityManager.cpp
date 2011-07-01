@@ -1775,6 +1775,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     pObjectManager_.reset( objectManager );
     missionController_.reset( missionController );
     missionController_->Initialize( *agentFactory );
+    agentFactory_->Apply( boost::bind( &MIL_AgentPion::Register, _1, boost::ref( *missionController_ ) ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );

@@ -88,10 +88,7 @@ void MissionController::Initialize( AgentFactory_ABC& factory )
 {
     BOOST_FOREACH( const T_Missions::value_type& mission, missions_ )
         if( MIL_AgentPion* pion = factory.Find( mission.first ) )
-        {
             pion->GetOrderManager().ReplaceMission( mission.second );
-            pion->Register( *this );
-        }
 }
 
 // -----------------------------------------------------------------------------
