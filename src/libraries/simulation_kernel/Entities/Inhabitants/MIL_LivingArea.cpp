@@ -118,7 +118,7 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
         float ratio = ( *it )->GetObject().GetLivingSpace() * GetStructuralState( ( *it )->GetObject() ) / area;
-        unsigned long person = ratio * population_;
+        unsigned long person = static_cast< unsigned long >( ratio * population_ );
         if( tmp - person < 0 )
             person = tmp;
         if( ( it + 1 ) == blocks_.end() && tmp > 0 )
@@ -300,8 +300,8 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
         for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
             for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
             {
-                unsigned int person = static_cast< unsigned int >( ratio * itMotivation->second + 0.5f );
-                person = std::min( movingNumber, person );
+                unsigned int person = static_cast< unsigned int >( ratio * itMotivation->second + 1.f );
+                person = std::min( it->first->GetMaxOccupation( itMotivation->first ), std::min( movingNumber, person ) );
                 itMotivation->second = person;
                 movingNumber -= person;
             }
