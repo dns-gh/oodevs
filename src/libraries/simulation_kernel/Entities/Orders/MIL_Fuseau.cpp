@@ -1261,9 +1261,31 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     T_PointVector pLeftLimit;
     T_PointVector pRightLimit;
-    file >> pLeftLimit
-         >> pRightLimit
-         >> vOrientationRefPos_
+    {
+        std::size_t nNbr;
+        file >> nNbr;
+        while ( nNbr-- )
+        {
+            double x;
+            double y;
+             file >> x
+                  >> y;
+            pLeftLimit.push_back( MT_Vector2D( x, y ) );
+        }
+    }
+    {
+        std::size_t nNbr2;
+        file >> nNbr2;
+        while ( nNbr2-- )
+        {
+            double x;
+            double y;
+            file >> x
+                 >> y;
+            pRightLimit.push_back( MT_Vector2D( x, y ) );
+        }
+    }
+    file >> vOrientationRefPos_
          >> vStartGlobalDirection_
          >> vEndGlobalDirection_;
     globalDirectionLine_ = MT_Line( vStartGlobalDirection_, vEndGlobalDirection_ );
@@ -1286,13 +1308,28 @@ void MIL_Fuseau::save( MIL_CheckPointOutArchive& file, const unsigned int ) cons
 {
     T_PointVector pLeftLimit;
     T_PointVector pRightLimit;
+    if( pLeftLimit_ )
+        pLeftLimit = const_cast< T_PointVector& >( pLeftLimit_->GetPoints() );
     if( pRightLimit_ )
-        pLeftLimit = pLeftLimit_->GetPoints();
-    if( pRightLimit_ )
-        pRightLimit = pRightLimit_->GetPoints();
-    file << pLeftLimit
-         << pRightLimit
-         << vOrientationRefPos_
+        pRightLimit = const_cast< T_PointVector& >( pRightLimit_->GetPoints() );
+
+    std::size_t size = pLeftLimit.size();
+    file << size;
+    for( IT_PointVector it = pLeftLimit.begin(); it != pLeftLimit.end(); ++it )
+    {
+        file << it->rX_
+             << it->rY_;
+    }
+
+    std::size_t size2 = pRightLimit.size();
+    file << size2;
+    for( IT_PointVector it = pRightLimit.begin(); it != pRightLimit.end(); ++it )
+    {
+        file << it->rX_
+             << it->rY_;
+    }
+
+    file << vOrientationRefPos_
          << vStartGlobalDirection_
          << vEndGlobalDirection_;
 }
