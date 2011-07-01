@@ -277,7 +277,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     case AttributeType::ETypeAlphanumeric:
         {
             QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
-            edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( QRegExp( "[a-zA-Z0-9]*" ), edit ) ) );
+            edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( QRegExp( "[a-zA-Z0-9.]*" ), edit ) ) );
             edit->insert( value.c_str() );
             box->setStretchFactor( edit, 1 );
             widgets_.push_back( edit );
