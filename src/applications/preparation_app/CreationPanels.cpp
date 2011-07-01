@@ -38,7 +38,7 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
     AddPanel( new TemplatesPanel( this, *this, controllers, model.agents_, model.formations_, staticModel.types_ ) );
-    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, model.drawings_ ) );
+    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
     AddPanel( new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer ) );
 
     intelligencesPanel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons );

@@ -26,6 +26,11 @@ namespace kernel
     class ModelLoaded;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace gui
 {
     class ParametersLayer;
@@ -55,7 +60,7 @@ class DrawerPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model );
+             DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model, const tools::ExerciseConfig& config );
     virtual ~DrawerPanel();
     //@}
 
@@ -101,6 +106,7 @@ private:
     kernel::Controllers& controllers_;
     ParametersLayer& layer_;
     DrawerModel& model_;
+    const tools::ExerciseConfig& config_;
     ColorButton* color_;
     QLabel* parentLabel_;
     QToolBox* toolBox_;

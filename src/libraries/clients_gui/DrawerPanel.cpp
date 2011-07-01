@@ -23,6 +23,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "resources.h"
+#include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include <xeumeuleu/xml.hpp>
 #include <qtoolbox.h>
@@ -33,11 +34,12 @@ using namespace gui;
 // Name: DrawerPanel constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model )
+DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model, const tools::ExerciseConfig& config )
     : InfoPanel_ABC( parent, panel, tr( "Drawings" ) )
     , controllers_    ( controllers )
     , layer_          ( layer )
     , model_          ( model )
+    , config_         ( config )
     , selectedStyle_  ( 0 )
     , selectedDrawing_( controllers )
     , selectedEntity_ ( controllers )
@@ -244,7 +246,7 @@ void DrawerPanel::StartDrawing()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Open()
 {
-    QString filename = QFileDialog::getOpenFileName( "", tr( "Drawings (*.xml)" ), this, 0, tr( "Load drawings file" ) );
+    QString filename = QFileDialog::getOpenFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Load drawings file" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
@@ -265,7 +267,7 @@ void DrawerPanel::Open()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Save()
 {
-    QString filename = QFileDialog::getSaveFileName( "", tr( "Drawings (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
+    QString filename = QFileDialog::getSaveFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
