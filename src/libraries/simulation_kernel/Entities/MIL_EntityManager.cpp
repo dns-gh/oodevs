@@ -706,6 +706,7 @@ void MIL_EntityManager::UpdateStates()
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateState, _1 ) );
     formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateNetwork, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
