@@ -10,10 +10,10 @@
 #ifndef _Affinities_ABC_h
 #define _Affinities_ABC_h
 
+#include "Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "Types.h"
-#include <map>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -30,6 +30,7 @@ class Model;
 // =============================================================================
 class Affinities : public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

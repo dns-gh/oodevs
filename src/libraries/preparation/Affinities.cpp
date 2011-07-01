@@ -19,7 +19,7 @@
 // Created: LGY 2011-03-17
 // -----------------------------------------------------------------------------
 Affinities::Affinities( Model& model )
-    : model_ ( model )
+    : model_( model )
 {
     // NOTHING
 }
@@ -29,7 +29,7 @@ Affinities::Affinities( Model& model )
 // Created: LGY 2011-03-17
 // -----------------------------------------------------------------------------
 Affinities::Affinities( xml::xistream& xis, Model& model )
-    : model_ ( model )
+    : model_( model )
 {
     xis >> xml::optional
             >> xml::start( "adhesions" )
@@ -94,7 +94,7 @@ void Affinities::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( "adhesions" );
         for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         {
-            if( model_.teams_.FindTeam( it->first ) )
+            if( model_.GetTeamResolver().Find( it->first ) )
             {
                 xos << xml::start( "adhesion" )
                     << xml::attribute( "party", it->first )
