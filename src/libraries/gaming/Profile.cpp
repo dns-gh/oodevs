@@ -194,10 +194,10 @@ void Profile::ResolveEntities( const Model& model )
 {
     readWriteEntities_.clear();
     readEntities_.clear();
-    ResolveEntities< Team_ABC >      ( model.teams_ , readTeams_      , writeTeams_ );
-    ResolveEntities< Formation_ABC > ( model.teams_ , readFormations_ , writeFormations_ );
-    ResolveEntities< Automat_ABC >   ( model.agents_, readAutomats_   , writeAutomats_ );
-    ResolveEntities< Population_ABC >( model.agents_, readPopulations_, writePopulations_ );
+    ResolveEntities< Team_ABC >      ( model.GetTeamResolver() , readTeams_      , writeTeams_ );
+    ResolveEntities< Formation_ABC > ( model.GetFormationResolver() , readFormations_ , writeFormations_ );
+    ResolveEntities< Automat_ABC >   ( model.GetAutomatResolver(), readAutomats_   , writeAutomats_ );
+    ResolveEntities< Population_ABC >( model.GetPopulationResolver(), readPopulations_, writePopulations_ );
 }
 
 // -----------------------------------------------------------------------------

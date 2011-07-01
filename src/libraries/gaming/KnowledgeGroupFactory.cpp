@@ -20,6 +20,7 @@
 #include "StaticModel.h"
 #include "TeamsModel.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Team_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -52,8 +53,8 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const s
 {
     // LTO begin
     Entity_ABC* superior = message.has_parent() ?
-        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( message.parent().id() ) :
-    (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.party().id() );
+        static_cast< Entity_ABC* >( &model_.GetKnowledgeGroupResolver().Get( message.parent().id() ) ) :
+        static_cast< Entity_ABC* >( &model_.GetTeamResolver().Get( message.party().id() ) );
     // LTO end
 
     KnowledgeGroup* result = new KnowledgeGroup( message.knowledge_group().id(), controllers_.controller_, message.type(), model_.static_.types_ );
@@ -62,7 +63,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const s
     if( jam )
         result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
-    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result, model_.knowledgeGroups_, jam ) ); // LTO
+    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result, model_.GetKnowledgeGroupResolver(), jam ) ); // LTO
     result->Polish();
     return result;
 }

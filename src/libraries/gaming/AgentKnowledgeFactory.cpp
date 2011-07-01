@@ -51,8 +51,8 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // -----------------------------------------------------------------------------
 AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message )
 {
-    AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.agents_, model_.teams_ );
-    result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
+    AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.GetAgentResolver(), model_.GetTeamResolver() );
+    result->Attach( *new PerceptionMap( controllers_.controller_, model_.GetAutomatResolver() ) );
     result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< Speeds >( *new Speeds( converter_ ) );
@@ -66,7 +66,7 @@ AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const Knowledge
 // -----------------------------------------------------------------------------
 PopulationKnowledge_ABC* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const sword::CrowdKnowledgeCreation& message )
 {
-    PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.agents_, message );
+    PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.GetPopulationResolver(), message );
     result->Attach< Positions >( *new PopulationKnowledgePositions( *result ) );
     result->Polish();
     return result;
