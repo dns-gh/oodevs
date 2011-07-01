@@ -4854,7 +4854,7 @@
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="387" name="Pion Autoriser Toutes Munitions"/>
-    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.UtiliserALR" id="388" name="Utiliser ALR">
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.combat.support.artillery.tasks.UtiliserALR" id="388" name="Utiliser ALR">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
@@ -4884,4 +4884,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1717011436" -->
+<!-- signature="1787056952" -->
