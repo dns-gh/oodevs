@@ -7877,6 +7877,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Realiser Travaux"/>
+        <mission name="GENIE Retablir Itineraire"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
       </missions>
@@ -7908,7 +7909,7 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="Detruire point du reseau"/>
+        <mission name="GENIE Retablir Itineraire"/>
         <mission name="Reparer point du reseau"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
@@ -11847,4 +11848,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0005992920" -->
+<!-- signature="3349141788" -->
