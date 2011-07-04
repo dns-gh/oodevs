@@ -243,7 +243,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team)
 void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation)
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyTeamDeleted( formation.GetId() );
+        (*it)->NotifyFormationDeleted( formation.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation)
 void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat)
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyTeamDeleted( automat.GetId() );
+        (*it)->NotifyAutomatDeleted( automat.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,5 +263,5 @@ void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat)
 void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population)
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        (*it)->NotifyTeamDeleted( population.GetId() );
+        (*it)->NotifyPopulationDeleted( population.GetId() );
 }
