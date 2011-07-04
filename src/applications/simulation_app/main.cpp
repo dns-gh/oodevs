@@ -81,13 +81,15 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     // Init the console window size and appearance
     // InitConsole();
 
+    SIM_App* app = 0;
+
     int nResult = EXIT_FAILURE;
     try
     {
         GOOGLE_PROTOBUF_VERIFY_VERSION;
-        SIM_App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections );
+        app = new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
-        nResult = app.Execute();
+        nResult = app->Execute();
     }
     catch( MT_ScipioException& exception )
     {
@@ -97,7 +99,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
                << "Line : "        << exception.GetLine()        << std::endl
                << "Message : "     << exception.GetMsg()         << std::endl
                << "Description : " << exception.GetDescription() << std::endl;
-        MT_LOG_ERROR_MSG( strMsg.str() );
+        MT_LOG_ERROR_MSG( strMsg.str().c_str() );
         MessageBox( 0, strMsg.str().c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( xml::exception& exception )
@@ -117,6 +119,9 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     }
 
     google::protobuf::ShutdownProtobufLibrary();
+
+    if( app )
+        delete app;
 
     MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );
