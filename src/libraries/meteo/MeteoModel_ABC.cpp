@@ -9,7 +9,6 @@
 
 #include "MeteoModel_ABC.h"
 #include "meteo/Meteo.h"
-#include "meteo/Meteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 
