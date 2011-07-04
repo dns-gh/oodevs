@@ -57,12 +57,6 @@ private slots:
     void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
     //@}
 
-signals:
-    //! @name Signals
-    //@{
-    void EmitError();
-    //@}
-
 private:
     //! @name Types
     //@{

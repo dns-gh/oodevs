@@ -207,7 +207,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
     pLogDockWnd_->setCaption( tr( "Log" ) );
     setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
-    connect( pLogPanel_, SIGNAL( EmitError() ), pLogDockWnd_, SLOT( show() ) );
     pLogDockWnd_->hide();
     logger.SetLogger( *pLogPanel_ );
 

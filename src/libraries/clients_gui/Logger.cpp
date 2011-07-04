@@ -119,8 +119,6 @@ void Logger::End( std::stringstream& output )
     T_Item& item = items_[ &output ];
     if( item.first )
         item.first->setText( 2, output.str().c_str() );
-    if( item.second )
-        emit EmitError();
     items_.erase( &output );
     delete &output;
 }
