@@ -15,7 +15,7 @@
     <property name="version.major" value="4.3.1"/>
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
     <property name="version.version" value="${version.minor}"/><!-- required for version extension -->
-    <property name="masalife.version" value="2010-1.0/1.0.6-sword64"/>
+    <property name="masalife.version" value="2011-1.1.x/latest"/>
 
     <!--
     ============================================================================

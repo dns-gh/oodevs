@@ -155,13 +155,15 @@ class CanRemoveFromPathComputer : public OnComponentComputer_ABC
 public:
     CanRemoveFromPathComputer( const MIL_ObjectType_ABC& type )
         : type_( type )
+        , canRemove_( false )
     {}
 
     virtual void ApplyOnComponent( PHY_ComposantePion& component )
     {
-        if( component.CanRemoveFromPath( type_, false ) ) // $$$$ BCI 2011-06-20: comment savoir si l'objet est miné ou pas?
-            throw CanRemoveFromPathException();
+        if( !canRemove_ && component.CanRemoveFromPath( type_, false ) ) // $$$$ BCI 2011-06-20: comment savoir si l'objet est miné ou pas?
+            canRemove_ = true;
     }
+    bool canRemove_;
 private:
     const MIL_ObjectType_ABC& type_;
 };
@@ -175,15 +177,9 @@ public:
 
     virtual bool Test ( const MIL_ObjectType_ABC& type ) const
     {
-        try
-        {
-            CanRemoveFromPathComputer computer( type );
-            agent_.Execute< OnComponentComputer_ABC >( computer );
-            return false;
-        } catch( const CanRemoveFromPathException& )
-        {
-            return true;
-        }
+        CanRemoveFromPathComputer computer( type );
+        agent_.Execute< OnComponentComputer_ABC >( computer );
+        return computer.canRemove_;
     }
 
 private:
