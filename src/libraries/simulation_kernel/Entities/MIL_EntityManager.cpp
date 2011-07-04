@@ -1199,13 +1199,24 @@ void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& mes
 void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx )
 {
     client::ChangeDiplomacyAck ack;
-    ack().mutable_party1()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).identifier() );
-    ack().mutable_party2()->set_id( message.parameters().elem( 1 ).value().Get( 0 ).identifier() );
+    int party1 ( 0 ), party2 ( 0 );
+    if ( message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
+        party1 = message.parameters().elem( 0 ).value().Get( 0 ).identifier();
+    else if ( message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
+        party1 = message.parameters().elem( 0 ).value().Get( 0 ).party().id();
+
+    if ( message.parameters().elem( 1 ).value().Get( 0 ).has_identifier() )
+        party2 = message.parameters().elem( 1 ).value().Get( 0 ).identifier();
+    else if ( message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
+        party2 = message.parameters().elem( 1 ).value().Get( 0 ).party().id();
+
+    ack().mutable_party1()->set_id( party1 );
+    ack().mutable_party2()->set_id( party2 );
     ack().set_diplomacy( ( EnumDiplomacy ) message.parameters().elem( 2 ).value().Get( 0 ).enumeration() );
     ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
     try
     {
-        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value().Get( 0 ).identifier() );
+        MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
         if( !pArmy1 )
             throw NET_AsnException< ChangeDiplomacyAck_ErrorCode >( ChangeDiplomacyAck::error_invalid_party_diplomacy );
         pArmy1->OnReceiveChangeDiplomacy( message.parameters() );

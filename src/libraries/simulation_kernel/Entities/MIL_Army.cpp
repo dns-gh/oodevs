@@ -674,13 +674,19 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& asnMsg )
+void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& parameters )
 {
-    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().Get( 0 ).identifier() );
+    int party2 ( 0 );
+    if ( parameters.elem( 1 ).value().Get( 0 ).has_identifier() )
+        party2 = parameters.elem( 1 ).value().Get( 0 ).identifier();
+    else if ( parameters.elem( 1 ).value().Get( 0 ).has_party() )
+        party2 = parameters.elem( 1 ).value().Get( 0 ).party().id();
+
+    MIL_Army_ABC* pArmy2 = armyFactory_.Find( party2 );
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
-    switch( asnMsg.elem( 2 ).value().Get( 0 ).enumeration() )
+    switch( parameters.elem( 2 ).value().Get( 0 ).enumeration() )
     {
     case sword::unknown:
         nDiplomacy = eUnknown;
