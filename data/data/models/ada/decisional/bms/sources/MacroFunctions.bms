@@ -543,6 +543,7 @@ function S_Misc_Copie_MissionPion_Mission( misSrc, misDst )
 end
 
 local assignMission = {}
+local assignMissionListParameter = {}
 local initializeAssignMissions = function()
 assignMission[ "automateAAppuyer_" ] = DEC_AssignMissionAutomatParameter
 assignMission[ "automateAEscorter_" ] = DEC_AssignMissionAutomatParameter
@@ -553,58 +554,67 @@ assignMission[ "campRefugies_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "cible_" ] = DEC_AssignMissionPionParameter
 assignMission[ "ciblesPrioritaires_" ] = DEC_AssignMissionNatureAtlasTypeParameter
 assignMission[ "compagnie_" ] = DEC_AssignMissionAutomatParameter
-assignMission[ "compagniesAAppuyer_" ] = DEC_AssignMissionAutomatListParameter
+assignMissionListParameter[ "compagniesAAppuyer_" ] = DEC_AssignMissionAutomatListParameter
 assignMission[ "ennemi_" ] = DEC_AssignMissionAgentKnowledgeParameter
-assignMission[ "itineraires_" ] = DEC_AssignMissionPathListParameter
+assignMissionListParameter[ "itineraires_" ] = DEC_AssignMissionPathListParameter
 assignMission[ "modeDeploiement_" ] = DEC_AssignMissionEnumereParameter
 assignMission[ "natureObjectif_" ] = DEC_AssignMissionEnumereParameter
 assignMission[ "neutraliser_" ] = DEC_AssignMissionBoolParameter
 assignMission[ "objectif_" ] = DEC_AssignMissionLocationParameter
-assignMission[ "plotsRavitaillement_" ] = DEC_AssignMissionObjectKnowledgeListParameter
+assignMissionListParameter[ "plotsRavitaillement_" ] = DEC_AssignMissionObjectKnowledgeListParameter
 assignMission[ "pointCible_" ] = DEC_AssignMissionPointParameter
 assignMission[ "pointDeDeploiement_" ] = DEC_AssignMissionPointParameter
 assignMission[ "pointObjectif_" ] = DEC_AssignMissionPointParameter
 assignMission[ "pontFlottant_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "positionDeploiement_" ] = DEC_AssignMissionPointParameter
 assignMission[ "preparerTerrain_" ] = DEC_AssignMissionBoolParameter
-assignMission[ "refugies_" ] = DEC_AssignMissionAgentKnowledgeListParameter
+assignMissionListParameter[ "refugies_" ] = DEC_AssignMissionAgentKnowledgeListParameter
 assignMission[ "siteDecontamination_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "siteFranchissement_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "siteROTA_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "travail_" ] = DEC_AssignMissionObjectKnowledgeParameter
-assignMission[ "travaux_" ] = DEC_AssignMissionGenObjectListParameter
+assignMissionListParameter[ "travaux_" ] = DEC_AssignMissionGenObjectListParameter
 assignMission[ "typePontage_" ] = DEC_AssignMissionEnumereParameter
 assignMission[ "uniteAAppuyer_" ] = DEC_AssignMissionPionParameter
-assignMission[ "uniteADetruire_" ] = DEC_AssignMissionAgentKnowledgeListParameter
+assignMissionListParameter[ "uniteADetruire_" ] = DEC_AssignMissionAgentKnowledgeListParameter
 assignMission[ "uniteAEscorter_" ] = DEC_AssignMissionPionParameter
 assignMission[ "uniteAFixer_" ] = DEC_AssignMissionAgentKnowledgeParameter
 assignMission[ "uniteAReduire_" ] = DEC_AssignMissionAgentKnowledgeParameter
 assignMission[ "uniteASoutenir_" ] = DEC_AssignMissionPionParameter
 assignMission[ "uniteASuivre_" ] = DEC_AssignMissionPionParameter
 assignMission[ "unite_" ] = DEC_AssignMissionPionParameter
-assignMission[ "unitesAAppuyer_" ] = DEC_AssignMissionPionListParameter
-assignMission[ "unitesACouvrir_" ] = DEC_AssignMissionPionListParameter
-assignMission[ "unitesAEscorter_" ] = DEC_AssignMissionPionListParameter
-assignMission[ "unitesAHeliporter_" ] = DEC_AssignMissionPionListParameter
-assignMission[ "unitesAHelitransporter_" ] = DEC_AssignMissionPionListParameter
-assignMission[ "unitesATransporter_" ] = DEC_AssignMissionPionListParameter
-assignMission[ "unitesRendues_" ] = DEC_AssignMissionAgentKnowledgeListParameter
-assignMission[ "unites_" ] = DEC_AssignMissionPionListParameter
+assignMissionListParameter[ "unitesAAppuyer_" ] = DEC_AssignMissionPionListParameter
+assignMissionListParameter[ "unitesACouvrir_" ] = DEC_AssignMissionPionListParameter
+assignMissionListParameter[ "unitesAEscorter_" ] = DEC_AssignMissionPionListParameter
+assignMissionListParameter[ "unitesAHeliporter_" ] = DEC_AssignMissionPionListParameter
+assignMissionListParameter[ "unitesAHelitransporter_" ] = DEC_AssignMissionPionListParameter
+assignMissionListParameter[ "unitesATransporter_" ] = DEC_AssignMissionPionListParameter
+assignMissionListParameter[ "unitesRendues_" ] = DEC_AssignMissionAgentKnowledgeListParameter
+assignMissionListParameter[ "unites_" ] = DEC_AssignMissionPionListParameter
 assignMission[ "zoneAControler_" ] = DEC_AssignMissionLocationParameter
 assignMission[ "zoneImplantation1_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "zoneImplantation2_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "zoneRegroupement_" ] = DEC_AssignMissionLocationParameter
 assignMission[ "zone_" ] = DEC_AssignMissionLocationParameter
-assignMission[ "zonesAcquisition_" ] = DEC_AssignMissionLocationListParameter
+assignMissionListParameter[ "zonesAcquisition_" ] = DEC_AssignMissionLocationListParameter
 assignMission[ "positionImplantation_" ] = DEC_AssignMissionPointParameter
 assignMission[ "presenceContreBatterie_" ] = DEC_AssignMissionBoolParameter
 assignMission[ "repeat_" ] = DEC_AssignMissionBoolParameter
 end
 
 function DEC_AssignMissionParameter( missionPion, parameter, value )
-    if not assignMission[ parameter ] then initializeAssignMissions() end
-    if not assignMission[ parameter ] then error( "No assignment for "..tostring( parameter )..": "..tostring( DEC_AssignMissionPionParameter ).."? : ".. tostring( value ) ) end
-    return assignMission[ parameter ](missionPion, parameter, value )
+    if not assignMission[ parameter ] and not assignMissionListParameter[ parameter ] then initializeAssignMissions() end
+    if not assignMission[ parameter ] and not assignMissionListParameter[ parameter ] then error( "No assignment for "..tostring( parameter )..": "..tostring( DEC_AssignMissionPionParameter ).."? : ".. tostring( value ) ) end
+
+    if assignMissionListParameter[ parameter ] then
+        local listParams = {}
+        for i, parameterValue in pairs( value ) do
+            listParams[i] = assignMissionListParameter[ parameter ]( parameterValue )
+        end
+        return DEC_AssignMissionListParameter( missionPion, parameter, listParams )
+    else
+        return assignMission[ parameter ](missionPion, parameter, value )
+    end
 end
 
 function DEC_Connaissances_ObjetsDansZone( localisation, ... )
