@@ -25,6 +25,8 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Equipement_Wizard.h"
 #include "ADN_Equipement_GUI.h"
+#include "ADN_WeaponFilter.h"
+#include <boost/bind.hpp>
 
 typedef ADN_Equipement_Data::AmmoCategoryInfo AmmoCategoryInfo;
 typedef ADN_Equipement_Data::ResourceInfos ResourceInfos;
@@ -55,6 +57,18 @@ ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent, cons
 ADN_Equipement_AmmoListView::~ADN_Equipement_AmmoListView()
 {
     delete pConnector_;
+}
+
+namespace
+{
+    bool Matches( bool direct, const ADN_Weapons_Data::WeaponInfos& weapon, const AmmoCategoryInfo* pAmmo )
+    {
+        if( weapon.ptrAmmunition_.GetData() != pAmmo )
+            return false;
+        if( direct )
+            return weapon.bDirect_.GetData();
+        return weapon.bIndirect_.GetData();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +112,13 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
 
     // Connect those at the end so that the items in the associated group boxes
     // are correctly enabled / disabled according to those values.
-    vItemConnectors_[ADN_Equipement_GUI::eDirect]->Connect( &pInfos->bDirect_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eIndirect]->Connect( &pInfos->bIndirect_, bConnect );
+    static ADN_WeaponFilter direct( boost::bind( &Matches, true, _1, pInfos ) );
+    direct.SetData( &pInfos->bDirect_ );
+    vItemConnectors_[ADN_Equipement_GUI::eDirect]->Connect( &direct, bConnect );
+    static ADN_WeaponFilter indirect( boost::bind( &Matches, false, _1, pInfos ) );
+    indirect.SetData( &pInfos->bIndirect_ );
+    vItemConnectors_[ADN_Equipement_GUI::eIndirect]->Connect( &indirect, bConnect );
+
     vItemConnectors_[ADN_Equipement_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
 
     vItemConnectors_[ADN_Equipement_GUI::eIlluminating]->Connect( &pInfos->bIlluminating_, bConnect );

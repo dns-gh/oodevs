@@ -5389,6 +5389,21 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_WeaponFilter</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proceed anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete all the following associated weapon systems :</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapon_Wizard</name>
     <message>
         <source>New weapon creation</source>

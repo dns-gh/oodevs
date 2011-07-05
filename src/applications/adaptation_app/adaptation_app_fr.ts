@@ -5400,6 +5400,21 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
+    <name>ADN_WeaponFilter</name>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>This will delete all the following associated weapon systems :</source>
+        <translation>Cette opération va supprimer les système d&apos;arme associés :</translation>
+    </message>
+    <message>
+        <source>Proceed anyway ?</source>
+        <translation>Voulez-vous continuer ?</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapon_Wizard</name>
     <message>
         <source>New weapon creation</source>

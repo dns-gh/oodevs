@@ -3,7 +3,8 @@ ADN_Rich_ListViewItem.h \
 ADN_Table.h \
 
 
-SOURCES = ADN_ActiveProtectionsListView.cpp \
+SOURCES = ADN_WeaponFilter.cpp \
+ADN_ActiveProtectionsListView.cpp \
 ADN_ActiveProtections_Data.cpp \
 ADN_ActiveProtections_GUI.cpp \
 ADN_ActiveProtections_WeaponsTable.cpp \

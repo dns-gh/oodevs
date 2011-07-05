@@ -19,7 +19,9 @@
 #include "ADN_Launcher_Wizard.h"
 #include "ADN_Tools.h"
 #include "ADN_Launchers_GUI.h"
+#include "ADN_WeaponFilter.h"
 
+#include <boost/bind.hpp>
 
 typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
 
@@ -51,6 +53,17 @@ ADN_ListView_Launchers::~ADN_ListView_Launchers()
     delete pConnector_;
 }
 
+namespace
+{
+    bool Matches( bool direct, const ADN_Weapons_Data::WeaponInfos& weapon, const LauncherInfos* pLauncher )
+    {
+        if( weapon.ptrLauncher_.GetData() != pLauncher )
+            return false;
+        if( direct )
+            return weapon.bDirect_.GetData();
+        return weapon.bIndirect_.GetData();
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Launchers::ConnectItem
@@ -69,8 +82,12 @@ void ADN_ListView_Launchers::ConnectItem( bool bConnect )
 
     // Connect those at the end so that the items in the associated group boxes
     // are correctly enabled / disabled according to those values.
-    vItemConnectors_[ADN_Launchers_GUI::eDirect]->Connect( &pInfos->bDirect_, bConnect );
-    vItemConnectors_[ADN_Launchers_GUI::eIndirect]->Connect( &pInfos->bIndirect_, bConnect );
+    static ADN_WeaponFilter direct( boost::bind( &Matches, true, _1, pInfos ) );
+    direct.SetData( &pInfos->bDirect_ );
+    vItemConnectors_[ADN_Launchers_GUI::eDirect]->Connect( &direct, bConnect );
+    static ADN_WeaponFilter indirect( boost::bind( &Matches, false, _1, pInfos ) );
+    indirect.SetData( &pInfos->bIndirect_ );
+    vItemConnectors_[ADN_Launchers_GUI::eIndirect]->Connect( &indirect, bConnect );
 }
 
 
