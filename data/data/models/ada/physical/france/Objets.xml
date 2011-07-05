@@ -57,7 +57,7 @@
     <perception blinded="true"/>
     <time-limited/>
   </object>
-  <object geometry="polygon" name="Zone dispercante" symbol="G*ZD***********" type="scattering area">
+  <object geometry="polygon" name="Zone dispersante" symbol="G*ZD***********" type="scattering area">
     <avoidable distance="250"/>
     <interact-with-enemy/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -348,7 +348,7 @@
     <resources/>
     <structural value="100"/>
   </object>
-  <object geometry="line" name="Zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
+  <object geometry="line" name="Zone bouclée" symbol="G*MPOGZ---****X" type="seal off area">
     <avoidable distance="10"/>
     <interact-with-enemy/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -387,4 +387,4 @@
     <resources/>
   </object>
 </objects>
-<!-- signature="2804945473" -->
+<!-- signature="1193556562" -->
