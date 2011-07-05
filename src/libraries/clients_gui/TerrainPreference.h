@@ -10,12 +10,14 @@
 #ifndef __TerrainPreference_h_
 #define __TerrainPreference_h_
 
-#include "GraphicPreference_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 class TerrainData;
 
-namespace xml { class xistream; };
+namespace xml
+{
+    class xistream;
+}
 
 namespace kernel
 {
@@ -35,7 +37,6 @@ namespace gui
 // Created: SBO 2006-04-04
 // =============================================================================
 class TerrainPreference : public QWidget
-                        , public GraphicPreference_ABC
                         , public tools::Observer_ABC
                         , public kernel::OptionsObserver_ABC
 {
@@ -48,11 +49,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( QWidget* parent );
+    void Display( QWidget* parent );
     void SetLineWidth() const;
     void SetColor( float alpha ) const;
-    virtual void Commit();
-    virtual void Revert();
+    void Commit();
+    void Revert();
 
     void Save() const;
     //@}

@@ -27,7 +27,10 @@ GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
     : controllers_( controllers )
     , alpha_( 1 )
 {
-    InitializeTerrainPreferences();
+    xml::xifstream xis( "preferences.xml" ); // $$$$ AGE 2006-04-05:
+    xis >> xml::start( "preferences" )
+            >> xml::start( "terrains" )
+                >> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,18 +41,6 @@ GraphicPreferences::~GraphicPreferences()
 {
     for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
         delete *it;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicPreferences::InitializeTerrainPreferences
-// Created: SBO 2006-04-04
-// -----------------------------------------------------------------------------
-void GraphicPreferences::InitializeTerrainPreferences()
-{
-    xml::xifstream xis( "preferences.xml" ); // $$$$ AGE 2006-04-05:
-    xis >> xml::start( "preferences" )
-            >> xml::start( "terrains" )
-                >> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
 }
 
 // -----------------------------------------------------------------------------

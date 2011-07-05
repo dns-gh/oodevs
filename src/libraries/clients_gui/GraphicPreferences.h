@@ -62,7 +62,6 @@ private:
 
     //! @name Helpers
     //@{
-    void InitializeTerrainPreferences();
     void ReadTerrainPreference( xml::xistream& xis );
     void Save() const;
     void Save( xml::xostream& xos, const TerrainPreference& preference ) const;
