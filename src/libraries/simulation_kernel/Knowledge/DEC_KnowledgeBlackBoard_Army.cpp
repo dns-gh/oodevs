@@ -85,7 +85,7 @@ void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const unsigned i
 // Name: DEC_KnowledgeBlackBoard_Army::SendFullState
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_Army::SendFullState( unsigned int nCtx ) const
+void DEC_KnowledgeBlackBoard_Army::SendFullState( unsigned int ) const
 {
     std::mem_fun_ref_t< void, DEC_Knowledge_Object > functorObject = std::mem_fun_ref( &DEC_Knowledge_Object::SendStateToNewClient );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( functorObject );
