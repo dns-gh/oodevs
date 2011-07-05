@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <preferences>
   <terrains>
-    <terrain name="lisiere" type="forest edge">
+    <terrain type="forest">
+      <width>1</width>
+      <color>#648040</color>
+    </terrain>
+    <terrain type="forest edge">
       <width>1</width>
       <color>#aae2a4</color>
     </terrain>
-    <terrain name="plantation" type="orchard edge">
+    <terrain name="orchard" type="orchard edge">
       <width>1</width>
       <color>#d3e0ad</color>
     </terrain>
-    <terrain name="marais" type="swamp edge">
+    <terrain name="swamp" type="swamp edge">
       <width>1</width>
       <color>#92d081</color>
     </terrain>
-    <terrain name="urbain" type="suburb">
+    <terrain name="urban area" type="suburb">
       <width>1</width>
       <color>#c3c1c2</color>
     </terrain>
-    <terrain name="etendue eau" type="waterfront">
+    <terrain name="lake" type="waterfront">
       <width>1</width>
       <color>#aaaaff</color>
     </terrain>
@@ -25,58 +29,53 @@
       <width>1</width>
       <color>#dce062</color>
     </terrain>
-    <terrain name="glace" type="glacier edge">
+    <terrain name="glacier" type="glacier edge">
       <width>1</width>
       <color>#c0c0ff</color>
     </terrain>
-    <terrain name="montagne" type="mountain edge">
+    <terrain name="mountain" type="mountain edge">
       <width>1</width>
       <color>#909090</color>
     </terrain>
-    <terrain name="foret" type="forest">
-      <width>1</width>
-      <color>#648040</color>
-    </terrain>
-    <terrain name="falaise" type="cliff">
+    <terrain type="cliff">
       <width>3</width>
       <color>#a7a500</color>
     </terrain>
-    <terrain name="autoroute" type="highway">
+    <terrain type="highway">
       <width>3</width>
       <color>#f7a500</color>
     </terrain>
-    <terrain name="nationale" type="main road">
+    <terrain type="main road">
       <width>2</width>
       <color>#f42020</color>
     </terrain>
-    <terrain name="departementale" type="secondary road">
+    <terrain type="secondary road">
       <width>1.5</width>
       <color>#c88033</color>
     </terrain>
-    <terrain name="chemin" type="country road">
+    <terrain type="country road">
       <width>1</width>
       <color>#b00000</color>
     </terrain>
-    <terrain name="pont" type="bridge">
+    <terrain type="bridge">
       <width>1</width>
       <color>#a80000</color>
     </terrain>
-    <terrain name="voie ferree" type="railroad">
+    <terrain type="railroad">
       <width>1</width>
       <color>#b0b0b0</color>
     </terrain>
-    <terrain name="riviere importante" type="main river">
+    <terrain type="main river">
       <width>1</width>
       <color>#aaaaff</color>
     </terrain>
-    <terrain name="riviere" type="river">
+    <terrain type="river">
       <width>2</width>
       <color>#aaaaff</color>
     </terrain>
-    <terrain name="ruisseau" type="stream">
+    <terrain type="stream">
       <width>1</width>
       <color>#aaaaff</color>
     </terrain>
   </terrains>
 </preferences>
-<!-- signature="2372419943" -->

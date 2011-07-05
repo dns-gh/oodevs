@@ -76,6 +76,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::Options& options_;
     std::string type_;
+    std::string name_;
     bool shown_;
     ColorButton* colorButton_;
     SizeButton*  sizeButton_;
