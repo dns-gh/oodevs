@@ -253,12 +253,14 @@ double PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture( const PHY_
 double PHY_WeaponDataType_DirectFire::GetMaxRangeToFire( double rWantedPH ) const
 {
     const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
-    std::string targetType = "Personnel";
 
-    PHY_Volume::CIT_VolumeMap it = volumes.find( targetType );
-    const PHY_Volume& volume = *it->second;
+	double result = 0.;
+    for( PHY_Volume::CIT_VolumeMap it = volumes.begin(); it != volumes.end(); ++it )
+	{
+		result = std::max( result, GetMaxDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, *it->second ) );
+	}
 
-    return GetMaxDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, volume );
+	return result;
 }
 
 // -----------------------------------------------------------------------------

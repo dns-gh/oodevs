@@ -167,7 +167,7 @@ bool PHY_DirectFireData::CanFire( const PHY_ComposantePion& /*firer*/ )
     if( !firer_.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return true;
     bTemporarilyBlocked_ = !( MT_Random::GetInstance().rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );
-    return bTemporarilyBlocked_;
+    return !bTemporarilyBlocked_;
 }
 
 // -----------------------------------------------------------------------------
