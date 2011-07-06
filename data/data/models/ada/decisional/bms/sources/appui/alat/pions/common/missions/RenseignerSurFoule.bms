@@ -1,0 +1,118 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/RenseignerSurFoule.bms"] = true
+
+local emptyTable = emptyTable
+
+local getCrowdPosition = function( self, crowd )
+    local pointLePlusProche = DEC_ConnaissancePopulation_PointPlusProche( crowd )
+    self._namedParams.getCrowdPositionResult =  self._namedParams.getCrowdPositionResult or pointLePlusProche
+    if DEC_Geometrie_DistanceBetweenPoints( pointLePlusProche, self._namedParams.getCrowdPositionResult ) > 300 then
+        self._namedParams.getCrowdPositionResult = pointLePlusProche
+    end
+    return self._namedParams.getCrowdPositionResult
+end
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_RenseignerSurFoule
+]]--[[// Création 04//07/2011
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_RenseignerSurFoule"
+{
+    feedbacks = { { { "done_MIS_Pion_RenseignerSurPopulations" }, "MIS_Pion_RenseignerSurFoule" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RenseignerSurPopulations, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Virtuel_ProgressionVers", { "done_BEH_Dep_Virtuel_ProgressionVers" } },
+        { "BEH_Pion_RenseignerSurPops", { "done_BEH_Pion_RenseignerSurPops" } },
+        { "BEH_Dep_Virtuel_PreparationAction", { "done_BEH_Dep_Virtuel_PreparationAction" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.ePhase = self.ePhase or ePreparerMission
+        self.objectif = self.objectif or self._namedParams.mission.crowd_
+        self.eEtat = self.eEtat or eActionEnCours
+        self.eActionPreparation = self.eActionPreparation or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+         do
+            local _continue = true
+--[[// 1) Preparation de la mission
+]]--[[// 2) Déplacement et renseignement
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhase
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    DEC_Trace( "** MIS_Pion_Renseigner **" )
+                    self.ePhase = eProgresser
+                    _continue = false
+                elseif switch_1 == eProgresser then
+                    local posCrowd = getCrowdPosition( self, self.objectif )
+
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), posCrowd ) > 20 ) then
+                        do
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                              
+                            Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, {  posCrowd, eProgressionDefaut, eTypeItiMouvement, } )
+                        end
+                    else
+                        do                          
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                            if( self.eActionPreparation == eActionEffectuee ) then
+                                Activate( self.activations.BEH_Pion_RenseignerSurPops, 1, emptyTable )
+                            end
+
+                            Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, emptyTable )
+self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.eActionPreparation = v[1] end
+                        end
+                    end
+
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
+                                        Halt( self )
+                    do return end
+
+                                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_RenseignerSurFoule = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Dep_Virtuel_ProgressionVers", nodes.BEH_Dep_Virtuel_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Pion_RenseignerSurPops", nodes.BEH_Pion_RenseignerSurPops }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Dep_Virtuel_PreparationAction", nodes.BEH_Dep_Virtuel_PreparationAction }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

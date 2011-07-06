@@ -961,6 +961,7 @@
         <mission name="Stationner"/>
         <mission name="Se Faire Transporter"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -1003,9 +1004,9 @@
         <mission name="ALAT Attaquer"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
-        <mission name="Interdire Franchissement Populations"/>
-        <mission name="Renseigner Sur Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -1050,6 +1051,7 @@
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -1090,9 +1092,9 @@
         <mission name="Stationner"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
-        <mission name="Interdire Franchissement Populations"/>
-        <mission name="Renseigner Sur Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -1132,9 +1134,9 @@
         <mission name="Stationner"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
-        <mission name="Interdire Franchissement Populations"/>
-        <mission name="Renseigner Sur Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -1175,6 +1177,7 @@
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -1218,9 +1221,9 @@
         <mission name="ALAT Attaquer"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
-        <mission name="Interdire Franchissement Populations"/>
-        <mission name="Renseigner Sur Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -2208,7 +2211,7 @@
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="Canaliser Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Securiser Zone Contre Populations"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -2407,7 +2410,7 @@
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Stationner"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Canaliser Populations"/>
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Filtrer Populations"/>
@@ -2480,7 +2483,7 @@
         <mission name="Canaliser Populations"/>
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Filtrer Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
@@ -2552,7 +2555,7 @@
         <mission name="Canaliser Populations"/>
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Filtrer Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
@@ -5502,9 +5505,9 @@
         <mission name="Stationner"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
-        <mission name="Interdire Franchissement Populations"/>
-        <mission name="Renseigner Sur Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="ALAT Aller Se Recompleter"/>
+        <mission name="ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6484,7 +6487,7 @@
         <mission name="Canaliser Populations"/>
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Filtrer Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
@@ -6755,7 +6758,7 @@
         <mission name="Stationner"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
@@ -6838,7 +6841,7 @@
         <mission name="Stationner"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Passer Au Commandement De"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
@@ -6915,7 +6918,7 @@
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="Canaliser Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Securiser Zone Contre Populations"/>
         <mission name="INF Soutenir"/>
         <mission name="INF Barrer"/>
@@ -6973,7 +6976,7 @@
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="Canaliser Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Securiser Zone Contre Populations"/>
         <mission name="INF Soutenir"/>
         <mission name="INF Interdire"/>
@@ -7026,7 +7029,7 @@
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Renseigner Sur Populations"/>
         <mission name="Canaliser Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Securiser Zone Contre Populations"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -11213,7 +11216,7 @@
         <mission name="Canaliser Populations"/>
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Filtrer Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Securiser Zone Contre Populations"/>
         <mission name="INF Soutenir"/>
         <mission name="Orienter Refugies"/>
@@ -11254,7 +11257,7 @@
         <mission name="Canaliser Populations"/>
         <mission name="Controler Populations Dans Zone"/>
         <mission name="Filtrer Populations"/>
-        <mission name="Interdire Franchissement Populations"/>
+        <mission name="Interdire Foules"/>
         <mission name="Securiser Zone Contre Populations"/>
         <mission name="INF Soutenir"/>
         <mission name="Orienter Refugies"/>
@@ -11853,4 +11856,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2012529375" -->
+<!-- signature="3902838564" -->
