@@ -25,6 +25,7 @@ double MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
 double MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
 double MIL_NbcAgentType::rContaminationDistance_        = 100.;
 double MIL_NbcAgentType::rContaminationQuantityGiven_   = 0.5;
+double MIL_NbcAgentType::rMinPropagationSpeed_          = 0.;
 
 struct MIL_NbcAgentType::LoadingWrapper
 {
@@ -49,6 +50,7 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
             >> xml::start( "propagation" )
                 >> xml::attribute( "contamination-distance", rContaminationDistance_ )
                 >> xml::attribute( "contamination-quantity-given", rContaminationQuantityGiven_ )
+                >> xml::attribute( "wind-speed-limit", rMinPropagationSpeed_ )
             >> xml::end;
 
     if( rCoefMaxSpeedModificator_ < 0 )

@@ -11,7 +11,6 @@
 #include "CapacityFactory.h"
 #include "ObjectPrototype.h"
 #include "MIL_Object_ABC.h"
-
 #include "ActivableCapacity.h"
 #include "AltitudeModifierCapacity.h"
 #include "AttitudeModifierCapacity.h"
@@ -51,6 +50,7 @@
 #include "UndergroundNetworkExitCapacity.h"
 #include "UniversalCapacity.h"
 #include "WorkableCapacity.h"
+#include "CloudPropagationCapacity.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -106,6 +106,8 @@ namespace
                 bHasFirePropagation_ = true;
                 prototype.AddCapacity< BurnSurfaceCapacity >( new BurnSurfaceCapacity( xis ) );
             }
+            else if( model == "cloud" )
+                prototype.AddCapacity( new CloudPropagationCapacity() );
         }
 
         void Finalize( ObjectPrototype& prototype )

@@ -186,3 +186,13 @@ double MIL_NbcAgentType::GetMinContaminationQuantity()
 {
     return rContaminationQuantityGiven_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetMinPropagationSpeed
+// Created: LGY 2011-07-05
+// -----------------------------------------------------------------------------
+inline
+double MIL_NbcAgentType::GetMinPropagationSpeed()
+{
+    return rMinPropagationSpeed_;
+}

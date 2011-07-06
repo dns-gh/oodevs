@@ -63,6 +63,7 @@ public:
     static double GetCoefReloadingTimeModificator();
     static double GetContaminationDistance       ();
     static double GetMinContaminationQuantity    ();
+    static double GetMinPropagationSpeed         ();
     //@}
 
 private:
@@ -118,6 +119,7 @@ private:
     static double rCoefReloadingTimeModificator_;
     static double rContaminationDistance_;
     static double rContaminationQuantityGiven_;
+    static double rMinPropagationSpeed_;
     //@}
 };
 
