@@ -32,11 +32,62 @@
         </parameters>
     </primitive>
     <primitive category="extract" name="humans" type="list(key,humans)">
-        <comments><![CDATA[Amount of specified personel into specified states.]]></comments>
+        <comments><![CDATA[Amount of personel into specified states.]]></comments>
         <parameters>
             <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
             <parameter name="states" type="list(human-state)" attribute="states"/>
         </parameters>
+    </primitive>
+	<primitive category="extract" name="populations" type="list(key,populations)">
+        <comments><![CDATA[Amount of population into specified states.]]></comments>
+        <parameters>
+            <parameter name="states" type="list(population-state)" attribute="states"/>
+        </parameters>
+    </primitive>
+	<primitive category="extract" name="crowd-states" type="list(key,crowds)">
+        <comments><![CDATA[Amount of crowd into specified states.]]></comments>
+        <parameters>
+            <parameter name="states" type="list(crowd-state)" attribute="states"/>
+        </parameters>
+    </primitive>
+	<primitive category="extract" name="satisfactions" type="list(key,satisfaction-states)">
+        <comments><![CDATA[Satisfaction values into specified types.]]></comments>
+        <parameters>
+            <parameter name="types" type="list(satisfaction-type)" attribute="type"/>
+        </parameters>
+    </primitive>
+	<primitive category="extract" name="population-in-selected-blocks" type="list(key,populations)">
+        <comments><![CDATA[Amount of population into specified urban blocks.]]></comments>
+        <parameters>
+            <parameter name="blocks" type="list(urban-block)" attribute="blocks"/>
+        </parameters>
+    </primitive>
+	<primitive category="extract" name="infrastructures-functional-states" type="list(key,structural-states)">
+        <comments><![CDATA[Functional state values of urban blocks.]]></comments>
+    </primitive>
+	<primitive category="extract" name="resource-networks-functional-states" type="list(key,functional-states)">
+        <comments><![CDATA[Functional state values of the resource networks in urban blocks.]]></comments>
+    </primitive>
+	<primitive category="extract" name="stocks" type="list(key,resources)">
+        <comments><![CDATA[Amount of specified ressources.]]></comments>
+		<parameters>
+            <parameter name="resources" type="list(resource-type)" attribute="types"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="ambulances" type="list(key)">
+        <comments><![CDATA[Amount of available ambulances into specified types.]]></comments>
+		<parameters>
+            <parameter name="ambulance-types" type="list(ambulance-type)" attribute="types"/>
+        </parameters>
+    </primitive>
+   <primitive category="extract" name="maintenances" type="list(key)">
+        <comments><![CDATA[Amount of available maintenance vehicule into specified type.]]></comments>
+		<parameters>
+            <parameter name="maintenance-types" type="list(maintenance-type)" attribute="types"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="waiting-for-medical" type="list(key)">
+        <comments><![CDATA[Number of wounded waiting for medical in units.]]></comments>
     </primitive>
     <primitive category="extract" name="maintenance-handling-unit" type="list(key)">
         <comments><![CDATA[Units carrying maintenance operations.]]></comments>
@@ -44,17 +95,68 @@
     <primitive category="extract" name="direct-fire-unit" type="list(key)">
         <comments><![CDATA[Units firing direct fires.]]></comments>
     </primitive>
+	 <primitive category="extract" name="indirect-fire-unit" type="list(key)">
+        <comments><![CDATA[Units firing indirect fires.]]></comments>
+    </primitive>
+	<primitive category="extract" name="direct-fire-targets" type="list(key)">
+        <comments><![CDATA[Units hit by direct fires.]]></comments>
+    </primitive>
+	<primitive category="extract" name="indirect-fire-positions" type="list(key,damage)">
+        <comments><![CDATA[Position of each indirect fire]]></comments>
+    </primitive>
+	<primitive category="extract" name="damage-indirect-fires" type="list(key,damage)">
+        <comments><![CDATA[Units that did damages by indirect fires]]></comments>
+    </primitive>		
     <primitive category="extract" name="fire-component-damage" type="list(key,damage)">
-        <comments><![CDATA[Amount of specified equipments damaged by direct fires.]]></comments>
+        <comments><![CDATA[Amount of specified equipments damaged by direct fires by unit.]]></comments>
         <parameters>
             <parameter name="equipments" type="list(equipment-type)" attribute="components"/>
+			<parameter name="states" type="list(equipment-state)" attribute="states"/>
+			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
+			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="fire-component-loss" type="list(key,damage)">
+        <comments><![CDATA[Amount of specified equipments damaged by direct fires on unit.]]></comments>
+        <parameters>
+            <parameter name="equipments" type="list(equipment-type)" attribute="components"/>
+			<parameter name="states" type="list(equipment-state)" attribute="states"/>
+			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
+			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
+        </parameters>
+    </primitive>
+	<primitive category="extract" name="fire-human-damage" type="list(key,damage)">
+        <comments><![CDATA[Amount of dead or wound people made by direct fires by unit.]]></comments>
+        <parameters>
+            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
+			<parameter name="states" type="list(human-state)" attribute="states"/>
+			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
+			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
+        </parameters>
+    </primitive>
+	<primitive category="extract" name="fire-human-loss" type="list(key,damage)">
+        <comments><![CDATA[Amount of dead or wound people made by direct fires on unit.]]></comments>
+        <parameters>
+            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
+			<parameter name="states" type="list(human-state)" attribute="states"/>
+			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
+			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
+        </parameters>
+    </primitive>
+	<primitive category="extract" name="fire-human-damages-by-crowd-fires" type="list(key,damage)">
+        <comments><![CDATA[Amount of dead or wound people made by crowd fires on unit.]]></comments>
+        <parameters>
+            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
+			<parameter name="states" type="list(human-state)" attribute="states"/>
+			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
+			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
         </parameters>
     </primitive>
     <primitive category="extract" name="detecting-unit" type="list(key,key)">
         <comments><![CDATA[Whether a specified unit is detected or not with specified perception level(s).]]></comments>
         <parameters>
-            <parameter name="detected unit" type="unit" attribute="detected"/>
-            <parameter name="perception level" type="list(perception-level)" attribute="visibility"/>
+            <parameter name="detected-unit" type="unit" attribute="detected"/>
+            <parameter name="perception-level" type="list(perception-level)" attribute="visibility"/>
         </parameters>
     </primitive>
     <primitive category="extract" name="mounted" type="list(key,float)">
@@ -190,4 +292,4 @@
         </parameters>
     </primitive>
 </primitives>
-<!-- signature="2996663135" -->
+<!-- signature="1311524730" -->

@@ -60,8 +60,6 @@ void Score::Update( const sword::Indicator& message )
 // -----------------------------------------------------------------------------
 void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const
 {
-    std::vector< double > values; values.reserve( values_.size() );
-    std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
     aar::PlotResult result;
     result().set_identifier( context );
     result().set_error( "" );

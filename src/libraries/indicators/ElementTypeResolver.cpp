@@ -84,12 +84,19 @@ namespace
         // $$$$ SBO 2009-05-12: Variable types
         boost::replace_all( result, "unit list", "list(key)" );
         boost::replace_all( result, "unit", "key" );
+        boost::replace_all( result, "urban block list", "list(urban-block)" );
         boost::replace_all( result, "dotation list", "list(resource-type)" );
         boost::replace_all( result, "equipment list", "list(equipment-type)" );
+        boost::replace_all( result, "equipment states", "list(equipment-state)" );
+        boost::replace_all( result, "fire types", "list(fire-type)" );
+        boost::replace_all( result, "ambulance types", "list(ambulance-type)" );
+        boost::replace_all( result, "maintenance types", "list(maintenance-type)" );
         boost::replace_all( result, "zone", "position" );
         boost::replace_all( result, "human states", "list(human-state)" );
         boost::replace_all( result, "human ranks", "list(human-rank)" );
-        boost::replace_all( result, "equipment states", "list(equipment-state)" );
+        boost::replace_all( result, "population states", "list(population-state)" );
+        boost::replace_all( result, "crowd states", "list(crowd-state)" );
+        boost::replace_all( result, "satisfaction types", "list(satisfaction-type)" );
         boost::replace_all( result, "perception levels", "list(perception-level)" );
         boost::replace_all( result, "operator", "string" ); // $$$$ SBO 2009-06-05:
         return result;
@@ -106,6 +113,11 @@ namespace
         boost::replace_all( result, "resources", "int" );
         boost::replace_all( result, "equipments", "unsigned long" );
         boost::replace_all( result, "humans", "unsigned long" );
+        boost::replace_all( result, "populations", "unsigned long" );
+        boost::replace_all( result, "crowds", "unsigned long" );
+        boost::replace_all( result, "satisfaction-states", "float" );
+        boost::replace_all( result, "structural-states", "int" );
+        boost::replace_all( result, "functional-states", "float" );
         // $$$$ SBO 2009-05-12: Function parameter types
         boost::replace_all( result, "operator", "string" );
         // $$$$ SBO 2009-04-15: TODO: put this into a config file...

@@ -11,21 +11,22 @@
 #define __EntityListParameter_h_
 
 #include "ListParameter.h"
-#include "EntityParameter.h"
-#include "clients_kernel/OrderParameter.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/Controller.h"
 
 namespace kernel
 {
     class ContextMenu;
+    class OrderParameter;
+    class ActionController;
+    class Controller;
 }
 
 namespace actions
 {
     namespace gui
     {
+    template< typename T > class EntityParameter;
 
 // =============================================================================
 /** @class  EntityListParameterBase

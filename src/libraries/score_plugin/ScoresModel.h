@@ -132,6 +132,7 @@ private:
     bool dateTimeInitialized_;
     unsigned int tickDuration_;
     const std::string sessionDir_;
+    const std::string separator_;
     //@}
 };
 

@@ -13,11 +13,12 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Controller.h"
-#include "actions/Entity.h"
-#include "actions/Action_ABC.h"
-#include "protocol/Protocol.h"
+
+namespace kernel
+{
+    class OrderParameter;
+}
 
 namespace gui
 {
@@ -26,6 +27,10 @@ namespace gui
 
 namespace actions
 {
+    namespace parameters
+    {
+        template< typename T > class Entity;
+    }
     namespace gui
     {
 

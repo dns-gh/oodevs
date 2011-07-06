@@ -38,7 +38,6 @@ namespace
         extended.insert(  6, '-' ); extended.insert(  4, '-' );
         return QDateTime::fromString( extended, Qt::ISODate );
     }
-    const std::string separator = ";";
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +52,7 @@ ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::Client
     , dateTimeInitialized_( false )
     , tickDuration_       ( 0 )
     , sessionDir_         ( config.GetSessionDir() )
+    , separator_          ( ";" )
 {
     // NOTHING
 }
@@ -220,7 +220,7 @@ void ScoresModel::Export() const
         }
         catch( std::exception& e )
         {
-            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
+            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
         }
 }
 
@@ -245,7 +245,7 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
         }
         catch( std::exception& e )
         {
-            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
+            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
         }
 }
 
@@ -256,14 +256,12 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
 std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 {
     std::size_t size = 0;
-    file << "Tick" << separator << "Time";
-    BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
+    file << "Tick" << this->separator_ << "Time";
+    for( T_Scores::const_iterator score = scores_.begin(); score != scores_.end(); ++score )
     {
-        file << separator << score.first;
+        file << this->separator_ << score->first;
         if ( ! size )
-            size = score.second->Size();
-        else if ( size != score.second->Size() )
-            throw std::runtime_error( __FUNCTION__ ": not the same number of score." );
+            size = score->second->Size();
     }
     file << std::endl;
     return size;
@@ -275,9 +273,18 @@ std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 // -----------------------------------------------------------------------------
 void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
 {
-    file << index << separator << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).ascii();
-    BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
-        file << separator << score.second->GetValue( index );
+    file << index << this->separator_ << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).ascii();
+    for( T_Scores::const_iterator score = scores_.begin(); score != scores_.end(); ++score )
+    {
+        try
+        {
+            file << this->separator_ << score->second->GetValue( index );
+        }
+        catch ( std::exception& /*e*/ )
+        {
+            file << this->separator_ << "Invalid score";
+        }
+    }
     file << std::endl;
 }
 

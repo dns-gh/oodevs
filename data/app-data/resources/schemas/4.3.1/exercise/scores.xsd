@@ -31,7 +31,12 @@
 		</xs:attribute>
 		<xs:attribute name="types" type="xs:string">
 			<xs:annotation>
-				<xs:documentation>used by "satisfactions" "stocks" "ambulances" and "maintenances" functions</xs:documentation>
+				<xs:documentation>used by "stocks" "ambulances" and "maintenances" functions</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>used by "satisfactions" function</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="party" type="xs:string">
@@ -201,12 +206,12 @@
 															<xs:enumeration value="unit"/>
 															<xs:enumeration value="unit list"/>
 															<xs:enumeration value="party list"/>
-															<xs:enumeration value="block list"/>
+															<xs:enumeration value="urban block list"/>
 															<xs:enumeration value="dotation list"/>
 															<xs:enumeration value="equipment list"/>
 															<xs:enumeration value="zone"/>
-															<xs:enumeration value="direct fire"/>
-															<xs:enumeration value="fratricide fire"/>
+															<xs:enumeration value="fire types"/>
+															<xs:enumeration value="fratricide"/>
 															<xs:enumeration value="human states"/>
 															<xs:enumeration value="human damage states"/>
 															<xs:enumeration value="human ranks"/>
@@ -215,6 +220,8 @@
 															<xs:enumeration value="equipment states"/>
 															<xs:enumeration value="perception levels"/>
 															<xs:enumeration value="satisfaction types"/>
+															<xs:enumeration value="ambulance types"/>
+															<xs:enumeration value="maintenance types"/>
 															<xs:enumeration value="operator"/>
 														</xs:restriction>
 													</xs:simpleType>
@@ -253,7 +260,9 @@
 																<xs:simpleType>
 																	<xs:restriction base="xs:string">
 																		<xs:enumeration value="operational-state"/>
+																		<xs:enumeration value="operational-states"/>
 																		<xs:enumeration value="position"/>
+																		<xs:enumeration value="positions"/>
 																		<xs:enumeration value="resources"/>
 																		<xs:enumeration value="equipments"/>
 																		<xs:enumeration value="humans"/>
@@ -265,12 +274,16 @@
 																		<xs:enumeration value="resource-networks-functional-states"/>
 																		<xs:enumeration value="stocks"/>
 																		<xs:enumeration value="maintenance-handling-unit"/>
+																		<xs:enumeration value="maintenance-handling-units"/>
 																		<xs:enumeration value="direct-fire-unit"/>
+																		<xs:enumeration value="direct-fire-units"/>
 																		<xs:enumeration value="direct-fire-targets"/>
 																		<xs:enumeration value="indirect-fire-unit"/>
+																		<xs:enumeration value="indirect-fire-units"/>
 																		<xs:enumeration value="indirect-fire-positions"/>
 																		<xs:enumeration value="damage-indirect-fires"/>
 																		<xs:enumeration value="fire-component-damage"/>
+																		<xs:enumeration value="fire-component-damages"/>
 																		<xs:enumeration value="fire-component-loss"/>
 																		<xs:enumeration value="fire-human-damage"/>
 																		<xs:enumeration value="fire-human-loss"/>

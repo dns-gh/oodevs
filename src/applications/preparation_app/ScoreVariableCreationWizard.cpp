@@ -11,11 +11,15 @@
 #include "ScoreVariableCreationWizard.h"
 #include "moc_ScoreVariableCreationWizard.cpp"
 #include "ParamStringEnumeration.h"
+#include "clients_kernel/Object_ABC.h" // Doit être inclus avant l'include de ParamUrbanBlockList
+#include "actions/Parameter_ABC.h"
+#include "actions/ParameterContainer_ABC.h"
 #include "actions_gui/ParamAgent.h"
 #include "actions_gui/ParamAgentList.h"
 #include "actions_gui/ParamDotationTypeList.h"
 #include "actions_gui/ParamEquipmentList.h"
 #include "actions_gui/ParamLocation.h"
+#include "actions_gui/ParamUrbanBlockList.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OrderParameter.h"
@@ -48,15 +52,23 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kerne
         connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( OnChangeName() ) );
         new QLabel( tr( "Type: " ), box );
         type_ = new gui::ValuedComboBox< std::string >( box );
-        type_->AddItem( tr( "Unit" ), "unit" );
-        type_->AddItem( tr( "Unit list" ), "unit list" );
-        type_->AddItem( tr( "Resource list" ), "dotation list" );
+        type_->AddItem( tr( "Ambulance types" ), "ambulance types" );
+        type_->AddItem( tr( "Crowd states" ), "crowd states" );
         type_->AddItem( tr( "Equipment list" ), "equipment list" );
-        type_->AddItem( tr( "Zone" ), "zone" );
+        type_->AddItem( tr( "Equipment states" ), "equipment states" );
+        type_->AddItem( tr( "Fire types" ), "fire types" );
+        type_->AddItem( tr( "Fratricide fire" ), "fratricide" );
         type_->AddItem( tr( "Human states" ), "human states" );
         type_->AddItem( tr( "Human ranks" ), "human ranks" );
         type_->AddItem( tr( "Perception levels" ), "perception levels" );
-        type_->AddItem( tr( "Equipment states" ), "equipment states" );
+        type_->AddItem( tr( "Population states" ), "population states" );
+        type_->AddItem( tr( "Resource list" ), "dotation list" );
+        type_->AddItem( tr( "Satisfaction types" ), "satisfaction types" );
+        type_->AddItem( tr( "Unit" ), "unit" );
+        type_->AddItem( tr( "Unit list" ), "unit list" );
+        type_->AddItem( tr( "Urban blocks" ), "urban block list" );
+        type_->AddItem( tr( "Zone" ), "zone" );
+
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
         grid->addWidget( box, 0, 0 );
     }
@@ -205,6 +217,41 @@ void ScoreVariableCreationWizard::OnChangeType()
 
 namespace
 {
+    std::map< std::string, std::string > AmbulanceTypes()
+    {
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Evacuation" ).ascii(), "evacuation" )
+            ( tools::translate( "ScoreDef", "Collection" ).ascii(), "collection" );
+    }
+
+    std::map< std::string, std::string > CrowdStates()
+    {
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).ascii(), "healthy" )
+            ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
+            ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" )
+            ( tools::translate( "ScoreDef", "Contaminated" ).ascii(), "contaminated" );
+    }
+
+    std::map< std::string, std::string > EquipmentStates()
+    {
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Available" ).ascii(), "available" )
+            ( tools::translate( "ScoreDef", "Unavailable" ).ascii(), "unavailable" )
+            ( tools::translate( "ScoreDef", "Repairable" ).ascii(), "repairable" )
+            ( tools::translate( "ScoreDef", "Repairing" ).ascii(), "repairing" )
+            ( tools::translate( "ScoreDef", "Prisoner" ).ascii(), "prisoner" );
+    }
+
+    std::map< std::string, std::string > FireTypes()
+    {
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Direct fires" ).ascii(), "direct" )
+            ( tools::translate( "ScoreDef", "Indirect fires" ).ascii(), "indirect" );
+    }
+
+    std::map< std::string, std::string > Fratricide()
+    {
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Not fratricide fires" ).ascii(), "false" )
+            ( tools::translate( "ScoreDef", "Fratricide fires" ).ascii(), "true" );
+    }
+
     std::map< std::string, std::string > HumanStates()
     {
         return boost::assign::map_list_of( tools::translate( "ScoreDef", "Total" ).ascii(), "total" )
@@ -217,20 +264,17 @@ namespace
             ( tools::translate( "ScoreDef", "In maintenance" ).ascii(), "in-maintenance" );
     }
 
-   std::map< std::string, std::string > HumanRanks()
+    std::map< std::string, std::string > HumanRanks()
     {
         return boost::assign::map_list_of( tools::translate( "ScoreDef", "Officer" ).ascii(), "officer" )
             ( tools::translate( "ScoreDef", "Sub officer" ).ascii(), "sub-officer" )
             ( tools::translate( "ScoreDef", "Troopers" ).ascii(), "troopers" );
     }
 
-   std::map< std::string, std::string > EquipmentStates()
+    std::map< std::string, std::string > MaintenanceTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Available" ).ascii(), "available" )
-            ( tools::translate( "ScoreDef", "Unavailable" ).ascii(), "unavailable" )
-            ( tools::translate( "ScoreDef", "Repairable" ).ascii(), "repairable" )
-            ( tools::translate( "ScoreDef", "Repairing" ).ascii(), "repairing" )
-            ( tools::translate( "ScoreDef", "Prisoner" ).ascii(), "prisoner" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Repairers" ).ascii(), "repairers" )
+            ( tools::translate( "ScoreDef", "Haulers" ).ascii(), "haulers" );
     }
 
    std::map< std::string, std::string > PerceptionLevels()
@@ -241,6 +285,20 @@ namespace
             ( tools::translate( "ScoreDef", "Identified" ).ascii(), "identified" )
             ( tools::translate( "ScoreDef", "Recorded" ).ascii(), "recorded" );
     }
+
+   std::map< std::string, std::string > PopulationStates()
+   {
+       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).ascii(), "healthy" )
+           ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
+           ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" );
+   }
+
+   std::map< std::string, std::string > SatisfactionTypes()
+   {
+       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Lodging" ).ascii(), "lodging" )
+           ( tools::translate( "ScoreDef", "Health" ).ascii(), "health" )
+           ( tools::translate( "ScoreDef", "Safety" ).ascii(), "safety" );
+   }
 }
 
 // -----------------------------------------------------------------------------
@@ -266,20 +324,36 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
             result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
         else if( type == "equipment list" )
             result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
+        else if( type == "urban block list" )
+            result.reset( new actions::gui::ParamUrbanBlockList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
         else if( type == "zone" )
         {
             std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
             location->SetShapeFilter( false, false, true, true, false );
             result.reset( location.release() );
         }
+        else if( type == "ambulance types" )
+            result.reset( new ParamStringEnumeration( this, tr( "Ambulance types" ), parameter, AmbulanceTypes() ) );
+        else if( type == "crowd states" )
+            result.reset( new ParamStringEnumeration( this, tr( "Crowd states" ), parameter, CrowdStates() ) );
+        else if( type == "equipment states" )
+            result.reset( new ParamStringEnumeration( this, tr( "Equipment states" ), parameter, EquipmentStates() ) );
+        else if( type == "fire types" )
+            result.reset( new ParamStringEnumeration( this, tr( "Fire types" ), parameter, FireTypes() ) );
+        else if( type == "fratricide" )
+            result.reset( new ParamStringEnumeration( this, tr( "Fratricide fire" ), parameter, Fratricide() ) );
         else if( type == "human states" )
             result.reset( new ParamStringEnumeration( this, tr( "Human states" ), parameter, HumanStates() ) );
         else if( type == "human ranks" )
             result.reset( new ParamStringEnumeration( this, tr( "Human ranks" ), parameter, HumanRanks() ) );
-        else if( type == "equipment states" )
-            result.reset( new ParamStringEnumeration( this, tr( "Equipment states" ), parameter, EquipmentStates() ) );
+        else if( type == "maintenance types" )
+            result.reset( new ParamStringEnumeration( this, tr( "Maintenance types" ), parameter, MaintenanceTypes() ) );
+        else if( type == "population states" )
+            result.reset( new ParamStringEnumeration( this, tr( "Population states" ), parameter, PopulationStates() ) );
         else if( type == "perception levels" )
             result.reset( new ParamStringEnumeration( this, tr( "Perception levels" ), parameter, PerceptionLevels() ) );
+        else if( type == "satisfaction types" )
+            result.reset( new ParamStringEnumeration( this, tr( "Satisfaction types" ), parameter, SatisfactionTypes() ) );
     }
     return result;
 }

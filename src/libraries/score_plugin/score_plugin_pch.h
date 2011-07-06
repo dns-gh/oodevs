@@ -12,5 +12,6 @@
 
 #include <memory>
 #include <string>
+#include <stdexcept>
 
 #endif // __score_plugin_pch_h_
