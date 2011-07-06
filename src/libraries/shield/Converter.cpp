@@ -64,9 +64,8 @@ using namespace shield;
 // Name: Converter constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Converter::Converter( const std::string& from, Server_ABC& server, Client_ABC& client, ClientListener_ABC& listener )
-    : from_    ( from )
-    , server_  ( server )
+Converter::Converter( Server_ABC& server, Client_ABC& client, ClientListener_ABC& listener )
+    : server_  ( server )
     , client_  ( client )
     , listener_( listener )
 {
@@ -105,7 +104,7 @@ namespace
 // Name: Converter::ReceiveAarToClient
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveAarToClient( const std::string& /*from*/, const sword::AarToClient& msg )
+void Converter::ReceiveAarToClient( const sword::AarToClient& msg )
 {
     MsgsAarToClient::MsgAarToClient out;
     FORWARD( client_, AarToClient, aar_information )
@@ -118,7 +117,7 @@ void Converter::ReceiveAarToClient( const std::string& /*from*/, const sword::Aa
 // Name: Converter::ReceiveAuthenticationToClient
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveAuthenticationToClient( const std::string& /*from*/, const sword::AuthenticationToClient& msg )
+void Converter::ReceiveAuthenticationToClient( const sword::AuthenticationToClient& msg )
 {
     MsgsAuthenticationToClient::MsgAuthenticationToClient out;
     FORWARD( client_, AuthenticationToClient, authentication_response )
@@ -135,7 +134,7 @@ void Converter::ReceiveAuthenticationToClient( const std::string& /*from*/, cons
 // Name: Converter::ReceiveDispatcherToClient
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveDispatcherToClient( const std::string& /*from*/, const sword::DispatcherToClient& msg )
+void Converter::ReceiveDispatcherToClient( const sword::DispatcherToClient& msg )
 {
     MsgsDispatcherToClient::MsgDispatcherToClient out;
     if( msg.message().has_services_description() )
@@ -151,7 +150,7 @@ void Converter::ReceiveDispatcherToClient( const std::string& /*from*/, const sw
 // Name: Converter::ReceiveMessengerToClient
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveMessengerToClient( const std::string& /*from*/, const sword::MessengerToClient& msg )
+void Converter::ReceiveMessengerToClient( const sword::MessengerToClient& msg )
 {
     MsgsMessengerToClient::MsgMessengerToClient out;
     FORWARD( client_, MessengerToClient, shape_creation )
@@ -177,7 +176,7 @@ void Converter::ReceiveMessengerToClient( const std::string& /*from*/, const swo
 // Name: Converter::ReceiveReplayToClient
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveReplayToClient( const std::string& /*from*/, const sword::ReplayToClient& msg )
+void Converter::ReceiveReplayToClient( const sword::ReplayToClient& msg )
 {
     MsgsReplayToClient::MsgReplayToClient out;
     FORWARD( client_, ReplayToClient, control_replay_information )
@@ -193,7 +192,7 @@ void Converter::ReceiveReplayToClient( const std::string& /*from*/, const sword:
 // Name: Converter::ReceiveSimToClient
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::SimToClient& msg )
+void Converter::ReceiveSimToClient( const sword::SimToClient& msg )
 {
     MsgsSimToClient::MsgSimToClient out;
     if( msg.message().has_order_ack() )
@@ -345,7 +344,7 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
 // Name: Converter::ReceiveLauncherToAdmin
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void Converter::ReceiveLauncherToAdmin( const std::string& /*from*/, const sword::LauncherToAdmin& msg )
+void Converter::ReceiveLauncherToAdmin( const sword::LauncherToAdmin& msg )
 {
     MsgsLauncherToAdmin::MsgLauncherToAdmin out;
     FORWARD( client_, LauncherToAdmin, connection_response )
@@ -370,146 +369,128 @@ void Converter::ReceiveLauncherToAdmin( const std::string& /*from*/, const sword
 // Name: Converter::ReceiveClientToAar
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveClientToAar( const std::string& from, const MsgsClientToAar::MsgClientToAar& msg )
+void Converter::ReceiveClientToAar( const MsgsClientToAar::MsgClientToAar& msg )
 {
-    if( from == from_ )
+    sword::ClientToAar out;
+    if( msg.message().has_plot_request() )
     {
-        sword::ClientToAar out;
-        if( msg.message().has_plot_request() )
+        if( msg.has_context() )
+            out.set_context( msg.context() );
+        out.mutable_message()->mutable_plot_request()->set_identifier( msg.message().plot_request().identifier() );
+        out.mutable_message()->mutable_plot_request()->set_request( msg.message().plot_request().request() );
+        if( msg.message().plot_request().has_time_range() )
         {
-            if( msg.has_context() )
-                out.set_context( msg.context() );
-            out.mutable_message()->mutable_plot_request()->set_identifier( msg.message().plot_request().identifier() );
-            out.mutable_message()->mutable_plot_request()->set_request( msg.message().plot_request().request() );
-            if( msg.message().plot_request().has_time_range() )
-            {
-                out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_begin_tick( msg.message().plot_request().time_range().begin_tick() );
-                out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_end_tick( msg.message().plot_request().time_range().end_tick() );
-            }
-            server_.Send( out );
-            return;
+            out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_begin_tick( msg.message().plot_request().time_range().begin_tick() );
+            out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_end_tick( msg.message().plot_request().time_range().end_tick() );
         }
-        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
+        server_.Send( out );
+        return;
     }
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Converter::ReceiveClientToAuthentication
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveClientToAuthentication( const std::string& from, const MsgsClientToAuthentication::MsgClientToAuthentication& msg )
+void Converter::ReceiveClientToAuthentication( const MsgsClientToAuthentication::MsgClientToAuthentication& msg )
 {
-    if( from == from_ )
-    {
-        sword::ClientToAuthentication out;
-        FORWARD( server_, ClientToAuthentication, authentication_request )
-        FORWARD( server_, ClientToAuthentication, profile_creation_request )
-        FORWARD( server_, ClientToAuthentication, profile_update_request )
-        FORWARD( server_, ClientToAuthentication, profile_destruction_request )
-        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
-    }
+    sword::ClientToAuthentication out;
+    FORWARD( server_, ClientToAuthentication, authentication_request )
+    FORWARD( server_, ClientToAuthentication, profile_creation_request )
+    FORWARD( server_, ClientToAuthentication, profile_update_request )
+    FORWARD( server_, ClientToAuthentication, profile_destruction_request )
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Converter::ReceiveClientToMessenger
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveClientToMessenger( const std::string& from, const MsgsClientToMessenger::MsgClientToMessenger& msg )
+void Converter::ReceiveClientToMessenger( const MsgsClientToMessenger::MsgClientToMessenger& msg )
 {
-    if( from == from_ )
-    {
-        sword::ClientToMessenger out;
-        FORWARD( server_, ClientToMessenger, shape_creation_request )
-        FORWARD( server_, ClientToMessenger, shape_update_request )
-        FORWARD( server_, ClientToMessenger, shape_destruction_request )
-        FORWARD( server_, ClientToMessenger, marker_creation_request )
-        FORWARD( server_, ClientToMessenger, marker_update_request )
-        FORWARD( server_, ClientToMessenger, marker_destruction_request )
-        FORWARD( server_, ClientToMessenger, client_object_creation_request )
-        FORWARD( server_, ClientToMessenger, client_object_update_request )
-        FORWARD( server_, ClientToMessenger, client_object_destruction_request )
-        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
-    }
+    sword::ClientToMessenger out;
+    FORWARD( server_, ClientToMessenger, shape_creation_request )
+    FORWARD( server_, ClientToMessenger, shape_update_request )
+    FORWARD( server_, ClientToMessenger, shape_destruction_request )
+    FORWARD( server_, ClientToMessenger, marker_creation_request )
+    FORWARD( server_, ClientToMessenger, marker_update_request )
+    FORWARD( server_, ClientToMessenger, marker_destruction_request )
+    FORWARD( server_, ClientToMessenger, client_object_creation_request )
+    FORWARD( server_, ClientToMessenger, client_object_update_request )
+    FORWARD( server_, ClientToMessenger, client_object_destruction_request )
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Converter::ReceiveClientToReplay
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveClientToReplay( const std::string& from, const MsgsClientToReplay::MsgClientToReplay& msg )
+void Converter::ReceiveClientToReplay( const MsgsClientToReplay::MsgClientToReplay& msg )
 {
-    if( from == from_ )
+    sword::ClientToReplay out;
+    if( msg.message().has_control_skip_to_tick() )
     {
-        sword::ClientToReplay out;
-        if( msg.message().has_control_skip_to_tick() )
-        {
-            if( msg.has_context() )
-                out.set_context( msg.context() );
-            out.mutable_message()->mutable_control_skip_to_tick()->set_tick( msg.message().control_skip_to_tick().tick() );
-            server_.Send( out );
-            return;
-        }
-        FORWARD( server_, ClientToSimulation, control_change_time_factor )
-        FORWARD( server_, ClientToSimulation, control_stop )
-        FORWARD( server_, ClientToSimulation, control_pause )
-        FORWARD( server_, ClientToSimulation, control_resume )
-        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
+        if( msg.has_context() )
+            out.set_context( msg.context() );
+        out.mutable_message()->mutable_control_skip_to_tick()->set_tick( msg.message().control_skip_to_tick().tick() );
+        server_.Send( out );
+        return;
     }
+    FORWARD( server_, ClientToSimulation, control_change_time_factor )
+    FORWARD( server_, ClientToSimulation, control_stop )
+    FORWARD( server_, ClientToSimulation, control_pause )
+    FORWARD( server_, ClientToSimulation, control_resume )
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Converter::ReceiveClientToSim
 // Created: MCO 2010-10-26
 // -----------------------------------------------------------------------------
-void Converter::ReceiveClientToSim( const std::string& from, const MsgsClientToSim::MsgClientToSim& msg )
+void Converter::ReceiveClientToSim( const MsgsClientToSim::MsgClientToSim& msg )
 {
-    if( from == from_ )
-    {
-        sword::ClientToSim out;
-        FORWARD( server_, ClientToSimulation, control_change_time_factor )
-        FORWARD( server_, ClientToSimulation, control_stop )
-        FORWARD( server_, ClientToSimulation, control_pause )
-        FORWARD( server_, ClientToSimulation, control_resume )
-        FORWARD( server_, ClientToSimulation, control_date_time_change )
-        FORWARD( server_, ClientToSimulation, control_checkpoint_save_now )
-        FORWARD( server_, ClientToSimulation, control_checkpoint_set_frequency )
-        FORWARD( server_, ClientToSimulation, control_toggle_vision_cones )
-        FORWARD( server_, ClientToSimulation, unit_order )
-        FORWARD( server_, ClientToSimulation, automat_order )
-        FORWARD( server_, ClientToSimulation, crowd_order )
-        FORWARD( server_, ClientToSimulation, frag_order )
-        FORWARD( server_, ClientToSimulation, set_automat_mode )
-        FORWARD( server_, ClientToSimulation, unit_magic_action )
-        FORWARD( server_, ClientToSimulation, object_magic_action )
-        FORWARD( server_, ClientToSimulation, knowledge_magic_action )
-        FORWARD( server_, ClientToSimulation, magic_action )
-        FORWARD( server_, ClientToSimulation, control_checkpoint_list_request )
-        FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
-        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
-    }
+    sword::ClientToSim out;
+    FORWARD( server_, ClientToSimulation, control_change_time_factor )
+    FORWARD( server_, ClientToSimulation, control_stop )
+    FORWARD( server_, ClientToSimulation, control_pause )
+    FORWARD( server_, ClientToSimulation, control_resume )
+    FORWARD( server_, ClientToSimulation, control_date_time_change )
+    FORWARD( server_, ClientToSimulation, control_checkpoint_save_now )
+    FORWARD( server_, ClientToSimulation, control_checkpoint_set_frequency )
+    FORWARD( server_, ClientToSimulation, control_toggle_vision_cones )
+    FORWARD( server_, ClientToSimulation, unit_order )
+    FORWARD( server_, ClientToSimulation, automat_order )
+    FORWARD( server_, ClientToSimulation, crowd_order )
+    FORWARD( server_, ClientToSimulation, frag_order )
+    FORWARD( server_, ClientToSimulation, set_automat_mode )
+    FORWARD( server_, ClientToSimulation, unit_magic_action )
+    FORWARD( server_, ClientToSimulation, object_magic_action )
+    FORWARD( server_, ClientToSimulation, knowledge_magic_action )
+    FORWARD( server_, ClientToSimulation, magic_action )
+    FORWARD( server_, ClientToSimulation, control_checkpoint_list_request )
+    FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Converter::ReceiveAdminToLauncher
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void Converter::ReceiveAdminToLauncher( const std::string& from, const MsgsAdminToLauncher::MsgAdminToLauncher& msg )
+void Converter::ReceiveAdminToLauncher( const MsgsAdminToLauncher::MsgAdminToLauncher& msg )
 {
-    if( from == from_ )
-    {
-        sword::AdminToLauncher out;
-        FORWARD( server_, AdminToLauncher, connection_request )
-        FORWARD( server_, AdminToLauncher, session_start_request )
-        FORWARD( server_, AdminToLauncher, session_stop_request )
-        FORWARD( server_, AdminToLauncher, exercise_list_request )
-        FORWARD( server_, AdminToLauncher, session_list_request )
-        FORWARD( server_, AdminToLauncher, profile_list_request )
-        FORWARD( server_, AdminToLauncher, connected_profile_list_request )
-        FORWARD( server_, AdminToLauncher, session_parameter_change_request )
-        FORWARD( server_, AdminToLauncher, session_command_execution_request )
-        FORWARD( server_, AdminToLauncher, checkpoint_list_request )
-        FORWARD( server_, AdminToLauncher, checkpoint_delete_request )
-        FORWARD( server_, AdminToLauncher, session_notification )
-        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
-    }
+    sword::AdminToLauncher out;
+    FORWARD( server_, AdminToLauncher, connection_request )
+    FORWARD( server_, AdminToLauncher, session_start_request )
+    FORWARD( server_, AdminToLauncher, session_stop_request )
+    FORWARD( server_, AdminToLauncher, exercise_list_request )
+    FORWARD( server_, AdminToLauncher, session_list_request )
+    FORWARD( server_, AdminToLauncher, profile_list_request )
+    FORWARD( server_, AdminToLauncher, connected_profile_list_request )
+    FORWARD( server_, AdminToLauncher, session_parameter_change_request )
+    FORWARD( server_, AdminToLauncher, session_command_execution_request )
+    FORWARD( server_, AdminToLauncher, checkpoint_list_request )
+    FORWARD( server_, AdminToLauncher, checkpoint_delete_request )
+    FORWARD( server_, AdminToLauncher, session_notification )
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }

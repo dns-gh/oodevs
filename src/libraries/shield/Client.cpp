@@ -9,7 +9,7 @@
 
 #include "Client.h"
 #include "ClientListener_ABC.h"
-#include "DebugInfo_ABC.h"
+#include "Logger.h"
 #pragma warning( push, 0 )
 #include "proto/ClientToAar.pb.h"
 #include "proto/ClientToAuthentication.pb.h"
@@ -31,52 +31,12 @@ using namespace shield;
 
 namespace
 {
-    template< typename T >
-    class DebugInfo : public DebugInfo_ABC
-    {
-    public:
-        DebugInfo( const char* prefix, const T& message )
-            : prefix_  ( prefix )
-            , pMessage_( &message )
-        {}
-        virtual void Serialize( std::ostream& s ) const
-        {
-            s << prefix_ << pMessage_->ShortDebugString();
-        }
-    private:
-        const char* prefix_;
-        const T* pMessage_;
-    };
-
-    template< typename T >
-    class Logger
-    {
-    private:
-        typedef boost::function< void( const std::string&, const T& ) > T_Callback;
-
-    public:
-        Logger( ClientListener_ABC& listener, T_Callback callback )
-            : pListener_( &listener )
-            , callback_ ( callback )
-        {}
-
-        void operator()( const std::string& link, const T& message ) const
-        {
-            pListener_->Debug( DebugInfo< T >( "Shield received : ", message ) );
-            callback_( link, message );
-        }
-
-    private:
-        ClientListener_ABC* pListener_;
-        T_Callback callback_;
-    };
-
     template< typename C, typename T >
     boost::function< void( const std::string&, const T& ) > MakeLogger(
         ClientListener_ABC& listener,
-        C& instance, void (C::*callback)( const std::string&, const T& ) )
+        C& instance, void (C::*callback)( const T& ) )
     {
-        return Logger< T >( listener, boost::bind( callback, &instance, _1, _2 ) );
+        return Logger< T >( listener, boost::bind( callback, &instance, _2 ) );
     }
 }
 
@@ -84,13 +44,13 @@ namespace
 // Name: Client constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Client::Client( const std::string& host, const std::string& from, tools::MessageSender_ABC& sender,
-                tools::MessageDispatcher_ABC& dispatcher, ClientListener_ABC& listener )
+Client::Client( const std::string& host, const std::string& from,
+                tools::MessageSender_ABC& sender, ClientListener_ABC& listener )
     : tools::ClientNetworker( host )
     , from_     ( from )
     , sender_   ( sender )
     , listener_ ( listener )
-    , converter_( from, *this, *this, listener )
+    , converter_( *this, *this, listener )
 {
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveSimToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAuthenticationToClient ) );
@@ -99,12 +59,6 @@ Client::Client( const std::string& host, const std::string& from, tools::Message
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveReplayToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAarToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveLauncherToAdmin ) );
-    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToAar ) );
-    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToAuthentication ) );
-    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToMessenger ) );
-    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToReplay ) );
-    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToSim ) );
-    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAdminToLauncher ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,6 +68,60 @@ Client::Client( const std::string& host, const std::string& from, tools::Message
 Client::~Client()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::ReceiveClientToAar
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Client::ReceiveClientToAar( const MsgsClientToAar::MsgClientToAar& msg )
+{
+    converter_.ReceiveClientToAar( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::ReceiveClientToAuthentication
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Client::ReceiveClientToAuthentication( const MsgsClientToAuthentication::MsgClientToAuthentication& msg )
+{
+    converter_.ReceiveClientToAuthentication( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::ReceiveClientToMessenger
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Client::ReceiveClientToMessenger( const MsgsClientToMessenger::MsgClientToMessenger& msg )
+{
+    converter_.ReceiveClientToMessenger( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::ReceiveClientToReplay
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Client::ReceiveClientToReplay( const MsgsClientToReplay::MsgClientToReplay& msg )
+{
+    converter_.ReceiveClientToReplay( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::ReceiveClientToSim
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Client::ReceiveClientToSim( const MsgsClientToSim::MsgClientToSim& msg )
+{
+    converter_.ReceiveClientToSim( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::ReceiveAdminToLauncher
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Client::ReceiveAdminToLauncher( const MsgsAdminToLauncher::MsgAdminToLauncher& msg )
+{
+    converter_.ReceiveAdminToLauncher( msg );
 }
 
 // -----------------------------------------------------------------------------

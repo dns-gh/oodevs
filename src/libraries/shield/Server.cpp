@@ -9,10 +9,37 @@
 
 #include "Server.h"
 #include "Client.h"
+#include "Logger.h"
 #include "Listener_ABC.h"
+#pragma warning( push, 0 )
+#include "shield/proto/AarToClient.pb.h"
+#include "shield/proto/AuthenticationToClient.pb.h"
+#include "shield/proto/DispatcherToClient.pb.h"
+#include "shield/proto/MessengerToClient.pb.h"
+#include "shield/proto/ReplayToClient.pb.h"
+#include "shield/proto/SimToClient.pb.h"
+#include "shield/proto/LauncherToAdmin.pb.h"
+#include "shield/proto/ClientToAar.pb.h"
+#include "shield/proto/ClientToAuthentication.pb.h"
+#include "shield/proto/ClientToMessenger.pb.h"
+#include "shield/proto/ClientToReplay.pb.h"
+#include "shield/proto/ClientToSim.pb.h"
+#include "shield/proto/AdminToLauncher.pb.h"
+#pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
 using namespace shield;
+
+namespace
+{
+    template< typename C, typename T >
+    boost::function< void( const std::string&, const T& ) > MakeLogger(
+        ClientListener_ABC& listener, C& instance,
+        void (C::*callback)( const std::string&, const T& ) )
+    {
+        return Logger< T >( listener, boost::bind( callback, &instance, _1, _2 ) );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Server constructor
@@ -24,6 +51,12 @@ Server::Server( unsigned short port, const std::string& host, Listener_ABC& list
     , listener_( listener )
 {
     listener_.Info( "Starting shield server on port " + boost::lexical_cast< std::string >( port ) );
+    RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToAar ) );
+    RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToAuthentication ) );
+    RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToMessenger ) );
+    RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToReplay ) );
+    RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToSim ) );
+    RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveAdminToLauncher ) );
     AllowConnections();
 }
 
@@ -57,7 +90,7 @@ void Server::Update()
 void Server::ConnectionSucceeded( const std::string& from )
 {
     clients_.erase( from );
-    boost::shared_ptr< Client > client( new Client( host_, from, *this, *this, *this ) );
+    boost::shared_ptr< Client > client( new Client( host_, from, *this, *this ) );
     clients_.insert( std::make_pair( from, client ) );
     listener_.Info( "Shield proxy received connection from " + from );
     tools::ServerNetworker::ConnectionSucceeded( from );
@@ -113,4 +146,70 @@ void Server::Error( const std::string& from, const std::string& message )
 void Server::Debug( const DebugInfo_ABC& info )
 {
     listener_.Debug( info );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Server::ReceiveClientToAar
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Server::ReceiveClientToAar( const std::string& from, const MsgsClientToAar::MsgClientToAar& msg )
+{
+    CIT_Clients it = clients_.find( from );
+    if( it != clients_.end() )
+        it->second->ReceiveClientToAar( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Server::ReceiveClientToAuthentication
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Server::ReceiveClientToAuthentication( const std::string& from, const MsgsClientToAuthentication::MsgClientToAuthentication& msg )
+{
+    CIT_Clients it = clients_.find( from );
+    if( it != clients_.end() )
+        it->second->ReceiveClientToAuthentication( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Server::ReceiveClientToMessenger
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Server::ReceiveClientToMessenger( const std::string& from, const MsgsClientToMessenger::MsgClientToMessenger& msg )
+{
+    CIT_Clients it = clients_.find( from );
+    if( it != clients_.end() )
+        it->second->ReceiveClientToMessenger( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Server::ReceiveClientToReplay
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Server::ReceiveClientToReplay( const std::string& from, const MsgsClientToReplay::MsgClientToReplay& msg )
+{
+    CIT_Clients it = clients_.find( from );
+    if( it != clients_.end() )
+        it->second->ReceiveClientToReplay( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Server::ReceiveClientToSim
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Server::ReceiveClientToSim( const std::string& from, const MsgsClientToSim::MsgClientToSim& msg )
+{
+    CIT_Clients it = clients_.find( from );
+    if( it != clients_.end() )
+        it->second->ReceiveClientToSim( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Server::ReceiveAdminToLauncher
+// Created: MCO 2011-07-06
+// -----------------------------------------------------------------------------
+void Server::ReceiveAdminToLauncher( const std::string& from, const MsgsAdminToLauncher::MsgAdminToLauncher& msg )
+{
+    CIT_Clients it = clients_.find( from );
+    if( it != clients_.end() )
+        it->second->ReceiveAdminToLauncher( msg );
 }

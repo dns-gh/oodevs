@@ -17,5 +17,5 @@ BOOST_FIXTURE_TEST_CASE( services_description_to_client_is_converted, MessageFix
     content.mutable_services_description()->add_services( "service 1" );
     content.mutable_services_description()->add_services( "service 2" );
     MOCK_EXPECT( client, SendDispatcherToClient ).once().with( constraint( msg, "message { services_description { services: \"service 1\" services: \"service 2\" } }" ) );
-    converter.ReceiveDispatcherToClient( "unused endpoint", msg );
+    converter.ReceiveDispatcherToClient( msg );
 }

@@ -15,6 +15,36 @@
 #include <boost/shared_ptr.hpp>
 #include <map>
 
+namespace MsgsClientToAar
+{
+    class MsgClientToAar;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+
+namespace MsgsClientToReplay
+{
+    class MsgClientToReplay;
+}
+
+namespace MsgsClientToAuthentication
+{
+    class MsgClientToAuthentication;
+}
+
+namespace MsgsClientToMessenger
+{
+    class MsgClientToMessenger;
+}
+
+namespace MsgsAdminToLauncher
+{
+    class MsgAdminToLauncher;
+}
+
 namespace shield
 {
     class Listener_ABC;
@@ -50,6 +80,16 @@ private:
     virtual void Info( const std::string& message );
     virtual void Error( const std::string& from, const std::string& message );
     virtual void Debug( const DebugInfo_ABC& info );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReceiveClientToAar           ( const std::string& from, const MsgsClientToAar::MsgClientToAar& msg );
+    void ReceiveClientToAuthentication( const std::string& from, const MsgsClientToAuthentication::MsgClientToAuthentication& msg );
+    void ReceiveClientToMessenger     ( const std::string& from, const MsgsClientToMessenger::MsgClientToMessenger& msg );
+    void ReceiveClientToReplay        ( const std::string& from, const MsgsClientToReplay::MsgClientToReplay& msg );
+    void ReceiveClientToSim           ( const std::string& from, const MsgsClientToSim::MsgClientToSim& msg );
+    void ReceiveAdminToLauncher       ( const std::string& from, const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
     //@}
 
 private:

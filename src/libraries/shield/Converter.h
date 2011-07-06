@@ -60,26 +60,26 @@ class Converter : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Converter( const std::string& from, Server_ABC& server, Client_ABC& client, ClientListener_ABC& listener );
+             Converter( Server_ABC& server, Client_ABC& client, ClientListener_ABC& listener );
     virtual ~Converter();
     //@}
 
     //! @name Operations
     //@{
-    void ReceiveAarToClient           ( const std::string& from, const sword::AarToClient& msg );
-    void ReceiveAuthenticationToClient( const std::string& from, const sword::AuthenticationToClient& msg );
-    void ReceiveDispatcherToClient    ( const std::string& from, const sword::DispatcherToClient& msg );
-    void ReceiveMessengerToClient     ( const std::string& from, const sword::MessengerToClient& msg );
-    void ReceiveReplayToClient        ( const std::string& from, const sword::ReplayToClient& msg );
-    void ReceiveSimToClient           ( const std::string& from, const sword::SimToClient& msg );
-    void ReceiveLauncherToAdmin       ( const std::string& from, const sword::LauncherToAdmin& msg );
+    void ReceiveAarToClient           ( const sword::AarToClient& msg );
+    void ReceiveAuthenticationToClient( const sword::AuthenticationToClient& msg );
+    void ReceiveDispatcherToClient    ( const sword::DispatcherToClient& msg );
+    void ReceiveMessengerToClient     ( const sword::MessengerToClient& msg );
+    void ReceiveReplayToClient        ( const sword::ReplayToClient& msg );
+    void ReceiveSimToClient           ( const sword::SimToClient& msg );
+    void ReceiveLauncherToAdmin       ( const sword::LauncherToAdmin& msg );
 
-    void ReceiveClientToAar           ( const std::string& from, const MsgsClientToAar::MsgClientToAar& msg );
-    void ReceiveClientToAuthentication( const std::string& from, const MsgsClientToAuthentication::MsgClientToAuthentication& msg );
-    void ReceiveClientToMessenger     ( const std::string& from, const MsgsClientToMessenger::MsgClientToMessenger& msg );
-    void ReceiveClientToReplay        ( const std::string& from, const MsgsClientToReplay::MsgClientToReplay& msg );
-    void ReceiveClientToSim           ( const std::string& from, const MsgsClientToSim::MsgClientToSim& msg );
-    void ReceiveAdminToLauncher       ( const std::string& from, const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
+    void ReceiveClientToAar           ( const MsgsClientToAar::MsgClientToAar& msg );
+    void ReceiveClientToAuthentication( const MsgsClientToAuthentication::MsgClientToAuthentication& msg );
+    void ReceiveClientToMessenger     ( const MsgsClientToMessenger::MsgClientToMessenger& msg );
+    void ReceiveClientToReplay        ( const MsgsClientToReplay::MsgClientToReplay& msg );
+    void ReceiveClientToSim           ( const MsgsClientToSim::MsgClientToSim& msg );
+    void ReceiveAdminToLauncher       ( const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
     //@}
 
 private:

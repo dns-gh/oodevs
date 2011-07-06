@@ -73,7 +73,7 @@ namespace shield
     struct Fixture
     {
         Fixture()
-            : converter( "client endpoint", server, client, listener )
+            : converter( server, client, listener )
         {}
         MockServer server;
         MockClient client;

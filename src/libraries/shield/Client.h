@@ -30,9 +30,19 @@ class Client : public tools::ClientNetworker, private Server_ABC, private Client
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( const std::string& host, const std::string& from, tools::MessageSender_ABC& sender,
-                     tools::MessageDispatcher_ABC& dispatcher, ClientListener_ABC& listener );
+             Client( const std::string& host, const std::string& from,
+                     tools::MessageSender_ABC& sender, ClientListener_ABC& listener );
     virtual ~Client();
+    //@}
+
+    //! @name Operations
+    //@{
+    void ReceiveClientToAar           ( const MsgsClientToAar::MsgClientToAar& msg );
+    void ReceiveClientToAuthentication( const MsgsClientToAuthentication::MsgClientToAuthentication& msg );
+    void ReceiveClientToMessenger     ( const MsgsClientToMessenger::MsgClientToMessenger& msg );
+    void ReceiveClientToReplay        ( const MsgsClientToReplay::MsgClientToReplay& msg );
+    void ReceiveClientToSim           ( const MsgsClientToSim::MsgClientToSim& msg );
+    void ReceiveAdminToLauncher       ( const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
     //@}
 
 private:
