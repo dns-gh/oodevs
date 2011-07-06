@@ -11,7 +11,7 @@
 #define __dispatcher_pch_h_
 
 #pragma warning ( push )
-#pragma warning ( disable : 4702 4996 )
+#pragma warning ( disable : 4702 4996 4355 )
 
 #include <limits>
 #include <vector>

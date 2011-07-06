@@ -93,7 +93,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState( unsigned int nCtx ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState( unsigned int /*nCtx*/ ) const
 {
     boost::function< void( DEC_Knowledge_Agent& ) > agentFunctor = boost::bind( &DEC_Knowledge_Agent::SendStateToNewClient, _1 );
     pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( agentFunctor );

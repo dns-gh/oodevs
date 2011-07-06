@@ -636,7 +636,7 @@ namespace
     {
     public:
         FireData( const PHY_DotationCategory& category ) : number_( 0 ), category_( category ) {}
-        virtual void operator()( const PHY_ComposantePion& firer, PHY_Weapon& weapon )
+        virtual void operator()( const PHY_ComposantePion& /*firer*/, PHY_Weapon& weapon )
         {
             number_ += weapon.GetNumberOfDotationPerBurst( category_ );
         }
