@@ -435,6 +435,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( double ) >( boost::bind( &DEC_MiscFunctions::SetCurrentSpeedModificator, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ModulationVitesseMax" ] =
         boost::function< void( double ) >( boost::bind( &DEC_MiscFunctions::SetMaxSpeedModificator, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_GetModulationVitesseMax" ] = &DEC_MiscFunctions::GetMaxSpeedModificator;
+    brain[ "DEC_Agent_GetCurrentSpeed" ] = &DEC_AgentFunctions::GetCurrentSpeed;
     brain[ "DEC_Elongation"      ] =
         boost::function< void( double ) >( boost::bind( &DEC_AgentFunctions::SetElongationFactor, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ReleverPion"     ] =

@@ -969,3 +969,14 @@ double DEC_AgentFunctions::GetRapForLocalAgent( const DEC_Decision_ABC* agent )
 {
     return agent->GetPion().GetKnowledge().GetRapForLocalValue();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetCurrentSpeed
+// Created: LMT 2011-07-05
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetCurrentSpeed( const DEC_Decision_ABC* agent )
+{
+    const PHY_RoleInterface_Location& roleLocation = agent->GetPion().GetRole< PHY_RoleInterface_Location >();
+    return roleLocation.GetCurrentSpeed();
+}

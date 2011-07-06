@@ -60,6 +60,7 @@ public:
     static bool CanActivateObject( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static void EnableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static void DisableDiscreteMode( MIL_Agent_ABC& callerAgent );
+    static double GetCurrentSpeed( const DEC_Decision_ABC* agent );
 
     // Embarquement / débarquement
     static bool IsLoaded( const MIL_Agent_ABC& callerAgent );

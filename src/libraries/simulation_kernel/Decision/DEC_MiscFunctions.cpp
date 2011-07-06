@@ -40,6 +40,16 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, doub
     callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetMaxSpeedModificator
+// Created: LMT 2011-07-06
+// -----------------------------------------------------------------------------
+double DEC_MiscFunctions::GetMaxSpeedModificator( const DEC_Decision_ABC* agent )
+{
+    return agent->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedModificator();
+}
+
 // =============================================================================
 // REINFORCEMENT
 // =============================================================================

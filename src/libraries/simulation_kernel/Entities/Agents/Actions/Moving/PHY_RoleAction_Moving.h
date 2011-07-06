@@ -85,6 +85,7 @@ public:
     double GetTheoricMaxSpeed( bool loaded ) const;
     void SetSpeedModificator( double rFactor );
     void SetMaxSpeedModificator( double rFactor );
+    double GetMaxSpeedModificator();
     //@}
 
     //! @name Network

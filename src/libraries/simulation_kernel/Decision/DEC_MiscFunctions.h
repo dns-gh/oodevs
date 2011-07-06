@@ -78,6 +78,7 @@ public:
     // Misc
     static void SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, double rFactor );
     static void SetMaxSpeedModificator    ( MIL_AgentPion& callerAgent, double rFactor );
+    static double GetMaxSpeedModificator( const DEC_Decision_ABC* agent );
     static unsigned int GetTimeInSeconds();
 
     // Representations

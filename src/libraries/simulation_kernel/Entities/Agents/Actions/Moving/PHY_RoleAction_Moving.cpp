@@ -479,6 +479,15 @@ void PHY_RoleAction_Moving::SetMaxSpeedModificator( double rFactor )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetMaxSpeedModificator
+// Created: LMT 2011-07-06
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetMaxSpeedModificator()
+{
+    return rMaxSpeedModificator_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::Execute
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
