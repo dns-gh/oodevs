@@ -11,6 +11,7 @@
 #include "AfterActionFunctionList.h"
 #include "moc_AfterActionFunctionList.cpp"
 #include "actions/ParameterContainer_ABC.h"
+#include "actions/Parameter_ABC.h"
 #include "actions_gui/ParamAgent.h"
 #include "actions_gui/ParamAgentList.h"
 #include "actions_gui/ParamCrowdList.h"
