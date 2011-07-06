@@ -340,11 +340,14 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestComponentDamages )
 {
     const std::string expected =
         "<indicator>"
-            "<extract components='com,pon,ents' function='fire-component-damage' id='1'/>"
+            "<extract components='com,pon,ents' fire-types='firetypes' fratricide='friendlyfire' function='fire-component-damage' id='1' states='states'/>"
             "<reduce function='sum' id='2' input='1' type='float'/>"
         "</indicator>";
     RegisterVariable( "Components", "equipment list", "com,pon,ents" );
-    ParseAndCheck( "Sum( fire-component-damage( $Components ) )", expected );
+    RegisterVariable( "Equipmentstates", "equipment states", "states" );
+    RegisterVariable( "Firetypes", "fire types", "firetypes" );
+    RegisterVariable( "Fratricidefires", "fratricide", "friendlyfire" );
+    ParseAndCheck( "Sum( fire-component-damage( $Components, $Equipmentstates, $Firetypes, $Fratricidefires ) )", expected );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,13 +363,16 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestInflictedDamageFromDirectFiresFrom
             "<extract function='direct-fire-unit' id='2'/>"
             "<transform function='compose' id='3' input='1,2' type='position'/>"
             "<transform function='contains' id='4' input='$Zone,3' type='bool'/>"
-            "<extract components='com,pon,ents' function='fire-component-damage' id='5'/>"
+            "<extract components='com,pon,ents' fire-types='firetypes' fratricide='friendlyfire' function='fire-component-damage' id='5' states='states'/>"
             "<transform function='filter' id='6' input='4,5' type='float'/>"
             "<reduce function='sum' id='7' input='6' type='float'/>"
         "</indicator>";
     RegisterVariable( "Components", "equipment list", "com,pon,ents" );
+    RegisterVariable( "Equipmentstates", "equipment states", "states" );
+    RegisterVariable( "Firetypes", "fire types", "firetypes" );
+    RegisterVariable( "Fratricidefires", "fratricide", "friendlyfire" );
     RegisterVariable( "Zone", "zone", "circle(00UTM0000000000,00UTM0000000000)" );
-    ParseAndCheck( "Sum( Filter( Contains( $Zone, Compose( position(), direct-fire-unit() ) ), fire-component-damage( $Components ) ) )", expected );
+    ParseAndCheck( "Sum( Filter( Contains( $Zone, Compose( position(), direct-fire-unit() ) ), fire-component-damage( $Components, $Equipmentstates, $Firetypes, $Fratricidefires ) ) )", expected );
 }
 
 // -----------------------------------------------------------------------------
