@@ -14,7 +14,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 
-
 namespace sword
 {
     class UrbanObjectKnowledgeId;

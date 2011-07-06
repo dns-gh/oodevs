@@ -443,7 +443,6 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, b
     return action.release();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::AutomateChangeModeMagicAction
 // Created: FDS 2010-11-23
@@ -702,7 +701,7 @@ actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatTy
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     int knowledgeGroup = 0;
     const kernel::CommunicationHierarchies* hierarchy = selected.Retrieve< kernel::CommunicationHierarchies >();
-    if ( !hierarchy )
+    if( !hierarchy )
     {
         const kernel::TacticalHierarchies& tacticalHierarchy = selected.Get< kernel::TacticalHierarchies >();
         const kernel::Entity_ABC& top = tacticalHierarchy.GetTop();

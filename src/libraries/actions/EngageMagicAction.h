@@ -31,7 +31,6 @@ class EngageMagicAction : public ActionWithTarget_ABC
 {
 public:
 
-
 //! @name Constructors/Destructor
     //@{
              EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, const bool engaged, bool registered = true );

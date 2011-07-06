@@ -303,7 +303,7 @@ bool ListParameter::IsOptional() const
 // -----------------------------------------------------------------------------
 void ListParameter::SetLabel( const QString& label )
 {
-    if ( list_ )
+    if( list_ )
     {
         assert( list_->columns() == 1 );
         list_->setColumnText( 0, label );

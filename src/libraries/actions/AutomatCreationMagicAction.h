@@ -27,7 +27,6 @@ namespace kernel
 
 class AgentServerMsgMgr;
 
-
 namespace actions
 {
 class CreationListener_ABC;

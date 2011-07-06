@@ -72,7 +72,7 @@ template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 {
     Parameter< const ConcreteEntity* >::Serialize( xos );
-    xos << xml::attribute( "value", id_ ); // $$$$ SBO 2007-05-24: 
+    xos << xml::attribute( "value", id_ ); // $$$$ SBO 2007-05-24:
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::NotifyValueSet()
-{    
+{
     if( ! GetValue() )
         isEntityValid_ = false;
     else

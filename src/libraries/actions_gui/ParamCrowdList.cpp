@@ -66,7 +66,6 @@ void ParamCrowdList::CommitTo( actions::ParameterContainer_ABC& action ) const
     action.AddParameter( *param.release() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ParamCrowdList::SetName
 // Created: FPO 2011-05-30

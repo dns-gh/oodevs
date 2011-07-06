@@ -16,7 +16,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-
 using namespace kernel;
 using namespace actions;
 using namespace parameters;
