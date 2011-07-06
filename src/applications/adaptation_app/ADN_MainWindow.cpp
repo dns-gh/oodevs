@@ -116,7 +116,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
 {
     generalConfig_->Parse( qApp->argc(), qApp->argv() );
     setMinimumSize( 640, 480 );
-    setIcon( MAKE_PIXMAP( application ) );
+    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     setCaption( tr( "Sword Adaptation Tool - No Project" ) );
 }
 
