@@ -27,7 +27,7 @@ Message::Message()
 // Name: Message constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-Message::Message( std::size_t size /*= 0*/ )
+Message::Message( std::size_t size )
     : readOffset_( 0 )
     , data_      ( new T_Data( size ) )
 {
@@ -60,6 +60,8 @@ Message& Message::operator >>( unsigned long& n )
 // -----------------------------------------------------------------------------
 std::size_t Message::Size() const
 {
+    if( ! data_ )
+        return 0;
     return data_->size() - readOffset_;
 }
 
