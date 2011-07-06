@@ -170,7 +170,7 @@ namespace
         bool bHasFirePropagation_;
     };
 
-    ObjectAttributePrototypeFactory_ABC* FactoryMaker( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
@@ -194,7 +194,7 @@ namespace
         factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1 ) );
         factory->RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders ) );
 
-        return factory;
+        return std::auto_ptr< ObjectAttributePrototypeFactory_ABC >( factory );
     }
 }
 
@@ -203,10 +203,11 @@ namespace
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer )
-: ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, layer, *FactoryMaker( controllers, model.objectTypes_, attributesList_ ) )
-, static_( model )
-, currentActionsModel_( 0 )
-, currentSimulationTime_( 0 )
+    : ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, layer,
+                           CreateFactory( controllers, model.objectTypes_, attributesList_ ) )
+    , static_               ( model )
+    , currentActionsModel_  ( 0 )
+    , currentSimulationTime_( 0 )
 {
     // NOTHING
 }

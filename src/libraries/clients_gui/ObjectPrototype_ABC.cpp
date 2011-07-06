@@ -36,8 +36,10 @@ using namespace gui;
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const kernel::CoordinateConverter_ABC& coordinateConverter, const tools::Resolver_ABC< ObjectType, std::string >& resolver,
-                                         ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory )
+ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers,
+                                         const kernel::CoordinateConverter_ABC& coordinateConverter,
+                                         const tools::Resolver_ABC< ObjectType, std::string >& resolver,
+                                         ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory )
     : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
     , coordinateConverter_( coordinateConverter )
     , controllers_( controllers )

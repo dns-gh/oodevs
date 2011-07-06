@@ -23,10 +23,10 @@ using namespace gui;
 // Name: ObjectAttributePrototypeContainer constructor
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const tools::Resolver_ABC< ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent )
+ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const tools::Resolver_ABC< ObjectType, std::string >& resolver,
+                                                                      std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory, QWidget* parent )
     : factory_ ( factory )
     , resolver_( resolver )
-    , current_ ()
     , parent_  ( parent )
 {
     // NOTHING
@@ -63,8 +63,8 @@ void ObjectAttributePrototypeContainer::Load( const kernel::ObjectType& type )
     {
         std::pair< IT_AttributesPrototypes, bool > result = attributes_.insert( std::make_pair( type.GetType(), new T_AttributeContainer() ) );
         for( kernel::ObjectType::T_Capacities::const_iterator it = type.CapacitiesBegin(); result.second && it != type.CapacitiesEnd(); ++it )
-            factory_.Create( it->first, *it->second, *result.first->second, parent_ );
-        factory_.FinalizeCreate();
+            factory_->Create( it->first, *it->second, *result.first->second, parent_ );
+        factory_->FinalizeCreate();
     }
 }
 

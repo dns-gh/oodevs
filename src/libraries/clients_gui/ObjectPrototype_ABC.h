@@ -59,8 +59,10 @@ class ObjectPrototype_ABC : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& coordinateConverter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver
-                                , ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory );
+             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers,
+                                  const kernel::CoordinateConverter_ABC& coordinateConverter,
+                                  const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver,
+                                  ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory );
     virtual ~ObjectPrototype_ABC();
     //@}
 

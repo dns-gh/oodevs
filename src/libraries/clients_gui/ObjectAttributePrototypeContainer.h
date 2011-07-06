@@ -47,7 +47,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectAttributePrototypeContainer( const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent );
+             ObjectAttributePrototypeContainer( const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver,
+                                                std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory, QWidget* parent );
     virtual ~ObjectAttributePrototypeContainer();
     //@}
 
@@ -87,7 +88,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const ObjectAttributePrototypeFactory_ABC& factory_;
+    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory_;
     const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;
     T_AttributesPrototypes attributes_;
     boost::shared_ptr< T_AttributeContainer > current_;

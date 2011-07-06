@@ -112,18 +112,19 @@ namespace
 {
     struct Serializer : public actions::ParameterContainer_ABC
     {
-        explicit Serializer( const QString& name ) : name_( name ), variable_( 0 ) {}
+        explicit Serializer( const QString& name )
+            : name_( name )
+        {}
         virtual void AddParameter( actions::Parameter_ABC& parameter )
         {
             indicators::DataTypeFactory types;
             std::string value;
             parameter.CommitTo( value );
-            variable_ = new indicators::Variable( name_.ascii(), types.Instanciate( parameter.GetType() ), value );
+            pVariable_.reset( new indicators::Variable( name_.ascii(), types.Instanciate( parameter.GetType() ), value ) );
             delete &parameter;
         }
-
         const QString name_;
-        indicators::Variable* variable_;
+        std::auto_ptr< indicators::Variable > pVariable_;
     };
 }
 
@@ -139,7 +140,7 @@ void ScoreVariableCreationWizard::OnAccept()
         parameter_->RemoveFromController();
     Serializer serializer( name_->text() );
     parameter_->CommitTo( serializer );
-    emit VariableCreated( *serializer.variable_ );
+    emit VariableCreated( *serializer.pVariable_ );
     accept();
 }
 
