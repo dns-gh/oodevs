@@ -527,6 +527,9 @@
         <mission name="GENIE Contourner obstacle">
           <fragorder name="Abandonner travaux"/>
         </mission>
+        <mission name="MELEE Controler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
         <mission name="GENIE Degager Obstacles">
           <fragorder name="Abandonner travaux"/>
         </mission>
@@ -538,6 +541,7 @@
         <mission name="GENIE Realiser Travaux">
           <fragorder name="Abandonner travaux"/>
         </mission>
+        <mission name="GENIE Reconnaitre"/>
         <mission name="GENIE Reconnaitre Site de franchissement"/>
         <mission name="GENIE Reparer">
           <fragorder name="Abandonner travaux"/>
@@ -11856,4 +11860,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3902838564" -->
+<!-- signature="1533824705" -->
