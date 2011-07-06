@@ -1648,7 +1648,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestStocks, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationStates, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='population-states' states='dead' id='populations'/>"
+                             "    <extract function='populations' states='dead' id='populations'/>"
                              "    <transform function='domain' type='int' select='40' input='populations' id='domained-populations'/>"
                              "    <reduce type='int' function='sum' input='domained-populations' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"

@@ -87,6 +87,7 @@ namespace
 CrowdHumanDamages::CrowdHumanDamages( xml::xistream& xis )
     : rankMask_ ( ReadRanks( xis ) )
     , stateMask_( ReadStates( xis ) )
+    , partyFilter_( xis, "party" )
 {
     // NOTHING
 }
@@ -99,6 +100,8 @@ int CrowdHumanDamages::Extract( const sword::SimToClient& wrapper ) const
 {
     const sword::UnitDamagedByCrowdFire& damages = wrapper.message().unit_damaged_by_crowd_fire();
     int result = 0;
+    if( !partyFilter_.IsAllowed( damages.party().id() ) )
+        return 0;
     for( int e = 0; e < damages.humans().elem_size(); ++e )
     {
         const UnitHumanFireDamage& damage = damages.humans().elem( e );

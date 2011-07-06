@@ -75,7 +75,7 @@ namespace
             ( "resources"                             , BuildExtractor< Value, attributes::Resources >() )
             ( "equipments"                            , BuildExtractor< Value, attributes::Equipments >() )
             ( "humans"                                , BuildExtractor< Value, attributes::Humans >() )
-            ( "population-states"                     , BuildExtractor< Value, attributes::PopulationStates >() )
+            ( "populations"                           , BuildExtractor< Value, attributes::PopulationStates >() )
             ( "crowd-states"                          , BuildExtractor< Value, attributes::CrowdStates >() )
             ( "satisfactions"                         , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
             ( "population-in-selected-blocks"         , BuildExtractor< Value, attributes::PopulationUrbanOccupation >() )
