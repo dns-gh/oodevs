@@ -723,6 +723,7 @@
   <weapon-system launcher="56-mm Grenade Launcher" munition="56-mm Explosive Grenade">
     <burst duration="2s" munition="1"/>
     <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="200" max-range="2000" min-range="0"/>
   </weapon-system>
   <weapon-system launcher="56-mm Armoured Vehicle Close Defense Multiple Launcher" munition="56-mm Smoke Grenade">
     <burst duration="30s" munition="1"/>
@@ -901,6 +902,7 @@
   <weapon-system launcher="56-mm Grenade Launcher" munition="56-mm Light Grenade">
     <burst duration="2s" munition="1"/>
     <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="200" max-range="2000" min-range="0"/>
   </weapon-system>
   <weapon-system launcher="81-mm Mortar" munition="81-mm Smoke Shell">
     <burst duration="2s" munition="1"/>
@@ -1355,4 +1357,4 @@
     </direct-fire>
   </weapon-system>
 </weapons>
-<!-- signature="0930691636" -->
+<!-- signature="3451540462" -->
