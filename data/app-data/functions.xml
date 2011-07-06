@@ -699,7 +699,7 @@
       </description>
     </descriptions>
         <parameters>
-      <parameter name='Urban blocks' type='urbanblock list'/>
+      <parameter name='Urban blocks' type='urban block list'/>
     </parameters>
     <indicator>
       <extract function='population-in-selected-blocks' blocks='${Urban blocks}' id='populations'/>
@@ -738,7 +738,7 @@
       </description>
     </descriptions>
     <parameters>
-      <parameter name='Urban blocks' type='urbanblock list'/>
+      <parameter name='Urban blocks' type='urban block list'/>
     </parameters>
     <indicator>
       <extract function='infrastructures-functional-states' id='structural-states'/>
@@ -846,7 +846,7 @@
       </description>
     </descriptions>
     <parameters>
-      <parameter name='Urban blocks' type='urbanblock list'/>
+      <parameter name='Urban blocks' type='urban block list'/>
     </parameters>
     <indicator>
       <extract function='resource-networks-functional-states' id='functional-states'/>

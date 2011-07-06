@@ -222,7 +222,7 @@ boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreatePara
             result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
         else if( type == "equipment list" )
             result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
-        else if( type == "urbanblock list" )
+        else if( type == "urban block list" )
             result.reset( new actions::gui::ParamUrbanBlockList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     }
     return result;
