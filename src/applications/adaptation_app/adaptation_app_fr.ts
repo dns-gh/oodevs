@@ -5398,6 +5398,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Default maximal capacity</source>
         <translation>Capacité maximale par défaut</translation>
     </message>
+    <message>
+        <source>persons/m2</source>
+        <translation>personnes/m2</translation>
+    </message>
 </context>
 <context>
     <name>ADN_WeaponFilter</name>

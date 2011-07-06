@@ -5387,6 +5387,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Emergency bed rate</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>persons/m2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_WeaponFilter</name>

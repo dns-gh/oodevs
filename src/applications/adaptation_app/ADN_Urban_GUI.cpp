@@ -122,8 +122,8 @@ void ADN_Urban_GUI::Build()
     ADN_GuiBuilder builder;
     QWidget* pHolder = builder.AddFieldHolder( pGroupAccommodations );
 
-    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Default nominal capacity" ), data_.defaultNominalCapacity_ );
-    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Default maximal capacity" ), data_.defaultMaxCapacity_ );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Default nominal capacity" ), data_.defaultNominalCapacity_, tr( "persons/m2" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Default maximal capacity" ), data_.defaultMaxCapacity_, tr( "persons/m2" ), eGreaterZero );
 
     QHBox* pGroupAccommodation = new QHBox( pGroupAccommodations );
 
@@ -139,8 +139,8 @@ void ADN_Urban_GUI::Build()
     pHolder = builder.AddFieldHolder( pGroupAccommodations );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
-    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Nominal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationNominalCapacity ] );
-    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Maximal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationMaxCapacity ] );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Nominal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationNominalCapacity ], tr( "persons/m2" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Maximal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationMaxCapacity ], tr( "persons/m2" ), eGreaterZero );
 
     ///////////////////
     // Infrastructures
