@@ -13,6 +13,7 @@
 #include "PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "tools/xmlcodecs.h"
+#include "Tools/MIL_Tools.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
@@ -100,9 +101,10 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     double timeVal, variance;
     if( ! tools::DecodeTime( timeString, timeVal ) || timeVal < 0 )
         xis.error( "average-time not defined or < 0" );
+    timeVal = MIL_Tools::ConvertSecondsToSim( timeVal );
     if( ! tools::DecodeTime( varianceString, variance ) )
         xis.error( "variance is not defined" );
-    neutralizationTime_ = MT_GaussianRandom( timeVal, fabs( variance ) );
+    neutralizationTime_ = MT_GaussianRandom( timeVal, fabs( MIL_Tools::ConvertSecondsToSim( variance ) ) );
 
     if( nType_ == eHuman )
     {

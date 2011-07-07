@@ -336,6 +336,10 @@
         <source>Underground:</source>
         <translation>Sous terre:</translation>
     </message>
+    <message>
+        <source>Info/Neutralized</source>
+        <translation>Info/Neutralisé</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>
