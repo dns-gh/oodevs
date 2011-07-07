@@ -82,14 +82,19 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\geos.dll"
     File "${RUNDIR}\proj.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
-    File "${RUNDIR}\plugins\crossbow\plugin.xml"
-    File "${RUNDIR}\plugins\positions\plugin.xml"
     File "resources\*.ico"
 
     ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
     !endif
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+    ;plugin definitions
+    SetOutPath "$INSTDIR\applications\plugins"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r "${RUNDIR}\plugins\crossbow"
+    File /r "${RUNDIR}\plugins\positions"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;projection settings (used in crossbow)
