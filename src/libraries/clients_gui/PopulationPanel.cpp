@@ -16,7 +16,6 @@
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "DisplayBuilder.h"
-#include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
 #include "ValuedListItem.h"
 #include "ListDisplayer.h"
