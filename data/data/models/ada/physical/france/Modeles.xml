@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Models.xsd">
   <units>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonINF">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -11,7 +11,6 @@
         <mission name="COMMUNES Orienter Refugies Vers Position"/>
         <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
@@ -19,11 +18,9 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Barrer">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler">
           <fragorder name="Abandonner travaux"/>
         </mission>
@@ -35,7 +32,6 @@
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
-        <mission name="MELEE Fouiller"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
         </mission>
@@ -56,7 +52,6 @@
         <mission name="MELEE Relever"/>
         <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer De"/>
-        <mission name="MELEE Appuyer"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE Tenir">
           <fragorder name="Abandonner travaux"/>
@@ -66,7 +61,6 @@
         <mission name="STABILISATION Controler foule"/>
         <mission name="STABILISATION Canaliser foules"/>
         <mission name="STABILISATION Renseigner sur foule"/>
-        <mission name="MELEE S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -104,14 +98,10 @@
         <mission name="COMMUNES Orienter Refugies Vers Position"/>
         <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Appuyer Sur Position"/>
-        <mission name="MELEE Fouiller"/>
-        <mission name="MELEE Appuyer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -360,7 +350,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PC">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.PC">
       <missions>
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
@@ -370,12 +360,13 @@
         <mission name="COMMUNES Orienter Refugies Vers Position"/>
         <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Fouiller"/>
+        <mission name="STABILISATION Animer Poste De Controle"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Interdire foule"/>
         <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
@@ -7844,6 +7835,313 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.MILAN">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
+        <mission name="MELEE Surveiller"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.HOT">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Surveiller"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.Commando">
+      <missions>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
+        <mission name="MELEE Detruire"/>
+        <mission name="MELEE Surveiller"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.Section.PROTERRE">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Boucler"/>
+        <mission name="MELEE Controler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE Escorter"/>
+        <mission name="MELEE Intercepter">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE Surveiller"/>
+        <mission name="MELEE Tenir">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="STABILISATION Animer Poste De Controle"/>
+        <mission name="STABILISATION Interdire foule"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.Groupe.PROTERRE">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Boucler"/>
+        <mission name="MELEE Escorter"/>
+        <mission name="MELEE Intercepter">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE Interdire">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE Surveiller"/>
+        <mission name="MELEE Tenir">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="STABILISATION Animer Poste De Controle"/>
+        <mission name="STABILISATION Interdire foule"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.TE">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Couvrir"/>
+        <mission name="MELEE Harceler">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE Interdire">
+          <fragorder name="Abandonner travaux"/>
+        </mission>
+        <mission name="MELEE S'emparer De"/>
+        <mission name="MELEE Surveiller"/>
+        <mission name="STABILISATION Animer Poste De Controle"/>
+        <mission name="STABILISATION Interdire foule"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
   </units>
   <automats>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.SGTIA">
@@ -11903,4 +12201,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0372925121" -->
+<!-- signature="0218943417" -->
