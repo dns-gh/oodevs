@@ -42,7 +42,7 @@ include "bit.lua"
         self.ePhase = self.ePhase or eRejoindre
         local pionTC2 = DEC_Pion_PcDeTC2()
         --[[// Si on n'a pas de TC2 ni de plot de ravitaillement attribué
-]]if( not DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == nil ) then
+]]if( not DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and pionTC2 == nil ) then
             do return end
         end
 
