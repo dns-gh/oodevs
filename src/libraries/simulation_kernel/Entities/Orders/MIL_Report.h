@@ -488,6 +488,8 @@ public:
         eRC_PasDeDroneDisponible,
         eRC_TerroristNeutralized,
         eRC_MiseEnPlaceProducePoint,
+        eRC_ProduceImpossible,
+        eRC_FinProducePoint,
         eLast
     };
     //@}
