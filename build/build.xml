@@ -1339,7 +1339,8 @@
             <include name="exercises/ValidationTests/Charge/**"/>
             <include name="exercises/ValidationTests/Performance/**"/>
             <include name="exercises/ValidationTests/Validation/**"/>            
-            <include name="data/terrains/Performance/500x1000/**"/>
+            <include name="data/terrains/Performance/500_1000/**"/>
+            <include name="data/terrains/Performance/500_500/**"/>
             <include name="data/terrains/Cabourg/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
