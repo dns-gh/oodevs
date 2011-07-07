@@ -11,10 +11,10 @@
 #define __ParamUrbanBlockList_h_
 
 #include "EntityListParameter.h"
+#include "clients_kernel/Object_ABC.h"
 
 namespace kernel
 {
-    class Object_ABC;
     class OrderParameter;
 }
 

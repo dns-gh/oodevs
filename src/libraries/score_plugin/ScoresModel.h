@@ -12,11 +12,11 @@
 
 #include "dispatcher/Registrable_ABC.h"
 #pragma warning( push, 0 )
+#pragma warning( disable : 4996 )
 #include <qdatetime.h>
 #pragma warning( pop )
-#include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/filesystem/fstream.hpp>
+#include <boost/shared_ptr.hpp>
 #include <vector>
 #include <map>
 
@@ -61,8 +61,8 @@ namespace score
     struct Variable
     {
         Variable( const std::string& name, const std::string& type, const std::string& value )
-            : name_( name )
-            , type_( type )
+            : name_ ( name )
+            , type_ ( type )
             , value_( value )
         {
             // NOTHING
@@ -132,7 +132,7 @@ private:
     bool dateTimeInitialized_;
     unsigned int tickDuration_;
     const std::string sessionDir_;
-    const std::string separator_;
+    static const std::string separator_;
     //@}
 };
 

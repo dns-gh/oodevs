@@ -11,7 +11,6 @@
 #include "ScoreVariableCreationWizard.h"
 #include "moc_ScoreVariableCreationWizard.cpp"
 #include "ParamStringEnumeration.h"
-#include "clients_kernel/Object_ABC.h" // Doit être inclus avant l'include de ParamUrbanBlockList
 #include "actions/Parameter_ABC.h"
 #include "actions/ParameterContainer_ABC.h"
 #include "actions_gui/ParamAgent.h"

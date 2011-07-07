@@ -19,7 +19,7 @@
 #include "protocol/protocol.h"
 #include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/foreach.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
@@ -40,6 +40,8 @@ namespace
     }
 }
 
+const std::string ScoresModel::separator_( ";" );
+
 // -----------------------------------------------------------------------------
 // Name: ScoresModel constructor
 // Created: SBO 2009-08-20
@@ -52,7 +54,6 @@ ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::Client
     , dateTimeInitialized_( false )
     , tickDuration_       ( 0 )
     , sessionDir_         ( config.GetSessionDir() )
-    , separator_          ( ";" )
 {
     // NOTHING
 }
@@ -256,10 +257,10 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
 std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 {
     std::size_t size = 0;
-    file << "Tick" << this->separator_ << "Time";
+    file << "Tick" << separator_ << "Time";
     for( T_Scores::const_iterator score = scores_.begin(); score != scores_.end(); ++score )
     {
-        file << this->separator_ << score->first;
+        file << separator_ << score->first;
         if ( ! size )
             size = score->second->Size();
     }
@@ -273,16 +274,16 @@ std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 // -----------------------------------------------------------------------------
 void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
 {
-    file << index << this->separator_ << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).ascii();
+    file << index << separator_ << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).ascii();
     for( T_Scores::const_iterator score = scores_.begin(); score != scores_.end(); ++score )
     {
         try
         {
-            file << this->separator_ << score->second->GetValue( index );
+            file << separator_ << score->second->GetValue( index );
         }
         catch ( std::exception& /*e*/ )
         {
-            file << this->separator_ << "Invalid score";
+            file << separator_ << "Invalid score";
         }
     }
     file << std::endl;
