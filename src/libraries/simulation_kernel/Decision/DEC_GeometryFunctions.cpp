@@ -1877,7 +1877,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::FindSafet
 // Name: boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetRoadIntersectionsWithZone
 // Created: LDC 2011-06-22
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetRoadIntersectionsWithZone( const TER_Localisation* zone )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetRoadIntersectionsWithZone( const TER_Localisation* /*zone*/ )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     // $$$$ LDC TODO: Needs a function to retrieve all intersections of objects of type road with the polygon.
