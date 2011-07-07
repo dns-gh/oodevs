@@ -560,6 +560,7 @@
         <mission name="Reparer point du reseau"/>
         <mission name="MELEE S'Infiltrer"/>
         <mission name="Produire"/>
+        <mission name="LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7892,6 +7893,7 @@
         <mission name="STABILISATION Interdire foules"/>
         <mission name="STABILISATION Controler foule"/>
         <mission name="STABILISATION Canaliser foule"/>
+        <mission name="MELEE Jalonner"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7930,6 +7932,7 @@
         <mission name="GENIE Reparer"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
+        <mission name="LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -7968,6 +7971,7 @@
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
         <mission name="LOGISTIQUE Transporter"/>
+        <mission name="GENIE Realiser Camps"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -11899,4 +11903,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3687790603" -->
+<!-- signature="0372925121" -->
