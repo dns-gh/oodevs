@@ -133,4 +133,3 @@ static StaticInitImages_example staticImages;
 #include "res/filesave.xpm"
 #include "res/filenew.xpm"
 #include "res/testdata.xpm"
-#include "res/application.xpm"
