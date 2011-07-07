@@ -1192,10 +1192,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic Superior:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cell ignition:  %1/%2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1229,6 +1225,10 @@
     </message>
     <message>
         <source>Altitude modifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic superior:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

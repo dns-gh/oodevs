@@ -76,7 +76,7 @@ void LogisticAttribute::DoUpdate( const sword::ObjectUpdate& message )
 void LogisticAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Camp" ) )
-             .Display( tools::translate( "Object", "Logistic Superior:" ), logisticSuperior_ );
+             .Display( tools::translate( "Object", "Logistic superior:" ), logisticSuperior_ );
 }
 
 // -----------------------------------------------------------------------------

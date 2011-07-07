@@ -49,9 +49,9 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tools::findTranslation( "Object", "Location:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Type:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Construction:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Construction dotation:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Construction resource:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Mining:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Development dotation:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Development resource:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Bypass:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Reserved obstacle activated:" ) )
@@ -65,7 +65,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tools::findTranslation( "Object", "Build river banks:" ) );
 
     display_->AddGroup( tools::findTranslation( "Object", "Camp" ) )
-                .AddLabel( tools::findTranslation( "Object", "TC2:" ) );
+                .AddLabel( tools::findTranslation( "Object", "Logistic superior:" ) );
 
     display_->AddGroup( tools::findTranslation( "NBC", "NBC" ) )
                 .AddLabel( tools::findTranslation( "NBC", "Danger:" ) )

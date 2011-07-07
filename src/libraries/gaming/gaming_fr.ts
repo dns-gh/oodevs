@@ -1192,7 +1192,7 @@
         <translation>Distance de référence:</translation>
     </message>
     <message>
-        <source>Logistic Superior:</source>
+        <source>Logistic superior:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

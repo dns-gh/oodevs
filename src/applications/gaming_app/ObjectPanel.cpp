@@ -52,9 +52,9 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
 
     GetBuilder().Group( tools::findTranslation( "Object", "Information" ) )
                 .AddSpinBox( tools::findTranslation( "Object", "Construction:" ), 0, 100, 1 )
-                .AddLabel( tools::findTranslation( "Object", "Construction dotation:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Construction resource:" ) )
                 .AddSpinBox( tools::findTranslation( "Object", "Mining:" ), 0, 100, 1 )
-                .AddLabel( tools::findTranslation( "Object", "Development dotation:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Development resource:" ) )
                 .AddSpinBox( tools::findTranslation( "Object", "Bypass:" ), 0, 100, 1 )
                 .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
                 .AddCheckBox( tools::findTranslation( "Object", "Reserved obstacle activated:" ) );
@@ -66,7 +66,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tools::findTranslation( "Object", "Build river banks:" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Camp" ) )
-                .AddLabel( tools::findTranslation( "Object", "TC2:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Logistic superior:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Lodging capacity:" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "NBC", "NBC" ) )
