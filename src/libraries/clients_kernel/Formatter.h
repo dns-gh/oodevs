@@ -79,7 +79,6 @@ struct Formatter< const char* >
 template< unsigned int N >
 struct Formatter< const char [N] > : public Formatter< const char* > { };
 
-
 template< >
 struct Formatter< std::string >
 {
@@ -177,7 +176,6 @@ struct Formatter< Unit >
     void operator()( const Unit& element, Displayer_ABC& displayer ) const;
 };
 
-
 // =============================================================================
 /** @class  Formatter
     @brief  Urban
@@ -189,7 +187,6 @@ struct Formatter< kernel::UrbanKnowledge_ABC >
 {
     void operator()( const kernel::UrbanKnowledge_ABC& value, Displayer_ABC& displayer ) const;
 };
-
 
 // =============================================================================
 /** @class  Formatter

@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __KERNEL_LOGISTIC_LEVEL_H__
 #define __KERNEL_LOGISTIC_LEVEL_H__
 

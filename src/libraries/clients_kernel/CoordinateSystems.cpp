@@ -35,5 +35,3 @@ CoordinateSystems::~CoordinateSystems()
     // NOTHING
 }
 
-
-

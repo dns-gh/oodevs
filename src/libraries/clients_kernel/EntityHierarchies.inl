@@ -171,7 +171,7 @@ template< typename Interface >
 void EntityHierarchies< Interface >::SetSuperiorInternal( Entity_ABC* superior )
 {
     superior_ = superior;
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: EntityHierarchies::RetrieveHierarchies

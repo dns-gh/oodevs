@@ -37,7 +37,7 @@ const PHY_Lighting* PHY_Lighting::FindLighting( const std::string& strName )
 // Created: SLG 2010-05-26
 // -----------------------------------------------------------------------------
 inline
-const PHY_Lighting* PHY_Lighting::FindLighting( sword::WeatherAttributes::EnumLightingType nAsnID ) 
+const PHY_Lighting* PHY_Lighting::FindLighting( sword::WeatherAttributes::EnumLightingType nAsnID )
 {
     for( CIT_LightingMap it = lightings_.begin(); it != lightings_.end(); ++it )
     {

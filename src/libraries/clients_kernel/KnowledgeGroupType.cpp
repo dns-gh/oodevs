@@ -60,7 +60,6 @@ double KnowledgeGroupType::GetCommunicationDelay() const
     return rCommunicationDelay_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupType::ShowCommunicationDelay
 // Created: LDC 2009-11-30

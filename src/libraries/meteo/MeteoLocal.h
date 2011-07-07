@@ -105,5 +105,4 @@ public:
 
 }
 
-
 #endif // __weather_MeteoLocal_h_

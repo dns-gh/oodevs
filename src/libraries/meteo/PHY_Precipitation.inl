@@ -37,7 +37,7 @@ const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( const std::string
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
 inline
-const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( sword::WeatherAttributes::EnumPrecipitationType nAsnID ) 
+const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( sword::WeatherAttributes::EnumPrecipitationType nAsnID )
 {
     for( CIT_PrecipitationMap it = precipitations_.begin(); it != precipitations_.end(); ++it )
     {

@@ -108,7 +108,7 @@ void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
 
         for( std::vector< std::string* >::iterator iter = currentChain_.begin(); iter != currentChain_.end(); ++iter )
         {
-            if ( iter != currentChain_.begin() )
+            if( iter != currentChain_.begin() )
                 current +="/";
             current += **(iter);
         }
@@ -124,7 +124,7 @@ void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
         out << xml::attribute( "value", current );
         out << xml::attribute( "symbol", symbol );
         out << xml::end;
-        if ( it->second && ( it->second)->GetRule() )
+        if( it->second && ( it->second)->GetRule() )
         {
             TraverseTree( out, *( it->second)->GetRule() );
         }
@@ -217,8 +217,8 @@ bool SymbolFactory::IsThisChainAvailable( const std::string& chain ) const
     if( !initialized_ )
         return false;
     std::vector< std::string >::const_iterator  it;
-    for ( it = availableSymbols_.begin() ; it != availableSymbols_.end() ; ++it )
-        if ( *it == chain )
+    for( it = availableSymbols_.begin() ; it != availableSymbols_.end() ; ++it )
+        if( *it == chain )
             break;
     return it != availableSymbols_.end();
 }

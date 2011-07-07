@@ -317,7 +317,6 @@ void ObjectTypes::ReadUrbanTypes( xml::xistream& xis )
     xis >> xml::end;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: StaticModel::ReadFacadeTypes
 // Created: SLG 2010-11-17

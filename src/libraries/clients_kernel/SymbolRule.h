@@ -60,7 +60,6 @@ private:
     void          ReadCase( xml::xistream& xis );
     //@}
 
-
 private:
     //! @name Member data
     //@{

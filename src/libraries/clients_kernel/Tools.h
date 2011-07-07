@@ -15,7 +15,6 @@
 #include <qstring.h>
 #pragma warning( pop )
 
-
 // =============================================================================
 /** @class  Tools
     @brief  Crappy translation tools

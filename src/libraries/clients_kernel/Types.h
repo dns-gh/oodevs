@@ -24,7 +24,6 @@ namespace kernel
 {
     struct Nothing {};
 
-
 enum E_TroopHealthState
 {
     eTroopHealthStateTotal = 0,

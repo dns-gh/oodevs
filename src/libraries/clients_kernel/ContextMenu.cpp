@@ -152,7 +152,6 @@ int ContextMenu::InsertItem( const std::string& category, QWidget* widget, int i
     return menu_->insertItem( widget, id, InsertCategory( category ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::SubMenu
 // Created: SBO 2006-08-10

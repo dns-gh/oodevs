@@ -10,7 +10,6 @@
 #ifndef __OptionVariant_h_
 #define __OptionVariant_h_
 
-
 namespace kernel
 {
     class Settings_ABC;

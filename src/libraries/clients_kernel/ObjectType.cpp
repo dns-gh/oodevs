@@ -115,7 +115,6 @@ xml::xistream* ObjectType::FindCapacity( const std::string& capacity ) const
     return 0;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectType::HasBuildableDensity
 // Created: LDC 2009-03-17

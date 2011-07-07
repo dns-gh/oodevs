@@ -96,7 +96,6 @@ void Displayer_ABC::AddToDisplay( const T& element )
     tools::VirtualTemplate< Displayer_ABC >::Call( element );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Displayer_ABC::AddToDisplay
 // Created: AGE 2006-02-21

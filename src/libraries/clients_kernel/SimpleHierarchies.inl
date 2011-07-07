@@ -60,7 +60,7 @@ tools::Iterator< const Entity_ABC& > SimpleHierarchies< I >::CreateSubordinateIt
 {
     return new tools::NullIterator< const Entity_ABC& >();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SimpleHierarchies::RegisterSubordinate
 // Created: AGE 2006-11-24
@@ -80,7 +80,7 @@ void SimpleHierarchies< I >::AddSubordinate( Entity_ABC& )
 {
     throw std::runtime_error( __FUNCTION__ );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: SimpleHierarchies::RemoveSubordinate
 // Created: AGE 2006-11-24
