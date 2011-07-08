@@ -538,7 +538,9 @@
   <report category="operational" id="370" message="Le terroriste est neutralise %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="371" message="Mise en place de la production pour le reseau de ressources"/>
+  <report category="operational" id="371" message="Mise en place de la production pour le réseau de ressources"/>
+  <report category="operational" id="372" message="Impossible d'atteindre le réseau pour produire une ressource"/>
+  <report category="operational" id="373" message="Fin de la production pour le réseau de ressource"/>
   <report category="operational" id="3015" message="Demande un renfort technique"/>
   <report category="operational" id="3016" message="Demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -550,4 +552,4 @@
   <report category="operational" id="3018" message="Demande un renfort de police"/>
   <report category="operational" id="3019" message="Demande un renfort médical"/>
 </reports>
-<!-- signature="0476168528" -->
+<!-- signature="0693178828" -->

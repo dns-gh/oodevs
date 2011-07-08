@@ -2788,12 +2788,12 @@
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Produire" dia-type="france.military.platoon.combat.support.engineer.tasks.Produire" id="2145" name="Produire">
+    <mission dia-behavior="france.military.platoon.tasks.Produire" dia-type="france.military.platoon.tasks.Produire" id="2145" name="Produire">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="ressource" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Reconnaitre" dia-type="france.military.platoon.combat.support.engineer.tasks.Reconnaitre" id="2150" name="GENIE Reconnaitre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4667,6 +4667,13 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.Produire" dia-type="france.military.company.tasks.Produire" id="1055" mrt-dia-behavior="france.military.company.tasks.Produire" name="Produire">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+    </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" dia-type="france.military.company.combat.support.engineer.tasks.Reparer" id="1054" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" name="GENIE Reparer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4933,4 +4940,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2011164236" -->
+<!-- signature="1911164834" -->

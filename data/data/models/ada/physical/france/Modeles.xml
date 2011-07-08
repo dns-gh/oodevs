@@ -8230,6 +8230,7 @@
         <mission name="GENIE Reparer"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
+        <mission name="Produire"/>
         <mission name="LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
@@ -8263,6 +8264,7 @@
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="GENIE Reparer"/>
         <mission name="Reparer point du reseau"/>
+        <mission name="Produire"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
@@ -12201,4 +12203,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0218943417" -->
+<!-- signature="2360413667" -->

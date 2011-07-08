@@ -387,7 +387,9 @@ eRC_CrossingSiteNotRecon = 368
 eRC_InvalidObject = 369
 eRC_TerroristNeutralized = 370
 eRC_MiseEnPlaceProducePoint = 371
-eNbr = 372
+eRC_ProduceImpossible = 372
+eRC_FinProducePoint = 373
+eNbr = 374
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

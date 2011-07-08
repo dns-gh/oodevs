@@ -383,8 +383,9 @@
     <universal/>
   </object>
   <object geometry="point" name="Noeud de reseaux de ressource" symbol="G*SPPR----****X" type="resource production node">
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
     <resources/>
+    <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="1193556562" -->
+<!-- signature="3184211938" -->
