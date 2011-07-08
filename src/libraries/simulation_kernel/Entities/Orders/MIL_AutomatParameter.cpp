@@ -41,7 +41,7 @@ MIL_AutomatParameter::MIL_AutomatParameter( DEC_AutomateDecision* pDecision )
 // Name: MIL_AutomatParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AutomatParameter::MIL_AutomatParameter( const sword::AutomatId& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AutomatParameter::MIL_AutomatParameter( const sword::AutomatId& asn, const MIL_EntityManager_ABC& entityManager )
     : pDecision_( 0 )
 {
     MIL_Automate* pAutomate = entityManager.FindAutomate( asn.id() );

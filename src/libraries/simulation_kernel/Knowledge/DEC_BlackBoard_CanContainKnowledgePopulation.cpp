@@ -113,6 +113,5 @@ DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowl
     CIT_KnowledgePopulationMap itKnowledge = knowledgePopulationMap_.find( &associatedPopulation );
     if( itKnowledge != knowledgePopulationMap_.end() )
         return itKnowledge->second;
-    else
-        return 0;
+    return 0;
 }

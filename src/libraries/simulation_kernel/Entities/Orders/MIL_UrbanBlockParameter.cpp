@@ -29,7 +29,7 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter()
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, MIL_EntityManager_ABC& entityManager )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, const MIL_EntityManager_ABC& entityManager )
     : pUrbanBlock_( 0 )
 {
     MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );

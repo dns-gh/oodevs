@@ -28,7 +28,7 @@ public:
     //@{
              MIL_AutomatParameter();
     explicit MIL_AutomatParameter( DEC_AutomateDecision* pDecision );
-             MIL_AutomatParameter( const sword::AutomatId&, MIL_EntityManager_ABC& entityManager );
+             MIL_AutomatParameter( const sword::AutomatId&, const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AutomatParameter();
     //@}
 
