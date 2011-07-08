@@ -11256,7 +11256,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonABC" id="427" name="Peloton . LECLERC CDP OFF" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="427" name="Peloton . LECLERC CDP OFF" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -11820,7 +11820,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="80"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonABC" id="447" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="447" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -11847,7 +11847,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonABC" id="448" name="Peloton . d appui direct" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="448" name="Peloton . d appui direct" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/light"/>
     <equipments>
       <equipment count="1" crew="2" type="VBL CDT"/>
@@ -12128,4 +12128,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2702632305" -->
+<!-- signature="3833332042" -->
