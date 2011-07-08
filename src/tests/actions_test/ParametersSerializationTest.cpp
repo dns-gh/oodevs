@@ -23,9 +23,11 @@
 #include "actions/Limit.h"
 #include "actions/Numeric.h"
 #include "actions/ObjectKnowledge.h"
+#include "actions/ObjectKnowledgeOrder.h"
 #include "actions/Path.h"
 #include "actions/Polygon.h"
 #include "actions/PopulationKnowledge.h"
+#include "actions/PopulationKnowledgeOrder.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/AtlasNatures.h"
@@ -532,7 +534,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
     kernel::Controller controller;
     MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
     std::auto_ptr< sword::MissionParameter > message( Serialize( "crowdknowledge", input,
-        bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
+        bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
     BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).crowdknowledge().id() );
 }
 
@@ -561,6 +563,6 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
 
     kernel::Controller controller;
     std::auto_ptr< sword::MissionParameter > message( Serialize( "objectknowledge", input,
-        bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
+        bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
     BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).objectknowledge().id() );
 }
