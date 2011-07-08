@@ -8530,6 +8530,8 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="GENIE Degager Obstacles"/>
+        <mission name="GENIE Ouvrir Itineraire"/>
         <mission name="GENIE Realiser Travaux"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="GENIE Reparer"/>
@@ -12508,4 +12510,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3102894351" -->
+<!-- signature="2823358798" -->
