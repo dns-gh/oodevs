@@ -143,19 +143,16 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Appuyer Sur Position"/>
+        <mission name="MELEE Appuyer"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Boucler"/>
-        <mission name="MELEE Barrer">
+        <mission name="MELEE Controler">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
-        </mission>
-        <mission name="MELEE Controler">
-          <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="MELEE Defendre">
           <fragorder name="Abandonner travaux"/>
@@ -163,31 +160,13 @@
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
-        <mission name="MELEE Fouiller"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Jalonner">
-          <fragorder name="Decrocher"/>
-        </mission>
-        <mission name="MELEE Neutraliser"/>
-        <mission name="MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="MELEE Reconnaitre"/>
-        <mission name="MELEE Relever"/>
-        <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer De"/>
-        <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Surveiller"/>
-        <mission name="MELEE Tenir">
-          <fragorder name="Abandonner travaux"/>
-        </mission>
         <mission name="STABILISATION Animer Poste De Controle"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
-        <mission name="STABILISATION Interdire foule"/>
-        <mission name="STABILISATION Renseigner sur foule"/>
-        <mission name="GENIE Degager Obstacles"/>
-        <mission name="GENIE OuvrirItineraire"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -12977,4 +12956,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0738999045" -->
+<!-- signature="2083134828" -->
