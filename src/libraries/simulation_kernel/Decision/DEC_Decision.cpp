@@ -1319,6 +1319,7 @@ bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, 
                 "plugins={"
                 + PLUGIN46( "eventmanager" )
                 + PLUGIN46( "motivation" )
+                + PLUGIN46( "errorhandler" )
                 + "} cwd='" + includePath + "'" ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
             brainTable[brainFile] = pArchetypeBrain;

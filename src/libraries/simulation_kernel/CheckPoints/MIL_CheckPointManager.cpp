@@ -11,8 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_CheckPointManager.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Tools/MIL_Config.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include "MT_Tools/MT_ScipioException.h"

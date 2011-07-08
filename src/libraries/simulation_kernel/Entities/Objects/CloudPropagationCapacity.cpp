@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "CloudPropagationCapacity.h"
+#include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
 #include "NBCAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"

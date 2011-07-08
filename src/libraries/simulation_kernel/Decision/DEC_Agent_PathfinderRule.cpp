@@ -14,6 +14,7 @@
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject_ABC.h"
 #include "DEC_Path_KnowledgePopulation.h"
+#include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"

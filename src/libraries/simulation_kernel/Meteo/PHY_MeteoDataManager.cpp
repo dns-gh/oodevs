@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
+#include "MIL_AgentServer.h"
 #include "meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"

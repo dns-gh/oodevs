@@ -13,6 +13,7 @@
 #include "PHY_SensorTypeAgent.h"
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
+#include "MIL_AgentServer.h"
 #include "PerceptionDistanceComputer_ABC.h"
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"

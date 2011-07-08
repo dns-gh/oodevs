@@ -16,6 +16,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "MockMIL_Time_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 class TestPK : private boost::noncopyable
@@ -24,6 +25,10 @@ public:
 
     TestPK()
     {
+        MockMIL_Time_ABC time;
+        MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
+        MOCK_EXPECT( time, GetCurrentTick ).returns( 10u );
+
         xml::xistringstream xisUrbanType( "<urban><urban-block-types><material-composition-types><material-composition-type name='Bois'>"
             "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"
             "<material-composition-type name='Beton'>"

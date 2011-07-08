@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_BurningCells.h"
+#include "MIL_AgentServer.h"
 #include "MIL_FireClass.h"
 #include "MIL_Object_ABC.h"
 #include "FireAttribute.h"

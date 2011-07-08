@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectManipulator.h"
+#include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"

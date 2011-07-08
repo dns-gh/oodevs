@@ -7,7 +7,8 @@
 //
 // *****************************************************************************
 
-#include "MIL_AgentServer.h"
+#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertSpeedMosToSim
@@ -16,7 +17,7 @@
 inline
 double MIL_Tools::ConvertSpeedMosToSim( double v )
 {
-    static double rConvertionFactor = 1000. * MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
+    static double rConvertionFactor = 1000. * MIL_Singletons::GetTime().GetTickDuration() / 3600.;
     // conversion des vitesses de Km/H en pixel/deltaT
     return v * rConvertionFactor;
 }
@@ -28,7 +29,7 @@ double MIL_Tools::ConvertSpeedMosToSim( double v )
 inline
 double MIL_Tools::ConvertSpeedSimToMos( double v )
 {
-    static double rConvertionFactor = 3600. / MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 1000.;
+    static double rConvertionFactor = 3600. / MIL_Singletons::GetTime().GetTickDuration() / 1000.;
     // conversion des vitesses de pixel/deltaT en Km/H
     return v * rConvertionFactor;
 }
@@ -50,7 +51,7 @@ double MIL_Tools::ConvertSecondsToSim( double v, const MIL_Time_ABC& time )
 inline
 double MIL_Tools::ConvertSecondsToSim( double v )  // s    -> DeltaT
 {
-    return ConvertSecondsToSim( v, MIL_AgentServer::GetWorkspace() );
+    return ConvertSecondsToSim( v, MIL_Singletons::GetTime() );
 }
 
 //-----------------------------------------------------------------------------
@@ -80,7 +81,7 @@ double MIL_Tools::ConvertHoursToSim( double v ) // h -> DeltaT
 inline
 double MIL_Tools::ConvertSimToMinutes( double v ) // deltaT -> m
 {
-    return v * MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 60.;
+    return v * MIL_Singletons::GetTime().GetTickDuration() / 60.;
 }
 
 // -----------------------------------------------------------------------------
