@@ -109,13 +109,13 @@ namespace
 // Name: CloudPropagationCapacity::Update
 // Created: LGY 2011-07-04
 // -----------------------------------------------------------------------------
-void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time )
+void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
     if( !pNBC )
         return;
     const NBCAttribute::T_NBCAgents& agents = pNBC->GetNBCAgents();
-    if( MIL_AgentServer::GetWorkspace().TickToRealTime( time ) - time_ >= GetDestructionDelay( agents ) )
+    if( MIL_AgentServer::GetWorkspace().GetRealTime() - time_ >= GetDestructionDelay( agents ) )
     {
         object.MarkForDestruction();
         return;
@@ -135,7 +135,7 @@ void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time
 bool CloudPropagationCapacity::UpdateLocalisation( double angle, TER_Localisation& newLocalisation )
 {
     const weather::Meteo::sWindData& wind = MIL_Tools::GetWind( origin_ );
-    if ( wind.rSpeed_ <= MIL_NbcAgentType::GetMinPropagationSpeed() )
+    if ( wind.rSpeed_ <= MIL_Tools::ConvertSpeedMosToSim( MIL_NbcAgentType::GetMinPropagationSpeed() ) )
     {
         if ( wind.rSpeed_ <= 0. )
             return false;

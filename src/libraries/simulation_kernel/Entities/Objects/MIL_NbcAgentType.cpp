@@ -163,7 +163,6 @@ void MIL_NbcAgentType::ReadGaz( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "life-time", nGasLifeTime_ );
     if( nGasLifeTime_ <= 0 )
         xis.error( "effects: life-time <= 0" );
-    nGasLifeTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
 
     xis >> xml::attribute( "propagation", rGasPropagationAngle_ );
     if( rGasPropagationAngle_ <= 0 )
