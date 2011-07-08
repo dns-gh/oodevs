@@ -11194,7 +11194,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonINF" id="425" name="Section . CBT INF VAB CDS OFF" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="425" name="Section . CBT INF VAB CDS OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11226,7 +11226,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonINF" id="426" name="Section . CDT CIE INF VAB" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="426" name="Section . CDT CIE INF VAB" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="3" type="VBL 7,62"/>
@@ -11725,7 +11725,7 @@
     <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="5" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PC" id="444" name="PC SGTIA" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="444" name="PC SGTIA" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11757,7 +11757,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonINF" id="445" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="445" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11874,7 +11874,7 @@
     <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PC" id="449" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
+  <unit decisional-model="Masalife.INF.PC" id="449" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL CDT"/>
@@ -12128,4 +12128,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2158373254" -->
+<!-- signature="2702632305" -->
