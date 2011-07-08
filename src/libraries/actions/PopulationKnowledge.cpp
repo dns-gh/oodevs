@@ -10,7 +10,6 @@
 #include "actions_pch.h"
 #include "PopulationKnowledge.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
-#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -41,8 +40,8 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsig
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.GetPopulation( xis.attribute< unsigned long >( "value" ) ), owner ), controller )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, const PopulationKnowledge_ABC* knowledge, kernel::Controller& controller )
+    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, knowledge, controller )
 {
     // NOTHING
 }

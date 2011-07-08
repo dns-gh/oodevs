@@ -26,9 +26,10 @@ namespace kernel
     class EntityResolver_ABC;
 }
 
-namespace actions {
-    namespace parameters {
-
+namespace actions
+{
+namespace parameters
+{
 // =============================================================================
 /** @class  AgentKnowledge
     @brief  AgentKnowledge
@@ -42,10 +43,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             AgentKnowledge( const kernel::OrderParameter& parameter, const kernel::AgentKnowledge_ABC& entity, kernel::Controller& controller );
+             AgentKnowledge( const kernel::OrderParameter& parameter, const kernel::AgentKnowledge_ABC* entity, kernel::Controller& controller );
              AgentKnowledge( const kernel::OrderParameter& parameter, unsigned long id, const kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, const kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             AgentKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, const kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~AgentKnowledge();
     //@}
 
@@ -62,7 +61,7 @@ public:
     virtual std::string SerializeType() const;
     //@}
 };
-    }
+}
 }
 
 #endif // __ActionParameterAgentKnowledge_h_

@@ -114,14 +114,19 @@ protected:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    bool CheckKnowledgeValidity() const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const kernel::OrderType& type_;
     unsigned long id_;
     QString name_;
-    bool valid_;
-
+    mutable bool valid_;
     static unsigned long idManager_;
     //@}
 };

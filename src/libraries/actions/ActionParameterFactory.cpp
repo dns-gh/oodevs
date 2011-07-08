@@ -22,8 +22,11 @@
 #include "Agent.h"
 #include "Automat.h"
 #include "AgentKnowledge.h"
+#include "AgentKnowledgeOrder.h"
 #include "PopulationKnowledge.h"
+#include "PopulationKnowledgeOrder.h"
 #include "ObjectKnowledge.h"
+#include "ObjectKnowledgeOrder.h"
 #include "Enumeration.h"
 #include "Bool.h"
 #include "String.h"
@@ -338,12 +341,12 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity );
     }
     else if( type == "agentknowledge" )
-        param.reset( new parameters::AgentKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+        param.reset( new parameters::AgentKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "crowdknowledge" )
-        param.reset( new parameters::PopulationKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+        param.reset( new parameters::PopulationKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" )
-        param.reset( new parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "urbanknowledge" ) // $$$$ _RC_ LGY 2011-02-24: urban block id
+        param.reset( new parameters::ObjectKnowledgeOrder( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "urbanknowledge" )
         param.reset( new parameters::UrbanBlock( parameter, xis, entities_, controller_ ) );
     else
         return false;

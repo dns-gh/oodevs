@@ -26,9 +26,10 @@ namespace kernel
     class ObjectKnowledgeConverter_ABC;
 }
 
-namespace actions {
-    namespace parameters {
-
+namespace actions
+{
+namespace parameters
+{
 // =============================================================================
 /** @class  ObjectKnowledge
     @brief  ObjectKnowledge
@@ -43,8 +44,7 @@ public:
     //@{
              ObjectKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              ObjectKnowledge( const kernel::OrderParameter& parameter, unsigned long id, const kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             ObjectKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, const kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             ObjectKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, const kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledge( const kernel::OrderParameter& parameter, const kernel::ObjectKnowledge_ABC* knowledge, kernel::Controller& controller );
     virtual ~ObjectKnowledge();
     //@}
 
@@ -63,7 +63,8 @@ private:
     //@}
 };
 
-    }
+}
+
 }
 
 #endif // __ActionParameterObjectKnowledge_h_

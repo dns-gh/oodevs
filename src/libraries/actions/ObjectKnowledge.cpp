@@ -10,29 +10,11 @@
 #include "actions_pch.h"
 #include "ObjectKnowledge.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
-#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
 using namespace actions;
 using namespace parameters;
-
-namespace
-{
-    unsigned long ReadId( xml::xistream& xis )
-    {
-        unsigned long id;
-        xis >> xml::attribute( "value", id );
-        return id;
-    }
-
-    std::string ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
@@ -58,18 +40,8 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const EntityResolver_ABC& resolver, const ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
-    : Knowledge_ABC< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ), converter.Find( resolver.GetObject( ReadId( xis ) ), owner ), controller )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const EntityResolver_ABC& resolver, const ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
-    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, converter.Find( resolver.GetObject( ReadId( xis ) ), owner ), controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, const ObjectKnowledge_ABC* knowledge, Controller& controller )
+    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, knowledge, controller )
 {
     // NOTHING
 }

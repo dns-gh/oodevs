@@ -199,17 +199,31 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Action_ABC::CheckKnowledgeValidity
+// Created: LGY 2011-07-08
+// -----------------------------------------------------------------------------
+bool Action_ABC::CheckKnowledgeValidity() const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( ! ( it->second->CheckKnowledgeValidity() ) )
+            return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Action_ABC::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 void Action_ABC::CommitTo( sword::MissionParameters& message ) const
 {
-    if( valid_ )
+    if( CheckKnowledgeValidity() && IsValid() )
     {
         // $$$$ FHD 2009-10-28: potential bug, parameters serialized in "map" order
         for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
             it->second->CommitTo( *message.add_elem() );
     }
+    else
+        valid_ = false;
 }
 
 // -----------------------------------------------------------------------------

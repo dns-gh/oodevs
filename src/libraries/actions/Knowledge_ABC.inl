@@ -14,6 +14,7 @@
 template< typename ConcreteEntity >
 Knowledge_ABC< ConcreteEntity >::Knowledge_ABC(const kernel::OrderParameter& parameter, kernel::Controller& controller )
     : Entity< ConcreteEntity >( parameter, controller )
+    , id_( 0u )
 {
     // NOTHING
 }
@@ -25,6 +26,7 @@ Knowledge_ABC< ConcreteEntity >::Knowledge_ABC(const kernel::OrderParameter& par
 template< typename ConcreteEntity >
 Knowledge_ABC< ConcreteEntity >::Knowledge_ABC(const kernel::OrderParameter& parameter, const ConcreteEntity* entity, kernel::Controller& controller )
     : Entity< ConcreteEntity >( parameter, entity, controller )
+    , id_( 0u )
 {
     NotifyValueSet();
 }

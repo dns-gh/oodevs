@@ -224,3 +224,11 @@ void Parameter_ABC::CommitTo( sword::MissionParameter_Value& /*message*/ ) const
     throw( "No specific implementation avalaible" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Parameter_ABC::CheckKnowledgeValidity
+// Created: LGY 2011-07-08
+// -----------------------------------------------------------------------------
+bool Parameter_ABC::CheckKnowledgeValidity() const
+{
+    return true;
+}

@@ -78,6 +78,7 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     void Set( bool isSet );
     virtual bool IsSet() const;
+    virtual bool CheckKnowledgeValidity() const;
     //@}
 
 protected:

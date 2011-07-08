@@ -43,7 +43,7 @@ public:
     //@{
              PopulationKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, const kernel::PopulationKnowledge_ABC* knowledge, kernel::Controller& controller );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -64,4 +64,4 @@ public:
     }
 }
 
-#endif // __ActionParameterAgentKnowledge_h_
+#endif // __ActionParameterPopulationKnowledge_h_
