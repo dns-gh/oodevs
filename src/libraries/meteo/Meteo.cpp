@@ -20,9 +20,9 @@ using namespace weather;
 
 namespace
 {
-    int ConvertSpeedMosToSim( unsigned int timeStep )
+    double ConvertSpeedMosToSim( unsigned int timeStep )
     {
-        return ( timeStep ) ? static_cast< int >( 1000. * timeStep / 3600. ) : 1;
+        return ( timeStep ) ? 1000. * timeStep / 3600. : 1.;
     }
 }
 

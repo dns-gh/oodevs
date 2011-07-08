@@ -102,7 +102,7 @@ void Meteo::SetCloud( const sCloudData& cloud )
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
 inline
-int Meteo::GetConversionFactor() const
+double Meteo::GetConversionFactor() const
 {
     return conversionFactor_;
 }

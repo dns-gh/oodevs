@@ -89,7 +89,7 @@ public:
     const PHY_Lighting&      GetLighting        () const;
     const sWindData&         GetWind            () const;
     const sCloudData&        GetCloud           () const;
-    int                      GetConversionFactor() const;
+    double                   GetConversionFactor() const;
     bool                     IsModified() const;
 
     void SetPrecipitation( const PHY_Precipitation& precipitation );
@@ -138,7 +138,7 @@ protected:
     sCloudData               cloud_;
     const PHY_Lighting*      pLighting_;
     const PHY_Precipitation* pPrecipitation_;
-    int                      conversionFactor_;
+    double                   conversionFactor_;
     bool                     modified_;
     //@}
 };
