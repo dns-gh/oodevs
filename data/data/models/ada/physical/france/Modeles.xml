@@ -8963,6 +8963,495 @@
         <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.AMX-ERC">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Defendre"/>
+        <mission name="MELEE Detruire"/>
+        <mission name="MELEE Donner Coup Arret"/>
+        <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Effectuer un raid"/>
+        <mission name="MELEE Escorter"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
+        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Intercepter"/>
+        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Neutraliser"/>
+        <mission name="MELEE Ratisser"/>
+        <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner Sur"/>
+        <mission name="MELEE S'emparer"/>
+        <mission name="MELEE Surveiller"/>
+        <mission name="MELEE Tenir"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.ERIAC">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Couvrir"/>
+        <mission name="MELEE Donner Coup Arret"/>
+        <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Organiser accueil colonne refugies"/>
+        <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Renseigner Sur"/>
+        <mission name="MELEE Surveiller"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.XL">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Donner Coup Arret"/>
+        <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Effectuer un raid"/>
+        <mission name="MELEE Defendre"/>
+        <mission name="MELEE Detruire"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
+        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Intercepter"/>
+        <mission name="MELEE Neutraliser"/>
+        <mission name="MELEE Ratisser"/>
+        <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner Sur"/>
+        <mission name="MELEE S'emparer"/>
+        <mission name="MELEE Surveiller"/>
+        <mission name="MELEE Tenir"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.EI">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Organiser accueil colonne refugies"/>
+        <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Renseigner Sur"/>
+        <mission name="MELEE Surveiller"/>
+        <mission name="STABILISATION Animer Postes De Controle"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.PIR">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Controler"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.RASIT">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.Blinde Ecl">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Couvrir"/>
+        <mission name="MELEE Defendre"/>
+        <mission name="MELEE Detruire"/>
+        <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Intercepter"/>
+        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Neutraliser"/>
+        <mission name="MELEE Ratisser"/>
+        <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Surveiller"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.Blinde Inf">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Couvrir"/>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Escorter"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE S'emparer"/>
+        <mission name="MELEE Tenir"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.Char Ecl">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Couvrir"/>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Effectuer un raid"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
+        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE S'emparer"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.Char Inf">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
+        <mission name="MELEE Couvrir"/>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Defendre"/>
+        <mission name="MELEE Detruire"/>
+        <mission name="MELEE Donner Coup Arret"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Intercepter"/>
+        <mission name="MELEE Neutraliser"/>
+        <mission name="MELEE Ratisser"/>
+        <mission name="MELEE S'emparer"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.Ecl Blinde">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.GEN">
       <missions>
         <mission name="COMMUNES Decrocher"/>
@@ -12956,4 +13445,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2083134828" -->
+<!-- signature="4116562337" -->
