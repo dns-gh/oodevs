@@ -4672,7 +4672,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" dia-type="france.military.company.combat.support.engineer.tasks.Reparer" id="1054" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" name="GENIE Reparer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4954,4 +4954,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="4207076408" -->
+<!-- signature="0182219086" -->

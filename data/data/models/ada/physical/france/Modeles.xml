@@ -391,6 +391,7 @@
         </mission>
         <mission name="Animer"/>
         <mission name="Detruire point du reseau"/>
+        <mission name="Produire"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -489,6 +490,7 @@
         <mission name="GENIE Retablir Itineraire">
           <fragorder name="Abandonner travaux"/>
         </mission>
+        <mission name="Produire"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -13445,4 +13447,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4116562337" -->
+<!-- signature="3277028186" -->
