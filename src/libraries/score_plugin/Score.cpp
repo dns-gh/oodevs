@@ -63,7 +63,7 @@ void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) cons
     aar::PlotResult result;
     result().set_identifier( context );
     result().set_error( "" );
-    for( std::vector< double >::const_iterator it = values_.begin(); it != values_.end(); ++it )
+    for( std::deque< float >::const_iterator it = values_.begin(); it != values_.end(); ++it )
         result().mutable_values()->Add( static_cast< float >( *it ) );
     result.Send( publisher );
 }
@@ -81,7 +81,7 @@ unsigned int Score::Size() const
 // Name: Score::GetValue
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-double Score::GetValue( unsigned int index ) const
+float Score::GetValue( unsigned int index ) const
 {
     return values_.at( index );
 }

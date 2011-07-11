@@ -12,6 +12,7 @@
 
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/noncopyable.hpp>
+#include <deque>
 #include <vector>
 
 namespace sword
@@ -57,7 +58,7 @@ public:
     //! @name Accessors
     //@{
     unsigned int Size() const;
-    double GetValue( unsigned int index ) const;
+    float GetValue( unsigned int index ) const;
     //@}
 
     //! @name Operations
@@ -78,7 +79,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< xml::xibufferstream > xml_;
-    std::vector< double > values_;
+    std::deque< float > values_;
     std::vector< std::string > profiles_;
     //@}
 };
