@@ -35,22 +35,6 @@ public:
     //@{
     bool isChecked() const;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LoadableCheckBox( const LoadableCheckBox& );            //!< Copy constructor
-    LoadableCheckBox& operator=( const LoadableCheckBox& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 } // end namespace gui

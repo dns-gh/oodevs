@@ -74,6 +74,7 @@ TerrainPicker.cpp \
 TerrainPreference.cpp \
 TerrainProfile.cpp \
 TerrainProfiler.cpp \
+UndergroundPrototype_ABC.cpp \
 UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \

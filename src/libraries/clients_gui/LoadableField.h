@@ -10,9 +10,7 @@
 #ifndef __LoadableField_h_
 #define __LoadableField_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -25,6 +23,7 @@ namespace gui
 // Created: BCI 2011-05-09
 // =============================================================================
 class LoadableField : public QHBox
+                    , private boost::noncopyable
 {
     Q_OBJECT
 public:
@@ -45,12 +44,6 @@ private slots:
     void FieldSelected( const QString& fieldName );
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LoadableField( const LoadableField& );            //!< Copy constructor
-    LoadableField& operator=( const LoadableField& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void SetPossibleFields( const QStringList& fields );

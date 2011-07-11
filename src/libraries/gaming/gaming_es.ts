@@ -1231,6 +1231,10 @@
         <source>Logistic superior:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Underground network:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

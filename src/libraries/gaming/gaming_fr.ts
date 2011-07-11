@@ -1231,6 +1231,10 @@
         <source>Altitude modifier:</source>
         <translation>Modificateur d&apos;altitude:</translation>
     </message>
+    <message>
+        <source>Underground network:</source>
+        <translation>Réseau souterrain:</translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

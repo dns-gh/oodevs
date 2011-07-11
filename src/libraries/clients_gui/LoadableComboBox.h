@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LoadableSpinBox_h_
-#define __LoadableSpinBox_h_
+#ifndef __LoadableComboBox_h_
+#define __LoadableComboBox_h_
 
 #include "LoadableField.h"
 
@@ -16,29 +16,26 @@ namespace gui
 {
 
 // =============================================================================
-/** @class  LoadableSpinBox
-    @brief  Spin box that can be filled from a file or manually.
+/** @class  LoadableComboBox
+    @brief  Combo box that can be filled from a file or manually.
 */
-// Created: BCI 2011-05-09
+// Created: JSR 2011-07-07
 // =============================================================================
-class LoadableSpinBox : public LoadableFieldTemplate< QSpinBox >
+class LoadableComboBox : public LoadableFieldTemplate< QComboBox >
 {
 public:
-
     //! @name Constructors/Destructor
     //@{
-             LoadableSpinBox( int minValue, int maxValue, int step, QWidget* parent, const QString& probableName = QString() );
-    virtual ~LoadableSpinBox();
+             LoadableComboBox( bool rw, QWidget* parent, const QString& probableName = QString() );
+    virtual ~LoadableComboBox();
     //@}
 
     //! @name Operations
     //@{
-    int value() const;
-    void setSuffix( const QString& );
-    void setValue( int );
+    QString currentText() const;
     //@}
 };
 
-} // end namespace gui
+}
 
-#endif // __LoadableSpinBox_h_
+#endif // __LoadableComboBox_h_

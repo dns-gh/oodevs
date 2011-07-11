@@ -1516,6 +1516,17 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::UndergroundPrototype_ABC</name>
+    <message>
+        <source>Underground network</source>
+        <translation>Réseau souterrain</translation>
+    </message>
+    <message>
+        <source>Underground network:</source>
+        <translation>Réseau souterrain:</translation>
+    </message>
+</context>
+<context>
     <name>gui::UnitListView</name>
     <message>
         <source>Unit type</source>

@@ -9,31 +9,28 @@
 
 #include "preparation_app_pch.h"
 #include "ObjectPrototype.h"
-#include "preparation/StaticModel.h"
-#include "preparation/ObjectsModel.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Object_ABC.h"
-#include "clients_gui/ObjectAttributePrototypeFactory.h"
-#include "clients_gui/LoadableLineEdit.h"
+#include "ActivityTimePrototype.h"
+#include "AltitudeModifierPrototype.h"
 #include "ConstructionPrototype.h"
 #include "CrossingSitePrototype.h"
+#include "DelayPrototype.h"
+#include "FirePropagationModifierPrototype.h"
 #include "FirePrototype.h"
 #include "FloodPrototype.h"
+#include "InputPropagationPrototype.h"
 #include "LodgingPrototype.h"
 #include "LogisticPrototype.h"
 #include "MedicalTreatmentPrototype.h"
-#include "MinePrototype.h"
 #include "NBCPrototype.h"
 #include "ObstaclePrototype.h"
-#include "StockPrototype.h"
 #include "ResourceNetworkPrototype.h"
+#include "StockPrototype.h"
 #include "SupplyRoutePrototype.h"
-#include "InputPropagationPrototype.h"
-#include "ActivityTimePrototype.h"
-#include "DelayPrototype.h"
-#include "FirePropagationModifierPrototype.h"
-#include "AltitudeModifierPrototype.h"
+#include "UndergroundPrototype.h"
+#include "clients_gui/ObjectAttributePrototypeFactory.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "preparation/StaticModel.h"
+#include "preparation/ObjectsModel.h"
 #include "preparation/UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -58,14 +55,14 @@ namespace
     {
     }
 
-    void LodgingAttribute( T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
-    {
-        container.push_back( new LodgingPrototype( parent, object ) );
-    }
-
     void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
     {
         container.push_back( new LogisticPrototype( parent, controllers, object ) );
+    }
+
+    void UndergroundAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
+    {
+        container.push_back( new UndergroundPrototype( parent, controllers.controller_, object ) );
     }
 
     void FloodAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const DetectionMap& detection, Object_ABC*& object )
@@ -170,10 +167,11 @@ namespace
         factory->Register( "bridging"                  , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( object ) ) );
+        factory->Register( "lodging"                   , boost::bind( &Capacity< LodgingPrototype >::Build, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "flood"                     , boost::bind( &::FloodAttribute, _2, _3, boost::ref( controllers ), boost::cref( detection ), boost::ref( object ) ) );
-        factory->Register( "lodging"                   , boost::bind( &::LodgingAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "logistic"                  , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
+        factory->Register( "underground-network"       , boost::bind( &::UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "interact-with-enemy"       , boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"              , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &::AltitudeModifierAttribute, _2, _3, boost::ref( controllers ), boost::ref( detection ), boost::ref( object ) ) );

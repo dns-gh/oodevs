@@ -844,6 +844,10 @@ message ObjectAttributeNBCType {
    required int32        source_life_duration = 3;
 }
 
+message ObjectAttributeUnderground {
+   required string network = 1;
+}
+
 message ObjectAttributes {
    optional ObjectAttributeConstruction      construction        = 1;
    optional ObjectAttributeObstacle          obstacle            = 2;
@@ -865,6 +869,7 @@ message ObjectAttributes {
    optional ObjectAttributeBurn              burn                = 18;
    optional ObjectAttributeBurnSurface       burn_surface        = 19;
    optional ObjectAttributeLodging           lodging             = 20;
+   optional ObjectAttributeUnderground       underground         = 21;
 }
 
 message MsgMarker {

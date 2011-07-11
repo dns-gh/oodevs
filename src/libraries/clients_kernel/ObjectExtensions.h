@@ -23,9 +23,9 @@ namespace sword
 namespace kernel
 {
     class ObjectExtension : public kernel::Extension_ABC
-                    , public kernel::Displayable_ABC
-                    , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
-                    , public kernel::Updatable_ABC< sword::ObjectUpdate >
+                          , public kernel::Displayable_ABC
+                          , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
+                          , public kernel::Updatable_ABC< sword::ObjectUpdate >
     {
     public:
                  ObjectExtension() {}
@@ -58,6 +58,11 @@ namespace kernel
     class DelayAttribute_ABC : public ObjectExtension {};
     class FloodAttribute_ABC : public ObjectExtension {};
     class AltitudeModifierAttribute_ABC : public ObjectExtension {};
+    class UndergroundAttribute_ABC : public ObjectExtension
+    {
+    public:
+        virtual const std::string& GetNetwork() const = 0;
+    };
 }
 
 #endif // __ObjectExtensions_h_

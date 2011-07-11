@@ -29,6 +29,7 @@
 #include "MedicalTreatmentAttribute.h"
 #include "StockAttribute.h"
 #include "ToxicCloudAttribute.h"
+#include "UndergroundAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -126,4 +127,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_toxic_cloud() && entity.Retrieve< kernel::ToxicCloudAttribute_ABC >() == 0 )
         entity.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
+
+    if( attributes.has_underground() && entity.Retrieve< kernel::UndergroundAttribute_ABC >() == 0 )
+        entity.Attach< kernel::UndergroundAttribute_ABC >( *new UndergroundAttribute( controllers_.controller_ ) );
 }

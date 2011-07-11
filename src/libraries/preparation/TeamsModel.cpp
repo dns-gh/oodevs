@@ -130,6 +130,15 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
         static_cast< const Diplomacies& >( it->second->Get< Diplomacies_ABC >() ).Serialize( xos ); // $$$$ SBO 2008-12-09: !
         xos << xml::end;
     }
+    /*if( !undergroundNetworks_.empty() )
+    {
+        xos << xml::start( "underground-networks" );
+        for( std::map< std::string, unsigned int >::const_iterator it = undergroundNetworks_.begin(); it != undergroundNetworks_.end(); ++it )
+            xos << xml::start( "underground-network" )
+                << xml::attribute( "name", it->first )
+                << xml::end
+        xos << xml::end;
+    }*/
     xos << xml::end;
 }
 
@@ -158,6 +167,11 @@ void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErr
             >> xml::start( "diplomacy" )
                 >> xml::list( "party", *this, &TeamsModel::ReadDiplomacy )
             >> xml::end
+            /*>> xml::optional >> xml::start( "underground-networks" )
+            << xml::list( "underground-network", *this, &TeampsModel::ReadUndergroundNetwork )
+                << xml::attribute( "name", *it )
+                << xml::end
+            xos << xml::end;*/
         >> xml::end;
 }
 

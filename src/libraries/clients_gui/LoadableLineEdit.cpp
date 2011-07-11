@@ -18,7 +18,7 @@ using namespace gui;
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 LoadableLineEdit::LoadableLineEdit( QWidget* parent, const QString& probableName )
-: LoadableFieldTemplate< QLineEdit >( parent, probableName )
+    : LoadableFieldTemplate< QLineEdit >( parent, probableName )
 {
     SetDefaultValueWidget( new QLineEdit( this ) );
 }

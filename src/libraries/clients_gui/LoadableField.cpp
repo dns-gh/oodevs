@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "clients_gui_pch.h"
 #include "LoadableField.h"
 #include "moc_LoadableField.cpp"
@@ -23,14 +19,14 @@ using namespace gui;
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 LoadableField::LoadableField( QWidget* parent, const QString& probableName)
-: QHBox( parent )
-, probableName_( probableName )
-, defaultValueWidget_( 0 )
-, currentLoader_( 0 )
+    : QHBox( parent )
+    , probableName_      ( probableName )
+    , defaultValueWidget_( 0 )
+    , currentLoader_     ( 0 )
 {
     fieldName_ = new QComboBox( this );
-    connect( fieldName_, SIGNAL( activated(const QString&) ), this, SLOT( FieldSelected(const QString&) ) );
-    SetPossibleFields(  QStringList() );
+    connect( fieldName_, SIGNAL( activated( const QString& ) ), this, SLOT( FieldSelected( const QString& ) ) );
+    SetPossibleFields( QStringList() );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +93,7 @@ void LoadableField::SelectProbableField()
 {
     if( !probableName_.isNull() )
     {
-        for( int i=0, count=fieldName_->count(); i<count; ++i )
+        for( int i = 0, count = fieldName_->count(); i < count; ++i )
         {
             QString text = fieldName_->text( i );
             if( text.contains( probableName_, false ) )

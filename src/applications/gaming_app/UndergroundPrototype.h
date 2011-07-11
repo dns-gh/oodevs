@@ -3,14 +3,14 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __LogisticPrototype_h_
-#define __LogisticPrototype_h_
+#ifndef __UndergroundPrototype_h_
+#define __UndergroundPrototype_h_
 
-#include "clients_gui/LogisticPrototype_ABC.h"
+#include "clients_gui/UndergroundPrototype_ABC.h"
 
 namespace actions
 {
@@ -21,18 +21,18 @@ namespace actions
 }
 
 // =============================================================================
-/** @class  LogisticPrototype
-    @brief  LogisticPrototype
+/** @class  UndergroundPrototype
+    @brief  UndergroundPrototype
 */
-// Created: SBO 2006-04-19
+// Created: JSR 2011-07-08
 // =============================================================================
-class LogisticPrototype : public gui::LogisticPrototype_ABC
+class UndergroundPrototype : public gui::UndergroundPrototype_ABC
 {
 public:
-    //! @name Constructor/Destructor
+    //! @name Constructors/Destructor
     //@{
-             LogisticPrototype( QWidget* parent, kernel::Controllers& controllers, actions::parameters::ParameterList*& attributesList );
-    virtual ~LogisticPrototype();
+             UndergroundPrototype( QWidget* parent, kernel::Controller& controller, actions::parameters::ParameterList*& attributesList );
+    virtual ~UndergroundPrototype();
     //@}
 
     //! @name Operations
@@ -41,10 +41,10 @@ public:
     //@}
 
 private:
-    //! @name Member Data
+    //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;
     //@}
 };
 
-#endif // __LogisticPrototype_h_
+#endif // __UndergroundPrototype_h_

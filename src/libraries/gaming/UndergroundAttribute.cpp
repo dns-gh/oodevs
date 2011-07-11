@@ -3,95 +3,102 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "DelayAttribute.h"
+#include "UndergroundAttribute.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Units.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute constructor
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( Controller& controller )
-    : controller_ ( controller )
-    , delay_ ( 0 )
+UndergroundAttribute::UndergroundAttribute( Controller& controller )
+    : controller_( controller )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute destructor
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute destructor
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-DelayAttribute::~DelayAttribute()
+UndergroundAttribute::~UndergroundAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::Display
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::GetNetwork
+// Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-void DelayAttribute::Display( Displayer_ABC& displayer ) const
+const std::string& UndergroundAttribute::GetNetwork() const
+{
+    return network_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::Display
+// Created: JSR 2011-07-07
+// -----------------------------------------------------------------------------
+void UndergroundAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Delay time:" ), delay_ / 3600. * Units::hours );
+             .Display( tools::translate( "Object", "Underground network:" ), network_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::DisplayInTooltip
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::DisplayInTooltip
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void DelayAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
+void UndergroundAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::DisplayInSummary
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::DisplayInSummary
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void DelayAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
+void UndergroundAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::DoUpdate
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::DoUpdate
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void DelayAttribute::DoUpdate( const sword::ObjectUpdate& message )
+void UndergroundAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::DoUpdate
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::DoUpdate
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void DelayAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
+void UndergroundAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::UpdateData
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::UpdateData
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
 template< typename T >
-void DelayAttribute::UpdateData( const T& message )
+void UndergroundAttribute::UpdateData( const T& message )
 {
-    if( message.has_effect_delay() )
+    if( message.has_underground() )
     {
-        delay_ = static_cast< unsigned int >( message.effect_delay().value() );
-        controller_.Update( *static_cast< DelayAttribute_ABC* >( this ) );
+        network_ = message.underground().network();
+        controller_.Update( *static_cast< UndergroundAttribute_ABC* >( this ) );
     }
 }

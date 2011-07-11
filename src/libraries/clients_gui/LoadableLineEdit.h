@@ -36,23 +36,7 @@ public:
     void clear();
     QString text() const;
     void setText( const QString& );
-    void setValidator( const QValidator * );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LoadableLineEdit( const LoadableLineEdit& );            //!< Copy constructor
-    LoadableLineEdit& operator=( const LoadableLineEdit& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
+    void setValidator( const QValidator* );
     //@}
 };
 

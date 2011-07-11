@@ -3,52 +3,51 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "DelayPrototype.h"
+#include "UndergroundPrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/LoadableTimeEdit.h"
-#include "preparation/DelayAttribute.h"
+#include "clients_gui/LoadableComboBox.h"
+#include "preparation/UndergroundAttribute.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: DelayPrototype constructor
-// Created: JSR 2010-07-06
+// Name: UndergroundPrototype constructor
+// Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-DelayPrototype::DelayPrototype( QWidget* parent, Object_ABC*& creation )
-    : DelayPrototype_ABC( parent )
-    , creation_( creation )
+UndergroundPrototype::UndergroundPrototype( QWidget* parent, Controller& controller, Object_ABC*& creation )
+    : UndergroundPrototype_ABC( parent, controller )
+    , controller_( controller )
+    , creation_  ( creation )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayPrototype destructor
-// Created: JSR 2010-07-06
+// Name: UndergroundPrototype destructor
+// Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-DelayPrototype::~DelayPrototype()
+UndergroundPrototype::~UndergroundPrototype()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayPrototype::Commit
-// Created: JSR 2010-07-06
+// Name: UndergroundPrototype::Commit
+// Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-void DelayPrototype::Commit()
+void UndergroundPrototype::Commit()
 {
     if( creation_ )
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        DelayAttribute* attribute = new DelayAttribute( dico );
-        attribute->SetDelay( 3600 * delayTime_->time().hour() +
-                               60 * delayTime_->time().minute() +
-                                    delayTime_->time().second() );
+        UndergroundAttribute* attribute = new UndergroundAttribute( dico, controller_ );
+        attribute->SetNetwork( network_->currentText().ascii() );
         creation_->Attach( *attribute );
     }
 }

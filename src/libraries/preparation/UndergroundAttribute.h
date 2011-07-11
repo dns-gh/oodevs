@@ -3,19 +3,19 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __DelayAttribute_h_
-#define __DelayAttribute_h_
+#ifndef __UndergroundAttribute_h_
+#define __UndergroundAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Units.h"
 
 namespace kernel
 {
+    class Controller;
     class Displayer_ABC;
     class PropertiesDictionary;
 }
@@ -26,38 +26,35 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  DelayAttribute
-    @brief  DelayAttribute
+/** @class  UndergroundAttribute
+    @brief  UndergroundAttribute
 */
-// Created: JSR 2010-07-06
+// Created: JSR 2011-07-07
 // =============================================================================
-class DelayAttribute : public kernel::DelayAttribute_ABC
-                     , public kernel::Serializable_ABC
+class UndergroundAttribute : public kernel::UndergroundAttribute_ABC
+                           , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DelayAttribute( kernel::PropertiesDictionary& dico );
-             DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
-    virtual ~DelayAttribute();
+    explicit UndergroundAttribute( kernel::PropertiesDictionary& dico, kernel::Controller& controller );
+             UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, kernel::PropertiesDictionary& dico );
+    virtual ~UndergroundAttribute();
     //@}
 
     //! @name Operations
     //@{
+    virtual const std::string& GetNetwork() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    void SetDelay( unsigned int time );
+    void SetNetwork( const std::string& network );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    DelayAttribute( const DelayAttribute& );            //!< Copy constructor
-    DelayAttribute& operator=( const DelayAttribute& ); //!< Assignment operator
+    UndergroundAttribute( const UndergroundAttribute& );            //!< Copy constructor
+    UndergroundAttribute& operator=( const UndergroundAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -68,8 +65,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::UnitedValue< unsigned int > delay_;
+    std::string network_;
+    kernel::Controller& controller_;
     //@}
 };
 
-#endif // __DelayAttribute_h_
+#endif // __UndergroundAttribute_h_

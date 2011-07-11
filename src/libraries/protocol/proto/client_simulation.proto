@@ -195,6 +195,7 @@ message ObjectMagicAction {
         resource_network   = 24;
         lodging            = 25;
         altitude_modifier  = 26;
+        underground        = 27;
     }
     required ObjectId          object     = 1; //!< The object identifier
     required Type              type       = 2; //!< The type of magic action

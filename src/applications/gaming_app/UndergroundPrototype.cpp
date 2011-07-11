@@ -3,48 +3,46 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "LogisticPrototype.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "protocol/Protocol.h"
+#include "UndergroundPrototype.h"
 #include "actions/ParameterList.h"
-
-using namespace kernel;
+#include "clients_gui/LoadableComboBox.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
-// Name: LogisticPrototype::LogisticPrototype
-// Created: SBO 2006-04-19
+// Name: UndergroundPrototype constructor
+// Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-LogisticPrototype::LogisticPrototype( QWidget* parent, Controllers& controllers, actions::parameters::ParameterList*& attributesList )
-    : LogisticPrototype_ABC( parent, controllers )
+UndergroundPrototype::UndergroundPrototype( QWidget* parent, kernel::Controller& controller, actions::parameters::ParameterList*& attributesList )
+    : UndergroundPrototype_ABC( parent, controller )
     , attributesList_( attributesList )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticPrototype::~LogisticPrototype
-// Created: SBO 2006-04-19
+// Name: UndergroundPrototype destructor
+// Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-LogisticPrototype::~LogisticPrototype()
+UndergroundPrototype::~UndergroundPrototype()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticPrototype::Commit
-// Created: SBO 2006-04-19
+// Name: UndergroundPrototype::Commit
+// Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-void LogisticPrototype::Commit()
+void UndergroundPrototype::Commit()
 {
     if( CheckValidity() )
     {
-        actions::parameters::ParameterList& list = attributesList_->AddList( "Logistic" );
-        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::logistic );
-        list.AddIdentifier( "tc2", logSuperiors_->GetValue()->GetId() ); //$$ tc2 à renommer ...
+        actions::parameters::ParameterList& list = attributesList_->AddList( "Underground" );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::underground );
+        list.AddString( "Network", network_->currentText().ascii() );
     }
 }

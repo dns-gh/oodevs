@@ -8,41 +8,41 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "LoadableCheckBox.h"
+#include "LoadableComboBox.h"
 #include "ObjectPrototypeLoader_ABC.h"
 
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: LoadableCheckBox constructor
-// Created: BCI 2011-05-09
+// Name: LoadableComboBox constructor
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-LoadableCheckBox::LoadableCheckBox( const QString& text, QWidget* parent, const QString& probableName )
-    : LoadableFieldTemplate< QCheckBox >( parent, probableName )
+LoadableComboBox::LoadableComboBox( bool rw, QWidget* parent, const QString& probableName /*= QString()*/ )
+    : LoadableFieldTemplate< QComboBox >( parent, probableName )
 {
-    SetDefaultValueWidget( new QCheckBox( text, this ) );
+    SetDefaultValueWidget( new QComboBox( rw, this ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LoadableCheckBox destructor
-// Created: BCI 2011-05-09
+// Name: LoadableComboBox destructor
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-LoadableCheckBox::~LoadableCheckBox()
+LoadableComboBox::~LoadableComboBox()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LoadableCheckBox::isChecked
-// Created: BCI 2011-05-12
+// Name: LoadableComboBox::currentText
+// Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-bool LoadableCheckBox::isChecked() const
+QString LoadableComboBox::currentText() const
 {
     if( currentLoader_ )
     {
         QString field = GetField();
         if( !field.isNull() ) 
-            return currentLoader_->GetCurrentFieldValueAsBool( field );
+            return currentLoader_->GetCurrentFieldValueAsString( field );
     }
-    return GetDefaultValueWidget()->isOn();
+    return GetDefaultValueWidget()->currentText();
 }

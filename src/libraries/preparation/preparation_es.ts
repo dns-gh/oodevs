@@ -594,6 +594,10 @@
         <source>Logistic base:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Underground network:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
@@ -774,6 +778,13 @@ Detallado: %1.</translation>
     <message>
         <source>Info/Cloud parameters/Data export</source>
         <translation>Info/Parámetros de nubes/Expoortación de datos</translation>
+    </message>
+</context>
+<context>
+    <name>UndergroundAttribute</name>
+    <message>
+        <source>Info/Underground/Network</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

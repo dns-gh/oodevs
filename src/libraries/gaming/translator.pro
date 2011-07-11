@@ -60,6 +60,7 @@ SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
 Transports.cpp \
+UndergroundAttribute.cpp \
 UrbanKnowledge.cpp \
 UserProfileFactory.cpp \
 UserProfilesModel.cpp \

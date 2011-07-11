@@ -40,7 +40,9 @@
 #include "ResourceNetworkAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "StockAttribute.h"
+#include "UndergroundAttribute.h"
 #include "AltitudeModifierAttribute.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -98,6 +100,12 @@ namespace
             result.Attach( *new T( xis, dico ) );
         }
 
+        template< typename T >
+        static void Attach( Object_ABC& result, PropertiesDictionary& dico, kernel::Controller& controller, xml::xistream& xis )
+        {
+            result.Attach( *new T( xis, controller, dico ) );
+        }
+
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
         {
@@ -153,6 +161,9 @@ namespace
 
 #define BIND_ATTACH_ATTRIBUTE( CLASS, P1, P2, P3 ) \
     boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS >, P1, P2, P3 )
+
+#define BIND_ATTACH_ATTRIBUTE_CONTROLLER( CLASS, P1, P2, P3, P4 ) \
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS >, P1, P2, P3, P4 )
 
 #define BIND_ATTACH_ATTRIBUTE_HELPER( CLASS, HELPER, P1, P2, P3, P4, P5 ) \
     boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS, HELPER >, P1, P2, P3, P4, P5 )
@@ -218,6 +229,7 @@ void ObjectFactory::Initialize()
     factory->Register( "stock"              , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( StockAttribute, DotationType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "resources"          ,
                        boost::bind( &AttributeBuilder< ResourceNetwork_ABC >::Attach< ResourceNetworkAttribute >, _1, boost::cref( model_.urban_), boost::cref( model_.objects_ ), boost::cref( staticModel_.objectTypes_ ), _3, boost::ref( controllers_ ) ) );
+    factory->Register( "underground"        , BIND_ATTACH_ATTRIBUTE_CONTROLLER( UndergroundAttribute, _1, _2, boost::ref( controllers_.controller_ ), _3 ) );
 
     factory_.reset( factory );
 }

@@ -56,6 +56,7 @@ class InfoSummariesWidget : public QVBox
                           , public tools::ElementObserver_ABC< kernel::FloodAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::StockAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::AltitudeModifierAttribute_ABC >
+                          , public tools::ElementObserver_ABC< kernel::UndergroundAttribute_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -98,6 +99,7 @@ private:
     virtual void NotifyUpdated( const kernel::FloodAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::FloodAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::StockAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::StockAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::AltitudeModifierAttribute_ABC& extension ) { UpdateDisplayIfNeeded< kernel::AltitudeModifierAttribute_ABC >( extension ); }
+    virtual void NotifyUpdated( const kernel::UndergroundAttribute_ABC& extension )      { UpdateDisplayIfNeeded< kernel::UndergroundAttribute_ABC >( extension ); }
 
     template< class T >
     void UpdateDisplayIfNeeded( const T& extension );
