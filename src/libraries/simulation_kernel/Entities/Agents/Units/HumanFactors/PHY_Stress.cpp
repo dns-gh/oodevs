@@ -95,9 +95,6 @@ PHY_Stress::~PHY_Stress()
 // -----------------------------------------------------------------------------
 const PHY_Stress* PHY_Stress::Find( sword::UnitAttributes::EnumUnitStress nAsnID )
 {
-    CIT_StressMap it = std::find_if( stresses_.begin(), stresses_.end(), std::compose1( std::bind2nd( std::equal_to< sword::UnitAttributes::EnumUnitStress >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Stress::GetAsnID ), std::select2nd< T_StressMap::value_type >() ) ) );
-
-    return it == stresses_.end() ? 0 : it->second;
     for( CIT_StressMap it = stresses_.begin(); it != stresses_.end(); ++it )
         if( it->second->GetAsnID() == nAsnID )
             return it->second;
