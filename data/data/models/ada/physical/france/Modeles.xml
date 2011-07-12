@@ -8916,6 +8916,7 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Barrer"/>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
@@ -8984,6 +8985,7 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
@@ -9090,6 +9092,7 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Donner Coup Arret"/>
         <mission name="MELEE Eclairer"/>
@@ -9256,6 +9259,7 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Defendre"/>
@@ -9391,6 +9395,7 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
@@ -13450,4 +13455,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1226046576" -->
+<!-- signature="3738240429" -->
