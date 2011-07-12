@@ -138,7 +138,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         return;
     try
     {
-        std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( exercise->GetName() ) );
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise->GetName() ) );
         std::string image, terrain, data, physical;
         *xis >> xml::start( "exercise" )
                 >> xml::start( "terrain" )
@@ -169,10 +169,13 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
             const QStringList decisionalModels = frontend::commands::ListModels( config_ );
             for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
             {
-                const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
-                int index = physicalModels.findIndex( QString( physical.c_str() ) );
-                if( index != -1 )
-                    modelList_->setCurrentItem( index + 1 );
+                if( (*it).ascii() == data )
+                {
+                    const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+                    int index = physicalModels.findIndex( QString( physical.c_str() ) );
+                    if( index != -1 )
+                        modelList_->setCurrentItem( index + 1 );
+                }
             }
         }
     }
