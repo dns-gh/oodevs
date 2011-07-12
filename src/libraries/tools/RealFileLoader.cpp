@@ -179,12 +179,6 @@ namespace
         if( error && !observer.NotifySignatureError( inputFile, error ) )
             throw std::runtime_error( boost::str( boost::format( "Check before upgrade failed : File %s SignatureException %d " ) % inputFile % error ) );
     }
-    void AddSignature( const std::string& inputFile )
-    {
-        tools::EXmlCrc32SignatureError error = WriteXmlCrc32Signature( inputFile );
-        if( error )
-            throw std::runtime_error( boost::str( boost::format( "Signing after upgrade failed : File %s SignatureException %d " ) % inputFile % error ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -226,9 +220,6 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& init
                 throw;
         }
     }
-
     CheckSignature( inputFileName, observer );
-    xis = UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
-//    AddSignature( inputFileName );
-    return xis;
+    return UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
 }
