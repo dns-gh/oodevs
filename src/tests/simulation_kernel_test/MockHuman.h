@@ -12,7 +12,6 @@
 
 #include "simulation_kernel/Entities/Units/Humans/Human_ABC.h"
 
-
 // =============================================================================
 // @class  MockHuman
 // Created: MGD 2010-03-17

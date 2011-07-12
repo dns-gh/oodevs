@@ -33,7 +33,7 @@ namespace launcher_test
 {
     const std::string  defaultHost = "127.0.0.1";
     const unsigned int timeOut     = 5000;
-    
+
     template< typename P >
     void FillProfileDescription( P* p )
     {

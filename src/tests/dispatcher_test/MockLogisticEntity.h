@@ -24,5 +24,4 @@ MOCK_BASE_CLASS( MockLogisticEntity, dispatcher::LogisticEntity_ABC )
     MOCK_METHOD( Send, 1 );
 };
 
-
 #endif // __MockLogisticEntity_h_

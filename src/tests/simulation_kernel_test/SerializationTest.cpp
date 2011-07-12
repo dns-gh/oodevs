@@ -96,7 +96,6 @@ private:
     std::string name_;
 };
 
-
 BOOST_CLASS_EXPORT( MyRole )
 BOOST_CLASS_EXPORT( MyRole2 )
 

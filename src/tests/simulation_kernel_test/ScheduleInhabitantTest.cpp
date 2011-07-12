@@ -152,7 +152,6 @@ BOOST_FIXTURE_TEST_CASE( schedule_notifies_living_area, Fixture )
     }
 }
 
-
 BOOST_FIXTURE_TEST_CASE( schedule_time_magic_action_notifies_living_area, Fixture )
 {
     {
@@ -162,7 +161,6 @@ BOOST_FIXTURE_TEST_CASE( schedule_time_magic_action_notifies_living_area, Fixtur
     MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
     schedule.Update( Convert( 2011, 1, 21, 9, 0, 0 ), 1u );
 }
-
 
 BOOST_FIXTURE_TEST_CASE( every_week_schedule_notifies_living_area, Fixture )
 {

@@ -66,7 +66,6 @@ BOOST_AUTO_TEST_CASE( IlluminatedByTwoTest )
     BOOST_CHECK( !role.IsIlluminated() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: IlluminatedDefinitelyTest
 // Created: MGD 2010-02-25

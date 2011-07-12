@@ -551,7 +551,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
             MockLogisticEntity logisticEntity;
             MOCK_EXPECT( automat, GetLogisticEntity ).once().returns( &logisticEntity );
             automats.Get( 1 ).Update( message );
-        
+
             // change log supply quotas
             sword::SimToClient expectedQuotas;
             expectedQuotas.set_context( 0 );
@@ -569,7 +569,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             automats.Get( 1 ).Update( message2 );
-        
+
             // network serialization
             MockClientPublisher publisher;
             MOCK_EXPECT( publisher, SendSimToClient ).exactly( 4 ); // TODO! AutomatChangeKnowledgeGroup, AutomatChangeSuperior, AutomatChangeLogisticLinks, AutomatOrder

@@ -20,7 +20,6 @@
 // Created: LDC 2010-04-30
 // =============================================================================
 
-
 MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composantes )
 {
     MOCK_METHOD( Update, 1 );

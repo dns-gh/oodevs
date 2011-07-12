@@ -52,5 +52,4 @@ MOCK_BASE_CLASS( MockKnowledgeGroup, dispatcher::KnowledgeGroup_ABC )
     MOCK_METHOD( Accept, 1 );
 };
 
-
 #endif // __MockKnowledgeGroup_h_

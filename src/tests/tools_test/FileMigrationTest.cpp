@@ -88,7 +88,6 @@ BOOST_FIXTURE_TEST_CASE( test_migration_invalid_xsl, Fixture )
     BOOST_CHECK_THROW( tools::FileMigration fileMigration( xis ), std::exception );
 }
 
-
 BOOST_FIXTURE_TEST_CASE( test_invalid_migration_several_migrations_for_schema, Fixture )
 {
     xml::xistringstream xis( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"

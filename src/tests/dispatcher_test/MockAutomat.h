@@ -60,5 +60,4 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD_EXT( Send, 1, void ( sword::ParentEntity& ), LogisticHierarchyOwnerSend );
 };
 
-
 #endif // __MockAutomat_h_

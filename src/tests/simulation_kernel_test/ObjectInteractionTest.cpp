@@ -213,7 +213,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapa
     MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
-
 // -----------------------------------------------------------------------------
 /* Name: Test VerifyObjectCapacity_Interaction_InteractIfEquipped
     Create an object prototype with supply-route capacity and checks it "can interacti with"

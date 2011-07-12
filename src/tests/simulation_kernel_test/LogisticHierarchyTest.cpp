@@ -52,7 +52,6 @@ namespace {
         }
     };
 
-
     template< typename T >
     void testIteratorContent( tools::Iterator< T& > inputIterator, const std::vector< T* >& wantedOutput )
     {
@@ -213,7 +212,6 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
 
     BOOST_CHECK_EQUAL( linkBrainLog1->GetQuota( *PHY_DotationType::FindDotationCategory( 42 ) ), 2.9 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TestLogisticHierarchySwitchHierarchy

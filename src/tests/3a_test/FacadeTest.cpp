@@ -365,7 +365,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDirectFireInZone, Fixture )
     task->Commit();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Facade_TestIndirectFireInZone
 // Created: FPO 2011-05-24
@@ -1959,7 +1958,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCombinedZoneAndUnitlistDirectFirePower, Fixt
     MakeExpectation( expectedResult );
     task->Commit();
 }
-
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]

@@ -430,7 +430,6 @@ bool TestTools::IsDirectFirePower( const extractors::PowerExtractor_ABC& extract
     return dynamic_cast< const extractors::DirectFirePower* >( &extractor ) != 0;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: 3aTestTools::CreateMedicalConsign
 // Created: FPO 2011-05-09

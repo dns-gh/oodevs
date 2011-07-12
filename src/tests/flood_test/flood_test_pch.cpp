@@ -39,4 +39,3 @@ std::string BOOST_RESOLVE( const std::string& filename )
     return data_directory + '/' + filename;
 }
 
-

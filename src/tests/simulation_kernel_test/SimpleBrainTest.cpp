@@ -1,4 +1,3 @@
-
 #include "simulation_kernel_test_pch.h"
 #include "tools/MIL_Config.h"
 #include "Decision/DEC_Workspace.h"

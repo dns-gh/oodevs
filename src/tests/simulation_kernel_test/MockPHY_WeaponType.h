@@ -73,7 +73,6 @@ public:
         return CreateKnowledgeShadow( knowledgeGroup );
     }
 
-
     virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const
     {
         throw;

@@ -489,7 +489,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter )
 //    delete[] out.elem;
 //}
 
-
 // -----------------------------------------------------------------------------
 // Name: TestMIL_PathParameter_Throw
 // Created: LDC 2009-06-11
