@@ -16,8 +16,7 @@ namespace bfs = boost::filesystem;
 
 void SignDirectory( const bfs::path& root/*, const std::string& name, zip::ozipfile& zos, bool recursive*/ )
 {
-    bfs::directory_iterator end;
-    for( bfs::directory_iterator it( root ); it != end; ++it )
+    for( bfs::directory_iterator it( root ); it != bfs::directory_iterator(); ++it )
     {
         const bfs::path child = *it;
         if( bfs::is_regular_file( child ) && child.extension() == ".xml" )
@@ -29,10 +28,11 @@ void SignDirectory( const bfs::path& root/*, const std::string& name, zip::ozipf
 
 int main( int argc, char** argv )
 {
-    std::cout << "Usage: xml_signature path" << std::endl;
     if( argc < 2 )
+    {
+        std::cout << "Usage: xml_signature path" << std::endl;
         return 1;
-    std::string path( argv[ 1 ] );
-    SignDirectory( bfs::path( path, bfs::native ) );
+    }
+    SignDirectory( bfs::path( argv[ 1 ] ) );
     return 0;
 }
