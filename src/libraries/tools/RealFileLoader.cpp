@@ -229,6 +229,6 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& init
 
     CheckSignature( inputFileName, observer );
     xis = UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
-    AddSignature( inputFileName );
+//    AddSignature( inputFileName );
     return xis;
 }
