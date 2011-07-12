@@ -107,13 +107,6 @@ namespace
     {
         schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
     }
-
-    void CheckSignature( const std::string& inputFile, RealFileLoaderObserver_ABC& observer )
-    {
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( inputFile );
-        if( error && !observer.NotifySignatureError( inputFile, error ) )
-            throw std::runtime_error( boost::str( boost::format( "File %s SignatureException %d " ) % inputFile % error ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -178,6 +171,22 @@ const std::string& RealFileLoader::CheckIfAddedFile( const std::string& initialI
     return initialInputFileName;
 }
 
+namespace
+{
+    void CheckSignature( const std::string& inputFile, RealFileLoaderObserver_ABC& observer )
+    {
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( inputFile );
+        if( error && !observer.NotifySignatureError( inputFile, error ) )
+            throw std::runtime_error( boost::str( boost::format( "Check before upgrade failed : File %s SignatureException %d " ) % inputFile % error ) );
+    }
+    void AddSignature( const std::string& inputFile )
+    {
+        tools::EXmlCrc32SignatureError error = WriteXmlCrc32Signature( inputFile );
+        if( error )
+            throw std::runtime_error( boost::str( boost::format( "Signing after upgrade failed : File %s SignatureException %d " ) % inputFile % error ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RealFileLoader::LoadFile
 // Created: NLD 2011-02-14
@@ -214,10 +223,12 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& init
         catch( xml::exception& e )
         {
             if( !observer.NotifyInvalidXml( inputFileName, e ) )
-                throw e;
+                throw;
         }
     }
 
     CheckSignature( inputFileName, observer );
-    return UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
+    xis = UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
+    AddSignature( inputFileName );
+    return xis;
 }
