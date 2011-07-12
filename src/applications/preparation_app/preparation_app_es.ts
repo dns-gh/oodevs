@@ -1157,6 +1157,58 @@ Do you want to save anyway?</source>
         <source>Prisoner</source>
         <translation>Prisionero</translation>
     </message>
+    <message>
+        <source>Evacuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Healthy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direct fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non fratricide fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fratricide fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repairers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Haulers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lodging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Health</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Safety</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreDialog</name>
@@ -1381,6 +1433,38 @@ Do you want to save anyway?</source>
     <message>
         <source>Perception levels</source>
         <translation>Niveles de percepción</translation>
+    </message>
+    <message>
+        <source>Ambulance types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fratricide fires</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

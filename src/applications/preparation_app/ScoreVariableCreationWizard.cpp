@@ -56,7 +56,7 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kerne
         type_->AddItem( tr( "Equipment list" ), "equipment list" );
         type_->AddItem( tr( "Equipment states" ), "equipment states" );
         type_->AddItem( tr( "Fire types" ), "fire types" );
-        type_->AddItem( tr( "Fratricide fire" ), "fratricide" );
+        type_->AddItem( tr( "Fratricide fires" ), "fratricide" );
         type_->AddItem( tr( "Human states" ), "human states" );
         type_->AddItem( tr( "Human ranks" ), "human ranks" );
         type_->AddItem( tr( "Perception levels" ), "perception levels" );
@@ -248,7 +248,7 @@ namespace
 
     std::map< std::string, std::string > Fratricide()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Not fratricide fires" ).ascii(), "false" )
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Non fratricide fires" ).ascii(), "false" )
             ( tools::translate( "ScoreDef", "Fratricide fires" ).ascii(), "true" );
     }
 
@@ -341,7 +341,7 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
         else if( type == "fire types" )
             result.reset( new ParamStringEnumeration( this, tr( "Fire types" ), parameter, FireTypes() ) );
         else if( type == "fratricide" )
-            result.reset( new ParamStringEnumeration( this, tr( "Fratricide fire" ), parameter, Fratricide() ) );
+            result.reset( new ParamStringEnumeration( this, tr( "Fratricide fires" ), parameter, Fratricide() ) );
         else if( type == "human states" )
             result.reset( new ParamStringEnumeration( this, tr( "Human states" ), parameter, HumanStates() ) );
         else if( type == "human ranks" )

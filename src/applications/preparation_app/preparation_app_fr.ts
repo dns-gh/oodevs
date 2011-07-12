@@ -46,11 +46,11 @@
     </message>
     <message>
         <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation type="unfinished"></translation>
+        <translation>La signature des fichiers suivants n&apos;existe pas: </translation>
     </message>
     <message>
         <source>The following files do not match their xsd : </source>
-        <translation type="unfinished"></translation>
+        <translation>Les fichiers suivants ne correspondent pas avec leur xsd: </translation>
     </message>
 </context>
 <context>
@@ -201,7 +201,7 @@
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Espagnol</translation>
     </message>
 </context>
 <context>
@@ -701,7 +701,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Contour Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lignes de contour</translation>
     </message>
 </context>
 <context>
@@ -888,7 +888,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>&amp;Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Recharger</translation>
     </message>
 </context>
 <context>
@@ -1075,87 +1075,139 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <name>ScoreDef</name>
     <message>
         <source>Total</source>
-        <translation type="unfinished">Total</translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Operational</source>
-        <translation type="unfinished">Operationnel</translation>
+        <translation>Operationnel</translation>
     </message>
     <message>
         <source>Mental</source>
-        <translation type="unfinished">Moral</translation>
+        <translation>Moral</translation>
     </message>
     <message>
         <source>Officer</source>
-        <translation type="unfinished">Officier</translation>
+        <translation>Officier</translation>
     </message>
     <message>
         <source>Sub officer</source>
-        <translation type="unfinished">Sous officier</translation>
+        <translation>Sous officier</translation>
     </message>
     <message>
         <source>Troopers</source>
-        <translation type="unfinished">Soldat</translation>
+        <translation>Soldat</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation type="unfinished">Indisponible</translation>
+        <translation>Indisponible</translation>
     </message>
     <message>
         <source>Repairable</source>
-        <translation type="unfinished">Réparable</translation>
+        <translation>Réparable</translation>
     </message>
     <message>
         <source>Repairing</source>
-        <translation type="unfinished">En réparation</translation>
+        <translation>En réparation</translation>
     </message>
     <message>
         <source>Invisible</source>
-        <translation type="unfinished">Invisible</translation>
+        <translation>Invisible</translation>
     </message>
     <message>
         <source>Detected</source>
-        <translation type="unfinished">Détecté</translation>
+        <translation>Détecté</translation>
     </message>
     <message>
         <source>Recognized</source>
-        <translation type="unfinished">Reconnu</translation>
+        <translation>Reconnu</translation>
     </message>
     <message>
         <source>Identified</source>
-        <translation type="unfinished">Identifié</translation>
+        <translation>Identifié</translation>
     </message>
     <message>
         <source>Recorded</source>
-        <translation type="unfinished">Enregistré</translation>
+        <translation>Enregistré</translation>
     </message>
     <message>
         <source>Dead</source>
-        <translation type="unfinished">Mort</translation>
+        <translation>Mort</translation>
     </message>
     <message>
         <source>Wounded</source>
-        <translation type="unfinished">Blessé</translation>
+        <translation>Blessé</translation>
     </message>
     <message>
         <source>Nbc</source>
-        <translation type="unfinished">Nbc</translation>
+        <translation>Nbc</translation>
     </message>
     <message>
         <source>In treatment</source>
-        <translation type="unfinished">En traitement</translation>
+        <translation>En traitement</translation>
     </message>
     <message>
         <source>In maintenance</source>
-        <translation type="unfinished">En maintenance</translation>
+        <translation>En maintenance</translation>
     </message>
     <message>
         <source>Prisoner</source>
-        <translation type="unfinished">Prisonnier</translation>
+        <translation>Prisonnier</translation>
+    </message>
+    <message>
+        <source>Evacuation</source>
+        <translation>Relève</translation>
+    </message>
+    <message>
+        <source>Collection</source>
+        <translation>Ramassage</translation>
+    </message>
+    <message>
+        <source>Healthy</source>
+        <translation>Sain</translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation>Contaminé</translation>
+    </message>
+    <message>
+        <source>Direct fires</source>
+        <translation>Tirs directs</translation>
+    </message>
+    <message>
+        <source>Indirect fires</source>
+        <translation>Tirs indirects</translation>
+    </message>
+    <message>
+        <source>Non fratricide fires</source>
+        <translation>Tirs non fratricides</translation>
+    </message>
+    <message>
+        <source>Fratricide fires</source>
+        <translation>Tirs fratricides</translation>
+    </message>
+    <message>
+        <source>Repairers</source>
+        <translation>Réparateurs</translation>
+    </message>
+    <message>
+        <source>Haulers</source>
+        <translation>Remorqueurs</translation>
+    </message>
+    <message>
+        <source>Lodging</source>
+        <translation>Logement</translation>
+    </message>
+    <message>
+        <source>Health</source>
+        <translation>Santé</translation>
+    </message>
+    <message>
+        <source>Safety</source>
+        <translation>Sûreté</translation>
     </message>
 </context>
 <context>
@@ -1381,6 +1433,38 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Perception levels</source>
         <translation>Niveaux de perception</translation>
+    </message>
+    <message>
+        <source>Ambulance types</source>
+        <translation>Types d&apos;ambulance</translation>
+    </message>
+    <message>
+        <source>Crowd states</source>
+        <translation>Etats de foules</translation>
+    </message>
+    <message>
+        <source>Fire types</source>
+        <translation>Types de tirs</translation>
+    </message>
+    <message>
+        <source>Fratricide fires</source>
+        <translation>Tirs fratricides</translation>
+    </message>
+    <message>
+        <source>Population states</source>
+        <translation>Etats de populations</translation>
+    </message>
+    <message>
+        <source>Satisfaction types</source>
+        <translation>Etats de satisfactions</translation>
+    </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Blocs urbains</translation>
+    </message>
+    <message>
+        <source>Maintenance types</source>
+        <translation>Types de véhicules de maintenance</translation>
     </message>
 </context>
 <context>
