@@ -19,6 +19,7 @@
 // -----------------------------------------------------------------------------
 FileLoaderObserver::FileLoaderObserver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -27,6 +28,7 @@ FileLoaderObserver::FileLoaderObserver()
 // -----------------------------------------------------------------------------
 FileLoaderObserver::~FileLoaderObserver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +67,7 @@ void FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& fileName
 // Name: FileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void FileLoaderObserver::NotifyFileMigrated( const std::string& fileName , const std::string& fromVersion, const std::string& toVersion )
+void FileLoaderObserver::NotifyFileMigrated( const std::string& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
-    MT_LOG_INFO_MSG( "File " << fileName << " migrated from version '" << fromVersion << "' to version '" << toVersion << "'" );
+    // NOTHING
 }
