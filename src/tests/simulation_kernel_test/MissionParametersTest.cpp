@@ -23,6 +23,7 @@
 #include "MockMIL_Object_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "StubTER_World.h"
+#include "MockAgent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -106,7 +107,7 @@ namespace
         {
             mock::reset();
             MOCK_EXPECT( mockPublisher, Send );
-            MIL_KnowledgeGroupType::InitializeWithTime( group, 0.5f );
+            MIL_KnowledgeGroupType::Initialize( group );
             MOCK_EXPECT( army, GetID ).returns( 29u );
             MOCK_EXPECT( army, RegisterKnowledgeGroup );
             MOCK_EXPECT( army, UnregisterKnowledgeGroup );
@@ -123,7 +124,6 @@ namespace
         MIL_KnowledgeGroup groupArmy;
     };
 }
-#include "MockAgent.h"
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_AgentKnowledgeParameter

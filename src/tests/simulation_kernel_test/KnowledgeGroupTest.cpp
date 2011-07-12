@@ -83,6 +83,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     BOOST_CHECK_EQUAL( &group1, group2.GetParent() );
     mockPublisher.verify();
     MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupArmy ) ).once();
+    MIL_KnowledgeGroupType::Terminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -250,4 +251,5 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     BOOST_CHECK_EQUAL( "TOTO", groupArmy.GetType().GetName().c_str() );
     mockPublisher.verify();
     MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupArmy ) ).once();
+    MIL_KnowledgeGroupType::Terminate();
 }

@@ -63,6 +63,7 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
     BOOST_CHECK_EQUAL( 60 * timeFactor, kgType.GetKnowledgeCommunicationDelay() );
     BOOST_CHECK_EQUAL( "GTIA", kgType.GetName() );
     BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, kgType.GetKnowledgeAgentExtrapolationTime() );
+    MIL_KnowledgeGroupType::Terminate();
 }
 
 namespace
