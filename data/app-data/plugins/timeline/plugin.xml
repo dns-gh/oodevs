@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="timeline" version="1.0" library="timeline_plugin-vc80-mt.dll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
+    <descriptions>
+        <description lang="en" name="Timeline"><![CDATA[Timeline communication plugin.]]></description>
+    </descriptions>
+    <settings>
+        <group>
+            <descriptions>
+                <description lang="en" name="Timeline Connection"><![CDATA[]]></description>
+                <description lang="fr" name="Connexion à la Timeline"><![CDATA[]]></description>
+            </descriptions>
+            <settings>
+                <setting attribute="@host" type="string" default="localhost:8088">
+                    <descriptions>
+                        <description lang="en" name="Host"><![CDATA[]]></description>
+                        <description lang="fr" name="Nom du server"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@ssl" type="boolean" default="false">
+                    <descriptions>
+                        <description name="use SSL" lang="en"><![CDATA[]]></description>
+                        <description name="Utilise SSL" lang="fr"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@log" type="boolean" default="false">
+                    <descriptions>
+                        <description name="Log" lang="en"><![CDATA[Activate log output]]></description>
+                        <description name="Log" lang="fr"><![CDATA[Active la sortie de log]]></description>
+                    </descriptions>
+                </setting>
+            </settings>
+        </group>
+        <group>
+            <descriptions>
+                <description lang="en" name="Scenario Info"><![CDATA[]]></description>
+                <description lang="fr" name="Info Scenario"><![CDATA[]]></description>
+            </descriptions>
+            <settings>
+                <setting attribute="orders/@file" type="file">
+                    <descriptions>
+                        <description lang="en" name="Recorded orders"><![CDATA[]]></description>
+                        <description lang="fr" name="Ordres pré-enregistrés"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="scenario/@id" type="integer" default="1">
+                    <descriptions>
+                        <description lang="en" name="Scenario's reference ID"><![CDATA[]]></description>
+                        <description lang="fr" name="ID du scénario"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="scenario/@restart" type="boolean" default="false">
+                    <descriptions>
+                        <description name="Restart scenario" lang="en"><![CDATA[Select an order file...]]></description>
+                        <description name="Redémarre le scénario" lang="fr"><![CDATA[Sélectionner un fichier d'ordres...]]></description>
+                    </descriptions>
+                </setting>
+            </settings>
+        </group>
+        <group>
+            <descriptions>
+                <description lang="en" name="Actor Info"><![CDATA[]]></description>
+                <description lang="fr" name="Info Acteur"><![CDATA[]]></description>
+            </descriptions>
+            <settings>
+                <setting attribute="scenario/actor/@id" type="integer">
+                    <descriptions>
+                        <description lang="en" name="Actor's reference ID"><![CDATA[]]></description>
+                        <description lang="fr" name="ID de l'Acteur"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="scenario/actor/@name" type="string">
+                    <descriptions>
+                        <description name="Actor's name" lang="en"><![CDATA[]]></description>
+                        <description name="Nom de l'Acteur" lang="fr"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+            </settings>
+        </group>
+    </settings>
+</plugin>

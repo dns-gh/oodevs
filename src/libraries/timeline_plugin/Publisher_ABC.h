@@ -41,9 +41,10 @@ public:
 
     //! @name Operations
     //@{
-        virtual void PullSituation( const std::string& message, const std::string& timestamp, ResponseHandler_ABC& response ) = 0;
-        virtual void PushReport( const std::string& message ) = 0;
-        //@}
+    virtual void PullSituation( const std::string& message, const std::string& timestamp, ResponseHandler_ABC& response ) = 0;
+    virtual void PushReport( const std::string& message ) = 0;
+    virtual void RestartScenario() = 0;
+    //@}
 };
 
 }

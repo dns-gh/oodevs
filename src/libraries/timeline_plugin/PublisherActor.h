@@ -48,6 +48,7 @@ public:
     //@{
     virtual void PullSituation( const std::string& message, const std::string& timestamp, ResponseHandler_ABC& response );
     virtual void PushReport( const std::string& message );
+    virtual void RestartScenario();
     //@}
 
 private:
@@ -61,6 +62,7 @@ private:
     //@{
     void DoPushReport( const std::string& message );
     void DoPullSituation( const std::string& message, const std::string& timestamp, ResponseHandler_ABC& handler );
+    void DoRestartScenario();
     //@}
 
     //! @name Types

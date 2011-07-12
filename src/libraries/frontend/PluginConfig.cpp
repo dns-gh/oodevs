@@ -93,7 +93,7 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     box_->setChecked( false );
     xis >> xml::start( "settings" )
             >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
-            >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
+                >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +177,7 @@ void PluginConfig::Commit( const std::string& exercise, const std::string& sessi
 // -----------------------------------------------------------------------------
 void PluginConfig::ReadSetting( xml::xistream& xis, QWidget* parent )
 {
-    settings_.push_back( boost::shared_ptr< PluginSetting >( new PluginSetting( parent, xis ) ) );
+    settings_.push_back( boost::shared_ptr< PluginSetting >( new PluginSetting( parent, config_, xis ) ) );
 }
 
 // -----------------------------------------------------------------------------

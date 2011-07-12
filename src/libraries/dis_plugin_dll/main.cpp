@@ -15,13 +15,14 @@
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
+    class StaticModel;
 }
 
 // -----------------------------------------------------------------------------
 // Name: CreateInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-DIS_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& /*simulation*/, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
+DIS_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, const dispatcher::StaticModel& /*staticModel*/, dispatcher::SimulationPublisher_ABC& /*simulation*/, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
     try
     {

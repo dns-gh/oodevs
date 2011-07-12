@@ -19,7 +19,6 @@
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
 #include "frontend/EdxlHavePluginConfigPanel.h"
-#include "frontend/TimelinePluginConfigPanel.h"
 #include "frontend/EditExercise.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinAnalysis.h"
@@ -174,7 +173,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
             frontend::PluginConfigBuilder builder( config_, tabs );
             plugins_.push_back( builder.BuildFromXml()
                                        .Build< frontend::EdxlHavePluginConfigPanel >()
-                                       .Build< frontend::TimelinePluginConfigPanel >()
                                        .Finalize() );
         }
     }

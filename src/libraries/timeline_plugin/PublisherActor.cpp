@@ -65,7 +65,6 @@ void PublisherActor::PushReport( const std::string& message )
     thread_->Enqueue( boost::bind( &PublisherActor::DoPushReport, this, message ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PublisherActor::DoPushReports
 // Created: AGE 2008-05-30
@@ -73,4 +72,22 @@ void PublisherActor::PushReport( const std::string& message )
 void PublisherActor::DoPushReport( const std::string& message )
 {
     base_->PushReport( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PublisherActor::RestartScenario
+// Created: JCR 2011-03-30
+// -----------------------------------------------------------------------------
+void PublisherActor::RestartScenario()
+{
+    thread_->Enqueue( boost::bind( &PublisherActor::DoRestartScenario, this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PublisherActor::DoRestartScenario
+// Created: JCR 2011-03-30
+// -----------------------------------------------------------------------------
+void PublisherActor::DoRestartScenario()
+{
+    base_->RestartScenario();
 }

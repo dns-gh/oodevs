@@ -65,6 +65,7 @@ private:
     QButton*   order_;
     std::string orderFile_;
     QLineEdit* scenarioId_;
+    QCheckBox* doRestart_;
     QLineEdit* actorName_;
     QLineEdit* actorId_;
     //@}

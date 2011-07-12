@@ -18,11 +18,6 @@ namespace xml
     class xistream;
 }
 
-namespace kernel
-{
-    class StaticModel;
-}
-
 namespace plugins
 {
 namespace rights
@@ -35,6 +30,7 @@ namespace dispatcher
 {
     class Config;
     class Model;
+    class StaticModel;
     class SimulationPublisher_ABC;
     class ClientsNetworker;
     class CompositePlugin;
@@ -55,7 +51,7 @@ class PluginFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel,
+             PluginFactory( const Config& config, Model& model, const dispatcher::StaticModel& staticModel,
                             SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
                             CompositePlugin& handler, CompositeRegistrable& registrables,
                             const Services& services, RotatingLog& log, int maxConnections );
@@ -85,7 +81,7 @@ private:
     //@{
     const Config& config_;
     Model& model_;
-    const kernel::StaticModel& staticModel_;
+    const dispatcher::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
     ClientsNetworker& clients_;
     CompositePlugin& handler_;

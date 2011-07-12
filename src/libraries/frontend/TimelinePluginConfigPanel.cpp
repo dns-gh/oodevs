@@ -74,6 +74,9 @@ TimelinePluginConfigPanel::TimelinePluginConfigPanel( QWidget* parent, const too
             QGroupBox* scenario = Style( new QGroupBox( 2, Horizontal, tools::translate( "TimelinePluginConfigPanel", "Scenario information:" ), services ) );
             Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Scenario Id: " ), scenario ) );
             scenarioId_ = Style( new QLineEdit( "1", scenario ) );
+            Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Restart timeline scenario: " ), scenario ) );
+            doRestart_ = Style( new QCheckBox( scenario ) );
+            doRestart_->setChecked( false );
             Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Actor: " ), scenario ) );
             {
                 QHBox* box = new QHBox( scenario );
@@ -149,6 +152,8 @@ void TimelinePluginConfigPanel::Commit( const std::string& exercise, const std::
         if( log_->isChecked() )
             action.SetOption( "session/config/dispatcher/plugins/timeline/@log", "true" );
         action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/@id", scenarioId_->text() );
+        if ( doRestart_->isChecked() )
+            action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/@restart", "true" );
         action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/actor/@id", actorId_->text() );
         action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/actor/@name", actorName_->text() );
         const bfs::path exerciseDir = bfs::path( config_.GetExerciseDir( exercise ), bfs::native );

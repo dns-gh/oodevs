@@ -14,9 +14,9 @@
 #include "ActionPublisher.h"
 #include "ActionLoader.h"
 #include "Publisher.h"
-#include "MT_Tools/MT_Logger.h"
 #include "tools/ExerciseConfig.h"
 #include "clients_kernel/Controller.h"
+#include "dispatcher/Logger_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::timeline;
@@ -25,8 +25,8 @@ using namespace plugins::timeline;
 // Name: TimelinePlugin constructor
 // Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
-TimelinePlugin::TimelinePlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::ExerciseConfig& config, xml::xistream& xis,
-                                dispatcher::SimulationPublisher_ABC& simulationPublisher )
+TimelinePlugin::TimelinePlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulationPublisher, 
+                                const tools::ExerciseConfig& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
     : controller_( new kernel::Controller() )
     , actions_   ( new ActionPublisher( *controller_, config, model, staticModel, simulationPublisher ) )
     , scenario_  ( new ScenarioManager( *actions_ ) )
@@ -38,10 +38,10 @@ TimelinePlugin::TimelinePlugin( dispatcher::Model_ABC& model, const kernel::Stat
     }
     catch ( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "TimelinePlugin : error occured while loading plugin." )
-        MT_LOG_ERROR_MSG( "TimelinePlugin : " << e.what() )
+        logger.LogError( "TimelinePlugin : error occured while loading plugin." );
+        logger.LogError( "TimelinePlugin : " + std::string( e.what() ) );
     }
-    MT_LOG_INFO_MSG( "TimelinePlugin : registered." )
+    logger.LogInfo( "TimelinePlugin : registered." );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,15 +61,20 @@ void TimelinePlugin::Load( const tools::ExerciseConfig& config, xml::xistream& x
 {
     std::string file;
     long scenarioId, actorId;
+    bool doRestart = false;
+
     xis >> xml::start( "orders" )
                 >> xml::attribute( "file", file )
         >> xml::end
         >> xml::start( "scenario" ) >> xml::attribute( "id", scenarioId )
+            >> xml::optional >> xml::attribute( "restart", doRestart )
             >> xml::start( "actor" )
                 >> xml::attribute( "id", actorId )
             >> xml::end
         >> xml::end;
 
+    if( doRestart )
+        publisher_->RestartScenario();
     ActionLoader loader( scenarioId, actorId, *publisher_ );
     loader.Load( config.BuildExerciseChildFile( file ) );
 }

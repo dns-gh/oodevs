@@ -32,6 +32,7 @@ namespace tools
 namespace dispatcher
 {
     class Model_ABC;
+    class Logger_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -54,7 +55,7 @@ class TimelinePlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            TimelinePlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::ExerciseConfig& config, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulationPublisher );
+            TimelinePlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulationPublisher, const tools::ExerciseConfig& config, xml::xistream& xis, dispatcher::Logger_ABC& logger );
     virtual ~TimelinePlugin();
     //@}
 

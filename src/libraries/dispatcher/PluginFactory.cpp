@@ -11,6 +11,7 @@
 #include "PluginFactory.h"
 #include "Config.h"
 #include "Model.h"
+#include "StaticModel.h"
 #include "CompositePlugin.h"
 #include "SimulationPublisher_ABC.h"
 #include "ClientsNetworker.h"
@@ -35,7 +36,7 @@ using namespace plugins;
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel,
+PluginFactory::PluginFactory( const Config& config, Model& model, const dispatcher::StaticModel& staticModel,
                               SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler,
                               CompositeRegistrable& registrables, const Services& services, RotatingLog& log, int maxConnections )
     : config_      ( config )
@@ -125,7 +126,7 @@ namespace
         return boost::filesystem::basename( p ) + EXTENSION + boost::filesystem::extension( p );
     }
 
-    typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, dispatcher::SimulationPublisher_ABC&, const dispatcher::Config&, dispatcher::Logger_ABC&, xml::xistream& );
+    typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, const dispatcher::StaticModel&, dispatcher::SimulationPublisher_ABC&, const dispatcher::Config&, dispatcher::Logger_ABC&, xml::xistream& );
     typedef void (*DestroyFunctor)( dispatcher::Plugin_ABC*, dispatcher::Logger_ABC& );
 
     template< typename T >
@@ -175,7 +176,7 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
         boost::shared_ptr< Logger_ABC > logger( new FileLogger( config_.BuildSessionChildFile( name + "_plugin.log" ) ) );
-        boost::shared_ptr< Plugin_ABC > plugin( createFunction( model_, simulation_, config_, *logger, xis ), boost::bind( destroyFunction, _1, boost::ref( *logger ) ) );
+        boost::shared_ptr< Plugin_ABC > plugin( createFunction( model_, staticModel_, simulation_, config_, *logger, xis ), boost::bind( destroyFunction, _1, boost::ref( *logger ) ) );
         if( !plugin.get() )
             throw std::runtime_error( "CreateFunctor returned an error (see details in plugin log file)" );
         handler_.Add( plugin, logger );

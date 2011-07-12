@@ -44,6 +44,7 @@ public:
     //@{
     virtual void PullSituation( const std::string& message, const std::string& timestamp, ResponseHandler_ABC& response );
     virtual void PushReport( const std::string& message );
+    virtual void RestartScenario();
     //@}
 
 private:
@@ -52,6 +53,11 @@ private:
     Publisher( const Publisher& );            //!< Copy constructor
     Publisher& operator=( const Publisher& ); //!< Assignment operator
     //@}}
+
+    //! @name 
+    //@{
+    void ExecuteGetRequest( const std::string& uri, const std::string& message, ResponseHandler_ABC& handler );
+    //@}
 
     //! @name Helpers
     //@{

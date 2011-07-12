@@ -17,10 +17,8 @@
 #include "frontend/commands.h"
 #include "frontend/EdxlHavePluginConfigPanel.h"
 #include "frontend/PluginConfigBuilder.h"
-#include "frontend/TimelinePluginConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
-
 #include <qaction.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -70,7 +68,6 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
         frontend::PluginConfigBuilder builder( config_, tabs );
         plugins_.push_back( builder.BuildFromXml()
                                    .Build< frontend::EdxlHavePluginConfigPanel >()
-                                   .Build< frontend::TimelinePluginConfigPanel >()
                                    .Finalize() );
     }
     {

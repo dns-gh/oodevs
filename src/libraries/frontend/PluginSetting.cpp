@@ -10,6 +10,8 @@
 #include "frontend_pch.h"
 #include "PluginSetting.h"
 #include "PluginSettingVisitor_ABC.h"
+#include "moc_PluginSetting.cpp"
+#include "tools/GeneralConfig.h"
 #include <qapplication.h>
 #include <qcheckbox.h>
 #include <qdatetimeedit.h>
@@ -20,6 +22,8 @@
 #include <qtextcodec.h>
 #include <qtooltip.h>
 #include <qcombobox.h>
+#include <qpushbutton.h>
+#include <qfiledialog.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
@@ -63,13 +67,33 @@ namespace
     };
 }
 
+FileButtonEvent::FileButtonEvent( PluginSetting& plugins, QWidget* parent, const std::string& description ) 
+    : QObject( parent )
+    , plugins_ ( plugins )
+    , fileValue_( Style( new QPushButton( parent ) ) )
+{
+    fileValue_->setText( description.empty() ? "Select an order file..." : description.c_str() );
+    connect( fileValue_, SIGNAL( clicked() ), this, SLOT( OnFileClicked() ) );
+}
+
+void FileButtonEvent::setText( const std::string& value )
+{
+    fileValue_->setText( value.c_str() );
+}
+
+void FileButtonEvent::OnFileClicked()
+{
+    plugins_.OnFileClicked();
+}
+
 // -----------------------------------------------------------------------------
 // Name: PluginSetting constructor
 // Created: SBO 2011-05-09
 // -----------------------------------------------------------------------------
-PluginSetting::PluginSetting( QWidget* parent, xml::xistream& xis )
-    : attribute_( xis.attribute< std::string >( "attribute" ) )
-    , type_( xis.attribute< std::string >( "type" ) )
+PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& config, xml::xistream& xis )
+    : attribute_ ( xis.attribute< std::string >( "attribute" ) )
+    , type_ ( xis.attribute< std::string >( "type" ) )
+    , config_ ( config )
 {
     DescriptionReader reader( xis, ReadLang() );
     QToolTip::add( Style( new QLabel( reader.name_.c_str(), parent ) ), reader.description_.c_str() );
@@ -94,6 +118,10 @@ PluginSetting::PluginSetting( QWidget* parent, xml::xistream& xis )
         timeValue_ = Style( new QTimeEdit( parent ) );
         timeValue_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds );
         timeValue_->setTime( QTime().addSecs( xis.attribute< int >( "default", 0 ) ) );
+    }
+    else if( type_ == "file" )
+    {
+        fileValue_.reset( new FileButtonEvent( *this, parent, reader.description_ ) );
     }
     else if( type_ == "enumeration" )
     {
@@ -130,6 +158,38 @@ void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
         visitor.Visit( attribute_, booleanValue_->isChecked() );
     else if( type_ == "time" )
         visitor.Visit( attribute_, std::string( QString( "%1s" ).arg( QTime().secsTo( timeValue_->time() ) ).ascii() ) );
+    else if( type_ == "file" )
+    {
+        // TODO:
+        // const bfs::path exerciseDir = bfs::path( config_.GetExerciseDir( exercise ), bfs::native );
+        // const bfs::path orderDir = bfs::path( orderFile_, bfs::native );
+        // if( exerciseDir.string() == std::string( orderDir.string(), 0, exerciseDir.string().size() ) )
+        //    action.SetOption( "session/config/dispatcher/plugins/timeline/orders/@file", std::string( orderFile_, exerciseDir.string().size() + 1, orderFile_.size() - exerciseDir.string().size() - 1 ) );
+        visitor.Visit( attribute_, fileName_ );
+    }
     else if( type_ == "enumeration" )
         visitor.Visit( attribute_, std::string( enumerationValue_->currentText().ascii() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginSetting::OnFileClicked
+// Created: JCR 2011-07-11
+// -----------------------------------------------------------------------------
+void PluginSetting::OnFileClicked()
+{
+    const int max_size = 20;
+
+    QString fileName = QFileDialog::getOpenFileName(
+                                QString( config_.GetExercisesDir().c_str() ), "Order File (*.ord)",
+                                0, "Select", "Select recorded orders" );
+    if( !fileName.isNull() && !fileName.isEmpty() )
+    {
+        fileName_ = fileName;
+        std::string::size_type size = fileName_.length() - std::min( max_size, (int)fileName_.length() );
+        std::string msg( fileName_, size, size );
+        if ( fileName_.size() > max_size + 2 )
+            fileValue_->setText( ".." + msg );
+        else
+            fileValue_->setText( msg );
+    }
 }

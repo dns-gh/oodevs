@@ -9,32 +9,29 @@
 
 #include "DllConfig.h"
 #include "dispatcher/Logger_ABC.h"
-#include "hla_plugin/HlaPlugin.h"
-#include <hla/HLAException.h>
+#include "dispatcher/Config.h"
+#include "dispatcher/StaticModel.h"
+#include "timeline_plugin/TimelinePlugin.h"
 #include <windows.h>
 
 namespace dispatcher
 {
-    class SimulationPublisher_ABC;
     class StaticModel;
+    class SimulationPublisher_ABC;
 }
 
 // -----------------------------------------------------------------------------
 // Name: CreateInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, const dispatcher::StaticModel& /*staticModel*/, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
+TIMELINE_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, const dispatcher::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
     try
     {
         logger.LogInfo( "Initialization..." );
-        dispatcher::Plugin_ABC* result = new plugins::hla::HlaPlugin( model, simulation, config, xis, logger );
+        dispatcher::Plugin_ABC* result = new plugins::timeline::TimelinePlugin( model, staticModel, simulation, config, xis, logger );
         logger.LogInfo( "Initialized!" );
         return result;
-    }
-    catch( hla::HLAException& e )
-    {
-        logger.LogError( std::string( "Initialization failed cause hla exception: " ) + e.what() );
     }
     catch( std::exception& e )
     {
@@ -51,17 +48,13 @@ HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
 // Name: DestroyInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-HLA_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatcher::Logger_ABC& logger )
+TIMELINE_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatcher::Logger_ABC& logger )
 {
     try
     {
         logger.LogInfo( "Destruction..." );
         delete plugin;
         logger.LogInfo( "Destructed!" );
-    }
-    catch( hla::HLAException& e )
-    {
-        logger.LogError( std::string( "Destruction failed cause hla exception: " ) + e.what() );
     }
     catch( std::exception& e )
     {

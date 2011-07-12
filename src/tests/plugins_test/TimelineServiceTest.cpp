@@ -32,6 +32,7 @@ MOCK_BASE_CLASS( MockPublisher, plugins::timeline::Publisher_ABC )
 {
     MOCK_METHOD( PullSituation, 3 )
     MOCK_METHOD( PushReport, 1 )
+    MOCK_METHOD( RestartScenario, 0 )
 };
 
 namespace

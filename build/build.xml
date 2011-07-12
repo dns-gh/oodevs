@@ -113,7 +113,7 @@
     <target name="library.crossbow_plugin" depends="library.MT_Tools,library.tools,library.protocol" description="build crossbow dispatcher plugin static library">
         <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
-
+    
     <target name="library.rpr" description="build rpr static library">
         <build-lib name="rpr" pattern="lib${ant.project.name}_rpr-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
@@ -252,6 +252,23 @@
         <build-lib name="timeline_plugin" pattern="lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
+    <target name="library.timeline_plugin_dll" depends="library.timeline_plugin" description="build timeline_plugin dynamic library">
+        <build-lib name="timeline_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf,openssl" pattern="timeline_plugin-${platform}-mt@{suffix}" suffix="-gd"
+            libs="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+                  lib${ant.project.name}_ENT-${platform}-mt@{suffix},
+                  lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_actions-${platform}-mt@{suffix},
+                  lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+            <syslibset libs="shell32,user32"/>
+            <defineset define="TIMELINE_PLUGIN_DLL_EXPORTS"/>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
+        <move todir="${run.dir}/plugins/timeline" file="${run.dir}/timeline_plugin-${platform}-mt.dll"/>
+    </target>
+
     <target name="library.score_plugin" depends="library.dispatcher,library.3a,library.indicators" description="build score_plugin static library">
         <build-lib name="score_plugin" depends="boost,qt" pattern="lib${ant.project.name}_score_plugin-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
@@ -267,7 +284,7 @@
     <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
                                             library.aar_plugin,library.rights_plugin,library.saver_plugin,library.replay_plugin,
                                             library.3a,library.bml_plugin,library.script_plugin,library.score_plugin,
-                                            library.crossbow_plugin,library.timeline_plugin,
+                                            library.crossbow_plugin,library.timeline_plugin_dll,
                                             library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>
 
     <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
@@ -317,8 +334,8 @@
     </target>
 
     <target name="application.dispatcher_dll" depends="library.dispatcher,library.actions,library.clients_kernel,library.ENT,library.plugins,library.shield" description="build Sword Dispatcher dll with crossbow">
-        <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan,openssl,protobuf" pattern="dispatcher-${platform}-mt"
-            libs="masalloc,tools,gdal_i,
+        <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan,protobuf" pattern="dispatcher-${platform}-mt"
+            libs="masalloc,tools,
                   directia-${platform}-mt-4_6,
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -335,7 +352,6 @@
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_3a-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -1114,7 +1130,7 @@
     <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
-    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.dis" description="package plugin individual installers"/>
+    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.dis,package.plugin.timeline" description="package plugin individual installers"/>
 
     <target name="package.plugin.vrforces" description="create vrforces plugin installer" if="is-vc80">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
@@ -1142,7 +1158,16 @@
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>
-
+    
+    <target name="package.plugin.timeline" description="create timeline plugin installer">
+        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DPLUGIN=plugin-timeline"/>
+            <arg value="/DPLUGIN_VERSION=1.0"/>
+        </nsis>
+    </target>
+    
     <!-- Package misc -->
     <target name="package.patch" description="create a patch installer">
         <nsis name="sword-patch" script="patchs/sword-patch.nsi" license="true">

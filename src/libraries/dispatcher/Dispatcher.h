@@ -16,13 +16,9 @@
 #include "clients_kernel/Application_ABC.h"
 #include <boost/shared_ptr.hpp>
 
-namespace kernel
-{
-    class StaticModel;
-}
-
 namespace dispatcher
 {
+    class StaticModel;
     class ClientsNetworker;
     class Config;
     class Model;
@@ -67,7 +63,7 @@ private:
     //@}
 
 private:
-    std::auto_ptr< kernel::StaticModel >  staticModel_;
+    std::auto_ptr< dispatcher::StaticModel >  staticModel_;
     boost::shared_ptr< Model >            model_;
     std::auto_ptr< CompositeRegistrable > registrables_;
     std::auto_ptr< CompositePlugin >      handler_;
