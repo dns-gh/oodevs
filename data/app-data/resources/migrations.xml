@@ -3,6 +3,7 @@
   <default>
     <!-- Exercise -->
     <match-if non-versioned-schema="schemas/exercise/weather.xsd" assign-schema="schemas/3.0/exercise/weather.xsd"/>
+    <match-if root-node="weather" assign-schema="schemas/3.0/exercise/weather.xsd"/>    
     <match-if non-versioned-schema="schemas/exercise/exercise.xsd" assign-schema="schemas/3.0/exercise/exercise.xsd"/>
     <match-if root-node="exercise" assign-schema="schemas/3.0/exercise/exercise.xsd"/>    
     <match-if non-versioned-schema="schemas/exercise/urbanstate.xsd" assign-schema="schemas/3.0/exercise/urbanstate.xsd"/>
