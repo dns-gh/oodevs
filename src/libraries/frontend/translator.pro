@@ -16,6 +16,5 @@ SessionConfigPanel.cpp \
 SpawnCommand.cpp \
 StartExercise.cpp \
 StartTerrainWorkshop.cpp \
-TimelinePluginConfigPanel.cpp \
 
 TRANSLATIONS = frontend_fr.ts frontend_es.ts
