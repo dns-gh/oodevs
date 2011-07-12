@@ -19,6 +19,7 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 ADN_FileLoaderObserver::ADN_FileLoaderObserver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -27,6 +28,7 @@ ADN_FileLoaderObserver::ADN_FileLoaderObserver()
 // -----------------------------------------------------------------------------
 ADN_FileLoaderObserver::~ADN_FileLoaderObserver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +65,9 @@ void ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& file
 // Name: ADN_FileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void ADN_FileLoaderObserver::NotifyFileMigrated( const std::string& fileName, const std::string& fromVersion, const std::string& toVersion )
+void ADN_FileLoaderObserver::NotifyFileMigrated( const std::string& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
-    std::cout << boost::format( "Xml file %s migrated from version %s to %s" ) % fileName % fromVersion % toVersion << std::endl;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
