@@ -10,6 +10,8 @@
 #ifndef __ActionParameterFactory_ABC_h_
 #define __ActionParameterFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class MissionParameter;
@@ -38,7 +40,7 @@ class Parameter_ABC;
 */
 // Created: SBO 2007-03-19
 // =============================================================================
-class ParameterFactory_ABC
+class ParameterFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

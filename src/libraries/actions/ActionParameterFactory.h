@@ -56,12 +56,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionParameterFactory( const ActionParameterFactory& );            //!< Copy constructor
-    ActionParameterFactory& operator=( const ActionParameterFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list ) const;

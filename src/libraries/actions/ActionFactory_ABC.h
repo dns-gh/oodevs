@@ -12,6 +12,7 @@
 
 #include "tools/Resolver_ABC.h"
 #include <geometry/types.h>
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -44,6 +45,7 @@ namespace actions
 class Action_ABC;
 class CreationListener_ABC;
 class ActionsModel;
+
 namespace parameters
 {
     class ParameterList;
@@ -55,7 +57,7 @@ namespace parameters
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionFactory_ABC
+class ActionFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

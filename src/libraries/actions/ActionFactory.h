@@ -78,12 +78,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionFactory( const ActionFactory& );            //!< Copy constructor
-    ActionFactory& operator=( const ActionFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     Action_ABC* CreateMission( xml::xistream& xis, bool readonly ) const;
