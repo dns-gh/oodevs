@@ -217,16 +217,16 @@ bool XmlNode::GetValue<bool>( const std::string& path ) const
 bool XmlNode::RemoveNode( const std::string& path )
 {
     XmlNode* node = GetChildNode( path );
-    if ( !node )
+    if( !node )
         return false;
 
     XmlNode* parentNode = GetChildNode( path, true );
-    if ( !parentNode )
+    if( !parentNode )
         return false;
 
-    for ( T_Nodes::iterator it = parentNode->children_.begin(); it != parentNode->children_.end(); ++it )
+    for( T_Nodes::iterator it = parentNode->children_.begin(); it != parentNode->children_.end(); ++it )
     {
-        if ( it->second == node )
+        if( it->second == node )
         {
             parentNode->children_.erase( it );
             return true;
@@ -242,14 +242,14 @@ bool XmlNode::RemoveNode( const std::string& path )
 // -----------------------------------------------------------------------------
 bool XmlNode::HasNode( const std::string& path )
 {
-    if ( IsAttribute( path ) && attributes_.find( path.substr( 1, path.size() - 1 ) ) != attributes_.end() )
+    if( IsAttribute( path ) && attributes_.find( path.substr( 1, path.size() - 1 ) ) != attributes_.end() )
         return true;
     std::string element = NextElement( path );
     T_Nodes::iterator it = children_.find( element );
-    if ( element.size() && it != children_.end() )
+    if( element.size() && it != children_.end() )
     {
         element = element != path ? path.substr( element.length() + 1 ) : "";
-        if ( !element.size() || it->second->HasNode( element ) )
+        if( !element.size() || it->second->HasNode( element ) )
             return true;
     }
     return false;
@@ -263,10 +263,10 @@ XmlNode* XmlNode::GetChildNode( const std::string& path, bool parent /*= false*/
 {
     std::string element = NextElement( path );
     T_Nodes::iterator it = children_.find( element );
-    if ( element.size() && it != children_.end() )
+    if( element.size() && it != children_.end() )
     {
         element = element != path ? path.substr( element.length() + 1 ) : "";
-        if ( !element.size() )
+        if( !element.size() )
             return parent? this : it->second;
         return it->second->GetChildNode( element, parent );
     }

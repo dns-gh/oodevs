@@ -75,13 +75,13 @@ namespace frontend
         exerciseItem->setEnabled( false );
 
         const QStringList sessions( frontend::commands::ListSessions( config, exercise ) );
-        for ( QStringList::const_iterator it = sessions.constBegin(); it != sessions.constEnd(); ++it )
+        for( QStringList::const_iterator it = sessions.constBegin(); it != sessions.constEnd(); ++it )
         {
             (void) new CheckListItem( exerciseItem, base + "/sessions/" + *it, true );
         }
 
         const QStringList others = frontend::commands::ListOtherDirectories( config, exercise );
-        for ( QStringList::const_iterator it = others.constBegin(); it != others.constEnd(); ++it )
+        for( QStringList::const_iterator it = others.constBegin(); it != others.constEnd(); ++it )
         {
             (void) new CheckListItem( rootItem, base + "/" + *it, true );
         }

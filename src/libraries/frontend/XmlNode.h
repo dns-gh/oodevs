@@ -112,10 +112,8 @@ T XmlNode::GetValue( const std::string& path ) const
         throw std::exception( "XmlNode impossible to find path" );
 }
 
-
 template<>
 bool XmlNode::GetValue<bool>( const std::string& path ) const;
-
 
 }
 

@@ -118,7 +118,7 @@ void TimelinePluginConfigPanel::OnOrderClicked()
         orderFile_ = orderFile;
         std::string::size_type size = orderFile_.length() - std::min( max_size, (int)orderFile_.length() );
         std::string msg( orderFile_, size, size );
-        if ( orderFile_.size() > max_size + 2 )
+        if( orderFile_.size() > max_size + 2 )
             order_->setText( std::string( ".." + msg ).c_str() );
         else
             order_->setText( msg.c_str() );

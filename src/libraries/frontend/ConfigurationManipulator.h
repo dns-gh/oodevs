@@ -67,7 +67,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ConfigurationManipulator::SetValue
 // Created: SBO 2008-02-25

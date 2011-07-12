@@ -34,9 +34,9 @@ namespace
         {
             xml::xifstream xis( file );
             xis >> xml::start( "exercise" );
-            if ( xis.has_child( "action-planning" ) )
+            if( xis.has_child( "action-planning" ) )
                 xis >> xml::start( "action-planning" ) >> xml::attribute( "file", actionPlanning ) >> xml::end;
-            if ( keepMeta )
+            if( keepMeta )
             {
                 if( xis.has_child( "meta" ) )
                 {
@@ -46,7 +46,7 @@ namespace
             }
         }
 
-        if ( !actionPlanning.empty() )
+        if( !actionPlanning.empty() )
             xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning ) << xml::end;
 
         xos     << xml::start( "profiles" )   << xml::attribute( "file", "profiles.xml" ) << xml::end

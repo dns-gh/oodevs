@@ -16,5 +16,4 @@ namespace frontend
     unsigned short DispatcherPort( unsigned exerciseNumber );
 }
 
-
 #endif // __CommandLineTools_h_

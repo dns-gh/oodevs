@@ -49,5 +49,4 @@ namespace frontend
     QListViewItem* BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, QListView* content );
 }
 
-
 #endif // __ListViewHelper_h_
