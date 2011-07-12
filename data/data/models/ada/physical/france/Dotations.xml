@@ -2394,6 +2394,5 @@
   <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="142" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="6" name="électricité" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="144" id-nature="5" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="145" id-nature="4" name="gaz de ville" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="2995082551" -->
+<!-- signature="0844560874" -->

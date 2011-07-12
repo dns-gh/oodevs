@@ -10,10 +10,5 @@
     <color rgb="0x00aaff"/>
     <defaults production="100"/>
   </resource-network>
-  <resource-network name="gaz de ville">
-    <resource id="145"/>
-    <color rgb="0xaaaa7f"/>
-    <defaults production="100"/>
-  </resource-network>
 </resource-networks>
-<!-- signature="4072252555" -->
+<!-- signature="0370317611" -->
