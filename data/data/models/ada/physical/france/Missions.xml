@@ -4347,6 +4347,28 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a soutenir" optional="false" type="Automat"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" dia-type="france.military.company.combat.tasks.AppuyerSurPosition" id="5011" mrt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" name="MELEE Appuyer Sur Position" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objective" name="Compagnie a soutenir" optional="false" type="Automat"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="direction" name="Face a" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.ProtegerPC" dia-type="france.military.company.combat.tasks.ProtegerPC" id="5006" mrt-dia-behavior="france.military.company.combat.tasks.ProtegerPC" name="MELEE Proteger PC" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4954,4 +4976,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0182219086" -->
+<!-- signature="3510240156" -->

@@ -8910,6 +8910,8 @@
         <mission name="COMMUNES Orienter Refugies Vers Position"/>
         <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -8929,6 +8931,7 @@
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
+        <mission name="MELEE Jalonner"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="MELEE Proteger PC"/>
@@ -8937,14 +8940,12 @@
         <mission name="MELEE Relever"/>
         <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer"/>
-        <mission name="MELEE Appuyer"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE Tenir"/>
         <mission name="STABILISATION Animer Postes De Controle"/>
         <mission name="STABILISATION Interdire foules"/>
         <mission name="STABILISATION Controler foule"/>
         <mission name="STABILISATION Canaliser foule"/>
-        <mission name="MELEE Jalonner"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8979,6 +8980,7 @@
         <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -9084,6 +9086,7 @@
         <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -13447,4 +13450,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3277028186" -->
+<!-- signature="1226046576" -->
