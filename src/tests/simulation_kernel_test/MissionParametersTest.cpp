@@ -105,9 +105,10 @@ namespace
                      "    </knowledge-group>"
                      "</knowledge-groups>" )
         {
+            MIL_KnowledgeGroupType::Terminate();
             mock::reset();
             MOCK_EXPECT( mockPublisher, Send );
-            MIL_KnowledgeGroupType::Initialize( group );
+            MIL_KnowledgeGroupType::InitializeWithTime( group, 0.5f );
             MOCK_EXPECT( army, GetID ).returns( 29u );
             MOCK_EXPECT( army, RegisterKnowledgeGroup );
             MOCK_EXPECT( army, UnregisterKnowledgeGroup );
