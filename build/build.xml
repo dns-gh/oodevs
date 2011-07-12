@@ -611,6 +611,8 @@
     <target name="generate-signatures" depends="application.xml_signature_app" description="generate signatures">
         <exec executable="${out.dir}/release/applications/xml_signature_app/xml_signature_app.exe" dir="${run.dir}" failonerror="true" timeout="30000">
             <arg value="${data.dir}/data/models/ada/physical"/>
+            <arg value="${data.dir}/data/terrains"/>
+            <arg value="${data.dir}/exercises"/>
         </exec>
     </target>
 
