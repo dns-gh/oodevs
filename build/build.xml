@@ -293,7 +293,7 @@
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,
                      application.loadtester_app,application.import_app,application.wise_driver_dll,library.vrforces_plugin_dll,
                      application.mission_tester_app,application.orbat_generator_app,application.edxlhave_app,
-                     application.launcher_test_app"/>
+                     application.launcher_test_app,application.xml_signature_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
             depends="application.selftraining_app,application.launcher_app,application.frontend_app,application.package_app"/>
@@ -562,6 +562,10 @@
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}"/>
     </target>
 
+    <target name="application.xml_signature_app" description="build application">
+        <build-app name="xml_signature_app" subsystem="console" depends="boost" libs="tools"/>
+    </target>
+
     <!--
     ============================================================================
     samples
@@ -580,7 +584,6 @@
     data
     ============================================================================
     -->
-
     <macrodef name="extract-knowledges">
         <attribute name="dir"/>
         <attribute name="tofile"/>
@@ -601,8 +604,14 @@
 
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
-            <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
+            <fileset dir="${libraries.dir}/clients_gui/svg"/>
         </zip>
+    </target>
+
+    <target name="generate-signatures" depends="application.xml_signature_app" description="generate signatures">
+        <exec executable="${out.dir}/release/applications/xml_signature_app/xml_signature_app.exe" dir="${run.dir}" failonerror="true" timeout="30000">
+            <arg value="${data.dir}/data/models/ada/physical"/>
+        </exec>
     </target>
 
     <target name="deploy-application-data" description="deploy applications data to run directory">
