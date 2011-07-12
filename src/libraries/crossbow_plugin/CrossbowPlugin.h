@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CrossbowPlugin_h_
-#define __CrossbowPlugin_h_
+#ifndef __crossbow_CrossbowPlugin_h_
+#define __crossbow_CrossbowPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/NullClientPublisher.h"
@@ -34,8 +34,7 @@ namespace dispatcher
     class Model_ABC;
     class Config;
     class SimulationPublisher_ABC;
-    class LinkResolver_ABC;
-    class CompositeRegistrable;
+    class Logger_ABC;
 }
 
 namespace tools
@@ -62,7 +61,7 @@ class CrossbowPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
+             CrossbowPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger );
     virtual ~CrossbowPlugin();
     //@}
 
@@ -103,4 +102,4 @@ private:
 }
 }
 
-#endif // __CrossbowPlugin_h_
+#endif // __crossbow_CrossbowPlugin_h_

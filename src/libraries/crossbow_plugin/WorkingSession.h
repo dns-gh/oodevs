@@ -17,6 +17,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace tools
 {
     class ExerciseConfig;
@@ -36,12 +41,12 @@ namespace crossbow
 */
 // Created: JCR 2007-04-30
 // =============================================================================
-    class WorkingSession : public WorkingSession_ABC
+class WorkingSession : public WorkingSession_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-            WorkingSession( Workspace_ABC& database, const tools::SessionConfig& config, const kernel::CoordinateConverter_ABC& converter );
+            WorkingSession( Workspace_ABC& database, const tools::SessionConfig& config, const kernel::CoordinateConverter_ABC& converter, dispatcher::Logger_ABC& logger );
     virtual ~WorkingSession();
     //@}
 
@@ -78,6 +83,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     T_Information exercise_;
     T_Information session_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 };
 

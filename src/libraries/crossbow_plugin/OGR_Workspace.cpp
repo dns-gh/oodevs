@@ -32,7 +32,6 @@ namespace
         CPLSetConfigOption( "GDAL_DATA", projPath.c_str() );
         CPLSetConfigOption( "OGR_SDE_GETLAYERTYPE", "TRUE" );
         CPLSetConfigOption( "OGR_SDE_SEARCHORDER", "ATTRIBUTE_FIRST" );
-        MT_LOG_INFO_MSG( "OGR/GDAL path: " << bfs::current_path().string() )
         OGRRegisterAll();
     }
 }
@@ -41,7 +40,8 @@ namespace
 // Name: OGR_Workspace constructor
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
-crossbow::OGR_Workspace::OGR_Workspace( int argc, char* argv[] )
+crossbow::OGR_Workspace::OGR_Workspace( int argc, char* argv[], dispatcher::Logger_ABC& logger )
+    : logger_ ( logger )
 {
     InitializeOGR( argc, argv );
 }
@@ -50,7 +50,8 @@ crossbow::OGR_Workspace::OGR_Workspace( int argc, char* argv[] )
 // Name: OGR_Workspace constructor
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
-crossbow::OGR_Workspace::OGR_Workspace()
+crossbow::OGR_Workspace::OGR_Workspace( dispatcher::Logger_ABC& logger )
+    : logger_ ( logger )
 {
     int argc = 1;
     char *argv[] = { "--verbose" };
@@ -140,7 +141,7 @@ void crossbow::OGR_Workspace::InitializeConnection( const std::string& name )
         if( !db )
         {
             DatabaseFactory factory;
-            db = T_Database( factory.Create( tools::GeneralConfig::BuildChildPath( path_, name ), reference ) );
+            db = T_Database( factory.Create( tools::GeneralConfig::BuildChildPath( path_, name ), reference, logger_ ) );
         }
     }
 }

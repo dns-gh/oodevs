@@ -39,8 +39,6 @@ OGR_FeatureClass::OGR_FeatureClass( OGRLayer& layer )
 OGR_FeatureClass::~OGR_FeatureClass()
 {
     EndTransaction();
-    if( OGRERR_NONE != layer_.SyncToDisk() )
-        MT_LOG_ERROR_MSG( "Crossbow plugin : OGR_FeatureClass::SyncToDisk failed" )
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +129,7 @@ void OGR_FeatureClass::Clear()
 void OGR_FeatureClass::Flush()
 {
     if( OGRERR_NONE != layer_.SyncToDisk() )
-        MT_LOG_ERROR_MSG( "Crossbow plugin : OGR_Database::SyncToDisk failed" )
+        throw std::runtime_error( "Crossbow plugin : OGR_Database::SyncToDisk failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +138,7 @@ void OGR_FeatureClass::Flush()
 // -----------------------------------------------------------------------------
 void OGR_FeatureClass::BeginTransaction()
 {
-     editor_->BeginTransaction();
+    editor_->BeginTransaction();
 }
 
 // -----------------------------------------------------------------------------

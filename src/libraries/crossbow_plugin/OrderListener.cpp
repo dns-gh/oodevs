@@ -14,9 +14,10 @@
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "ActionSerializer_ABC.h"
-#include "actions/Action_ABC.h"
 #include "WorkingSession_ABC.h"
+#include "actions/Action_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
@@ -50,11 +51,12 @@ namespace
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session )
+OrderListener::OrderListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger )
     : publisher_    ( new CrossbowPublisher( publisher ) )
     , workspace_    ( workspace )
     , session_      ( session )
     , serializer_   ( serializer )
+    , logger_       ( logger )
 {
     Clean();
 }
@@ -99,7 +101,7 @@ void OrderListener::Clean()
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "OrderListener is not correctly loaded : " + std::string( e.what() ) );
+        logger_.LogError( "OrderListener is not correctly loaded : " + std::string( e.what() ) );
     }
 }
 
@@ -111,12 +113,12 @@ namespace
         return boost::get< Type >( row.GetField( name ) );
     }
 
-    void DebugAction( const actions::Action_ABC& action )
+    void DebugAction( const actions::Action_ABC& action, dispatcher::Logger_ABC& logger )
     {
         xml::xostringstream xos;
         xos << xml::start( "action" );
             action.Serialize( xos );
-        MT_LOG_ERROR_MSG( "(" << __FUNCTION__ << ")" << xos.str() );
+        logger.LogError( "(" + std::string( __FUNCTION__ ) + ")" + xos.str() );
     }
 }
 
@@ -144,7 +146,7 @@ void OrderListener::Listen()
     }
     catch ( std::exception& ex )
     {
-        MT_LOG_ERROR_MSG( "crossbow::Listen : " + std::string( ex.what() ) );
+        logger_.LogError( "crossbow::Listen : " + std::string( ex.what() ) );
     }
 }
 
@@ -168,12 +170,12 @@ bool OrderListener::SendCreation( const Row_ABC& row )
             if ( order->IsValid() )
                 order->Publish( *publisher_ );
             else
-                DebugAction( *order );
+                DebugAction( *order, logger_ );
         }
     }
     catch ( std::exception& ex )
     {
-        MT_LOG_ERROR_MSG( "crossbow::ListenRow - unable to build order correctly: " << ex.what() );
+        logger_.LogError( "crossbow::ListenRow - unable to build order correctly: " + std::string( ex.what() ) );
     }
     return orderid >= 0;
 }

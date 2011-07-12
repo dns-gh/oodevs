@@ -19,6 +19,11 @@ namespace xml
     class xistream;
 }
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace tools
 {
     class ExerciseConfig;
@@ -41,8 +46,8 @@ class OGR_Workspace : public Workspace_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OGR_Workspace();
-             OGR_Workspace( int argc, char* argv[] );
+             OGR_Workspace( dispatcher::Logger_ABC& logger );
+             OGR_Workspace( int argc, char* argv[], dispatcher::Logger_ABC& logger );
     virtual ~OGR_Workspace();
     //@}
 
@@ -85,6 +90,7 @@ private:
     T_DatabasesConnectionMap connections_;
     T_DatabasesReferenceMap references_; // use to not open db twice
     std::string             path_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 };
 

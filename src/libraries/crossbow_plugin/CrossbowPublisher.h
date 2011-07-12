@@ -26,6 +26,7 @@ namespace dispatcher
     class Config;
     class Model_ABC;
     class SimulationPublisher_ABC;
+    class Logger_ABC;
 }
 
 namespace sword
@@ -58,7 +59,7 @@ class CrossbowPublisher : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
+             CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis, dispatcher::Logger_ABC& logger );
     virtual ~CrossbowPublisher();
     //@}
 
@@ -108,6 +109,7 @@ private:
     std::auto_ptr< ActionSerializer_ABC >           serializer_;
     std::auto_ptr< ExtensionFactory >               extensions_;
     std::auto_ptr< WorkingSession_ABC >             session_;
+    dispatcher::Logger_ABC&                         logger_;
     //@}
 };
 

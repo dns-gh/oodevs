@@ -21,10 +21,12 @@
 #include "ExtensionFactory.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Config.h"
+#include "dispatcher/Logger_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -34,27 +36,27 @@ using namespace plugins::crossbow;
 // Name: CrossbowPublisher constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
+CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis, dispatcher::Logger_ABC& logger )
     : model_           ( model )
-    , workspace_       ( new OGR_Workspace() )
+    , workspace_       ( new OGR_Workspace( logger ) )
     , converter_       ( new kernel::CoordinateConverter( config ) )
     , serializer_      ( new ActionSerializer( *converter_, model, staticModel ) )
     , extensions_      ( new ExtensionFactory() )
     , modelLoaded_     ( false )
+    , logger_          ( logger )
 {
     model.RegisterFactory( *extensions_ );
 
     workspace_->Initialize( xis, config );
 
-    session_.reset          ( new WorkingSession( *workspace_, config, *converter_ ) );
-    databaseUpdater_.reset  ( new DatabaseUpdater( *workspace_, model, *session_ ) );
-    reportUpdater_.reset    ( new ReportUpdater( *workspace_, config, model, *session_ ) );
+    session_.reset          ( new WorkingSession( *workspace_, config, *converter_, logger_ ) );
+    databaseUpdater_.reset  ( new DatabaseUpdater( *workspace_, model, *session_, logger_ ) );
+    reportUpdater_.reset    ( new ReportUpdater( *workspace_, config, model, *session_, logger_ ) );
 
     // activate listeners
-    listeners_.push_back( T_SharedListener( new OrderListener( *workspace_, *serializer_, publisher, *session_ ) ) );
-    listeners_.push_back( T_SharedListener( new ObjectListener( *workspace_, *serializer_, publisher, *session_ ) ) );
+    listeners_.push_back( T_SharedListener( new OrderListener( *workspace_, *serializer_, publisher, *session_, logger_ ) ) );
+    listeners_.push_back( T_SharedListener( new ObjectListener( *workspace_, *serializer_, publisher, *session_, logger_ ) ) );
     // listeners_.push_back( T_SharedListener( new StatusListener( *workspace_, publisher, *session_ ) ) );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +191,7 @@ void CrossbowPublisher::Receive( const sword::SimToClient& asn )
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "ERROR CAUGHT (" << __FUNCTION__ << ") : " << std::string( e.what() ) );
+        logger_.LogError( "ERROR CAUGHT (" + std::string( __FUNCTION__ ) + ") : " + std::string( e.what() ) );
     }
 }
 
@@ -207,7 +209,7 @@ void CrossbowPublisher::Receive( const sword::MessengerToClient& asn )
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "ERROR CAUGHT :" << __FUNCTION__ << std::string( e.what() ) );
+        logger_.LogError( "ERROR CAUGHT :" + std::string( __FUNCTION__ ) + std::string( e.what() ) );
     }
 }
 
@@ -227,7 +229,7 @@ void CrossbowPublisher::UpdateOnTick( const sword::SimToClient& wrapper )
     }
     else if( wrapper.message().has_control_begin_tick() )
     {
-        MT_LOG_INFO_MSG( "tick " << wrapper.message().control_begin_tick().current_tick() );
+        logger_.LogInfo( "tick " + boost::lexical_cast< std::string >( wrapper.message().control_begin_tick().current_tick() ) );
         // update simulation clock
         databaseUpdater_->Update( wrapper.message().control_begin_tick() );
     }

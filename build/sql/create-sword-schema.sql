@@ -295,6 +295,22 @@ SELECT AddGeometryColumn('sword', 'unitforces', 'shape', 4326, 'GEOMETRY', 2);
 ALTER TABLE sword.unitforces OWNER TO sword;
 GRANT ALL ON TABLE sword.unitforces TO sword;
 
+CREATE TABLE sword.unitforces_equipments
+(
+  id          SERIAL PRIMARY KEY,
+  public_oid   INTEGER NOT NULL,
+  unitforce_id     INTEGER NOT NULL,
+  session_id  INTEGER NOT NULL,
+  "name"      CHARACTER VARYING(255),
+  available   INTEGER NOT NULL,
+  unavailable INTEGER NOT NULL,
+  repairable INTEGER NOT NULL,
+  repairing INTEGER NOT NULL, 
+  captured INTEGER NOT NULL
+);
+ALTER TABLE sword.unitforces_equipments OWNER TO sword;
+GRANT ALL ON TABLE sword.unitforces_equipments TO sword;
+
 CREATE TABLE sword.user_exercises
 (
   user_id     INTEGER,
@@ -405,6 +421,7 @@ GRANT ALL ON TABLE sword.inhabitants_by_team TO sword;
 
 CREATE TABLE sword.inhabitants_urban_blocks_occupation
 (
+  id                      SERIAL NOT NULL PRIMARY KEY,
   inhabitant_id           INTEGER NOT NULL,
   urban_block_id          INTEGER NOT NULL,
   session_id              INTEGER NOT NULL,
@@ -417,11 +434,34 @@ ALTER TABLE sword.inhabitants_urban_blocks_occupation OWNER TO sword;
 GRANT ALL ON TABLE sword.inhabitants_urban_blocks_occupation TO sword;
 
 CREATE OR REPLACE VIEW sword.urbanblocks_inhabitants AS 
- SELECT inhabitants_urban_blocks_occupation.urban_block_id AS urban_block_id, inhabitants_urban_blocks_occupation.session_id AS session_id, inhabitants.name AS name, inhabitants_urban_blocks_occupation.alerted AS alerted, inhabitants_urban_blocks_occupation.confined AS confined, inhabitants_urban_blocks_occupation.evacuated AS evacuated, inhabitants_urban_blocks_occupation.angriness AS angriness
+ SELECT inhabitants.id, inhabitants.name, inhabitants_urban_blocks_occupation.urban_block_id, inhabitants_urban_blocks_occupation.session_id, inhabitants_urban_blocks_occupation.alerted, inhabitants_urban_blocks_occupation.confined, inhabitants_urban_blocks_occupation.evacuated, inhabitants_urban_blocks_occupation.angriness, inhabitants_urban_blocks_occupation_usage.usage, inhabitants_urban_blocks_occupation_usage.number
    FROM sword.inhabitants_urban_blocks_occupation
    JOIN sword.inhabitants ON inhabitants_urban_blocks_occupation.inhabitant_id = inhabitants.public_oid AND inhabitants_urban_blocks_occupation.session_id = inhabitants.session_id
+   JOIN sword.inhabitants_urban_blocks_occupation_usage ON inhabitants_urban_blocks_occupation_usage.inhabitant_id = inhabitants.public_oid AND inhabitants_urban_blocks_occupation_usage.session_id = inhabitants.session_id AND sword.inhabitants_urban_blocks_occupation_usage.urban_block_id = sword.inhabitants_urban_blocks_occupation.urban_block_id
   ORDER BY inhabitants.name;
 
 ALTER TABLE sword.urbanblocks_inhabitants OWNER TO sword;
 GRANT ALL ON TABLE sword.urbanblocks_inhabitants TO sword;
 
+CREATE TABLE sword.inhabitants_urban_blocks_occupation_usage
+(
+  id                      SERIAL NOT NULL PRIMARY KEY,
+  inhabitant_id           INTEGER NOT NULL,
+  urban_block_id          INTEGER NOT NULL,
+  session_id              INTEGER NOT NULL,
+  "usage"                 CHARACTER VARYING(255) NOT NULL,
+  number                  INTEGER NOT NULL
+);
+ALTER TABLE sword.inhabitants_urban_blocks_occupation_usage OWNER TO sword;
+GRANT ALL ON TABLE sword.inhabitants_urban_blocks_occupation_usage TO sword;
+
+CREATE TABLE sword.magic_action
+(
+  id            SERIAL NOT NULL PRIMARY KEY,
+  data          XML,
+  "date"        TIMESTAMP WITHOUT TIME ZONE,
+  checked_xbow  INTEGER DEFAULT 0,
+  session_id    INTEGER NOT NULL
+);
+ALTER TABLE sword.magic_action OWNER TO sword;
+GRANT ALL ON TABLE sword.magic_action TO sword;

@@ -16,6 +16,7 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
+#include "dispatcher/Logger_ABC.h"
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
@@ -86,24 +87,22 @@ private:
 // Name: CrossbowPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis,
-                                dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel,
-                                dispatcher::SimulationPublisher_ABC& publisher,
-                                dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher,
-                                dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
+CrossbowPlugin::CrossbowPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, 
+                                dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config, 
+                                xml::xistream& xis, dispatcher::Logger_ABC& logger )
     : clientNetworker_  ( new DummyClientNetworker() )
 {
     try
     {
-        crossbowPublisher_.reset( new CrossbowPublisher( config, model, staticModel, publisher, xis ) );
+        crossbowPublisher_.reset( new CrossbowPublisher( config, model, staticModel, publisher, xis, logger ) );
         listeners_.reset( new ListenerThread( *crossbowPublisher_, 500 ) );
-        MT_LOG_INFO_MSG( "CrossbowPlugin : registered." )
+        logger.LogInfo( "CrossbowPlugin : registered." );
     }
     catch ( std::exception& ex )
     {
-        MT_LOG_ERROR_MSG( "CrossbowPlugin : load failed - " + std::string( ex.what() ) )
+        logger.LogError( "CrossbowPlugin : load failed - " + std::string( ex.what() ) );
     }
-    dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
+    // dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
 }
 
 // -----------------------------------------------------------------------------

@@ -26,6 +26,7 @@ namespace sword
 namespace dispatcher
 {
     class Model_ABC;
+    class Logger_ABC;
 }
 
 namespace plugins
@@ -48,14 +49,13 @@ class DatabaseUpdater : public DatabaseUpdater_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session );
+             DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger );
     virtual ~DatabaseUpdater();
     //@}
 
     //! @name
     //@{
     void Flush( bool reset = true );
-    void Clean();
     //@}
 
     //! @name sword
@@ -107,6 +107,11 @@ private:
     DatabaseUpdater& operator=( const DatabaseUpdater& ); //!< Assignment operator
     //@}
 
+    //! @name 
+    //@{
+    void Clean( dispatcher::Logger_ABC& logger );
+    //@}
+
     //! @name Objects
     //@{
     void UpdateObjectAttributes( long oid, const sword::ObjectAttributes& msg );
@@ -134,8 +139,9 @@ private:
     //@{
     Workspace_ABC& workspace_;
     std::auto_ptr< LazyDatabaseConnection > database_;
-    const dispatcher::Model_ABC&    model_;
-    const WorkingSession_ABC&   session_;
+    const dispatcher::Model_ABC& model_;
+    const WorkingSession_ABC& session_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 };
 

@@ -15,6 +15,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace crossbow
@@ -32,7 +37,7 @@ class QuerySessionData
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit QuerySessionData( Database_ABC& database );
+    explicit QuerySessionData( Database_ABC& database, dispatcher::Logger_ABC& logger );
     virtual ~QuerySessionData();
     //@}
 
@@ -56,6 +61,7 @@ private:
     //! @name Member data
     //@{
     Database_ABC& database_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 };
 

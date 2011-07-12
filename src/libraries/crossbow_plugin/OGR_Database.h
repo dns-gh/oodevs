@@ -46,11 +46,7 @@ public:
     Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true );
     Table_ABC*  OpenTable( const std::string& name );
     void        ClearTable( const std::string& name, const std::string& filter );
-    //@}
-
-    //! @name
-    //@{
-    void Flush();
+    void        Flush();
     //@}
 
 private:

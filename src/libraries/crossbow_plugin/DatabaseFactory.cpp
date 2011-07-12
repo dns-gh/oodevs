@@ -11,7 +11,7 @@
 #include "DatabaseFactory.h"
 #include "OGR_Database.h"
 #include "tools/GeneralConfig.h"
-
+#include "dispatcher/Logger_ABC.h"
 #include <gdal/ogrsf_frmts.h>
 
 #pragma warning( push, 0 )
@@ -94,7 +94,7 @@ namespace
                     port_ = matches[ 6 ];
                 database_ = matches[ 7 ];
                 schema_ = matches[ 8 ];
-
+                /*
                 std::string msg = "server:" + server_ + ":" + matches[ 6 ] + ", " +
                     "instance:" + protocol_ + ":postgresql:" + server_ + ", " +
                     "user:" + matches[ 2 ] + ", " +
@@ -102,6 +102,7 @@ namespace
                     "database:" + database_ + "." + schema_ + ", " +
                     "version:sde.DEFAULT";
                 MT_LOG_INFO_MSG( msg );
+                */
             }
         }
 
@@ -146,7 +147,7 @@ namespace
 // Name: DatabaseFactory::Create
 // Created: JCR 2009-02-10
 // -----------------------------------------------------------------------------
-std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::Create( const std::string& path, const std::string& name ) const
+std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::Create( const std::string& path, const std::string& name, dispatcher::Logger_ABC& logger ) const
 {
     bfs::path p( name, bfs::native );
 
@@ -155,9 +156,9 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::Create( const std::stri
     if( IsShapefileDatabase( p ) )
         return CreateShapefile( path, name );
     if( IsSDEDatabase( p ) )
-        return CreateSDE( name );
+        return CreateSDE( name, logger );
     if( IsPostgreSQLDatabase( p ) )
-        return CreatePostgreSQL( name );
+        return CreatePostgreSQL( name, logger );
     throw std::runtime_error( "Unknown geodatabase connection properties: " + name );
 }
 
@@ -171,12 +172,12 @@ namespace
         return driver;
     }
 
-    OGRDataSource* TryCreateDatabase( const std::string& connection, OGRSFDriver* driver )
+    OGRDataSource* TryCreateDatabase( const std::string& connection, OGRSFDriver* driver, dispatcher::Logger_ABC& logger )
     {
         OGRDataSource* db = OGRSFDriverRegistrar::Open( connection.c_str(), TRUE, &driver );
         if( !db ) // READONLY
         {
-            MT_LOG_INFO_MSG( "Had to open data source read-only." );
+            logger.LogInfo( "Had to open data source read-only." );
             db = OGRSFDriverRegistrar::Open( connection.c_str(), FALSE, &driver );
         }
         return db;
@@ -223,13 +224,13 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePgeo( const std::
 // Name: std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePostgreSQL
 // Created: JCR 2010-03-01
 // -----------------------------------------------------------------------------
-std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateSDE( const std::string& name ) const
+std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateSDE( const std::string& name, dispatcher::Logger_ABC& logger ) const
 {
     OGRSFDriver* driver = GetDriver( "SDE" );
     ConnectionProperty  properties( name, "sde" );
     const std::string connection( properties.toSDE() );
-    MT_LOG_INFO_MSG( connection );
-    OGRDataSource* datasource = TryCreateDatabase( connection, driver );
+    logger.LogInfo( connection );
+    OGRDataSource* datasource = TryCreateDatabase( connection, driver, logger );
     return CreateDatabase( datasource, properties.database_, properties.schema_ );
 }
 
@@ -237,12 +238,12 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateSDE( const std::s
 // Name: std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateSDE
 // Created: JCR 2010-03-01
 // -----------------------------------------------------------------------------
-std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePostgreSQL( const std::string& name ) const
+std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePostgreSQL( const std::string& name, dispatcher::Logger_ABC& logger ) const
 {
     OGRSFDriver* driver = GetDriver( "PostgreSQL" );
     ConnectionProperty  properties( name, "postgres" );
     const std::string connection( properties.toPostgreSQL() );
-    MT_LOG_INFO_MSG( connection );
-    OGRDataSource* datasource = TryCreateDatabase( connection, driver );
+    logger.LogInfo( connection );
+    OGRDataSource* datasource = TryCreateDatabase( connection, driver, logger );
     return CreateDatabase( datasource, properties.database_, "" /*, properties.schema_*/ );
 }

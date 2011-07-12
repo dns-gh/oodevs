@@ -10,6 +10,12 @@
 #ifndef __crossbow_DatabaseFactory_h_
 #define __crossbow_DatabaseFactory_h_
 
+
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace crossbow
@@ -33,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    std::auto_ptr< crossbow::Database_ABC > Create( const std::string& path, const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > Create( const std::string& path, const std::string& name, dispatcher::Logger_ABC& logger ) const;
     //@}
 
 private:
@@ -41,8 +47,8 @@ private:
     //@{
     std::auto_ptr< crossbow::Database_ABC > CreateShapefile( const std::string& path, const std::string& name ) const;
     std::auto_ptr< crossbow::Database_ABC > CreatePgeo( const std::string& path, const std::string& name ) const;
-    std::auto_ptr< crossbow::Database_ABC > CreatePostgreSQL( const std::string& name ) const;
-    std::auto_ptr< crossbow::Database_ABC > CreateSDE( const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > CreatePostgreSQL( const std::string& name, dispatcher::Logger_ABC& logger ) const;
+    std::auto_ptr< crossbow::Database_ABC > CreateSDE( const std::string& name, dispatcher::Logger_ABC& logger ) const;
     //@}
 
 private:

@@ -17,6 +17,7 @@
 #include "ActionSerializer_ABC.h"
 #include "actions/Action_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
@@ -50,11 +51,12 @@ namespace
 // Name: ObjectListener constructor
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
-ObjectListener::ObjectListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session )
+ObjectListener::ObjectListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger )
     : publisher_ ( new CrossbowPublisher( publisher ) )
     , workspace_ ( workspace )
     , serializer_ ( serializer )
     , session_ ( session )
+    , logger_ ( logger )
 {
     Clean();
 }
@@ -83,7 +85,7 @@ void ObjectListener::Clean()
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "ObjectListener is not correctly loaded : " + std::string( e.what() ) );
+        logger_.LogError( "ObjectListener is not correctly loaded : " + std::string( e.what() ) );
     }
 }
 
@@ -111,18 +113,18 @@ void ObjectListener::Listen()
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "(" << __FUNCTION__ << ") " << e.what() );
+        logger_.LogError( "(" + std::string( __FUNCTION__ ) + ") " + std::string( e.what() ) );
     }
 }
 
 namespace
 {
-    void DebugAction( const actions::Action_ABC& action )
+    void DebugAction( const actions::Action_ABC& action, dispatcher::Logger_ABC& logger )
     {
         xml::xostringstream xos;
         xos << xml::start( "action" );
             action.Serialize( xos );
-        MT_LOG_ERROR_MSG( "(" << __FUNCTION__ << ")" << xos.str() );
+        logger.LogInfo( "(" + std::string( __FUNCTION__ ) + ")" + xos.str() );
     }
 }
 
@@ -146,12 +148,12 @@ bool ObjectListener::SendCreation( const Row_ABC& row )
             if ( magic->IsValid() )
                 magic->Publish( *publisher_ );
             else
-                DebugAction( *magic );
+                DebugAction( *magic, logger_ );
         }
     }
     catch ( std::exception& ex )
     {
-        MT_LOG_ERROR_MSG( "crossbow::ObjectListener - unable to build object correctly: " << ex.what() );
+        logger_.LogError( "crossbow::ObjectListener - unable to build object correctly: " + std::string( ex.what() ) );
     }
     return orderid >= 0;
 }

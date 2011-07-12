@@ -111,5 +111,5 @@ void OGR_Database::ClearTable( const std::string& name, const std::string& filte
 void OGR_Database::Flush()
 {
     if( OGRERR_NONE != datasource_->SyncToDisk() )
-        MT_LOG_ERROR_MSG( "Crossbow plugin : OGR_Database::SyncToDisk failed" )
+        throw std::runtime_error( "Crossbow plugin : OGR_Database::SyncToDisk failed" );
 }

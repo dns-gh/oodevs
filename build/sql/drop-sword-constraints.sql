@@ -38,3 +38,4 @@ ALTER TABLE sword.knowledgeobjects             DROP CONSTRAINT knowledgeobjects_
 ALTER TABLE sword.layers                       DROP CONSTRAINT layers_exercise_id CASCADE;
 ALTER TABLE sword.layers_properties            DROP CONSTRAINT layers_properties_id CASCADE;
 
+ALTER TABLE sword.magic_action                 DROP CONSTRAINT magic_action_session_id_ctrt CASCADE;

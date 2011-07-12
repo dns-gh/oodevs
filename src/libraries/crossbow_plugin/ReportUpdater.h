@@ -14,6 +14,7 @@ namespace dispatcher
 {
     class Config;
     class Model_ABC;
+    class Logger_ABC;
 }
 
 namespace sword
@@ -41,7 +42,7 @@ class ReportUpdater
 public:
     //! @name Constructors/Destructor
     //@{
-            ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session );
+            ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger );
     virtual ~ReportUpdater();
     //@}
 
@@ -59,7 +60,7 @@ private:
 
     //! @name
     //@{
-    void Clean();
+    void Clean( dispatcher::Logger_ABC& logger );
     //@}
 
 private:

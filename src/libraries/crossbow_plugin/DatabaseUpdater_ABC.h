@@ -58,17 +58,11 @@ public:
     virtual ~DatabaseUpdater_ABC() {}
     //@}
 
-    //! @name
-    //@{
-    virtual void Clean() = 0;
-    //@}
-
     //! @name sword
     //@{
     virtual void Update( const sword::LimitCreation& msg ) = 0;
     virtual void Update( const sword::PhaseLineCreation& msg ) = 0;
     //@}
-
 
     //! @name sword
     //@{

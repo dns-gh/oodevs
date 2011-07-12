@@ -114,6 +114,23 @@
         <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
     
+    <target name="library.crossbow_plugin_dll" depends="library.crossbow_plugin" description="build crossbow_plugin dynamic library">
+        <build-lib name="crossbow_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd"
+            libs="gdal_i,
+                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_ENT-${platform}-mt@{suffix},
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
+                  lib${ant.project.name}_actions-${platform}-mt@{suffix},
+                  lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+            <syslibset libs="shell32,user32"/>
+            <defineset define="CROSSBOW_PLUGIN_DLL_EXPORTS"/>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
+        <move todir="${run.dir}/plugins/crossbow" file="${run.dir}/crossbow_plugin-${platform}-mt.dll"/>
+    </target>
+
     <target name="library.rpr" description="build rpr static library">
         <build-lib name="rpr" pattern="lib${ant.project.name}_rpr-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
@@ -284,7 +301,7 @@
     <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
                                             library.aar_plugin,library.rights_plugin,library.saver_plugin,library.replay_plugin,
                                             library.3a,library.bml_plugin,library.script_plugin,library.score_plugin,
-                                            library.crossbow_plugin,library.timeline_plugin_dll,
+                                            library.crossbow_plugin_dll,library.timeline_plugin_dll,
                                             library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>
 
     <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
@@ -352,7 +369,6 @@
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_3a-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_indicators-${platform}-mt,
@@ -1164,6 +1180,15 @@
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DPLUGIN=plugin-timeline"/>
+            <arg value="/DPLUGIN_VERSION=1.0"/>
+        </nsis>
+    </target>
+    
+    <target name="package.plugin.crossbow" description="create crossbow plugin installer">
+        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DPLUGIN=plugin-crossbow"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>

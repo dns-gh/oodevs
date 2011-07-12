@@ -11,9 +11,12 @@
 #include "WorkingSession.h"
 #include "Workspace_ABC.h"
 #include "QuerySessionData.h"
+#include "dispatcher/Logger_ABC.h"
 #include "tools/SessionConfig.h"
-#include <boost/filesystem/path.hpp>
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include <boost/filesystem/path.hpp>
+#include <boost/lexical_cast.hpp>
+
 using namespace plugins;
 using namespace plugins::crossbow;
 namespace bfs = boost::filesystem;
@@ -22,14 +25,15 @@ namespace bfs = boost::filesystem;
 // Name: Constructor
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-WorkingSession::WorkingSession( Workspace_ABC& workspace, const tools::SessionConfig& config, const kernel::CoordinateConverter_ABC& converter )
-: converter_( converter )
+WorkingSession::WorkingSession( Workspace_ABC& workspace, const tools::SessionConfig& config, const kernel::CoordinateConverter_ABC& converter, dispatcher::Logger_ABC& logger )
+    : converter_( converter )
+    , logger_ ( logger )
 {
-    QuerySessionData querySession( workspace.GetDatabase( "flat" ) );
+    QuerySessionData querySession( workspace.GetDatabase( "flat" ), logger_ );
 
     LoadExercise( config, querySession );
     LoadSession( config, querySession );
-    MT_LOG_INFO_MSG( "CrossbowPlugin : loaded for exercise " << exercise_.first << " and session_id " << session_.second );
+    logger_.LogInfo( "CrossbowPlugin : loaded for exercise " + exercise_.first + " and session_id " + boost::lexical_cast< std::string >( session_.second ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +78,7 @@ void WorkingSession::LoadExercise( const tools::ExerciseConfig& config, QuerySes
             exercise_.second = database.CreateExercise( exercise_.first, converter_ );
     }
     else
-        MT_LOG_ERROR_MSG( "CrossbowPlugin : can't retrieve exercise name" );
+        logger_.LogError( "CrossbowPlugin : can't retrieve exercise name" );
 }
 
 

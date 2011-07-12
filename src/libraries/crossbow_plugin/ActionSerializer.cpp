@@ -95,7 +95,7 @@ void ActionSerializer::SerializeCreation( const Row_ABC& row, std::auto_ptr< act
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionSerializer::SerializeCreation
+// Name: ActionSerializer::ReadAction
 // Created: JCR 2011-01-19
 // -----------------------------------------------------------------------------
 void ActionSerializer::ReadAction(  xml::xistream& xis, std::auto_ptr< actions::Action_ABC >& action ) const

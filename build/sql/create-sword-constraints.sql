@@ -21,6 +21,7 @@ ALTER TABLE sword.teams                       ADD CONSTRAINT teams_session_id_ct
 ALTER TABLE sword.formations                  ADD CONSTRAINT formations_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 ALTER TABLE sword.unitforces                  ADD CONSTRAINT unitforces_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 ALTER TABLE sword.unitforces                  ADD CONSTRAINT unitforces_op_state_ctrt CHECK (op_state >= 0 AND op_state <= 100);
+ALTER TABLE sword.unitforces                  ADD CONSTRAINT unitforces___public_oid__session_id__unique UNIQUE(public_oid, session_id);
 ALTER TABLE sword.knowledgeunits              ADD CONSTRAINT knowledgeunits_exercise_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 
 ALTER TABLE sword.create_order                ADD CONSTRAINT create_order_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
@@ -39,6 +40,19 @@ ALTER TABLE sword.objectparameters            ADD CONSTRAINT objectparameters_ob
 ALTER TABLE sword.knowledgeobjects            ADD CONSTRAINT knowledgeobjects_session_id_ctrt FOREIGN KEY (session_id) REFERENCES sword.sessions (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE;
 
 ALTER TABLE sword.inhabitants ADD CONSTRAINT inhabitants_session_id_ctrt FOREIGN KEY (session_id) REFERENCES sword.sessions (id) ON UPDATE NO ACTION ON DELETE CASCADE;
+ALTER TABLE sword.inhabitants ADD CONSTRAINT inhabitants__public_oid__session_id__unique UNIQUE(public_oid, session_id);
 
-ALTER TABLE sword.inhabitants_urban_blocks_occupation ADD CONSTRAINT inhabitants_urban_blocks_occupation_session_id_ctrt FOREIGN KEY (session_id) REFERENCES sword.sessions (id) ON UPDATE NO ACTION ON DELETE CASCADE;
+ALTER TABLE sword.inhabitants_urban_blocks_occupation ADD CONSTRAINT inhabitants_urban_blocks_occupation__inhabitants_ctrt FOREIGN KEY (inhabitant_id, session_id) REFERENCES sword.inhabitants (public_oid, session_id)
+   ON UPDATE NO ACTION ON DELETE CASCADE;
 
+ALTER TABLE sword.inhabitants_urban_blocks_occupation_usage ADD CONSTRAINT inhabitants_urban_blocks_occupation_usage_session_id_ctrt FOREIGN KEY (session_id) REFERENCES sword.sessions (id) ON UPDATE NO ACTION ON DELETE CASCADE;
+ALTER TABLE sword.inhabitants_urban_blocks_occupation_usage ADD CONSTRAINT inhabitants_urban_blocks_occupation_usage__inhabitants_ctrt FOREIGN KEY (inhabitant_id, session_id) REFERENCES sword.inhabitants (public_oid, session_id)
+   ON UPDATE NO ACTION ON DELETE CASCADE;
+   
+ALTER TABLE sword.update_urban_block ADD CONSTRAINT update_urban_block_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
+
+ALTER TABLE sword.magic_action                ADD CONSTRAINT magic_action_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
+
+ALTER TABLE sword.unitforces_equipments ADD CONSTRAINT unitforces_equipments_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
+ALTER TABLE sword.unitforces_equipments ADD CONSTRAINT unitforces_equipments__unitforces_ctrt FOREIGN KEY (unitforce_it, session_id) REFERENCES sword.unitforces (public_oid, session_id)
+   ON UPDATE NO ACTION ON DELETE CASCADE;

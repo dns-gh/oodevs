@@ -110,9 +110,9 @@ void OGR_FeatureRow::SetField( const std::string& field, const FieldVariant& val
 
 namespace
 {
-    void Log( OGRFeature& feature )
+    void Log( const OGRFeature& /*feature*/ )
     {
-        char* value;
+        /* char* value;
         OGRGeometry* result = feature.GetGeometryRef();
 
         if( result )
@@ -124,6 +124,7 @@ namespace
         }
         else
             MT_LOG_ERROR_MSG( "OGR_FeatureRow: geometry not registered" );
+        */
     }
 }
 // -----------------------------------------------------------------------------
@@ -211,7 +212,7 @@ long OGR_FeatureRow::GetID() const
 
 namespace 
 {
-    void Dump( OGRFeature* feature, OGRLayer& layer )
+    std::string Dump( OGRFeature* feature, OGRLayer& layer )
     {
        std::stringstream ss;
        
@@ -227,7 +228,7 @@ namespace
                 ss << feature->GetFieldAsString(iField) << ", ";
        }
        ss << std::endl;
-       MT_LOG_INFO_MSG( ss.str() );
+       return ss.str();
     }
 }
 // -----------------------------------------------------------------------------
@@ -241,8 +242,7 @@ void OGR_FeatureRow::Insert( OGRLayer& layer ) const
     OGRErr err = layer.CreateFeature( feature_.get() );
     if( feature_.get() && err != OGRERR_NONE )
     {
-        Dump( feature_.get(), layer );
-        throw std::runtime_error( "unable to insert feature to the layer" );
+        throw std::runtime_error( "unable to insert feature to the layer : " + Dump( feature_.get(), layer ) );
     }
 }
 

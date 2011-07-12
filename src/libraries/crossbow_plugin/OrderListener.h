@@ -19,6 +19,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class SimulationPublisher_ABC;
+    class Logger_ABC;
 }
 
 namespace plugins
@@ -42,7 +43,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session );
+    OrderListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger );
     virtual ~OrderListener();
     //@}
 
@@ -71,6 +72,7 @@ private:
     Workspace_ABC&                      workspace_;
     const WorkingSession_ABC&           session_;
     const ActionSerializer_ABC&         serializer_;
+    dispatcher::Logger_ABC&             logger_;
     //@}
 };
 

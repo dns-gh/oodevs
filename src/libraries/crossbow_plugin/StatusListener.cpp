@@ -15,6 +15,7 @@
 #include "Row_ABC.h"
 #include "WorkingSession_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/lexical_cast.hpp>
 
@@ -25,13 +26,14 @@ using namespace plugins::crossbow;
 // Name: StatusListener constructor
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-StatusListener::StatusListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session )
+StatusListener::StatusListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger )
     : publisher_      ( publisher )
     , workspace_      ( workspace )
     , paused_         ( false )
     , session_        ( session )
+    , logger_         ( logger )
 {
-    Clean();
+    Clean( logger );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +63,7 @@ namespace
 // Name: StatusListener::Clean
 // Created: MPT 2009-12-15
 // -----------------------------------------------------------------------------
-void StatusListener::Clean()
+void StatusListener::Clean( dispatcher::Logger_ABC& logger )
 {
     try
     {
@@ -70,7 +72,7 @@ void StatusListener::Clean()
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "StatusListener is not correctly loaded : " + std::string( e.what() ) );
+        logger.LogError( "StatusListener is not correctly loaded : " + std::string( e.what() ) );
     }
 }
 
@@ -89,7 +91,7 @@ void StatusListener::Listen()
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( __FUNCTION__ + std::string( e.what() ) );
+        logger_.LogError( __FUNCTION__ + std::string( e.what() ) );
     }
 }
 

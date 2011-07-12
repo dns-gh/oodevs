@@ -18,8 +18,6 @@
 #include <vector>
 #include <memory>
 
-#include "MT_Tools/MT_Logger.h"
-
 #pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
 
 #endif // __crossbow_plugin_pch_h_

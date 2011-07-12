@@ -15,6 +15,7 @@
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::crossbow;
@@ -23,12 +24,12 @@ using namespace plugins::crossbow;
 // Name: ReportUpdater constructor
 // Created: JCR 2010-03-23
 // -----------------------------------------------------------------------------
-ReportUpdater::ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session )
+ReportUpdater::ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger )
     : workspace_ ( workspace )
     , reportFactory_ ( new ReportFactory( config, model ) )
     , session_ ( session )
 {
-    Clean();
+    Clean( logger );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +45,7 @@ ReportUpdater::~ReportUpdater()
 // Name: ReportUpdater::Clean
 // Created: JCR 2010-03-23
 // -----------------------------------------------------------------------------
-void ReportUpdater::Clean()
+void ReportUpdater::Clean( dispatcher::Logger_ABC& logger )
 {
     try
     {
@@ -53,7 +54,7 @@ void ReportUpdater::Clean()
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "QueryDatabaseUpdater is not correctly loaded : " + std::string( e.what() ) );
+        logger.LogError( "QueryDatabaseUpdater is not correctly loaded : " + std::string( e.what() ) );
     }
 }
 

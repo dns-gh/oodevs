@@ -10,10 +10,12 @@
 #include "crossbow_plugin_pch.h"
 #include "QuerySessionData.h"
 #include "dispatcher/Config.h"
+#include "dispatcher/Logger_ABC.h"
 #include "Database_ABC.h"
 #include "Row_ABC.h"
 #include "Table_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
@@ -28,8 +30,9 @@ namespace bfs = boost::filesystem;
 // Name: Constructor
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-QuerySessionData::QuerySessionData( Database_ABC& database )
+QuerySessionData::QuerySessionData( Database_ABC& database, dispatcher::Logger_ABC& logger )
     : database_ ( database )
+    , logger_ ( logger )
 {
     // NOTHING
 }
@@ -94,9 +97,9 @@ int QuerySessionData::FindExercise( const std::string& name ) const
     }
     catch ( std::exception& ex )
     {
-        MT_LOG_ERROR_MSG( "QuerySessionData - Unable to find exercise: " + std::string( ex.what() ) );
+        logger_.LogError( "QuerySessionData - Unable to find exercise: " + std::string( ex.what() ) );
     }
-        return -1;
+    return -1;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +119,7 @@ int QuerySessionData::FindSession( const std::string& name, int exercise_id ) co
     }
     catch ( std::exception& ex )
     {
-        MT_LOG_ERROR_MSG( "QuerySessionData - Unable to find session: " + std::string( ex.what() ) );
+        logger_.LogError( "QuerySessionData - Unable to find session: " + std::string( ex.what() ) );
     }
-        return -1;
+    return -1;
 }

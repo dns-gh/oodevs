@@ -41,11 +41,7 @@ public:
     virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true ) = 0;
     virtual Table_ABC*  OpenTable( const std::string& name ) = 0;
     virtual void        ClearTable( const std::string& name, const std::string& filter ) = 0;
-    //@}
-
-    //! @name
-    //@{
-    virtual void Flush() = 0;
+    virtual void        Flush() = 0;
     //@}
 };
 

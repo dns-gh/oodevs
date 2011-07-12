@@ -9,9 +9,9 @@
 				<description lang="en" name="Feature database (manage geometry information)"><![CDATA[]]></description>
 			</descriptions>
 			<settings>
-				<setting attribute="geometry/@connection" type="string" default="sde://user:password@host:port/sword_crossbow_db.sword">
+				<setting attribute="geometry/@connection" type="string" default="postgres://user:password@host:port/sword_crossbow_db.sword">
 					<descriptions>
-						<description name="Connection URL:" lang="en"><![CDATA[GDB: filename.{gdb|mdb} SDE connection: sde://user:password@host:port/db_name.sword.]]></description>
+						<description name="Connection URL:" lang="en"><![CDATA[Geometry database (manage geometry information).]]></description>
 					</descriptions>
 				</setting>
 			</settings>

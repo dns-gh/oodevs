@@ -15,6 +15,7 @@
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
+    class Logger_ABC;
 }
 
 namespace plugins
@@ -37,7 +38,7 @@ class StatusListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusListener( Workspace_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session );
+             StatusListener( Workspace_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger );
     virtual ~StatusListener();
     //@}
 
@@ -55,7 +56,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Clean();
+    void Clean( dispatcher::Logger_ABC& logger );
     void ListenStatusUpdate( Table_ABC& table );
     void ChangeStatus( const std::string& status );
     void ListenTimefactorUpdate( Table_ABC& table );
@@ -70,6 +71,7 @@ private:
     Workspace_ABC& workspace_;
     const WorkingSession_ABC& session_;
     bool paused_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 };
 

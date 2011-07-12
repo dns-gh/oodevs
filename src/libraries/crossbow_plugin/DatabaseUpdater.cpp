@@ -29,6 +29,7 @@
 #include "dispatcher/ObjectKnowledge.h"
 #include "dispatcher/KnowledgeGroup.h"
 #include "dispatcher/Side.h"
+#include "dispatcher/Logger_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "tools/App6Symbol.h"
 #include "WorkingSession_ABC.h"
@@ -85,14 +86,15 @@ namespace crossbow
 // Name: DatabaseUpdater constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-DatabaseUpdater::DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session )
+DatabaseUpdater::DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session, dispatcher::Logger_ABC& logger )
     : workspace_ ( workspace )
     , database_ ( new LazyDatabaseConnection( workspace ) )
     , model_    ( model )
     , session_  ( session )
+    , logger_   ( logger )
 {
     database_->Reset();
-    Clean();
+    Clean( logger );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +139,7 @@ void DatabaseUpdater::Flush( bool reset /*= true*/  )
 // Name: DatabaseUpdater::Clean
 // Created: JCR 2010-03-01
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Clean()
+void DatabaseUpdater::Clean( dispatcher::Logger_ABC& logger )
 {
     try
     {
@@ -161,7 +163,7 @@ void DatabaseUpdater::Clean()
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "DatabaseUpdater is not correctly loaded : " + std::string( e.what() ) );
+        logger.LogError( "DatabaseUpdater is not correctly loaded : " + std::string( e.what() ) );
     }
 }
 
@@ -812,7 +814,6 @@ void DatabaseUpdater::Update( const sword::PopulationUpdate& msg )
 
             UpdateBlockOccupation( newRow, occupation );
             table->InsertRow( newRow );
-
         }
     }
 }
@@ -837,9 +838,7 @@ void DatabaseUpdater::Log( const sword::ObjectMagicActionAck& msg )
 {
     // TODO (MPT): a rapid hack. Should extract Log function and allow to either dump to DB or write to console
     if( msg.error_code() != sword::ObjectMagicActionAck::no_error )
-    {
-        MT_LOG_ERROR_MSG( __FUNCTION__ + std::string( ": ObjectMagicActionAck indicates error: " ) + Error( msg.error_code() ) );
-    }
+        throw std::runtime_error( ": ObjectMagicActionAck indicates error: " + Error( msg.error_code() ) );
 }
 
 // -----------------------------------------------------------------------------
