@@ -455,11 +455,9 @@ void MIL_Fuseau::Reset()
 // TOOLS
 //=============================================================================
 
-
 // =============================================================================
 // £$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ NLD - A NETTOYER
 // =============================================================================
-
 
 //-----------------------------------------------------------------------------
 // Name: GetNextPoint
@@ -535,7 +533,6 @@ MT_Vector2D GetPointOnLimitAfterIntersection( const T_PointVector& points, const
     GetNextPoint( vResult, points.end(), ++itBegin, rDist );
     return vResult;
 }
-
 
 // =============================================================================
 // GEOMETRY
@@ -639,7 +636,6 @@ bool MIL_Fuseau::SplitIntoSubFuseaux( unsigned int nNbrSubFuseau, T_FuseauPtrLis
     return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::ComputeFurthestExtremityPoint
 // Created: NLD 2003-04-23
@@ -708,7 +704,6 @@ void MIL_Fuseau::ComputeNearestEntryPoint( const MT_Vector2D& vStartPos, MT_Vect
     }
     assert( IsInside( vResult ) );
 }
-
 
 namespace
 {
@@ -841,7 +836,6 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     vResult=vNearest;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Fuseau::ComputePointBeforeLima
 // Created: NLD 2003-08-22
@@ -906,7 +900,7 @@ bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_LimaOrder& lima, double rDis
     if( rDist == 0. )
         return false;
 
-    for ( double rCurrentDist = rDist * 0.5; nNbPoints--; rCurrentDist += rDist )
+    for( double rCurrentDist = rDist * 0.5; nNbPoints--; rCurrentDist += rDist )
         results.push_back( supportLine.GetPointAt( rCurrentDist ) );
     return true;
 }
@@ -1264,7 +1258,7 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         std::size_t nNbr;
         file >> nNbr;
-        while ( nNbr-- )
+        while( nNbr-- )
         {
             double x;
             double y;
@@ -1276,7 +1270,7 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         std::size_t nNbr2;
         file >> nNbr2;
-        while ( nNbr2-- )
+        while( nNbr2-- )
         {
             double x;
             double y;

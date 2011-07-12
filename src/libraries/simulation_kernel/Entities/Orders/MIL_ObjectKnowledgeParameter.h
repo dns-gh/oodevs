@@ -66,5 +66,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( MIL_ObjectKnowledgeParameter )
 
-
 #endif // __MIL_ObjectKnowledgeParameter_h_

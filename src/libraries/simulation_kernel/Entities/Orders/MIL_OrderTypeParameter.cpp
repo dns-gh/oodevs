@@ -16,7 +16,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-
 namespace
 {
     bool InitIsList(  xml::xistream& xis )

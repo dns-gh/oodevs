@@ -164,7 +164,6 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
     parameters_.push_back( pParameter );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::DoSend
 // Created: LDC 2009-06-16
@@ -190,7 +189,6 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
     }
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::Send
@@ -252,7 +250,7 @@ void MIL_Report::Send< DEC_Decision_ABC >( const DEC_Decision_ABC& sender, E_Typ
 {
     client::Report message;
     if( DoSend( message, nType, diaParameters ) )
-    {        
+    {
         MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), sender.GetID() );
         message.Send( NET_Publisher_ABC::Publisher() );
     }

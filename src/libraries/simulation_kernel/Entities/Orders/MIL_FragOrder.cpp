@@ -546,4 +546,3 @@ void MIL_FragOrder::Serialize( sword::MissionParameters& message ) const
         throw std::runtime_error( std::string( "Frag Order " ) + type_.GetName() + " impossible to serialize parameters" );
 }
 
-

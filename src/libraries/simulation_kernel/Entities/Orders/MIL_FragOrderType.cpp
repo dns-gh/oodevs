@@ -123,7 +123,6 @@ const MIL_FragOrderType* MIL_FragOrderType::FindByDiaType( const std::string& st
     return it->second;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrderType::IsAvailableWithoutMission
 // Created: NLD 2006-11-25

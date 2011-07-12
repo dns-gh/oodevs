@@ -100,5 +100,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( MIL_ExternalIdentifierWrapper )
 
-
 #endif // __MIL_ExternalIdentifierWrapper_h_

@@ -74,7 +74,6 @@ bool MIL_DirectionParameter::ToDirection( boost::shared_ptr< MT_Vector2D >& dir 
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter::ToElement
 // Created: MGD 2010-11-19

@@ -273,7 +273,6 @@ bool MIL_BaseParameter::ToGDH( float& ) const
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToGenObject
 // Created: LDC 2009-05-20
@@ -354,7 +353,6 @@ bool MIL_BaseParameter::ToLima( boost::shared_ptr< TER_Localisation >& ) const
 {
     return false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToLimaList

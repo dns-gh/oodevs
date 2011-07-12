@@ -51,7 +51,6 @@ bool MIL_BoolParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
     return type == MIL_ParameterType_ABC::eBool;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_BoolParameter::ToBool
 // Created: LDC 2009-05-22

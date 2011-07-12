@@ -233,7 +233,7 @@ namespace boost
         {
             std::size_t size = functions.size();
             file << size;
-            for ( CIT_LimaFunctions it = functions.begin(); it != functions.end(); ++it )
+            for( CIT_LimaFunctions it = functions.begin(); it != functions.end(); ++it )
             {
                 unsigned id = (*it)->GetID();
                 file << id;
@@ -245,7 +245,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 unsigned int nID;
                 file >> nID;

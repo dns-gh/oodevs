@@ -12,7 +12,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "MIL_MissionParameterFactory.h"
-#include "MIL_AgentServer.h"  
+#include "MIL_AgentServer.h"
 #include "MIL_Mission_ABC.h"
 #include "MIL_AgentKnowledgeParameter.h"
 #include "MIL_AgentParameter.h"
@@ -46,7 +46,6 @@
 #include "MIL_ExternalIdentifierWrapper.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
@@ -102,7 +101,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     else if( message.has_area() )
     {
         ptr = new MIL_PolygonParameter( message.area() );
-        if ( !static_cast< MIL_PolygonParameter* > ( ptr )->IsValid() )
+        if( !static_cast< MIL_PolygonParameter* > ( ptr )->IsValid() )
             throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
     }
     else if( message.has_location() )
@@ -123,7 +122,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_PopulationKnowledgeParameter( message.crowdknowledge(), resolver, entityManager );
     else if( message.has_plannedwork() )
         ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
-    else if ( message.has_resourcetype() )
+    else if( message.has_resourcetype() )
         ptr = new MIL_DotationTypeParameter( message.resourcetype() );
     else if( message.has_equipmenttype() )
         ptr = new MIL_EquipmentTypeParameter( message.equipmenttype() );
@@ -321,7 +320,7 @@ void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, cons
 {
     parameters.clear();
     int size = asn.elem_size();
-    for ( int i = 0; i < size; ++i )
+    for( int i = 0; i < size; ++i )
         parameters.push_back( Create( orderType.GetParameterType(i), asn.elem(i), resolver ) );
 }
 
@@ -379,7 +378,7 @@ void MIL_MissionParameterFactory::SetPawnParameter( boost::shared_ptr< MIL_Missi
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAutomat( DEC_Decision_ABC* automat )
-{    
+{
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AutomatParameter( dynamic_cast<DEC_AutomateDecision*>( automat ) ) );
     return result;
 }

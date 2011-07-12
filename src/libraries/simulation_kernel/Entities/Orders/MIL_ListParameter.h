@@ -78,5 +78,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( MIL_ListParameter )
 
-
 #endif // __MIL_ListParameter_h_

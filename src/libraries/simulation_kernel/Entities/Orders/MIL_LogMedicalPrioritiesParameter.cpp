@@ -105,7 +105,7 @@ namespace boost
         {
             std::size_t size = vector.size();
             file << size;
-            for ( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
+            for( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
                 unsigned id = (*it)->GetID();
                 file << id;
@@ -118,7 +118,7 @@ namespace boost
             std::size_t nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 unsigned int nID;
                 file >> nID;

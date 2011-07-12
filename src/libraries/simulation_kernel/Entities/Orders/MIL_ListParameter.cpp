@@ -132,7 +132,6 @@ bool MIL_ListParameter::ToPathList( std::vector< std::vector< boost::shared_ptr<
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::ToPointList
 // Created: MGD 2010-11-09
