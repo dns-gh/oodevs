@@ -880,16 +880,16 @@
     <macrodef name="test-adaptation">
         <attribute name="input"/>
         <sequential>
-            <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
+            <property name="test-adaptation.dir" value="${out.dir}/test-adaptation"/>
             <echo>Testing models: @{input}</echo>
-            <delete dir="${adaptation_test.dir2}"/>
+            <delete dir="${test-adaptation.dir}"/>
             <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-i"/>
                 <arg value="@{input}/physical.xml"/>
                 <arg value="-o"/>
-                <arg value="${adaptation_test.dir2}/physical.xml"/>
+                <arg value="${test-adaptation.dir}/physical.xml"/>
             </exec>
-            <compare-dirs dir1="@{input}" dir2="${adaptation_test.dir2}"
+            <compare-dirs dir1="@{input}" dir2="${test-adaptation.dir}"
                 excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,**/templates.xml,**/ObjectNames.xml,**/mapping.xml,**/DrawingTemplates.xml,**/FOM.xml,**/Extensions.xml,**/scores.xml,**/symbols.xml,**/Filters,**/Filters/**"
                 includes="**/*.xml" property="adaptation_test.is-different"/>
             <if>
@@ -901,6 +901,7 @@
                     <fail message="saved data differs from loaded data."/>
                 </then>
             </if>
+            <delete dir="${test-adaptation.dir}"/>
         </sequential>
     </macrodef>
 
@@ -975,13 +976,13 @@
                 <fileset dir="../data/tests/test_data_migration/@{old-version}/physical"/>
             </copy>
             <!-- ADN -->
-            <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
-            <delete dir="${adaptation_test.dir2}"/>
+            <property name="test-data-migration.dir" value="${out.dir}/test-data-migration"/>
+            <delete dir="${test-data-migration.dir}"/>
             <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-i"/>
                 <arg value="${data.dir}/data/models/ada/physical/@{temporary-name}/physical.xml"/>
                 <arg value="-o"/>
-                <arg value="${adaptation_test.dir2}/physical.xml"/>
+                <arg value="${test-data-migration.dir}/physical.xml"/>
             </exec>
             <!-- Copy exercise -->
             <delete dir="${data.dir}/exercises/@{temporary-name}" failonerror="false"/>
@@ -995,9 +996,9 @@
             <!-- SIM -->
             <run-simulation exercise="@{temporary-name}" session="@{session}"/>
             <!-- cleanup -->
-            <delete dir="${adaptation_test.dir2}" failonerror="false"/>
-            <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}"  failonerror="false"/>
-            <delete dir="${data.dir}/exercises/@{temporary-name}"  failonerror="false"/>
+            <delete dir="${test-data-migration.dir}"/>
+            <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}"/>
+            <delete dir="${data.dir}/exercises/@{temporary-name}"/>
         </sequential>
     </macrodef>
 
