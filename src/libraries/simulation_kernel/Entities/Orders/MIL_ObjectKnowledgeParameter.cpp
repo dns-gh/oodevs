@@ -9,8 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectKnowledgeParameter.h"
+#include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 #include "Checkpoints/SerializationTools.h"
 
@@ -39,11 +42,15 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< D
 // Name: MIL_ObjectKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
-    : pKnowledgeObject_( resolver.ResolveKnowledgeObject( asn ) )
+MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
+                                                            const MIL_EntityManager_ABC& entityManager )
 {
+    MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );
+    if( !pObject )
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    pKnowledgeObject_ = resolver.ResolveKnowledgeObject( *pObject );
     if( !pKnowledgeObject_ )
-        throw std::runtime_error( "Object Knowledge does not exist" );
+       throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +88,7 @@ bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( boost::shared_ptr< DEC_Kno
 // -----------------------------------------------------------------------------
 bool MIL_ObjectKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.mutable_objectknowledge()->set_id( pKnowledgeObject_->GetID() );
+    elem.mutable_objectknowledge()->set_id( pKnowledgeObject_->GetObjectKnown()->GetID() );
     return true;
 }
 

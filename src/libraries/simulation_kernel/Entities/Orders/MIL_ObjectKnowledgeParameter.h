@@ -14,6 +14,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_KnowledgeResolver_ABC;
+class MIL_EntityManager_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectKnowledgeParameter
@@ -28,7 +29,8 @@ public:
     //@{
              MIL_ObjectKnowledgeParameter();
     explicit MIL_ObjectKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );
-             MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
+                                           const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_ObjectKnowledgeParameter();
     //@}
 

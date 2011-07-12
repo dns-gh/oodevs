@@ -19,7 +19,6 @@
 #include "MockRoleDotations.h"
 #include "MockRoleLocation.h"
 #include "StubDEC_Decision.h"
-#include "StubMIL_Object_ABC.h"
 #include "TestIndirectFireModifier.h"
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
@@ -148,6 +147,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 
 
 template<>
-void MIL_Report::Send< MockAgent >( const MockAgent& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
+void MIL_Report::Send< MockAgent >( const MockAgent& /*sender*/, E_Type /*nType*/, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& /*diaParameters*/ ) const
 {
+    // NOTHING
 }

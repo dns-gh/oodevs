@@ -43,7 +43,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ObjectKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ObjectKnowledge( const kernel::OrderParameter& parameter, unsigned long id, const kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledge( const kernel::OrderParameter& parameter, unsigned long id, const kernel::ObjectKnowledgeConverter_ABC& converter,
+                              const kernel::Entity_ABC& owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities );
              ObjectKnowledge( const kernel::OrderParameter& parameter, const kernel::ObjectKnowledge_ABC* knowledge, kernel::Controller& controller );
     virtual ~ObjectKnowledge();
     //@}

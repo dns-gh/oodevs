@@ -83,13 +83,15 @@ public:
     //! @name tools::Resolver
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( MIL_Object_ABC& object ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const MIL_Population& population ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
     //@}
 
@@ -100,6 +102,7 @@ public:
     DEC_Knowledge_Population& CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& perceived );
     bool IsKnown( const MIL_Agent_ABC& agent ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const DEC_Knowledge_AgentPerception& perception ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const MIL_Agent_ABC& agent ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( unsigned int nID ) const;
     void GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const;
     void GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
@@ -119,6 +122,7 @@ public:
     // Knowledge populations
     DEC_Knowledge_Population* GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const;
     DEC_Knowledge_Population* GetKnowledgePopulation( const DEC_Knowledge_PopulationPerception& perception ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulation( const MIL_Population& population ) const;
     DEC_Knowledge_Population* GetKnowledgePopulationFromID( unsigned int nID ) const;
     void GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const;
     void GetPopulations( T_KnowledgePopulationVector& container ) const;

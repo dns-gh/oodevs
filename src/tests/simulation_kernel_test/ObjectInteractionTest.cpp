@@ -479,7 +479,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType popuType( model );
-    StubMIL_Population population( popuType );
+    StubMIL_Population population( popuType, army );
 
     xml::xistringstream xisConcentration( "<population attitude='calme' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );
@@ -520,7 +520,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapac
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType popuType( model );
-    StubMIL_Population population( popuType );
+    StubMIL_Population population( popuType, army );
 
     xml::xistringstream xisConcentration( "<population attitude='agressive' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );
@@ -561,7 +561,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapac
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType popuType( model );
-    StubMIL_Population population( popuType );
+    StubMIL_Population population( popuType, army );
 
     xml::xistringstream xisConcentration( "<population attitude='agressive' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );

@@ -154,6 +154,16 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup:
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgent
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgent( const MIL_Agent_ABC& agent ) const
+{
+    assert( pKnowledgeAgentContainer_ );
+    return pKnowledgeAgentContainer_->GetKnowledgeAgent( agent );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
@@ -347,6 +357,16 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePo
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const MIL_Population& population ) const
+{
+    assert( pKnowledgePopulationContainer_ );
+    return pKnowledgePopulationContainer_->GetKnowledgePopulation( population );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const
@@ -452,6 +472,16 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup:
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const
+{
+    assert( pKnowledgeAgentContainer_ );
+    return pKnowledgeAgentContainer_->GetKnowledgeAgent( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( unsigned int nID ) const
@@ -483,7 +513,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( MIL_Object_ABC& object ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
 {
     if( pKnowledgeObjectContainer_ )
         return pKnowledgeObjectContainer_->GetKnowledgeObject( object );
@@ -497,6 +527,16 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
     return GetKnowledgePopulationFromID( asn.id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const MIL_Population& population ) const
+{
+    assert( pKnowledgePopulationContainer_ );
+    return pKnowledgePopulationContainer_->GetKnowledgePopulation( population );
 }
 
 // -----------------------------------------------------------------------------

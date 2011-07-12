@@ -555,12 +555,30 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const
+{
+    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( agent );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const
 {
     return pPion_->GetKnowledgeGroup().ResolveKnowledgeObject( asn.id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
+{
+    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -579,6 +597,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const MIL_Population& population ) const
+{
+    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( population );
 }
 
 // -----------------------------------------------------------------------------

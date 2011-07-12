@@ -42,7 +42,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              PopulationKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter,
+                                  const kernel::Entity_ABC& owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities );
              PopulationKnowledge( const kernel::OrderParameter& parameter, const kernel::PopulationKnowledge_ABC* knowledge, kernel::Controller& controller );
     virtual ~PopulationKnowledge();
     //@}

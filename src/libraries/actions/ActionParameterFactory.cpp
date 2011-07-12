@@ -129,11 +129,11 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_path() )
         return new parameters::Path( parameter, converter_, message.path().location() );
     if( message.has_agentknowledge() )
-        return new parameters::AgentKnowledge( parameter, message.agentknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
+        return new parameters::AgentKnowledge( parameter, message.agentknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_objectknowledge() )
-        return new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_ );
+        return new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_crowdknowledge() )
-        return new parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
+        return new parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_location() )
         return new parameters::Location( parameter, converter_, message.location() );
     if( message.has_plannedwork() )

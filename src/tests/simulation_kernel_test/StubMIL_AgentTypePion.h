@@ -6,7 +6,7 @@
 class StubMIL_AgentTypePion : public MIL_AgentTypePion
 {
 public:
-    StubMIL_AgentTypePion( DEC_Model_ABC& model ) : MIL_AgentTypePion( &model ) {}
+             StubMIL_AgentTypePion( DEC_Model_ABC& model ) : MIL_AgentTypePion( &model ) {}
     virtual ~StubMIL_AgentTypePion() {}
 };
 

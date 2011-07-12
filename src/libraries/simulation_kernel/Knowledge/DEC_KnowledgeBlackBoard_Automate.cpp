@@ -72,6 +72,15 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::Resol
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( unsigned int nID ) const
@@ -90,6 +99,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::Reso
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObject( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( unsigned int nID ) const
@@ -104,6 +122,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::Reso
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const MIL_Population& population ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( population );
 }
 
 // -----------------------------------------------------------------------------

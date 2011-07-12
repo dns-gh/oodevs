@@ -40,6 +40,12 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void NotifyDestruction();
+    template< typename M >
+    void CommitTo( M& message ) const
+    {
+        if( GetValue() )
+            message.set_id( GetValue()->GetEntity()->GetId() );
+    }
     //@}
 
 private:

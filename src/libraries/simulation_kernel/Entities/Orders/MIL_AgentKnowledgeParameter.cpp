@@ -9,8 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentKnowledgeParameter.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/MIL_EntityManager_ABC.h"
+#include "knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 #include "Checkpoints/SerializationTools.h"
@@ -40,9 +42,13 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC
 // Name: MIL_AgentKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const sword::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
-    : pKnowledgeAgent_( NET_ASN_Tools::ReadAgentKnowledge( asn, resolver ) )
+MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const sword::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
+                                                          const MIL_EntityManager_ABC& entityManager )
 {
+    MIL_AgentPion* pAgent = entityManager.FindAgentPion( asn.id() );
+    if( !pAgent )
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    pKnowledgeAgent_ = resolver.ResolveKnowledgeAgent( *pAgent );
     if( !pKnowledgeAgent_ )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
@@ -82,7 +88,7 @@ bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( boost::shared_ptr< DEC_Knowl
 // -----------------------------------------------------------------------------
 bool MIL_AgentKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.mutable_agentknowledge()->set_id( pKnowledgeAgent_->GetID() );
+    elem.mutable_agentknowledge()->set_id( pKnowledgeAgent_->GetAgentKnown().GetID() );
     return true;
 }
 

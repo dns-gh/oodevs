@@ -11,6 +11,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "Fixture.h"
 #include "MockMIL_MissionType_ABC.h"
+#include "MockArmy.h"
 #include "StubMIL_AgentPion.h"
 #include "StubMIL_AgentTypePion.h"
 #include "StubMIL_Automate.h"
@@ -52,8 +53,9 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
+    MockArmy army;
     StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
+    StubMIL_Population population( type, army );
     DEC_PopulationDecision decision( population, 100, 100 );
 }
 
@@ -139,7 +141,7 @@ namespace
             : xis       ( "<main dia-type='PionTest' file='PionTest.bms'/>" )
             , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false )
             , type      ( model )
-            , population( type )
+            , population( type, army )
             , decision  ( population, 0 )
         {
             // NOTHING
@@ -147,6 +149,7 @@ namespace
         xml::xistringstream xis;
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model;
+        MockArmy army;
         StubMIL_PopulationType type;
         StubMIL_Population population;
         DEC_TestPopulationDecision decision;
@@ -211,7 +214,7 @@ namespace
             : xis       ( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" )
             , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false )
             , type      ( model )
-            , population( type )
+            , population( type, army )
             , decision  ( population, 0 )
         {
             // NOTHING
@@ -219,6 +222,7 @@ namespace
         xml::xistringstream xis;
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model;
+        MockArmy army;
         StubMIL_PopulationType type;
         StubMIL_Population population;
         DEC_TestPopulationDecision decision;

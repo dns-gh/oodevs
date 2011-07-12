@@ -116,11 +116,11 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     else if( message.has_automat() )
         ptr = new MIL_AutomatParameter( message.automat(), entityManager );
     else if( message.has_agentknowledge() )
-        ptr = new MIL_AgentKnowledgeParameter( message.agentknowledge(), resolver );
+        ptr = new MIL_AgentKnowledgeParameter( message.agentknowledge(), resolver, entityManager );
     else if( message.has_objectknowledge() )
-        ptr = new MIL_ObjectKnowledgeParameter( message.objectknowledge(), resolver );
+        ptr = new MIL_ObjectKnowledgeParameter( message.objectknowledge(), resolver, entityManager );
     else if( message.has_crowdknowledge() )
-        ptr = new MIL_PopulationKnowledgeParameter( message.crowdknowledge(), resolver );
+        ptr = new MIL_PopulationKnowledgeParameter( message.crowdknowledge(), resolver, entityManager );
     else if( message.has_plannedwork() )
         ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
     else if ( message.has_resourcetype() )

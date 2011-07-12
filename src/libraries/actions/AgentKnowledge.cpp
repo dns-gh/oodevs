@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "AgentKnowledge.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 
@@ -41,8 +42,9 @@ AgentKnowledge::AgentKnowledge( const kernel::OrderParameter& parameter, const k
 // Name: AgentKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long id, const AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, converter.FindAgent( id, owner ), controller )
+AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long id, const AgentKnowledgeConverter_ABC& converter,
+                                const Entity_ABC& owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities )
+    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, converter.Find( entities.GetAgent( id ), owner ), controller )
 {
     // NOTHING
 }
@@ -73,7 +75,7 @@ void AgentKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &sword::UnitKnowledgeId::set_id, boost::ref(*message.mutable_value()->Add()->mutable_agentknowledge()), _1 ) );
+        Knowledge_ABC< AgentKnowledge_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_agentknowledge() );
 }
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::CommitTo
@@ -82,7 +84,7 @@ void AgentKnowledge::CommitTo( sword::MissionParameter& message ) const
 void AgentKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &sword::UnitKnowledgeId::set_id, boost::ref(*message.mutable_agentknowledge()), _1 ) );
+        Knowledge_ABC< AgentKnowledge_ABC >::CommitTo( *message.mutable_agentknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +93,7 @@ void AgentKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::CommitTo( sword::UnitKnowledgeId& message ) const
 {
-    Entity< AgentKnowledge_ABC >::CommitTo( message );
+    Knowledge_ABC< AgentKnowledge_ABC >::CommitTo( message );
 }
 
 // -----------------------------------------------------------------------------

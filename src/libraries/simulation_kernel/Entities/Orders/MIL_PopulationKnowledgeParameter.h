@@ -16,6 +16,7 @@ class DEC_Knowledge_Object;
 class DEC_KnowledgeResolver_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class MIL_EntityManager_ABC;
 
 // =============================================================================
 /** @class  MIL_PopulationKnowledgeParameter
@@ -30,7 +31,8 @@ public:
     //@{
              MIL_PopulationKnowledgeParameter();
     explicit MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge );
-             MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
+                                               const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_PopulationKnowledgeParameter();
     //@}
 

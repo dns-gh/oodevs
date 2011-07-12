@@ -71,11 +71,15 @@ public:
     //! @name tools::Resolver
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
+
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const MIL_Population& population ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
     //@}
 
@@ -84,7 +88,7 @@ public:
     bool IsKnown( const MIL_Object_ABC& oject ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
     void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( MIL_Object_ABC& object ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const DEC_Knowledge_ObjectCollision& collision ) const;
     void GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
     void GetObjects( T_KnowledgeObjectVector& container ) const;

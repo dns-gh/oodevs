@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "ObjectKnowledge.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -30,8 +31,9 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, Controller& c
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, const ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
-    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, converter.Find( id, owner ), controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, const ObjectKnowledgeConverter_ABC& converter,
+                                  const Entity_ABC& owner, Controller& controller, const kernel::EntityResolver_ABC& entities )
+    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, converter.Find( entities.GetObject( id ), owner ), controller )
 {
     // NOTHING
 }
@@ -72,7 +74,7 @@ void ObjectKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->Add()->mutable_objectknowledge() );
+        Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_objectknowledge() );
 }
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::CommitTo
@@ -81,7 +83,7 @@ void ObjectKnowledge::CommitTo( sword::MissionParameter& message ) const
 void ObjectKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        CommitTo( *message.mutable_objectknowledge() );
+        Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( *message.mutable_objectknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +92,7 @@ void ObjectKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::CommitTo( sword::ObjectKnowledgeId& message ) const
 {
-    Entity< ObjectKnowledge_ABC >::CommitTo< sword::ObjectKnowledgeId >( message );
+    Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo< sword::ObjectKnowledgeId >( message );
 }
 
 // -----------------------------------------------------------------------------

@@ -169,6 +169,15 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowled
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const MIL_Agent_ABC& /*agent*/ ) const
+{
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( unsigned int /*nID*/ ) const
@@ -187,6 +196,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
+{
+    return population_.GetArmy().GetKnowledge().GetKnowledgeObject( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( unsigned int nID ) const
@@ -199,6 +217,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const MIL_Population& /*population*/ ) const
 {
     return 0;
 }

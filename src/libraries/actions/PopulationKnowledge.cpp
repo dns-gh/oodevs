@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "PopulationKnowledge.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -30,8 +31,9 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, kerne
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, converter.FindPopulation( id, owner ), controller )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter,
+                                          const Entity_ABC& owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities )
+    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, converter.Find( entities.GetPopulation( id ), owner ), controller )
 {
     // NOTHING
 }
@@ -72,8 +74,9 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_value()->Add()->mutable_crowdknowledge() );
+        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_value()->Add()->mutable_crowdknowledge() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
@@ -81,7 +84,7 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 void PopulationKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_crowdknowledge() );
+        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +93,7 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter_Value& message ) con
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::CommitTo( sword::CrowdKnowledgeId& message ) const
 {
-    Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( message );
+    Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( message );
 }
 
 // -----------------------------------------------------------------------------

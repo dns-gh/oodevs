@@ -1408,7 +1408,7 @@ MIL_Army_ABC& MIL_Population::GetArmy() const
 // -----------------------------------------------------------------------------
 void MIL_Population::SetPionMaxSpeed( double rSpeed )
 {
-    assert( rSpeed >= 0. );
+    assert( rSpeed >= 0. ); 
     bPionMaxSpeedOverloaded_ = true;
     rOverloadedPionMaxSpeed_ = rSpeed;
 }

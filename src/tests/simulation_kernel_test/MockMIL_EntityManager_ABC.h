@@ -23,6 +23,7 @@ MOCK_BASE_CLASS( MockMIL_EntityManager_ABC, MIL_EntityManager_ABC )
     MOCK_METHOD( FindAgentPion, 1 );
     MOCK_METHOD( FindAutomate, 1 );
     MOCK_METHOD( FindObject, 1 );
+    MOCK_METHOD( FindPopulation, 1 );
     MOCK_METHOD( FindKnowledgeGroup, 1 ); // LTO
     MOCK_METHOD( FindObjectType, 1 );
 

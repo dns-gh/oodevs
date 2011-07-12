@@ -608,7 +608,7 @@ const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObject
+// Name: MIL_KnowledgeGroup::ResolveKnowledgeObject
 // Created: LDC 2011-06-10
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObject( unsigned int id ) const
@@ -616,6 +616,18 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
     boost::shared_ptr< DEC_Knowledge_Object > result = GetKnowledge().ResolveKnowledgeObject( id );
     if( !result && parent_ )
         result = parent_->ResolveKnowledgeObject( id );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::ResolveKnowledgeObject
+// Created: LGY 2011-07-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
+{
+    boost::shared_ptr< DEC_Knowledge_Object > result = GetKnowledge().ResolveKnowledgeObject( object );
+    if( !result && parent_ )
+        result = parent_->ResolveKnowledgeObject( object );
     return result;
 }
 
