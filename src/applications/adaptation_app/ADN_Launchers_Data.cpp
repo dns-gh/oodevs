@@ -135,7 +135,7 @@ void ADN_Launchers_Data::LauncherInfos::WriteArchive( xml::xostream& output )
             {
                 output << xml::start( "ph-modifier" )
                         << xml::attribute( "target-posture", ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureCible) )
-                        << xml::attribute( "value", tabModifs_.Get(iPostureTireur,iPostureCible).GetData() / 100.0 )
+                        << xml::attribute( "value", std::abs( tabModifs_.Get(iPostureTireur,iPostureCible).GetData() / 100.0 ) )
                        << xml::end;
             }
             output << xml::end;
