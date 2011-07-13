@@ -89,7 +89,7 @@ void Publisher::PullSituation( const std::string& message, const std::string& ti
 {
     try
     {
-        ExecuteGetRequest( message, GetUri( timestamp ), handler );
+        ExecuteGetRequest( GetUri( timestamp ), message, handler );
         if( log_ )
             MT_LOG_INFO_MSG( "Pull situation from server succeeded." )
     }
@@ -154,7 +154,7 @@ void Publisher::RestartScenario()
         VoidResponseHandler handler;
         const std::string uri( "/initialize?servletid=" + boost::lexical_cast<std::string>( scenario_ ) );
         
-        ExecuteGetRequest( "", uri, handler );
+        ExecuteGetRequest( uri, "", handler );
         if( log_ )
             MT_LOG_INFO_MSG( "Scenario restarted successfully." )
     }
