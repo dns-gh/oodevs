@@ -14,9 +14,9 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Options.h"
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -135,8 +135,8 @@ void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
 void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
     if( controllers_.options_.GetOption( "Infra", true ).To< bool >() )
-        if( const kernel::Positions* positions = object_.Retrieve< kernel::Positions >() )
-            tools.DrawApp6Symbol( type_.GetSymbol(), positions->GetPosition(), 0.1f, 0.1f );
+        if( const kernel::UrbanPositions_ABC* positions = object_.Retrieve< kernel::UrbanPositions_ABC >() )
+            tools.DrawApp6Symbol( type_.GetSymbol(), positions->Barycenter(), 0.1f, 0.1f );
 }
 
 // -----------------------------------------------------------------------------
