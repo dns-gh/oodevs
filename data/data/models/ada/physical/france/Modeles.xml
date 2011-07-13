@@ -8938,6 +8938,7 @@
         <mission name="MELEE Proteger PC"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer"/>
@@ -9039,6 +9040,7 @@
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE S'emparer"/>
         <mission name="MELEE Surveiller"/>
@@ -9287,6 +9289,7 @@
         </mission>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Recueillir"/>
         <mission name="MELEE Tenir"/>
       </missions>
       <fragorders>
@@ -9344,6 +9347,7 @@
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer"/>
@@ -9393,6 +9397,7 @@
         <mission name="MELEE Jalonner"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Recueillir"/>
         <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE Surveiller"/>
       </missions>
@@ -9449,6 +9454,7 @@
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer"/>
@@ -9494,6 +9500,7 @@
         <mission name="MELEE Jalonner"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Recueillir"/>
         <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE Surveiller"/>
         <mission name="STABILISATION Animer Postes De Controle"/>
@@ -13826,4 +13833,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3414177458" -->
+<!-- signature="4194245296" -->
