@@ -47,7 +47,7 @@
             <unit command-post="true" id="23" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="Peloton . LECLERC CDT ESC"/>
             <unit command-post="false" id="24" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="Peloton . LECLERC CDP SOFF"/>
             <unit command-post="false" id="25" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="Peloton . LECLERC CDP SOFF"/>
-            <unit command-post="false" id="26" name="Peloton . LECLERC CDP OFF" position="29TNF3414758331" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="26" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3414758331" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="27" name="Section . CBT INF VAB CDS SOFF" position="29TNF3503958595" type="Section . CBT INF VAB CDS SOFF"/>
             <unit command-post="false" id="28" name="Peloton . d appui direct" position="29TNF3418358939" type="Peloton . d appui direct"/>
             <unit command-post="false" id="29" name="Groupe GEN . EBG" position="29TNF3450458846" type="Groupe GEN . EBG"/>
@@ -162,7 +162,7 @@
           </automat>
           <automat engaged="true" id="82" knowledge-group="8" name="SGTIA ABC [82]" type="SGTIA ABC">
             <unit command-post="true" id="83" name="Peloton . LECLERC CDT ESC" position="29TNF3635452123" type="Peloton . LECLERC CDT ESC"/>
-            <unit command-post="false" id="86" name="Peloton . LECLERC CDP OFF" position="29TNF3622952858" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="86" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3622952858" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3670753093" type="Section . CBT INF VAB CDS SOFF"/>
             <unit command-post="false" id="88" name="Peloton . d appui direct" position="29TNF3659152712" type="Peloton . d appui direct"/>
             <unit command-post="false" id="89" name="Groupe GEN . EBG" position="29TNF3714553049" type="Groupe GEN . EBG"/>
@@ -217,7 +217,7 @@
             <unit command-post="true" id="115" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="Peloton . LECLERC CDT ESC"/>
             <unit command-post="false" id="116" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="Peloton . LECLERC CDP SOFF"/>
             <unit command-post="false" id="117" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="Peloton . LECLERC CDP SOFF"/>
-            <unit command-post="false" id="118" name="Peloton . LECLERC CDP OFF" position="29TNF3414758331" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="118" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3414758331" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="119" name="Section . CBT INF VAB CDS SOFF" position="29TNF3503958595" type="Section . CBT INF VAB CDS SOFF"/>
             <unit command-post="false" id="120" name="Peloton . d appui direct" position="29TNF3418358939" type="Peloton . d appui direct"/>
             <unit command-post="false" id="121" name="Groupe GEN . EBG" position="29TNF3450458846" type="Groupe GEN . EBG"/>
@@ -270,7 +270,7 @@
           </automat>
           <automat engaged="true" id="174" knowledge-group="100" name="SGTIA ABC [82]" type="SGTIA ABC">
             <unit command-post="true" id="175" name="Peloton . LECLERC CDT ESC" position="29TNF3918956647" type="Peloton . LECLERC CDT ESC"/>
-            <unit command-post="false" id="178" name="Peloton . LECLERC CDP OFF" position="29TNF3906457382" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="178" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3906457382" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="179" name="Section . CBT INF VAB CDS SOFF" position="29TNF3954257617" type="Section . CBT INF VAB CDS SOFF"/>
             <unit command-post="false" id="180" name="Peloton . d appui direct" position="29TNF3942657236" type="Peloton . d appui direct"/>
             <unit command-post="false" id="181" name="Groupe GEN . EBG" position="29TNF3998057573" type="Groupe GEN . EBG"/>
@@ -351,4 +351,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3971283169" -->
+<!-- signature="2103524911" -->

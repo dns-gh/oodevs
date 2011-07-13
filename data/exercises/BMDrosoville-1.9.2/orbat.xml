@@ -97,8 +97,8 @@
             <unit command-post="true" id="8" name="PC" position="31TCM1064488371" type="Section . CDT CIE INF VAB"/>
             <unit command-post="false" id="9" name="INF 1" position="31TCM1067688353" type="Section . CBT INF VAB CDS OFF"/>
             <unit command-post="false" id="10" name="INF 2" position="31TCM1067688353" type="Section . CDT CIE INF VAB"/>
-            <unit command-post="false" id="11" name="ABC 1" position="31TCM1062688116" type="Peloton . LECLERC CDP OFF"/>
-            <unit command-post="false" id="12" name="ABC 2" position="31TCM1063688220" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="11" name="ABC 1" position="31TCM1062688116" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="12" name="ABC 2" position="31TCM1063688220" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="47" name="GEN EBG" position="31TCM1063688220" type="Groupe GEN . EBG"/>
             <unit command-post="false" id="48" name="GEN MPG" position="31TCM1063688220" type="Groupe GEN . MPG"/>
             <unit command-post="false" id="49" name="Unit test" position="31TCM1063688220" type="Pion de tests"/>
@@ -108,8 +108,8 @@
             <unit command-post="true" id="30" name="Section CDT CIE INF VAB" position="31TCM1135691013" type="Section . CDT CIE INF VAB"/>
             <unit command-post="false" id="31" name="Section CBT INF VAB CDS OFF" position="31TCM1138090952" type="Section . CBT INF VAB CDS OFF"/>
             <unit command-post="false" id="32" name="Section CBT INF VAB CDS OFF" position="31TCM1139391062" type="Section . CBT INF VAB CDS OFF"/>
-            <unit command-post="false" id="33" name="Peloton LECLERC CDP OFF" position="31TCM1135391009" type="Peloton . LECLERC CDP OFF"/>
-            <unit command-post="false" id="34" name="Peloton LECLERC CDP OFF" position="31TCM1132490824" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="33" name="Peloton LECLERC CDP OFF" position="31TCM1135391009" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="34" name="Peloton LECLERC CDP OFF" position="31TCM1132490824" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="147" name="GEN EBG" position="31TCM1132490825" type="Groupe GEN . EBG"/>
           </automat>
           <automat engaged="true" id="50" knowledge-group="2" name="ONG" type="ONG">
@@ -231,15 +231,15 @@
             <unit command-post="true" id="24" name="BAD PC" position="31TCM1300488355" type="Section . CDT CIE INF VAB"/>
             <unit command-post="false" id="25" name="BAD INF 1" position="31TCM1748285728" type="Section . CBT INF VAB CDS OFF"/>
             <unit command-post="false" id="26" name="BAD INF 2" position="31TCM1750785598" type="Section . CBT INF VAB CDS OFF"/>
-            <unit command-post="false" id="27" name="BAD ABC 2" position="31TCM1735785794" type="Peloton . LECLERC CDP OFF"/>
-            <unit command-post="false" id="28" name="BAD ABC 1" position="31TCM1739885706" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="27" name="BAD ABC 2" position="31TCM1735785794" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="28" name="BAD ABC 1" position="31TCM1739885706" type="ABC . Peloton LECLERC CDP OFF"/>
           </automat>
           <automat engaged="true" id="37" knowledge-group="17" name="BAD SGTIA Engaged" type="SGTIA">
             <unit command-post="true" id="38" name="Section CDT CIE INF VAB" position="31TCM1610284629" type="Section . CDT CIE INF VAB"/>
             <unit command-post="false" id="39" name="Section CBT INF VAB CDS OFF" position="31TCM1619884629" type="Section . CBT INF VAB CDS OFF"/>
             <unit command-post="false" id="40" name="Section CBT INF VAB CDS OFF" position="31TCM1613684624" type="Section . CBT INF VAB CDS OFF"/>
-            <unit command-post="false" id="41" name="Peloton LECLERC CDP OFF" position="31TCM1601284632" type="Peloton . LECLERC CDP OFF"/>
-            <unit command-post="false" id="42" name="Peloton LECLERC CDP OFF" position="31TCM1625784627" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="41" name="Peloton LECLERC CDP OFF" position="31TCM1601284632" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="42" name="Peloton LECLERC CDP OFF" position="31TCM1625784627" type="ABC . Peloton LECLERC CDP OFF"/>
           </automat>
           <automat engaged="false" id="90" knowledge-group="17" name="Tireurs [90]" type="Tireurs">
             <unit command-post="true" id="91" name="Tireur PC" position="31TCM1290083941" type="Tireur"/>
@@ -279,4 +279,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0027585950" -->
+<!-- signature="2258727280" -->
