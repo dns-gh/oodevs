@@ -10,6 +10,7 @@
 #include "actions_test_pch.h"
 #include "MockEntityResolver.h"
 #include "actions/Agent.h"
+#include "actions/AgentKnowledgeOrder.h"
 #include "actions/Automat.h"
 #include "actions/AtlasNature.h"
 #include "actions/Bool.h"
@@ -22,11 +23,9 @@
 #include "actions/Lima.h"
 #include "actions/Limit.h"
 #include "actions/Numeric.h"
-#include "actions/ObjectKnowledge.h"
 #include "actions/ObjectKnowledgeOrder.h"
 #include "actions/Path.h"
 #include "actions/Polygon.h"
-#include "actions/PopulationKnowledge.h"
 #include "actions/PopulationKnowledgeOrder.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
@@ -46,10 +45,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/construct.hpp>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
 
 namespace bl = boost::lambda;
 
@@ -111,13 +106,20 @@ namespace
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetTeam, 0 );
-
-//        MOCK_METHOD_EXT( GetEntity, 0, const kernel::Entity_ABC*(), GetBaseEntity ); // $$$$ SBO 2009-10-30: refactor interface
-//        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Entity_ABC&(), GetBaseOwner ); // $$$$ SBO 2009-10-30: refactor interface
-        MOCK_METHOD_EXT( GetEntity, 0, const kernel::Population_ABC*(), GetPopulationEntity );
-        MOCK_METHOD_EXT( GetOwner, 0, const kernel::KnowledgeGroup_ABC&(), GetKnowledgeGroup );
+        MOCK_METHOD( GetEntity, 0 );
+        MOCK_METHOD( GetOwner, 0 );
         MOCK_METHOD( Display, 1 );
         MOCK_METHOD( DisplayInList, 1 );
+    };
+
+    MOCK_BASE_CLASS( MockAgentKnowledge, kernel::AgentKnowledge_ABC )
+    {
+        MOCK_METHOD( GetName, 0 );
+        MOCK_METHOD( GetId, 0 );
+        MOCK_METHOD( GetTeam, 0 );
+        MOCK_METHOD( GetEntity, 0 );
+        MOCK_METHOD( GetOwner, 0 );
+        MOCK_METHOD( Display, 1 );
     };
 
     MOCK_BASE_CLASS( MockAgentKnowledgeConverter, kernel::AgentKnowledgeConverter_ABC )
@@ -512,30 +514,42 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 //    BOOST_CHECK_EQUAL( 66, message->value().Get( 0 ).unitlist().elem(4).oid() );
 }
 
+namespace
+{
+    class KnowledgeFixture
+    {
+    public:
+        KnowledgeFixture()
+        {
+            // NOTHING
+        }
+        MockEntityResolver resolver;
+        kernel::Controller controller;
+        mock::sequence s;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParametersSerialization_PopulationKnowledge
 // @brief Population real id is stored in XML, converter tries to find a matching knowledge
 // Created: FHD 2009-10-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
+BOOST_FIXTURE_TEST_CASE( ParametersSerialization_PopulationKnowledge, KnowledgeFixture )
 {
     const std::string input( "<parameter name='test' type='crowdknowledge' value='42'/>" );
 
     MockPopulation population;
-    MOCK_EXPECT( population, GetId ).returns( 42 );
-    MockEntityResolver resolver;
-    MOCK_EXPECT( resolver, GetPopulation ).with( 42u ).returns( boost::ref( population ) );
+    MOCK_EXPECT( resolver, GetPopulation ).with( 42u ).once().in( s ).returns( boost::ref( population ) );
     MockAgent owner;
     MockPopulationKnowledge knowledge;
-    MOCK_EXPECT( knowledge, GetId ).returns( 15 );
     MockAgentKnowledgeConverter converter;
-    MOCK_EXPECT( converter, FindPopulationKnowledgeFromPopulation ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( converter, FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &population );
+    MOCK_EXPECT( population, GetId ).once().in( s ).returns( 42u );
 
-    kernel::Controller controller;
-    MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
     std::auto_ptr< sword::MissionParameter > message( Serialize( "crowdknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-    BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).crowdknowledge().id() );
+    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).crowdknowledge().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -543,26 +557,44 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 // @brief Object real id is stored in XML, converter tries to find a matching knowledge
 // Created: SBO 2009-10-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
+BOOST_FIXTURE_TEST_CASE( ParametersSerialization_ObjectKnowledge, KnowledgeFixture )
 {
     const std::string input( "<parameter name='test' type='objectknowledge' value='42'/>" );
-    MockObject object;
-    MOCK_EXPECT( object, GetId ).returns( 42 );
-    MockEntityResolver resolver;
-    MOCK_EXPECT( resolver, GetObject ).with( 42u ).returns( boost::ref( object ) );
-    MockTeam owner;
-    MockCommunicationHierarchies* pHierarchies = new MockCommunicationHierarchies;
-    MOCK_EXPECT( *pHierarchies, GetSuperior ).returns( 0 );
-    MOCK_EXPECT( *pHierarchies, GetEntity ).returns( boost::cref( owner ) );
-    owner.Attach< kernel::CommunicationHierarchies >( *pHierarchies );
-    MockObjectKnowledge knowledge;
-    MOCK_EXPECT( knowledge, GetId ).returns( 15 );
-    MockObjectKnowledgeConverter converter;
-    MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetEntity ).returns( &object );
 
-    kernel::Controller controller;
+    MockObject object;
+    MOCK_EXPECT( resolver, GetObject ).once().in( s ).with( 42u ).returns( boost::ref( object ) );
+    MockTeam owner;
+    MockObjectKnowledgeConverter converter;
+    MockObjectKnowledge knowledge;
+    MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &object );
+    MOCK_EXPECT( object, GetId ).once().in( s ).returns( 42u );
+
     std::auto_ptr< sword::MissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-    BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).objectknowledge().id() );
+
+    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).objectknowledge().id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersSerialization_AgentKnowledge
+// Created: LGY 2011-07-13
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixture )
+{
+    const std::string input( "<parameter name='test' type='agentknowledge' value='42'/>" );
+
+    MockAgent agent;
+    MOCK_EXPECT( resolver, GetAgent ).once().in( s ).with( 42u ).returns( boost::ref( agent ) );
+    MockAgent owner;
+    MockAgentKnowledgeConverter converter;
+    MockAgentKnowledge knowledge;
+    MOCK_EXPECT( converter, FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &agent );
+    MOCK_EXPECT( agent, GetId ).once().in( s ).returns( 42u );
+
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "agentknowledge", input,
+        bl::bind( bl::new_ptr< actions::parameters::AgentKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
+
+    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).agentknowledge().id() );
 }

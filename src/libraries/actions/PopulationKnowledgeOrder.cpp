@@ -59,6 +59,6 @@ void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter& message ) cons
     if( pKnowledge )
     {
         sword::CrowdKnowledgeId& id = *message.mutable_value()->Add()->mutable_crowdknowledge();
-        id.set_id( pKnowledge->GetId() );
+        id.set_id( pKnowledge->GetEntity()->GetId() );
     }
 }

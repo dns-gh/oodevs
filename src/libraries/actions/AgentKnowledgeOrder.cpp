@@ -60,6 +60,6 @@ void AgentKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
     if( pKnowledge )
     {
         sword::UnitKnowledgeId& id = *message.mutable_value()->Add()->mutable_agentknowledge();
-        id.set_id( pKnowledge->GetId() );
+        id.set_id( pKnowledge->GetEntity()->GetId() );
     }
 }

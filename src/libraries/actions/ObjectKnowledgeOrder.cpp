@@ -70,6 +70,6 @@ void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
     if( pKnowledge )
     {
         sword::ObjectKnowledgeId& id = *message.mutable_value()->Add()->mutable_objectknowledge();
-        id.set_id( pKnowledge->GetId() );
+        id.set_id( pKnowledge->GetEntity()->GetId() );
     }
 }
