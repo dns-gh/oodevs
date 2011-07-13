@@ -8895,6 +8895,25 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.DPRE">
+      <missions>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Stationner"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Interrompre"/>
+      </fragorders>
+    </unit>
   </units>
   <automats>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.SGTIA">
@@ -13833,4 +13852,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4194245296" -->
+<!-- signature="3171294235" -->
