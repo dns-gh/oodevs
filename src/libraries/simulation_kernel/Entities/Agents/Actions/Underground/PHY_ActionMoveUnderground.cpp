@@ -13,7 +13,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/UndergroundNetworkExitCapacity.h"
+#include "Entities/Objects/UndergroundCapacity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 namespace
@@ -22,7 +22,7 @@ namespace
     {
         if( pKnowledge && pKnowledge->IsValid() )
             if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-                if( pObject->Retrieve< UndergroundNetworkExitCapacity >() != 0 )
+                if( pObject->Retrieve< UndergroundCapacity >() != 0 )
                     return pObject;
         return 0;
     }

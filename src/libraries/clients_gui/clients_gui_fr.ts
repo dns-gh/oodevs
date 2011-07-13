@@ -1357,18 +1357,18 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Resource networks</source>
-        <translation type="unfinished"></translation>
+        <translation>Réseaux de ressources</translation>
     </message>
     <message>
         <source>Add/Remove link</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter/Supprimer lien</translation>
     </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>
     <message>
         <source>Resource network</source>
-        <translation type="unfinished"></translation>
+        <translation>Réseau de ressource</translation>
     </message>
 </context>
 <context>
@@ -1518,12 +1518,12 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::UndergroundPrototype_ABC</name>
     <message>
-        <source>Underground network</source>
-        <translation>Réseau souterrain</translation>
+        <source>Underground</source>
+        <translation>Souterrain</translation>
     </message>
     <message>
-        <source>Underground network:</source>
-        <translation>Réseau souterrain:</translation>
+        <source>Network:</source>
+        <translation>Réseau:</translation>
     </message>
 </context>
 <context>

@@ -45,12 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectAttributeContainer( const ObjectAttributeContainer& );            //!< Copy constructor
-    ObjectAttributeContainer& operator=( const ObjectAttributeContainer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename T > void CreateOrUpdate( const sword::ObjectAttributes& message );

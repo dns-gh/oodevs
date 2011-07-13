@@ -28,9 +28,10 @@
 #include "OccupantAttribute.h"
 #include "PopulationAttribute.h"
 #include "ResourceNetworkAttribute.h"
+#include "StockAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "TimeLimitedAttribute.h"
-#include "StockAttribute.h"
+#include "UndergroundAttribute.h"
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"
 #include "protocol/Protocol.h"
@@ -98,15 +99,6 @@ namespace
             object.GetAttribute< FloodAttribute >() = FloodAttribute( xis, object.GetLocalisation() );
         }
     };
-
-    template<>
-    struct AddBuilder< LodgingAttribute >
-    {
-        static void Add( Object& object, xml::xistream& xis )
-        {
-            object.GetAttribute< LodgingAttribute >().Load( xis );
-        }
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +127,7 @@ AttributeFactory::AttributeFactory()
     Register( "flood", boost::bind( &AddBuilder< FloodAttribute >::Add, _1, _2 ) );
     Register( "altitude-modifier", boost::bind( &AddBuilder< AltitudeModifierAttribute >::Add, _1, _2 ) );
     Register( "lodging", boost::bind( &AddBuilder< LodgingAttribute >::Add, _1, _2 ) );
+    Register( "underground", boost::bind( &AddBuilder< UndergroundAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,6 +241,9 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 break;
             case ObjectMagicAction::altitude_modifier:
                 object.GetAttribute< AltitudeModifierAttribute >() = AltitudeModifierAttribute( attributes, object.GetLocalisation() );
+                break;
+            case ObjectMagicAction::underground:
+                object.GetAttribute< UndergroundAttribute >() = UndergroundAttribute( attributes );
                 break;
             default:
                 break;

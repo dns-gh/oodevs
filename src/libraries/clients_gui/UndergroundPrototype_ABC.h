@@ -23,6 +23,7 @@ namespace kernel
 namespace gui
 {
     class LoadableComboBox;
+    class RichLabel;
 
 // =============================================================================
 /** @class  UndergroundPrototype_ABC
@@ -52,6 +53,7 @@ protected:
     //! @name Member data
     //@{
     LoadableComboBox* network_;
+    RichLabel* networkLabel_;
     kernel::Controller& controller_;
     //@}
 };

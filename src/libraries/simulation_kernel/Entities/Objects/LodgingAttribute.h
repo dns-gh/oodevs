@@ -53,11 +53,6 @@ public:
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name Initialize
-    //@{
-    void Load( xml::xistream& xis );
-    //@}
-
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()

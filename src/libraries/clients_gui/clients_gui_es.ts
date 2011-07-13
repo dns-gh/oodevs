@@ -1518,11 +1518,11 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::UndergroundPrototype_ABC</name>
     <message>
-        <source>Underground network</source>
+        <source>Underground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Underground network:</source>
+        <source>Network:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

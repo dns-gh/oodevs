@@ -47,7 +47,7 @@
 #include "SupplyCapacity.h"
 #include "TerrainHeuristicCapacity.h"
 #include "TimeLimitedCapacity.h"
-#include "UndergroundNetworkExitCapacity.h"
+#include "UndergroundCapacity.h"
 #include "UniversalCapacity.h"
 #include "WorkableCapacity.h"
 #include "CloudPropagationCapacity.h"
@@ -168,12 +168,12 @@ CapacityFactory::CapacityFactory()
     DoRegister( "spawn", boost::bind( &AddBuilder< SpawnCapacity >::Add, _1, _2 ) );
     DoRegister( "structural-state", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     // $$$$ JSR 2010-09-08: on garde l'attribut "structural" en double emploi de "structural-state" : il est utilisé par les objets et on ne peut pas changer les xsd pour l'instant.
-    // Ca sera à supprimer quand les xml des objets seront à jour (voire avec RPD).
+    // Ca sera à supprimer quand les xml des objets seront à jour (voir avec RPD).
     DoRegister( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     DoRegister( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
     DoRegister( "supply-route", boost::bind( &AddBuilder< InteractIfEquippedCapacity >::Add, _1, _2 ) );
     DoRegister( "time-limited", boost::bind( &AddBuilder< TimeLimitedCapacity >::Add, _1, _2 ) );
-    DoRegister( "underground-network", boost::bind( &AddBuilder< UndergroundNetworkExitCapacity >::Add, _1, _2 ) );
+    DoRegister( "underground-network", boost::bind( &AddBuilder< UndergroundCapacity >::Add, _1, _2 ) );
     DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
     DoRegister( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
 

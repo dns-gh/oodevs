@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UndergroundNetworkExitCapacity_h_
-#define __UndergroundNetworkExitCapacity_h_
+#ifndef __UndergroundCapacity_h_
+#define __UndergroundCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
 
@@ -18,20 +18,20 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  UndergroundNetworkExitCapacity
-    @brief  UndergroundNetworkExitCapacity
+/** @class  UndergroundCapacity
+    @brief  UndergroundCapacity
 */
 // Created: JSR 2011-05-30
 // =============================================================================
-class UndergroundNetworkExitCapacity : public ObjectCapacity_ABC
+class UndergroundCapacity : public ObjectCapacity_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UndergroundNetworkExitCapacity();
-    explicit UndergroundNetworkExitCapacity( xml::xistream& xis );
-    virtual ~UndergroundNetworkExitCapacity();
+             UndergroundCapacity();
+    explicit UndergroundCapacity( xml::xistream& xis );
+    virtual ~UndergroundCapacity();
     //@}
 
     //! @name Operations
@@ -44,12 +44,12 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    UndergroundNetworkExitCapacity( const UndergroundNetworkExitCapacity& );            //!< Copy constructor
-    UndergroundNetworkExitCapacity& operator=( const UndergroundNetworkExitCapacity& ); //!< Assignment operator
+    UndergroundCapacity( const UndergroundCapacity& );            //!< Copy constructor
+    UndergroundCapacity& operator=( const UndergroundCapacity& ); //!< Assignment operator
     //@}
 
 };
 
-BOOST_CLASS_EXPORT_KEY( UndergroundNetworkExitCapacity )
+BOOST_CLASS_EXPORT_KEY( UndergroundCapacity )
 
-#endif // __UndergroundNetworkExitCapacity_h_
+#endif // __UndergroundCapacity_h_

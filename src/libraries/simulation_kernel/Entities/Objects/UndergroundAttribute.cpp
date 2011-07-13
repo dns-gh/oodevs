@@ -3,137 +3,126 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "DelayAttribute.h"
+#include "UndergroundAttribute.h"
 #include "MIL_Object_ABC.h"
-#include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-BOOST_CLASS_EXPORT_IMPLEMENT( DelayAttribute )
+BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundAttribute )
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute constructor
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute()
-    : nDelay_( 0 )
+UndergroundAttribute::UndergroundAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute constructor
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( xml::xistream& xis )
-    : nDelay_( xis.attribute< unsigned int >( "value" ) )
-{
-    if( nDelay_ < 0 )
-        xis.error( "nDelay_ is not greater than or equal to 0" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
-// -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( const sword::MissionParameter_Value& attributes )
-    : nDelay_( attributes.list( 1 ).quantity() )
+UndergroundAttribute::UndergroundAttribute( xml::xistream& xis )
+    : network_( xis.attribute< std::string >( "network" ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute constructor
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( const DelayAttribute& from )
-    : nDelay_( from.nDelay_ )
+UndergroundAttribute::UndergroundAttribute( const sword::MissionParameter_Value& attributes )
+    : network_( attributes.list( 1 ).acharstr() )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::operator=
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute constructor
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-DelayAttribute& DelayAttribute::operator=( const DelayAttribute& from )
+UndergroundAttribute::UndergroundAttribute( const UndergroundAttribute& from )
+    : network_( from.network_ )
 {
-    nDelay_ = from.nDelay_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::operator=
+// Created: JSR 2011-07-11
+// -----------------------------------------------------------------------------
+UndergroundAttribute& UndergroundAttribute::operator=( const UndergroundAttribute& from )
+{
+    network_ = from.network_;
     return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute destructor
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute destructor
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-DelayAttribute::~DelayAttribute()
+UndergroundAttribute::~UndergroundAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::serialize
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::serialize
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DelayAttribute::serialize( Archive& file, const unsigned int )
+void UndergroundAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & nDelay_;
+         & network_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::Register
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::Register
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-void DelayAttribute::Register( MIL_Object_ABC& object ) const
+void UndergroundAttribute::Register( MIL_Object_ABC& object ) const
 {
-    object.SetAttribute< DelayAttribute, DelayAttribute >( *this );
+    object.SetAttribute< UndergroundAttribute, UndergroundAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::WriteODB
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::WriteODB
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-void DelayAttribute::WriteODB( xml::xostream& xos ) const
+void UndergroundAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "delay" )
-            << xml::attribute( "value", nDelay_ )
+    xos << xml::start( "underground" )
+            << xml::attribute( "network", network_ )
         << xml::end;
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::SendFullState
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::SendFullState
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-void DelayAttribute::SendFullState( sword::ObjectAttributes& asn ) const
+void UndergroundAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_effect_delay()->set_value( nDelay_ );
+    asn.mutable_underground()->set_network( network_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::SendUpdate
-// Created: JSR 2010-07-06
+// Name: UndergroundAttribute::SendUpdate
+// Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-void DelayAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+void UndergroundAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DelayAttribute::IsOverDelay
-// Created: JSR 2010-07-07
-// -----------------------------------------------------------------------------
-bool DelayAttribute::IsOverDelay( unsigned int nTicks ) const
-{
-    return nTicks >= MIL_Tools::ConvertSecondsToSim( nDelay_ );
 }

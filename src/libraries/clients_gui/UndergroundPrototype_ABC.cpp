@@ -13,6 +13,7 @@
 #include "UndergroundPrototype_ABC.h"
 #include "Tools.h"
 #include "LoadableComboBox.h"
+#include "clients_gui/RichLabel.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ObjectExtensions.h"
 
@@ -23,10 +24,10 @@ using namespace gui;
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
 UndergroundPrototype_ABC::UndergroundPrototype_ABC( QWidget* parent, kernel::Controller& controller )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::UndergroundPrototype_ABC", "Underground network" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::UndergroundPrototype_ABC", "Underground" ) )
     , controller_( controller )
 {
-    new QLabel( tools::translate( "gui::UndergroundPrototype_ABC", "Underground network:" ), this );
+    networkLabel_ = new RichLabel( tools::translate( "gui::UndergroundPrototype_ABC", "Network:" ), this );
     network_ = new LoadableComboBox( true, this );
     controller_.Register( *this );
 }
@@ -46,7 +47,12 @@ UndergroundPrototype_ABC::~UndergroundPrototype_ABC()
 // -----------------------------------------------------------------------------
 bool UndergroundPrototype_ABC::CheckValidity() const
 {
-    return !network_->currentText().isEmpty();
+    if( network_->currentText().isEmpty() )
+    {
+        networkLabel_->Warn( 3000 );
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------

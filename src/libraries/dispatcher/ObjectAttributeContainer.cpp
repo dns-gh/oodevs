@@ -10,31 +10,29 @@
 #include "dispatcher_pch.h"
 
 #include "ObjectAttributeContainer.h"
+#include "ActivityTimeAttribute.h"
 #include "AltitudeModifierAttribute.h"
+#include "BurnAttribute.h"
+#include "BurnSurfaceAttribute.h"
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
 #include "DelayAttribute.h"
 #include "FireAttribute.h"
-#include "BurnAttribute.h"
 #include "FloodAttribute.h"
-#include "BurnSurfaceAttribute.h"
+#include "InteractionHeightAttribute.h"
 #include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
-#include "KnowledgeGroup.h"
 #include "MedicalTreatmentAttribute.h"
 #include "MineAttribute.h"
-#include "Model.h"
 #include "NBCAttribute.h"
-#include "ObjectKnowledge.h"
-#include "ObstacleAttribute.h"
-#include "SupplyRouteAttribute.h"
-#include "ActivityTimeAttribute.h"
-#include "ToxicCloudAttribute.h"
-#include "InteractionHeightAttribute.h"
-#include "StockAttribute.h"
-#include "ResourceNetworkAttribute.h"
 #include "NBCTypeAttribute.h"
+#include "ObstacleAttribute.h"
+#include "ResourceNetworkAttribute.h"
+#include "StockAttribute.h"
+#include "SupplyRouteAttribute.h"
+#include "ToxicCloudAttribute.h"
+#include "UndergroundAttribute.h"
 #include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
 
@@ -47,6 +45,7 @@ using namespace dispatcher;
 ObjectAttributeContainer::ObjectAttributeContainer( const Model_ABC& model )
     : model_( model )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,10 +54,11 @@ ObjectAttributeContainer::ObjectAttributeContainer( const Model_ABC& model )
 // -----------------------------------------------------------------------------
 ObjectAttributeContainer::~ObjectAttributeContainer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::CreateOrUpdate
+// Name: ObjectAttributeContainer::CreateOrUpdate
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -74,7 +74,7 @@ void ObjectAttributeContainer::CreateOrUpdate( const sword::ObjectAttributes& me
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::CreateOrUpdate
+// Name: ObjectAttributeContainer::CreateOrUpdate
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -139,6 +139,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< FloodAttribute >( message );
     if( message.has_altitude_modifier() )
         CreateOrUpdate< AltitudeModifierAttribute >( message );
+    if( message.has_underground() )
+        CreateOrUpdate< UndergroundAttribute >( message );
 }
 
 // -----------------------------------------------------------------------------

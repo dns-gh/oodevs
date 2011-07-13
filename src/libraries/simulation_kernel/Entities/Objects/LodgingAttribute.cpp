@@ -78,15 +78,6 @@ void LodgingAttribute::WriteODB( xml::xostream& xos ) const
 // Name: LodgingAttribute::load
 // Created: MMC 2011-05-04
 // -----------------------------------------------------------------------------
-void LodgingAttribute::Load( xml::xistream& xis )
-{
-    capacity_ = xis.attribute< unsigned int >( "capacity", 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LodgingAttribute::load
-// Created: MMC 2011-05-04
-// -----------------------------------------------------------------------------
 void LodgingAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )

@@ -8,72 +8,72 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "UndergroundNetworkExitCapacity.h"
+#include "UndergroundCapacity.h"
 #include "MIL_Object_ABC.h"
 
-BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundNetworkExitCapacity )
+BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundCapacity )
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundNetworkExitCapacity constructor
+// Name: UndergroundCapacity constructor
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-UndergroundNetworkExitCapacity::UndergroundNetworkExitCapacity()
+UndergroundCapacity::UndergroundCapacity()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundNetworkExitCapacity constructor
+// Name: UndergroundCapacity constructor
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-UndergroundNetworkExitCapacity::UndergroundNetworkExitCapacity( xml::xistream& /*xis*/ )
+UndergroundCapacity::UndergroundCapacity( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundNetworkExitCapacity constructor
+// Name: UndergroundCapacity constructor
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-UndergroundNetworkExitCapacity::UndergroundNetworkExitCapacity( const UndergroundNetworkExitCapacity& )
+UndergroundCapacity::UndergroundCapacity( const UndergroundCapacity& )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundNetworkExitCapacity destructor
+// Name: UndergroundCapacity destructor
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-UndergroundNetworkExitCapacity::~UndergroundNetworkExitCapacity()
+UndergroundCapacity::~UndergroundCapacity()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundNetworkExitCapacity::serialize
+// Name: UndergroundCapacity::serialize
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void UndergroundNetworkExitCapacity::serialize( Archive& file, const unsigned int )
+void UndergroundCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundNetworkExitCapacity::Instanciate
+// Name: UndergroundCapacity::Instanciate
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-void UndergroundNetworkExitCapacity::Instanciate( MIL_Object_ABC& object ) const
+void UndergroundCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
-    UndergroundNetworkExitCapacity* capacity = new UndergroundNetworkExitCapacity( *this );
+    UndergroundCapacity* capacity = new UndergroundCapacity( *this );
     object.AddCapacity( capacity );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundNetworkExitCapacity::Register
+// Name: UndergroundCapacity::Register
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-void UndergroundNetworkExitCapacity::Register( MIL_Object_ABC& object )
+void UndergroundCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }

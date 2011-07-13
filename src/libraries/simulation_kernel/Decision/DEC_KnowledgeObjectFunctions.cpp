@@ -26,7 +26,7 @@
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
-#include "Entities/Objects/UndergroundNetworkExitCapacity.h"
+#include "Entities/Objects/UndergroundCapacity.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/CrossingSiteAttribute.h"
 #include "Entities/MIL_Army.h"
@@ -483,7 +483,7 @@ bool DEC_KnowledgeObjectFunctions::CanBeValorized( boost::shared_ptr< DEC_Knowle
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    return IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pKnowledge ) != 0;
+    return IsValidObjectCapacity< UndergroundCapacity >( pKnowledge ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -492,7 +492,7 @@ bool DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit( boost::shared_ptr< 
 // -----------------------------------------------------------------------------
 double DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pEnter, boost::shared_ptr< DEC_Knowledge_Object > pExit )
 {
-    if( IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pEnter ) != 0 && IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pExit ) != 0 )
+    if( IsValidObjectCapacity< UndergroundCapacity >( pEnter ) != 0 && IsValidObjectCapacity< UndergroundCapacity >( pExit ) != 0 )
         return callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().EstimatedUndergroundTime( *pEnter->GetObjectKnown(), *pExit->GetObjectKnown() );
     return -1.0f;
 }
@@ -503,7 +503,7 @@ double DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime( const DEC_Decisio
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pExit )
 {
-    if( IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pExit ) != 0 )
+    if( IsValidObjectCapacity< UndergroundCapacity >( pExit ) != 0 )
     {
         callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().HideInUndergroundNetwork( *pExit->GetObjectKnown() );
         return int( eQueryValid );
