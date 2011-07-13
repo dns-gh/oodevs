@@ -1147,7 +1147,7 @@
     <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
-    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.dis,package.plugin.timeline" description="package plugin individual installers"/>
+    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow" description="package plugin individual installers"/>
 
     <target name="package.plugin.vrforces" description="create vrforces plugin installer" if="is-vc80">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">

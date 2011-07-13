@@ -27,6 +27,15 @@
     ${File} "${RUNDIR}\plugins\crossbow\" "plugin.xml"
     
     ${SetOutPath} "$INSTDIR\applications\plugins\crossbow\sql"
-    ${File} "${SQLDIR}\" "*.sql"
-    ${File} "${SQLDIR}\" "*.bat"
+    ${File} "${SQLDIR}\" "create-sword-constraints.sql"
+    ${File} "${SQLDIR}\" "create-sword-indexes.sql"
+    ${File} "${SQLDIR}\" "create-sword-schema.sql"
+    ${File} "${SQLDIR}\" "create-sword-user.sql"
+    ${File} "${SQLDIR}\" "drop-sword-constraints.sql"
+    ${File} "${SQLDIR}\" "drop-sword-schema.sql"
+    ${File} "${SQLDIR}\" "drop-sword-user.sql"
+    ${File} "${SQLDIR}\" "howto.txt"
+    ${File} "${SQLDIR}\" "install-sword-db.bat"
+    ${File} "${SQLDIR}\" "set_sword_var.bat"
+    ${File} "${SQLDIR}\" "uninstall-sword-db.bat"
 !macroend
