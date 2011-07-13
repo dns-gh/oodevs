@@ -640,7 +640,7 @@
         </zip>
     </target>
 
-    <target name="generate-signatures" depends="application.xml_signature_app" description="generate signatures">
+    <target name="generate-signatures" depends="application.adaptation_app" description="generate signatures">
         <exec executable="${out.dir}/release/applications/xml_signature_app/xml_signature_app.exe" dir="${run.dir}" failonerror="true" timeout="30000">
             <arg value="${data.dir}/data/models/ada/physical"/>
             <arg value="${data.dir}/data/terrains"/>
@@ -920,18 +920,26 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="run-adaptation">
+        <attribute name="input"/>
+        <attribute name="output"/>
+    	  <sequential>
+            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+                <arg value="-i"/>
+                <arg value="@{input}/physical.xml"/>
+                <arg value="-o"/>
+                <arg value="@{output}/physical.xml"/>
+            </exec>
+    	  </sequential>
+    </macrodef>
+
     <macrodef name="test-adaptation">
         <attribute name="input"/>
         <sequential>
             <property name="test-adaptation.dir" value="${out.dir}/test-adaptation"/>
             <echo>Testing models: @{input}</echo>
             <delete dir="${test-adaptation.dir}"/>
-            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-                <arg value="-i"/>
-                <arg value="@{input}/physical.xml"/>
-                <arg value="-o"/>
-                <arg value="${test-adaptation.dir}/physical.xml"/>
-            </exec>
+            <run-adaptation input="@{input}" output="${test-adaptation.dir}"/>
             <compare-dirs dir1="@{input}" dir2="${test-adaptation.dir}"
                 excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,**/templates.xml,**/ObjectNames.xml,**/mapping.xml,**/DrawingTemplates.xml,**/FOM.xml,**/Extensions.xml,**/scores.xml,**/symbols.xml,**/Filters,**/Filters/**"
                 includes="**/*.xml" property="adaptation_test.is-different"/>
@@ -940,7 +948,7 @@
                 <then>
                     <echo>ERROR: the following files differ :</echo>
                     <echo-files files="${adaptation_test.is-different}" prefix="ERROR: "/>
-                    <echo>ERROR: did you forget to load and save modified files using adaptation_app ?</echo>
+                    <echo>ERROR: did you forget to run 'ant generate-signatures' ?</echo>
                     <fail message="saved data differs from loaded data."/>
                 </then>
             </if>
@@ -1019,14 +1027,8 @@
                 <fileset dir="../data/tests/test_data_migration/@{old-version}/physical"/>
             </copy>
             <!-- ADN -->
-            <property name="test-data-migration.dir" value="${out.dir}/test-data-migration"/>
-            <delete dir="${test-data-migration.dir}"/>
-            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-                <arg value="-i"/>
-                <arg value="${data.dir}/data/models/ada/physical/@{temporary-name}/physical.xml"/>
-                <arg value="-o"/>
-                <arg value="${test-data-migration.dir}/physical.xml"/>
-            </exec>
+            <delete dir="${out.dir}/@{temporary-name}"/>
+            <run-adaptation input="${data.dir}/data/models/ada/physical/@{temporary-name}" output="${out.dir}/@{temporary-name}"/>
             <!-- Copy exercise -->
             <delete dir="${data.dir}/exercises/@{temporary-name}" failonerror="false"/>
             <copy todir="${data.dir}/exercises/@{temporary-name}">
@@ -1039,7 +1041,7 @@
             <!-- SIM -->
             <run-simulation exercise="@{temporary-name}" session="@{session}"/>
             <!-- cleanup -->
-            <delete dir="${test-data-migration.dir}"/>
+            <delete dir="${out.dir}/@{temporary-name}"/>
             <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}"/>
             <delete dir="${data.dir}/exercises/@{temporary-name}"/>
         </sequential>
