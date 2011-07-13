@@ -14,6 +14,7 @@
 
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
+#include "ADN_Units_Data.h"
 
 namespace kernel
 {
@@ -25,7 +26,6 @@ class ADN_GroupBox;
 class ADN_ListView_Units;
 class ADN_Nature_GUI;
 class ADN_SymbolWidget;
-class ADN_Units_Data;
 class ADN_Units_LogThreshold_GUI;
 class QComboBox;
 class QLabel;
@@ -87,6 +87,7 @@ public:
         eMalesPercent,
         eFemalesPercent,
         eChildrenPercent,
+        eNatureSymbol,
         eNbrGuiElements
     };
     //@}
@@ -104,6 +105,8 @@ public:
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
     ADN_SymbolWidget* GetSymbolWidget() const;
     void SetSymbolFactory( kernel::SymbolFactory& factory );
+    bool IsSymbolAvailable( const std::string& symbol );
+    void PreloadUnitSymbolComboBox( ADN_Units_Data::UnitInfos* pValidUnitInfos );
     //@}
 
 private slots:

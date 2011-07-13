@@ -74,6 +74,8 @@
 #include "ADN_Symbols_GUI.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Units_GUI.h"
+#include "ADN_UnitSymbols_Data.h"
+#include "ADN_UnitSymbols_GUI.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_Weapons_Data.h"
@@ -129,6 +131,7 @@ ADN_Workspace::ADN_Workspace()
     projectData_ = new ADN_Project_Data();
     elements_[eDrawings]          = new ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI>( tr( "Drawings" ) );
     elements_[eSymbols]           = new ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI>( tr( "Symbols" ) );
+    elements_[eUnitSymbols]       = new ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI>( tr( "UnitSymbols" ) );
     elements_[eCategories]        = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
     elements_[eUrban]             = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >( tr( "Urban" ) );
     elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );

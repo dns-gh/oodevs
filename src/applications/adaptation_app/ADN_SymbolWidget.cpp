@@ -20,6 +20,11 @@
 
 using namespace gui;
 
+namespace
+{
+    const double svgSize = 400.0;
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_SymbolWidget constructor
 // Created: NLD 2010-12-01
@@ -62,6 +67,10 @@ void ADN_SymbolWidget::initializeGL()
     renderText( 0, 0, "" );
     glEnable( GL_LINE_SMOOTH );
     glEnableClientState( GL_VERTEX_ARRAY );
+    glLineWidth( 1.f );
+    glColor3f( 1.f, 1.f, 1.f );
+    glDisable( GL_DEPTH_TEST );
+    glBindTexture( GL_TEXTURE_2D, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +83,7 @@ void ADN_SymbolWidget::resizeGL( int w, int h )
     glViewport( 0, 0, w, h );
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    glOrtho( 0, w, h, 0, -300, 300 );
+    glOrtho( 0, svgSize, 0, svgSize, -300, 300 );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,28 +93,14 @@ void ADN_SymbolWidget::resizeGL( int w, int h )
 void ADN_SymbolWidget::paintGL()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    glLineWidth( 1.f );
-    glColor3f( 1, 1, 1 );
-    glDisable( GL_DEPTH_TEST );
-    glBindTexture( GL_TEXTURE_2D, 0 );
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-
-    /* Test line
-    glColor3f( 0.1f, 0.1f, 0.1f );
-    glEnable( GL_LINE_SMOOTH );
-    glBegin( GL_LINES );
-        glVertex2f( topLeft_.X(), topLeft_.Y() );
-        glVertex2f( bottomRight_.X(), bottomRight_.Y() );
-    glEnd();
-    */
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
-        glMatrixMode( GL_MODELVIEW );
-        glPushMatrix();
-            DisplaySymbol();
-        glPopMatrix();
-    glPopAttrib();
+    glRotatef( 180, 0, 0, 1 );
+    glScalef ( -1, 1, 1 );
+    glOrtho( 0, svgSize, 0, svgSize, -300, 300 );
+    DisplaySymbol();
 }
 
 // -----------------------------------------------------------------------------
@@ -116,15 +111,6 @@ void ADN_SymbolWidget::DisplaySymbol() const
 {
     if( currentSymbol_.empty() )
         return;
-
-    const float svgWidth = 360;
-    const float scaleRatio = viewPort_.Width() / svgWidth;
-
-    const float svgDeltaX = -20;
-    const float svgDeltaY = -30;
-
-    glScalef( scaleRatio, scaleRatio, 1 );
-    glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
 
     symbols_->PrintApp6( currentSymbol_, SvglRenderer::DefaultStyle(), viewPort_, (int)viewPort_.Width(), (int)viewPort_.Height());
 }

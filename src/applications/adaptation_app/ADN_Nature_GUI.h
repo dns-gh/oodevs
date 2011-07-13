@@ -46,6 +46,8 @@ private slots:
     //@{
     void OnTextChanged( const QString& );
     void UpdateEnableState();
+    
+    void OnUnitSymbolChanged( const QString& nature );
     //@}
 };
 

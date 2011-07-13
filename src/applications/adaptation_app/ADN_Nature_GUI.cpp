@@ -56,3 +56,13 @@ void ADN_Nature_GUI::UpdateEnableState()
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_String< ADN_Nature_GUI >* >( pConnector_ )->IsConnected() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Nature_GUI::OnUnitSymbolChanged
+// Created: MMC 2011-07-07
+// -----------------------------------------------------------------------------
+void ADN_Nature_GUI::OnUnitSymbolChanged( const QString& nature )
+{
+    if ( text() != nature )
+        setText( nature );
+}

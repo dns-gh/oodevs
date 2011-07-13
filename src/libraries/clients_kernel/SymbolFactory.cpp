@@ -231,3 +231,12 @@ SymbolRule* SymbolFactory::GetSymbolRule() const
 {
     return symbolRule_.get();
 }
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::GetAvailableSymbols
+// Created: ABR 2011-05-26
+// -----------------------------------------------------------------------------
+const std::vector< std::string >& SymbolFactory::GetAvailableSymbols()
+{
+    return availableSymbols_;
+}

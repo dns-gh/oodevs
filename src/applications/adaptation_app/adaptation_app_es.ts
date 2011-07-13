@@ -5230,19 +5230,23 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Units/</source>
-        <translation>Unidades/</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
-    </message>
-    <message>
         <source>The type of unit in the simulation. This type must match the associated decisional model.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The decisional model associated to the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UnitSymbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units/</source>
+        <translation type="unfinished">Unidades/</translation>
+    </message>
+    <message>
+        <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5849,6 +5853,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UnitSymbols</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

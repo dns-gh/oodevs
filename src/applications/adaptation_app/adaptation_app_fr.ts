@@ -5213,14 +5213,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Hauteur de franchissement</translation>
     </message>
     <message>
-        <source>Units</source>
-        <translation>Pions</translation>
-    </message>
-    <message>
-        <source>Units/</source>
-        <translation>Pions/</translation>
-    </message>
-    <message>
         <source>Skills</source>
         <translation>Aptitudes</translation>
     </message>
@@ -5255,6 +5247,18 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>The decisional model associated to the unit.</source>
         <translation>Le modèle comportemental associé à l&apos;unité.</translation>
+    </message>
+    <message>
+        <source>UnitSymbol</source>
+        <translation>Symbole du pion</translation>
+    </message>
+    <message>
+        <source>Units/</source>
+        <translation type="unfinished">Pions/</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Pions</translation>
     </message>
 </context>
 <context>
@@ -5861,6 +5865,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Drawings</source>
         <translation>Dessins</translation>
+    </message>
+    <message>
+        <source>UnitSymbols</source>
+        <translation>Symboles de pion</translation>
     </message>
 </context>
 <context>

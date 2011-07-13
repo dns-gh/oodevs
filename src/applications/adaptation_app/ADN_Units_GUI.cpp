@@ -12,6 +12,7 @@
 #include "ADN_Units_GUI.h"
 #include "moc_ADN_Units_GUI.cpp"
 #include "ADN_App.h"
+#include "ADN_ComboBox_Drawings.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Composantes_Dotations_GUI.h"
@@ -26,6 +27,7 @@
 #include "ADN_SymbolWidget.h"
 #include "ADN_TimeField.h"
 #include "ADN_Tr.h"
+#include "ADN_UnitSymbolsComboBox.h"
 #include "ADN_Units_Composantes_GUI.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Units_Postures_GUI.h"
@@ -146,6 +148,13 @@ void ADN_Units_GUI::Build()
     pSymbolWidget_->setMaximumSize( 130, 140 );
     connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
     connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
+    QWidget* pHolder = builder.AddFieldHolder( pNatureGroup );
+
+    ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, tr( "UnitSymbol"), vInfosConnectors[ eNatureSymbol ] );
+
+    unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+    connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
+    connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
 
     // Commandement
     QGroupBox* pCommandGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );
@@ -396,4 +405,28 @@ void ADN_Units_GUI::SetSymbolFactory( kernel::SymbolFactory& factory )
     assert( pNatureGui_ );
     if( factory.GetSymbolRule() )
         pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::IsSymbolAvailable
+// Created: MMC 2011-07-06
+// -----------------------------------------------------------------------------
+bool ADN_Units_GUI::IsSymbolAvailable( const std::string& symbol )
+{
+    if( pSymbolWidget_ )
+        return pSymbolWidget_->IsAvailable( symbol );
+
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::PreloadUnitSymbolComboBox
+// Created: MMC 2011-07-06
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::PreloadUnitSymbolComboBox( ADN_Units_Data::UnitInfos* pValidUnitInfos )
+{
+    if ( !pListUnits_ )
+        return;
+
+   pListUnits_->ConnectNatureSymbol( pValidUnitInfos );
 }

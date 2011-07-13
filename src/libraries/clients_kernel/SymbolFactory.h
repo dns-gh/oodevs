@@ -53,7 +53,8 @@ public:
     std::string CreateAutomatSymbol() const;
     SymbolRule* GetSymbolRule() const;
     bool IsThisChainAvailable( const std::string& chain ) const;
-    void Load( const tools::ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );    
+    const std::vector< std::string >& GetAvailableSymbols();
     //@}
 
 private:

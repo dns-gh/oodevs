@@ -93,15 +93,21 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
 {
     CreateStaticLists();
-    unsigned int& list = lists_[ node ];
-    if( ! list )
-        list = GenerateList( node, style, viewport, vWidth, vHeight );
-    if( list )
+    unsigned int listId = 0;
+    CIT_Lists it = lists_.find( node );
+    if( lists_.find( node ) == lists_.end() )
     {
-        ConfigureColorList();
-        ConfigureWidthList( viewport, vWidth, vHeight );
-        glCallList( list );
+        listId = GenerateList( node, style, viewport, vWidth, vHeight );
+        if ( !listId )
+            return;
+        lists_[ node ] = listId;
     }
+    else
+        listId = it->second;
+
+    ConfigureColorList();
+    ConfigureWidthList( viewport, vWidth, vHeight );
+    glCallList( listId );
 }
 
 // -----------------------------------------------------------------------------

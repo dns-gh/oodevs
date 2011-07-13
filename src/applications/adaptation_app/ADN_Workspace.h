@@ -68,6 +68,8 @@ class ADN_Symbols_Data;
 class ADN_Symbols_GUI;
 class ADN_Units_Data;
 class ADN_Units_GUI;
+class ADN_UnitSymbols_Data;
+class ADN_UnitSymbols_GUI;
 class ADN_Urban_Data;
 class ADN_Urban_GUI;
 class ADN_Weapons_Data;
@@ -133,6 +135,7 @@ public:
     ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& GetFireClasses();
     ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& GetDrawings() const;
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
+    ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& GetUnitSymbols() const;
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -153,6 +156,7 @@ private:
     {
         eCategories,
         eSymbols, // Must be before eUnits && before eUrban
+        eUnitSymbols,
         eUrban,
         eNBC,
         eLaunchers,
@@ -486,6 +490,16 @@ inline
 ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& ADN_Workspace::GetSymbols() const
 {
     return static_cast< ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& >( *elements_[ eSymbols ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& ADN_Workspace::GetUnitSymbols
+// Created: MMC 2011-07-07
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& ADN_Workspace::GetUnitSymbols() const
+{
+    return static_cast< ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& >( *elements_[ eUnitSymbols ] );
 }
 
 // -----------------------------------------------------------------------------

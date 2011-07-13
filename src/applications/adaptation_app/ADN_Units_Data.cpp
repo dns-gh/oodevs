@@ -20,7 +20,7 @@
 #include "ADN_DataException.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
-
+#include "ADN_UnitSymbols_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
@@ -52,7 +52,7 @@ ADN_Units_Data::ComposanteInfos::ComposanteInfos()
     bConveyor_.SetDataName( "hein ?" ); //XXX
     bConveyor_.SetParentNode( *this );
     nNbrHumanInCrew_.SetDataName( "Comprends pas ..." );
-    nNbrHumanInCrew_.SetParentNode( *this );
+    nNbrHumanInCrew_.SetParentNode( *this );  
 }
 
 // -----------------------------------------------------------------------------
@@ -499,6 +499,11 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     // postures initialization
     for( int i = ePostureNeedTimeStart; i < eNbrUnitPosture; ++i )
         vPostures_.AddItem( new PostureInfos((E_UnitPosture)i) );
+
+    natureSymbol_.SetParentNode( *this );
+    ADN_UnitSymbols_Data& unitSymbolsData = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
+    natureSymbol_.SetVector( unitSymbolsData.GetSymbols() );
+    natureSymbol_.SetData( unitSymbolsData.GetSymbol(), false );
 }
 
 //-----------------------------------------------------------------------------
@@ -667,6 +672,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "nature-app6", strNature_ )
           >> xml::end;
     CleanupNature();
+
     E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( level );
     if( eNatureLevelType == (E_NatureLevel)-1 )
         throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit types - Invalid hierarchical level '%1'" ).arg( level.c_str() ).ascii() );
@@ -676,6 +682,10 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     if( eNatureAtlasType == (E_NatureAtlasType)-1 )
         throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit types - Invalid 'Atlas' attribute '%1'" ).arg( atlas.c_str() ).ascii() );
     eNatureAtlas_=eNatureAtlasType;
+
+    ADN_UnitSymbols_Data& unitSymbols = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
+    natureSymbol_.SetVector( unitSymbols.GetSymbols() );
+    natureSymbol_.SetData( unitSymbols.GetSymbol(), false );
 
     input >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &ADN_Units_Data::UnitInfos::ReadEquipment )
@@ -879,7 +889,7 @@ void ADN_Units_Data::UnitInfos::CleanupNature()
             strNature_ = nature;
         }
     }
-    if ( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().GetSymbolWidget()->IsAvailable( strNature_.GetData() ) )
+    if ( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().IsSymbolAvailable( strNature_.GetData() ) )
         strNature_ = "undefined";
 }
 
@@ -954,6 +964,9 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
             >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
           >> xml::end;
     vUnits_.AddItem( 0 );
+
+    if ( !vUnits_.empty() )
+        ADN_Workspace::GetWorkspace().GetUnits().GetGui().PreloadUnitSymbolComboBox( vUnits_[0] );
 }
 
 // -----------------------------------------------------------------------------
