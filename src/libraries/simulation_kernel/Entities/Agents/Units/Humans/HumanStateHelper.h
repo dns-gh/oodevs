@@ -22,18 +22,13 @@ class Human_ABC;
 */
 // Created: ABR 2011-03-08
 // =============================================================================
-class HumanState
+class HumanState : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              HumanState( const PHY_HumanRank& rank, const PHY_HumanWound& state, bool contaminated, bool psyop, unsigned int number );
     virtual ~HumanState();
-    //@}
-
-    //! @name Operations
-    //@{
-
     //@}
 
     //! @name Member data

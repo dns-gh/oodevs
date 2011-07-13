@@ -309,7 +309,7 @@ namespace
     struct SelectPredicate
     {
         SelectPredicate( std::vector< std::pair< const PHY_DotationCategory*, double > >& selection, bool select_full )
-            : selection_  ( selection )
+            : selection_  ( &selection )
             , select_full_( select_full )
         {
             // NOTHING
@@ -318,9 +318,9 @@ namespace
         void operator()( const T& it ) const
         {
             if( select_full_ || it.second.stock_ < it.second.maxStock_ )
-                selection_.push_back( std::make_pair( it.first, it.second.maxStock_ - it.second.stock_ ) );
+                selection_->push_back( std::make_pair( it.first, it.second.maxStock_ - it.second.stock_ ) );
         }
-        std::vector< std::pair< const PHY_DotationCategory*, double > >& selection_;
+        std::vector< std::pair< const PHY_DotationCategory*, double > >* selection_;
         bool select_full_;
     };
 }

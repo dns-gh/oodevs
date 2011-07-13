@@ -106,19 +106,14 @@ void DEC_KS_Sharing::Clean()
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: DEC_KS_ArmyQuerier::sKnowledgeSharer
-    // Created: NLD 2004-05-06
-    // -----------------------------------------------------------------------------
-    class sKnowledgeSharer
+    class sKnowledgeSharer : boost::noncopyable
     {
     public:
         sKnowledgeSharer( const MIL_KnowledgeGroup& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
             : knowledgeGroup_( knowledgeGroup )
             , blackBoard_    ( blackBoard )
             , shareSource_   ( shareSource )
-        {
-        }
+        {}
 
         void operator() ( DEC_Knowledge_Agent& knowledge, int currentTimeStep)
         {

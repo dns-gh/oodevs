@@ -115,18 +115,18 @@ namespace
     {
     public:
         CollateSensorFunctor( std::set< const PHY_SensorTypeAgent* >& sensors )
-            : sensors_( sensors )
+            : sensors_( &sensors )
         {
-            // NOTHING 
+            // NOTHING
         }
         void operator()( const PHY_Sensor& sensor )
         {
             const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
             if( sensorTypeAgent )
-                sensors_.insert( sensorTypeAgent );
+                sensors_->insert( sensorTypeAgent );
         }
     private:
-        std::set< const PHY_SensorTypeAgent* >& sensors_;
+        std::set< const PHY_SensorTypeAgent* >* sensors_;
     };
 
     class CollateSensorComponentFunctor : public OnComponentFunctor_ABC

@@ -59,7 +59,7 @@ protected:
     //@}
 
 private:
-    const std::string         strName_;
+    std::string               strName_;
     unsigned int              nType_;
 
     double rCoefMaxSpeedModificator_;

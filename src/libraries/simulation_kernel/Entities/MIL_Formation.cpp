@@ -451,16 +451,18 @@ namespace
 {
     struct VisitorApplyer
     {
-        VisitorApplyer( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor) : visitor_(visitor){}
+        VisitorApplyer( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor)
+            : visitor_( &visitor )
+        {}
         void operator()(const MIL_Formation& f) const
         {
-            f.Apply( visitor_ );
+            f.Apply( *visitor_ );
         }
         void operator()(const MIL_Automate& f) const
         {
-            f.Apply( visitor_ );
+            f.Apply( *visitor_ );
         }
-        MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor_;
+        MIL_EntityVisitor_ABC< MIL_AgentPion >* visitor_;
     };
 }
 

@@ -10,14 +10,16 @@
 #ifndef __ConsumptionOperator_ABC_h_
 #define __ConsumptionOperator_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
+class PHY_ComposantePion;
+
 // =============================================================================
 /** @class   ConsumptionOperator_ABC
     @brief   ConsumptionOperator_ABC
 */
 // Created: MGD 2009-08-24
 // =============================================================================
-class PHY_ComposantePion;
-
 class OnComponentFunctor_ABC : private boost::noncopyable
 {
 public:

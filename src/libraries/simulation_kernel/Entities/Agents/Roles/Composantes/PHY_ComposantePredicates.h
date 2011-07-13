@@ -59,7 +59,7 @@ private:
 };
 
 // =============================================================================
-// @class  PHY_ComposanteUsePredicate1
+// @class  PHY_ComposantePredicate1
 // Created: NLD 2006-08-02
 // =============================================================================
 template< typename T >
@@ -155,7 +155,7 @@ private:
 };
 
 // =============================================================================
-// @class  PHY_ComposanteUsePredicate1
+// @class  PHY_ComposanteTypePredicate1
 // Created: NLD 2006-08-02
 // =============================================================================
 template< typename T >
@@ -213,9 +213,10 @@ public:
 // @class  ComposanteUsePredicate_ABC
 // Created: MGD 2009-09-28
 // =============================================================================
-class ComposanteUsePredicate_ABC
+class ComposanteUsePredicate_ABC : boost::noncopyable
 {
 public:
+             ComposanteUsePredicate_ABC() {}
     virtual ~ComposanteUsePredicate_ABC() {}
     virtual bool operator() ( const PHY_ComposantePion& composante ) = 0;
     virtual bool operator() ( const PHY_ComposanteTypePion& composanteType ) = 0;

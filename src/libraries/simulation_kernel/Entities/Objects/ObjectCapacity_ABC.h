@@ -11,6 +11,7 @@
 #define __ObjectCapacity_ABC_h_
 
 #include <boost/serialization/export.hpp>
+#include <boost/noncopyable.hpp>
 
 class MIL_Object_ABC;
 
@@ -20,18 +21,21 @@ class MIL_Object_ABC;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class ObjectCapacity_ABC
+class ObjectCapacity_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-            ObjectCapacity_ABC() {}
+             ObjectCapacity_ABC() {}
     virtual ~ObjectCapacity_ABC() {}
     //@}
 
     //! @name CheckPoints / boost serialize/deserialize
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int )
+    {
+        // NOTHING
+    }
     virtual void Register( MIL_Object_ABC& object ) = 0;
     //@}
 
@@ -43,7 +47,10 @@ public:
 
     //! @name Update
     //@{
-    virtual void Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ ) {}
+    virtual void Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ )
+    {
+        // NOTHING
+    }
     //@}
 };
 

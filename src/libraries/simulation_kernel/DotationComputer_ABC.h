@@ -10,6 +10,8 @@
 #ifndef __DotationComputer_ABC_h_
 #define __DotationComputer_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 class PHY_DotationGroupContainer;
 class PHY_DotationCategory;
 
@@ -22,7 +24,7 @@ namespace dotation
 */
 // Created: MGD 2009-09-30
 // =============================================================================
-class DotationComputer_ABC
+class DotationComputer_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -42,6 +44,6 @@ public:
     //@}
 };
 
-} // namespace firing
+}
 
 #endif // __DotationComputer_ABC_h_

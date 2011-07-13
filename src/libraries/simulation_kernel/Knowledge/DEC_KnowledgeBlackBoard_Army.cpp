@@ -107,11 +107,7 @@ void DEC_KnowledgeBlackBoard_Army::SendChangedState() const
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgesObject
-    // Created: NLD 2004-05-06
-    // -----------------------------------------------------------------------------
-    class sObjectKnowledgesDiaIDInserter
+    class sObjectKnowledgesDiaIDInserter : boost::noncopyable
     {
     public:
         sObjectKnowledgesDiaIDInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter )
@@ -143,11 +139,7 @@ void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectDiaIDVector& con
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle
-    // Created: NLD 2006-05-05
-    // -----------------------------------------------------------------------------
-    class sObjectKnowledgesInCircleFilteredInserter
+    class sObjectKnowledgesInCircleFilteredInserter : boost::noncopyable
     {
     public:
         sObjectKnowledgesInCircleFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius )
@@ -310,11 +302,7 @@ void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectVector& containe
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: DEC_KnowledgeBlackBoard_Army::GetClosestObject
-    // Created: NLD 2005-03-10
-    // -----------------------------------------------------------------------------
-    class sClosestObjectInserter
+    class sClosestObjectInserter : boost::noncopyable
     {
     public:
         sClosestObjectInserter( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter )
@@ -358,11 +346,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetClose
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: DEC_KnowledgeBlackBoard_Army::sClosestObjectFriendInserter
-    // Created: NLD 2005-03-10
-    // -----------------------------------------------------------------------------
-    class sClosestObjectFriendInserter
+    class sClosestObjectFriendInserter : boost::noncopyable
     {
     public:
         sClosestObjectFriendInserter( const MT_Vector2D& vPos, const MIL_Army_ABC& army, const MIL_ObjectFilter& filter )
