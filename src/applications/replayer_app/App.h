@@ -79,6 +79,7 @@ private:
     NOTIFYICONDATA                 TrayIcon_;
     unsigned int                   nIconIndex_;
     std::auto_ptr< boost::thread > guiThread_ ;
+    static bool                    bUserInterrupt_;
     //@}
 
 

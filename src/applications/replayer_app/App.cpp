@@ -19,6 +19,8 @@
 
 using namespace dispatcher;
 
+bool App::bUserInterrupt_ = false;
+
 #define MY_WM_NOTIFYICON WM_USER + 1
 
 static const int NUM_ICON_FOR_ANIMATION = 2;
@@ -63,7 +65,7 @@ void App::Execute()
     StartIconAnimation();
     try
     {
-        for( ;; )
+        for( ; !bUserInterrupt_; )
         {
             ::Sleep( 10 );
             replayer_->Update();
@@ -101,12 +103,16 @@ LRESULT App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
              }
             break;
         case WM_CLOSE:
+            bUserInterrupt_ = true;
         case WM_DESTROY:
             PostQuitMessage( 0 );
             break;
         case WM_COMMAND:
             if( LOWORD( wParam ) == IDM_QUIT )
+            {
+                bUserInterrupt_ = true;
                 PostQuitMessage( 0 );
+            }
             break;
         case WM_TIMER:
             application->AnimateIcon();

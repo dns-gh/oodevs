@@ -35,7 +35,7 @@ PositionsPlugin::~PositionsPlugin()
 {
     try
     {
-        Export(); // $$$$ MCO : try catch to prevent exceptions from leaving the destructor !
+        Export();
     }
     catch( ... )
     {

@@ -39,7 +39,7 @@
 bool SIM_App::bCrashWithCoreDump_ = false;
 bool SIM_App::bUserInterrupt_ = false;
 
-#define MY_WM_NOTIFYICON WM_USER+1
+#define MY_WM_NOTIFYICON WM_USER + 1
 
 #include "resource.h"
 
@@ -159,7 +159,7 @@ LRESULT SIM_App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
              }
             return 0;
         case WM_CLOSE:
-            return 0;
+            bUserInterrupt_ = true;
         case WM_DESTROY:
             PostQuitMessage( 0 );
             return 0;
