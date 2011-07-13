@@ -30,7 +30,7 @@ NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const tools::Load
     header()->hide();
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
-    loader.LoadOptionalPhysicalFile( "symbols", boost::bind( &NatureSelectionWidget::LoadSymbols, this, _1 ) );
+    loader.LoadPhysicalFile( "symbols", boost::bind( &NatureSelectionWidget::LoadSymbols, this, _1 ) );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
 }
 

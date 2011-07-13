@@ -71,7 +71,7 @@ void SymbolFactory::Load( const tools::ExerciseConfig& config )
     currentChain_.clear();
     currentSymbol_.clear();
     availableSymbols_.clear();
-    config.GetLoader().LoadOptionalPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
+    config.GetLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
     ListSymbols();
     initialized_ = true;
 }
