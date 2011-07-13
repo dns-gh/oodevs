@@ -889,7 +889,7 @@
         <attribute name="property"/>
         <sequential>
             <fileset id="@{dir1}.id" dir="@{dir1}" excludes="@{excludes}" includes="@{includes}">
-                <different targetdir="@{dir2}" ignorefiletimes="true"/> <!-- ne prend pas en compte les fichiers 'en trop' dans dir2 -->
+                <different targetdir="@{dir2}" ignorefiletimes="true"/>
             </fileset>
             <pathconvert property="@{property}.@{dir1}" refid="@{dir1}.id" setonempty="false"/>
             <fileset id="@{dir2}.id" dir="@{dir2}" excludes="@{excludes}" includes="@{includes}">
@@ -923,24 +923,23 @@
     <macrodef name="run-adaptation">
         <attribute name="input"/>
         <attribute name="output"/>
-    	  <sequential>
+        <sequential>
             <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-i"/>
                 <arg value="@{input}/physical.xml"/>
                 <arg value="-o"/>
                 <arg value="@{output}/physical.xml"/>
             </exec>
-    	  </sequential>
+        </sequential>
     </macrodef>
 
     <macrodef name="test-adaptation">
         <attribute name="input"/>
         <sequential>
-            <property name="test-adaptation.dir" value="${out.dir}/test-adaptation"/>
             <echo>Testing models: @{input}</echo>
-            <delete dir="${test-adaptation.dir}"/>
-            <run-adaptation input="@{input}" output="${test-adaptation.dir}"/>
-            <compare-dirs dir1="@{input}" dir2="${test-adaptation.dir}"
+            <delete dir="${out.dir}/test-adaptation"/>
+            <run-adaptation input="@{input}" output="${out.dir}/test-adaptation"/>
+            <compare-dirs dir1="@{input}" dir2="${out.dir}/test-adaptation"
                 excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,**/templates.xml,**/ObjectNames.xml,**/mapping.xml,**/DrawingTemplates.xml,**/FOM.xml,**/Extensions.xml,**/scores.xml,**/symbols.xml,**/Filters,**/Filters/**"
                 includes="**/*.xml" property="adaptation_test.is-different"/>
             <if>
@@ -949,10 +948,10 @@
                     <echo>ERROR: the following files differ :</echo>
                     <echo-files files="${adaptation_test.is-different}" prefix="ERROR: "/>
                     <echo>ERROR: did you forget to run 'ant generate-signatures' ?</echo>
-                    <fail message="saved data differs from loaded data."/>
+                    <fail message="saved data differ from loaded data."/>
                 </then>
             </if>
-            <delete dir="${test-adaptation.dir}"/>
+            <delete dir="${out.dir}/test-adaptation"/>
         </sequential>
     </macrodef>
 
