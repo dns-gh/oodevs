@@ -49,7 +49,6 @@ public:
     const PHY_BreakdownType&            GetType             () const;
     //@}
 
-
 private:
     //! @name Member data
     //@{

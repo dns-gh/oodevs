@@ -95,7 +95,6 @@ private:
     //@}
 };
 
-
 #include "PHY_MeteoDataManager.inl"
 
 #endif // __PHY_MeteoDataManager_h_

@@ -133,7 +133,7 @@ private:
     {
         static T badId = BadId< T >();
 
-        for ( unsigned int i = 0; ; ++i )
+        for( unsigned int i = 0; ; ++i )
         {
             const std::string& sCurrentName = conv[i].name_;
             if( sCurrentName.empty() || sCaseInsensitiveEqual()( sCurrentName, str ) )
@@ -149,7 +149,7 @@ private:
     //-----------------------------------------------------------------------------
     template < typename T > static const std::string& InverseFindInConverter( const converter<T> conv[], T val )
     {
-        for ( unsigned int i = 0; !conv[i].name_.empty(); ++i )
+        for( unsigned int i = 0; !conv[i].name_.empty(); ++i )
             if( conv[i].type_ == val )
                 return conv[i].name_;
 

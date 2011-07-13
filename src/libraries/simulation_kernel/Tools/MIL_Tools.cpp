@@ -63,7 +63,7 @@ boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const std::string& fileNam
 
     std::ifstream file( fileName.c_str(), std::ios::in | std::ios::binary );
 
-    while ( file )
+    while( file )
     {
         file.read( buffer, nBufferSize );
         CRC.process_bytes( buffer, file.gcount() );

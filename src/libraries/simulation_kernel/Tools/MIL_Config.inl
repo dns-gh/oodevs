@@ -206,7 +206,7 @@ unsigned int MIL_Config::GetTimeStep() const
 inline
 unsigned int MIL_Config::GetTimeFactor() const
 {
-    return timeFactor_; 
+    return timeFactor_;
 }
 
 inline
@@ -220,7 +220,6 @@ unsigned int MIL_Config::ReadGCParameter_setStepMul() const
 {
     return setstepmul_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Config::GetEndTick

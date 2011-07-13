@@ -19,7 +19,7 @@ PHY_RawVisionData::envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
         return static_cast< PHY_RawVisionData::envBits >( pCurrentCell_->GetEnv() | PHY_RawVisionData::eVisionGround );
     else if( bIsInEnv_ )
         return pCurrentCell_->GetEnv();
-    else 
+    else
         return static_cast< PHY_RawVisionData::envBits >( PHY_RawVisionData::eVisionEmpty );
 }
 

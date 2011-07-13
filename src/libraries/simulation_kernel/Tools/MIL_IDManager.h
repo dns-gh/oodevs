@@ -59,5 +59,4 @@ void MIL_IDManager::serialize( Archive& archive, unsigned int /*version*/ )
     archive & last_;
 }
 
-
 #endif // __MIL_IDManager_h_

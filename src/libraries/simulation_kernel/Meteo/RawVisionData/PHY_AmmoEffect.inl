@@ -19,7 +19,6 @@ void PHY_AmmoEffect::SetNextEffect( PHY_AmmoEffect* pNextEffect )
     pNextEffect_ = pNextEffect;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_AmmoEffect::HandleAmmo
 // Created: JVT 04-03-24

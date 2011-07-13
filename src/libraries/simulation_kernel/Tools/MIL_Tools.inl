@@ -104,7 +104,6 @@ float MIL_Tools::ConvertSimToMeterSquare( double rValue ) // px² => m²
     return (float)( rValue );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertMeterToSim
 // Created: NLD 2004-08-05

@@ -58,7 +58,7 @@ PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double rCol, double rR
 inline
 const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_Vector2D& vPos ) const
 {
-    return operator() ( vPos ).GetPrecipitation();    
+    return operator() ( vPos ).GetPrecipitation();
 }
 
 //-----------------------------------------------------------------------------
@@ -73,10 +73,10 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY ) const
 
     double rScaledX = rX / rCellSize_;
 
-    return MT_LinearInterpolation< double >() ( 
-                 nRow, 
-                 MT_LinearInterpolation< double >()( 
-                    nCol, 
+    return MT_LinearInterpolation< double >() (
+                 nRow,
+                 MT_LinearInterpolation< double >()(
+                    nCol,
                     operator()( nCol, nRow ).GetAltitude(),
                     nCol + 1,
                     operator()( nCol + 1, nRow ).GetAltitude(),
@@ -119,7 +119,7 @@ PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D
 inline
 const weather::Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
-    return operator()( vPos ).GetWind();    
+    return operator()( vPos ).GetWind();
 }
 
 //-----------------------------------------------------------------------------
@@ -206,7 +206,7 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, unsign
     const unsigned int nXEnd   = GetCol( localisation.GetBoundingBox().GetRight() );
     const unsigned int nYBegin = GetRow( localisation.GetBoundingBox().GetBottom() );
     const unsigned int nYEnd   = GetRow( localisation.GetBoundingBox().GetTop() );
-    
+
     for( unsigned int nX = GetCol( localisation.GetBoundingBox().GetLeft() ); nX <= nXEnd; ++nX )
         for( unsigned int nY = nYBegin; nY <= nYEnd; ++nY )
         {
