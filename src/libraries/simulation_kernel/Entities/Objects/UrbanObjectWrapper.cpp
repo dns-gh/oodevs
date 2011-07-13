@@ -35,6 +35,8 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 
+const float UrbanObjectWrapper::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper constructor
 // Created: SLG 2010-06-18
@@ -321,6 +323,23 @@ void UrbanObjectWrapper::Accept( urban::MotivationsVisitor_ABC& visitor ) const
 float UrbanObjectWrapper::GetLivingSpace() const
 {
     return object_->GetLivingSpace();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ComputeLocalisationsInsideBlock
+// Created: MIA 2011-06-13
+// -----------------------------------------------------------------------------
+const std::vector< boost::shared_ptr< MT_Vector2D > >& UrbanObjectWrapper::ComputeLocalisationsInsideBlock()
+{
+	if( strechedArea_.size() == 0 )
+	{
+		const UrbanObjectWrapper& constThis = *this;
+		const T_PointVector& points = constThis.GetLocalisation().GetPoints();
+		const MT_Vector2D barycenter = constThis.GetLocalisation().ComputeBarycenter();
+		for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+			strechedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
+	}
+	return strechedArea_;
 }
 
 // -----------------------------------------------------------------------------

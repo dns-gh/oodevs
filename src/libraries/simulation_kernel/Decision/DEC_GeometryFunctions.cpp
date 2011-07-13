@@ -966,31 +966,17 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject )
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+	typedef std::vector< boost::shared_ptr< MT_Vector2D > > T_Vectors;
+    T_Vectors result;
     if( pUrbanObject )
     {
         boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
         result.push_back( position );
-        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( *pUrbanObject, false, result );
+        const T_Vectors& area = pUrbanObject->ComputeLocalisationsInsideBlock();
+		for( T_Vectors::const_iterator it = area.begin(); it != area.end(); ++it )
+			result.push_back( *it );
     }
     return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeLocalisationsInsideBlock
-// Created: LMT 2010-10-13
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( const UrbanObjectWrapper& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result )
-{
-    const T_PointVector& points = terrainObject.GetLocalisation().GetPoints();
-    const MT_Vector2D barycenter = terrainObject.GetLocalisation().ComputeBarycenter();
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-    {
-        const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
-        MT_Vector2D point = *it + MT_Vector2D( *it - barycenter ).Normalize() * distance;
-        if( !onlyInsideBlock || terrainObject.IsInside( point ) )
-            result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1037,15 +1023,18 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( const MT_Vector2D& point )
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
-        const UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *terrainObject );
-        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( wrapper, false, result );
+        UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *terrainObject );
+        return wrapper.ComputeLocalisationsInsideBlock();
     }
     else
+	{
+		// $$$$ JSR 2011-06-13 optimiser pour ne pas passer un tableau d'un seul point
+	    std::vector< boost::shared_ptr< MT_Vector2D > > result;
         result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) ));
-    return result;
+	    return result;
+	}
 }
 
 // -----------------------------------------------------------------------------
