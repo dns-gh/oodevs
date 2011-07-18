@@ -334,7 +334,7 @@
     </message>
     <message>
         <source>Stress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stress:</translation>
     </message>
 </context>
 <context>

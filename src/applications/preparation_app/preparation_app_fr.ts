@@ -1209,6 +1209,18 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Safety</source>
         <translation>Sûreté</translation>
     </message>
+    <message>
+        <source>Favorable</source>
+        <translation>Favorable</translation>
+    </message>
+    <message>
+        <source>Neutral</source>
+        <translation>Neutre</translation>
+    </message>
+    <message>
+        <source>Unfavorable</source>
+        <translation>Défavorable</translation>
+    </message>
 </context>
 <context>
     <name>ScoreDialog</name>
@@ -1465,6 +1477,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Maintenance types</source>
         <translation>Types de véhicules de maintenance</translation>
+    </message>
+    <message>
+        <source>Force ratio types</source>
+        <translation>Types de rapport de force</translation>
     </message>
 </context>
 <context>
