@@ -9875,6 +9875,7 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="GENIE Reconnaitre"/>
         <mission name="LOGISTIQUE Se Deployer"/>
         <mission name="Produire"/>
       </missions>
@@ -9909,6 +9910,7 @@
         <mission name="GENIE Degager Obstacles"/>
         <mission name="GENIE Ouvrir Itineraire"/>
         <mission name="GENIE Realiser Travaux"/>
+        <mission name="GENIE Reconnaitre"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="GENIE Reparer"/>
         <mission name="Detruire point du reseau"/>
@@ -13885,4 +13887,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0256274016" -->
+<!-- signature="0033043404" -->
