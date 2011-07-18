@@ -70,6 +70,7 @@ namespace
         std::map< Key, Value > extractors = boost::assign::list_of< std::pair< Key, Value > >
             ( "operational-state"                     , BuildExtractor< Value, attributes::OperationalState >() ) // A VIRER
             ( "operational-states"                    , BuildExtractor< Value, attributes::OperationalState >() )
+            ( "force-ratio"                           , BuildExtractor< Value, attributes::ForceRatioValue >() )
             ( "position"                              , BuildExtractor< Value, attributes::Positions >() )        // A VIRER
             ( "positions"                             , BuildExtractor< Value, attributes::Positions >() )
             ( "resources"                             , BuildExtractor< Value, attributes::Resources >() )

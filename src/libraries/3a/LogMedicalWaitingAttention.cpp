@@ -22,7 +22,7 @@ LogMedicalWaitingAttention::LogMedicalWaitingAttention()
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalWaitingAttention constructor
-// Created: FPO 2011-05-09
+// Created: FPO 2011-07-08
 // -----------------------------------------------------------------------------
 LogMedicalWaitingAttention::LogMedicalWaitingAttention( xml::xistream& /*xis*/ )
 {

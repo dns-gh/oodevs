@@ -68,6 +68,7 @@ public:
     static sword::SimToClient CreateStructuralState( unsigned long objectId, int stateValue );
     static sword::SimToClient UpdateStructuralState( unsigned long objectId, int stateValue );
     static sword::SimToClient UpdateResourceState( unsigned long objectId, float stateValue );
+    static sword::SimToClient ChangeUnitRatio( unsigned long unitId, sword::ForceRatio_Value state );
     //@}
 
 private:

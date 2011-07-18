@@ -26,6 +26,7 @@
 #include "StructuralStates.h"
 #include "ResourcesNetworksFunctionalStates.h"
 #include "CrowdStates.h"
+#include "ForceRatioValue.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -97,6 +98,7 @@ typedef UnitAttribute< extractors::DirectFirePower >               DirectFirePow
 typedef UnitAttribute< extractors::IndirectFirePower >             IndirectFirePower;
 typedef UnitAttribute< extractors::CloseCombatPower >              CloseCombatPower;
 typedef UnitAttribute< extractors::EngineeringPower >              EngineeringPower;
+typedef UnitAttribute< extractors::ForceRatioValue >               ForceRatioValue;
 
 typedef Attribute< extractors::LogMedicalEquipments >              LogMedicalEquipments;
 typedef Attribute< extractors::LogMedicalWaitingAttention >        LogMedicalWaitingAttention;

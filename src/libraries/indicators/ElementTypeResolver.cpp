@@ -84,6 +84,7 @@ namespace
         // $$$$ SBO 2009-05-12: Variable types
         boost::replace_all( result, "unit list", "list(key)" );
         boost::replace_all( result, "unit", "key" );
+        boost::replace_all( result, "force-ratio types", "list(force-ratio-type)" );
         boost::replace_all( result, "urban block list", "list(urban-block)" );
         boost::replace_all( result, "dotation list", "list(resource-type)" );
         boost::replace_all( result, "equipment list", "list(equipment-type)" );

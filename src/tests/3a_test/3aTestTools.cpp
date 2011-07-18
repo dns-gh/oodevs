@@ -490,3 +490,16 @@ sword::SimToClient TestTools::UpdateResourceState( unsigned long objectId, float
     attributes.mutable_infrastructures()->add_resource_network()->set_functional_state( stateValue );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::ChangeUnitRatio
+// Created: FPO 2011-07-08
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::ChangeUnitRatio( unsigned long unitId, sword::ForceRatio_Value state )
+{
+    SimToClient result;
+    UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+    attributes.mutable_unit()->set_id( unitId );
+    attributes.set_force_ratio( state );
+    return result;
+}

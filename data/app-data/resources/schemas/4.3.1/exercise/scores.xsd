@@ -31,7 +31,7 @@
 		</xs:attribute>
 		<xs:attribute name="types" type="xs:string">
 			<xs:annotation>
-				<xs:documentation>used by "stocks" "ambulances" and "maintenances" functions</xs:documentation>
+				<xs:documentation>used by "force-ratio" "stocks" "ambulances" and "maintenances" functions</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="type" type="xs:string">
@@ -205,6 +205,7 @@
 														<xs:restriction base="xs:string">
 															<xs:enumeration value="unit"/>
 															<xs:enumeration value="unit list"/>
+															<xs:enumeration value="force-ratio types"/>													
 															<xs:enumeration value="party list"/>
 															<xs:enumeration value="urban block list"/>
 															<xs:enumeration value="dotation list"/>
@@ -261,6 +262,7 @@
 																	<xs:restriction base="xs:string">
 																		<xs:enumeration value="operational-state"/>
 																		<xs:enumeration value="operational-states"/>
+																		<xs:enumeration value="force-ratio"/>	
 																		<xs:enumeration value="position"/>
 																		<xs:enumeration value="positions"/>
 																		<xs:enumeration value="resources"/>

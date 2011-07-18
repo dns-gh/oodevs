@@ -1039,6 +1039,26 @@
     </indicator>
   </function>  
   
+  <function name="Number of units in favorable force ratio types for a unit list">
+    <descriptions>
+      <description name="Number of units in favorable force ratio types for a unit list" lang="en">
+        <![CDATA[Number of units in favorable force ratio types for a unit list.]]>
+      </description>
+      <description name="Nombre d'unités disposant d'un rapport de force favorable" lang="fr">
+        <![CDATA[Nombre d'unités disposant d'un rapport de force favorable.]]>
+      </description>
+    </descriptions>
+    <parameters>
+      <parameter name='Units' type='unit list'/>
+    </parameters>
+    <indicator>
+      <extract function='force-ratio' id='ratio' types='favorable'/>
+      <transform function='domain' type='int' select='${Units}' input='ratio' id='domained-ratio'/>
+      <reduce type='unsigned int' function='sum' input='domained-ratio' id='sum'/>
+      <result function='plot' input='sum' type='unsigned'/>
+    </indicator>
+  </function> 
+  
 </functions>
 
 <!-- signature="1328184444" -->

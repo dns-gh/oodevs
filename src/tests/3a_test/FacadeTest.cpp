@@ -1959,6 +1959,70 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCombinedZoneAndUnitlistDirectFirePower, Fixt
     task->Commit();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade_TestForceRatioOnUnitsList
+// Created: FPO 2011-05-24
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestForceRatioOnUnitsList, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='force-ratio' id='ratio' types='favorable,neutral'/>"
+                             "    <transform function='domain' type='int' select='12,42' input='ratio' id='domained-ratio'/>"
+                             "    <reduce type='int' function='sum' input='domained-ratio' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::ChangeUnitRatio( 12, sword::ForceRatio::favorable ) );
+    task->Receive( TestTools::ChangeUnitRatio( 42, sword::ForceRatio::neutral ) );
+    task->Receive( TestTools::ChangeUnitRatio( 13, sword::ForceRatio::favorable ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::ChangeUnitRatio( 12, sword::ForceRatio::unfavorable ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::ChangeUnitRatio( 12, sword::ForceRatio::favorable ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2. )( 1. )( 1. )( 2. );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestForceRatioInZone
+// Created: FPO 2011-05-24
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestForceRatioInZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='force-ratio' id='ratio' types='unfavorable'/>"
+                             "    <extract function='positions' id='positions'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
+                             "    <transform function='contains' input='circle,positions' id='selected-ratio'/>"
+                             "    <transform function='filter' type='float' input='selected-ratio,ratio' id='the-ratio'/>"
+                             "    <reduce type='int' function='sum' input='the-ratio' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 12 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 16 ) ); // out of zone
+    task->Receive( TestTools::ChangeUnitRatio( 12, sword::ForceRatio::unfavorable ) );
+    task->Receive( TestTools::ChangeUnitRatio( 13, sword::ForceRatio::favorable ) );
+    task->Receive( TestTools::ChangeUnitRatio( 16, sword::ForceRatio::unfavorable ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::ChangeUnitRatio( 12, sword::ForceRatio::favorable ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 0. )( 0. );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
 //(

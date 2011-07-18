@@ -3,6 +3,12 @@
     <primitive category="extract" name="operational-state" type="list(key,float)">
         <comments><![CDATA[Unit operational state, in the interval [0,1].]]></comments>
     </primitive>
+	<primitive category="extract" name="force-ratio" type="list(key,float)">
+        <comments><![CDATA[Returns 1 if unit's force ratio is of specified types].]]></comments>
+	    <parameters>
+            <parameter name="types" type="list(force-ratio-type)" attribute="types"/>
+        </parameters>
+    </primitive>
     <primitive category="extract" name="direct-fire-power" type="list(key,float)">
         <comments><![CDATA[Unit direct-fire power.]]></comments>
     </primitive>
@@ -292,4 +298,4 @@
         </parameters>
     </primitive>
 </primitives>
-<!-- signature="1311524730" -->
+<!-- signature="4167870095" -->
