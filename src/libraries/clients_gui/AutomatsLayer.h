@@ -13,6 +13,7 @@
 #include "EntityLayer.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <boost/function.hpp>
 
 namespace gui
 {
@@ -54,6 +55,7 @@ protected:
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void NotifySelected( const kernel::Automat_ABC* automat );
+    virtual void NotifyActivated( const kernel::Automat_ABC& automat );
     //@}
 
 private:
@@ -64,7 +66,7 @@ private:
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity ) const;
+    bool HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const;
     //@}
 
 protected:

@@ -14,6 +14,7 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Formation_ABC.h"
+#include <boost/function.hpp>
 #include <set>
 
 namespace kernel
@@ -56,6 +57,7 @@ protected:
     //! @name Operations
     //@{
     virtual void NotifySelected( const kernel::Formation_ABC* formation );
+    virtual void NotifyActivated( const kernel::Formation_ABC& formation );
     //@}
 
 private slots:
@@ -73,7 +75,8 @@ private:
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity ) const;
+    bool HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const;
+    bool IsAgent( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

@@ -16,6 +16,8 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
+#include <boost/lambda/lambda.hpp>
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -88,11 +90,21 @@ void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::Conte
     selected_ = &automat;
     if( !IsAggregated( automat ) )
     {
-        if( !HasAggregatedSubordinate( automat ) )
+        if( !HasSubordinate( automat, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) ) )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
         else
             menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatsLayer::NotifyActivated
+// Created: LGY 2011-07-18
+// -----------------------------------------------------------------------------
+void AutomatsLayer::NotifyActivated( const kernel::Automat_ABC& automat )
+{
+    if( HasSubordinate( automat, boost::function< bool( const kernel::Entity_ABC& ) >( boost::lambda::constant( true ) ) ) )
+        EntityLayer< kernel::Automat_ABC >::NotifyActivated( automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +139,7 @@ void AutomatsLayer::Toggle( const Entity_ABC& entity, bool aggregate )
 void AutomatsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
 {
     const Automat_ABC* automat = static_cast< const Automat_ABC* >( &entity );
-    if( !IsAggregated( entity ) && HasAggregatedSubordinate( entity ) )
+    if( !IsAggregated( entity ) && HasSubordinate( entity, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) ) )
         controllers_.actions_.ContextMenu( *automat, entity, point, where );
 }
 
@@ -137,7 +149,7 @@ void AutomatsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    return EntityLayer< Automat_ABC >::ShouldDisplay( entity ) && !IsAggregated( entity ) && HasAggregatedSubordinate( entity );
+    return EntityLayer< Automat_ABC >::ShouldDisplay( entity ) && !IsAggregated( entity ) && HasSubordinate( entity, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,17 +174,17 @@ bool AutomatsLayer::IsAggregated( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatsLayer::HasAggregatedSubordinate
+// Name: AutomatsLayer::HasSubordinate
 // Created: LGY 2011-03-07
 // -----------------------------------------------------------------------------
-bool AutomatsLayer::HasAggregatedSubordinate( const kernel::Entity_ABC& entity ) const
+bool AutomatsLayer::HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const
 {
     bool children = false;
     tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        if( !IsAggregated( child ) )
+        if( !fun( child ) )
             return false;
         children = true;
     }
