@@ -56,9 +56,11 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kerne
         type_->AddItem( tr( "Equipment list" ), "equipment list" );
         type_->AddItem( tr( "Equipment states" ), "equipment states" );
         type_->AddItem( tr( "Fire types" ), "fire types" );
+        type_->AddItem( tr( "Force ratio types" ), "force-ratio types" );
         type_->AddItem( tr( "Fratricide fires" ), "fratricide" );
         type_->AddItem( tr( "Human states" ), "human states" );
         type_->AddItem( tr( "Human ranks" ), "human ranks" );
+        type_->AddItem( tr( "Maintenance types" ), "maintenance types" );
         type_->AddItem( tr( "Perception levels" ), "perception levels" );
         type_->AddItem( tr( "Population states" ), "population states" );
         type_->AddItem( tr( "Resource list" ), "dotation list" );
@@ -223,6 +225,19 @@ namespace
             ( tools::translate( "ScoreDef", "Collection" ).ascii(), "collection" );
     }
 
+    std::map< std::string, std::string > MaintenanceTypes()
+    {
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Repairers" ).ascii(), "repairers" )
+            ( tools::translate( "ScoreDef", "Haulers" ).ascii(), "haulers" );
+    }
+
+    std::map< std::string, std::string > ForceRatioTypes()
+    {
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Favorable" ).ascii(), "favorable" )
+            ( tools::translate( "ScoreDef", "Neutral" ).ascii(), "neutral" )
+            ( tools::translate( "ScoreDef", "Unfavorable" ).ascii(), "unfavorable" );
+    }
+
     std::map< std::string, std::string > CrowdStates()
     {
         return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).ascii(), "healthy" )
@@ -269,12 +284,6 @@ namespace
         return boost::assign::map_list_of( tools::translate( "ScoreDef", "Officer" ).ascii(), "officer" )
             ( tools::translate( "ScoreDef", "Sub officer" ).ascii(), "sub-officer" )
             ( tools::translate( "ScoreDef", "Troopers" ).ascii(), "troopers" );
-    }
-
-    std::map< std::string, std::string > MaintenanceTypes()
-    {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Repairers" ).ascii(), "repairers" )
-            ( tools::translate( "ScoreDef", "Haulers" ).ascii(), "haulers" );
     }
 
    std::map< std::string, std::string > PerceptionLevels()
@@ -332,6 +341,8 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
             location->SetShapeFilter( false, false, true, true, false );
             result.reset( location.release() );
         }
+        else if( type == "force-ratio types" )
+            result.reset( new ParamStringEnumeration( this, tr( "Force ratio types" ), parameter, ForceRatioTypes() ) );
         else if( type == "ambulance types" )
             result.reset( new ParamStringEnumeration( this, tr( "Ambulance types" ), parameter, AmbulanceTypes() ) );
         else if( type == "crowd states" )
