@@ -461,9 +461,24 @@ void SIM_App::CreateConsoleLog()
     HMENU menu = GetSystemMenu( GetConsoleWindow(), false );
     DeleteMenu( menu, SC_CLOSE, MF_BYCOMMAND );
     SetConsoleCtrlHandler( &::ConsoleHandler, TRUE );
-    stdout->_file = _open_osfhandle( long( GetStdHandle( STD_OUTPUT_HANDLE ) ), _O_TEXT );
-    setvbuf( stdout, NULL, _IONBF, 0 );
-    stderr->_file = _open_osfhandle( long( GetStdHandle( STD_ERROR_HANDLE ) ), _O_TEXT );
-    setvbuf( stderr, NULL, _IONBF, 0 );
+    int outFile = _open_osfhandle( intptr_t( GetStdHandle( STD_OUTPUT_HANDLE ) ), _O_TEXT );
+    if( outFile != -1 )
+    {
+        stdout->_file = outFile ;
+        setvbuf( stdout, NULL, _IONBF, 0 );
+    }
+    int errFile = _open_osfhandle( intptr_t( GetStdHandle( STD_ERROR_HANDLE ) ), _O_TEXT );
+    if( errFile != -1 )
+    {
+        if( outFile == -1 )
+        {
+            // FIXME : connect out to err
+            stdout->_file = errFile ;
+        }
+        stderr->_file = errFile ;
+        setvbuf( stderr, NULL, _IONBF, 0 );
+    }
+    if( (outFile < 0) || (errFile < 0) )
+        ::MessageBox(NULL, "Console output failed. No messages will be available.","Console error", MB_OK | MB_ICONWARNING);
     std::ios::sync_with_stdio();
 }
