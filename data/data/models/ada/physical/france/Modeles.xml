@@ -9330,6 +9330,39 @@
         <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.INF.Commando">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.AMX-ERC">
       <missions>
         <mission name="COMMUNES Decrocher"/>
@@ -9912,8 +9945,8 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="GENIE Reparer"/>
-        <mission name="Reparer point du reseau"/>
         <mission name="Produire"/>
+        <mission name="Reparer point du reseau"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
@@ -13852,4 +13885,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3171294235" -->
+<!-- signature="0256274016" -->
