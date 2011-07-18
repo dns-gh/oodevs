@@ -27,7 +27,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
                               IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick,
-                              QHBox* hbox )
+                              QVBox* vbox )
     : gui::GQ_Plot( parent, "IndicatorPlot" )
     , controllers_ ( controllers )
     , publisher_   ( publisher )
@@ -55,12 +55,11 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
 
     SetBackgroundColor( Qt::white );
     setMinimumWidth( 320 );
-    setMinimumHeight( 200 );
+    setMinimumHeight( 250 );
     controllers_.Register( *this );
-    plotNames_ = new QLabel( hbox );
+    plotNames_ = new QLabel( vbox );
     plotNames_->setBackgroundColor( Qt::white );
-    plotNames_->setMinimumWidth( 200 );
-    plotNames_->setIndent( 10 );
+    plotNames_->setIndent( 20 );
     Add( request );
     SetTickData( currentTick );
 }
@@ -119,6 +118,7 @@ void IndicatorPlot::Add( const IndicatorRequest& request )
         return;
     gui::GQ_PlotData* data = new gui::GQ_PlotData( static_cast< unsigned >( datas_.size() + 1 ), *this );
     plotNames_->setText( plotNames_->text() + "<font color='" + GetPlotColor( static_cast< unsigned >( datas_.size() ) ).name() + "'>" + request.GetName() + "</font>" + "<br />" );
+    plotNames_->setMaximumHeight( datas_.size() * ( plotNames_->fontMetrics().height() + 10 ) + 30 );
     data->SetLinePen( GetPlotColor( static_cast< unsigned >( datas_.size() ) ) );
     UpdatePlot( data, request, 0 );
     RegisterPlotData( *data );

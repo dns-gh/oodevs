@@ -43,7 +43,7 @@ public:
     //@{
              IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
                             IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick,
-                            QHBox* plotNames );
+                            QVBox* plotNames );
     virtual ~IndicatorPlot();
     //@}
 
