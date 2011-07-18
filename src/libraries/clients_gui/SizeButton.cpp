@@ -36,7 +36,6 @@ SizeButton::SizeButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, flo
     setValue( int( 2 * value ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SizeButton destructor
 // Created: SBO 2006-04-05

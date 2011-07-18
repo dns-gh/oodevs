@@ -33,8 +33,8 @@ class TeamFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory_ABC() {};
-    virtual ~TeamFactory_ABC() {};
+             TeamFactory_ABC() {}
+    virtual ~TeamFactory_ABC() {}
     //@}
 
     //! @name Operations

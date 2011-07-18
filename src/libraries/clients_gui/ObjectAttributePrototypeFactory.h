@@ -25,7 +25,6 @@ namespace kernel
 
 namespace gui
 {
-
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributePrototypeFactory
 // Created: JCR 2008-05-22

@@ -52,12 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentFactory( const AgentFactory& );            //!< Copy constructor
-    AgentFactory& operator=( const AgentFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     kernel::Entity_ABC* FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent );

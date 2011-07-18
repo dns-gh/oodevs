@@ -10,6 +10,8 @@
 #ifndef __AgentFactory_ABC_h_
 #define __AgentFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Agent_ABC;
@@ -36,13 +38,13 @@ namespace xml
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class AgentFactory_ABC
+class AgentFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory_ABC() {};
-    virtual ~AgentFactory_ABC() {};
+             AgentFactory_ABC() {}
+    virtual ~AgentFactory_ABC() {}
     //@}
 
     //! @name Operations
@@ -56,13 +58,6 @@ public:
     virtual kernel::Automat_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent ) = 0;
     virtual kernel::Population_ABC* CreatePop( xml::xistream& xis, kernel::Team_ABC& parent ) = 0;
     virtual kernel::Inhabitant_ABC* CreateInhab( xml::xistream& xis, kernel::Team_ABC& parent ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AgentFactory_ABC( const AgentFactory_ABC& );            //!< Copy constructor
-    AgentFactory_ABC& operator=( const AgentFactory_ABC& ); //!< Assignment operator
     //@}
 };
 
