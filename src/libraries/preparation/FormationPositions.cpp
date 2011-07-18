@@ -12,6 +12,8 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Agent_ABC.h"
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: FormationPositions constructor
@@ -42,13 +44,17 @@ geometry::Point2f FormationPositions::GetPosition( bool aggregated ) const
     if( !aggregated || !aggregated_ )
     {
         geometry::Point2f aggregatedPosition;
-        unsigned count = 0;
+        unsigned int count = 0u;
         tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
-            const geometry::Point2f& childPosition = children.NextElement().Get< kernel::Positions >().GetPosition( false );
-            aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
-            ++count;
+            const kernel::Entity_ABC& child = children.NextElement();
+            if( HasSubordinate( child, boost::bind( &FormationPositions::IsAgent, this, _1 ) ) )
+            {
+                const geometry::Point2f& childPosition = child.Get< kernel::Positions >().GetPosition( false );
+                aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
+                ++count;
+            }
         }
         return count ? geometry::Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
     }
@@ -84,7 +90,7 @@ float FormationPositions::GetHeight( bool aggregated ) const
 // -----------------------------------------------------------------------------
 bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
-    if( !IsAggregated( formation_ ) && HasAggregatedSubordinate() )
+    if( !IsAggregated( formation_ ) && HasSubordinate( formation_, boost::bind( &FormationPositions::IsAggregated, this, _1 ) ) )
     {
         // $$$$ SBO 2009-02-02: Aggregated symbol position
         const float halfSizeX = 500.f * 0.5f * 4.f; // $$$$ SBO 2006-03-21: use font size?
@@ -180,13 +186,24 @@ bool FormationPositions::IsAggregated( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationPositions::HasAggregatedSubordinate
+// Name: FormationPositions::IsAgent
+// Created: LGY 2011-07-18
+// -----------------------------------------------------------------------------
+bool FormationPositions::IsAgent( const kernel::Entity_ABC& entity ) const
+{
+    if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
+        return true;
+    return HasSubordinate( entity, boost::bind( &FormationPositions::IsAgent, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationPositions::HasSubordinate
 // Created: LGY 2011-03-11
 // -----------------------------------------------------------------------------
-bool FormationPositions::HasAggregatedSubordinate() const
+bool FormationPositions::HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const
 {
-    tools::Iterator< const kernel::Entity_ABC& > it = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
-        return IsAggregated( it.NextElement() );
+        return fun( it.NextElement() );
     return false;
 }

@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
+#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -58,7 +59,8 @@ private:
     //! @name Helpers
     //@{
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    bool HasAggregatedSubordinate() const;
+    bool IsAgent( const kernel::Entity_ABC& entity ) const;
+    bool HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const;
     //@}
 
 private:
