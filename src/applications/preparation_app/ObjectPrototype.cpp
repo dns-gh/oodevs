@@ -154,6 +154,34 @@ namespace
         bool bHasFirePropagation_;
     };
 
+    class NBCBuilder
+    {
+    public:
+        NBCBuilder()
+            : prototype_( 0 )
+        {
+            // NOTHING
+        }
+
+        void Add( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, Object_ABC*& object )
+        {
+            if( !prototype_ )
+            {
+                prototype_ =  new NBCPrototype( parent, resolver, xis.attribute< int >( "max-toxic" ), object );
+                container.push_back( prototype_ );
+            }
+            else
+                prototype_->UpdateMaxToxic( xis.attribute< int >( "max-toxic" ) );
+        }
+
+        void Finalize()
+        {
+            prototype_ = 0;
+        }
+    private:
+        NBCPrototype* prototype_;
+    };
+
     /*
     * Register capacity tag
     */
@@ -178,12 +206,18 @@ namespace
 
         factory->Register( "medical"                   , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "stock"                     , boost::bind( &::StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
-        factory->Register( "contamination"             , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+
+        boost::shared_ptr< NBCBuilder > pNBCBuilder( new NBCBuilder() );
+        factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilder, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "contamination"             , boost::bind( &NBCBuilder::Add, pNBCBuilder, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->RegisterFinalizeCreate( boost::bind( &NBCBuilder::Finalize, pNBCBuilder ) );
+
         factory->Register( "resources"                 , boost::bind( &::ResourceNetworkAttribute, _2, _3, boost::ref( controllers ), boost::cref( urbanModel ), boost::cref( objectsModel ), boost::cref( resolver ), boost::ref( object ) ) );
 
         boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
         factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
+
         factory->RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders ) );
 
         return std::auto_ptr< ObjectAttributePrototypeFactory_ABC >( factory );

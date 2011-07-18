@@ -34,10 +34,6 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     danger_ = new LoadableSpinBox( 0, 10, 1, this );
     nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ), this );
     nbcAgents_ = new QListView( this );
-    if( maxToxic == 1 )
-        nbcAgents_->setSelectionMode( QListView::Single );
-    else
-        nbcAgents_->setSelectionMode( QListView::Multi );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
     nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
 
@@ -47,6 +43,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Liquid" ), std::string( "liquid" ) );
     nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Gaseous" ), std::string( "gaseous" ) );
 
+    UpdateSelection();
     FillTypes();
 }
 
@@ -57,6 +54,18 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
 NBCPrototype_ABC::~NBCPrototype_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCPrototype_ABC::UpdateSelection
+// Created: LGY 2011-07-18
+// -----------------------------------------------------------------------------
+void NBCPrototype_ABC::UpdateSelection()
+{
+    if( maxToxic_ == 1 )
+        nbcAgents_->setSelectionMode( QListView::Single );
+    else
+        nbcAgents_->setSelectionMode( QListView::Multi );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,3 +130,17 @@ void NBCPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
     danger_->SetLoader( loader );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NBCPrototype_ABC::UpdateMaxToxic
+// Created: LGY 2011-07-18
+// -----------------------------------------------------------------------------
+void NBCPrototype_ABC::UpdateMaxToxic( int toxic )
+{
+    if( toxic > maxToxic_ )
+    {
+        maxToxic_ = toxic;
+        UpdateSelection();
+    }
+}
+

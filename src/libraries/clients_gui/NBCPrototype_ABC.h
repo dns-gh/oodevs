@@ -43,6 +43,8 @@ public:
     //@{
     virtual bool CheckValidity() const;
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
+
+    virtual void UpdateMaxToxic( int toxic );
     //@}
 
 private:
@@ -50,6 +52,7 @@ private:
     //@{
     void FillTypes();
     virtual void showEvent( QShowEvent* );
+    void UpdateSelection();
     //@}
 
 protected:

@@ -107,12 +107,6 @@ namespace
         container.push_back( new StockPrototype( parent, resolver, attributesList ) );
     }
 
-    void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
-    {
-        int toxic = xis.attribute< int >( "max-toxic" );
-        container.push_back( new NBCPrototype( parent, resolver, toxic, attributesList ) );
-    }
-
     void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver, ParameterList*& attributesList )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
@@ -166,6 +160,34 @@ namespace
         bool bHasFirePropagation_;
     };
 
+    class NBCBuilder
+    {
+    public:
+        NBCBuilder()
+            : prototype_( 0 )
+        {
+            // NOTHING
+        }
+
+        void Add( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+        {
+            if( !prototype_ )
+            {
+                prototype_ =  new NBCPrototype( parent, resolver, xis.attribute< int >( "max-toxic" ), attributesList );
+                container.push_back( prototype_ );
+            }
+            else
+                prototype_->UpdateMaxToxic( xis.attribute< int >( "max-toxic" ) );
+        }
+
+        void Finalize()
+        {
+            prototype_ = 0;
+        }
+    private:
+        NBCPrototype* prototype_;
+    };
+
     std::auto_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
@@ -180,11 +202,15 @@ namespace
         factory->Register( "underground-network"       , boost::bind( &UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
         factory->Register( "logistic"                  , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
         factory->Register( "medical"                   , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
-        factory->Register( "contamination"             , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "resources"                 , boost::bind( &Capacity< ResourceNetworkPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &Capacity< AltitudeModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+
+        boost::shared_ptr< NBCBuilder > pNBCBuilders( new NBCBuilder() );
+        factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "contamination"             , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->RegisterFinalizeCreate( boost::bind( &NBCBuilder::Finalize, pNBCBuilders ) );
 
         boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
         factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
