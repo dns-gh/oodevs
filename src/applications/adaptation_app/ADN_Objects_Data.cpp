@@ -765,19 +765,23 @@ void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostrea
 }
 //@}
 
+//! @name ADN_CapacityInfos_Bridging
+//@{
 ADN_Objects_Data::ADN_CapacityInfos_Bridging::ADN_CapacityInfos_Bridging()
+    : type_( eBridge )
 {
-    // NOTHING
+    type_.SetParentNode( *this );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    type_ = ENT_Tr::ConvertToCrossingType( xis.attribute< std::string >( "type" ) );
 }
 
-void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& /*xos*/ )
+void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& xos )
 {
-    // NOTHING
+    xos << xml::attribute( "type", ENT_Tr::ConvertFromCrossingType( type_.GetData() ) );
 }
 
 // -----------------------------------------------------------------------------

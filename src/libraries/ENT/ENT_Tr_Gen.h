@@ -53,6 +53,7 @@ public:
     static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
     static const std::string& ConvertFromLocation( E_Location, E_Conversion = eToSim );
     static const std::string& ConvertFromActionParameter( E_ActionParameter, E_Conversion = eToSim );
+    static const std::string& ConvertFromCrossingType( E_CrossingType, E_Conversion = eToSim );
 
     // ConvertTo functions
     static E_LocationType ConvertToLocationType( const std::string& );
@@ -81,6 +82,7 @@ public:
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
     static E_Location ConvertToLocation( const std::string& );
     static E_ActionParameter ConvertToActionParameter( const std::string& );
+    static E_CrossingType ConvertToCrossingType( const std::string& );
 
 private:
     // Typedefs
@@ -111,6 +113,7 @@ private:
     typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
     typedef ENT_Tr::converter<E_Location> T_ConverterLocation;
     typedef ENT_Tr::converter<E_ActionParameter> T_ConverterActionParameter;
+    typedef ENT_Tr::converter<E_CrossingType> T_ConverterCrossingType;
 
     // Converters
     static T_ConverterLocationType LocationTypeConverter_ [];
@@ -140,6 +143,7 @@ private:
     static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
     static T_ConverterLocation LocationConverter_ [];
     static T_ConverterActionParameter ActionParameterConverter_ [];
+    static T_ConverterCrossingType CrossingTypeConverter_ [];
 };
 
 #endif // __ENT_Tr_Gen_h_

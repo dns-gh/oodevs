@@ -330,6 +330,16 @@ ENT_Tr::T_ConverterActionParameter ENT_Tr::ActionParameterConverter_[] =
     T_ConverterActionParameter( "", "", ( E_ActionParameter ) - 1 )
 };
 
+ENT_Tr::T_ConverterCrossingType ENT_Tr::CrossingTypeConverter_[] =
+{
+    T_ConverterCrossingType( "bridge"        , QT_TRANSLATE_NOOP( "ENT_Tr", "bridge" )        , eBridge ),
+    T_ConverterCrossingType( "highway"       , QT_TRANSLATE_NOOP( "ENT_Tr", "highway" )       , eHighway ),
+    T_ConverterCrossingType( "main road"     , QT_TRANSLATE_NOOP( "ENT_Tr", "main road" )     , eMainRoad ),
+    T_ConverterCrossingType( "secondary road", QT_TRANSLATE_NOOP( "ENT_Tr", "secondary road" ), eSecondaryRoad ),
+    T_ConverterCrossingType( "country road"  , QT_TRANSLATE_NOOP( "ENT_Tr", "country road" )  , eCountryRoad ),
+    T_ConverterCrossingType( "", "", ( E_CrossingType ) - 1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -363,6 +373,7 @@ void ENT_Tr::InitTranslations()
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( LocationConverter_, "ENT_Tr" );
     InitTr( ActionParameterConverter_, "ENT_Tr" );
+    InitTr( CrossingTypeConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -608,6 +619,15 @@ const std::string& ENT_Tr::ConvertFromActionParameter( E_ActionParameter nValue,
     return ENT_Tr::InverseFindInConverter( ActionParameterConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromCrossingType
+// Created: LGY 2011-07-19
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromCrossingType( E_CrossingType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( CrossingTypeConverter_, nValue, nConverterType );
+}
+
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -839,4 +859,13 @@ E_Location ENT_Tr::ConvertToLocation( const std::string& strName )
 E_ActionParameter ENT_Tr::ConvertToActionParameter( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( ActionParameterConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToCrossingType
+// Created: LGY 2011-07-19
+// -----------------------------------------------------------------------------
+E_CrossingType ENT_Tr::ConvertToCrossingType( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( CrossingTypeConverter_, strName );
 }

@@ -121,6 +121,7 @@ public:
         eLodgingCapacityPresent,
         eAltitudeModifierCapacityPresent,
         eUndergroundNetworkCapacityPresent,
+        eBridgingCapacity_Type,
         eNbrGuiElements
     };
 

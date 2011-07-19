@@ -305,9 +305,10 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eSupplyCapacityPresent ] = & supply->GetConnector();
     }
 
-    ADN_GroupBox* bridging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Bridging" ), hBox );
+    ADN_GroupBox* bridging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Bridge / Road" ), hBox );
     {
         vInfosConnectors[ eBridgingCapacityPresent ] = & bridging->GetConnector();
+        builder.AddEnumField< E_CrossingType >( bridging, tr( "Type" ), vInfosConnectors[ eBridgingCapacity_Type ], ENT_Tr::ConvertFromCrossingType );
     }
 
     ADN_GroupBox* time_limited = new ADN_GroupBox( 3, Qt::Horizontal, tr( "TimeLimited" ), hBox );

@@ -2954,8 +2954,8 @@ du tireur</translation>
         <translation>Evitable</translation>
     </message>
     <message>
-        <source>Bridging</source>
-        <translation>Permet le franchissement</translation>
+        <source>Bridge / Road</source>
+        <translation>Pont / Route</translation>
     </message>
     <message>
         <source>Buildable</source>

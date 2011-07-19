@@ -323,7 +323,11 @@
 			<xs:element name="logistic" minOccurs="0"/>
 			<xs:element name="supply" minOccurs="0"/>
 			<xs:element name="supply-route" minOccurs="0"/>
-			<xs:element name="bridging" minOccurs="0"/>
+			<xs:element name="bridging" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="type" type="T_TerrainType"/>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="lodging" minOccurs="0"/>
 			<xs:element name="medical" minOccurs="0">
 				<xs:complexType>

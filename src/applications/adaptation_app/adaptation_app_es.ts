@@ -3052,10 +3052,6 @@ tirador</translation>
         <translation>Suministro</translation>
     </message>
     <message>
-        <source>Bridging</source>
-        <translation>Puente</translation>
-    </message>
-    <message>
         <source>TimeLimited</source>
         <translation>Limitado en tiempo</translation>
     </message>
@@ -3201,6 +3197,10 @@ tirador</translation>
     </message>
     <message>
         <source>Underground network exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bridge / Road</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

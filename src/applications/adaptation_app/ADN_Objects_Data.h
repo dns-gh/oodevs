@@ -155,6 +155,9 @@ public:
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
+
+    public:
+        ADN_Type_Enum< E_CrossingType, eNbrCrossingType > type_;
     };
 
     class ADN_CapacityInfos_Buildable

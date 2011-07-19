@@ -251,10 +251,10 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="line point" name="Bridge (continuous)" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
-    <bridging/>
+    <bridging type="bridge"/>
   </object>
   <object geometry="line point" name="Bridge (discontinuous)" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
-    <bridging/>
+    <bridging type="bridge"/>
     <workable max-animator="0"/>
   </object>
   <object geometry="point" name="Firing post" symbol="G*FPAP----****X" type="firing post">
@@ -426,4 +426,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1886756209" -->
+<!-- signature="2165416919" -->

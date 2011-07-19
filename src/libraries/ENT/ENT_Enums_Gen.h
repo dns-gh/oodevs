@@ -332,4 +332,14 @@ enum E_ActionParameter
     eNbrActionParameter
 };
 
+enum E_CrossingType
+{
+    eBridge,
+    eHighway,
+    eMainRoad,
+    eSecondaryRoad,
+    eCountryRoad,
+    eNbrCrossingType
+};
+
 #endif // __ENT_Enums_Gen_h_

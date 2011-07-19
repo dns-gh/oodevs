@@ -128,7 +128,9 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Logistic >( ADN_Objects_GUI::eLogisticCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute >( ADN_Objects_GUI::eSupplyRouteCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_TimeLimited >( ADN_Objects_GUI::eTimeLimitedCapacityPresent );
-    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Bridging >( ADN_Objects_GUI::eBridgingCapacityPresent );
+    ADN_Objects_Data::ADN_CapacityInfos_Bridging& bridging = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Bridging >( ADN_Objects_GUI::eBridgingCapacityPresent );
+    vItemConnectors_[ ADN_Objects_GUI::eBridgingCapacity_Type ]->Connect( &bridging.type_, bConnect );
+
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Lodging >( ADN_Objects_GUI::eLodgingCapacityPresent );
 
     ADN_Objects_Data::ADN_CapacityInfos_Workable& workable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Workable >( ADN_Objects_GUI::eWorkableCapacityPresent );
