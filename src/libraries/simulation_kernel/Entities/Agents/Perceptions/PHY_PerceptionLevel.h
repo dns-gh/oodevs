@@ -47,6 +47,7 @@ public:
     bool IsBestLevel() const;
 
     static const PHY_PerceptionLevel& FindPerceptionLevel( unsigned int nID );
+    static const unsigned int ConvertFromMsgIdToSimId( sword::UnitIdentification_Level level );
     //@}
 
     //! @name Operators

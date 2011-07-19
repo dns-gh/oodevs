@@ -74,6 +74,27 @@ const PHY_PerceptionLevel& PHY_PerceptionLevel::FindPerceptionLevel( unsigned in
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::ConvertFromMsgIdToSimId
+// Created: JSR 2011-07-19
+// -----------------------------------------------------------------------------
+const unsigned int PHY_PerceptionLevel::ConvertFromMsgIdToSimId( sword::UnitIdentification_Level level )
+{
+    switch( level )
+    {
+    case sword::UnitIdentification::identified :
+        return identified_.GetID();
+    case sword::UnitIdentification::recognized :
+        return recognized_.GetID();
+    case sword::UnitIdentification::detected :
+        return detected_.GetID();
+    case sword::UnitIdentification::unseen :
+        return notSeen_.GetID();
+    default:
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionLevel::IsBestLevel
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------

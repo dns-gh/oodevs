@@ -891,8 +891,11 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
     MIL_AgentPion* pAgent       = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( identifier );
     MIL_Object_ABC* pObject     = pAgent? 0 : MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( identifier );
     MIL_Population* pPopulation = ( pAgent || pObject )? 0 : MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( identifier );
-    
-    unsigned int perception = message.elem( 1 ).value().Get( 0 ).quantity();
+    unsigned int perception = 0;
+    if( message.elem( 1 ).value().Get( 0 ).has_quantity() )
+        perception = message.elem( 1 ).value().Get( 0 ).quantity();
+    else if( message.elem( 1 ).value().Get( 0 ).has_enumeration() )
+        perception = PHY_PerceptionLevel::ConvertFromMsgIdToSimId( static_cast< sword::UnitIdentification_Level >( message.elem( 1 ).value().Get( 0 ).enumeration() ) );
     if ( perception < 1 || 3 < perception )
         throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_perception );
 
