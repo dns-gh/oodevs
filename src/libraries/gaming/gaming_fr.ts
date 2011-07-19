@@ -1232,8 +1232,16 @@
         <translation>Modificateur d&apos;altitude:</translation>
     </message>
     <message>
-        <source>Underground network:</source>
-        <translation>Réseau souterrain:</translation>
+        <source>Underground</source>
+        <translation>Souterrain</translation>
+    </message>
+    <message>
+        <source>Network:</source>
+        <translation>Réseau:</translation>
+    </message>
+    <message>
+        <source>Activated:</source>
+        <translation>Activé:</translation>
     </message>
 </context>
 <context>

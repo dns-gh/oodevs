@@ -482,13 +482,13 @@ sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google
         const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
         switch( actionId )
         {
-        case sword::ObjectMagicAction_Attribute_alerted:
+        case sword::ObjectMagicAction::alerted:
             OnReceiveSetAlerted( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_confined:
+        case sword::ObjectMagicAction::confined:
             OnReceiveSetConfined( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_evacuated:
+        case sword::ObjectMagicAction::evacuated:
             OnReceiveSetEvacuated( attribute );
             break;
         default:

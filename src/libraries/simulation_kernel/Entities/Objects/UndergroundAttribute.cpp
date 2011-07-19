@@ -20,6 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundAttribute )
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
 UndergroundAttribute::UndergroundAttribute()
+    : activated_( true )
 {
     // NOTHING
 }
@@ -29,7 +30,8 @@ UndergroundAttribute::UndergroundAttribute()
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
 UndergroundAttribute::UndergroundAttribute( xml::xistream& xis )
-    : network_( xis.attribute< std::string >( "network" ) )
+    : network_  ( xis.attribute< std::string >( "network" ) )
+    , activated_( true )
 {
     // NOTHING
 }
@@ -39,7 +41,8 @@ UndergroundAttribute::UndergroundAttribute( xml::xistream& xis )
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
 UndergroundAttribute::UndergroundAttribute( const sword::MissionParameter_Value& attributes )
-    : network_( attributes.list( 1 ).acharstr() )
+    : network_  ( attributes.list( 1 ).acharstr() )
+    , activated_( true )
 {
     // NOTHING
 }
@@ -49,7 +52,8 @@ UndergroundAttribute::UndergroundAttribute( const sword::MissionParameter_Value&
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
 UndergroundAttribute::UndergroundAttribute( const UndergroundAttribute& from )
-    : network_( from.network_ )
+    : network_  ( from.network_ )
+    , activated_( from.activated_ )
 {
     // NOTHING
 }
@@ -61,6 +65,7 @@ UndergroundAttribute::UndergroundAttribute( const UndergroundAttribute& from )
 UndergroundAttribute& UndergroundAttribute::operator=( const UndergroundAttribute& from )
 {
     network_ = from.network_;
+    activated_ = from.activated_;
     return *this;
 }
 
@@ -81,7 +86,8 @@ template< typename Archive >
 void UndergroundAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & network_;
+         & network_
+         & activated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,12 +112,26 @@ void UndergroundAttribute::WriteODB( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::OnUpdate
+// Created: JSR 2011-07-18
+// -----------------------------------------------------------------------------
+void UndergroundAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
+{
+    if( attribute.list_size() > 1 )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        activated_ = attribute.list( 1 ).booleanvalue();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UndergroundAttribute::SendFullState
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
 void UndergroundAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_underground()->set_network( network_ );
+    asn.mutable_underground()->set_network_name( network_ );
+    asn.mutable_underground()->set_available( activated_ );
 }
 
 // -----------------------------------------------------------------------------

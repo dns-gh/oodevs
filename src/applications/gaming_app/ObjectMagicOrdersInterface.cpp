@@ -107,8 +107,8 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         if( entity.Retrieve< Infrastructure_ABC >() )
         {
             AddValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ) );
-            AddMagic( tr( "Disable" ), SLOT( Disable() ), magicMenu );
-            AddMagic( tr( "Enable" ), SLOT( Enable() ), magicMenu );
+            AddMagic( tr( "Disable" ), SLOT( DisableInfrastructure() ), magicMenu );
+            AddMagic( tr( "Enable" ), SLOT( EnableInfrastructure() ), magicMenu );
         }
     }
     else
@@ -122,13 +122,20 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         }
         if( entity.Retrieve< FloodAttribute_ABC >() )
             AddMagic( tr( "Generate flood" ), SLOT( GenerateFlood() ), magicMenu );
-        const Object& obj = static_cast< const Object& >( entity );
-        if( obj.IsReservedObstacle() )
+        const kernel::ObstacleAttribute_ABC* obstacle = entity.Retrieve< kernel::ObstacleAttribute_ABC >();
+        if( obstacle && obstacle->IsReservedObstacle() )
         {
-            if( obj.IsReservedObstacleActivated() )
+            if( obstacle->IsReservedObstacleActivated() )
                 AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );
             else
                 AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateReservedObstacle() ), magicMenu );
+        }
+        if( const kernel::UndergroundAttribute_ABC* underground = entity.Retrieve< kernel::UndergroundAttribute_ABC >() )
+        {
+            if( underground->IsActivated() )
+                AddMagic( tr( "Deactivate exit" ), SLOT( DeactivateUndergroundExit() ), magicMenu );
+            else
+                AddMagic( tr( "Activate exit" ), SLOT( ActivateUndergroundExit() ), magicMenu );
         }
     }
 }
@@ -166,7 +173,7 @@ void ObjectMagicOrdersInterface::BuildObject()
     if( !selectedEntity_ )
         return;
     ParameterList& list = *new ParameterList( OrderParameter( "Construction", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_construction );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::construction );
     list.AddIdentifier( "Type", 0 );
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
@@ -186,20 +193,29 @@ void ObjectMagicOrdersInterface::DestroyObject()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::DoMineObject
+// Created: JSR 2011-07-13
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::DoMineObject( int quantity )
+{
+    if( !selectedEntity_ )
+        return;
+    ParameterList& list = *new ParameterList( OrderParameter( "Mine", "list", false ) );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::mine );
+    list.AddIdentifier( "Type", 0 );
+    list.AddQuantity( "Number", 0 );
+    list.AddNumeric( "Density", 0 );
+    list.AddQuantity( "Percentage", quantity );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectMagicOrdersInterface::MineObject
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::MineObject()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Mine", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_mine );
-    list.AddIdentifier( "Type", 0 );
-    list.AddQuantity( "Number", 0 );
-    list.AddNumeric( "Density", 0 );
-    list.AddQuantity( "Percentage", 100 );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    DoMineObject( 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,14 +224,21 @@ void ObjectMagicOrdersInterface::MineObject()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::SweepMineObject()
 {
+    DoMineObject( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::DoActivateReservedObstacle
+// Created: JSR 2011-07-13
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::DoActivateReservedObstacle( bool activate )
+{
     if( !selectedEntity_ )
         return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Mine", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_mine );
-    list.AddIdentifier( "Type", 0 );
-    list.AddQuantity( "Number", 0 );
-    list.AddNumeric( "Density", 0 );
-    list.AddQuantity( "Percentage", 0 );
+    ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::obstacle );
+    list.AddIdentifier( "TargetType", sword::ObstacleType::reserved );
+    list.AddBool( "Activation", activate );
     actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
 }
 
@@ -225,13 +248,7 @@ void ObjectMagicOrdersInterface::SweepMineObject()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
-    list.AddIdentifier( "TargetType", sword::ObstacleType_DemolitionTargetType_reserved );
-    list.AddBool( "Activation", true );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    DoActivateReservedObstacle( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,13 +257,7 @@ void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
-    list.AddIdentifier( "TargetType", sword::ObstacleType_DemolitionTargetType_reserved );
-    list.AddBool( "Activation", false );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    DoActivateReservedObstacle( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,44 +271,42 @@ void ObjectMagicOrdersInterface::ChangeStructuralState()
     if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
     {
         ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_structural_state );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::structural_state );
         list.AddNumeric( "Value", 0.01f * editor->text().toInt() );
         actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::Disable
-// Created: SLG 2011-01-18
+// Name: ObjectMagicOrdersInterface::PublishActivation
+// Created: JSR 2011-07-18
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::Disable()
+void ObjectMagicOrdersInterface::PublishActivation( const std::string& name, unsigned int id, bool activate )
 {
     if( !selectedEntity_ )
         return;
-    if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
-    {
-        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
-        list.AddBool( "Enabled", false );
-        actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
-    }
+    ParameterList& list = *new ParameterList( OrderParameter( name, "list", false ) );
+    list.AddIdentifier( "AttributeId", id );
+    list.AddBool( name, activate );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::Enable
+// Name: ObjectMagicOrdersInterface::DisableInfrastructure
 // Created: SLG 2011-01-18
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::Enable()
+void ObjectMagicOrdersInterface::DisableInfrastructure()
 {
-    if( !selectedEntity_ )
-        return;
-    if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
-    {
-        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
-        list.AddBool( "Enabled", true );
-        actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
-    }
+    PublishActivation( "Infrastructure", sword::ObjectMagicAction::infrastructure, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::EnableInfrastructure
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::EnableInfrastructure()
+{
+    PublishActivation( "Infrastructure", sword::ObjectMagicAction::infrastructure, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,8 +320,8 @@ void ObjectMagicOrdersInterface::ChangeThreshold()
     if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
         {
-            ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
+            ParameterList& list = *new ParameterList( OrderParameter( "Infrastructure", "list", false ) );
+            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::infrastructure );
             list.AddNumeric( "Threshold", 0.01f * editor->text().toFloat() );
             actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
         }
@@ -324,12 +333,7 @@ void ObjectMagicOrdersInterface::ChangeThreshold()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::Alert()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_alerted );
-    list.AddBool( "Alerted", true );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    PublishActivation( "Alerted", sword::ObjectMagicAction::alerted, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -338,12 +342,7 @@ void ObjectMagicOrdersInterface::Alert()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::StopAlert()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_alerted );
-    list.AddBool( "Alerted", false );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    PublishActivation( "Alerted", sword::ObjectMagicAction::alerted, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,12 +351,7 @@ void ObjectMagicOrdersInterface::StopAlert()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::Confine()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_confined );
-    list.AddBool( "Confined", true );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    PublishActivation( "Confined", sword::ObjectMagicAction::confined, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -366,12 +360,7 @@ void ObjectMagicOrdersInterface::Confine()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::StopConfine()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_confined );
-    list.AddBool( "Confined", false );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    PublishActivation( "Confined", sword::ObjectMagicAction::confined, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -380,12 +369,7 @@ void ObjectMagicOrdersInterface::StopConfine()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::Evacuate()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_evacuated );
-    list.AddBool( "Evacuated", true );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    PublishActivation( "Evacuated", sword::ObjectMagicAction::evacuated, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -394,12 +378,7 @@ void ObjectMagicOrdersInterface::Evacuate()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::StopEvacuate()
 {
-    if( !selectedEntity_ )
-        return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_evacuated );
-    list.AddBool( "Evacuated", false );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    PublishActivation( "Evacuated", sword::ObjectMagicAction::evacuated, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,7 +393,25 @@ void ObjectMagicOrdersInterface::GenerateFlood()
     if( !flood )
         return;
     ParameterList& list = *new ParameterList( OrderParameter( "Flood", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_flood );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::flood );
     actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
     flood->GenerateFlood( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::ActivateUndergroundExit
+// Created: JSR 2011-07-13
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::ActivateUndergroundExit()
+{
+    PublishActivation( "Underground", sword::ObjectMagicAction::underground, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::DeactivateUndergroundExit
+// Created: JSR 2011-07-13
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::DeactivateUndergroundExit()
+{
+    PublishActivation( "Underground", sword::ObjectMagicAction::underground, false );
 }

@@ -17,15 +17,10 @@
 namespace actions
 {
     class ActionsModel;
-    namespace parameters
-    {
-        class ParameterList;
-    }
 }
 
 namespace kernel
 {
-    class Entity_ABC;
     class Object_ABC;
     class Profile_ABC;
 }
@@ -66,8 +61,8 @@ private slots:
     void DeactivateReservedObstacle();
     void ChangeStructuralState();
     void ChangeThreshold();
-    void Disable();
-    void Enable();
+    void DisableInfrastructure();
+    void EnableInfrastructure();
     void Alert();
     void StopAlert();
     void Confine();
@@ -75,6 +70,8 @@ private slots:
     void Evacuate();
     void StopEvacuate();
     void GenerateFlood();
+    void ActivateUndergroundExit();
+    void DeactivateUndergroundExit();
     //@}
 
 private:
@@ -82,6 +79,9 @@ private:
     //@{
     int AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
+    void DoMineObject( int quantity );
+    void PublishActivation( const std::string& name, unsigned int id, bool activate );
+    void DoActivateReservedObstacle( bool activate );
     //@}
 
 private:

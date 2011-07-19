@@ -779,6 +779,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress );
     }
+    // $$$$ _RC_ JSR 2011-07-18: TODO Stress en elem( 4 )
 }
 
 // -----------------------------------------------------------------------------

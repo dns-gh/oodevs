@@ -1232,7 +1232,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Underground network:</source>
+        <source>Underground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

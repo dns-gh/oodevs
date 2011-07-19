@@ -40,6 +40,7 @@ private:
     //! @name Member data
     //@{
     std::string network_;
+    bool activated_;
     //@}
 };
 

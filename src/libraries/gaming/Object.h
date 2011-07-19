@@ -53,8 +53,6 @@ public:
     //! @name Accessors
     //@{
     const kernel::ObjectType& GetType() const;
-    bool IsReservedObstacle() const;
-    bool IsReservedObstacleActivated() const;
     //@}
 
 private:

@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual const std::string& GetNetwork() const;
+    virtual bool IsActivated() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
@@ -64,6 +65,7 @@ private:
     //@{
     kernel::Controller& controller_;
     std::string network_;
+    bool activated_;
     //@}
 };
 

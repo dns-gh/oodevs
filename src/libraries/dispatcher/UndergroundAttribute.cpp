@@ -18,6 +18,7 @@ using namespace dispatcher;
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
 UndergroundAttribute::UndergroundAttribute( const sword::ObjectAttributes& asnMsg )
+    : activated_( true )
 {
     Update( asnMsg );
 }
@@ -38,7 +39,10 @@ UndergroundAttribute::~UndergroundAttribute()
 void UndergroundAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_underground() )
-        network_ = asnMsg.underground().network();
+    {
+        network_ = asnMsg.underground().network_name();
+        activated_ = asnMsg.underground().available();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -47,5 +51,6 @@ void UndergroundAttribute::Update( const sword::ObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void UndergroundAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_underground()->set_network( network_ );
+    asnMsg.mutable_underground()->set_network_name( network_ );
+    asnMsg.mutable_underground()->set_available( activated_ );
 }

@@ -87,26 +87,6 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::IsReservedObstacle
-// Created: NLD 2007-05-23
-// -----------------------------------------------------------------------------
-bool Object::IsReservedObstacle() const
-{
-    const kernel::ObstacleAttribute_ABC* attribute = Retrieve< kernel::ObstacleAttribute_ABC >();
-    return attribute && attribute->IsReservedObstacle();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::IsReservedObstacleActivated
-// Created: NLD 2007-05-23
-// -----------------------------------------------------------------------------
-bool Object::IsReservedObstacleActivated() const
-{
-    const kernel::ObstacleAttribute_ABC* attribute = Retrieve< kernel::ObstacleAttribute_ABC >();
-    return attribute && attribute->IsReservedObstacleActivated();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Object::DisplayInSummary
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------

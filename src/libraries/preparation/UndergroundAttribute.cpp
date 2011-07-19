@@ -57,6 +57,15 @@ const std::string& UndergroundAttribute::GetNetwork() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::IsActivated
+// Created: JSR 2011-07-18
+// -----------------------------------------------------------------------------
+bool UndergroundAttribute::IsActivated() const
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UndergroundAttribute::Display
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------

@@ -62,6 +62,7 @@ namespace kernel
     {
     public:
         virtual const std::string& GetNetwork() const = 0;
+        virtual bool IsActivated() const = 0;
     };
 }
 

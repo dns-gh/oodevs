@@ -21,6 +21,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UndergroundAttribute::UndergroundAttribute( Controller& controller )
     : controller_( controller )
+    , activated_( true )
 {
     // NOTHING
 }
@@ -44,13 +45,23 @@ const std::string& UndergroundAttribute::GetNetwork() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::IsActivated
+// Created: JSR 2011-07-18
+// -----------------------------------------------------------------------------
+bool UndergroundAttribute::IsActivated() const
+{
+    return activated_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UndergroundAttribute::Display
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
 void UndergroundAttribute::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Underground network:" ), network_ );
+    displayer.Group( tools::translate( "Object", "Underground" ) )
+             .Display( tools::translate( "Object", "Network:" ), network_ )
+             .Display( tools::translate( "Object", "Activated:" ), activated_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +109,8 @@ void UndergroundAttribute::UpdateData( const T& message )
 {
     if( message.has_underground() )
     {
-        network_ = message.underground().network();
+        network_ = message.underground().network_name();
+        activated_ = message.underground().available();
         controller_.Update( *static_cast< UndergroundAttribute_ABC* >( this ) );
     }
 }

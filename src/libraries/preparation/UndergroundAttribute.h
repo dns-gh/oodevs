@@ -45,6 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual const std::string& GetNetwork() const;
+    virtual bool IsActivated() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void SetNetwork( const std::string& network );

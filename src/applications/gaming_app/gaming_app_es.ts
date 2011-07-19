@@ -2366,6 +2366,14 @@ Motivo: %3
         <source>Generate flood</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Deactivate exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate exit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OrbatToolbar</name>

@@ -21,6 +21,7 @@
 #include "MedicalTreatmentAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "StructuralCapacity.h"
+#include "UndergroundAttribute.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -302,36 +303,39 @@ sword::ObjectMagicActionAck_ErrorCode MIL_Object::OnUpdate( const google::protob
         const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
         switch( actionId )
         {
-        case sword::ObjectMagicAction_Attribute_mine:
+        case sword::ObjectMagicAction::mine:
             GetAttribute< MineAttribute >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_bypass:
+        case sword::ObjectMagicAction::bypass:
             GetAttribute< BypassAttribute >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_construction:
+        case sword::ObjectMagicAction::construction:
             GetAttribute< ConstructionAttribute >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_obstacle:
+        case sword::ObjectMagicAction::obstacle:
             GetAttribute< ObstacleAttribute >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_crossing_site:
+        case sword::ObjectMagicAction::crossing_site:
             GetAttribute< CrossingSiteAttribute >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_supply_route:
+        case sword::ObjectMagicAction::supply_route:
             GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_medical_treatment:
+        case sword::ObjectMagicAction::medical_treatment:
             GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_structural_state:
+        case sword::ObjectMagicAction::structural_state:
             Get< StructuralCapacity >().OnUpdate( attribute );
             ApplyStructuralState( Get< StructuralCapacity >().GetStructuralState() );
             break;
-        case sword::ObjectMagicAction_Attribute_infrastructure:
+        case sword::ObjectMagicAction::infrastructure:
             Get< InfrastructureCapacity >().OnUpdate( attribute );
             break;
-        case sword::ObjectMagicAction_Attribute_flood:
+        case sword::ObjectMagicAction::flood:
             GetAttribute< FloodAttribute >().GenerateFlood( true );
+            break;
+        case sword::ObjectMagicAction::underground:
+            GetAttribute< UndergroundAttribute >().OnUpdate( attribute );
             break;
         default:
             break;
@@ -358,7 +362,7 @@ void MIL_Object::UpdateState()
         || attr.has_crossing_site() || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
         || attr.has_burn() || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
         || attr.has_nbc_agent() || attr.has_effect_delay() || attr.has_resource_networks() || attr.has_flood()
-        || attr.has_lodging() || attr.has_altitude_modifier() )
+        || attr.has_lodging() || attr.has_altitude_modifier() || attr.has_underground() )
         asn.Send( NET_Publisher_ABC::Publisher() );
     xAttrToUpdate_ = 0;
 }

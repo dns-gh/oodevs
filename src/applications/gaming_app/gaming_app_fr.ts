@@ -2366,6 +2366,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Generate flood</source>
         <translation>Générer l&apos;inondation</translation>
     </message>
+    <message>
+        <source>Deactivate exit</source>
+        <translation>Désactiver l'issue</translation>
+    </message>
+    <message>
+        <source>Activate exit</source>
+        <translation>Activer l'issue</translation>
+    </message>
 </context>
 <context>
     <name>OrbatToolbar</name>
