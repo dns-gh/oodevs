@@ -1398,6 +1398,7 @@
     <target name="package.otpack.validation" description="package de validation otpack">
         <pack name="validationsw" description="validation, performance and charge exercises package">
             <include name="data/models/ada/physical/scipio-1.9.2/**"/>
+            <include name="data/models/ada/physical/scipioPIV3/**"/>            
             <include name="data/models/ada/physical/france/**"/>
             <include name="data/propagations/test/**"/>
             <include name="exercises/ValidationTests/Charge/**"/>
