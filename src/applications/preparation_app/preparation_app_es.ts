@@ -1209,6 +1209,18 @@ Do you want to save anyway?</source>
         <source>Safety</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Favorable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unfavorable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreDialog</name>
@@ -1464,6 +1476,10 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Fratricide fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force ratio types</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

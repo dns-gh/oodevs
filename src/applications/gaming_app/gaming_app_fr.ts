@@ -2368,11 +2368,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Deactivate exit</source>
-        <translation>Désactiver l'issue</translation>
+        <translation>Désactiver l&apos;issue</translation>
     </message>
     <message>
         <source>Activate exit</source>
-        <translation>Activer l'issue</translation>
+        <translation>Activer l&apos;issue</translation>
     </message>
 </context>
 <context>

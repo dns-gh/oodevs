@@ -917,7 +917,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& output )
 {
-    std::string type = load_ ? object_.GetData()->strType_.GetData() : objectName_;
+    std::string type = ( load_ && object_.GetData() ) ? object_.GetData()->strType_.GetData() : objectName_;
     output << xml::attribute( "object", type )
            << xml::attribute( "action-range", rActionRange_ );
 }

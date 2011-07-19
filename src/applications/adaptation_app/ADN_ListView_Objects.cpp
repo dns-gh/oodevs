@@ -15,6 +15,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_Objects_Wizard.h"
+#include "ADN_ComboBox.h"
 #include <qpopupmenu.h>
 
 typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
@@ -23,8 +24,10 @@ typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
 // Name: ADN_ListView_Objects constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName, WFlags f, ADN_ComboBox* pComboListUnitType, ADN_ComboBox* pComboListPropagation )
     : ADN_ListView( pParent, szName, f )
+    , pComboListUnitType_ ( pComboListUnitType ) 
+    , pComboListPropagation_ ( pComboListPropagation ) 
 {
     // Add one column.
     addColumn( tr( "Objects" ) );
@@ -100,6 +103,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     {
         vItemConnectors_[ ADN_Objects_GUI::eConstructorCapacity_DefaultConsumption ]->Connect( &constructor.nDefaultConsumption_, bConnect );
         vItemConnectors_[ ADN_Objects_GUI::eConstructorCapacity_UnitType ]->Connect( &constructor.unitType_, bConnect );
+        UpdateComboList( pComboListUnitType_, constructor.unitType_.GetData() );
 
         ADN_Objects_Data::ADN_CapacityInfos_Buildable& buildable = *static_cast< ADN_Objects_Data::ADN_CapacityInfos_Buildable* >( constructor.ptrBuildable_.get() );
         vItemConnectors_[ ADN_Objects_GUI::eBuildableCapacityPresent ]->Connect( &buildable.bPresent_, bConnect );
@@ -171,6 +175,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     ADN_Objects_Data::ADN_CapacityInfos_Propagation& propagation = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Propagation >( ADN_Objects_GUI::ePropagationCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::ePropagationCapacity_ModelType ]->Connect( &propagation.model_, bConnect );
+    UpdateComboList( pComboListPropagation_, propagation.model_.GetData() );
 
     ADN_Objects_Data::ADN_CapacityInfos_Detection& detection = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Detection >( ADN_Objects_GUI::eDetectionCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eDetectionCapacityPresent ]->Connect( &detection.bPresent_, bConnect );
@@ -244,4 +249,21 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_ListView::UpdateComboList
+// Created: MMC 2011-07-19
+// -----------------------------------------------------------------------------
+void ADN_ListView_Objects::UpdateComboList( ADN_ComboBox* pCombo, const std::string& value )
+{
+    if ( !pCombo )
+        return;
+
+    for ( int i=0; i < pCombo->count(); ++i )
+        if ( value == static_cast< std::string >( pCombo->text( i ) ) )
+        { 
+            pCombo->setCurrentItem( i ); 
+            return; 
+        }
 }
