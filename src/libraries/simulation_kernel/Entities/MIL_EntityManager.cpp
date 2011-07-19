@@ -957,7 +957,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
         if( msg.type() != UnitMagicAction::automat_creation )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
-        if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
+        if( !msg.has_parameters() || msg.parameters().elem_size() < 2 )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
         const MissionParameter& id = msg.parameters().elem( 0 );
@@ -972,7 +972,16 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
         if( groupId.value_size() != 1 || !groupId.value().Get( 0 ).has_identifier() )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
-        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get( 0 ).identifier(), "", entity, nCtx ); // auto-registration
+        std::string name;
+        if( msg.parameters().elem_size() > 2 )
+        {
+            const MissionParameter& nameParam = msg.parameters().elem( 2 );
+            if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
+                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+            name = nameParam.value().Get( 0 ).acharstr();
+        }        
+
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get( 0 ).identifier(), name, entity, nCtx ); // auto-registration
     }
     catch( std::runtime_error& )
     {
@@ -1628,7 +1637,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
 
         // Location
         const MissionParameter& location = msg.parameters().elem( 0 );
-        if( location.value_size() != 1 || !location.value().Get( 0 ).has_location() )
+        if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location() || location.value().Get( 0 ).has_point() ) )
             throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
 
         // Ammo
@@ -1649,8 +1658,15 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
 
         PHY_FireResults_Default fireResult;
         MT_Vector2D targetPos;
-        MIL_Tools::ConvertCoordMosToSim( location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
-
+        if( location.value().Get( 0 ).has_location() )
+            MIL_Tools::ConvertCoordMosToSim( location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
+        else if( location.value().Get( 0 ).has_point() )
+        {
+            const sword::Point& point = location.value().Get( 0 ).point();
+            if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
+                throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
+            MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
+        }
         pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
     }
     catch( NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
