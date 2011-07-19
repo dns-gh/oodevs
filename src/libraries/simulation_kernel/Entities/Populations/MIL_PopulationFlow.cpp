@@ -453,7 +453,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         {
             personsPassedThroughObject_ += nNbrHumans;
             double proportion = std::min( 1., static_cast< double >( personsPassedThroughObject_ ) / GetPopulation().GetAllHumans() );
-            double newArmed = armedIndividualsBeforeSplit_ * ( 1 - proportion ) +  GetPopulation().GetNewArmedIndividuals() * proportion;
+            double newArmed = armedIndividualsBeforeSplit_ * ( 1 - proportion ) +  GetPopulation().GetNewArmedIndividuals() * armedIndividualsBeforeSplit_ * proportion;
             GetPopulation().SetArmedIndividuals( newArmed );
         }
         pDestConcentration_->PushHumans( PullHumans( nNbrHumans ) );
