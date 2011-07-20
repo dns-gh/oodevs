@@ -20,10 +20,11 @@
 // Name: ScoreVariablesList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers, gui::ParametersLayer& layer, const StaticModel& staticModel )
+ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers, gui::ParametersLayer& layer,
+                                        const StaticModel& staticModel, const kernel::GlTools_ABC& tools )
     : QVBox( parent )
     , factory_( factory )
-    , wizard_( new ScoreVariableCreationWizard( this, controllers, layer, staticModel ) )
+    , wizard_( new ScoreVariableCreationWizard( this, controllers, layer, staticModel, tools ) )
     , list_( new gui::ListDisplayer< ScoreVariablesList >( this, *this, factory ) )
 {
     setMargin( 5 );
@@ -141,4 +142,13 @@ void ScoreVariablesList::OnPaste()
 {
     if( QListViewItem* item = list_->selectedItem() )
         emit Insert( item->text( 0 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariablesList::Draw
+// Created: FPO 2011-07-19
+// -----------------------------------------------------------------------------
+void ScoreVariablesList::Draw( kernel::Viewport_ABC& viewport )
+{
+    wizard_->Draw( viewport );
 }

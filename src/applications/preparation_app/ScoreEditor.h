@@ -22,6 +22,8 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
+    class Viewport_ABC;
+    class GlTools_ABC;
 }
 
 namespace gui
@@ -51,13 +53,15 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const ScoresModel& model, const StaticModel& staticModel );
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
+                          const ScoresModel& model, const StaticModel& staticModel, const kernel::GlTools_ABC& tools );
     virtual ~ScoreEditor();
     //@}
 
     //! @name Operations
     //@{
     void StartEdit( Score_ABC& score );
+    void Draw( kernel::Viewport_ABC& viewport );
     //@}
 
 signals:
@@ -97,6 +101,7 @@ private:
     ScoreVariablesList* variables_;
     ScoreGaugeConfiguration* gauge_;
     ScoreProfilesPage* profiles_;
+    const kernel::GlTools_ABC& tools_;
     //@}
 };
 

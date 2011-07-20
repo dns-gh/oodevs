@@ -21,6 +21,8 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
+    class Viewport_ABC;
+    class GlTools_ABC;
 }
 
 namespace gui
@@ -53,13 +55,16 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config );
+             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
+                          gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
+                          const kernel::GlTools_ABC& tools );
     virtual ~ScoreDialog();
     //@}
 
     //! @name Operations
     //@{
     void Load();
+    void Draw( kernel::Viewport_ABC& viewport );
     //@}
 
 private slots:
@@ -83,6 +88,7 @@ private:
     ScoreList* scores_;
     QLineEdit* editor_;
     QButton* createButton_;
+    const kernel::GlTools_ABC& tools_;
     //@}
 };
 

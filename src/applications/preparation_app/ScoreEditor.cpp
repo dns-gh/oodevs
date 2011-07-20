@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreEditor.h"
 #include "moc_ScoreEditor.cpp"
+#include "clients_kernel/SimpleLocationDrawer.h"
 #include "ScoreGaugeConfiguration.h"
 #include "ScorePrimitivesLibrary.h"
 #include "ScoreProfilesPage.h"
@@ -23,6 +24,8 @@
 #include "preparation/StaticModel.h"
 #include "preparation/ProfileSelection.h"
 #include <xeumeuleu/xml.hpp>
+
+using namespace kernel;
 
 namespace
 {
@@ -106,9 +109,11 @@ namespace
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const ScoresModel& model, const StaticModel& staticModel )
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
+                          const ScoresModel& model, const StaticModel& staticModel, const kernel::GlTools_ABC& tools )
     : QDialog( parent, "ScoreEditor" )
     , current_( 0 )
+    , tools_( tools )
 {
     setCaption( tr( "Score editor" ) );
     QGridLayout* grid = new QGridLayout( this, 3, 1, 0, 5 );
@@ -147,7 +152,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
             }
             {
                 QGroupBox* box = new QHGroupBox( tr( "Variables" ), page );
-                variables_ = new ScoreVariablesList( box, factory, controllers, layer, staticModel );
+                variables_ = new ScoreVariablesList( box, factory, controllers, layer, staticModel, tools );
                 pageLayout->addWidget( box, 1, 1 );
                 connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
                 connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );
@@ -330,4 +335,13 @@ void ScoreEditor::CheckFormula()
 void ScoreEditor::AllowCommit( bool base /*= true*/ )
 {
     ok_->setEnabled( base && name_->hasAcceptableInput() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreEditor::Draw
+// Created: FPO 2011-07-18
+// -----------------------------------------------------------------------------
+void ScoreEditor::Draw( kernel::Viewport_ABC& viewport )
+{
+    variables_->Draw( viewport );
 }

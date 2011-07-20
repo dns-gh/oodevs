@@ -46,12 +46,14 @@ class ScoreVariablesList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers, gui::ParametersLayer& layer, const StaticModel& staticModel );
+             ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers,
+                                 gui::ParametersLayer& layer, const StaticModel& staticModel, const kernel::GlTools_ABC& tools );
     virtual ~ScoreVariablesList();
     //@}
 
     //! @name Operations
     //@{
+    void Draw( kernel::Viewport_ABC& viewport );
     void StartEdit( const indicators::Variables& variables );
     indicators::Variables GetValue() const;
     //@}

@@ -24,13 +24,15 @@ namespace bfs = boost::filesystem;
 // Name: ScoreList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, ScoresModel& model, const StaticModel& staticModel, const tools::ExerciseConfig& config )
+ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
+                      ScoresModel& model, const StaticModel& staticModel, const tools::ExerciseConfig& config,
+                      const kernel::GlTools_ABC& tools )
     : QVBox       ( parent )
     , controllers_( controllers )
     , factory_    ( factory )
     , model_      ( model )
     , scores_     ( new gui::ListDisplayer< ScoreList >( this, *this, factory ) )
-    , editor_     ( new ScoreEditor( this, controllers, factory, layer, model, staticModel ) )
+    , editor_     ( new ScoreEditor( this, controllers, factory, layer, model, staticModel, tools ) )
     , config_     ( config )
 {
     layout()->setAlignment( Qt::AlignRight );
@@ -152,4 +154,13 @@ void ScoreList::Load()
 {
     if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
         generatorBox_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreList::Draw
+// Created: FPO 2011-07-19
+// -----------------------------------------------------------------------------
+void ScoreList::Draw( kernel::Viewport_ABC& viewport )
+{
+    editor_->Draw( viewport );
 }

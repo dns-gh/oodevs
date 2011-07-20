@@ -30,6 +30,9 @@ namespace gui
 namespace kernel
 {
     class Controllers;
+    class GlTools_ABC;
+    class Location_ABC;
+    class Viewport_ABC;
 }
 
 namespace indicators
@@ -54,13 +57,15 @@ class ScoreVariableCreationWizard : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::ParametersLayer& layer, const StaticModel& staticModel );
+             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::ParametersLayer& layer,
+                                          const StaticModel& staticModel, const kernel::GlTools_ABC& tools );
     virtual ~ScoreVariableCreationWizard();
     //@}
 
     //! @name Operations
     //@{
     void Create();
+    void Draw( kernel::Viewport_ABC& viewport );
     //@}
 
 signals:
@@ -97,6 +102,8 @@ private:
     gui::ValuedComboBox< std::string >* type_;
     QVGroupBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;
+    const kernel::GlTools_ABC& tools_;
+    kernel::Location_ABC* location_;
     //@}
 };
 

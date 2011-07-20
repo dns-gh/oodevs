@@ -22,6 +22,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/SimpleLocationDrawer.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
 #include "clients_kernel/Tools.h"
@@ -29,15 +30,19 @@
 #include <boost/assign/list_of.hpp>
 #include <qvgroupbox.h>
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ScoreVariableCreationWizard constructor
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::ParametersLayer& layer, const StaticModel& staticModel )
+ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Controllers& controllers, gui::ParametersLayer& layer,
+                                                          const StaticModel& staticModel, const GlTools_ABC& tools )
     : QDialog( parent )
     , controllers_( controllers )
-    , layer_( layer )
+    , layer_      ( layer )
     , staticModel_( staticModel )
+    , tools_      ( tools )
 {
     setCaption( tr( "Create variable" ) );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
@@ -141,6 +146,7 @@ void ScoreVariableCreationWizard::OnAccept()
         parameter_->RemoveFromController();
     Serializer serializer( name_->text() );
     parameter_->CommitTo( serializer );
+    parameter_.reset();
     emit VariableCreated( *serializer.pVariable_ );
     accept();
 }
@@ -320,12 +326,12 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
     boost::shared_ptr< actions::gui::Param_ABC > result;
     if( type == "unit list" )
     {
-        const kernel::OrderParameter parameter( variableName.ascii(), type.c_str(), false, 1, std::numeric_limits< unsigned int >::max() );
+        const OrderParameter parameter( variableName.ascii(), type.c_str(), false, 1, std::numeric_limits< unsigned int >::max() );
         result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     }
     else
     {
-        const kernel::OrderParameter parameter( variableName.ascii(), type.c_str(), false );
+        const OrderParameter parameter( variableName.ascii(), type.c_str(), false );
 
         if( type == "unit" )
             result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
@@ -376,4 +382,14 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
 QSize ScoreVariableCreationWizard::sizeHint() const
 {
     return QSize( 200, 200 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::Draw
+// Created: FPO 2011-07-19
+// -----------------------------------------------------------------------------
+void ScoreVariableCreationWizard::Draw( Viewport_ABC& viewport )
+{
+    if( parameter_ && isVisible() )
+        parameter_->Draw( geometry::Point2f(), viewport, tools_ );
 }

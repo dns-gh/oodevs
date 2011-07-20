@@ -11,7 +11,10 @@
 #include "ScoreDialog.h"
 #include "ScoreList.h"
 #include "moc_ScoreDialog.cpp"
+#include "clients_kernel/SimpleLocationDrawer.h"
 #include "preparation/ScoresModel.h"
+
+using namespace kernel;
 
 namespace
 {
@@ -35,9 +38,13 @@ namespace
 // Name: ScoreDialog constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config )
+ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
+                          gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
+                          const kernel::GlTools_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
-    , model_( model )
+    , model_   ( model )
+    , tools_   ( tools )
+    , location_( 0 )
 {
     setModal( false );
     setCaption( tr( "Scores" ) );
@@ -46,7 +53,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
     grid->setRowStretch( 0, 4 );
     {
         QGroupBox* box = new QHGroupBox( tr( "Scores" ), this );
-        scores_ = new ScoreList( box, controllers, factory, layer, model, staticModel, config );
+        scores_ = new ScoreList( box, controllers, factory, layer, model, staticModel, config, tools_ );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores_, SIGNAL( Show() ), SLOT( show() ) );
@@ -123,4 +130,13 @@ QSize ScoreDialog::sizeHint() const
 void ScoreDialog::Load()
 {
     scores_->Load();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreDialog::Draw
+// Created: FPO 2011-07-18
+// -----------------------------------------------------------------------------
+void ScoreDialog::Draw( kernel::Viewport_ABC& viewport )
+{
+    scores_->Draw( viewport );
 }

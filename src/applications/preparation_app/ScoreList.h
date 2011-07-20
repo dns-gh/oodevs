@@ -54,12 +54,15 @@ class ScoreList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, ScoresModel& model, const StaticModel& staticModel, const tools::ExerciseConfig& config );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
+                        ScoresModel& model, const StaticModel& staticModel, const tools::ExerciseConfig& config,
+                        const kernel::GlTools_ABC& tools );
     virtual ~ScoreList();
     //@}
 
     //! @name Operations
     //@{
+    void Draw( kernel::Viewport_ABC& viewport );
     void Load();
     //@}
 
