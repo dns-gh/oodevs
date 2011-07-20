@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BridgingCapacity )
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
 BridgingCapacity::BridgingCapacity( xml::xistream& xis )
-    : type_( TerrainData::FromString( xis.attribute< std::string >( "type" ) ) )
+    : type_( xis.attribute< std::string >( "type" ) )
 {
     // NOTHING
 }
@@ -83,6 +83,22 @@ void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.AddCapacity( new BridgingCapacity( *this ) );
 }
 
+namespace
+{
+    TerrainData Convert( const std::string& type )
+    {
+        if( type == "highway" )
+            return TerrainData::Motorway();
+        else if( type == "main road" )
+            return TerrainData::LargeRoad();
+        else if( type == "secondary road" )
+            return TerrainData::MediumRoad();
+        else if( type == "country road" )
+            return TerrainData::SmallRoad();
+        return TerrainData::Bridge();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: BridgingCapacity::Finalize
 // Created: JCR 2008-08-19
@@ -91,7 +107,7 @@ void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
     T_PointVector vector;
     CreateBridgeGeometry( object.GetLocalisation().GetPoints(), vector );
-    handler_.Reset( new TER_DynamicData( vector, type_ ) );
+    handler_.Reset( new TER_DynamicData( vector, Convert( type_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

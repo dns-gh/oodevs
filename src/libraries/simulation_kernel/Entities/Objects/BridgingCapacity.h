@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TerrainData type_;
+    const std::string type_;
     MIL_DynamicPathDataHandler handler_;
     //@}
 };
