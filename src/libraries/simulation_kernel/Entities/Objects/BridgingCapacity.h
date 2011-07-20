@@ -13,6 +13,7 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include <spatialcontainer/TerrainData.h>
 
 namespace xml
 {
@@ -64,6 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
+    TerrainData type_;
     MIL_DynamicPathDataHandler handler_;
     //@}
 };

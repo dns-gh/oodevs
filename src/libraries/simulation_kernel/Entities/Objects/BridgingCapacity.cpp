@@ -14,6 +14,7 @@
 #include "simulation_terrain/TER_DynamicData.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PathFindManager.h"
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BridgingCapacity )
 
@@ -21,7 +22,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BridgingCapacity )
 // Name: BridgingCapacity constructor
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-BridgingCapacity::BridgingCapacity( xml::xistream& /*xis*/ )
+BridgingCapacity::BridgingCapacity( xml::xistream& xis )
+    : type_( TerrainData::FromString( xis.attribute< std::string >( "type" ) ) )
 {
     // NOTHING
 }
@@ -87,9 +89,9 @@ void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
-    T_PointVector bridge;
-    CreateBridgeGeometry( object.GetLocalisation().GetPoints(), bridge );
-    handler_.Reset( new TER_DynamicData( bridge, TerrainData::Bridge() ) );
+    T_PointVector vector;
+    CreateBridgeGeometry( object.GetLocalisation().GetPoints(), vector );
+    handler_.Reset( new TER_DynamicData( vector, type_ ) );
 }
 
 // -----------------------------------------------------------------------------
