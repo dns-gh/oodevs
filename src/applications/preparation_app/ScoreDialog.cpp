@@ -44,7 +44,6 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
     : QDialog( parent, "ScoreDialog" )
     , model_   ( model )
     , tools_   ( tools )
-    , location_( 0 )
 {
     setModal( false );
     setCaption( tr( "Scores" ) );
