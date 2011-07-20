@@ -800,6 +800,16 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
         (*itComposante)->WriteArchive( output, bIsAutonomous_.GetData() );
     output << xml::end;
 
+    if( bRanges_.GetData() )
+    {
+        output << xml::start( "sensors-range" )
+                << xml::attribute( "range", nSensorRange_ )
+               << xml::end;
+        output << xml::start( "equipments-range" )
+                << xml::attribute( "range", nEquipmentRange_ )
+               << xml::end;
+    }
+
     output << xml::start( "crew-ranks" )
             << xml::start( "crew-rank" )
              << xml::attribute( "type", "Officier" )
@@ -849,16 +859,6 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
                 << xml::attribute( "width", rProbeWidth_ )
                 << xml::attribute( "length", rProbeLength_ )
                << xml::end;
-
-    if( bRanges_.GetData() )
-    {
-        output << xml::start( "sensors-range" )
-                << xml::attribute( "range", nSensorRange_ )
-               << xml::end;
-        output << xml::start( "equipments-range" )
-                << xml::attribute( "range", nEquipmentRange_ )
-               << xml::end;
-    }
 
     if( bStrengthRatioFeedbackTime_.GetData() )
         output << xml::start( "force-ratio" )
