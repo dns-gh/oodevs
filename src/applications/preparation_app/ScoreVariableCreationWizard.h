@@ -103,7 +103,6 @@ private:
     QVGroupBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;
     const kernel::GlTools_ABC& tools_;
-    kernel::Location_ABC* location_;
     //@}
 };
 
