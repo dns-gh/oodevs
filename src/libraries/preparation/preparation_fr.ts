@@ -600,7 +600,7 @@
     </message>
     <message>
         <source>The logistic base is not defined for &apos;%1&apos;</source>
-        <translation>La base logistique n'est pas définie pour &apos;%1&apos;</translation>
+        <translation>La base logistique n&apos;est pas définie pour &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

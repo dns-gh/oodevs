@@ -436,7 +436,7 @@ int PHY_RoleAction_Objects::ExtractFromStock( boost::shared_ptr< DEC_Knowledge_O
 // Name: PHY_RoleAction_Objects::Distribute
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, unsigned int quantity )
+int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, double quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )

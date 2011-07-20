@@ -10,9 +10,12 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Decision/DEC_Tools.h"
+#include "Entities/MIL_Army.h"
+#include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects_DataComputer.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
-#include "Entities/Objects/Object.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/ConstructionAttribute.h"
@@ -26,15 +29,12 @@
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
+#include "Entities/Objects/UndergroundAttribute.h"
 #include "Entities/Objects/UndergroundCapacity.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/CrossingSiteAttribute.h"
-#include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Decision/DEC_Tools.h"
-#include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects_DataComputer.h"
-#include "Entities/Agents/Actions/Objects/Operation.h"
 #include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
@@ -49,15 +49,26 @@ void DEC_KnowledgeObjectFunctions::Recon( const MIL_Agent_ABC& callerAgent, boos
 
 namespace
 {
+    MIL_Object_ABC* GetObjectKnown( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+    {
+        if( pKnowledge && pKnowledge->IsValid() )
+            return pKnowledge->GetObjectKnown();
+        return 0;
+    }
+
     template< typename Capacity >
     Capacity* IsValidObjectCapacity( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
     {
-        if( !pKnowledge || !pKnowledge->IsValid() )
-            return 0;
-
-        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-        if( pObject )
+        if( MIL_Object_ABC* pObject = GetObjectKnown( pKnowledge ) )
             return pObject->Retrieve< Capacity >();
+        return 0;
+    }
+
+    template< typename Attribute >
+    Attribute* IsValidObjectAttribute( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+    {
+        if( MIL_Object_ABC* pObject = GetObjectKnown( pKnowledge ) )
+            return pObject->RetrieveAttribute< Attribute >();
         return 0;
     }
 }
@@ -71,9 +82,9 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& caller
     if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
     {
         pCapacity->QueueForDecontamination( callerAgent );
-        return int( eQueryValid );
+        return static_cast< int >( eQueryValid );
     }
-    return int( eQueryInvalid );
+    return static_cast< int >( eQueryInvalid );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,9 +93,8 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& caller
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( const MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
-            return (*object)().CanBeAnimatedBy( callerAgent );
+    if( const MIL_Object_ABC* object = GetObjectKnown( pKnowledge ) )
+        return ( *object )().CanBeAnimatedBy( callerAgent );
     return false;
 }
 
@@ -92,17 +102,10 @@ bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_Agent_ABC& callerAge
 // Name: DEC_KnowledgeObjectFunctions::GetAnimationLevel
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
+float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-    {
-        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
-        {
-            const AnimatorAttribute* capacity = object->RetrieveAttribute< AnimatorAttribute >();
-            if( capacity )
-                return float(capacity->GetCurrent()) / float(capacity->GetMaxAnimators());
-        }
-    }
+    if( const AnimatorAttribute* attr = IsValidObjectAttribute< AnimatorAttribute >( pKnowledge ) )
+        return static_cast< float >( attr->GetAnimatorsRatio() );
     return 0.f;
 }
 
@@ -119,7 +122,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     T_KnowledgeObjectVector knownObjects;
     callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
     for( CIT_KnowledgeObjectVector it = knownObjects.begin(); it != knownObjects.end(); ++it )
-        if( location->IsIntersecting( (*it)->GetLocalisation() ) )
+        if( location->IsIntersecting( ( *it )->GetLocalisation() ) )
         {
             if( ContaminationCapacity* pContaminationCapacity = IsValidObjectCapacity< ContaminationCapacity >( *it ) )
                 pContaminationCapacity->DecontaminateZone( *location );
@@ -134,15 +137,14 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::DamageObject( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            if( (*pObject)().CanBePerceived() )
-            {
-                (*pObject)().Destroy( factor );
-                callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
-                return int( eQueryValid );
-            }
-    return int( eQueryInvalid );
+    if( MIL_Object_ABC* pObject = GetObjectKnown( pKnowledge ) )
+        if( ( *pObject )().CanBePerceived() )
+        {
+            ( *pObject )().Destroy( factor );
+            callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
+            return static_cast< int >( eQueryValid );
+        }
+    return static_cast< int >( eQueryInvalid );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,9 +153,8 @@ int DEC_KnowledgeObjectFunctions::DamageObject( MIL_Agent_ABC& callerAgent, boos
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            return (*pObject)().CanBeOccupiedBy( callerAgent );
+    if( const MIL_Object_ABC* pObject = GetObjectKnown( pKnowledge ) )
+        return ( *pObject )().CanBeOccupiedBy( callerAgent );
     return false;
 }
 
@@ -163,9 +164,8 @@ bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_Agent_ABC& callerAge
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::CanBeBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            return (*pObject)().CanBeBypassed();
+    if( const MIL_Object_ABC* pObject = GetObjectKnown( pKnowledge ) )
+        return ( *pObject )().CanBeBypassed();
     return false;
 }
 
@@ -175,14 +175,12 @@ bool DEC_KnowledgeObjectFunctions::CanBeBypassed( boost::shared_ptr< DEC_Knowled
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            if( SupplyRouteAttribute* pAttribute = pObject->RetrieveAttribute< SupplyRouteAttribute >() )
-            {
-                pAttribute->Equip();
-                return int( eQueryValid );
-            }
-    return int( eQueryInvalid );
+    if( SupplyRouteAttribute* pAttribute = IsValidObjectAttribute< SupplyRouteAttribute >( pKnowledge ) )
+    {
+        pAttribute->Equip();
+        return static_cast< int >( eQueryValid );
+    }
+    return static_cast< int >( eQueryInvalid );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,10 +189,8 @@ int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( boost::shared_ptr< DEC_Kno
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            if( PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >() )
-                pAttribute->SetDensity( density );
+    if( PopulationAttribute* pAttribute = IsValidObjectAttribute< PopulationAttribute >( pKnowledge ) )
+        pAttribute->SetDensity( density );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,10 +199,8 @@ void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( boost::shared_pt
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensityInPercentage( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float percentageDensity )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            if( PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >() )
-                pAttribute->SetDensity( pAttribute->GetDensity() * percentageDensity );
+    if( PopulationAttribute* pAttribute = IsValidObjectAttribute< PopulationAttribute >( pKnowledge ) )
+        pAttribute->SetDensity( pAttribute->GetDensity() * percentageDensity );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,10 +209,8 @@ void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensityInPercentage( boos
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            if( PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >() )
-                pAttribute->Reset();
+    if( PopulationAttribute* pAttribute = IsValidObjectAttribute< PopulationAttribute >( pKnowledge ) )
+        pAttribute->Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -228,16 +220,8 @@ void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( boost::shared_
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::IsStockSupplied( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge )
-    {
-        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-        if( pObject )
-        {
-            StockAttribute* pAttribute = pObject->RetrieveAttribute< StockAttribute >();
-            if( pAttribute )
-                return pAttribute->IsFull();
-        }
-    }
+    if( StockAttribute* pAttribute = IsValidObjectAttribute< StockAttribute >( pKnowledge ) )
+        return pAttribute->IsFull();
     return false;
 }
 
@@ -247,7 +231,7 @@ bool DEC_KnowledgeObjectFunctions::IsStockSupplied( boost::shared_ptr< DEC_Knowl
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    return( pKnowledge && pKnowledge->IsValid() );
+    return pKnowledge && pKnowledge->IsValid();
 }
 
 // -----------------------------------------------------------------------------
@@ -257,9 +241,7 @@ bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( boost::shared_ptr< DEC_Know
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        return pKnowledge->IsReservedObstacleActivated();
-    return false;
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsReservedObstacleActivated();
 }
 
 // -----------------------------------------------------------------------------
@@ -280,8 +262,8 @@ bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( boost::shared_ptr< DEC_Kn
 int DEC_KnowledgeObjectFunctions::IsBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return int( pKnowledge->IsBypassed() ? eTristate_True : eTristate_False );
-    return int( eTristate_DontKnow );
+        return static_cast< int >( pKnowledge->IsBypassed() ? eTristate_True : eTristate_False );
+    return static_cast< int >( eTristate_DontKnow );
 }
 
 // -----------------------------------------------------------------------------
@@ -315,9 +297,8 @@ std::string DEC_KnowledgeObjectFunctions::GetType( boost::shared_ptr< DEC_Knowle
 {
     if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge->GetType().GetName();
-    return "";
+    return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::GetName
@@ -327,9 +308,8 @@ std::string DEC_KnowledgeObjectFunctions::GetName( boost::shared_ptr< DEC_Knowle
 {
     if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge->GetName();
-    return "";
+    return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth
@@ -338,9 +318,8 @@ std::string DEC_KnowledgeObjectFunctions::GetName( boost::shared_ptr< DEC_Knowle
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( const CrossingSiteAttribute* attribute = pKnowledge->RetrieveAttribute< CrossingSiteAttribute >() )
-            return float( attribute->GetWidth() );
+    if( const CrossingSiteAttribute* attribute = IsValidObjectAttribute< CrossingSiteAttribute >( pKnowledge ) )
+        return static_cast< float >( attribute->GetWidth() );
     return 0.f;
 }
 
@@ -361,9 +340,9 @@ bool DEC_KnowledgeObjectFunctions::IsRecon( boost::shared_ptr< DEC_Knowledge_Obj
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( !pKnowledge || !pKnowledge->IsValid() )
-        return int( eTristate_DontKnow );
-    return int( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
+    if( pKnowledge && pKnowledge->IsValid() )
+        return static_cast< int >( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
+    return static_cast< int >( eTristate_DontKnow );
 }
 
 // -----------------------------------------------------------------------------
@@ -372,9 +351,9 @@ int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Agent_ABC& callerAgent, b
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( !pKnowledge || !pKnowledge->IsValid() )
-        return int( eTristate_DontKnow );
-    return int( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
+    if( pKnowledge && pKnowledge->IsValid() )
+        return static_cast< int >( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
+    return static_cast< int >( eTristate_DontKnow );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,10 +362,9 @@ int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_Agent_ABC& callerAgent, b
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge.get() && pKnowledge->IsValid() )
-        return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
-    else
-        return 0;
+    if( pKnowledge && pKnowledge->IsValid() )
+        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID() );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -395,15 +373,12 @@ int DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel( const MIL_Agent_ABC
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeObjectFunctions::GetConstructionLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
+    if( MIL_Object_ABC* object = GetObjectKnown( pKnowledge ) )
     {
-        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
-        {
-            const ConstructionAttribute* capacity = object->RetrieveAttribute< ConstructionAttribute >();
-            if( capacity )
-                return float(capacity->GetState());
-            return 1.f;
-        }
+        const ConstructionAttribute* attr = object->RetrieveAttribute< ConstructionAttribute >();
+        if( attr )
+            return static_cast< float >( attr->GetState() );
+        return 1.f;
     }
     return 0.f;
 }
@@ -414,19 +389,11 @@ float DEC_KnowledgeObjectFunctions::GetConstructionLevel( boost::shared_ptr< DEC
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeObjectFunctions::GetBurningLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-    {
-        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
-        {
-            const BurnAttribute* burnAttribute = object->RetrieveAttribute< BurnAttribute >();
-            const FireAttribute* fireAttribute = object->RetrieveAttribute< FireAttribute >();
-            if( burnAttribute && fireAttribute )
-            {
-                if( int maxHeat = fireAttribute->GetMaxHeat() )
-                    return burnAttribute->GetCurrentHeat() / float( maxHeat );
-            }
-        }
-    }
+    const BurnAttribute* burnAttribute = IsValidObjectAttribute< BurnAttribute >( pKnowledge );
+    const FireAttribute* fireAttribute = IsValidObjectAttribute< FireAttribute >( pKnowledge );
+    if( burnAttribute && fireAttribute )
+        if( int maxHeat = fireAttribute->GetMaxHeat() )
+            return static_cast< float >( burnAttribute->GetCurrentHeat() ) / maxHeat;
     return 0.f;
 }
 
@@ -436,15 +403,12 @@ float DEC_KnowledgeObjectFunctions::GetBurningLevel( boost::shared_ptr< DEC_Know
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
+    if( MIL_Object_ABC* object = GetObjectKnown( pKnowledge ) )
     {
-        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
-        {
-            const MineAttribute* capacity = object->RetrieveAttribute< MineAttribute >();
-            if( capacity )
-                return float(capacity->GetState());
-            return 1.f;
-        }
+        const MineAttribute* attr = object->RetrieveAttribute< MineAttribute >();
+        if( attr )
+            return static_cast< float >( attr->GetState() );
+        return 1.f;
     }
     return 0.f;
 }
@@ -455,12 +419,11 @@ float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
-        {
-            PHY_RoleAction_Objects_DataComputer dataComputer( pion, eDestroy, *object );
-            return float( dataComputer.ComputeWorkTime() );
-        }
+    if( MIL_Object_ABC* object = GetObjectKnown( pKnowledge ) )
+    {
+        PHY_RoleAction_Objects_DataComputer dataComputer( pion, eDestroy, *object );
+        return static_cast< float >( dataComputer.ComputeWorkTime() );
+    }
     return -1.0f;
 }
 
@@ -470,11 +433,7 @@ float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boos
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
-            if( object->Retrieve< ImprovableCapacity >() )
-                return true;
-    return false;
+    return IsValidObjectCapacity< ImprovableCapacity >( pKnowledge ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -487,13 +446,43 @@ bool DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit( boost::shared_ptr< 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::ActivateUndergroundNetworkExit
+// Created: JSR 2011-07-19
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::ActivateUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    UndergroundAttribute* pAttribute = IsValidObjectAttribute< UndergroundAttribute >( pKnowledge );
+    if( pAttribute && !pAttribute->IsActivated() )
+    {
+        pAttribute->SetActivation( true );
+        return static_cast< int >( eQueryValid );
+    }
+    return static_cast< int >( eQueryInvalid );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::DeactivateUndergroundNetworkExit
+// Created: JSR 2011-07-19
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::DeactivateUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    UndergroundAttribute* pAttribute = IsValidObjectAttribute< UndergroundAttribute >( pKnowledge );
+    if( pAttribute && pAttribute->IsActivated() )
+    {
+        pAttribute->SetActivation( false );
+        return static_cast< int >( eQueryValid );
+    }
+    return static_cast< int >( eQueryInvalid );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime
 // Created: JSR 2011-06-06
 // -----------------------------------------------------------------------------
-double DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pEnter, boost::shared_ptr< DEC_Knowledge_Object > pExit )
+double DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( IsValidObjectCapacity< UndergroundCapacity >( pEnter ) != 0 && IsValidObjectCapacity< UndergroundCapacity >( pExit ) != 0 )
-        return callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().EstimatedUndergroundTime( *pEnter->GetObjectKnown(), *pExit->GetObjectKnown() );
+    if( IsValidObjectCapacity< UndergroundCapacity >( pKnowledge ) )
+        return callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().EstimatedUndergroundTime( pKnowledge );
     return -1.0f;
 }
 
@@ -501,14 +490,10 @@ double DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime( const DEC_Decisio
 // Name: DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork
 // Created: JSR 2011-06-06
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pExit )
+int DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( IsValidObjectCapacity< UndergroundCapacity >( pExit ) != 0 )
-    {
-        callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().HideInUndergroundNetwork( *pExit->GetObjectKnown() );
-        return int( eQueryValid );
-    }
-    return int( eQueryInvalid );
+    bool ret = callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().HideInUndergroundNetwork( pKnowledge );
+    return static_cast< int >( ret ? eQueryValid : eQueryInvalid );
 }
 
 // -----------------------------------------------------------------------------
@@ -517,6 +502,9 @@ int DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork( DEC_Decision_ABC& ca
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork( DEC_Decision_ABC& callerAgent )
 {
-    callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().GetOutFromUndergroundNetwork();
-    return int( eQueryValid );
+    PHY_RoleAction_MovingUnderground& role = callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >();
+    if( !role.CanExitFromCurrentLocation() )
+        return static_cast< int >( eQueryInvalid );
+    role.GetOutFromUndergroundNetwork();
+    return static_cast< int >( eQueryValid );
 }

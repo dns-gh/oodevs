@@ -12,7 +12,6 @@
 
 #include "NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace detection
@@ -20,8 +19,8 @@ namespace detection
     class DetectionComputer_ABC;
 }
 
+class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
-class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  PHY_RoleAction_MovingUnderground
@@ -59,11 +58,12 @@ public:
     virtual void Clean();
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
 
-    void InitializeUndergroundMoving( const MIL_Object_ABC& firstObject, const MIL_Object_ABC& secondObject );
+    bool InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pDestination );
     bool Run();
+    bool CanExitFromCurrentLocation() const;
     bool IsUnderground() const;
-    double EstimatedUndergroundTime( const MIL_Object_ABC& firstObject, const MIL_Object_ABC& secondObject ) const;
-    void HideInUndergroundNetwork( const MIL_Object_ABC& object );
+    double EstimatedUndergroundTime( boost::shared_ptr< DEC_Knowledge_Object > pDestination ) const;
+    bool HideInUndergroundNetwork( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     void GetOutFromUndergroundNetwork();
     //@}
 
@@ -76,7 +76,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Reset();
     template< typename Archive >
     friend void save_construct_data( Archive& archive, const PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ );
     template< typename Archive >
@@ -87,9 +86,11 @@ private:
     //! @name Member data
     //@{
     MIL_Agent_ABC& pion_;
+    std::string currentNetwork_;
+    boost::shared_ptr< DEC_Knowledge_Object > pCurrentLocation_;
+    boost::shared_ptr< DEC_Knowledge_Object > pDestination_;
     double transferTime_;
-    MT_Vector2D firstPosition_;
-    MT_Vector2D secondPosition_;
+    double speed_;
     bool bHasChanged_;
     //@}
 };

@@ -235,7 +235,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_StartInterrogateUnit" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartTraverserReseauSouterrain" ] =
-        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMoveUnderground, boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMoveUnderground, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
 
     // Embarquement / debarquement
     brain[ "DEC_Agent_EstEmbarquable" ] =

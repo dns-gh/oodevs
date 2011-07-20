@@ -115,21 +115,12 @@ void AnimatorAttribute::ReleaseAnimator( const MIL_Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AnimatorAttribute::GetMaxAnimator
-// Created: JCR 2008-08-20
+// Name: AnimatorAttribute::GetAnimatorsRatio
+// Created: JSR 2011-07-20
 // -----------------------------------------------------------------------------
-unsigned int AnimatorAttribute::GetMaxAnimators() const
+double AnimatorAttribute::GetAnimatorsRatio() const
 {
-    return maxAnimators_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AnimatorAttribute::GetCurrent
-// Created: JCR 2008-08-20
-// -----------------------------------------------------------------------------
-unsigned int AnimatorAttribute::GetCurrent() const
-{
-    return static_cast< unsigned >( animators_.size() );
+    return static_cast< double >( animators_.size() ) / maxAnimators_;
 }
 
 // -----------------------------------------------------------------------------

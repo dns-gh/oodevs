@@ -15,6 +15,9 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundAttribute )
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< UndergroundAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< UndergroundAttribute > )
+
 // -----------------------------------------------------------------------------
 // Name: UndergroundAttribute constructor
 // Created: JSR 2011-07-11
@@ -70,6 +73,21 @@ UndergroundAttribute& UndergroundAttribute::operator=( const UndergroundAttribut
 }
 
 // -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::Update
+// Created: JSR 2011-07-20
+// -----------------------------------------------------------------------------
+bool UndergroundAttribute::Update( const UndergroundAttribute& rhs )
+{
+    if( network_ != rhs.network_ || activated_ != rhs.activated_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        network_ = rhs.network_;
+        activated_ = rhs.activated_;
+    }
+    return NeedUpdate( eOnUpdate );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UndergroundAttribute destructor
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
@@ -97,6 +115,15 @@ void UndergroundAttribute::serialize( Archive& file, const unsigned int )
 void UndergroundAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< UndergroundAttribute, UndergroundAttribute >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::Instanciate
+// Created: JSR 2011-07-20
+// -----------------------------------------------------------------------------
+void UndergroundAttribute::Instanciate( DEC_Knowledge_Object& object ) const
+{
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< UndergroundAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,4 +172,35 @@ void UndergroundAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
         SendFullState( asn );
         Reset( eOnUpdate );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::IsActivated
+// Created: JSR 2011-07-19
+// -----------------------------------------------------------------------------
+bool UndergroundAttribute::IsActivated() const
+{
+    return activated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::SetActivation
+// Created: JSR 2011-07-19
+// -----------------------------------------------------------------------------
+void UndergroundAttribute::SetActivation( bool activate )
+{
+    if( activated_ != activate )
+    {
+        activated_ = activate;
+        NotifyAttributeUpdated( eOnUpdate );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundAttribute::Network
+// Created: JSR 2011-07-20
+// -----------------------------------------------------------------------------
+const std::string& UndergroundAttribute::Network() const
+{
+    return network_;
 }

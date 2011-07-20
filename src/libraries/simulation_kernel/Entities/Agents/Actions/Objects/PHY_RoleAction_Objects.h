@@ -72,7 +72,7 @@ public:
     void StopOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int SupplyStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity );
     int ExtractFromStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity );
-    int Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, unsigned int quantity );
+    int Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, double quantity );
     void SetCreator( MIL_Object_ABC& object );
 
     void ResumeWorkSuspended();

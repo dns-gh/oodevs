@@ -34,7 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionDistributeObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pObject, int quantity );
+             PHY_ActionDistributeObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pObject, double quantity );
     virtual ~PHY_ActionDistributeObject();
     //@}
 
@@ -51,7 +51,7 @@ private:
     PHY_RoleAction_Objects& role_;
     boost::shared_ptr< DEC_Knowledge_Object > pObject_;
     boost::shared_ptr< DEC_Knowledge_Population > pPeople_;
-    unsigned int quantity_;
+    double quantity_;
     //@}
 };
 

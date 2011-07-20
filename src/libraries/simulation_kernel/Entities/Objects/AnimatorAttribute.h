@@ -49,8 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    unsigned int GetMaxAnimators() const;
-    unsigned int GetCurrent() const;
+    double GetAnimatorsRatio() const;
     bool AddAnimator( const MIL_Agent_ABC& agent );
     void ReleaseAnimator( const MIL_Agent_ABC& agent );
     //@}

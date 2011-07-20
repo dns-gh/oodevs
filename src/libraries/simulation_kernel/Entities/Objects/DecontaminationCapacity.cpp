@@ -107,7 +107,7 @@ bool DecontaminationCapacity::Decontaminate( MIL_Object_ABC& object, MIL_Agent_A
         return true;
 
     AnimatorAttribute& animators = object.GetAttribute< AnimatorAttribute >();
-    const double rRatioWorkers = (double)animators.GetCurrent() / (double)animators.GetMaxAnimators();
+    const double rRatioWorkers = animators.GetAnimatorsRatio();
     if( rRatioWorkers > 0 )
         roleNBC.Decontaminate( rRatioWorkers );
     return roleNBC.IsContaminated();

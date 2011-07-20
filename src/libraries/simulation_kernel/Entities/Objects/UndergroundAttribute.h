@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -28,6 +29,8 @@ namespace xml
 class UndergroundAttribute : public ObjectAttribute_ABC
                            , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< UndergroundAttribute > T_KnowledgeProxyType;
 
 public:
     //! @name Constructors/Destructor
@@ -46,6 +49,7 @@ public:
     //! @name From ObjectAttribute_ABC
     //@{
     virtual void Register( MIL_Object_ABC& object ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name ODB
@@ -60,9 +64,17 @@ public:
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
+    //! @name Getter/Setter
+    //@{
+    bool IsActivated() const;
+    void SetActivation( bool activate );
+    const std::string& Network() const;
+    //@}
+
     //! @name Assignment
     //@{
     UndergroundAttribute& operator=( const UndergroundAttribute& ); //!< Assignment operator
+    bool Update( const UndergroundAttribute& rhs );
     //@}
 
 private:

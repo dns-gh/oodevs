@@ -38,7 +38,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionMoveUnderground( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pFirstObject, boost::shared_ptr< DEC_Knowledge_Object > pSecondObject );
+             PHY_ActionMoveUnderground( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pDestination );
     virtual ~PHY_ActionMoveUnderground();
     //@}
 

@@ -13,6 +13,7 @@
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Objective.h"

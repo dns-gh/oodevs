@@ -12,11 +12,14 @@
 #include "DetectionComputer_ABC.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
+#include "Entities/Objects/UndergroundAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_MovingUnderground )
@@ -43,6 +46,7 @@ void load_construct_data( Archive& archive, PHY_RoleAction_MovingUnderground* ro
 PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion )
     : pion_        ( pion )
     , transferTime_( 0 )
+    , speed_       ( 0 )
     , bHasChanged_ ( false )
 {
     // NOTHING
@@ -65,9 +69,11 @@ template< typename Archive >
 void PHY_RoleAction_MovingUnderground::serialize( Archive& ar, const unsigned int )
 {
     ar & boost::serialization::base_object< tools::Role_ABC >( *this )
+       & currentNetwork_
+       & pCurrentLocation_
+       & pDestination_
        & transferTime_
-       & firstPosition_
-       & secondPosition_
+       & speed_
        & bHasChanged_;
 }
 
@@ -103,13 +109,18 @@ void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer_ABC
 // Name: PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving( const MIL_Object_ABC& firstObject, const MIL_Object_ABC& secondObject )
+bool PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pDestination )
 {
-    bool isUnderground = IsUnderground();
-    transferTime_ = EstimatedUndergroundTime( firstObject, secondObject );
-    firstPosition_ = firstObject.GetLocalisation().ComputeBarycenter();
-    secondPosition_ = secondObject.GetLocalisation().ComputeBarycenter();
-    bHasChanged_ = ( isUnderground != IsUnderground() );
+    if( speed_ == 0 || !IsUnderground() )
+        return false;
+    if( !pDestination || !pDestination->IsValid() )
+        return false;
+    const UndergroundAttribute* attr = pDestination_->RetrieveAttribute< UndergroundAttribute >();
+    if( !attr || attr->Network() != currentNetwork_ )
+        return false;
+    transferTime_ = EstimatedUndergroundTime( pDestination );
+    pDestination_ = pDestination;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -120,19 +131,38 @@ bool PHY_RoleAction_MovingUnderground::Run()
 {
     if( transferTime_ == 0 )
         return false;
+    if( !pDestination_ || !pDestination_->IsValid() )
+    {
+        transferTime_ = 0;
+        pDestination_.reset();
+        return false;
+    }
     transferTime_ -= MIL_Singletons::GetTime().GetTickDuration();
     if( transferTime_ <= 0 )
     {
         bHasChanged_ = true;
-        if( !secondPosition_.IsZero() )
-        {
-            pion_.GetRole< PHY_RolePion_Location >().MagicMove( secondPosition_ );
-            pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( secondPosition_ );
-        }
-        Reset();
+        MT_Vector2D destination = pDestination_->GetLocalisation().ComputeBarycenter();
+        pion_.GetRole< PHY_RolePion_Location >().MagicMove( destination );
+        pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( destination );
+        transferTime_ = 0;
+        pCurrentLocation_ = pDestination_;
+        pDestination_.reset();
         return false;
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground::CanExitFromCurrentLocation
+// Created: JSR 2011-07-20
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_MovingUnderground::CanExitFromCurrentLocation() const
+{
+    if( pCurrentLocation_ && pCurrentLocation_->IsValid() )
+        if( MIL_Object_ABC* object = pCurrentLocation_->GetObjectKnown() )
+            if( const UndergroundAttribute* pAttribute = object->RetrieveAttribute< UndergroundAttribute >() )
+                return pAttribute->IsActivated();
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,33 +171,40 @@ bool PHY_RoleAction_MovingUnderground::Run()
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_MovingUnderground::IsUnderground() const
 {
-    return transferTime_ > 0;
+    return !currentNetwork_.empty();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( const MIL_Object_ABC& firstObject, const MIL_Object_ABC& secondObject ) const
+double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( boost::shared_ptr< DEC_Knowledge_Object > pDestination ) const
 {
-    double speed = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), firstObject );
-    if( speed == 0 )
+    if( speed_ == 0 )
         return -1.f;
-    double dist = firstObject.GetLocalisation().ComputeBarycenter().Distance( secondObject.GetLocalisation().ComputeBarycenter() );
-    return dist / speed;
+    return pion_.GetRole< PHY_RolePion_Location >().GetPosition().Distance( pDestination_->GetLocalisation().ComputeBarycenter() ) / speed_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( const MIL_Object_ABC& exit )
+bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( !IsUnderground() )
-        bHasChanged_ = true;
-    transferTime_ = std::numeric_limits< double >::max();
-    firstPosition_ = exit.GetLocalisation().ComputeBarycenter();
-    secondPosition_.Reset();
+    if( IsUnderground() || !pKnowledge || pKnowledge->IsValid() )
+        return false;
+    const MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
+    if( !object )
+        return false;
+    const UndergroundAttribute* attr = object->RetrieveAttribute< UndergroundAttribute >();
+    if( !attr || !attr->IsActivated() )
+        return false;
+    bHasChanged_ = true;
+    currentNetwork_ = attr->Network();
+    speed_ = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), *object );
+    pCurrentLocation_ = pKnowledge;
+    pDestination_.reset();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -178,13 +215,12 @@ void PHY_RoleAction_MovingUnderground::GetOutFromUndergroundNetwork()
 {
     if( IsUnderground() )
     {
-        if( !firstPosition_.IsZero() )
-        {
-            pion_.GetRole< PHY_RolePion_Location >().MagicMove( firstPosition_ );
-            pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( firstPosition_ );
-        }
+        currentNetwork_.clear();
         bHasChanged_ = true;
-        Reset();
+        transferTime_ = 0;
+        speed_ = 0;
+        pCurrentLocation_.reset();
+        pDestination_.reset();
     }
 }
 
@@ -206,15 +242,3 @@ void PHY_RoleAction_MovingUnderground::SendFullState( client::UnitAttributes& ms
 {
     msg().set_underground( IsUnderground() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_MovingUnderground::Reset
-// Created: JSR 2011-06-08
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_MovingUnderground::Reset()
-{
-    transferTime_ = 0;
-    firstPosition_.Reset();
-    secondPosition_.Reset();
-}
-
