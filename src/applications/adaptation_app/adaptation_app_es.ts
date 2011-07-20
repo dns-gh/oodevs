@@ -5098,6 +5098,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation></translation>
     </message>
     <message>
+        <source>Ranges</source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Width</source>
         <translation></translation>
     </message>
@@ -5247,6 +5251,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

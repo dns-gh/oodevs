@@ -434,6 +434,9 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , vPostures_                        ( false )
     , vPointInfos_                      ( false )
     , bProbe_                           ( false )
+    , bRanges_                          ( false )
+    , nSensorRange_                     ( 0 )
+    , nEquipmentRange_                  ( 0 )
     , bStock_                           ( false )
     , stocks_                           ()
     , bStrengthRatioFeedbackTime_       ( false )
@@ -573,6 +576,10 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->bProbe_ = bProbe_.GetData();
     pCopy->rProbeLength_ = rProbeLength_.GetData();
     pCopy->rProbeWidth_ = rProbeWidth_.GetData();
+
+    pCopy->bRanges_ = bRanges_.GetData();
+    pCopy->nSensorRange_ = nSensorRange_.GetData();
+    pCopy->nEquipmentRange_ = nEquipmentRange_.GetData();
 
     pCopy->bStrengthRatioFeedbackTime_ = bStrengthRatioFeedbackTime_.GetData();
     pCopy->strengthRatioFeedbackTime_  = strengthRatioFeedbackTime_.GetData();
@@ -722,10 +729,17 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "width", rProbeWidth_ )
             >> xml::attribute( "length", rProbeLength_ )
           >> xml::end
+          >> xml::optional >> xml::start( "sensors-range" )
+            >> xml::attribute( "range", nSensorRange_ )
+          >> xml::end
+          >> xml::optional >> xml::start( "equipments-range" )
+            >> xml::attribute( "range", nEquipmentRange_ )
+          >> xml::end
           >> xml::optional >> xml::start( "force-ratio" )
             >> xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
           >> xml::end;
     bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
+    bRanges_ = nSensorRange_ != 0 || nEquipmentRange_ != 0;
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
 
     input >> xml::optional
@@ -835,6 +849,16 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
                 << xml::attribute( "width", rProbeWidth_ )
                 << xml::attribute( "length", rProbeLength_ )
                << xml::end;
+
+    if( bRanges_.GetData() )
+    {
+        output << xml::start( "sensors-range" )
+                << xml::attribute( "range", nSensorRange_ )
+               << xml::end;
+        output << xml::start( "equipments-range" )
+                << xml::attribute( "range", nEquipmentRange_ )
+               << xml::end;
+    }
 
     if( bStrengthRatioFeedbackTime_.GetData() )
         output << xml::start( "force-ratio" )

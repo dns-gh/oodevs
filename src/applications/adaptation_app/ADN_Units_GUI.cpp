@@ -117,9 +117,14 @@ void ADN_Units_GUI::Build()
     // Coup de sonde
     ADN_GroupBox* pReconGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scan" ), pGroup );
     vInfosConnectors[eCanProbe] = &pReconGroup->GetConnector();
-
     builder.AddField<ADN_EditLine_Double>( pReconGroup, tr( "Width" ), vInfosConnectors[eProbeWidth], tr( "m" ) );
     builder.AddField<ADN_EditLine_Double>( pReconGroup, tr( "Depth" ), vInfosConnectors[eProbeLength], tr( "m" ) );
+
+    // sensor & equipment ranges
+    ADN_GroupBox* pRangeGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Ranges" ), pGroup );
+    vInfosConnectors[eRanges] = &pRangeGroup->GetConnector();
+    builder.AddField<ADN_EditLine_Int>( pRangeGroup, tr( "Sensors" ), vInfosConnectors[eSensorRange], tr( "m" ) );
+    builder.AddField<ADN_EditLine_Int>( pRangeGroup, tr( "Equipments" ), vInfosConnectors[eEquipmentRange], tr( "m" ) );
 
     // Nature
     QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Nature" ), pGroup );
@@ -253,13 +258,14 @@ void ADN_Units_GUI::Build()
     pGroupLayout->addMultiCellWidget( pDistancesGroup, 1, 2, 0, 1 );
     pGroupLayout->addMultiCellWidget( postureInstallationBox, 1, 2, 2, 3 );
     pGroupLayout->addMultiCellWidget( pReconGroup, 1, 1, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pCommandGroup, 2, 2, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pRangeGroup, 2, 2, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pCommandGroup, 3, 3, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pSkillsGroup, 4, 4, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 5, 5, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pCivilianGroup, 6, 6, 4, 5 );
     pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 4, 0, 1 );
     pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 4, 2, 3 );
-    pGroupLayout->addMultiCellWidget( pSkillsGroup, 3, 3, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 4, 4, 4, 5 );
     pGroupLayout->addMultiCellWidget( pComposantesGroup, 5, 5, 0, 3 );
-    pGroupLayout->addMultiCellWidget( pCivilianGroup, 5, 5, 4, 5 );
 }
 
 // -----------------------------------------------------------------------------

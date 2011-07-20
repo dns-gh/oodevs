@@ -59,6 +59,8 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eStrengthRatioFeedbackTime ]->Connect( &pInfos->strengthRatioFeedbackTime_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eProbeWidth ]->Connect( &pInfos->rProbeWidth_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eProbeLength ]->Connect( &pInfos->rProbeLength_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eSensorRange ]->Connect( &pInfos->nSensorRange_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eEquipmentRange ]->Connect( &pInfos->nEquipmentRange_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eNatureLevel ]->Connect( &pInfos->eNatureLevel_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eNatureAtlas ]->Connect( &pInfos->eNatureAtlas_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eNatureNature ]->Connect( &pInfos->strNature_, bConnect );
@@ -70,6 +72,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eContenancesTC1 ]->Connect( &pInfos->contenancesTC1_.categories_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eStock ]->Connect( &pInfos->stocks_.vLogThresholds_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCanProbe ]->Connect( &pInfos->bProbe_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eRanges ]->Connect( &pInfos->bRanges_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eHasTC1 ]->Connect( &pInfos->bTC1_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eHasStock ]->Connect( &pInfos->bStock_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eHasStrengthRatioFeedbackTime ]->Connect( &pInfos->bStrengthRatioFeedbackTime_, bConnect );

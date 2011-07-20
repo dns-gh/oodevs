@@ -5109,6 +5109,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Scanne</translation>
     </message>
     <message>
+        <source>Ranges</source>
+        <translation>Portées</translation>
+    </message>
+    <message>
         <source>Width</source>
         <translation>Largeur</translation>
     </message>
@@ -5259,6 +5263,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Units</source>
         <translation type="unfinished">Pions</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Capteurs</translation>
     </message>
 </context>
 <context>

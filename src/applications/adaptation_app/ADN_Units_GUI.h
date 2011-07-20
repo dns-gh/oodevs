@@ -88,6 +88,9 @@ public:
         eFemalesPercent,
         eChildrenPercent,
         eNatureSymbol,
+        eRanges,
+        eEquipmentRange,
+        eSensorRange,
         eNbrGuiElements
     };
     //@}
