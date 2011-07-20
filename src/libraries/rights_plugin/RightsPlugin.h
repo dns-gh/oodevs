@@ -84,7 +84,7 @@ private:
     void OnReceive( const std::string& link, const sword::ClientToAuthentication& message );
     void OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message );
     void OnReceiveProfileCreationRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileCreationRequest& message );
-    void OnReceiveProfileUpdateRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message );
+    void OnReceiveProfileUpdateRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message, unsigned int context );
     void OnReceiveProfileDestructionRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileDestructionRequest& message );
     void OnReceiveConnectedProfilesRequest( dispatcher::ClientPublisher_ABC& client, int context, const sword::ConnectedProfilesRequest& message );
 

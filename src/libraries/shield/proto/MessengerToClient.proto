@@ -34,8 +34,7 @@ message ShapeRequestAck {
     }
 }
 message MsgShapeCreationRequestAck {
-    required ShapeRequestAck.ErrorCode error_code = 1;
-    optional int32 context = 2;       
+    required ShapeRequestAck.ErrorCode error_code = 1;      
 }
 
 message MsgShapeUpdateRequestAck {
@@ -76,7 +75,6 @@ message MarkerRequestAck {
 }
 message MsgMarkerCreationRequestAck {
     required MarkerRequestAck.ErrorCode error_code = 1;
-    optional int32 context = 2;
 }
 
 message MsgMarkerUpdateRequestAck {

@@ -66,10 +66,10 @@ public:
 
     //! @name Network
     //@{
-    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitCreationRequest& message );
+    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitCreationRequest& message, unsigned int context );
     void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitDestructionRequest& message );
     void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitUpdateRequest& message );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineCreationRequest& message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineCreationRequest& message, unsigned int context );
     void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineDestructionRequest& message );
     void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineUpdateRequest& message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;

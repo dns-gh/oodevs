@@ -95,12 +95,14 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 {
     if( GetProfile( link ).CheckRights( wrapper ) )
     {
+        unsigned int nCtx = wrapper.has_context()? wrapper.context() : 0;
+
         if( wrapper.message().has_authentication_request() )
             OnReceiveMsgAuthenticationRequest( link, wrapper.message().authentication_request() );
         if( wrapper.message().has_profile_creation_request() )
             OnReceiveProfileCreationRequest( GetPublisher( link ), wrapper.message().profile_creation_request() );
         if( wrapper.message().has_profile_update_request() )
-            OnReceiveProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request() );
+            OnReceiveProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request(), nCtx );
         if( wrapper.message().has_profile_destruction_request() )
             OnReceiveProfileDestructionRequest( GetPublisher( link ), wrapper.message().profile_destruction_request() );
         if( wrapper.message().has_connected_profiles_request() )
@@ -165,14 +167,12 @@ void RightsPlugin::OnReceiveProfileCreationRequest( ClientPublisher_ABC& client,
 // Name: RightsPlugin::OnReceiveProfileUpdateRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveProfileUpdateRequest( ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message )
+void RightsPlugin::OnReceiveProfileUpdateRequest( ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message, unsigned int context )
 {
-    unsigned int nCtx = message.has_context()? message.context() : 0;
     authentication::ProfileUpdateRequestAck ack;
     ack().set_error_code( profiles_->Update( message ) );
     ack().set_login( message.login() );
-    ack().set_context( nCtx );
-    ack.Send( client );
+    ack.Send( client, context );
 }
 
 // -----------------------------------------------------------------------------

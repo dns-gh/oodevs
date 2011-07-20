@@ -60,8 +60,7 @@ message ProfileCreationRequest {
 */
 message ProfileUpdateRequest {
     required string  login   = 1; //!< Identifies the profile to be updated. @note An error message is sent if login does not exist
-    required Profile profile = 2; //!< Describes the profile information to be updated. @note An error message is sent if login is changed to an existing one
-    optional int32 context   = 3; //!< This context allows the client application to put an unique identifier, thus allowing to track response     
+    required Profile profile = 2; //!< Describes the profile information to be updated. @note An error message is sent if login is changed to an existing one    
 }
 
 /** @struct ProfileDestructionRequest

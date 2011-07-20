@@ -58,9 +58,8 @@ NotesModel::~NotesModel()
 // Name: NotesModel::HandleRequest
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message )
+void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message, unsigned int context )
 {
-    unsigned int nCtx = message.has_context()? message.context() : 0;
     std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
     Register( note->GetId(), *note );
     if( note->GetParent() )
@@ -68,7 +67,7 @@ void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message )
         Note* parent = Find( note->GetParent() );
         parent->AddChild( note->GetId() );
     }
-    note->SendCreation( clients_, nCtx );
+    note->SendCreation( clients_, context );
     note.release();
     SaveNotes();
 }

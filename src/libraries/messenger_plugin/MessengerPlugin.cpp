@@ -93,17 +93,18 @@ void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client 
 // -----------------------------------------------------------------------------
 void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, const sword::ClientToMessenger& wrapper )
 {
+    unsigned int nCtx = wrapper.has_context()? wrapper.context() : 0;
     dispatcher::ClientPublisher_ABC& publisher = links_.GetPublisher( client );
     // Limit
     if( wrapper.message().has_limit_creation_request() )
-        model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_creation_request() );
+        model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_creation_request(), nCtx );
     if( wrapper.message().has_limit_destruction_request() )
         model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_destruction_request() );
     if( wrapper.message().has_limit_update_request() )
         model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_update_request() );
     // Lima
     if( wrapper.message().has_phase_line_creation_request() )
-        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_creation_request() );
+        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_creation_request(), nCtx );
     if( wrapper.message().has_phase_line_destruction_request() )
         model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_destruction_request() );
     if( wrapper.message().has_phase_line_update_request() )
@@ -117,7 +118,7 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
         model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_destruction_request() );
     // Drawings
     if( wrapper.message().has_shape_creation_request() )
-        model_->drawings_.HandleRequest( publisher, wrapper.message().shape_creation_request() );
+        model_->drawings_.HandleRequest( publisher, wrapper.message().shape_creation_request(), nCtx );
     if( wrapper.message().has_shape_update_request() )
         model_->drawings_.HandleRequest( publisher, wrapper.message().shape_update_request() );
     if( wrapper.message().has_shape_destruction_request() )
@@ -127,7 +128,7 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
         chat_->OnReceive( wrapper.message().text_message() );
     // Notes
     if( wrapper.message().has_marker_creation_request() )
-        model_->notes_.HandleRequest( wrapper.message().marker_creation_request() );
+        model_->notes_.HandleRequest( wrapper.message().marker_creation_request(), nCtx );
     if( wrapper.message().has_marker_update_request() )
         model_->notes_.HandleRequest( wrapper.message().marker_update_request() );
     if( wrapper.message().has_marker_destruction_request() )

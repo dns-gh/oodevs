@@ -13,8 +13,7 @@ import "Common.proto";
 
 // Drawings
 message MsgShapeCreationRequest {
-    required Common.MsgShape shape = 1;
-    optional int32 context = 2;    
+    required Common.MsgShape shape = 1; 
 }
 
 message MsgShapeUpdateRequest {
@@ -30,8 +29,7 @@ message MsgShapeDestructionRequest {
 }
 
 message MsgMarkerCreationRequest {
-    required Common.MsgMarker           marker        = 1;
-    optional int32                      context       = 2;       
+    required Common.MsgMarker           marker        = 1;      
 }
 
 message MsgMarkerUpdateRequest {

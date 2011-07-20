@@ -115,8 +115,7 @@ message LimitCreationRequestAck {
                a limit creation operation.
         @see TacticalLineAck.ErrorCode
     */
-    optional TacticalLineAck.ErrorCode error_code = 1;
-    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response        
+    optional TacticalLineAck.ErrorCode error_code = 1;    
 }
 
 /** @struct LimitUpdateRequestAck
@@ -213,8 +212,7 @@ message PhaseLineCreationAck {
                a phase line creation operation.
         @see TacticalLineAck.ErrorCode
     */
-    optional TacticalLineAck.ErrorCode error_code = 1;
-    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
+    optional TacticalLineAck.ErrorCode error_code = 1;  
 }
 
 /** @struct PhaseLineUpdateRequestAck
@@ -502,8 +500,7 @@ message ShapeCreationRequestAck {
         @see ShapeRequestAck.ErrorCode
         @bug should not be required
     */
-    required ShapeRequestAck.ErrorCode error_code = 1;
-    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
+    required ShapeRequestAck.ErrorCode error_code = 1;  
 }
 
 /** @struct ShapeUpdateRequestAck
@@ -559,7 +556,6 @@ message MarkerCreation {
         @see DateTime
     */
     required DateTime date  = 3;
-    optional int32 context  = 4; //!< This context allows the client application to put an unique identifier, thus allowing to track response        
 }
 
 /** @struct MarkerUpdate
@@ -660,8 +656,7 @@ message MarkerCreationRequestAck {
         @see MarkerRequestAck.ErrorCode
         @bug should not be required
     */
-    required MarkerRequestAck.ErrorCode error_code = 1;
-    optional int32 context = 2; //!< This context allows the client application to put an unique identifier, thus allowing to track response    
+    required MarkerRequestAck.ErrorCode error_code = 1;   
 }
 
 /** @struct MarkerUpdateRequestAck

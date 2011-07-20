@@ -91,8 +91,7 @@ void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher, unsigned in
     message().mutable_definition()->set_description( description_ );
     message().mutable_definition()->set_number( number_ );
     message().mutable_definition()->mutable_parent()->set_id( parent_ );
-    message().set_context( context );
-    message.Send( publisher );
+    message.Send( publisher, context );
 }
 
 // -----------------------------------------------------------------------------

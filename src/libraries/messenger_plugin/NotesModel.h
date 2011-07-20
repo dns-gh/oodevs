@@ -55,7 +55,7 @@ public:
 
     //! @name Requests
     //@{
-    void HandleRequest( const sword::MarkerCreationRequest&    message );
+    void HandleRequest( const sword::MarkerCreationRequest&    message, unsigned int context );
     void HandleRequest( const sword::MarkerDestructionRequest& message );
     void HandleRequest( const sword::MarkerUpdateRequest&      message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;

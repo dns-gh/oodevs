@@ -72,7 +72,7 @@ public:
 
     //! @name Requests
     //@{
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeCreationRequest&    message );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeCreationRequest&    message, unsigned int context );
     void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeDestructionRequest& message );
     void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeUpdateRequest&      message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
