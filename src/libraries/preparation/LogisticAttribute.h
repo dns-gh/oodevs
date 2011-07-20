@@ -25,6 +25,7 @@ namespace kernel
     class Controllers;
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Object_ABC;
 }
 
 namespace xml
@@ -47,8 +48,10 @@ class LogisticAttribute : public kernel::LogisticAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticAttribute( kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
-             LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
+             LogisticAttribute( kernel::PropertiesDictionary& dico, kernel::Controllers& controllers, const kernel::Object_ABC& object );
+             LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                                const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dico,
+                                kernel::Controllers& controllers, const kernel::Object_ABC& object );
     virtual ~LogisticAttribute();
     //@}
 
@@ -82,6 +85,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     LogisticBaseSuperior logisticBase_;
+    const kernel::Object_ABC& object_;
     //@}
 };
 

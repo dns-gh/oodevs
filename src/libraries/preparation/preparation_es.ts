@@ -598,6 +598,10 @@
         <source>Underground network:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The logistic base is not defined for &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
