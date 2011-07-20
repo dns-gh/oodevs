@@ -84,7 +84,7 @@
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/Logger.h"
-#include "clients_gui/MissionLayer.h"
+#include "clients_gui/MiscLayer.h"
 #include "clients_gui/ObjectList.h"
 #include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
