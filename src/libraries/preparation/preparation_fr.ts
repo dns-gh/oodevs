@@ -596,7 +596,7 @@
     </message>
     <message>
         <source>Object &apos;%1&apos; : &apos;%2&apos; is not a logistic base</source>
-        <translation>Objet &apos;%1&apos; : &apos;%2&apos; n'est pas une base logistique</translation>
+        <translation>Objet &apos;%1&apos; : &apos;%2&apos; n&apos;est pas une base logistique</translation>
     </message>
 </context>
 <context>
