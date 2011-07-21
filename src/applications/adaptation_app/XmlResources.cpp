@@ -51,5 +51,5 @@ static const char* physicalXml =
 "  <drawing-templates file=\"DrawingTemplates.xml\"/>\n"
 "  <symbols file=\"symbols.xml\"/>\n"
 "  <scores file=\"scores.xml\"/>\n"
-"  <filters file=\"Filters/Filters.xml\"/>\n"
+//"  <filters file=\"Filters/Filters.xml\"/>\n"// $$$$ ABR 2011-07-21: Commented for PIV3, will be back soon
 "</physical>";

@@ -108,7 +108,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "symbols", szSymbols_ );
     ReadFile( input, "scores", szScores_ );
     ReadOptionalFile( input, "extensions", szExtensions_ );
-    ReadOptionalFile( input, "filters", szFilters_ );
+    //ReadOptionalFile( input, "filters", szFilters_ );// $$$$ ABR 2011-07-21: Commented for PIV3, will be back soon
     input >> xml::end;
 }
 
@@ -157,7 +157,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "drawing-templates", szDrawingTemplates_ );
     WriteFile( output, "scores", szScores_ );
     WriteFile( output, "symbols", szSymbols_ );
-    WriteFile( output, "filters", szFilters_);
+    //WriteFile( output, "filters", szFilters_);// $$$$ ABR 2011-07-21: Commented for PIV3, will be back soon
     output << xml::end;
 }
 
@@ -463,7 +463,7 @@ void ADN_Project_Data::Save()
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szScores_.GetData() );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szSymbols_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szFilters_.GetData() );
+    //tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szFilters_.GetData() ); // $$$$ ABR 2011-07-21: Commented for PIV3, will be back soon
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
