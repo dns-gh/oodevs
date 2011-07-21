@@ -10,12 +10,14 @@
 #include "preparation_pch.h"
 #include "LogisticAttribute.h"
 #include "Tools.h"
+#include "LogisticLevelAttritube.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/LogisticLevel.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -107,6 +109,10 @@ void LogisticAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
    if( !logisticBase_ )
         throw std::exception( tools::translate( "Object", "The logistic base is not defined for '%1'" ).arg( object_.GetName().ascii() ) );
+   const LogisticLevelAttritube& attribute = logisticBase_->Get< LogisticLevelAttritube >();
+   if( attribute.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+        throw std::exception( tools::translate( "Object", "Object '%1' : '%2' is not a logistic base" ).arg( object_.GetName().ascii() )
+                                                                                                       .arg( logisticBase_->GetName().ascii() ) );
     xos << xml::start( "logistic-base" )
             << xml::attribute( "id", logisticBase_->GetId() )
         << xml::end;

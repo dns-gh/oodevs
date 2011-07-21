@@ -594,6 +594,10 @@
         <source>The logistic base is not defined for &apos;%1&apos;</source>
         <translation>La base logistique n&apos;est pas définie pour &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Object &apos;%1&apos; : &apos;%2&apos; is not a logistic base</source>
+        <translation>Objet &apos;%1&apos; : &apos;%2&apos; n'est pas une base logistique</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
