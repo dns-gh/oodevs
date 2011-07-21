@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Crowds.xsd">
+<populations model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="1"/>
   <time-between-nbc-applications delay="1h"/>
   <population armed-individuals="0" concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
@@ -325,4 +325,4 @@
     <repartition children="0" female="0" male="1"/>
   </population>
 </populations>
-<!-- signature="2433168995" -->
+<!-- signature="3245100817" -->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<breakdowns model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Breakdowns.xsd">
+<breakdowns model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Breakdowns.xsd">
   <diagnosis time="10m"/>
   <category name="NTI1">
     <breakdown average-repairing-time="1h" id="1" name="Panne MOB 1" type="EA" variance="30m">
@@ -317,4 +317,4 @@
     </breakdown>
   </category>
 </breakdowns>
-<!-- signature="2706145450" -->
+<!-- signature="4143669104" -->

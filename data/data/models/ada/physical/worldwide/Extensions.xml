@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<extensions model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Extensions.xsd">
+<extensions model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Extensions.xsd">
   <dictionaries/>
   <orbat-attributes>
     <attribute extends="unit;formation;automat;crowd;population" name="Id64" type="string">
@@ -30,4 +30,4 @@
   </orbat-attributes>
   <profile-attributes/>
 </extensions>
-<!-- signature="2043364408" -->
+<!-- signature="4288541661" -->

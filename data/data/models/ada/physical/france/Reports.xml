@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Reports.xsd">
+<reports model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Reports.xsd">
   <report category="information" id="0" message="ras"/>
   <report category="operational" id="1" message="En poste face a obstacle : %1">
     <parameter type="ObjectKnowledge"/>
@@ -552,4 +552,4 @@
   <report category="operational" id="3018" message="Demande un renfort de police"/>
   <report category="operational" id="3019" message="Demande un renfort médical"/>
 </reports>
-<!-- signature="0693178828" -->
+<!-- signature="2076279277" -->

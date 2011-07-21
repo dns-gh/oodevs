@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<weapons model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/WeaponSystems.xsd">
+<weapons model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/WeaponSystems.xsd">
   <weapon-system launcher="20-mm Helicopter Chain Gun" munition="20-mm Shell">
     <burst duration="5s" munition="4"/>
     <reloading duration="30s" munition="240"/>
@@ -1357,4 +1357,4 @@
     </direct-fire>
   </weapon-system>
 </weapons>
-<!-- signature="3451540462" -->
+<!-- signature="1407125876" -->

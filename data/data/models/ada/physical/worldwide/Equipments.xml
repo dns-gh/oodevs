@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<equipments model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Equipments.xsd">
+<equipments model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Equipments.xsd">
   <equipment codeEMAT6="Strategic Bomber" codeEMAT8="Strategic Bomber" codeLFRIL="Strategic Bomber" codeNNO="Strategic Bomber" comment="" id="1" name="Strategic Bomber" protection="Aircraft" size="Heavy" weight="1000">
     <speeds max="700">
       <speed terrain="unknown" value="600"/>
@@ -13655,4 +13655,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0975088300" -->
+<!-- signature="2660265335" -->
