@@ -10,13 +10,11 @@
 #ifndef __Automat_h_
 #define __Automat_h_
 
-#include "Types.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -56,7 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AutomatType& GetType() const;
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const ;
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     void Rename( const QString& name );
     //@}
 
@@ -77,7 +75,6 @@ private:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void CreateDictionary( kernel::Controller& controller );
     void InitializeSymbol() const;
-    void SetLogisticLevel( const EntityLogisticLevel& logisticLevel );
     //@}
 
 private:
@@ -86,7 +83,6 @@ private:
     const kernel::AutomatType& type_;
     mutable std::string symbol_;
     mutable std::string level_;
-    EntityLogisticLevel logisticLevel_;
     std::string color_;
     std::string nature_;
     //@}

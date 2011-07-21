@@ -26,6 +26,7 @@ Limit.cpp \
 LodgingAttribute.cpp \
 LogisticAttribute.cpp \
 LogisticBaseStates.cpp \
+LogisticLevelAttritube.cpp \
 MedicalTreatmentAttribute.cpp \
 MineAttribute.cpp \
 NBCAttribute.cpp \

@@ -23,7 +23,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/LogisticLevel.h"
+#include "LogisticLevelAttritube.h"
 #include "clients_kernel/App6Symbol.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -38,7 +38,6 @@ using namespace kernel;
 Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
     , level_( &level )
-    , logisticLevel_(&kernel::LogisticLevel::none_)
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Formation", "Formation [%1]" ).arg( id_ );
@@ -51,23 +50,16 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
-    , logisticLevel_( &kernel::LogisticLevel::none_ )
 {
     std::string level, name;
-    std::string logLevelName("none");
-
     xis >> xml::attribute( "id", ( int& ) id_ )
         >> xml::attribute( "level", level )
-        >> xml::attribute( "name", name )
-        >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
+        >> xml::attribute( "name", name );
     level_ = levels.Resolve( level.c_str() );
     name_  = name.empty() ? tools::translate( "Formation", "Formation [%1]" ).arg( id_ ) : name.c_str();
 
-    xis >> xml::optional >> xml::attribute( "nature", nature_ );
-
-    logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
-
-    xis >> xml::optional >> xml::attribute( "color", color_ );
+    xis >> xml::optional >> xml::attribute( "nature", nature_ )
+        >> xml::optional >> xml::attribute( "color", color_ );
 
     idManager.Lock( id_ );
     RegisterSelf( *this );
@@ -153,8 +145,6 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "level", level_->GetName().ascii() );
     if (nature_.length() > 0)
         xos << xml::attribute( "nature", nature_ );
-    if( *logisticLevel_ != kernel::LogisticLevel::none_ )
-        xos << xml::attribute( "logistic-level", logisticLevel_->GetName());
     if (color_.length() > 0)
         xos << xml::attribute( "color", color_ );
 }
@@ -169,7 +159,6 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), logisticLevel_, *this, &Formation::SetLogisticLevel );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,40 +167,7 @@ void Formation::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 {
-    return *logisticLevel_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::SerializeAttributes
-// Created: NLD 2011-01-29
-// -----------------------------------------------------------------------------
-void Formation::SetLogisticLevel( const EntityLogisticLevel& logisticLevel )
-{
-    //$$$ FACTORISER AVEC Automat
-    if( (*logisticLevel) == kernel::LogisticLevel::none_ )
-    {
-        const kernel::LogisticHierarchiesBase* logHierarchy = Retrieve< kernel::LogisticHierarchiesBase >();
-        if( logHierarchy )
-        {
-            tools::Iterator< const kernel::Entity_ABC& > children = logHierarchy->CreateSubordinateIterator();
-            if( children.HasMoreElements() )
-            {
-                int result = QMessageBox::question( 0, tools::translate( "Application", "SWORD" )
-                                                    , tools::translate( "Application", "By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?" )                                                    , QMessageBox::Yes, QMessageBox::Cancel );
-                if( result == QMessageBox::Cancel )
-                    return;
-
-                while( children.HasMoreElements() )
-                {
-                    const kernel::Entity_ABC& entity = children.NextElement();
-                    LogisticBaseStates* logEntityHierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< kernel::LogisticHierarchiesBase >() ) );
-                    if( logEntityHierarchy )
-                        logEntityHierarchy->SetSuperior( LogisticBaseSuperior() );
-                }
-            }
-        }
-    }
-    logisticLevel_ = logisticLevel;
+    return Get< LogisticLevelAttritube >().GetLogisticLevel();
 }
 
 // -----------------------------------------------------------------------------

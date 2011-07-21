@@ -66,21 +66,6 @@
     </message>
 </context>
 <context>
-    <name>Application</name>
-    <message>
-        <source>SWORD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>By disabling the logistic function on this automat, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Automat</name>
     <message>
         <source>Info/Identifier</source>
@@ -89,10 +74,6 @@
     <message>
         <source>Info/Name</source>
         <translation>Info/Nombre</translation>
-    </message>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -203,10 +184,6 @@
     <message>
         <source>Formation [%1]</source>
         <translation>Formacion [%1]</translation>
-    </message>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -326,6 +303,21 @@
     </message>
     <message>
         <source>Logistic/LogisticBase/Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticLevelAttritube</name>
+    <message>
+        <source>Info/LogisticLevel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

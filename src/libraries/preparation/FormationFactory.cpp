@@ -14,6 +14,7 @@
 #include "TacticalLines.h"
 #include "EntityIntelligences.h"
 #include "LogisticBaseStates.h"
+#include "LogisticLevelAttritube.h"
 #include "FormationPositions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
@@ -64,6 +65,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
+    formation->Attach( *new LogisticLevelAttritube( *formation, dico ) );
     formation->Polish();
     return formation;
 }
@@ -83,6 +85,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( xis ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
+    formation->Attach( *new LogisticLevelAttritube( xis, *formation, true, dico ) );
     formation->Polish();
     return formation;
 }
