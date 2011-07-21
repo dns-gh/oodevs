@@ -81,10 +81,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
             >> xml::optional >> text_
         >> xml::end;
     pLivingArea_.reset( new MIL_LivingArea( xis, nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_, *this ) );
-    pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
-    type_.InitializeSchedule( *pSchedule_ );
     pArmy_->RegisterInhabitant( *this );
-    pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,6 +115,18 @@ MIL_Inhabitant::~MIL_Inhabitant()
 {
     if( pArmy_ )
         pArmy_->UnregisterInhabitant( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::Finalize
+// Created: LMT 2011-07-21
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::Finalize()
+{
+    pLivingArea_->Finalize();
+    pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
+    type_.InitializeSchedule( *pSchedule_ );
+    pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
 }
 
 // -----------------------------------------------------------------------------

@@ -49,6 +49,15 @@ MIL_Inhabitant& InhabitantFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
 }
 
 // -----------------------------------------------------------------------------
+// Name: InhabitantFactory::Finalize
+// Created: LMT 2011-07-21
+// -----------------------------------------------------------------------------
+void InhabitantFactory::Finalize()
+{
+    Apply( boost::bind( &MIL_Inhabitant::Finalize, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: InhabitantFactory::load
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------

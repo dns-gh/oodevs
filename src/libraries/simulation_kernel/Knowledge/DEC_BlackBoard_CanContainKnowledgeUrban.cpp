@@ -65,14 +65,10 @@ namespace
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban constructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& army, bool fromCheckpoint /*= false*/ )
+DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& army )
     : army_( army )
 {
-    if( !fromCheckpoint && MIL_AgentServer::IsInitialized() )
-    {
-        UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, army, urbanBlocks_ );
-        MIL_AgentServer::GetWorkspace().GetUrbanModel().Accept( visitor );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -114,6 +110,16 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
         DEC_Knowledge_Urban* knowledge = it->second.get();
         file << knowledge;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeUrban::Finalize
+// Created: LMT 2011-07-21
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeUrban::Finalize()
+{
+    UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, army_, urbanBlocks_ );
+    MIL_AgentServer::GetWorkspace().GetUrbanModel().Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------

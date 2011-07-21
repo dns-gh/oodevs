@@ -296,8 +296,6 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
     config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) );
 
-    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
-
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
@@ -311,11 +309,9 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
             if( !automate.CheckComposition() )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
         }
-
     // Disengage automata for frozen mode
     if( config.IsFrozenMode() )
         automateFactory_->Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
-    UpdateStates();
 }
 
 // -----------------------------------------------------------------------------
@@ -452,6 +448,18 @@ void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
     if( !pArmy )
         xis.error( "Unknown side" );
     pArmy->InitializeDiplomacy( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::Finalize
+// Created: LMT 2011-07-21
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::Finalize()
+{
+    armyFactory_->Finalize();
+    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
+    inhabitantFactory_->Finalize();
+    UpdateStates();
 }
 
 // -----------------------------------------------------------------------------

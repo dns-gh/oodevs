@@ -32,7 +32,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& knowledgeGroup, bool fromCheckpoint = false );
+    explicit DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& knowledgeGroup );
     virtual ~DEC_BlackBoard_CanContainKnowledgeUrban();
     //@}
 
@@ -46,6 +46,7 @@ public:
 
     //! @name Operations
     //@{
+    void Finalize();
     boost::shared_ptr< DEC_Knowledge_Urban > CreateKnowledgeUrban( const MIL_Army_ABC& army, const UrbanObjectWrapper& object );
     void DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge );
     //@}
@@ -126,7 +127,7 @@ inline void load_construct_data( Archive& archive, DEC_BlackBoard_CanContainKnow
 {
     MIL_Army_ABC* army;
     archive >> army;
-    ::new( blackboard )DEC_BlackBoard_CanContainKnowledgeUrban( *army, true );
+    ::new( blackboard )DEC_BlackBoard_CanContainKnowledgeUrban( *army );
 }
 
 #endif // __DEC_BlackBoard_CanContainKnowledgeUrban_h_

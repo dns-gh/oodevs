@@ -427,6 +427,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowl
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::Finalize
+// Created: LMT 2011-07-21
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_Army::Finalize()
+{
+    pKnowledgeUrbanContainer_->Finalize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::IsKnown
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------

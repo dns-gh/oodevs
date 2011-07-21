@@ -85,6 +85,7 @@ public:
 
     //! @name Queries
     //@{
+    void Finalize();
     bool IsKnown( const MIL_Object_ABC& oject ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
     void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;

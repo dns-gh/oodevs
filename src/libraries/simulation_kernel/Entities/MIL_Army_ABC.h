@@ -96,6 +96,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Finalize() = 0;
+
     virtual bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const = 0;
 
     virtual E_Tristate IsAFriend( const MIL_Army_ABC& army ) const = 0;

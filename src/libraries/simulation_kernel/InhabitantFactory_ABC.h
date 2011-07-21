@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual MIL_Inhabitant& Create( xml::xistream& xis, MIL_Army_ABC& army ) = 0;
+    virtual void Finalize() = 0;
     //@}
 
     //! @name CheckPoint

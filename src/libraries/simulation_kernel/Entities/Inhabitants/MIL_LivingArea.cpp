@@ -47,7 +47,25 @@ MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, MI
     xis >> xml::start( "living-area" )
             >> xml::list( "urban-block", *this, &MIL_LivingArea::ReadUrbanBlock )
         >> xml::end;
-    DistributeHumans( population );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::Finalize
+// Created: LMT 2011-07-21
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::Finalize()
+{
+    for( std::set< unsigned long >::const_iterator it = urbanIds_.begin(); it != urbanIds_.end(); ++it )
+    {
+        const unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( *it );
+        UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
+        if( !object )
+            throw std::runtime_error( "Error in loading living urban block of population" );
+        blocks_.push_back( new MIL_LivingAreaBlock( *object ) );
+        object->Register( *pInhabitant_ );
+        object->AddLivingArea( *this );
+    }
+    DistributeHumans( population_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,13 +112,7 @@ void MIL_LivingArea::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis )
 {
-    const unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) );
-    UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
-    if( !object )
-        xis.error( "Error in loading living urban block of population" );
-    blocks_.push_back( new MIL_LivingAreaBlock( *object ) );
-    object->Register( *pInhabitant_ );
-    object->AddLivingArea( *this );
+    urbanIds_.insert( xis.attribute< unsigned int >( "id" ) );
 }
 
 // -----------------------------------------------------------------------------

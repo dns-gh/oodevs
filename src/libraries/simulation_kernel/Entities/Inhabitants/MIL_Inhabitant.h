@@ -51,6 +51,11 @@ public:
     virtual ~MIL_Inhabitant();
     //@}
 
+    //! @name Initialization
+    //@{
+    virtual void Finalize();
+    //@}
+
     //! @name Accessors
     //@{
     unsigned int GetID() const;
@@ -88,6 +93,7 @@ public:
     bool IsAlerted( const TER_Localisation& localisation ) const;
     void ReStartMotivation();
     //@}
+
 protected:
     //! @name Constructor
     //@{

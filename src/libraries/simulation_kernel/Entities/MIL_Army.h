@@ -127,6 +127,7 @@ public:
     E_Tristate IsAnEnemy( const DEC_Knowledge_Population & knowledge ) const;
     virtual E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
     virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const;
+    virtual void Finalize();
     //@}
 
     //! @name Accessors

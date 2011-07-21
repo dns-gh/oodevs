@@ -149,6 +149,7 @@ public:
     void SendStateToNewClient() const;
     void Update();
     void Clean();
+    void Finalize();
     //@}
 
     //! @external helper

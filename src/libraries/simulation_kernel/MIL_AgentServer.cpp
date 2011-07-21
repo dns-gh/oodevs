@@ -82,8 +82,9 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
-        pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
         pEntityManager_->ReadODB( config_ );
+        pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
+        pEntityManager_->Finalize();
         Resume( nextPause_ );
     }
     timerManager_.Register( *this );

@@ -60,6 +60,11 @@ public:
     virtual ~MIL_LivingArea();
     //@}
 
+    //! @name Initialization
+    //@{
+    virtual void Finalize();
+    //@}
+
     //! @name Operations
     //@{
     virtual void StartMotivation( const std::string& motivation );
@@ -120,6 +125,7 @@ private:
     //@{
     MIL_Inhabitant* pInhabitant_;
     unsigned long population_;
+    std::set< unsigned long > urbanIds_;
     T_Blocks blocks_;
     T_BlockCompositions startingBlocks_;
     T_BlockCompositions currentStartingState_;
