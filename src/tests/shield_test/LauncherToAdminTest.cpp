@@ -147,11 +147,13 @@ BOOST_FIXTURE_TEST_CASE( session_notification_from_launcher_is_converted, Contex
 
 BOOST_FIXTURE_TEST_CASE( connected_clients_update_from_launcher_is_converted, ContextFixture< sword::LauncherToAdmin > )
 {
+    content.mutable_connected_clients_update()->set_exercise( "exo" );
+    content.mutable_connected_clients_update()->set_session( "session" );
     sword::ClientConnectionNotification::ClientConnection* connection1 = content.mutable_connected_clients_update()->add_connection();
     connection1->set_connected(true); connection1->set_login("login1");
     sword::ClientConnectionNotification::ClientConnection* connection2 = content.mutable_connected_clients_update()->add_connection();
     connection2->set_connected(false); connection2->set_login("login2");
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { connected_clients_update { connection { login: \"login1\" connected: true } connection { login: \"login2\" connected: false } } }" ) );
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { connected_clients_update { exercise: \"exo\" session: \"session\" connection { login: \"login1\" connected: true } connection { login: \"login2\" connected: false } } }" ) );
     converter.ReceiveLauncherToAdmin( msg );
 }
 

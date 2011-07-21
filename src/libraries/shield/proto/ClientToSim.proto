@@ -64,13 +64,16 @@ message MsgUnitMagicAction {
         formation_creation                = 28;
         crowd_creation                    = 29;
         log_supply_pull_flow              = 30;
-        create_wound                      = 31;
-        inhabitant_change_health_state    = 32;
-        inhabitant_change_affinities      = 33;
-        unit_change_affinities            = 34;
-        change_extension                  = 35;
-        change_critical_intelligence      = 36;
-        transfer_equipment                = 37;
+        inhabitant_change_health_state    = 31;
+        inhabitant_change_affinities      = 32;
+        unit_change_affinities            = 33;
+        change_extension                  = 34;
+        change_critical_intelligence      = 35;
+        transfer_equipment                = 36;
+        knowledge_creation                = 37;
+        change_equipment_human_size       = 38;
+        create_breakdowns                 = 39;
+        create_wounds                     = 40;
     }
    required Common.Tasker               tasker     = 1;
    required Type                        type       = 2;
@@ -83,7 +86,6 @@ message MsgKnowledgeMagicAction {
         update_party           = 1;
         update_party_parent    = 2;
         update_type            = 3;
-        add_knowledge          = 4;
     }
    required Common.KnowledgeGroupId     knowledge_group = 1;
    required Type                        type            = 2;
@@ -151,11 +153,19 @@ message MsgControlCheckPointDeleteRequest {
    required string checkpoint = 1;
 }
 
+message MsgControlExportRequest {
+   required string directory_name = 1;
+}
+
 message MsgControlCheckPointListRequest {}
 
 
 message MsgControlEnableVisionCones {
    required bool vision_cones = 1;
+}
+
+message MsgOrderStream {
+    required string serialized_order = 1;
 }
 
 message MsgClientToSim {
@@ -179,6 +189,8 @@ message MsgClientToSim {
        optional MsgMagicAction                         magic_action                         = 17;
        optional MsgControlCheckPointListRequest        control_checkpoint_list_request      = 18;
        optional MsgControlCheckPointDeleteRequest      control_checkpoint_delete_request    = 19;
+       optional MsgControlExportRequest                control_export                       = 20;
+       optional MsgOrderStream                         order_stream                         = 21;
     }
     optional int32   context = 1;
     required Content message = 2;

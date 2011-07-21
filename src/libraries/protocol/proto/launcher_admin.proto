@@ -237,7 +237,9 @@ message ClientConnectionNotification {
        required string login = 1;
        required bool   connected = 2;
     }
-    repeated ClientConnection connection = 1;
+    required string           exercise   = 1;
+    required string           session    = 2;
+    repeated ClientConnection connection = 3;
 }
 
 /** @struct LauncherToAdmin

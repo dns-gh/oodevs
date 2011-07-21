@@ -60,8 +60,6 @@ inline void ConvertSimple(const T& from, T* to)
         bool dummy = injective; \
         if( dummy && fromField->enum_type()->value_count() > toField->enum_type()->value_count() ) \
                throw std::runtime_error( "source values cannot all be mapped to destination values of field '" BOOST_PP_STRINGIZE( to_field ) "'" ); \
-        if( fromField->enum_type()->value_count() != int( boost::assign::map_list_of mapping .size() ) ) \
-                throw std::runtime_error( "missing values pair in mapping for field '" BOOST_PP_STRINGIZE( from_field ) "'" ); \
         if( from.has_##from_field() ) \
             to->set_##to_field( ConvertEnum( from.from_field(), boost::assign::map_list_of mapping ) ); \
     }

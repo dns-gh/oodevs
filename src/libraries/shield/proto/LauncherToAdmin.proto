@@ -225,11 +225,15 @@ message MsgSessionNotification {
     message ProfileUpdate { 
         required Profile profile = 1;
     }
+    message ExportCreation { 
+        required string    export_directory = 1;
+    }
     message Notification {
         optional UnitUpdate         unit_update          = 1;
         optional FormationUpdate    formation_update     = 2;
         optional ProfileCreation    profile_creation     = 3;
         optional ProfileUpdate      profile_update       = 4;
+        optional ExportCreation     export_creation      = 5;
     }
     required string         exercise = 1; 
     required string         session  = 2; 
@@ -249,7 +253,9 @@ message MsgClientConnectionNotification {
        required string login = 1;
        required bool   connected = 2;
     }
-    repeated ClientConnection connection = 1;
+    required string           exercise   = 1;
+    required string           session    = 2;
+    repeated ClientConnection connection = 3;
 }
 
 message MsgLauncherToAdmin {

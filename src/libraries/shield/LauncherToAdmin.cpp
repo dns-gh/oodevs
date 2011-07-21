@@ -282,5 +282,7 @@ namespace
 // -----------------------------------------------------------------------------
 void LauncherToAdmin::Convert( const sword::ClientConnectionNotification& from, MsgsLauncherToAdmin::MsgClientConnectionNotification* to )
 {
+    CONVERT( exercise );
+    CONVERT( session );
     CONVERT_SIMPLE_LIST( connection, ConvertConnectionNotification );
 }

@@ -171,13 +171,15 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
                         ( MsgsClientToSim::MsgUnitMagicAction::formation_creation, sword::UnitMagicAction::formation_creation )
                         ( MsgsClientToSim::MsgUnitMagicAction::crowd_creation, sword::UnitMagicAction::crowd_creation )
                         ( MsgsClientToSim::MsgUnitMagicAction::log_supply_pull_flow, sword::UnitMagicAction::log_supply_pull_flow )
-                        ( MsgsClientToSim::MsgUnitMagicAction::create_wound, sword::UnitMagicAction::create_wound )
                         ( MsgsClientToSim::MsgUnitMagicAction::inhabitant_change_health_state, sword::UnitMagicAction::inhabitant_change_health_state )
                         ( MsgsClientToSim::MsgUnitMagicAction::inhabitant_change_affinities, sword::UnitMagicAction::inhabitant_change_affinities )
+                        ( MsgsClientToSim::MsgUnitMagicAction::unit_change_affinities, sword::UnitMagicAction::unit_change_affinities )
                         ( MsgsClientToSim::MsgUnitMagicAction::change_extension, sword::UnitMagicAction::change_extension )
                         ( MsgsClientToSim::MsgUnitMagicAction::change_critical_intelligence, sword::UnitMagicAction::change_critical_intelligence )
-                        ( MsgsClientToSim::MsgUnitMagicAction::unit_creation, sword::UnitMagicAction::unit_creation )
-                        ( MsgsClientToSim::MsgUnitMagicAction::transfer_equipment, sword::UnitMagicAction::transfer_equipment ) );
+                        ( MsgsClientToSim::MsgUnitMagicAction::transfer_equipment, sword::UnitMagicAction::transfer_equipment )
+                        ( MsgsClientToSim::MsgUnitMagicAction::change_equipment_human_size, sword::UnitMagicAction::change_equipment_human_size )
+                        ( MsgsClientToSim::MsgUnitMagicAction::create_breakdowns, sword::UnitMagicAction::create_breakdowns )
+                        ( MsgsClientToSim::MsgUnitMagicAction::create_wounds, sword::UnitMagicAction::create_wounds ) );
     switch( from.type() )
     {
         case MsgsClientToSim::MsgUnitMagicAction::change_logistic_links:    ConvertUnitMagicActionChangeLogisticLinks  ( from.parameters(), *to->mutable_parameters() ); break;
@@ -228,8 +230,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgKnowledgeMagicAction
     CONVERT_ENUM( type, ( MsgsClientToSim::MsgKnowledgeMagicAction::enable, sword::KnowledgeMagicAction::enable )
                         ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party, sword::KnowledgeMagicAction::update_party )
                         ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent, sword::KnowledgeMagicAction::update_party_parent )
-                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_type, sword::KnowledgeMagicAction::update_type )
-                        ( MsgsClientToSim::MsgKnowledgeMagicAction::add_knowledge, sword::KnowledgeMagicAction::add_knowledge ) );
+                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_type, sword::KnowledgeMagicAction::update_type ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 

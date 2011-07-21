@@ -451,6 +451,20 @@ void Converter::ReceiveClientToReplay( const MsgsClientToReplay::MsgClientToRepl
 void Converter::ReceiveClientToSim( const MsgsClientToSim::MsgClientToSim& msg )
 {
     sword::ClientToSim out;
+    if( msg.message().has_unit_magic_action() && msg.message().unit_magic_action().type() == MsgsClientToSim::MsgUnitMagicAction::knowledge_creation )
+    {
+        if ( msg.message().unit_magic_action().parameters().elem_size() == 2 )
+        {
+            out.mutable_message()->mutable_knowledge_magic_action()->set_type( sword::KnowledgeMagicAction::add_knowledge );
+            unsigned int knowledgeGroupId = msg.message().unit_magic_action().parameters().elem( 1 ).value( 0 ).knowledgegroup().id();
+            unsigned int unitId = msg.message().unit_magic_action().tasker().unit().id();
+            out.mutable_message()->mutable_knowledge_magic_action()->mutable_knowledge_group()->set_id( knowledgeGroupId );
+            out.mutable_message()->mutable_knowledge_magic_action()->mutable_parameters()->add_elem()->add_value()->set_identifier( unitId );
+            out.mutable_message()->mutable_knowledge_magic_action()->mutable_parameters()->add_elem()->add_value()->set_enumeration( msg.message().unit_magic_action().parameters().elem( 1 ).value( 0 ).enumeration() );
+            server_.Send( out );
+        }
+        return;
+    }
     FORWARD( server_, ClientToSimulation, control_change_time_factor )
     FORWARD( server_, ClientToSimulation, control_stop )
     FORWARD( server_, ClientToSimulation, control_pause )
