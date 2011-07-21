@@ -1036,54 +1036,6 @@ void SimulationToClient::Convert( const sword::UnitVisionCones& from, MsgsSimToC
 
 // -----------------------------------------------------------------------------
 // Name: SimulationToClient::Convert
-// Created: MCO 2010-11-10
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::UnitDetection& from, MsgsSimToClient::MsgUnitDetection* to )
-{
-    CONVERT_ID( observer );
-    CONVERT_ID( detected_unit );
-    CONVERT_UNIT_VISIBILITY( current_visibility );
-    CONVERT_UNIT_VISIBILITY( max_visibility );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-10
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::ObjectDetection& from, MsgsSimToClient::MsgObjectDetection* to )
-{
-    CONVERT_ID( observer );
-    CONVERT_ID( detected_object );
-    CONVERT_UNIT_VISIBILITY( visibility );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-10
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::CrowdConcentrationDetection& from, MsgsSimToClient::MsgCrowdConcentrationDetection* to )
-{
-    CONVERT_ID( observer );
-    CONVERT_ID( detected_crowd );
-    CONVERT_ID( detected_concentration );
-    CONVERT_UNIT_VISIBILITY( visibility );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-10
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::CrowdFlowDetection& from, MsgsSimToClient::MsgCrowdFlowDetection* to )
-{
-    CONVERT_ID( observer );
-    CONVERT_ID( detected_crowd );
-    CONVERT_ID( detected_flow );
-    if( from.has_visible_flow() && from.visible_flow().has_location() )
-        ConvertLocation( from.visible_flow().location(), to->mutable_visible_flow()->mutable_location() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
 // Created: MCO 2010-11-22
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::UnitOrder& from, Common::MsgUnitOrder* to )
@@ -1901,18 +1853,6 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-24
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::FolkCreation& from, MsgsSimToClient::MsgFolkCreation* to )
-{
-    CONVERT_LIST( profiles, elem, Assign );
-    CONVERT_LIST( activities, elem, Assign );
-    CONVERT( container_size );
-    CONVERT( edge_number );
-}
-
 namespace
 {
     template< typename From, typename To >
@@ -1923,16 +1863,6 @@ namespace
         for( int i = 0; i < from.crowd_occupation().size(); ++i )
             to->add_crowd_occupation( from.crowd_occupation( i ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-24
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::FolkGraphUpdate& from, MsgsSimToClient::MsgFolkGraphUpdate* to )
-{
-    for( int i = 0; i < from.elem().size(); ++i )
-        ConvertFolkGraphEdgeUpdate( from.elem( i ), to->add_elem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -2097,17 +2027,6 @@ void SimulationToClient::Convert( const sword::UrbanKnowledgeUpdate& from, MsgsS
 void SimulationToClient::Convert( const sword::StockResource& from, Common::StockResource* to )
 {
     ConvertStockResource( from, to );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-24
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::UrbanDetection& from, MsgsSimToClient::MsgUrbanDetection* to )
-{
-    CONVERT_ID( observer );
-    CONVERT_ID( object );
-    CONVERT_UNIT_VISIBILITY( visibility );
 }
 
 namespace

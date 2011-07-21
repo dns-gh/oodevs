@@ -824,45 +824,6 @@ BOOST_FIXTURE_TEST_CASE( unit_vision_cones_to_client_is_converted, ContextFixtur
     converter.ReceiveSimToClient( msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( unit_detection_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_unit_detection()->mutable_observer()->set_id( 7 );
-    content.mutable_unit_detection()->mutable_detected_unit()->set_id( 8 );
-    content.mutable_unit_detection()->set_current_visibility( sword::UnitVisibility::detected );
-    content.mutable_unit_detection()->set_max_visibility( sword::UnitVisibility::recorded );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_detection { observer { id: 7 } detected_unit { id: 8 } current_visibility: detected max_visibility: recorded } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( object_detection_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_object_detection()->mutable_observer()->set_id( 7 );
-    content.mutable_object_detection()->mutable_detected_object()->set_id( 8 );
-    content.mutable_object_detection()->set_visibility( sword::UnitVisibility::detected );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { object_detection { observer { id: 7 } detected_object { id: 8 } visibility: detected } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( crowd_concentration_detection_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_crowd_concentration_detection()->mutable_observer()->set_id( 7 );
-    content.mutable_crowd_concentration_detection()->mutable_detected_crowd()->set_id( 8 );
-    content.mutable_crowd_concentration_detection()->mutable_detected_concentration()->set_id( 9 );
-    content.mutable_crowd_concentration_detection()->set_visibility( sword::UnitVisibility::detected );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_concentration_detection { observer { id: 7 } detected_crowd { id: 8 } detected_concentration { id: 9 } visibility: detected } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( crowd_flow_detection_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_crowd_flow_detection()->mutable_observer()->set_id( 7 );
-    content.mutable_crowd_flow_detection()->mutable_detected_crowd()->set_id( 8 );
-    content.mutable_crowd_flow_detection()->mutable_detected_flow()->set_id( 9 );
-    FillLocation( content.mutable_crowd_flow_detection()->mutable_visible_flow()->mutable_location() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_flow_detection { observer { id: 7 } detected_crowd { id: 8 } detected_flow { id: 9 } visible_flow { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
 namespace
 {
     template< typename O >
@@ -1479,38 +1440,6 @@ BOOST_FIXTURE_TEST_CASE( crowd_flow_knowledge_update_to_client_is_converted, Con
     converter.ReceiveSimToClient( msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( crowd_folk_creation_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_folk_creation()->mutable_profiles()->add_elem( "profile1" );
-    content.mutable_folk_creation()->mutable_profiles()->add_elem( "profile2" );
-    content.mutable_folk_creation()->mutable_activities()->add_elem( "activity1" );
-    content.mutable_folk_creation()->mutable_activities()->add_elem( "activity2" );
-    content.mutable_folk_creation()->set_container_size( 3 );
-    content.mutable_folk_creation()->set_edge_number( 4 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { folk_creation { profiles { elem: \"profile1\" elem: \"profile2\" } activities { elem: \"activity1\" elem: \"activity2\" } container_size: 3 edge_number: 4 } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
-namespace
-{
-    template< typename U >
-    void FillFolkGraphEdgeUpdate( U* u )
-    {
-        u->set_folk( 7 );
-        u->set_shape_id( 8 );
-        u->add_crowd_occupation( 9 );
-        u->add_crowd_occupation( 10 );
-    }
-}
-
-BOOST_FIXTURE_TEST_CASE( folk_graph_update_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    FillFolkGraphEdgeUpdate( content.mutable_folk_graph_update()->add_elem() );
-    FillFolkGraphEdgeUpdate( content.mutable_folk_graph_update()->add_elem() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { folk_graph_update { elem { folk: 7 shape_id: 8 crowd_occupation: 9 crowd_occupation: 10 } elem { folk: 7 shape_id: 8 crowd_occupation: 9 crowd_occupation: 10 } } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
 BOOST_FIXTURE_TEST_CASE( control_global_weather_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_control_global_weather_ack();
@@ -1631,15 +1560,6 @@ BOOST_FIXTURE_TEST_CASE( stock_resource_to_client_is_converted, ContextFixture< 
 {
     FillStockResource( content.mutable_stock_resource() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { stock_resource { resource { id: 42 } current: 43 maximum: 44 } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( urban_detection_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_urban_detection()->mutable_observer()->set_id( 7 );
-    content.mutable_urban_detection()->mutable_object()->set_id( 8 );
-    content.mutable_urban_detection()->set_visibility( sword::UnitVisibility::detected );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_detection { observer { id: 7 } object { id: 8 } visibility: detected } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

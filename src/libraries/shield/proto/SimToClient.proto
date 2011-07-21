@@ -463,9 +463,9 @@ message MsgUnitAttributes {
     optional Common.UnitId                      reinforced_unit               = 14;
     optional bool                               mort                          = 15;
     optional bool                               neutralise                    = 16;
-    optional bool                               mode_furtif_actif             = 17;
-    optional bool                               underground                   = 18;    
-    optional bool                               embarque                      = 19;
+    optional bool                               mode_furtif_actif             = 17;  
+    optional bool                               embarque                      = 18;
+    optional bool                               underground                   = 19;  
     optional bool                               transporteurs_disponibles     = 20;
     optional Posture                            posture_old                   = 21;
     optional Posture                            posture_new                   = 22;
@@ -489,14 +489,14 @@ message MsgUnitAttributes {
     optional Common.EnumUnitTiredness           fatigue                       = 40;
     optional Common.EnumUnitMorale              moral                         = 41;
     optional Common.EnumUnitExperience          experience                    = 42;
-    optional Common.UnitId                      surrendered_unit              = 43;
-    optional bool                               prisonnier                    = 44;
-    optional bool                               refugie_pris_en_compte        = 45;
-    optional Satisfaction                       satisfaction                  = 46;
-    optional string                             critical_intelligence         = 47; //implemented in PIV3 
-    optional Common.PartyAdhesions              adhesions                     = 48;
-    optional Common.Extension                   extension                     = 49;
-    optional Common.EnumUnitStress              stress                        = 50;
+    optional Common.EnumUnitStress              stress                        = 43;
+    optional Common.UnitId                      surrendered_unit              = 44;
+    optional bool                               prisonnier                    = 45;
+    optional bool                               refugie_pris_en_compte        = 46;
+    optional Satisfaction                       satisfaction                  = 47;
+    optional string                             critical_intelligence         = 48;
+    optional Common.PartyAdhesions              adhesions                     = 49;
+    optional Common.Extension                   extension                     = 50;
 }
 
 message MsgUnitPathFind {
@@ -702,33 +702,6 @@ message MsgUnitVisionCones {
    required Common.UnitId   unit       = 1;
    required SeqOfVisionCone cones      = 2;
    required float           elongation = 3;
-}
-
-message MsgUnitDetection {
-   required Common.UnitId             observer           = 1;
-   required Common.UnitId             detected_unit      = 2;
-   required Common.EnumUnitVisibility current_visibility = 3;
-   required Common.EnumUnitVisibility max_visibility     = 4;
-}
-
-message MsgObjectDetection {
-   required Common.UnitId             observer        = 1;
-   required Common.ObjectId           detected_object = 2;
-   required Common.EnumUnitVisibility visibility      = 3;
-}
-
-message MsgCrowdConcentrationDetection {
-   required Common.UnitId               observer               = 1;
-   required Common.CrowdId              detected_crowd         = 2;
-   required Common.CrowdConcentrationId detected_concentration = 3;
-   required Common.EnumUnitVisibility   visibility             = 4;
-}
-
-message MsgCrowdFlowDetection {
-   required Common.UnitId      observer            = 1;
-   required Common.CrowdId     detected_crowd      = 2;
-   required Common.CrowdFlowId detected_flow       = 3;
-   required Common.MsgPath     visible_flow        = 4;
 }
 
 message MsgObjectCreation {
@@ -1093,28 +1066,6 @@ message MsgCrowdFlowKnowledgeDestruction {
     required Common.KnowledgeGroupId       knowledge_group = 3;
 }
 
-// Folk
-message MsgFolkCreation_profiles {
-   repeated string elem = 1;
-}
-message MsgFolkCreation_activities {
-   repeated string elem = 1;
-}
-message MsgFolkCreation {
-   required MsgFolkCreation_profiles    profiles       = 1;
-   required MsgFolkCreation_activities  activities     = 2;
-   optional int32                       container_size = 3;
-   optional int32                       edge_number    = 4;
-}
-message MsgFolkGraphEdgeUpdate {
-   required int32 folk             = 1;
-   required int32 shape_id         = 2;
-   repeated int32 crowd_occupation = 3;
-}
-message MsgFolkGraphUpdate {
-   repeated MsgFolkGraphEdgeUpdate elem = 1;
-}
-
 // Checkpoints
 message MsgControlCheckPointSetFrequencyAck {}
 message MsgControlCheckPointSaveNowAck      {}
@@ -1171,12 +1122,6 @@ message MsgUrbanCreation {
    required Common.MsgLocation location     = 3;
    optional UrbanAttributes    attributes   = 4;
    optional Common.ObjectId    parent       = 5;
-}
-
-message MsgUrbanDetection {
-    required Common.UnitId             observer     = 1;
-    required Common.ObjectId           object       = 2;
-    required Common.EnumUnitVisibility visibility   = 3;
 }
 
 message MsgUrbanUpdate {
@@ -1355,10 +1300,6 @@ message MsgSimToClient {
         optional MsgDecisionalState                             decisional_state                               = 55;
         optional MsgDebugPoints                                 debug_points                                   = 56;
         optional MsgUnitVisionCones                             unit_vision_cones                              = 57;
-        optional MsgUnitDetection                               unit_detection                                 = 58;
-        optional MsgObjectDetection                             object_detection                               = 59;
-        optional MsgCrowdConcentrationDetection                 crowd_concentration_detection                  = 60;
-        optional MsgCrowdFlowDetection                          crowd_flow_detection                           = 61;
         optional Common.MsgUnitOrder                            unit_order                                     = 62;
         optional Common.MsgAutomatOrder                         automat_order                                  = 63;
         optional Common.MsgCrowdOrder                           crowd_order                                    = 64;
@@ -1398,8 +1339,6 @@ message MsgSimToClient {
         optional MsgCrowdFlowKnowledgeCreation                  crowd_flow_knowledge_creation                  = 98;
         optional MsgCrowdFlowKnowledgeDestruction               crowd_flow_knowledge_destruction               = 99;
         optional MsgCrowdFlowKnowledgeUpdate                    crowd_flow_knowledge_update                    = 100;
-        optional MsgFolkCreation                                folk_creation                                  = 101;
-        optional MsgFolkGraphUpdate                             folk_graph_update                              = 102;
         optional MsgControlGlobalWeatherAck                     control_global_weather_ack                     = 103;
         optional MsgControlLocalWeatherAck                      control_local_weather_ack                      = 104;
         optional MsgControlCheckPointSaveBegin                  control_checkpoint_save_begin                  = 105;
@@ -1412,7 +1351,6 @@ message MsgSimToClient {
         optional MsgUrbanKnowledgeCreation                      urban_knowledge_creation                       = 112;
         optional MsgUrbanKnowledgeUpdate                        urban_knowledge_update                         = 113;
         optional Common.StockResource                           stock_resource                                 = 115;
-        optional MsgUrbanDetection                              urban_detection                                = 116;
         optional MsgKnowledgeGroupMagicActionAck                knowledge_group_magic_action_ack               = 117;
         optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 118;
         optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 119;

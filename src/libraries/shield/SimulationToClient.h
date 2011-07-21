@@ -68,7 +68,6 @@ public:
     static void Convert( const sword::ControlStopAck& from, MsgsSimToClient::MsgControlStopAck* to );
     static void Convert( const sword::CrowdConcentrationCreation& from, MsgsSimToClient::MsgCrowdConcentrationCreation* to );
     static void Convert( const sword::CrowdConcentrationDestruction& from, MsgsSimToClient::MsgCrowdConcentrationDestruction* to );
-    static void Convert( const sword::CrowdConcentrationDetection& from, MsgsSimToClient::MsgCrowdConcentrationDetection* to );
     static void Convert( const sword::CrowdConcentrationKnowledgeCreation& from, MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation* to );
     static void Convert( const sword::CrowdConcentrationKnowledgeDestruction& from, MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction* to );
     static void Convert( const sword::CrowdConcentrationKnowledgeUpdate& from, MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate* to );
@@ -77,7 +76,6 @@ public:
     static void Convert( const sword::CrowdDestruction& from, MsgsSimToClient::MsgCrowdDestruction* to );
     static void Convert( const sword::CrowdFlowCreation& from, MsgsSimToClient::MsgCrowdFlowCreation* to );
     static void Convert( const sword::CrowdFlowDestruction& from, MsgsSimToClient::MsgCrowdFlowDestruction* to );
-    static void Convert( const sword::CrowdFlowDetection& from, MsgsSimToClient::MsgCrowdFlowDetection* to );
     static void Convert( const sword::CrowdFlowKnowledgeCreation& from, MsgsSimToClient::MsgCrowdFlowKnowledgeCreation* to );
     static void Convert( const sword::CrowdFlowKnowledgeDestruction& from, MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction* to );
     static void Convert( const sword::CrowdFlowKnowledgeUpdate& from, MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate* to );
@@ -91,8 +89,6 @@ public:
     static void Convert( const sword::DebugPoints& from, MsgsSimToClient::MsgDebugPoints* to );
     static void Convert( const sword::DecisionalState& from, MsgsSimToClient::MsgDecisionalState* to );
     static void Convert( const sword::Explosion& from, MsgsSimToClient::MsgExplosion* to );
-    static void Convert( const sword::FolkCreation& from, MsgsSimToClient::MsgFolkCreation* to );
-    static void Convert( const sword::FolkGraphUpdate& from, MsgsSimToClient::MsgFolkGraphUpdate* to );
     static void Convert( const sword::FormationCreation& from, MsgsSimToClient::MsgFormationCreation* to );
     static void Convert( const sword::FormationDestruction& from, MsgsSimToClient::MsgFormationDestruction* to );
     static void Convert( const sword::FormationUpdate& from, MsgsSimToClient::MsgFormationUpdate* to );
@@ -122,7 +118,6 @@ public:
     static void Convert( const sword::MagicActionAck& from, MsgsSimToClient::MsgMagicActionAck* to );
     static void Convert( const sword::ObjectCreation& from, MsgsSimToClient::MsgObjectCreation* to );
     static void Convert( const sword::ObjectDestruction& from, MsgsSimToClient::MsgObjectDestruction* to );
-    static void Convert( const sword::ObjectDetection& from, MsgsSimToClient::MsgObjectDetection* to );
     static void Convert( const sword::ObjectKnowledgeCreation& from, MsgsSimToClient::MsgObjectKnowledgeCreation* to );
     static void Convert( const sword::ObjectKnowledgeDestruction& from, MsgsSimToClient::MsgObjectKnowledgeDestruction* to );
     static void Convert( const sword::ObjectKnowledgeUpdate& from, MsgsSimToClient::MsgObjectKnowledgeUpdate* to );
@@ -146,7 +141,6 @@ public:
     static void Convert( const sword::UnitCreation& from, MsgsSimToClient::MsgUnitCreation* to );
     static void Convert( const sword::UnitCreationRequestAck& from, MsgsSimToClient::MsgUnitCreationRequestAck* to );
     static void Convert( const sword::UnitDestruction& from, MsgsSimToClient::MsgUnitDestruction* to );
-    static void Convert( const sword::UnitDetection& from, MsgsSimToClient::MsgUnitDetection* to );
     static void Convert( const sword::UnitEnvironmentType& from, MsgsSimToClient::MsgUnitEnvironmentType* to );
     static void Convert( const sword::UnitKnowledgeCreation& from, MsgsSimToClient::MsgUnitKnowledgeCreation* to );
     static void Convert( const sword::UnitKnowledgeDestruction& from, MsgsSimToClient::MsgUnitKnowledgeDestruction* to );
@@ -156,7 +150,6 @@ public:
     static void Convert( const sword::UnitPathFind& from, MsgsSimToClient::MsgUnitPathFind* to );
     static void Convert( const sword::UnitVisionCones& from, MsgsSimToClient::MsgUnitVisionCones* to );
     static void Convert( const sword::UrbanCreation& from, MsgsSimToClient::MsgUrbanCreation* to );
-    static void Convert( const sword::UrbanDetection& from, MsgsSimToClient::MsgUrbanDetection* to );
     static void Convert( const sword::UrbanKnowledgeCreation& from, MsgsSimToClient::MsgUrbanKnowledgeCreation* to );
     static void Convert( const sword::UrbanKnowledgeUpdate& from, MsgsSimToClient::MsgUrbanKnowledgeUpdate* to );
     static void Convert( const sword::UrbanUpdate& from, MsgsSimToClient::MsgUrbanUpdate* to );
