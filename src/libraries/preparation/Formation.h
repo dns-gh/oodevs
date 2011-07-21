@@ -74,7 +74,6 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-//    void SetLogisticLevel( const EntityLogisticLevel& logisticLevel );
     void InitializeSymbol() const;
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     bool HasAggregatedSubordinate() const;
@@ -84,7 +83,6 @@ private:
     //! @name Member data
     //@{
     const kernel::HierarchyLevel_ABC* level_;
-//    EntityLogisticLevel logisticLevel_;
     std::string color_;
     std::string nature_;
     mutable std::string symbolPath_;
