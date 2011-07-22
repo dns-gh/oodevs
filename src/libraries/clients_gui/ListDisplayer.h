@@ -47,6 +47,7 @@ public:
     ListDisplayer& AddColumn( const QString& column ) {
         addColumn( column );
         itemDisplayer_.AddColumn( column );
+        setSorting( columns() - 1, true );
         setResizeMode( QListView::LastColumn );
         return *this;
     }
