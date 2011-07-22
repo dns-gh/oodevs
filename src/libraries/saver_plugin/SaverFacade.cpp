@@ -23,10 +23,10 @@ using namespace plugins::saver;
 // Name: SaverFacade constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-SaverFacade::SaverFacade( dispatcher::Model_ABC& model, const dispatcher::Config& config )
+SaverFacade::SaverFacade( dispatcher::ClientPublisher_ABC& client, dispatcher::Model_ABC& model, const dispatcher::Config& config )
     : config_         ( config )
     , model_          ( model )
-    , saver_          ( new Saver( config ) )
+    , saver_          ( new Saver( client, config ) )
     , keyFrameIndex_  ( 0 )
     , fragmentIndex_  ( 0 )
     , firstTick_      ( true )

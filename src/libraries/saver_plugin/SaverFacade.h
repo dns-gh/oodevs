@@ -23,6 +23,7 @@ namespace sword
 namespace dispatcher
 {
     class Config;
+    class ClientPublisher_ABC;
     class Model_ABC;
 }
 
@@ -43,7 +44,7 @@ class SaverFacade : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SaverFacade( dispatcher::Model_ABC& model, const dispatcher::Config& config );
+             SaverFacade( dispatcher::ClientPublisher_ABC& client, dispatcher::Model_ABC& model, const dispatcher::Config& config );
     virtual ~SaverFacade();
     //@}
 
@@ -53,12 +54,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SaverFacade( const SaverFacade& );            //!< Copy constructor
-    SaverFacade& operator=( const SaverFacade& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void StartFrame( const sword::SimToClient& message );

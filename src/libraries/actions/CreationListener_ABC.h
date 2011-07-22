@@ -10,6 +10,8 @@
 #ifndef __CreationListener_ABC_h_
 #define __CreationListener_ABC_h_
 
+#include <boost/shared_ptr.hpp>
+
 namespace sword
 {
     class Listener;

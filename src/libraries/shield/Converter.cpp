@@ -181,6 +181,9 @@ void Converter::ReceiveReplayToClient( const sword::ReplayToClient& msg )
     MsgsReplayToClient::MsgReplayToClient out;
     FORWARD( client_, ReplayToClient, control_replay_information )
     FORWARD( client_, ReplayToClient, control_skip_to_tick_ack )
+    FORWARD( client_, ReplayToClient, time_table_request_ack )
+    FORWARD( client_, ReplayToClient, time_table )
+    FORWARD( client_, ReplayToClient, new_data_chunk_notification )
     FORWARD( client_, SimulationToClient, control_stop_ack )
     FORWARD( client_, SimulationToClient, control_pause_ack )
     FORWARD( client_, SimulationToClient, control_resume_ack )
@@ -427,6 +430,16 @@ void Converter::ReceiveClientToReplay( const MsgsClientToReplay::MsgClientToRepl
         if( msg.has_context() )
             out.set_context( msg.context() );
         out.mutable_message()->mutable_control_skip_to_tick()->set_tick( msg.message().control_skip_to_tick().tick() );
+        server_.Send( out );
+        return;
+    }
+    if( msg.message().has_time_table_request() )
+    {
+        if( msg.has_context() )
+            out.set_context( msg.context() );
+        sword::TimeTableRequest_TimeRange* timerange = out.mutable_message()->mutable_time_table_request()->mutable_tick_range();
+        timerange->set_begin_tick( msg.message().time_table_request().tick_range().begin_tick() );
+        timerange->set_end_tick( msg.message().time_table_request().tick_range().end_tick() );
         server_.Send( out );
         return;
     }

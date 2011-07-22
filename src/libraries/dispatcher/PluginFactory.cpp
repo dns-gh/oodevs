@@ -100,7 +100,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
     if( xis.has_attribute( "library" ) )
         LoadPlugin( name, xis );
     else if( name == "recorder" )
-        handler_.Add( new plugins::saver::SaverPlugin( model_, config_ ) );
+        handler_.Add( new plugins::saver::SaverPlugin( clients_, model_, config_ ) );
     else
     {
         for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )

@@ -13,18 +13,39 @@ import "Common.proto";
 import "SimToClient.proto";
 
 message MsgControlReplayInformation {
-   required int32                       current_tick      = 1;
+   required int32                      current_tick      = 1;
    required Common.MsgDateTime         initial_date_time = 2;
    required Common.MsgDateTime         date_time         = 3;
-   required int32                       tick_duration     = 4;
-   required int32                       time_factor       = 5;
+   required int32                      tick_duration     = 4;
+   required int32                      time_factor       = 5;
    required Common.EnumSimulationState status            = 6;
-   required int32                       tick_count        = 7;
+   required int32                      tick_count        = 7;
 }
 
 message MsgControlSkipToTickAck {
    required int32                                tick       = 1;
    required MsgsSimToClient.ControlAck.ErrorCode error_code = 2;
+}
+
+message MsgTimeTableRequestAck {
+    enum ErrorCode {
+        no_error           = 0;
+        invalid_tick_range = 1;
+    }
+   required ErrorCode        error_code = 1;
+}
+
+message MsgTimeTable {
+    message TimeMapping {
+        required int32              tick            = 1;
+        required Common.MsgDateTime simulation_time = 2;
+        required Common.MsgDateTime real_time       = 3;
+    }
+    repeated TimeMapping time_table_item = 1;
+}
+
+message MsgNewDataChunkNotification {
+    required int32 last_tick = 1;
 }
 
 message MsgReplayToClient {
@@ -35,6 +56,9 @@ message MsgReplayToClient {
         optional MsgsSimToClient.MsgControlPauseAck            control_pause_ack               = 4;
         optional MsgsSimToClient.MsgControlResumeAck           control_resume_ack              = 5;
         optional MsgsSimToClient.MsgControlChangeTimeFactorAck control_change_time_factor_ack  = 6;
+        optional MsgTimeTableRequestAck                        time_table_request_ack          = 7;
+        optional MsgTimeTable                                  time_table                      = 8;
+        optional MsgNewDataChunkNotification                   new_data_chunk_notification     = 9;
     }
     optional int32   context = 1;
     required Content message = 2;

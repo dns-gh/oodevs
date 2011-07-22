@@ -12,9 +12,11 @@
 
 #include "dispatcher/Frames.h"
 #include <fstream>
+#include <boost/noncopyable.hpp>
 
 namespace dispatcher
 {
+    class ClientPublisher_ABC;
     class Config;
 }
 
@@ -35,12 +37,12 @@ namespace saver
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class Saver
+class Saver : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Saver( const dispatcher::Config& config );
+             Saver( dispatcher::ClientPublisher_ABC& client, const dispatcher::Config& config );
     virtual ~Saver();
     //@}
 
@@ -55,12 +57,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Saver( const Saver& );            //!< Copy constructor
-    Saver& operator=( const Saver& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Flush();
@@ -73,6 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
+    dispatcher::ClientPublisher_ABC& client_;
     static const std::string currentFolderName_;
     std::string recorderDirectory_;
     dispatcher::Frame current_;

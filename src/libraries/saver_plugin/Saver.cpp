@@ -13,7 +13,8 @@
 #include "tools/OutputBinaryWrapper.h"
 #include "tools/InputBinaryWrapper.h"
 #include "MT_Tools/MT_Logger.h"
-#include "protocol/Protocol.h"
+#include "protocol/ClientPublisher_ABC.h"
+#include "protocol/ReplaySenders.h"
 #include <boost/algorithm/string.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 )
@@ -31,8 +32,9 @@ const std::string Saver::currentFolderName_( "current" );
 // Name: Saver constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Saver::Saver( const dispatcher::Config& config )
-    : recorderDirectory_ ( config.GetRecordDirectory() )
+Saver::Saver( dispatcher::ClientPublisher_ABC& client, const dispatcher::Config& config )
+    : client_            ( client )
+    , recorderDirectory_ ( config.GetRecordDirectory() )
     , frameCount_        ( 0 )
     , fragmentFirstFrame_( 0 )
     , currentFolder_     ( 0 )
@@ -234,6 +236,9 @@ void Saver::TerminateFragment()
     update_.close();
     CopyFromCurrentToFolder();
     fragmentFirstFrame_ = frameCount_;
+    replay::NewDataChunkNotification msg;
+    msg().set_last_tick( frameCount_ - 1 );
+    msg.Send( client_ );
 }
 
 // -----------------------------------------------------------------------------

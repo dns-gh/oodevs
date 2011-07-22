@@ -37,3 +37,37 @@ void ReplayToClient::Convert( const sword::ControlSkipToTickAck& from, MsgsRepla
     CONVERT( tick );
     ConvertControlAckErrorCode( from, to );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ReplayToClient::Convert
+// Created: JSR 2011-07-22
+// -----------------------------------------------------------------------------
+void ReplayToClient::Convert( const sword::TimeTableRequestAck& from, MsgsReplayToClient::MsgTimeTableRequestAck* to )
+{
+    CONVERT_ENUM( error_code, ( sword::TimeTableRequestAck::no_error, MsgsReplayToClient::MsgTimeTableRequestAck::no_error )
+                              ( sword::TimeTableRequestAck::invalid_tick_range, MsgsReplayToClient::MsgTimeTableRequestAck::invalid_tick_range ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayToClient::Convert
+// Created: JSR 2011-07-22
+// -----------------------------------------------------------------------------
+void ReplayToClient::Convert( const sword::TimeTable& from, MsgsReplayToClient::MsgTimeTable* to )
+{
+    for( int i = 0; i < from.time_table_item().size(); ++i )
+    {
+        MsgsReplayToClient::MsgTimeTable_TimeMapping* item = to->add_time_table_item();
+        item->set_tick( from.time_table_item( i ).tick() );
+        item->mutable_simulation_time()->set_data( from.time_table_item( i ).simulation_time().data() );
+        item->mutable_real_time()->set_data( from.time_table_item( i ).real_time().data() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayToClient::Convert
+// Created: JSR 2011-07-22
+// -----------------------------------------------------------------------------
+void ReplayToClient::Convert( const sword::NewDataChunkNotification& from, MsgsReplayToClient::MsgNewDataChunkNotification* to )
+{
+    CONVERT( last_tick );
+}

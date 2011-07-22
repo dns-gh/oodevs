@@ -22,6 +22,7 @@ namespace replay
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlResume             , control_resume                 )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlChangeTimeFactor   , control_change_time_factor     )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlSkipToTick         , control_skip_to_tick           )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, TimeTableRequest          , time_table_request             )
 
     GENERATE_MESSAGE( sword::ReplayToClient, sword, ControlStopAck            , control_stop_ack               )
     GENERATE_MESSAGE( sword::ReplayToClient, sword, ControlPauseAck           , control_pause_ack              )
@@ -29,6 +30,9 @@ namespace replay
     GENERATE_MESSAGE( sword::ReplayToClient, sword, ControlChangeTimeFactorAck, control_change_time_factor_ack )
     GENERATE_MESSAGE( sword::ReplayToClient, sword, ControlSkipToTickAck      , control_skip_to_tick_ack       )
     GENERATE_MESSAGE( sword::ReplayToClient, sword, ControlReplayInformation  , control_replay_information     )
+    GENERATE_MESSAGE( sword::ReplayToClient, sword, TimeTableRequestAck       , time_table_request_ack         )
+    GENERATE_MESSAGE( sword::ReplayToClient, sword, TimeTable                 , time_table                     )
+    GENERATE_MESSAGE( sword::ReplayToClient, sword, NewDataChunkNotification  , new_data_chunk_notification    )
 }
 
 #endif // __ReplayMessages_h_

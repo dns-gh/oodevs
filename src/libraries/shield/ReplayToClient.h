@@ -30,6 +30,9 @@ public:
     //@{
     static void Convert( const sword::ControlReplayInformation& from, MsgsReplayToClient::MsgControlReplayInformation* to );
     static void Convert( const sword::ControlSkipToTickAck& from, MsgsReplayToClient::MsgControlSkipToTickAck* to );
+    static void Convert( const sword::TimeTableRequestAck& from, MsgsReplayToClient::MsgTimeTableRequestAck* to );
+    static void Convert( const sword::TimeTable& from, MsgsReplayToClient::MsgTimeTable* to );
+    static void Convert( const sword::NewDataChunkNotification& from, MsgsReplayToClient::MsgNewDataChunkNotification* to );
     //@}
 };
 

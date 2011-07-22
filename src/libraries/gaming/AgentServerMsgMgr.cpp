@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "AfterActionModel.h"
 #include "AgentServerMsgMgr.h"
+#include "AfterActionModel.h"
 #include "AgentsModel.h"
 #include "CommandHandler.h"
 #include "DrawingsModel.h"
@@ -17,8 +17,6 @@
 #include "FolkModel.h"
 #include "IntelligencesModel.h"
 #include "KnowledgeGroupsModel.h"
-#include "Lima.h"
-#include "Limit.h"
 #include "LimitsModel.h"
 #include "LogisticsModel.h"
 #include "LogMaintenanceConsign.h"
@@ -29,38 +27,29 @@
 #include "Model.h"
 #include "NotesModel.h"
 #include "ObjectsModel.h"
-#include "ResourceNetworkModel.h"
 #include "Profile.h"
 #include "ScoreDefinitions.h"
 #include "ScoreModel.h"
 #include "Services.h"
 #include "Simulation.h"
-#include "StaticModel.h"
+#include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
-#include "Tools.h"
 #include "UrbanModel.h"
 #include "UserProfilesModel.h"
 #include "UserProfile.h"
 #include "WeatherModel.h"
-#include "clients_gui/Drawing_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Logger_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "protocol/AarSenders.h"
 #include "protocol/MsgsSimToClientListener.h"
-#include "protocol/Protocol.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/MessageSender_ABC.h"
 #include <boost/foreach.hpp>
-#include <ctime>
 
 using namespace log_tools;
 using namespace kernel;
@@ -70,7 +59,7 @@ using namespace tools;
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands )
+AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Services& services, Simulation& simu, Logger_ABC& logger, CommandHandler& commands )
     : dispatcher_( dispatcher )
     , sender_    ( sender )
     , model_     ( 0 )
@@ -244,7 +233,7 @@ void AgentServerMsgMgr::OnReceiveCrowdFlowInterVisibility( const sword::CrowdFlo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const sword::DebugPoints& message )
 {
-    kernel::Entity_ABC& entity = GetTasker( message.source() );
+    Entity_ABC& entity = GetTasker( message.source() );
     entity.Update( message );
 }
 
@@ -1091,7 +1080,7 @@ void AgentServerMsgMgr::OnReceiveObjectKnowledgeUpdate( const sword::ObjectKnowl
 void AgentServerMsgMgr::OnReceiveObjectKnowledgeDestruction( const sword::ObjectKnowledgeDestruction& message )
 {
     GetModel().teams_.GetTeam( message.party().id() ).Update( message );
-    GetModel().knowledgeGroups_.Apply( boost::bind( &kernel::Entity_ABC::Update< sword::ObjectKnowledgeDestruction >, _1, boost::cref( message ) ) );
+    GetModel().knowledgeGroups_.Apply( boost::bind( &Entity_ABC::Update< sword::ObjectKnowledgeDestruction >, _1, boost::cref( message ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -2073,6 +2062,8 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
         OnReceiveControlSkipToTickAck      ( wrapper.message().control_skip_to_tick_ack() );
     else if( wrapper.message().has_control_change_time_factor_ack() )
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
+    else if( wrapper.message().has_new_data_chunk_notification() )
+        {}
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -2189,7 +2180,7 @@ void AgentServerMsgMgr::SetElements( Model& model, Profile& profile )
 // Name: AgentServerMsgMgr::GetModel
 // Created: SBO 2006-07-06
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC& AgentServerMsgMgr::GetTasker( const sword::Tasker& tasker ) const
+Entity_ABC& AgentServerMsgMgr::GetTasker( const sword::Tasker& tasker ) const
 {
     if( tasker.has_automat() )
         return GetModel().agents_.GetAutomat( tasker.automat().id() );

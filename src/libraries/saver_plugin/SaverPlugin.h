@@ -36,7 +36,7 @@ class SaverPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SaverPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config );
+             SaverPlugin( dispatcher::ClientPublisher_ABC& client, dispatcher::Model_ABC& model, const dispatcher::Config& config );
     virtual ~SaverPlugin();
     //@}
 
@@ -46,13 +46,6 @@ public:
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    SaverPlugin( const SaverPlugin& );            //!< Copy constructor
-    SaverPlugin& operator=( const SaverPlugin& ); //!< Assignment operator
     //@}
 
 private:
