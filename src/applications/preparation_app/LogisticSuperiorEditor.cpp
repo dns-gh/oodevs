@@ -10,10 +10,11 @@
 #include "preparation_app_pch.h"
 
 #include "LogisticSuperiorEditor.h"
-#include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/Tools.h"
 
@@ -29,13 +30,15 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
     , selected_( selected )
 {
     AddItem( tools::translate( "LogisticSuperiorEditor", "None" ), 0 );
+    bool bObject = ( dynamic_cast< const Object_ABC* >( &selected_ ) != 0 );
 
     {
         tools::Iterator< const Automat_ABC& > it = automatResolver.CreateIterator();
         while( it.HasMoreElements() )
         {
             const Automat_ABC& automat = it.NextElement();
-            if( IsValidSuperior( automat ) )
+            if  (   ( bObject && automat.GetLogisticLevel() != LogisticLevel::none_ )
+                ||  ( !bObject && IsValidSuperior( automat ) ) )
                 AddItem( automat.GetName(), &automat );
         }
     }
@@ -45,7 +48,8 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
         while( it.HasMoreElements() )
         {
             const Formation_ABC& formation = it.NextElement();
-            if( IsValidSuperior( formation ) )
+            if  (   ( bObject && formation.GetLogisticLevel() != LogisticLevel::none_ )
+                ||  ( !bObject && IsValidSuperior( formation ) ) )
                 AddItem( formation.GetName(), &formation );
         }
     }
