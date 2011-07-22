@@ -164,6 +164,17 @@ namespace shield
         FillCoordLatLong( s->mutable_points()->add_elem() );
         FillCoordLatLong( s->mutable_points()->add_elem() );
     }
+    template< typename S >
+    void FillShieldShape( S* s )
+    {
+        s->mutable_color()->set_red( 4 );
+        s->mutable_color()->set_green( 5 );
+        s->mutable_color()->set_blue( 6 );
+        s->set_external_identifier( "external identifier" );
+        s->mutable_location()->set_type( Common::MsgLocation::polygon );
+        FillCoordLatLong( s->mutable_location()->mutable_coordinates()->add_elem() );
+        FillCoordLatLong( s->mutable_location()->mutable_coordinates()->add_elem() );
+    }
     template< typename M >
     void FillMarker( M* m )
     {

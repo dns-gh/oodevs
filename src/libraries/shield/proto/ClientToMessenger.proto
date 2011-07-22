@@ -18,10 +18,8 @@ message MsgShapeCreationRequest {
 
 message MsgShapeUpdateRequest {
     required Common.DrawingId           shape     = 1;
-    optional string                     category  = 2;
-    optional Common.RgbColor            color     = 3;
-    optional string                     template  = 4;
-    optional Common.MsgCoordLatLongList points    = 5;
+    optional Common.RgbColor            color     = 2;
+    optional Common.MsgLocation         location  = 3;
 }
 
 message MsgShapeDestructionRequest {

@@ -28,10 +28,9 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeCreationRe
 void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeUpdateRequest& from, sword::ShapeUpdateRequest* to )
 {
     CONVERT_ID( shape );
-    CONVERT( category );
     CONVERT_CB( color, ConvertColor );
-    CONVERT_TO( template_, pattern );
-    CONVERT_LIST( points, elem, ConvertCoordLatLong );
+    for( int i = 0; i < from.location().coordinates().elem().size(); ++i )
+        ConvertCoordLatLong( from.location().coordinates().elem( i ), to->mutable_points()->add_elem() );
 }
 
 // -----------------------------------------------------------------------------

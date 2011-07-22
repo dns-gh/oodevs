@@ -28,7 +28,7 @@ BOOST_FIXTURE_TEST_CASE( shape_creation_to_client_is_converted, ContextFixture< 
 {
     content.mutable_shape_creation()->mutable_id()->set_id( 12 );
     FillShape( content.mutable_shape_creation()->mutable_shape() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { category: \"category\" color { red: 4 green: 5 blue: 6 } pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { external_identifier: \"pattern\" location { type: polygon coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } } } }" ) );
     converter.ReceiveMessengerToClient( msg );
 }
 
@@ -42,7 +42,7 @@ BOOST_FIXTURE_TEST_CASE( shape_update_to_client_is_converted, ContextFixture< sw
     content.mutable_shape_update()->mutable_shape()->set_pattern( "pattern" );
     FillCoordLatLong( content.mutable_shape_update()->mutable_shape()->mutable_points()->add_elem() );
     FillCoordLatLong( content.mutable_shape_update()->mutable_shape()->mutable_points()->add_elem() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_update { id { id: 12 } shape { category: \"category\" color { red: 4 green: 5 blue: 6 } pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_update { id { id: 12 } shape { external_identifier: \"pattern\" location { type: polygon coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } } } }" ) );
     converter.ReceiveMessengerToClient( msg );
 }
 

@@ -115,6 +115,19 @@ namespace shield
         CONVERT_ID( formation );
     }
     template< typename From, typename To >
+    void ConvertPointsToLocation( const From& from, To* to )
+    {
+        to->set_type( Common::MsgLocation::polygon );
+        for( int i = 0; i < from.elem().size(); ++i )
+            ConvertCoordLatLong( from.elem( i ), to->mutable_coordinates()->add_elem() );
+    }
+    template< typename From, typename To >
+    void ConvertLocationToPoints( const From& from, To* to )
+    {
+        for( int i = 0; i < from.coordinates().elem().size(); ++i )
+            ConvertCoordLatLong( from.coordinates().elem( i ), to->add_elem() );
+    }
+    template< typename From, typename To >
     void ConvertColor( const From& from, To* to )
     {
         CONVERT( red );
@@ -124,10 +137,15 @@ namespace shield
     template< typename From, typename To >
     void ConvertShape( const From& from, To* to )
     {
-        CONVERT( category );
         CONVERT_CB( color, ConvertColor );
-        CONVERT( pattern );
-        CONVERT_LIST( points, elem, ConvertCoordLatLong );
+#ifdef SHIELD_SIMULATION
+        CONVERT_TO( pattern, external_identifier );
+        CONVERT_CB_TO( points, location, ConvertPointsToLocation );
+#elif defined SHIELD_CLIENT
+        CONVERT_TO( external_identifier, pattern );
+        CONVERT_CB_TO( location, points, ConvertLocationToPoints );
+        to->set_category( "" );
+#endif
         CONVERT_CB( diffusion, ConvertDiffusion);
     }
     template< typename From, typename To >

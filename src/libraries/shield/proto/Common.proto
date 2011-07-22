@@ -643,11 +643,13 @@ message Diffusion {
 }
 
 message MsgShape {
-   required string              category  = 1;
-   required RgbColor			color     = 2;
-   required string              pattern   = 3;
-   required MsgCoordLatLongList points    = 4;
-   optional Diffusion           diffusion = 5;
+   required string              external_identifier  = 1;
+   required MsgLocation         location             = 2;
+   required RgbColor            color                = 3;
+   optional Diffusion           diffusion            = 4;
+   optional string              text                 = 5;
+   optional string              font                 = 6;
+   optional uint32              font_size            = 7;
 }
 
 message MsgChatTarget {

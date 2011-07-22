@@ -960,7 +960,7 @@ message Shape {
    required string           category  = 1; //!< The category
    required RgbColor         color     = 2; //!< The color
    required string           pattern   = 3; //!< The pattern
-   required CoordLatLongList points    = 4; //!< The coordinates
+   required CoordLatLongList points	   = 4; //!< The coordinates
    optional Diffusion        diffusion = 5; //!< The Diffusion
 }
 
