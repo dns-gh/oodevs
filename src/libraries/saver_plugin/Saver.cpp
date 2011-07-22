@@ -50,7 +50,11 @@ Saver::Saver( dispatcher::ClientPublisher_ABC& client, const dispatcher::Config&
 Saver::~Saver()
 {
     Flush();
-    TerminateFragment();
+    index_.close();
+    keyIndex_.close();
+    key_.close();
+    update_.close();
+    CopyFromCurrentToFolder();
 }
 
 namespace
