@@ -178,8 +178,7 @@ message MsgAutomatChangeKnowledgeGroup {
 
 message MsgChangeLogisticLinks {
    required ParentEntity requester     = 1;
-   optional AutomatId tc2              = 2;
-   optional ParentEntity logistic_base = 3;
+   repeated ParentEntity superior      = 2;
 }
 
 message MsgAutomatChangeSuperior_oid_superior {
@@ -358,8 +357,7 @@ enum EnumNatureLevel {
 
 enum EnumLogisticLevel {
    none          = 0;
-   tc2           = 1;
-   logistic_base = 2;
+   logistic_base = 1;
 }
 
 enum EnumBurningCellPhase {
@@ -457,7 +455,8 @@ message MsgPlannedWork {
    optional ObstacleType.DemolitionTargetType type_obstacle       = 3;
    optional float                             densite             = 4;
    optional AutomatId                         tc2                 = 5;
-   optional int32                             activity_time       = 6;
+   optional int32                             activity_time         = 6;    //in seconds
+   optional int32                             activation_time       = 7;    //in seconds
 }
 
 message MsgPlannedWorkList {
@@ -711,7 +710,7 @@ message ObjectAttributeValorisation {
 }
 
 message ObjectAttributeLogistic {
-   required AutomatId tc2 = 1;
+   required ParentEntity logistic_superior = 1;
 }
 
 message ObjectAttributeLodging {

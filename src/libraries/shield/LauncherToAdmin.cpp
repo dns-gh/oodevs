@@ -175,8 +175,7 @@ void LauncherToAdmin::Convert( const sword::SessionCommandExecutionResponse& fro
                               ( sword::SessionCommandExecutionResponse::session_not_running, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_not_running )
                               ( sword::SessionCommandExecutionResponse::invalid_checkpoint, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::invalid_checkpoint )
                               ( sword::SessionCommandExecutionResponse::session_already_paused, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_already_paused )
-                              ( sword::SessionCommandExecutionResponse::session_already_running, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_already_running )
-                              ( sword::SessionCommandExecutionResponse::invalid_date_time, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::invalid_date_time ) );
+                              ( sword::SessionCommandExecutionResponse::session_already_running, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_already_running ) );
     CONVERT( exercise );
     CONVERT( session );
     CONVERT( saved_checkpoint );

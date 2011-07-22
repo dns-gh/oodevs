@@ -465,7 +465,7 @@ void SimulationToClient::Convert( const sword::AutomatCreation& from, MsgsSimToC
     CONVERT_ID( knowledge_group );
     CONVERT( app6symbol );
     CONVERT_ENUM( logistic_level, ( sword::none, Common::none )
-                                  ( sword::logistic_base, Common::tc2 ) );
+                                  ( sword::logistic_base, Common::logistic_base ) );
     CONVERT_CB( color, ConvertRgbColor );
 }
 
@@ -738,18 +738,8 @@ void SimulationToClient::Convert( const sword::UnitChangeSuperior& from, Common:
 void SimulationToClient::Convert( const sword::ChangeLogisticLinks& from, Common::MsgChangeLogisticLinks* to )
 {
     CONVERT_CB( requester, ConvertParentEntity );
-
-    // Temporary dumb conversion: keep the last superior and transform it to tc2 or logistic_base
-    if( from.superior_size() > 0 )
-    {
-        const sword::ParentEntity& superior = from.superior( from.superior_size() - 1 );
-        if( superior.has_automat() )
-            to->mutable_tc2()->set_id( superior.automat().id() );
-        else if( superior.has_formation() )
-            to->mutable_logistic_base()->mutable_formation()->set_id( superior.formation().id() );
-    }
-    else
-        to->mutable_tc2()->set_id( 0 );
+    for( int i = 0; i < from.superior().size(); ++i )
+            ConvertParentEntity( from.superior( i ), to->add_superior() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1088,6 +1078,11 @@ namespace
         CONVERT( percentage );
     }
     template< typename From, typename To >
+    void ConvertObjectAttributeLogistic( const From& from, To* to )
+    {
+        CONVERT_CB( logistic_superior, ConvertParentEntity );
+    }
+    template< typename From, typename To >
     void ConvertObjectAttributeCrossingSite( const From& from, To* to )
     {
         CONVERT( width );
@@ -1213,11 +1208,7 @@ namespace
             to->mutable_activity_time()->set_value( from.activity_time().value() );
         if( from.has_bypass() )
             to->mutable_bypass()->set_percentage( from.bypass().percentage() );
-
-        // NB: Only "automat" type logistic attribute can be converted to old format
-        if( from.has_logistic() && from.logistic().logistic_superior().has_automat() )
-            to->mutable_logistic()->mutable_tc2()->set_id( from.logistic().logistic_superior().automat().id() );
-
+        CONVERT_CB( logistic, ConvertObjectAttributeLogistic );
         if( from.has_nbc() && from.nbc().has_danger_level() )
             to->mutable_nbc()->set_danger_level( from.nbc().danger_level() );
         CONVERT_LIST( nbc, nbc_agents, ConvertIdentifier );
