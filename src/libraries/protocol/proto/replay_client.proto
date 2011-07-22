@@ -47,7 +47,7 @@ message ControlSkipToTickAck {
     @see TimeTableRequest
 */
 message TimeTableRequestAck {
-    /** @struct ErrorCode
+    /** @enum ErrorCode
         @brief The error code
     */
     enum ErrorCode {
