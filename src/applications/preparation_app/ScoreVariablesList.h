@@ -16,6 +16,7 @@
 namespace gui
 {
     class ParametersLayer;
+    class UtmParser;
 }
 
 namespace indicators
@@ -27,6 +28,7 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
+    class Location_ABC;
 }
 
 class ScoreVariableCreationWizard;
@@ -79,6 +81,7 @@ private slots:
     void OnAdd();
     void OnDelete();
     void OnPaste();
+    void OnItemClick();
     //@}
 
 private:
@@ -91,8 +94,11 @@ private:
     //! @name Member data
     //@{
     gui::ItemFactory_ABC& factory_;
+    const kernel::GlTools_ABC& tools_;
     ScoreVariableCreationWizard* wizard_;
     gui::ListDisplayer< ScoreVariablesList >* list_;
+    std::auto_ptr< kernel::Location_ABC > location_;
+    std::auto_ptr< gui::UtmParser > parser_;
     //@}
 };
 

@@ -22,7 +22,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OrderParameter.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
 #include "clients_kernel/Tools.h"
@@ -205,13 +204,16 @@ void ScoreVariableCreationWizard::OnChangeName()
 // -----------------------------------------------------------------------------
 void ScoreVariableCreationWizard::OnChangeType()
 {
-    if( parameter_ )
+    if( paramBox_ )
     {
-        parameter_->RemoveFromController(); parameter_.reset();
         delete paramBox_;
         paramBox_ = new QVGroupBox( tr( "Value" ), this );
         static_cast< QGridLayout* >( layout() )->addWidget( paramBox_, 1, 0 );
     }
+
+    if( parameter_ )
+        parameter_->RemoveFromController(); parameter_.reset();
+
     parameter_ = CreateParameter( type_->GetValue(), name_->text() );
     if( parameter_ )
     {

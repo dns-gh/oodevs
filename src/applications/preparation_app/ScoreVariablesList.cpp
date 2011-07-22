@@ -11,10 +11,15 @@
 #include "ScoreVariablesList.h"
 #include "moc_ScoreVariablesList.cpp"
 #include "ScoreVariableCreationWizard.h"
+#include "clients_kernel/SimpleLocationDrawer.h"
+#include "clients_kernel/Polygon.h"
+#include "clients_kernel/Circle.h"
+#include "clients_gui/UtmParser.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Element_ABC.h"
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
+#include "preparation/StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScoreVariablesList constructor
@@ -22,10 +27,12 @@
 // -----------------------------------------------------------------------------
 ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers, gui::ParametersLayer& layer,
                                         const StaticModel& staticModel, const kernel::GlTools_ABC& tools )
-    : QVBox( parent )
+    : QVBox   ( parent )
     , factory_( factory )
-    , wizard_( new ScoreVariableCreationWizard( this, controllers, layer, staticModel, tools ) )
-    , list_( new gui::ListDisplayer< ScoreVariablesList >( this, *this, factory ) )
+    , tools_  ( tools )
+    , wizard_ ( new ScoreVariableCreationWizard( this, controllers, layer, staticModel, tools_ ) )
+    , list_   ( new gui::ListDisplayer< ScoreVariablesList >( this, *this, factory ) )
+    , parser_ ( new gui::UtmParser( controllers, staticModel.coordinateConverter_ ) )
 {
     setMargin( 5 );
     {
@@ -45,6 +52,7 @@ ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& f
     }
     connect( wizard_, SIGNAL( VariableCreated( const indicators::Element_ABC& ) ), SLOT( AddVariable( const indicators::Element_ABC& ) ) );
     connect( wizard_, SIGNAL( Closed() ), SIGNAL( EndEdit() ) );
+    connect( list_, SIGNAL( selectionChanged() ), SLOT( OnItemClick() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,6 +71,7 @@ ScoreVariablesList::~ScoreVariablesList()
 void ScoreVariablesList::StartEdit( const indicators::Variables& variables )
 {
     list_->clear();
+    location_.reset();
     tools::Iterator< const indicators::Element_ABC& > it = variables.CreateIterator();
     while( it.HasMoreElements() )
         AddVariable( it.NextElement() );
@@ -131,6 +140,7 @@ void ScoreVariablesList::OnDelete()
     {
         list_->removeItem( item );
         emit Updated();
+        location_.reset();
     }
 }
 
@@ -151,4 +161,42 @@ void ScoreVariablesList::OnPaste()
 void ScoreVariablesList::Draw( kernel::Viewport_ABC& viewport )
 {
     wizard_->Draw( viewport );
+    if( location_.get() && isVisible() )
+    {
+        kernel::SimpleLocationDrawer drawer( tools_ );
+        location_->Accept( drawer );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariablesList::OnItemClick
+// Created: FPO 2011-07-20
+// -----------------------------------------------------------------------------
+void ScoreVariablesList::OnItemClick()
+{
+    location_.reset();
+    if( QListViewItem* item = list_->selectedItem() )
+    {
+        if( item->text( 1 ) == "zone" )
+        {
+            QString temp( item->text( 2 ) );
+            if( item->text( 2 ).left( 7 ) == "polygon" )
+                location_.reset( new kernel::Polygon() );
+            else if( item->text( 2 ).left( 6 ) == "circle" )
+                location_.reset( new kernel::Circle() );
+
+            if( location_.get() )
+            {
+                temp = temp.mid( temp.find( "(" ) + 1, temp.length() - ( temp.find( "(" ) + 2 ) );
+                QStringList tempList = QStringList::split( ",", temp );
+                QStringList hint;
+                geometry::Point2f point;
+                for( QStringList::iterator it = tempList.begin(); it != tempList.end(); it++ )
+                {
+                    if( parser_->Parse( *it, point, hint ) )
+                        location_->AddPoint( point );
+                }
+            }
+        }
+    }
 }

@@ -31,7 +31,6 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
-    class Location_ABC;
     class Viewport_ABC;
 }
 
