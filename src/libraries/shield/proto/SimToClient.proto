@@ -160,6 +160,15 @@ message MsgUnitChangeSuperiorAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
+message MsgUnitTransferEquipmentAck  {
+    enum ErrorCode {
+        no_error     = 0;
+        error_invalid_equipment_type   = 1;
+        error_invalid_equipment_number = 2;
+    }
+    optional ErrorCode ack = 1;
+}
+
 message MsgLogSupplyPushFlowAck  {
     enum EnumLogSupplyPushFlow {
         no_error_pushflow               = 0;
@@ -181,8 +190,9 @@ message MsgLogSupplyPullFlowAck  {
 message MsgLogSupplyChangeQuotasAck {
     enum LogSupplyChangeQuotas {
         no_error_quotas               = 0;
-        error_invalid_donneur_quotas  = 1;
-        error_invalid_receveur_quotas = 2;
+        error_invalid_supplier        = 1;
+        error_invalid_receiver        = 2;
+        error_invalid_dotation        = 3;
     }
     optional LogSupplyChangeQuotas ack = 1;
 }
@@ -283,7 +293,6 @@ message MsgFormationCreation {
     required string                   app6symbol            = 6;
     required Common.EnumLogisticLevel logistic_level        = 7;
     optional Common.RgbColor          color                 = 8;
-    optional Common.ParentEntity      logistic_base_organic = 9;
 }
 
 message MsgFormationUpdate {
@@ -332,9 +341,7 @@ message MsgAutomatAttributes {
    optional Common.EnumMeetingEngagementStatus combat_de_rencontre   = 4;
    optional Common.EnumOperationalStatus       etat_operationnel     = 5;
    optional RulesOfEngagement.Value            roe                   = 6;
-   optional Common.AutomatId                   tc2_organic           = 7;
-   optional Common.ParentEntity                logistic_base_organic = 8;
-   optional Common.Extension                   extension             = 9;
+   optional Common.Extension                   extension             = 7;
 }
 
 message MsgAutomatDestruction {
@@ -349,6 +356,15 @@ message MsgUnitCreation {
    required bool                    pc          = 5;
    optional Common.RgbColor         color       = 6;
    optional Common.HumanRepartition repartition = 7;
+}
+
+message EquipmentUpdate {
+    message Equipment {
+        required Common.EquipmentType type           = 1;
+        optional int32                number_added   = 2;
+        optional int32                number_removed = 3;
+    }
+    repeated Equipment equipment = 1;
 }
 
 message BorrowedEquipments {
@@ -401,6 +417,7 @@ message HumanDotations {
         required int32                nb_dans_chaine_sante         = 8;
         required int32                nb_utilises_pour_maintenance = 9;
         required int32                nb_blesses_non_evacues       = 10;
+        required int32                nb_morts_dans_chaine_mortuaire = 11;
     }
     repeated HumanDotation elem = 1;
 }
@@ -490,13 +507,14 @@ message MsgUnitAttributes {
     optional Common.EnumUnitMorale              moral                         = 41;
     optional Common.EnumUnitExperience          experience                    = 42;
     optional Common.EnumUnitStress              stress                        = 43;
-    optional Common.UnitId                      surrendered_unit              = 44;
+    optional Common.PartyId                     surrendered_to_party          = 44;
     optional bool                               prisonnier                    = 45;
     optional bool                               refugie_pris_en_compte        = 46;
     optional Satisfaction                       satisfaction                  = 47;
     optional string                             critical_intelligence         = 48;
     optional Common.PartyAdhesions              adhesions                     = 49;
-    optional Common.Extension                   extension                     = 50;
+    optional EquipmentUpdate                    equipment_update              = 50;
+    optional Common.Extension                   extension                     = 51;
 }
 
 message MsgUnitPathFind {
@@ -555,6 +573,7 @@ message MsgUnitKnowledgeUpdate {
     optional Common.UnitId               surrendered_unit           = 14;
     optional bool                        prisonnier                 = 15;
     optional bool                        refugie_pris_en_compte     = 16;
+    optional string                      critical_intelligence      = 17;
 }
 
 message MsgUnitKnowledgeDestruction {
@@ -711,6 +730,7 @@ message MsgObjectCreation {
    required Common.PartyId             party      = 4;
    required Common.MsgLocation         location   = 5;
    required Common.ObjectAttributes    attributes = 6;
+   optional int32                      external_identifier = 7;
 }
 
 message MsgObjectDestruction  {
@@ -1084,6 +1104,15 @@ message MsgControlCheckPointDeleteAck    {}
 message MsgControlSendCurrentStateBegin {}
 message MsgControlSendCurrentStateEnd   {}
 
+message MsgControlExportRequestAck {
+    enum ErrorCode {
+        success                    = 0;
+        failure                    = 1;
+    }
+    required ErrorCode  error_code = 1;
+    required string directory_name = 2;
+}
+
 message UrbanAttributes {
     message Architecture
     {
@@ -1156,7 +1185,6 @@ message KnowledgeGroupAck {
        error_invalid_camp           = 3;
        error_invalid_knowledgegroup = 4;
        error_invalid_type           = 5; 
-       error_invalid_perception     = 6;        
     }
 }
 
@@ -1239,6 +1267,14 @@ message MsgPopulationUpdate {
     optional string                motivation   = 7; 
     repeated BlockOccupation       occupations  = 8;
     optional Common.Extension      extension    = 9;
+}
+
+message MsgUnitKnowledgeCreationRequestAck {
+    enum ErrorCode {
+        no_error                    = 0;
+        error_invalid_parameters    = 1;
+    }
+    required ErrorCode  error_code = 2;
 }
 
 // Message container
@@ -1369,7 +1405,10 @@ message MsgSimToClient {
         optional MsgCrowdDestruction                            crowd_destruction                              = 133;
         optional MsgPopulationCreation                          population_creation                            = 134;
         optional MsgPopulationUpdate                            population_update                              = 135;
-        optional MsgFormationUpdate                             formation_update                               = 136;
+        optional MsgUnitTransferEquipmentAck                    transfer_equipment_ack                         = 136;
+        optional MsgUnitKnowledgeCreationRequestAck             unit_knowledge_creation_request_ack            = 137;
+        optional MsgFormationUpdate                             formation_update                               = 138;
+        optional MsgControlExportRequestAck                     control_export_request_ack                     = 139;
     }
     optional int32   context = 1;
     required Content message = 2;

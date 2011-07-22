@@ -726,11 +726,13 @@ message ObjectAttributeInteractionHeight {
 message ObjectAttributeObstacle {
    required ObstacleType.DemolitionTargetType type      = 1;
    optional bool                              activated = 2;
-   optional int32                             activation_time = 3;
 }
 
 message ObjectAttributeActivityTime {
-   required int32                       value               = 1;
+   optional int32                       activity_time       = 1;        // 600 s (message sent at 12:00)
+   optional int32                       activation_time     = 2;        // 3600s
+   optional MsgDateTime                 start_activity      = 3;        // 13:00
+   optional MsgDateTime                 end_activity        = 4;        // 13:10
 }
 
 message ObjectAttributeBypass {
@@ -819,6 +821,15 @@ message ObjectAttributeBurnSurface {
 	repeated BurningCell burning_cells = 2;
 }
 
+message ObjectAttributeTrafficability {
+    required float value = 1;
+}
+
+message ObjectAttributeUnderground {
+    required string network_name = 1;
+    required bool   available    = 2;
+}
+
 message MedicalTreatmentBedCapacity {
     required int32 type_id = 1;  // Cf. Data/MedicalTreatment.xml
     optional uint32 baseline_count = 2;
@@ -845,11 +856,6 @@ message ObjectAttributeNBCType {
    required int32        source_life_duration = 3;
 }
 
-message ObjectAttributeUnderground {
-    required string network_name = 1;
-    required bool   available    = 2;
-}
-
 message ObjectAttributes {
    optional ObjectAttributeConstruction      construction        = 1;
    optional ObjectAttributeObstacle          obstacle            = 2;
@@ -871,7 +877,8 @@ message ObjectAttributes {
    optional ObjectAttributeBurn              burn                = 18;
    optional ObjectAttributeBurnSurface       burn_surface        = 19;
    optional ObjectAttributeLodging           lodging             = 20;
-   optional ObjectAttributeUnderground       underground         = 21;
+   optional ObjectAttributeTrafficability    trafficability      = 21;
+   optional ObjectAttributeUnderground       underground         = 22;
 }
 
 message MsgMarker {

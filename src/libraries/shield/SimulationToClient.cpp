@@ -222,10 +222,10 @@ void SimulationToClient::Convert( const sword::LogSupplyPullFlowAck& from, MsgsS
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, MsgsSimToClient::MsgLogSupplyChangeQuotasAck* to )
 {
-    CONVERT_NON_INJECTIVE_ENUM( error_code , ack, ( sword::LogSupplyChangeQuotasAck::no_error_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::no_error_quotas )
-                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_donneur_quotas )
-                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas )
-                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas ));
+    CONVERT_ENUM_TO( error_code , ack, ( sword::LogSupplyChangeQuotasAck::no_error_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::no_error_quotas )
+                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_supplier )
+                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receiver )
+                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_dotation ));
 }
 
 // -----------------------------------------------------------------------------
@@ -425,7 +425,6 @@ void SimulationToClient::Convert( const sword::FormationCreation& from, MsgsSimT
     CONVERT_ENUM( logistic_level, ( sword::none, Common::none )
                                   ( sword::logistic_base, Common::logistic_base ) );
     CONVERT_CB( color, ConvertRgbColor );
-    // NB : Don't fill "to->mutable_logistic_base_organic()" (useless)
 }
 
 // -----------------------------------------------------------------------------
@@ -517,7 +516,6 @@ void SimulationToClient::Convert( const sword::AutomatAttributes& from, MsgsSimT
     ConvertOperationalStatus( from, to );
     ConvertRulesOfEngagement( from, to );
     CONVERT_CB( extension, ConvertExtension );
-    // NB : Don't fill "to->mutable_logistic_base_organic()" and "to->mutable_tc2_organic()" (useless)
 }
 
 // -----------------------------------------------------------------------------
@@ -550,6 +548,7 @@ namespace
         CONVERT_TO( healing, nb_dans_chaine_sante );
         CONVERT_TO( maintenance, nb_utilises_pour_maintenance );
         CONVERT_TO( unevacuated_wounded, nb_blesses_non_evacues );
+        to->set_nb_morts_dans_chaine_mortuaire( 0 );
     }
     template< typename From, typename To >
     void ConvertEquipmentDotation( const From& from, To* to )
@@ -666,7 +665,8 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_ENUM( stress, ( sword::UnitAttributes::calm, Common::calm )
                           ( sword::UnitAttributes::worried, Common::worried )
                           ( sword::UnitAttributes::stressed, Common::stressed ) );
-    CONVERT_ID( surrendered_unit );
+    if ( from.has_surrendered_unit() )
+        to->mutable_surrendered_to_party()->set_id( from.surrendered_unit().id() );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
     CONVERT_CB( extension, ConvertExtension );
@@ -1067,7 +1067,6 @@ namespace
         CONVERT_ENUM( type, ( sword::ObstacleType::preliminary, Common::ObstacleType::preliminary )
                             ( sword::ObstacleType::reserved, Common::ObstacleType::reserved ) );
         CONVERT( activated );
-        CONVERT( activation_time );
     }
     template< typename From, typename To >
     void ConvertObjectAttributeMine( const From& from, To* to )
@@ -1205,7 +1204,7 @@ namespace
         CONVERT_CB( obstacle, ConvertObjectAttributeObstacle );
         CONVERT_CB_TO( mine, valorisation, ConvertObjectAttributeMine );
         if( from.has_activity_time() )
-            to->mutable_activity_time()->set_value( from.activity_time().value() );
+            to->mutable_activity_time()->set_activity_time( from.activity_time().value() );
         if( from.has_bypass() )
             to->mutable_bypass()->set_percentage( from.bypass().percentage() );
         CONVERT_CB( logistic, ConvertObjectAttributeLogistic );
@@ -2026,13 +2025,12 @@ namespace
     void ConvertKnowledgeGroupAck( const From& from, To* to )
     {
         CONVERT_ID( knowledge_group );
-        CONVERT_ENUM( error_code, ( sword::KnowledgeGroupAck::no_error, MsgsSimToClient::KnowledgeGroupAck::no_error )
+        CONVERT_NON_INJECTIVE_ENUM( error_code, error_code, ( sword::KnowledgeGroupAck::no_error, MsgsSimToClient::KnowledgeGroupAck::no_error )
                                   ( sword::KnowledgeGroupAck::error_invalid_unit, MsgsSimToClient::KnowledgeGroupAck::error_invalid_unit )
                                   ( sword::KnowledgeGroupAck::error_invalid_superior, MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior )
                                   ( sword::KnowledgeGroupAck::error_invalid_party, MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp )
                                   ( sword::KnowledgeGroupAck::error_invalid_knowledgegroup, MsgsSimToClient::KnowledgeGroupAck::error_invalid_knowledgegroup )
-                                  ( sword::KnowledgeGroupAck::error_invalid_type, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type )
-                                  ( sword::KnowledgeGroupAck::error_invalid_perception, MsgsSimToClient::KnowledgeGroupAck::error_invalid_perception ) );
+                                  ( sword::KnowledgeGroupAck::error_invalid_type, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type ) );
     }
 }
 
