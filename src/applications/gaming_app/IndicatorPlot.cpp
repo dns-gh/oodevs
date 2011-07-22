@@ -277,6 +277,14 @@ void IndicatorPlot::SetTickData( double currentTickPosition )
     }
     tickData_->SetLinePen( red );
     tickData_->ClearData();
-    tickData_->AddPoint( currentTickPosition, min_ );
-    tickData_->AddPoint( currentTickPosition, max_ * 1.1 );
+    if( min_ == 0 && max_ == 0 )
+    {
+        tickData_->AddPoint( currentTickPosition, 0 );
+        tickData_->AddPoint( currentTickPosition, 1 );
+    }
+    else
+    {
+        tickData_->AddPoint( currentTickPosition, min_ );
+        tickData_->AddPoint( currentTickPosition, max_ * 1.1 );
+    }
 }
