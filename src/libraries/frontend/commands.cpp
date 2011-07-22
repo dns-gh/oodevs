@@ -16,6 +16,7 @@
 #include <boost/filesystem/convenience.hpp>
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
+#include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <qstringlist.h>
 
@@ -153,12 +154,13 @@ namespace frontend
         }
 
         std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
-                                                     const std::string& session, const boost::optional< std::string >& checkpoint )
+                                                     const std::string& session, const std::vector< std::string >& checkpoints )
         {
             std::vector< std::string > result;
             const bfs::path path( config.GetCheckpointsDir( exercise, session ) );
-            if( checkpoint )
-                DeleteDirectory( bfs::path( path / *checkpoint ), result );
+            if( !checkpoints.empty() )
+                BOOST_FOREACH( const std::string& checkpoint, checkpoints )
+                    DeleteDirectory( bfs::path( path / checkpoint ), result );
             else
                 for( bfs::directory_iterator it( path ); it != bfs::directory_iterator(); ++it )
                     DeleteDirectory( bfs::path( *it ), result );

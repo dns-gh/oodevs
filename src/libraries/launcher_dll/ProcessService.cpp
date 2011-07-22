@@ -278,7 +278,7 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
 // Name: ProcessService::RemoveCheckpoint
 // Created: LGY 2011-05-19
 // -----------------------------------------------------------------------------
-void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const boost::optional< std::string >& checkpoint,
+void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const std::vector< std::string >& checkpoints,
                                        const std::string& exercice, const std::string& session )
 {
     if( ! frontend::commands::ExerciseExists( config_, exercice ) )
@@ -287,7 +287,7 @@ void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message,
         message.set_error_code( sword::CheckpointDeleteResponse::invalid_session_name );
     else
     {
-        const std::vector< std::string > result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoint );
+        const std::vector< std::string > result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoints );
         BOOST_FOREACH( const std::string& name, result )
             message.add_checkpoint( name );
     }

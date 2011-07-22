@@ -116,7 +116,7 @@ message CheckpointListRequest {
 message CheckpointDeleteRequest {
     required string exercise   = 1;                         //!< exercise to delete checkpoint from
     required string session    = 2 [ default = "default" ]; //!< session to delete checkpoint from
-    optional string checkpoint = 3;                         //!< delete all checkpoints if not specified
+    repeated string checkpoint = 3;                         //!< delete all checkpoints if not specified
 }
 
 /** @struct SessionNotification

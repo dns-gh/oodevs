@@ -11,7 +11,6 @@
 #define __commands_h_
 
 #include <boost/function.hpp>
-#include <boost/optional.hpp>
 #include <qstringlist.h>
 #include <vector>
 
@@ -49,7 +48,7 @@ namespace frontend
         void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );
 
         std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
-                                                     const std::string& session, const boost::optional< std::string >& checkpoint );
+                                                     const std::string& session, const std::vector< std::string >& checkpoints );
 
         bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise );
         bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );

@@ -136,7 +136,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgCheckpointDeleteReq
 {
     CONVERT( exercise );
     CONVERT( session );
-    CONVERT( checkpoint );
+    CONVERT_SIMPLE_LIST( checkpoint, ConvertSimple );
 }
 
 // -----------------------------------------------------------------------------

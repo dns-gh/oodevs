@@ -108,8 +108,9 @@ BOOST_FIXTURE_TEST_CASE( checkpoint_delete_request_to_launcher_is_converted, Con
 {
     content.mutable_checkpoint_delete_request()->set_exercise( "name" );
     content.mutable_checkpoint_delete_request()->set_session( "session" );
-    content.mutable_checkpoint_delete_request()->set_checkpoint( "checkpoint" );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { checkpoint_delete_request { exercise: \"name\" session: \"session\" checkpoint: \"checkpoint\" } }" ) );
+    content.mutable_checkpoint_delete_request()->add_checkpoint( "checkpoint1" );
+    content.mutable_checkpoint_delete_request()->add_checkpoint( "checkpoint2" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { checkpoint_delete_request { exercise: \"name\" session: \"session\" checkpoint: \"checkpoint1\" checkpoint: \"checkpoint2\" } }" ) );
     converter.ReceiveAdminToLauncher( msg );
 }
 

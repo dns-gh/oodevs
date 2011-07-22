@@ -17,7 +17,6 @@
 #include "tools/DefaultLoader.h"
 #include "protocol/LauncherSenders.h"
 #include "protocol/Version.h"
-#include <boost/optional.hpp>
 
 using namespace launcher;
 
@@ -225,10 +224,10 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Checkpoi
     CheckpointDeleteResponse response;
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
-    boost::optional< std::string > checkpoint = boost::none;
-    if( message.has_checkpoint() )
-        checkpoint = message.checkpoint();
-    processes_->RemoveCheckpoint( response(), checkpoint, message.exercise(), message.session() );
+    std::vector< std::string > checkpoints;
+    for( int i = 0; i < message.checkpoint_size(); ++i )
+        checkpoints.push_back( message.checkpoint( i ) );
+    processes_->RemoveCheckpoint( response(), checkpoints, message.exercise(), message.session() );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 
