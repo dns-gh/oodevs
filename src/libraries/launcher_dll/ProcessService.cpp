@@ -96,18 +96,36 @@ void ProcessService::SendSessionList( sword::SessionListResponse& message )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ProcessService::SendRunningExercices
+// Created: SLI 2011-07-22
+// -----------------------------------------------------------------------------
+void ProcessService::SendRunningExercices( const std::string& endpoint ) const
+{
+    for( ProcessContainer::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
+    {
+        const std::pair< std::string, std::string >& key = it->first;
+        if( IsRunning( key.first, key.second ) )
+        {
+            SessionStatus message;
+            message().set_exercise( key.first );
+            message().set_session( key.second );
+            message().set_status( sword::SessionStatus::running );
+            message.Send( server_.ResolveClient( endpoint ) );
+        }
+    }
+}
+
 namespace
 {
     struct SupervisorProfileCollector : public frontend::ProfileVisitor_ABC
     {
         SupervisorProfileCollector()
-            : found_(false)
-            , supervisorProfile_("")
-            , supervisorPassword_("")
+            : found_( false )
             {}
         void Visit( const frontend::Profile& profile )
         {
-            if(!found_ && profile.IsSupervision() )
+            if( !found_ && profile.IsSupervision() )
             {
                 supervisorProfile_ = profile.GetLogin().ascii();
                 supervisorPassword_ = profile.GetPassword().ascii();

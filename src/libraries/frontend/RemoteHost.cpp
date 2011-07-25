@@ -140,7 +140,7 @@ void RemoteHost::Handle( const sword::SessionStartResponse& message )
     boost::shared_ptr< Exercise_ABC > exercise( exercises_[ message.exercise() ] );
     if( !exercise.get() )
         exercise.reset( new RemoteExercise( *this, *this, message.exercise(), controller_ ) );
-    exercise->SetRunning( true);
+    exercise->SetRunning( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,9 +183,11 @@ void RemoteHost::Handle( const sword::SessionParameterChangeResponse& /*message*
 // Name: RemoteHost::Handle
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::SessionStatus& /*message*/ )
+void RemoteHost::Handle( const sword::SessionStatus& message )
 {
-    // NOTHING
+    std::map< std::string, boost::shared_ptr< Exercise_ABC > >::iterator it = exercises_.find( message.exercise() );
+    if( it != exercises_.end() && message.status() == sword::SessionStatus::running )
+        it->second->SetRunning( true );
 }
 
 // -----------------------------------------------------------------------------

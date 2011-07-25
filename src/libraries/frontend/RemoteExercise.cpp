@@ -14,23 +14,9 @@
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
 #include "protocol/LauncherSenders.h"
+#include <boost/algorithm/string.hpp>
 
 using namespace frontend;
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise constructor
-// Created: SBO 2010-10-01
-// -----------------------------------------------------------------------------
-RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const sword::Exercise& message, kernel::Controller& controller )
-    : controller_( controller )
-    , host_      ( host )
-    , name_      ( message.name() )
-    , id_        ( factory.CreateIdentifier( name_ ) )
-    , port_      ( message.has_port() ? message.port() : 0 )
-    , running_   ( message.has_running() ? message.running() : false )
-{
-    controller_.Create( *(Exercise_ABC*)this );
-}
 
 // -----------------------------------------------------------------------------
 // Name: RemoteExercise constructor
@@ -44,7 +30,7 @@ RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFa
     , port_      ( 0 )
     , running_   ( false )
 {
-    controller_.Create( *(Exercise_ABC*)this );
+    controller_.Create( static_cast< Exercise_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +39,7 @@ RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFa
 // -----------------------------------------------------------------------------
 RemoteExercise::~RemoteExercise()
 {
-    controller_.Delete( *(Exercise_ABC*)this );
+    controller_.Delete( static_cast< Exercise_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +84,7 @@ bool RemoteExercise::IsRunning() const
 // -----------------------------------------------------------------------------
 bool RemoteExercise::IsHostedBy( const std::string& host ) const
 {
-    return QString( GetId().c_str() ).startsWith( host.c_str() ); // $$$$ SBO 2010-10-22: TODO, something better (resolve host)
+    return boost::algorithm::starts_with( GetId(), host ); // $$$$ SBO 2010-10-22: TODO, something better (resolve host)
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +130,7 @@ void RemoteExercise::Stop( const std::string& session ) const
 void RemoteExercise::SetRunning( bool running )
 {
     running_ = running;
-    controller_.Update( *(Exercise_ABC*)this );
+    controller_.Update( static_cast< Exercise_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +146,7 @@ void RemoteExercise::QueryProfileList() const
 // Name: RemoteExercise::Pause
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteExercise::Pause(const std::string& session) const
+void RemoteExercise::Pause( const std::string& session ) const
 {
     host_.Pause( name_, session );
 }
@@ -169,7 +155,7 @@ void RemoteExercise::Pause(const std::string& session) const
 // Name: RemoteExercise::Resume
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteExercise::Resume(const std::string& session) const
+void RemoteExercise::Resume( const std::string& session ) const
 {
     host_.Resume( name_, session );
 }
@@ -187,7 +173,7 @@ void RemoteExercise::ChangeDateTime( const std::string& session, const std::stri
 // Name: RemoteExercise::SaveCheckpoint
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteExercise::SaveCheckpoint(const std::string& session, const std::string& name) const
+void RemoteExercise::SaveCheckpoint( const std::string& session, const std::string& name ) const
 {
     host_.SaveCheckpoint( name_, session, name );
 }
@@ -196,7 +182,7 @@ void RemoteExercise::SaveCheckpoint(const std::string& session, const std::strin
 // Name: RemoteExercise::QueryConnectedProfileList
 // Created: AHC 2010-05-23
 // -----------------------------------------------------------------------------
-void RemoteExercise::QueryConnectedProfileList(const std::string& session ) const
+void RemoteExercise::QueryConnectedProfileList( const std::string& session ) const
 {
     host_.QueryConnectedProfileList( name_, session );
 }

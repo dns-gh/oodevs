@@ -108,6 +108,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercise
     ExerciseListResponse response;
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
+    processes_->SendRunningExercices( endpoint );
 }
 
 // -----------------------------------------------------------------------------

@@ -66,6 +66,7 @@ public:
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );
     void Update();
+    void SendRunningExercices( const std::string& endpoint ) const;
     //@}
 
 private:
