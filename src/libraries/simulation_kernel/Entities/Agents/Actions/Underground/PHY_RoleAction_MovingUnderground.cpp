@@ -12,6 +12,7 @@
 #include "DetectionComputer_ABC.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
@@ -83,7 +84,8 @@ void PHY_RoleAction_MovingUnderground::serialize( Archive& ar, const unsigned in
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_MovingUnderground::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    if( bHasChanged_ )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,17 +111,17 @@ void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer_ABC
 // Name: PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pDestination )
+bool PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( speed_ == 0 || !IsUnderground() )
         return false;
-    if( !pDestination || !pDestination->IsValid() )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
-    const UndergroundAttribute* attr = pDestination_->RetrieveAttribute< UndergroundAttribute >();
+    const UndergroundAttribute* attr = pKnowledge->RetrieveAttribute< UndergroundAttribute >();
     if( !attr || attr->Network() != currentNetwork_ )
         return false;
-    transferTime_ = EstimatedUndergroundTime( pDestination );
-    pDestination_ = pDestination;
+    transferTime_ = EstimatedUndergroundTime( pKnowledge );
+    pDestination_ = pKnowledge;
     return true;
 }
 
@@ -178,11 +180,11 @@ bool PHY_RoleAction_MovingUnderground::IsUnderground() const
 // Name: PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( boost::shared_ptr< DEC_Knowledge_Object > pDestination ) const
+double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge ) const
 {
     if( speed_ == 0 )
         return -1.f;
-    return pion_.GetRole< PHY_RolePion_Location >().GetPosition().Distance( pDestination_->GetLocalisation().ComputeBarycenter() ) / speed_;
+    return pion_.GetRole< PHY_RolePion_Location >().GetPosition().Distance( pKnowledge->GetLocalisation().ComputeBarycenter() ) / speed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +193,7 @@ double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( boost::shared
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( IsUnderground() || !pKnowledge || pKnowledge->IsValid() )
+    if( IsUnderground() || !pKnowledge || !pKnowledge->IsValid() )
         return false;
     const MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
     if( !object )
@@ -200,9 +202,9 @@ bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_p
     if( !attr || !attr->IsActivated() )
         return false;
     bHasChanged_ = true;
-    currentNetwork_ = attr->Network();
     speed_ = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), *object );
     pCurrentLocation_ = pKnowledge;
+    currentNetwork_ = attr->Network();
     pDestination_.reset();
     return true;
 }

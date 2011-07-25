@@ -539,6 +539,13 @@
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="371" message="setting up production for the network resources"/>
+  <report category="operational" id="372" message="Cannot reach the network resources"/>
+  <report category="operational" id="373" message="End of production for the network resources"/>
+  <report category="operational" id="374" message="Arrival in %1 minute(s)">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="375" message="Invalid underground network"/>
+  <report category="operational" id="376" message="Underground network is not activated"/>
   <report category="operational" id="3015" message="need technical backup"/>
   <report category="operational" id="3016" message="need %1 firetrucks backup to fight fire of class %2">
     <parameter type="Integer"/>
@@ -550,4 +557,4 @@
   <report category="operational" id="3018" message="need police backup"/>
   <report category="operational" id="3019" message="need medical backup"/>
 </reports>
-<!-- signature="1793076624" -->
+<!-- signature="0336087024" -->

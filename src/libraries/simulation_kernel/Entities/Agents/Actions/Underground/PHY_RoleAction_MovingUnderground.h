@@ -58,11 +58,11 @@ public:
     virtual void Clean();
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
 
-    bool InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pDestination );
+    bool InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     bool Run();
     bool CanExitFromCurrentLocation() const;
     bool IsUnderground() const;
-    double EstimatedUndergroundTime( boost::shared_ptr< DEC_Knowledge_Object > pDestination ) const;
+    double EstimatedUndergroundTime( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge ) const;
     bool HideInUndergroundNetwork( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     void GetOutFromUndergroundNetwork();
     //@}

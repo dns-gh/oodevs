@@ -53,6 +53,7 @@ private:
     //! @name Member data
     //@{
     PHY_RoleAction_MovingUnderground& role_;
+    bool allowed_;
     //@}
 };
 

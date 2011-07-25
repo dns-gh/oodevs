@@ -22,12 +22,11 @@
 // -----------------------------------------------------------------------------
 PHY_ActionMoveUnderground::PHY_ActionMoveUnderground( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pDestination )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_( pion.GetRole< PHY_RoleAction_MovingUnderground >() )
+    , role_      ( pion.GetRole< PHY_RoleAction_MovingUnderground >() )
+    , allowed_( false )
 {
-    if( role_.InitializeUndergroundMoving( pDestination ) )
-        Callback( static_cast< unsigned int >( eRunning) );
-    else
-        Callback( static_cast< unsigned int >( eNotAllowed ) );
+    allowed_ = role_.InitializeUndergroundMoving( pDestination );
+    Callback( static_cast< int >( eRunning ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,10 +44,16 @@ PHY_ActionMoveUnderground::~PHY_ActionMoveUnderground()
 // -----------------------------------------------------------------------------
 void PHY_ActionMoveUnderground::Execute()
 {
-    if( role_.Run() )
-        Callback( static_cast< unsigned int >( eRunning ) );
+    if( allowed_ )
+    {
+        if( role_.Run() )
+            Callback( static_cast< int >( eRunning ) );
+        else
+            Callback( static_cast< int >( eFinished ) );
+    }
     else
-        Callback( static_cast< unsigned int >( eFinished ) );
+        Callback( static_cast< int >( eNotAllowed ) );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -66,5 +71,5 @@ void PHY_ActionMoveUnderground::ExecuteSuspended()
 // -----------------------------------------------------------------------------
 void PHY_ActionMoveUnderground::StopAction()
 {
-    Callback( static_cast< unsigned int >( eFinished ) );
+    Callback( static_cast< int >( eFinished ) );
 }

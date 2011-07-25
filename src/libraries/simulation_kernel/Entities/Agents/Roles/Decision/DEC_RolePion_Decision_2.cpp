@@ -143,6 +143,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     // Réseaux souterrains
     brain[ "DEC_Agent_TempsPourTraverserReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime;
     brain[ "DEC_Agent_SeDissimulerDansReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork;
+    brain[ "DEC_Agent_SortirDuReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork;
 }
 
 // -----------------------------------------------------------------------------
