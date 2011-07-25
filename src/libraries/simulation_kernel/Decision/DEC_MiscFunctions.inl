@@ -54,7 +54,6 @@ void DEC_MiscFunctions::DebugDrawPoints(const T& caller, std::vector< boost::sha
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), caller.GetID() );
     NET_ASN_Tools::WriteCoordinates( points, *message().mutable_coordinates() );
     message.Send( NET_Publisher_ABC::Publisher() );
-    message().clear_coordinates();
 }
 
 // -----------------------------------------------------------------------------
