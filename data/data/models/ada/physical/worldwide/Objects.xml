@@ -425,5 +425,17 @@
     <underground-network/>
     <universal/>
   </object>
+  <object geometry="line" name="Country road" symbol="Road" type="Country road">
+    <bridging type="country road"/>
+  </object>
+  <object geometry="line" name="Highway" symbol="Road" type="Highway">
+    <bridging type="highway"/>
+  </object>
+  <object geometry="line" name="Main road" symbol="Road" type="Main road">
+    <bridging type="main road"/>
+  </object>
+  <object geometry="line" name="Secondary road" symbol="Road" type="Secondary road">
+    <bridging type="secondary road"/>
+  </object>
 </objects>
-<!-- signature="0626244502" -->
+<!-- signature="0197299965" -->

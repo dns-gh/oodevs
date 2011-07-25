@@ -737,6 +737,13 @@
                 </g>
             </marker-start>
         </template>
+        <template name="Road" type="line">
+            <segment unit="%">
+                <g stroke="currentColor" stroke-width="3px">
+                    <line x2="1"/>
+                </g>
+            </segment>
+        </template>
     </category>
 </templates>
-<!-- signature="2080313142" -->
+<!-- signature="4244187457" -->
