@@ -389,7 +389,8 @@ eRC_TerroristNeutralized = 370
 eRC_MiseEnPlaceProducePoint = 371
 eRC_ProduceImpossible = 372
 eRC_FinProducePoint = 373
-eNbr = 374
+eRC_ImpossibleAtteindreObjectif = 374
+eNbr = 375
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

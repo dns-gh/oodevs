@@ -546,6 +546,7 @@
   </report>
   <report category="operational" id="375" message="Le reseau souterrain est invalide"/>
   <report category="operational" id="376" message="Le reseau souterrain n'est pas active"/>
+  <report category="operational" id="377" message="Impossible d'atteindre l'objectif"/>
   <report category="operational" id="3015" message="Demande un renfort technique"/>
   <report category="operational" id="3016" message="Demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -557,4 +558,4 @@
   <report category="operational" id="3018" message="Demande un renfort de police"/>
   <report category="operational" id="3019" message="Demande un renfort médical"/>
 </reports>
-<!-- signature="3720344705" -->
+<!-- signature="1059194791" -->
