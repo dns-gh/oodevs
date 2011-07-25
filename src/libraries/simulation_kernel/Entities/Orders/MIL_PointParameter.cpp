@@ -12,6 +12,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include "Tools/MIL_Tools.h"
+#include "MIL.h"
 #include "Checkpoints/SerializationTools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PointParameter )
@@ -91,12 +92,21 @@ bool MIL_PointParameter::ToElement( sword::MissionParameter_Value& elem ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PointParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_PointParameter::load
+// Created: LGY 2011-07-25
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_PointParameter::serialize( Archive& file, const unsigned int )
+void MIL_PointParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pPoint_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> pPoint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PointParameter::save
+// Created: LGY 2011-07-25
+// -----------------------------------------------------------------------------
+void MIL_PointParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << pPoint_;
 }

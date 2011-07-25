@@ -11,6 +11,7 @@
 #include "MIL_PathParameter.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
+#include "MIL.h"
 #include "Checkpoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 
@@ -102,12 +103,21 @@ bool MIL_PathParameter::ToElement( sword::MissionParameter_Value& elem ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PathParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_PathParameter::load
+// Created: LGY 2011-07-25
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_PathParameter::serialize( Archive& file, const unsigned int )
+void MIL_PathParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & path_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> path_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PathParameter::save
+// Created: LGY 2011-07-25
+// -----------------------------------------------------------------------------
+void MIL_PathParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << path_;
 }
