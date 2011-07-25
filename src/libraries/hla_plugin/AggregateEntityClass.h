@@ -12,7 +12,7 @@
 
 #include "AgentListener_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <vector>
+#include <map>
 
 namespace hla
 {
@@ -46,6 +46,7 @@ private:
     //! @name Operations
     //@{
     virtual void Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    virtual void Destroyed( const std::string& identifier );
     //@}
 
 private:
@@ -62,7 +63,7 @@ private:
     AgentSubject_ABC& subject_;
     std::auto_ptr< UnitRegistration > registration_;
     std::auto_ptr< ::hla::Class< AggregateEntity > > hlaClass_;
-    std::vector< T_Entity > entities_;
+    std::map< std::string, T_Entity > entities_;
     //@}
 };
 

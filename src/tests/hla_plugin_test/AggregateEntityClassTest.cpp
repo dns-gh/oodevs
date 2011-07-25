@@ -103,3 +103,27 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_instance_when_notified, 
     MOCK_EXPECT( subject, Unregister ).once();
     MOCK_EXPECT( factory, ReleaseIdentifier ).once().with( 42u );
 }
+
+BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_destroys_instance_when_notified, Fixture )
+{
+    MockAgent agent;
+    MockObjectIdentifierFactory* factory = new MockObjectIdentifierFactory(); // $$$$ _RC_ SLI 2011-06-10: wtf hla library?
+    subject.reset();
+    AgentListener_ABC* listener = 0;
+    hla::Class_ABC* hlaClass = 0;
+    MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );
+    MOCK_EXPECT( federate, RegisterClass ).once().with( mock::any, mock::retrieve( hlaClass ), true, false );
+    AggregateEntityClass entity( federate, subject );
+    BOOST_REQUIRE( listener );
+    BOOST_REQUIRE( hlaClass );
+    hlaClass->SetFactory( *factory );
+    MOCK_EXPECT( agent, Register ).once();
+    MOCK_EXPECT( factory, CreateIdentifier ).once().with( "identifier" ).returns( hla::ObjectIdentifier( 42u ) );
+    listener->Created( agent, "identifier", "name", rpr::Friendly, rpr::EntityType() );
+    mock::verify();
+    MOCK_EXPECT( agent, Unregister ).once();
+    MOCK_EXPECT( factory, ReleaseIdentifier ).once().with( hla::ObjectIdentifier( 42u ) );
+    listener->Destroyed( "identifier" );
+    mock::verify();
+    MOCK_EXPECT( subject, Unregister ).once();
+}

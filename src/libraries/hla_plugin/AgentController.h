@@ -12,6 +12,7 @@
 
 #include "AgentSubject_ABC.h"
 #include "dispatcher/ExtensionFactory_ABC.h"
+#include "tools/MessageObserver.h"
 #include <vector>
 #include <boost/shared_ptr.hpp>
 
@@ -24,6 +25,12 @@ namespace dispatcher
 namespace rpr
 {
     class EntityTypeResolver_ABC;
+}
+
+namespace sword
+{
+    class UnitDestruction;
+    class SimToClient_Content;
 }
 
 namespace plugins
@@ -40,11 +47,12 @@ namespace hla
 // =============================================================================
 class AgentController : public AgentSubject_ABC
                       , private dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+                      , private tools::MessageObserver< sword::UnitDestruction >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver );
+             AgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller, dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver );
     virtual ~AgentController();
     //@}
 
@@ -57,7 +65,8 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity ); // $$$$ _RC_ SLI 2011-02-04: handle also destruction
+    virtual void Create( dispatcher::Agent& entity );
+    virtual void Notify( const sword::UnitDestruction& message );
     //@}
 
 private:

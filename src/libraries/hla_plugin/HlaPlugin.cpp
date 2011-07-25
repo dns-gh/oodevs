@@ -54,8 +54,8 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublis
     , pFederateFactory_     ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
     , pDebugFederateFactory_( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
     , pEntityTypeResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
-    , pSubject_             ( new AgentController( model, *pEntityTypeResolver_ ) )
     , pMessageController_   ( new tools::MessageController< sword::SimToClient_Content >() )
+    , pSubject_             ( new AgentController( *pMessageController_, model, *pEntityTypeResolver_ ) )
     , federate_             ( new FederateFacade( xis, *pMessageController_, *pSubject_,
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,

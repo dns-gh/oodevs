@@ -43,6 +43,7 @@ public:
     //! @name Operations
     //@{
     virtual void Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type ) = 0;
+    virtual void Destroyed( const std::string& identifier ) = 0;
     //@}
 };
 

@@ -81,6 +81,18 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    entities_.push_back( T_Entity( new AggregateEntity( agent, ++id_, name, force, type ) ) );
-    hlaClass_->Register( *entities_.back(), identifier );
+    entities_[ identifier ] = T_Entity( new AggregateEntity( agent, ++id_, name, force, type ) );
+    hlaClass_->Register( *entities_[ identifier ], identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntityClass::Destroyed
+// Created: SLI 2011-07-25
+// -----------------------------------------------------------------------------
+void AggregateEntityClass::Destroyed( const std::string& identifier )
+{
+    if( entities_.find( identifier ) == entities_.end() )
+        return;
+    hlaClass_->Unregister( *entities_[ identifier ] );
+    entities_.erase( identifier );
 }
