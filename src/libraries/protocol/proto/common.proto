@@ -531,12 +531,6 @@ message ControlChangeTimeFactor {
     required int32 time_factor = 1; //!< The new time multiplier
 }
 
-message Exercise  {
-    required string name    = 1;
-    optional bool   running = 2;
-    optional uint32 port    = 3;
-}
-
 // Color
 /** @struct RgbColor
     @brief Defines a color
