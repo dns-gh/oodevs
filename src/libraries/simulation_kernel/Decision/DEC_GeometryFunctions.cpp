@@ -1897,3 +1897,17 @@ double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 {
      return pFuseau->GetWidth();
 }
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitFuseauWithParams
+// Created: EVH 2011-07-22
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitFuseauWithParams( const MIL_Fuseau* pFuseau, const double rSectionLength )
+{
+    
+    const MT_Line& globalDirection = pFuseau->GetGlobalDirection();
+    MT_Vector2D vDirection( globalDirection.GetPosEnd() - globalDirection.GetPosStart() );
+    vDirection.Normalize();
+
+    return SplitLocalisation( TER_Localisation( TER_Localisation::ePolygon, pFuseau->GetBorderPoints() ), globalDirection.GetPosStart(), vDirection , rSectionLength );
+}
