@@ -58,6 +58,7 @@ private:
     const LogisticHierarchyOwner_ABC& owner_;
     const LogisticEntity_ABC& superior_;
     tools::Resolver< DotationQuota > quotas_;
+    bool updated_;
     //@}
 };
 

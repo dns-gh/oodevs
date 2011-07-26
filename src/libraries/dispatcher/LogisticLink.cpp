@@ -22,8 +22,9 @@ using namespace dispatcher;
 // Created: NLD 2011-03-11
 // -----------------------------------------------------------------------------
 LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, const LogisticEntity_ABC& superior )
-    : owner_    ( owner )
-    , superior_ ( superior )
+    : owner_   ( owner )
+    , superior_( superior )
+    , updated_ ( false )
 {
     // NOTHING
 }
@@ -43,6 +44,7 @@ LogisticLink::~LogisticLink()
 // -----------------------------------------------------------------------------
 void LogisticLink::Update( const sword::SeqOfDotationQuota& msg )
 {
+    updated_ = true;
     quotas_.DeleteAll();
     for( int i = 0; i < msg.elem_size(); i++ )
     {
@@ -65,9 +67,13 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticLink::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::LogSupplyQuotas msg;
-    owner_.Send( *msg().mutable_supplied() );
-    superior_.Send( *msg().mutable_supplier() );
-    quotas_.Apply( boost::bind( &SerializeQuota, boost::ref( *msg().mutable_quotas() ), _1 ) );
-    msg.Send( publisher );
+    if( updated_ )
+    {
+        client::LogSupplyQuotas msg;
+        owner_.Send( *msg().mutable_supplied() );
+        superior_.Send( *msg().mutable_supplier() );
+        msg().mutable_quotas();
+        quotas_.Apply( boost::bind( &SerializeQuota, boost::ref( *msg().mutable_quotas() ), _1 ) );
+        msg.Send( publisher );
+    }
 }
