@@ -70,7 +70,7 @@
     <added-file filename="Inhabitants.xml" assign-file="schemas/4.2.2/added-files/Inhabitants.xml"/>
     <added-file filename="Extensions.xml" assign-file="schemas/4.3.0/added-files/Extensions.xml"/>
     <added-file filename="scores.xml" assign-file="schemas/4.3.1/added-files/scores.xml"/>
-    <added-file filename="symbols.xml" assign-file="symbols.xml"/>
+    <added-file filename="symbols.xml" assign-file="schemas/4.3.1/added-files/symbols.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">
