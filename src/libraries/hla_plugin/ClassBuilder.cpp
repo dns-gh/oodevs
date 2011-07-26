@@ -39,7 +39,7 @@ ClassBuilder::~ClassBuilder()
 // Name: ClassBuilder::Build
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void ClassBuilder::Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >& hlaClass ) const
+void ClassBuilder::Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >& hlaClass, bool publish, bool subscribe ) const
 {
     hlaClass.Register( ::hla::AttributeIdentifier( "EntityType" ) );              // static
     hlaClass.Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );        // static
@@ -55,5 +55,5 @@ void ClassBuilder::Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >&
     hlaClass.Register( ::hla::AttributeIdentifier( "SubAggregateIdentifiers" ) ); // static
     hlaClass.Register( ::hla::AttributeIdentifier( "EntityIdentifiers" ) );       // static
     hlaClass.ActivateUpdates( true );
-    federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity" ), hlaClass, true, false );
+    federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity" ), hlaClass, publish, subscribe );
 }

@@ -24,7 +24,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockClassBuilder, ClassBuilder_ABC )
 {
-    MOCK_METHOD( Build, 2 )
+    MOCK_METHOD( Build, 4 )
 };
 
 }

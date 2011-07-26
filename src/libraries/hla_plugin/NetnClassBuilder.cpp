@@ -57,15 +57,15 @@ namespace
 // Name: NetnClassBuilder::Build
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnClassBuilder::Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >& hlaClass ) const
+void NetnClassBuilder::Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >& hlaClass, bool publish, bool subscribe ) const
 {
     EmptyFederate empty;
-    builder_.Build( empty, hlaClass );
+    builder_.Build( empty, hlaClass, publish, subscribe );
     hlaClass.Register( ::hla::AttributeIdentifier( "Mounted" ) );            // dynamic
     hlaClass.Register( ::hla::AttributeIdentifier( "Echelon" ) );            // static
     hlaClass.Register( ::hla::AttributeIdentifier( "UniqueID" ) );           // static
     hlaClass.Register( ::hla::AttributeIdentifier( "HigherHeadquarters" ) ); // static
     hlaClass.Register( ::hla::AttributeIdentifier( "Callsign" ) );           // static
     hlaClass.ActivateUpdates( true );
-    federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), hlaClass, true, false );
+    federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), hlaClass, publish, subscribe );
 }

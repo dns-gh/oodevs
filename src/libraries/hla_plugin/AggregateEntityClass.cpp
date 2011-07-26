@@ -44,7 +44,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     , registration_( new UnitRegistration() )
     , hlaClass_    ( new ::hla::Class< Aggregate_ABC >( *registration_, true ) )
 {
-    builder.Build( federate, *hlaClass_ );
+    builder.Build( federate, *hlaClass_, true, false );
     subject_.Register( *this );
 }
 

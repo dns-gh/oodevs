@@ -34,16 +34,16 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( builder_registers_rpr_class_identifier_and_publish_only, Fixture )
+BOOST_FIXTURE_TEST_CASE( builder_registers_rpr_class_identifier_and_forwards_subscriptions, Fixture )
 {
     MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, true, false );
-    builder.Build( federate, hlaClass );
+    builder.Build( federate, hlaClass, true, false );
 }
 
 BOOST_FIXTURE_TEST_CASE( builder_registers_only_rpr_attributes, Fixture )
 {
     MOCK_EXPECT( federate, RegisterClass );
-    builder.Build( federate, hlaClass );
+    builder.Build( federate, hlaClass, true, false );
     mock::verify();
     const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
                                                                         ( "EntityIdentifier" )

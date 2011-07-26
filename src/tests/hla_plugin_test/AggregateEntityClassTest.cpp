@@ -44,7 +44,7 @@ namespace
             , hlaClass( 0 )
         {
             MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );
-            MOCK_EXPECT( builder, Build ).once().with( mock::any, mock::retrieve( hlaClass ) );
+            MOCK_EXPECT( builder, Build ).once().with( mock::any, mock::retrieve( hlaClass ), true, false );
         }
         MockFederate federate;
         MockAgentSubject subject;
