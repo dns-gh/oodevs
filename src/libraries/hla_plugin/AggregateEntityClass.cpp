@@ -20,29 +20,16 @@
 
 using namespace plugins::hla;
 
-struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< Aggregate_ABC >
-{
-    virtual Aggregate_ABC& Create( const ::hla::ObjectIdentifier&, const std::string& )
-    {
-        throw std::runtime_error( __FUNCTION__ );
-    }
-    virtual void Destroy( Aggregate_ABC& )
-    {
-        throw std::runtime_error( __FUNCTION__ );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: AggregateEntityClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
 AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject,
                                             const AggregateFactory_ABC& factory, const ClassBuilder_ABC& builder )
-    : id_          ( 1 )
-    , subject_     ( subject )
-    , factory_     ( factory )
-    , registration_( new UnitRegistration() )
-    , hlaClass_    ( new ::hla::Class< Aggregate_ABC >( *registration_, true ) )
+    : id_      ( 1 )
+    , subject_ ( subject )
+    , factory_ ( factory )
+    , hlaClass_( new ::hla::Class< Aggregate_ABC >( *this, true ) )
 {
     builder.Build( federate, *hlaClass_, true, false );
     subject_.Register( *this );
@@ -77,4 +64,22 @@ void AggregateEntityClass::Destroyed( const std::string& identifier )
         return;
     hlaClass_->Unregister( *entities_[ identifier ] );
     entities_.erase( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntityClass::Create
+// Created: SLI 2011-07-26
+// -----------------------------------------------------------------------------
+Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& /*objectName*/ )
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntityClass::Destroy
+// Created: SLI 2011-07-26
+// -----------------------------------------------------------------------------
+void AggregateEntityClass::Destroy( Aggregate_ABC& /*object*/ )
+{
+    throw std::runtime_error( __FUNCTION__ );
 }
