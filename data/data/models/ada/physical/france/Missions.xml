@@ -2809,6 +2809,43 @@
       </parameter>
       <parameter dia-name="searchObjective" name="Fouille des objectifs" optional="true" type="Boolean"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.tasks.ReparerReseauSouterrain" dia-type="france.military.platoon.tasks.ReparerReseauSouterrain" id="2147" name="Activer reseau souterrain">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="network" name="Reseau souterrain" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.DetruireReseauSouterrain" dia-type="france.military.platoon.tasks.DetruireReseauSouterrain" id="2148" name="Desactiver reseau souterrain">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="network" name="Reseau souterrain" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.EntrerDansReseauSouterrain" dia-type="france.military.platoon.tasks.EntrerDansReseauSouterrain" id="2149" name="Entrer dans un reseau souterrain">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="network" name="Reseau souterrain" optional="false" type="ObjectKnowledge"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.SortirDuReseauSouterrain" dia-type="france.military.platoon.tasks.SortirDuReseauSouterrain" id="2151" name="Sortir du reseau souterrain">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objective" name="Objectif" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.FaireMouvementDansReseauSouterrain" dia-type="france.military.platoon.tasks.FaireMouvementDansReseauSouterrain" id="2152" name="Faire mouvement dans reseau souterrain">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="network" name="Reseau souterrain" optional="false" type="ObjectKnowledge"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ALAT Aller Se Recompleter">
@@ -4759,7 +4796,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones" optional="false" type="LocationComposite">
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -5012,4 +5049,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3290782369" -->
+<!-- signature="0811842318" -->
