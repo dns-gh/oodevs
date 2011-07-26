@@ -92,14 +92,38 @@ void SuccessFactorsModel::Serialize( xml::xostream& xos, const tools::SchemaWrit
     xos << xml::end;
 }
 
+namespace
+{
+    void EraseLine( std::string filename, unsigned lineToErase )
+    {
+        std::string buffer = "";
+        std::ifstream inputFile( filename );
+        if( inputFile )
+        {
+            std::string line;
+            for( unsigned lineNumber = 0; std::getline( inputFile, line ); ++lineNumber )
+                if( lineNumber != lineToErase )
+                    buffer += line + "\n";
+        }
+        inputFile.close();
+
+        std::ofstream outputFile( filename );
+        outputFile << buffer;
+        outputFile.close();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorsModel::SerializeScript
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
 void SuccessFactorsModel::SerializeScript( const tools::ExerciseConfig& config ) const
 {
-    xsl::xftransform xft( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ), config.BuildExerciseChildFile( "scripts/success-factors.lua" ) );
-    xft << xml::xifstream( config.GetSuccessFactorsFile() );
+    {
+        xsl::xftransform xft( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ), config.BuildExerciseChildFile( "scripts/success-factors.lua" ) );
+        xft << xml::xifstream( config.GetSuccessFactorsFile() );
+    }
+    EraseLine( config.BuildExerciseChildFile( "scripts/success-factors.lua" ), 0 ); // $$$$ ABR 2011-07-26: Temporaire, la transformation xsl de Xalan crash en vc100 (Mantis 5915)
 }
 
 // -----------------------------------------------------------------------------
