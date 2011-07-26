@@ -39,7 +39,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications, Fixture )
+BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_netn_by_default, Fixture )
 {
     xml::xistringstream xis( "<root/>" );
     xis >> xml::start( "root" );
@@ -47,12 +47,28 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications, Fixtur
     MOCK_EXPECT( federateFactory, Create ).once().in( s ).with( mock::any, "SWORD", -1 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate, Connect ).once().in( s ).returns( true );
     MOCK_EXPECT( federate, Join ).once().in( s ).with( "Federation", true, true ).returns( true );
-    MOCK_EXPECT( federate, RegisterClass ).once().in( s );
+    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, mock::any, mock::any );
     MOCK_EXPECT( subject, Register ).once().in( s );
     MOCK_EXPECT( controller, Register ).once().in( s );
     FederateFacade facade( xis, controller, subject, rtiFactory, federateFactory, "directory" );
     MOCK_EXPECT( subject, Unregister ).once().in( s );
     MOCK_EXPECT( controller, Unregister ).once().in( s );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
+{
+    xml::xistringstream xis( "<root netn='false'/>" );
+    xis >> xml::start( "root" );
+    MOCK_EXPECT( rtiFactory, CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( federateFactory, Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federate, Connect ).once().returns( true );
+    MOCK_EXPECT( federate, Join ).once().returns( true );
+    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, mock::any, mock::any );
+    MOCK_EXPECT( subject, Register ).once();
+    MOCK_EXPECT( controller, Register ).once();
+    FederateFacade facade( xis, controller, subject, rtiFactory, federateFactory, "directory" );
+    MOCK_EXPECT( subject, Unregister ).once();
+    MOCK_EXPECT( controller, Unregister ).once();
 }
 
 namespace

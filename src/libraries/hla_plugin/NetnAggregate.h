@@ -3,29 +3,16 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_AgentExtension_h
-#define plugins_hla_AgentExtension_h
+#ifndef plugins_hla_NetnAggregate_h
+#define plugins_hla_NetnAggregate_h
 
 #include "Aggregate_ABC.h"
 #include "EventListener_ABC.h"
-#include "rpr/ForceIdentifier.h"
-#include <vector>
-
-namespace hla
-{
-    class AttributeIdentifier;
-    class Deserializer;
-    class UpdateFunctor_ABC;
-}
-
-namespace rpr
-{
-    class EntityType;
-}
+#include <memory>
 
 namespace plugins
 {
@@ -35,20 +22,19 @@ namespace hla
     class AttributesSerializer;
 
 // =============================================================================
-/** @class  AggregateEntity
-    @brief  Aggregate entity
+/** @class  NetnAggregate
+    @brief  Netn aggregate
 */
-// Created: SBO 2008-02-18
+// Created: SLI 2011-07-26
 // =============================================================================
-class AggregateEntity : public Aggregate_ABC
-                      , private EventListener_ABC
+class NetnAggregate : public Aggregate_ABC
+                    , private EventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntity( Agent_ABC& agent, unsigned short identifier,
-                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
-    virtual ~AggregateEntity();
+             NetnAggregate( std::auto_ptr< Aggregate_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier );
+    virtual ~NetnAggregate();
     //@}
 
     //! @name Operations
@@ -58,7 +44,7 @@ public:
     //@}
 
 private:
-    //! @name Observer
+    //! @name Operations
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
@@ -67,18 +53,10 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::pair< unsigned int, unsigned int > T_Equipment;
-    typedef std::vector< T_Equipment >  T_Equipments;
-    typedef T_Equipments::iterator     IT_Equipments;
-    //@}
-
-private:
     //! @name Member data
     //@{
+    std::auto_ptr< Aggregate_ABC > aggregate_;
     Agent_ABC& agent_;
-    T_Equipments equipments_;
     std::auto_ptr< AttributesSerializer > attributes_;
     //@}
 };
@@ -86,4 +64,4 @@ private:
 }
 }
 
-#endif // plugins_hla_AgentExtension_h
+#endif // plugins_hla_NetnAggregate_h

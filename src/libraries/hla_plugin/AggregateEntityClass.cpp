@@ -9,23 +9,24 @@
 
 #include "hla_plugin_pch.h"
 #include "AggregateEntityClass.h"
-#include "AggregateEntity.h"
+#include "Aggregate_ABC.h"
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
-#include "Federate_ABC.h"
+#include "AggregateFactory_ABC.h"
+#include "ClassBuilder_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/ObjectRegistration_ABC.h>
 
 using namespace plugins::hla;
 
-struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< AggregateEntity >
+struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< Aggregate_ABC >
 {
-    virtual AggregateEntity& Create( const ::hla::ObjectIdentifier&, const std::string& )
+    virtual Aggregate_ABC& Create( const ::hla::ObjectIdentifier&, const std::string& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
-    virtual void Destroy( AggregateEntity& )
+    virtual void Destroy( Aggregate_ABC& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
@@ -35,35 +36,16 @@ struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration
 // Name: AggregateEntityClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject )
+AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject,
+                                            const AggregateFactory_ABC& factory, const ClassBuilder_ABC& builder )
     : id_          ( 1 )
     , subject_     ( subject )
+    , factory_     ( factory )
     , registration_( new UnitRegistration() )
-    , hlaClass_    ( new ::hla::Class< AggregateEntity >( *registration_, true ) )
+    , hlaClass_    ( new ::hla::Class< Aggregate_ABC >( *registration_, true ) )
 {
-    // BaseEntity.AggregateEntity
-    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );              // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );        // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "ForceIdentifier" ) );         // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateMarking" ) );        // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateState" ) );          // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Dimensions" ) );              // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Spatial" ) );                 // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Formation" ) );               // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ) );  // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "SilentEntities" ) );          // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "SilentAggregates" ) );        // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "SubAggregateIdentifiers" ) ); // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifiers" ) );       // static
-    // BaseEntity.AggregateEntity.NETN_Aggregate
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Mounted" ) );                 // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Echelon" ) );                 // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "UniqueID" ) );                // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "HigherHeadquarters" ) );      // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Callsign" ) );                // static
-    federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), *hlaClass_, true, false );
+    builder.Build( federate, *hlaClass_ );
     subject_.Register( *this );
-    hlaClass_->ActivateUpdates( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +63,7 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    entities_[ identifier ] = T_Entity( new AggregateEntity( agent, ++id_, name, force, type ) );
+    entities_[ identifier ] = T_Entity( factory_.Create( agent, name, ++id_, force, type ).release() );
     hlaClass_->Register( *entities_[ identifier ], identifier );
 }
 

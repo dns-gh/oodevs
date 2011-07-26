@@ -27,6 +27,22 @@ namespace plugins
 {
 namespace hla
 {
+    template< typename T >
+    struct Wrapper
+    {
+    public:
+        explicit Wrapper( const T& value )
+            : value_( value )
+        {}
+        template< typename Archive >
+        void Serialize( Archive& serializer ) const
+        {
+            serializer << value_;
+        }
+    private:
+        T value_;
+    };
+
 // =============================================================================
 /** @class  AttributesSerializer
     @brief  Attributes serializer

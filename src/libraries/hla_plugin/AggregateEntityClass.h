@@ -23,9 +23,11 @@ namespace plugins
 {
 namespace hla
 {
-    class AggregateEntity;
+    class Aggregate_ABC;
+    class AggregateFactory_ABC;
     class AgentSubject_ABC;
     class Federate_ABC;
+    class ClassBuilder_ABC;
 
 // =============================================================================
 /** @class  AggregateEntityClass
@@ -38,7 +40,8 @@ class AggregateEntityClass : private AgentListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject );
+             AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject,
+                                   const AggregateFactory_ABC& factory, const ClassBuilder_ABC& builder );
     virtual ~AggregateEntityClass();
     //@}
 
@@ -53,7 +56,7 @@ private:
     //! @name Types
     //@{
     struct UnitRegistration;
-    typedef boost::shared_ptr< AggregateEntity > T_Entity;
+    typedef boost::shared_ptr< Aggregate_ABC > T_Entity;
     //@}
 
 private:
@@ -61,8 +64,9 @@ private:
     //@{
     unsigned short id_;
     AgentSubject_ABC& subject_;
+    const AggregateFactory_ABC& factory_;
     std::auto_ptr< UnitRegistration > registration_;
-    std::auto_ptr< ::hla::Class< AggregateEntity > > hlaClass_;
+    std::auto_ptr< ::hla::Class< Aggregate_ABC > > hlaClass_;
     std::map< std::string, T_Entity > entities_;
     //@}
 };

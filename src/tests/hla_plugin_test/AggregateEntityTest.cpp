@@ -58,7 +58,7 @@ BOOST_FIXTURE_TEST_CASE( unmodified_agent_serializes_nothing, RegisteredFixture 
     entity.Serialize( functor, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_serializes_all, RegisteredFixture )
+BOOST_FIXTURE_TEST_CASE( agregate_entity_serializes_all_its_attributes, RegisteredFixture )
 {
     const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
                                                                         ( "EntityIdentifier" )
@@ -72,12 +72,7 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all, RegisteredFixture )
                                                                         ( "SilentEntities" )
                                                                         ( "SilentAggregates" )
                                                                         ( "SubAggregateIdentifiers" )
-                                                                        ( "EntityIdentifiers" )
-                                                                        ( "Mounted" )
-                                                                        ( "Echelon" )
-                                                                        ( "UniqueID" )
-                                                                        ( "HigherHeadquarters" )
-                                                                        ( "Callsign" );
+                                                                        ( "EntityIdentifiers" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
@@ -149,36 +144,6 @@ BOOST_FIXTURE_TEST_CASE( agent_has_no_silent_aggregate, RegisteredFixture )
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_unique_id_is_sword_plus_identifier, RegisteredFixture )
-{
-    MOCK_EXPECT( functor, Visit ).once().with( "UniqueID", boost::bind( &CheckSize, _1, 11u ) );
-    MOCK_EXPECT( functor, Visit );
-    entity.Serialize( functor, true );
-}
-
-BOOST_FIXTURE_TEST_CASE( agent_callsign_is_its_name, RegisteredFixture )
-{
-    MOCK_EXPECT( functor, Visit ).once().with( "Callsign", boost::bind( &CheckSize, _1, sizeof( uint32 ) + 4 * sizeof( uint16 ) ) );
-    MOCK_EXPECT( functor, Visit );
-    entity.Serialize( functor, true );
-}
-
-BOOST_FIXTURE_TEST_CASE( agent_higher_headquarters_uniqueid_is_its_own_identifier, RegisteredFixture )
-{
-    MOCK_EXPECT( functor, Visit ).once().with( "HigherHeadquarters", boost::bind( &CheckSize, _1, 11u ) );
-    MOCK_EXPECT( functor, Visit );
-    entity.Serialize( functor, true );
-}
-
-BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, RegisteredFixture )
-{
-    const int8 platoonEchelon = 14;
-    hla::MockUpdateFunctor functor;
-    MOCK_EXPECT( functor, Visit ).once().with( "Echelon", boost::bind( &CheckSerialization< int8 >, _1, platoonEchelon ) );
-    MOCK_EXPECT( functor, Visit );
-    entity.Serialize( functor, true );
-}
-
 BOOST_FIXTURE_TEST_CASE( empty_agent_does_not_have_any_silent_entity, RegisteredFixture )
 {
     const unsigned short numberOfSilentEntity = 0;
@@ -212,24 +177,6 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_silent_entities_number, RegisteredFixt
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, RegisteredFixture )
-{
-    const double percentMounted = 0.;
-    MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
-    MOCK_EXPECT( functor, Visit );
-    entity.Serialize( functor, true );
-}
-
-BOOST_FIXTURE_TEST_CASE( mounted_agent_serializes_100_percent, RegisteredFixture )
-{
-    const double percentMounted = 100.;
-    BOOST_REQUIRE( listener );
-    listener->EmbarkmentChanged( true );
-    MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
-    MOCK_EXPECT( functor, Visit );
-    entity.Serialize( functor, true );
-}
-
 BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, RegisteredFixture )
 {
     BOOST_REQUIRE( listener );
@@ -257,15 +204,6 @@ BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, RegisteredFixtur
     mock::sequence s;
     MOCK_EXPECT( functor, Visit ).once().in( s ).with( "NumberOfSilentEntities", mock::any );
     MOCK_EXPECT( functor, Visit ).once().in( s ).with( "SilentEntities", mock::any );
-    entity.Serialize( functor, false );
-    entity.Serialize( functor, false );
-}
-
-BOOST_FIXTURE_TEST_CASE( embarkment_changed_event_is_serialized, RegisteredFixture )
-{
-    BOOST_REQUIRE( listener );
-    listener->EmbarkmentChanged( true );
-    MOCK_EXPECT( functor, Visit ).once().with( "Mounted", mock::any );
     entity.Serialize( functor, false );
     entity.Serialize( functor, false );
 }

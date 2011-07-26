@@ -39,6 +39,8 @@ namespace hla
     class FederateAmbassadorFactory_ABC;
     class Federate_ABC;
     class RtiAmbassadorFactory_ABC;
+    class AggregateFactory_ABC;
+    class ClassBuilder_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -51,7 +53,9 @@ namespace hla
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
+             FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                             AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory,
+                             const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
     virtual ~FederateFacade();
     //@}
 
@@ -75,6 +79,10 @@ private:
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
+    std::auto_ptr< AggregateFactory_ABC > pAggregateFactory_;
+    std::auto_ptr< AggregateFactory_ABC > pNetnAggregateFactory_;
+    std::auto_ptr< ClassBuilder_ABC > pClassBuilder_;
+    std::auto_ptr< ClassBuilder_ABC > pNetnClassBuilder_;
     std::auto_ptr< AggregateEntityClass > agentClass_;
     //@}
 };

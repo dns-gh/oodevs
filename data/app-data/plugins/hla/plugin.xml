@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <plugin name="hla" version="1.0" library="hla_plugin-vc80-mt.dll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
     <descriptions>
         <description lang="en" name="HLA"><![CDATA[HLA communication plugin.]]></description>
@@ -102,6 +102,12 @@
                     <descriptions>
                         <description lang="en" name="Debug"><![CDATA[]]>Enable debug informations.</description>
                         <description lang="fr" name="Debug"><![CDATA[]]>Active les informations de debug.</description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@netn" type="boolean" default="true">
+                    <descriptions>
+                        <description lang="en" name="Use NETN modules"><![CDATA[]]>Enable NETN subscriptions and publications.</description>
+                        <description lang="fr" name="Utiliser les modules NETN"><![CDATA[]]>Active la souscription et la publication NETN.</description>
                     </descriptions>
                 </setting>
             </settings>

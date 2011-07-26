@@ -16,35 +16,13 @@
 #include "SilentEntity.h"
 #include "Formation.h"
 #include "Dimension.h"
-#include "UnicodeString.h"
-#include "UniqueId.h"
 #include "AttributesSerializer.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
-
-namespace
-{
-    template< typename T >
-    struct Wrapper
-    {
-    public:
-        explicit Wrapper( const T& value )
-            : value_( value )
-        {}
-        template< typename Archive >
-        void Serialize( Archive& serializer ) const
-        {
-            serializer << value_;
-        }
-    private:
-        T value_;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity constructor
@@ -55,7 +33,6 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned short identifier,
     : agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
-    // BaseEntity.AggregateEntity
     attributes_->Register( "EntityType", type );
     attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, identifier ) );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
@@ -69,12 +46,6 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned short identifier,
     attributes_->Register( "SilentAggregates", Wrapper< uint32 >( 0 ) ); // no aggregates
     attributes_->Register( "SubAggregateIdentifiers", Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
     attributes_->Register( "EntityIdentifiers", Wrapper< uint32 >( 0 ) ); // no entity identifiers
-    // BaseEntity.AggregateEntity.NETN_Aggregate
-    attributes_->Register( "Mounted", Wrapper< double >( 0. ) );
-    attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
-    attributes_->Register( "UniqueID", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
-    attributes_->Register( "HigherHeadquarters", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
-    attributes_->Register( "Callsign", UnicodeString( name ) );
     agent_.Register( *this );
 }
 
@@ -154,7 +125,7 @@ void AggregateEntity::FormationChanged( bool isOnRoad )
 // Name: AggregateEntity::EmbarkmentChanged
 // Created: SLI 2011-06-16
 // -----------------------------------------------------------------------------
-void AggregateEntity::EmbarkmentChanged( bool mounted )
+void AggregateEntity::EmbarkmentChanged( bool /*mounted*/ )
 {
-    attributes_->Update( "Mounted", Wrapper< double >( mounted ? 100. : 0. ) );
+    // NOTHING
 }
