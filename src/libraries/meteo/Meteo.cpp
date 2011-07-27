@@ -139,6 +139,8 @@ Meteo::~Meteo()
 // -----------------------------------------------------------------------------
 void Meteo::Update( const sword::WeatherAttributes& msg )
 {
+    modified_ = true;
+
     // Plancher de couverture nuageuse
     cloud_.nFloor_ = msg.cloud_floor();
     // Plafond de couverture nuageuse
@@ -257,6 +259,20 @@ void Meteo::Update( const PHY_Lighting& light )
 void Meteo::Update( const PHY_Precipitation& precipitation)
 {
     pPrecipitation_ = &precipitation;
+    modified_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::Update
+// Created: ABR 2011-07-27
+// -----------------------------------------------------------------------------
+void Meteo::Update( const Meteo& other )
+{
+    wind_             = other.GetWind();
+    cloud_            = other.GetCloud();
+    pLighting_        = &other.GetLighting();
+    pPrecipitation_   = &other.GetPrecipitation();
+    conversionFactor_ = other.GetConversionFactor();
     modified_ = true;
 }
 

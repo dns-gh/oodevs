@@ -92,7 +92,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel( tacticalLineFactory_ ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
-    , weather_( *new WeatherModel( controllers, *this, simulation ) )
+    , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
     , actions_( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher  ) )
     , folk_( *new FolkModel( controllers.controller_ ) )

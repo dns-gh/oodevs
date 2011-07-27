@@ -11,6 +11,7 @@
 #include "AmmoEffect.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "meteo/Meteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 
@@ -20,17 +21,12 @@ using namespace kernel;
 // Name: AmmoEffect constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter, unsigned int tickDuration )
+AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
     , id_        ( message.fire_effect().id() )
     , type_      ( message.type() )
     , ellipse_   ( message.location(), converter )
-    , meteo_     ( 0, weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, tickDuration )
 {
-    if( type_ == sword::WeatherAttributes::artificial_light )
-        meteo_.Update( weather::PHY_Lighting::eclairant_ );
-    else if( type_ == sword::StartFireEffect::smoke )
-        meteo_.Update( weather::PHY_Precipitation::smoke_ );
     controller_.Create( *this );
 }
 
@@ -70,11 +66,15 @@ bool AmmoEffect::IsInside( const geometry::Point2f& point ) const
     return ellipse_.IsInside( point );
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: AmmoEffect::GetMeteo
-// Created: HBD 2010-04-06
+// Name: AmmoEffect::ApplyEffect
+// Created: ABR 2011-07-27
 // -----------------------------------------------------------------------------
-const weather::Meteo& AmmoEffect::GetMeteo() const
+void AmmoEffect::ApplyEffect( weather::Meteo& meteo ) const
 {
-    return meteo_;
+    if( type_ == sword::StartFireEffect::light )
+        meteo.Update( weather::PHY_Lighting::eclairant_ );
+    else if( type_ == sword::StartFireEffect::smoke )
+        meteo.Update( weather::PHY_Precipitation::smoke_ );
 }

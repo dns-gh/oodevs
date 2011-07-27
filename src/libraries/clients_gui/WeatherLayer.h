@@ -78,7 +78,7 @@ private:
     geometry::Point2f           bottomRight_;
     bool                        firstPointSet_;
     bool                        isEditing_;
-    weather::MeteoLocal*        currentWeather_;
+    weather::MeteoLocal*        currentMeteoLocal_;
     //@}
 };
 

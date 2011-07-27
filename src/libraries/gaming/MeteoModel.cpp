@@ -57,7 +57,7 @@ const weather::Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) con
     for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->IsInside( point ) )
             return ( *it ).get();
-    return globalMeteo_.get();
+    return GetGlobalMeteo();
 }
 
 // -----------------------------------------------------------------------------

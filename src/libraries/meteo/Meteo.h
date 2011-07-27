@@ -116,6 +116,7 @@ public:
     virtual void Update( const sword::MissionParameters& asn );
     virtual void Update( const PHY_Lighting& lighting );
     virtual void Update( const PHY_Precipitation& precipitation);
+    virtual void Update( const Meteo& );
     virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< Meteo > meteo );
     virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;

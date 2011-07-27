@@ -69,8 +69,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Effects effects_;
-    const MeteoModel& meteoModel_;
+    const MeteoModel&    meteoModel_;
+    T_Effects            effects_;
+    weather::Meteo*      currentMeteo_;
     //@}
 };
 

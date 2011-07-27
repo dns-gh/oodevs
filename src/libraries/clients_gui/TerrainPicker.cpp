@@ -86,11 +86,13 @@ void TerrainPicker::OnTimeOut()
         emit TerrainPicked( data.ToString().c_str() );
     }
     if( weather_ )
-        if( const weather::Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
-            emit WeatherPicked( tools::ToDisplayedString( weather->GetLighting().GetID() ),
-                                tools::ToDisplayedString( weather->GetPrecipitation().GetID() ),
-                                tools::translate( "gui::TerrainPicker", "Wind speed: %1km/h, direction: %2°" ).arg( weather->GetWind().rSpeed_ / weather->GetConversionFactor(), 0, 'f', 0 ).arg( weather->GetWind().eAngle_ ).ascii() );
-
+    {
+        const weather::Meteo* meteo = weather_->Pick( terrainCoordinates_ );
+        assert( meteo );
+        emit WeatherPicked( tools::ToDisplayedString( meteo->GetLighting().GetID() ),
+                            tools::ToDisplayedString( meteo->GetPrecipitation().GetID() ),
+                            tools::translate( "gui::TerrainPicker", "Wind speed: %1km/h, direction: %2°" ).arg( meteo->GetWind().rSpeed_ / meteo->GetConversionFactor(), 0, 'f', 0 ).arg( meteo->GetWind().eAngle_ ).ascii() );
+    }
     if( objects_ )
     {
         QStringList infos = objects_->TerrainPick( terrainCoordinates_ );

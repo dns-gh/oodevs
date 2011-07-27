@@ -13,13 +13,17 @@
 #include <boost/noncopyable.hpp>
 #include "MSEllipse.h"
 #include "protocol/Protocol.h"
-#include "meteo/Meteo.h"
 
 namespace kernel
 {
     class GlTools_ABC;
     class CoordinateConverter_ABC;
     class Controller;
+}
+
+namespace weather
+{
+    class Meteo;
 }
 
 // =============================================================================
@@ -33,7 +37,7 @@ class AmmoEffect : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, unsigned int tickDuration );
+             AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AmmoEffect();
     //@}
 
@@ -41,7 +45,7 @@ public:
     //@{
     virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
-    virtual const weather::Meteo& GetMeteo() const;
+    void ApplyEffect( weather::Meteo& meteo ) const;
     //@}
 
 private:
@@ -51,7 +55,6 @@ private:
     unsigned long id_;
     sword::StartFireEffect::EnumFireEffectType type_;
     MSEllipse ellipse_;
-    weather::Meteo meteo_;
     //@}
 };
 
