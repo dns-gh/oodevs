@@ -262,10 +262,10 @@ void Saver::GenerateInfoFile() const
         std::ofstream info;
         info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::in | std::ios_base::ate );
         tools::OutputBinaryWrapper wrapper( info );
-        info.seekp( 0, ios_base::beg );
+        info.seekp( 0, std::ios_base::beg );
         wrapper << fragmentFirstFrame_;
         wrapper << frameCount_ - 1;
-        info.seekp( 0, ios_base::end );
+        info.seekp( 0, std::ios_base::end );
         wrapper << realTime_;
         wrapper << localTime;
         info.close();
