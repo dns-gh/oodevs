@@ -20,11 +20,6 @@ namespace kernel
     class Profile_ABC;
 }
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 namespace gui
 {
     class OptionsPanel;
@@ -47,6 +42,7 @@ namespace gui
 }
 
 class AgentsLayer;
+class Config;
 class CreationPanels;
 class FileToolbar;
 class FilterDialogs;
@@ -81,7 +77,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, tools::ExerciseConfig& config, const QString& expiration );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration );
     virtual ~MainWindow();
     //@}
 
@@ -138,7 +134,7 @@ private:
     StaticModel& staticModel_;
     Model& model_;
     ModelBuilder* modelBuilder_;
-    tools::ExerciseConfig& config_;
+    Config& config_;
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;

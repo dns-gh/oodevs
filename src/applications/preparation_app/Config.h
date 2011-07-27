@@ -32,6 +32,17 @@ public:
              Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer );
     virtual ~Config();
     //@}
+
+    //! @name Accessor
+    //@{
+    bool HasGenerateScores() const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool generateScores_;
+    //@}
 };
 
 #endif // __Config_h_

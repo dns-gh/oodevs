@@ -35,8 +35,8 @@ int main( int argc, char** argv )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
     try
     {
-        app.Initialize();
-        app.exec();
+        if( app.Initialize() )
+            app.exec();
     }
     catch( std::exception& e )
     {

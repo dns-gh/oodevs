@@ -69,16 +69,16 @@ Application::~Application()
 // Name: Application::Initialize
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-void Application::Initialize()
+bool Application::Initialize()
 {
-    Initialize( argc(), argv() );
+    return Initialize( argc(), argv() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Application::Initialize
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-void Application::Initialize( int argc, char** argv )
+bool Application::Initialize( int argc, char** argv )
 {
     observer_.reset( new FileLoaderObserver() );
     config_.reset( new Config( argc, argv, *observer_ ) );
@@ -86,12 +86,17 @@ void Application::Initialize( int argc, char** argv )
     staticModel_.reset( new StaticModel( *controllers_ ) );
     model_.reset( new Model( *controllers_, *staticModel_ ) );
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );
+    if( config_->HasGenerateScores() )
+        return false;
+
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.
     connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
 
     observer_->DisplayErrors();
+
+    return true;
 }
 
 // -----------------------------------------------------------------------------

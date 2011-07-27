@@ -11,6 +11,7 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 #include "AgentsLayer.h"
+#include "Config.h"
 #include "CommunicationListView.h"
 #include "ExerciseCreationDialog.h"
 #include "CreationPanels.h"
@@ -36,6 +37,7 @@
 #include "ProfileWizardDialog.h"
 #include "PropertiesPanel.h"
 #include "ResourceNetworkDialog.h"
+#include "SaveModelChecker.h"
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "TacticalListView.h"
@@ -102,12 +104,14 @@
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
 #include "preparation/Model.h"
-#include "preparation/ModelChecker_ABC.h"
+#include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/Tools.h"
 #include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/SchemaWriter.h"
+#include <tools/XmlCrc32Signature.h>
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
@@ -122,7 +126,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, tools::ExerciseConfig& config, const QString& expiration )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_    ( controllers )
     , staticModel_    ( staticModel )
@@ -141,6 +145,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , needsSaving_    ( false )
     , loading_        ( false )
 {
+    if( config_.HasGenerateScores() )
+    {
+        staticModel_.Load( config_ );
+        LoadExercise();
+        return;
+    }
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
 
     lighting_ = new LightingProxy( this );
@@ -507,6 +517,18 @@ void MainWindow::LoadExercise()
         loading_ = true;
         std::string loadingErrors;
         model_.Load( config_, loadingErrors );
+        if( config_.HasGenerateScores() )
+        {
+            model_.scores_.GenerateScoresFromTemplate( config_.GetLoader() );
+            const tools::SchemaWriter schemaWriter;
+            SaveModelChecker checker( this );
+            if( model_.scores_.CheckValidity( checker, schemaWriter ) )
+            {
+                model_.scores_.Serialize( config_.GetScoresFile(), schemaWriter );
+                tools::WriteXmlCrc32Signature( config_.GetScoresFile() );
+            }
+            return;
+        }
         loading_ = false;
         bool errors = !loadingErrors.empty();
         SetWindowTitle( errors );
@@ -533,34 +555,6 @@ void MainWindow::ReloadExercise()
     assert( model_.IsLoaded() && !needsSaving_ );
     Close();
     DoLoad( config_.GetExerciseFile().c_str() );
-}
-
-namespace
-{
-    struct SaveModelChecker : public ModelChecker_ABC
-    {
-        explicit SaveModelChecker( QMainWindow* window ) : window_( window ) {}
-        virtual bool Validate()
-        {
-            return true;
-        }
-
-        virtual bool Reject( const QString& reason )
-        {
-            QMessageBox::critical( window_, tools::translate( "Application", "SWORD" ), reason );
-            return false;
-        }
-
-        virtual bool Prompt( const QString& question )
-        {
-            if( QMessageBox::question( window_, tools::translate( "Application", "SWORD" )
-                                     , question + tools::translate( "MainWindow", "\nDo you want to save anyway?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                return true;
-            return false;
-        }
-
-        QMainWindow* window_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -604,7 +598,7 @@ void MainWindow::SaveAs()
             return;
     } while( exist );
     bfs::create_directories( exerciseDirectory );
-    bfs::path exerciseFile( config_.tools::GeneralConfig::GetExerciseFile( name.ascii() ) );
+    bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.ascii() ) );
     bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
     config_.LoadExercise( exerciseFile.string() );
     needsSaving_ = true;
