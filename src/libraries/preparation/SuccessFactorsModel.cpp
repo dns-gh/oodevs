@@ -97,7 +97,7 @@ namespace
     void EraseLine( std::string filename, unsigned lineToErase )
     {
         std::string buffer = "";
-        std::ifstream inputFile( filename );
+        std::ifstream inputFile( filename.c_str() );
         if( inputFile )
         {
             std::string line;
@@ -107,7 +107,7 @@ namespace
         }
         inputFile.close();
 
-        std::ofstream outputFile( filename );
+        std::ofstream outputFile( filename.c_str() );
         outputFile << buffer;
         outputFile.close();
     }
