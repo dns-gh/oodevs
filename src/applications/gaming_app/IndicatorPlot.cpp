@@ -17,6 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "protocol/Protocol.h"
+#include "protocol/ReplaySenders.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;

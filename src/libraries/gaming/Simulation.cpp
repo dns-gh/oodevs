@@ -11,6 +11,7 @@
 #include "Simulation.h"
 #include "clients_kernel/Controller.h"
 #include "Network.h"
+#include "protocol/ReplaySenders.h"
 
 using namespace kernel;
 
@@ -19,15 +20,15 @@ using namespace kernel;
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
 Simulation::Simulation( Controller& controller )
-    : controller_( controller )
+    : controller_  ( controller )
     , tickDuration_( 10 )
-    , timeFactor_( 1 )
-    , currentTick_( 0 )
-    , tickCount_( unsigned( -1 ) )
-    , time_( 0 )
-    , paused_( false )
-    , connected_( false )
-    , initialized_( false )
+    , timeFactor_  ( 1 )
+    , currentTick_ ( 0 )
+    , tickCount_   ( static_cast< unsigned int >( -1 ) )
+    , time_        ( 0 )
+    , paused_      ( false )
+    , connected_   ( false )
+    , initialized_ ( false )
 {
     // NOTHING
 }
@@ -96,7 +97,7 @@ void Simulation::ChangeSpeed( int timeFactor )
 // -----------------------------------------------------------------------------
 void Simulation::Update( const sword::ControlInformation& message )
 {
-    tickCount_    = unsigned( -1 );
+    tickCount_    = static_cast< unsigned int >( -1 );
     currentTick_  = message.current_tick();
     tickDuration_ = message.tick_duration();
     paused_       = message.status() == sword::paused;
@@ -167,6 +168,15 @@ void Simulation::Update( const sword::ControlSendCurrentStateEnd& /*message*/ )
 {
     initialized_ = true;
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Update
+// Created: JSR 2011-07-26
+// -----------------------------------------------------------------------------
+void Simulation::Update( const sword::TimeTable& message )
+{
+    controller_.Update( sTimeTable( message ) );
 }
 
 // -----------------------------------------------------------------------------

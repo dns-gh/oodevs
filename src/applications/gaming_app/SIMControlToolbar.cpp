@@ -20,6 +20,7 @@
 #include "gaming/statusicons.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include "protocol/ReplaySenders.h"
 
 using namespace sword;
 using namespace kernel;

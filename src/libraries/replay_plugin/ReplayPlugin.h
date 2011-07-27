@@ -17,6 +17,7 @@
 namespace sword
 {
     class ClientToReplay;
+    class TimeTableRequest_TimeRange;
 }
 
 namespace tools
@@ -65,12 +66,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ReplayPlugin( const ReplayPlugin& );            //!< Copy constructor
-    ReplayPlugin& operator=( const ReplayPlugin& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual void OnTimer();
@@ -79,10 +74,11 @@ private:
     //! @name Helpers
     //@{
     void OnReceive( const std::string& link, const sword::ClientToReplay& asnMsg );
-    void ChangeTimeFactor( unsigned factor );
+    void ChangeTimeFactor( unsigned int factor );
     void Pause();
     void Resume();
-    void SkipToFrame( unsigned frame );
+    void SkipToFrame( unsigned int frame );
+    void RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg );
     void SendReplayInfo( dispatcher::ClientPublisher_ABC& client );
     //@}
 

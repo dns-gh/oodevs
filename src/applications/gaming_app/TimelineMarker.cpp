@@ -13,6 +13,7 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/Services.h"
 #include "clients_kernel/Controllers.h"
+#include "protocol/ReplaySenders.h"
 #include <qpainter.h>
 
 // -----------------------------------------------------------------------------

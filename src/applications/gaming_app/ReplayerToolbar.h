@@ -11,11 +11,14 @@
 #define __ReplayerToolbar_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "gaming/Simulation.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
 }
+
 class Publisher_ABC;
 class Simulation;
 
@@ -28,8 +31,10 @@ class Simulation;
 class ReplayerToolbar : public QToolBar
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< Simulation >
+                      , public tools::ElementObserver_ABC< Simulation::sTimeTable >
+                      , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -42,6 +47,7 @@ protected:
     //! @name Operations
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Simulation::sTimeTable& timeTable );
     //@}
 
 private slots:
@@ -49,13 +55,7 @@ private slots:
     //@{
     void OnSliderMoved( int );
     void OnSliderReleased();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ReplayerToolbar( const ReplayerToolbar& );            //!< Copy constructor
-    ReplayerToolbar& operator=( const ReplayerToolbar& ); //!< Assignment operator
+    void OnTimeTable();
     //@}
 
 private:
@@ -63,6 +63,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& network_;
+    unsigned int maxTick_;
     QSlider* slider_;
     QLabel* value_;
     bool userMove_;

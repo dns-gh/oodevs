@@ -9,6 +9,22 @@
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
+    <message>
+        <source>Time Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sim time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionProperties</name>
@@ -2591,6 +2607,10 @@ Motivo: %3
     <message>
         <source>Tick %1</source>
         <translation>Tick %1</translation>
+    </message>
+    <message>
+        <source>Time table</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

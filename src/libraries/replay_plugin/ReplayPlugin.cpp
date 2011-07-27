@@ -15,8 +15,6 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
-#include "protocol/ClientSenders.h"
-#include "protocol/Simulation.h"
 #include "MT_Tools/MT_Logger.h"
 
 using namespace plugins::replay;
@@ -56,7 +54,7 @@ ReplayPlugin::~ReplayPlugin()
 // Name: ReplayPlugin::Register
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void ReplayPlugin::Register( dispatcher::Services& services )
+void ReplayPlugin::Register( Services& services )
 {
     services.Declare< ::replay::Service >();
 }
@@ -139,20 +137,22 @@ void ReplayPlugin::OnReceive( const std::string& , const sword::ClientToReplay& 
         ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_skip_to_tick() )
         skipToFrame_ = wrapper.message().control_skip_to_tick().tick();
+    else if( wrapper.message().has_time_table_request() )
+        RequestTimeTable( wrapper.message().time_table_request().tick_range() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPlugin::ChangeTimeFactor
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ReplayPlugin::ChangeTimeFactor( unsigned factor )
+void ReplayPlugin::ChangeTimeFactor( unsigned int factor )
 {
     ::replay::ControlChangeTimeFactorAck message;
     if( factor )
     {
         factor_ = factor;
-        MT_Timer_ABC::Start( (int)( 10000 / factor ) );
-        message().set_error_code( sword::ControlAck::no_error);
+        MT_Timer_ABC::Start( 10000 / factor );
+        message().set_error_code( sword::ControlAck::no_error );
     }
     else
         message().set_error_code( sword::ControlAck::error_invalid_time_factor );
@@ -188,7 +188,7 @@ void ReplayPlugin::Resume()
 // Name: ReplayPlugin::SkipToFrame
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ReplayPlugin::SkipToFrame( unsigned frame )
+void ReplayPlugin::SkipToFrame( unsigned int frame )
 {
     ::replay::ControlSkipToTickAck asn;
     asn().set_tick( loader_.GetCurrentTick() );
@@ -203,4 +203,27 @@ void ReplayPlugin::SkipToFrame( unsigned frame )
     asn.Send( clients_ );
     if( frame < loader_.GetTickNumber() )
         loader_.SkipToFrame( frame );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayPlugin::RequestTimeTable
+// Created: JSR 2011-07-22
+// -----------------------------------------------------------------------------
+void ReplayPlugin::RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg )
+{
+    ::replay::TimeTableRequestAck ack;
+    int beginTick = msg.begin_tick();
+    int endTick = msg.end_tick();
+    bool valid = beginTick > 0 && beginTick <= endTick && endTick <= static_cast< int >( loader_.GetTickNumber() );
+    if( valid )
+        ack().set_error_code( sword::TimeTableRequestAck::no_error );
+    else
+        ack().set_error_code( sword::TimeTableRequestAck::invalid_tick_range );
+    ack.Send( clients_ );
+    if( valid )
+    {
+        ::replay::TimeTable asn;
+        loader_.FillTimeTable( asn(), beginTick, endTick );
+        asn.Send( clients_ );
+    }
 }

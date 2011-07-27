@@ -112,3 +112,12 @@ unsigned Loader::GetTickNumber() const
 {
     return loader_->GetTickNumber();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Loader::FillTimeTable
+// Created: JSR 2011-07-25
+// -----------------------------------------------------------------------------
+void Loader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const
+{
+    loader_->FillTimeTable( msg, beginTick, endTick );
+}

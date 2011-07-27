@@ -47,6 +47,7 @@
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/MsgsSimToClientListener.h"
+#include "protocol/ReplaySenders.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/MessageSender_ABC.h"
 #include <boost/foreach.hpp>
@@ -2064,6 +2065,12 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_new_data_chunk_notification() )
         {}
+    else if( wrapper.message().has_new_data_chunk_notification() )
+        {}
+    else if( wrapper.message().has_time_table_request_ack() )
+        OnReceiveTimeTableRequestAck( wrapper.message().time_table_request_ack() );
+    else if( wrapper.message().has_time_table() )
+        OnReceiveTimeTable( wrapper.message().time_table() );
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -2249,6 +2256,24 @@ void AgentServerMsgMgr::OnReceiveControlMeteoLocalDestruction( const sword::Cont
 void AgentServerMsgMgr::OnReceiveMsgSendCurrentStateEnd( const sword::ControlSendCurrentStateEnd& message )
 {
     GetModel().objects_.Initialize();
+    simulation_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveTimeTableRequestAck
+// Created: JSR 2011-07-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveTimeTableRequestAck( const sword::TimeTableRequestAck& message )
+{
+    CheckAcknowledge( logger_, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveTimeTable
+// Created: JSR 2011-07-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveTimeTable( const sword::TimeTable& message )
+{
     simulation_.Update( message );
 }
 

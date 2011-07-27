@@ -13,6 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "gaming/Services.h"
 #include "gaming/Simulation.h"
+#include "protocol/ReplaySenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorPlotFactory constructor

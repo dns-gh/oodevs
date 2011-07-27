@@ -143,6 +143,69 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MessageLoader::FillTimeTable
+// Created: JSR 2011-07-25
+// -----------------------------------------------------------------------------
+void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const
+{
+    try
+    {
+        boost::mutex::scoped_lock lock( filesAccessMutex_ );
+        unsigned int tick = beginTick;
+        while( tick <= endTick )
+        {
+            bool incremented = false;
+            for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+            {
+                if( tick >= it->second.first && tick <= it->second.second )
+                {
+                    std::ifstream infoFile;
+                    unsigned int start;
+                    unsigned int end;
+                    std::string simTime;
+                    std::string realTime;
+                    if( OpenFile( infoFile, it->first, infoFileName_ ) )
+                    {
+                        tools::InputBinaryWrapper wrapper( infoFile );
+                        wrapper >> start;
+                        wrapper >> end;
+                        for( unsigned int i = start; i <= end; ++i )
+                        {
+                            wrapper >> simTime;
+                            wrapper >> realTime;
+                            if( i == tick )
+                            {
+                                incremented = true;
+                                sword::TimeTable_TimeMapping* item = msg.add_time_table_item();
+                                item->set_tick( tick );
+                                item->mutable_simulation_time()->set_data( simTime );
+                                item->mutable_real_time()->set_data( realTime );
+                                ++tick;
+                            }
+
+                            if( tick > endTick )
+                            {
+                                infoFile.close();
+                                return;
+                            }
+                        }
+
+                        infoFile.close();
+                    }
+                    break;
+                }
+            }
+            if( !incremented )
+                ++tick; // juste pour éviter une éventuelle boucle sans fin, au cas où il y aurait eu une erreur.
+        }
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MessageLoader::ScanData
 // Created: JSR 2010-10-27
 // -----------------------------------------------------------------------------

@@ -16,9 +16,9 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
 #include <boost/algorithm/string.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4127 )
+#pragma warning( push, 1 )
 #include <boost/filesystem/convenience.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
@@ -133,15 +133,19 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
     key_     .open( ( currentDirectory / "key"      ).string().c_str(), std::ios_base::binary | std::ios_base::out );
     update_  .open( ( currentDirectory / "update"   ).string().c_str(), std::ios_base::binary | std::ios_base::out );
     current_.Reset( static_cast< unsigned >( update_.tellp() ) );
+    std::ofstream info;
+    info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+    info.close();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Saver::StartFrame
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Saver::StartFrame( const Savable_ABC& message )
+void Saver::StartFrame( const Savable_ABC& message, const std::string& dateTime )
 {
     SaveUpdateMessage( message );
+    realTime_ = dateTime;
 }
 
 // -----------------------------------------------------------------------------
@@ -254,11 +258,16 @@ void Saver::GenerateInfoFile() const
     const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
     try
     {
+        const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
         std::ofstream info;
-        info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+        info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::in | std::ios_base::ate );
         tools::OutputBinaryWrapper wrapper( info );
+        info.seekp( 0, ios_base::beg );
         wrapper << fragmentFirstFrame_;
         wrapper << frameCount_ - 1;
+        info.seekp( 0, ios_base::end );
+        wrapper << realTime_;
+        wrapper << localTime;
         info.close();
     }
     catch( std::exception& exception )
@@ -304,12 +313,34 @@ void Saver::UpdateFragments()
                         }
                     else if( frameCount_ > start && frameCount_ <= end )
                     {
-                        std::ofstream stream;
-                        stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
-                        tools::OutputBinaryWrapper wrapper( stream );
-                        wrapper << start;
-                        wrapper << frameCount_ - 1;
-                        stream.close();
+                        std::vector< std::string > timetable;
+                        {
+                            std::ifstream stream;
+                            stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::in );
+                            tools::InputBinaryWrapper wrapper( stream );
+                            unsigned int dummy;
+                            wrapper >> dummy; // start
+                            wrapper >> dummy; // end
+                            std::string tmp;
+                            for( unsigned int i = start; i < frameCount_; ++i )
+                            {
+                                wrapper >> tmp; // sim time
+                                timetable.push_back( tmp );
+                                wrapper >> tmp; // real time
+                                timetable.push_back( tmp );
+                            }
+                            stream.close();
+                        }
+                        {
+                            std::ofstream stream;
+                            stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+                            tools::OutputBinaryWrapper wrapper( stream );
+                            wrapper << start;
+                            wrapper << frameCount_ - 1;
+                            for( std::vector< std::string >::const_iterator it = timetable.begin(); it != timetable.end(); ++it )
+                                wrapper << *it;
+                            stream.close();
+                        }
                         if( it->path().leaf() == Saver::currentFolderName_ )
                             CopyFromCurrentToFolder();
                         else

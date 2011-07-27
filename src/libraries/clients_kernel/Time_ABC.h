@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include <qdatetime.h>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace kernel {
 
@@ -22,7 +23,7 @@ namespace kernel {
 */
 // Created: LDC 2010-03-17
 // =============================================================================
-class Time_ABC
+class Time_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -36,13 +37,6 @@ public:
     virtual QDateTime GetDateTime() const = 0;
     virtual QDateTime GetInitialDateTime() const = 0;
     virtual unsigned int GetTickDuration() const = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Time_ABC( const Time_ABC& );            //!< Copy constructor
-    Time_ABC& operator=( const Time_ABC& ); //!< Assignment operator
     //@}
 };
 

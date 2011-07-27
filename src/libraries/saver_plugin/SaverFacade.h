@@ -56,7 +56,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void StartFrame( const sword::SimToClient& message );
+    void StartFrame( const sword::SimToClient& message, const std::string& dateTime );
     void EndFrame( const sword::SimToClient& message );
     //@}
 

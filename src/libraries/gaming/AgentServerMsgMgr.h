@@ -170,6 +170,8 @@ namespace sword
     class StopUnitFire;
     class TaskCreationRequestAck;
     class TextMessage;
+    class TimeTableRequestAck;
+    class TimeTable;
     class Trace;
     class UnitAttributes;
     class UnitChangeSuperior;
@@ -262,40 +264,42 @@ private:
     void OnReceiveMsgMessengerToClient     ( const std::string& from, const sword::MessengerToClient& message );
     void OnReceiveMsgDispatcherToClient    ( const std::string& from, const sword::DispatcherToClient& message );
 
-    void OnReceiveUnitVisionCones                  ( const sword::UnitVisionCones&             message );
-    void OnReceiveUnitInterVisibility              ( const sword::UnitDetection&               message );
-    void OnReceiveObjectInterVisibility            ( const sword::ObjectDetection&             message );
+    void OnReceiveUnitVisionCones                  ( const sword::UnitVisionCones& message );
+    void OnReceiveUnitInterVisibility              ( const sword::UnitDetection& message );
+    void OnReceiveObjectInterVisibility            ( const sword::ObjectDetection& message );
     void OnReceiveCrowdConcentrationInterVisibility( const sword::CrowdConcentrationDetection& message );
-    void OnReceiveCrowdFlowInterVisibility         ( const sword::CrowdFlowDetection&          message );
-    void OnReceiveMsgDebugDrawPoints               ( const sword::DebugPoints&                 message );
+    void OnReceiveCrowdFlowInterVisibility         ( const sword::CrowdFlowDetection& message );
+    void OnReceiveMsgDebugDrawPoints               ( const sword::DebugPoints& message );
 
     // Control
-    void OnReceiveControlPauseAck             ( const sword::ControlPauseAck&                   message );
-    void OnReceiveControlResumeAck            ( const sword::ControlResumeAck&                  message );
-    void OnReceiveControlChangeTimeFactorAck  ( const sword::ControlChangeTimeFactorAck&        message );
-    void OnReceiveControlDateTimeChangeAck    ( const sword::ControlDateTimeChangeAck&          message );
-    void OnReceiveControlSkipToTickAck        ( const sword::ControlSkipToTickAck&           message );
-    void OnReceiveControlInformation          ( const sword::ControlInformation&                message );
-    void OnReceiveMsgProfilingValues          ( const sword::ControlProfilingInformation&       message );
-    void OnReceiveMsgCtrReplayInfo            ( const sword::ControlReplayInformation&       message );
+    void OnReceiveControlPauseAck             ( const sword::ControlPauseAck& message );
+    void OnReceiveControlResumeAck            ( const sword::ControlResumeAck& message );
+    void OnReceiveControlChangeTimeFactorAck  ( const sword::ControlChangeTimeFactorAck& message );
+    void OnReceiveControlDateTimeChangeAck    ( const sword::ControlDateTimeChangeAck& message );
+    void OnReceiveControlSkipToTickAck        ( const sword::ControlSkipToTickAck& message );
+    void OnReceiveControlInformation          ( const sword::ControlInformation& message );
+    void OnReceiveMsgProfilingValues          ( const sword::ControlProfilingInformation& message );
+    void OnReceiveMsgCtrReplayInfo            ( const sword::ControlReplayInformation& message );
     void OnReceiveControlMeteoGlobalAck       ();
     void OnReceiveControlMeteoLocalAck        ();
     void OnReceiveMsgCheckPointSaveBegin      ();
-    void OnReceiveMsgCheckPointSaveEnd        ( const sword::ControlCheckPointSaveEnd&          message );
+    void OnReceiveMsgCheckPointSaveEnd        ( const sword::ControlCheckPointSaveEnd& message );
     void OnReceiveMsgCheckPointSetFrequencyAck();
     void OnReceiveMsgCheckPointSaveNowAck     ();
-    void OnReceiveControlBeginTick            ( const sword::ControlBeginTick&                  message );
-    void OnReceiveControlEndTick              ( const sword::ControlEndTick&                    message );
-    void OnReceiveAutomatCreation             ( const sword::AutomatCreation&                   message );
-    void OnReceiveAutomatDestruction          ( const sword::AutomatDestruction&                message );
-    void OnReceiveUnitCreation                ( const sword::UnitCreation&                      message );
-    void OnReceiveUnitDestruction             ( const sword::UnitDestruction&                   message );
-    void OnReceiveChangeDiplomacy             ( const sword::ChangeDiplomacy&                     message );
+    void OnReceiveControlBeginTick            ( const sword::ControlBeginTick& message );
+    void OnReceiveControlEndTick              ( const sword::ControlEndTick& message );
+    void OnReceiveAutomatCreation             ( const sword::AutomatCreation& message );
+    void OnReceiveAutomatDestruction          ( const sword::AutomatDestruction& message );
+    void OnReceiveUnitCreation                ( const sword::UnitCreation& message );
+    void OnReceiveUnitDestruction             ( const sword::UnitDestruction& message );
+    void OnReceiveChangeDiplomacy             ( const sword::ChangeDiplomacy& message );
     void OnReceiveAuthenticationResponse      ( const sword::AuthenticationResponse& message );
-    void OnReceiveControlMeteoGlobal          ( const sword::ControlGlobalWeather&                message );
-    void OnReceiveControlMeteoLocalCreation   ( const sword::ControlLocalWeatherCreation&         message );
-    void OnReceiveControlMeteoLocalDestruction( const sword::ControlLocalWeatherDestruction&      message );
-    void OnReceiveMsgSendCurrentStateEnd      ( const sword::ControlSendCurrentStateEnd&          message );
+    void OnReceiveControlMeteoGlobal          ( const sword::ControlGlobalWeather& message );
+    void OnReceiveControlMeteoLocalCreation   ( const sword::ControlLocalWeatherCreation& message );
+    void OnReceiveControlMeteoLocalDestruction( const sword::ControlLocalWeatherDestruction& message );
+    void OnReceiveMsgSendCurrentStateEnd      ( const sword::ControlSendCurrentStateEnd& message );
+    void OnReceiveTimeTableRequestAck         ( const sword::TimeTableRequestAck& message );
+    void OnReceiveTimeTable                   ( const sword::TimeTable& message );
 
     // Profiles
     void OnReceiveProfileCreation             ( const sword::ProfileCreation&                message );

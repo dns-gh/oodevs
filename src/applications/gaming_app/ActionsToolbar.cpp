@@ -19,6 +19,7 @@
 #include "gaming/Services.h"
 #include "tools/SessionConfig.h"
 #include "icons.h"
+#include "protocol/ReplaySenders.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/filesystem/convenience.hpp>

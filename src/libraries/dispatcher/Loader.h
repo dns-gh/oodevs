@@ -10,6 +10,13 @@
 #ifndef __Loader_h_
 #define __Loader_h_
 
+#include <boost/noncopyable.hpp>
+
+namespace sword
+{
+    class TimeTable;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -23,7 +30,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class Loader
+class Loader : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -38,15 +45,10 @@ public:
     void SkipToFrame( unsigned int count );
     bool Tick();
 
-    unsigned GetCurrentTick() const;
-    unsigned GetTickNumber() const;
-    //@}
+    unsigned int GetCurrentTick() const;
+    unsigned int GetTickNumber() const;
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    Loader( const Loader& );            //!< Copy constructor
-    Loader& operator=( const Loader& ); //!< Assignment operator
+    void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     //@}
 
 private:

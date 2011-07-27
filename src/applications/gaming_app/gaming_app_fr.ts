@@ -9,6 +9,22 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Time Table</source>
+        <translation>Table de Temps</translation>
+    </message>
+    <message>
+        <source>Tick</source>
+        <translation>Pas de temps</translation>
+    </message>
+    <message>
+        <source>Sim time</source>
+        <translation>Temps Sim</translation>
+    </message>
+    <message>
+        <source>Real time</source>
+        <translation>Temps réel</translation>
+    </message>
 </context>
 <context>
     <name>ActionProperties</name>
@@ -2591,6 +2607,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Tick %1</source>
         <translation>Tick %1</translation>
+    </message>
+    <message>
+        <source>Time table</source>
+        <translation>Table de temps</translation>
     </message>
 </context>
 <context>

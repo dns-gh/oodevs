@@ -36,6 +36,7 @@ DECLARE_ICON( activated );
 DECLARE_ICON( not_activated );
 DECLARE_ICON( replayer );
 DECLARE_ICON( timer );
+DECLARE_ICON( tic_temps );
 DECLARE_ICON( trash2 );
 DECLARE_ICON( aaa_function_copy );
 DECLARE_ICON( aaa_function_edit );
