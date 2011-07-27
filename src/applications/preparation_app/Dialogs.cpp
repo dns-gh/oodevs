@@ -14,6 +14,7 @@
 #include "AgentAffinitiesDialog.h"
 #include "PeopleAffinitiesDialog.h"
 #include "ColorEditor.h"
+#include "SymbolEditor.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/StaticModel.h"
 
@@ -24,7 +25,8 @@ using namespace kernel;
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& model, const kernel::Profile_ABC& profile,
-                  gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor )
+                  gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
+                  const tools::ExerciseConfig& config )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, profile );
@@ -32,6 +34,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& 
     new AgentAffinitiesDialog( parent, controllers );
     new PeopleAffinitiesDialog( parent, controllers );
     new ColorEditor( parent, controllers, colorStrategy, colorEditor );
+    new SymbolEditor( parent, controllers, symbols, config );
 }
 
 // -----------------------------------------------------------------------------

@@ -47,6 +47,7 @@ SuccessFactorConditionsEditor.cpp \
 SuccessFactorDialog.cpp \
 SuccessFactorEditor.cpp \
 SuccessFactorList.cpp \
+SymbolEditor.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \

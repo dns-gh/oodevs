@@ -1642,6 +1642,13 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>SymbolEditor</name>
+    <message>
+        <source>Symbol</source>
+        <translation>Símbolo</translation>
+    </message>
+</context>
+<context>
     <name>TacticalListView</name>
     <message>
         <source>Create side</source>

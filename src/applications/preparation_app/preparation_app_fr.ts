@@ -1642,6 +1642,13 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>SymbolEditor</name>
+    <message>
+        <source>Symbol</source>
+        <translation>Symbole</translation>
+    </message>
+</context>
+<context>
     <name>TacticalListView</name>
     <message>
         <source>Create side</source>

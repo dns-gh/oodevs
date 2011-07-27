@@ -15,6 +15,9 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -236,7 +239,27 @@ SymbolRule* SymbolFactory::GetSymbolRule() const
 // Name: SymbolFactory::GetAvailableSymbols
 // Created: ABR 2011-05-26
 // -----------------------------------------------------------------------------
-const std::vector< std::string >& SymbolFactory::GetAvailableSymbols()
+const std::vector< std::string >& SymbolFactory::GetAvailableSymbols() const
 {
     return availableSymbols_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::FillSymbols
+// Created: LGY 2011-07-22
+// -----------------------------------------------------------------------------
+void SymbolFactory::FillSymbols( const std::string& symbol, const std::string& karma, std::set< std::string >& result ) const
+{
+    std::string compare = symbol;
+    std::string base = symbolBase_;
+    boost::replace_all( base, "*", karma );
+    result.insert( base );
+    if( !symbol.empty() )
+    {
+        while( compare != base )
+        {
+            result.insert( compare );
+            compare = compare.substr( 0, compare.length() - 1 );
+        }
+    }
 }

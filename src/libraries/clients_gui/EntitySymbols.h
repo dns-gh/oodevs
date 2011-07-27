@@ -10,6 +10,8 @@
 #ifndef __EntitySymbols_h_
 #define __EntitySymbols_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -28,7 +30,7 @@ namespace gui
 */
 // Created: SBO 2007-02-21
 // =============================================================================
-class EntitySymbols
+class EntitySymbols : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -39,15 +41,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual QPixmap GetSymbol( const kernel::Entity_ABC& entity, const QSize& size = QSize( 32, 32 ) ) const;
-    virtual QPixmap GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size = QSize( 32, 32 ) ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    EntitySymbols( const EntitySymbols& );            //!< Copy constructor
-    EntitySymbols& operator=( const EntitySymbols& ); //!< Assignment operator
+    const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const QSize& size = QSize( 32, 32 ) ) const;
+    const QPixmap& GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size = QSize( 32, 32 ) ) const;
+    const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
+                              const QSize& size = QSize( 32, 32 ) ) const;
     //@}
 
 private:

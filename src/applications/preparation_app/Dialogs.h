@@ -20,6 +20,12 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class ColorEditor_ABC;
+    class EntitySymbols;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 class StaticModel;
@@ -36,7 +42,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Dialogs( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Profile_ABC& profile,
-                      gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor );
+                      gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
+                      const tools::ExerciseConfig& config );
     virtual ~Dialogs();
     //@}
 };

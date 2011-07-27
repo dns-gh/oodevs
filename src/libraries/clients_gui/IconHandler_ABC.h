@@ -10,6 +10,8 @@
 #ifndef __IconHandler_ABC_h_
 #define __IconHandler_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
     class SymbolIcon;
@@ -20,13 +22,13 @@ namespace gui
 */
 // Created: AGE 2006-11-22
 // =============================================================================
-class IconHandler_ABC
+class IconHandler_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             IconHandler_ABC() {};
-    virtual ~IconHandler_ABC() {};
+             IconHandler_ABC() {}
+    virtual ~IconHandler_ABC() {}
     //@}
 
     //! @name Operations

@@ -47,14 +47,15 @@ public:
 
     //! @name Operations
     //@{
-    std::string CreateSymbol       ( const std::string& hierarchy ) const;
-    std::string CreateLevelSymbol  ( const std::string& level ) const;
-    std::string CreateLevelSymbol  ( const kernel::HierarchyLevel_ABC& level ) const;
+    std::string CreateSymbol( const std::string& hierarchy ) const;
+    std::string CreateLevelSymbol( const std::string& level ) const;
+    std::string CreateLevelSymbol( const kernel::HierarchyLevel_ABC& level ) const;
     std::string CreateAutomatSymbol() const;
     SymbolRule* GetSymbolRule() const;
     bool IsThisChainAvailable( const std::string& chain ) const;
-    void Load( const tools::ExerciseConfig& config );    
-    const std::vector< std::string >& GetAvailableSymbols();
+    void Load( const tools::ExerciseConfig& config );
+    const std::vector< std::string >& GetAvailableSymbols() const;
+    void FillSymbols( const std::string& symbol, const std::string& karma, std::set< std::string >& result ) const;
     //@}
 
 private:
@@ -64,7 +65,7 @@ private:
     void ListSymbols();
     void TraverseTree( xml::xostream& xos, const SymbolRule& rule );
     SymbolRule* ReadRule( xml::xistream& xis, const std::string& ruleName, std::string& base ) const;
-    void        ReadRule( xml::xistream& xis, SymbolRule*& rule ) const;
+    void ReadRule( xml::xistream& xis, SymbolRule*& rule ) const;
     //@}
 
 private:

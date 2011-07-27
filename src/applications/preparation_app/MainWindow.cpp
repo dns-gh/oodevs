@@ -155,16 +155,18 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
-
     glProxy_ = new GlProxy();
+
     strategy_ = new ColorStrategy( controllers, *glProxy_, *colorController_ );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
 
-    new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_ );
+    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
+    gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
+
+    new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config );
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
-
     RichItemFactory* factory = new RichItemFactory( this );
 
     // Agent list panel
@@ -172,9 +174,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
-    gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
 

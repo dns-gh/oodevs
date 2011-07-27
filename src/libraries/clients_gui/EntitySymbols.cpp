@@ -43,38 +43,41 @@ EntitySymbols::~EntitySymbols()
 // Name: EntitySymbols::GetSymbol
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
+const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
 {
-    QPixmap stub( 1, 1 );
-    stub.fill( Qt::white );
     const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !symbol )
-        return stub;
+        return icons_.GetDefaultSymbol();
     const std::string symbolName = symbol->GetSymbol();
     const std::string levelName  = symbol->GetLevel();
     if( symbolName.empty() && levelName.empty() )
-        return stub;
-    SymbolIcon icon( symbolName, levelName );
-    icon.SetColor( strategy_.FindColor( entity ) );
-    icon.SetSize( size );
-    return icons_.GetSymbol( icon );
+        return icons_.GetDefaultSymbol();
+    return GetSymbol( entity, symbolName, levelName, size );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntitySymbols::GetSymbol
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
-QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
+const QPixmap& EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
 {
-    QPixmap stub( 1, 1 );
-    stub.fill( Qt::white );
     const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::IntelligenceHierarchies >();
     if( !symbol )
-        return stub;
+        return icons_.GetDefaultSymbol();
     const std::string symbolName = symbol->GetSymbol();
     const std::string levelName  = symbol->GetLevel();
     if( symbolName.empty() && levelName.empty() )
-        return stub;
+        return icons_.GetDefaultSymbol();
+    return GetSymbol( entity, symbolName, levelName, size );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbols::GetSymbol
+// Created: LGY 2011-07-22
+// -----------------------------------------------------------------------------
+const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
+                                         const QSize& size /*= QSize( 32, 32 )*/ ) const
+{
     SymbolIcon icon( symbolName, levelName );
     icon.SetColor( strategy_.FindColor( entity ) );
     icon.SetSize( size );

@@ -29,7 +29,8 @@ namespace gui
 */
 // Created: AGE 2006-11-22
 // =============================================================================
-class SymbolIcons : public QObject, private IconHandler_ABC
+class SymbolIcons : public QObject
+                  , private IconHandler_ABC
 {
     Q_OBJECT;
 
@@ -42,7 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual QPixmap GetSymbol( SymbolIcon symbol );
+    const QPixmap& GetSymbol( SymbolIcon symbol );
+    const QPixmap& GetDefaultSymbol() const;
     //@}
 
 public slots:
@@ -52,12 +54,6 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SymbolIcons( const SymbolIcons& );            //!< Copy constructor
-    SymbolIcons& operator=( const SymbolIcons& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< SymbolIcon, QPixmap > T_Icons;
@@ -75,6 +71,7 @@ private:
     //! @name Member data
     //@{
     GlWidget* widget_;
+    QPixmap defaultSymbol_;
     T_PendingIcons pending_;
     T_Icons icons_;
     std::auto_ptr< IconsRenderPass > renderPass_;

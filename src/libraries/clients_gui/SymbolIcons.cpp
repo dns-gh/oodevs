@@ -21,10 +21,11 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 SymbolIcons::SymbolIcons( QObject* parent, kernel::GlTools_ABC& tools )
     : QObject( parent )
-    , widget_    ( 0 )
-    , renderPass_( new IconsRenderPass( tools ) )
+    , widget_       ( 0 )
+    , defaultSymbol_( 1, 1 )
+    , renderPass_   ( new IconsRenderPass( tools ) )
 {
-    // NOTHING
+    defaultSymbol_.fill( Qt::white ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +52,7 @@ void SymbolIcons::OnWidget2dChanged( gui::GlWidget* widget )
 // Name: SymbolIcons::GetSymbol
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-QPixmap SymbolIcons::GetSymbol( SymbolIcon symbol )
+const QPixmap& SymbolIcons::GetSymbol( SymbolIcon symbol )
 {
     std::replace( symbol.symbol_.begin(), symbol.symbol_.end(), '*', 'f' ); // $$$$ AGE 2006-11-22:
     const QPixmap& result = icons_[ symbol ];
@@ -59,6 +60,15 @@ QPixmap SymbolIcons::GetSymbol( SymbolIcon symbol )
         if( widget_ && pending_.insert( symbol ).second )
             renderPass_->CreateIcon( symbol, *this );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolIcons::GetDefaultSymbol
+// Created: LGY 2011-07-26
+// -----------------------------------------------------------------------------
+const QPixmap& SymbolIcons::GetDefaultSymbol() const
+{
+    return defaultSymbol_;
 }
 
 // -----------------------------------------------------------------------------
