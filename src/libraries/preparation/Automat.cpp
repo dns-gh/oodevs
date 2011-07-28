@@ -32,11 +32,12 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager )
+Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager, const QString& name )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_( type )
 {
-    name_ = type.GetName().c_str() + QString( " [%1]" ).arg( id_ );
+    name_ = name.isEmpty() ? type.GetName().c_str() + QString( " [%1]" ).arg( id_ )
+                           : name + " " + QString( "[%1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -80,11 +81,7 @@ const AutomatType& Automat::GetType() const
 // -----------------------------------------------------------------------------
 void Automat::Rename( const QString& name )
 {
-    QString id = QString( "[%1]" ).arg( id_ );
-    if( !name.endsWith( id ))
-        name_ = name + " " +  id;
-    else
-        name_ = name;
+    name_ = name;
     Touch();
 }
 

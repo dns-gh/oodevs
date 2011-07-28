@@ -110,9 +110,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 // -----------------------------------------------------------------------------
 Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, const QString& name )
 {
-    Automat* result = new Automat( type, controllers_.controller_, idManager_ );
-    if( !name.isEmpty() )
-        result->Rename( name );
+    Automat* result = new Automat( type, controllers_.controller_, idManager_, name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
