@@ -143,8 +143,10 @@ void Agent::CreateDictionary( kernel::Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
+    const Agent& constSelf = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), constSelf.type_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Command post" ), commandPost_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Critical intelligence" ), criticalIntelligence_ );
 }

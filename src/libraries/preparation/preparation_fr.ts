@@ -35,6 +35,10 @@
         <source>Info/Critical intelligence</source>
         <translation>Info/Renseignement critique</translation>
     </message>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished">Info/Type</translation>
+    </message>
 </context>
 <context>
     <name>AgentPositions</name>
@@ -74,6 +78,10 @@
     <message>
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished">Info/Type</translation>
     </message>
 </context>
 <context>
