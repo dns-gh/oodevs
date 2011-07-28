@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<sections model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/4.3.1/physical/Filters.xsd">
+<sections model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/4.3.2/physical/Filters.xsd">
   <section id="export">
     <descriptions>
       <description name="Export..." xml:lang="en"/>
@@ -21,4 +21,4 @@
     </filters>
   </section>
 </sections>
-<!-- signature="0792066777" -->
+<!-- signature="0932216223" -->

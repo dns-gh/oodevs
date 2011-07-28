@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Objects.xsd">
+<objects model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Objects.xsd">
   <object geometry="point" name="Mine Cluster" symbol="G*MPOMC---****X" type="mines">
     <activable/>
     <attrition category="Standard Landmine"/>
@@ -438,4 +438,4 @@
     <bridging type="secondary road"/>
   </object>
 </objects>
-<!-- signature="0197299965" -->
+<!-- signature="3329120066" -->

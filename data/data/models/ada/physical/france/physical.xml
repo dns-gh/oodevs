@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<physical model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Physical.xsd">
+<physical model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Physical.xsd">
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
   <protections file="Protections.xml"/>
@@ -38,4 +38,4 @@
   <scores file="scores.xml"/>
   <symbols file="symbols.xml"/>
 </physical>
-<!-- signature="1211065345" -->
+<!-- signature="0120859572" -->

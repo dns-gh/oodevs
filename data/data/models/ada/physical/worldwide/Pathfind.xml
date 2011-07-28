@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<pathfind model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Pathfind.xsd">
+<pathfind model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Pathfind.xsd">
   <configuration distance-threshold="15000" max-calculation-time="15s"/>
   <unit-rules>
     <rule autonomous="false" flying="false" type="base">
@@ -323,4 +323,4 @@
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="3817383576" -->
+<!-- signature="1680196191" -->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Inhabitants.xsd">
+<populations model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Inhabitants.xsd">
   <population associated-crowd="Population standard" id="0" name="PopType1">
     <repartition children="0.1" female="0.4" male="0.5"/>
     <schedule transfer-time="10m"/>
@@ -15,4 +15,4 @@
     <consumption/>
   </population>
 </populations>
-<!-- signature="2970972436" -->
+<!-- signature="3444328657" -->
