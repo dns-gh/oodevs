@@ -41,11 +41,12 @@ int main( int argc, char** argv )
     catch( std::exception& e )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
+        return 1;
     }
     catch( ... )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
-        throw;
+        return 1;
     }
     return 0;
 }
