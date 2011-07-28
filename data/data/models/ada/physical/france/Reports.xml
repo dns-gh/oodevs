@@ -544,8 +544,8 @@
   <report category="operational" id="374" message="Le temps de deplacement est d'environ %1 minute(s)">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="375" message="Le reseau souterrain est invalide"/>
-  <report category="operational" id="376" message="Le reseau souterrain n'est pas active"/>
+  <report category="operational" id="375" message="L'issue du reseau souterrain est invalide"/>
+  <report category="operational" id="376" message="L'issue du reseau souterrain n'est pas operationnel (etat inactif) ou l'unité est déjà sous terre."/>
   <report category="operational" id="377" message="Impossible d'atteindre l'objectif"/>
   <report category="operational" id="3015" message="Demande un renfort technique"/>
   <report category="operational" id="3016" message="Demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
@@ -558,4 +558,4 @@
   <report category="operational" id="3018" message="Demande un renfort de police"/>
   <report category="operational" id="3019" message="Demande un renfort médical"/>
 </reports>
-<!-- signature="1401104358" -->
+<!-- signature="4284380395" -->

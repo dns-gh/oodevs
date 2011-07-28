@@ -2846,6 +2846,15 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="network" name="Reseau souterrain" optional="false" type="ObjectKnowledge"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.tasks.FaireMouvementViaReseauSouterrain" dia-type="france.military.platoon.tasks.FaireMouvementViaReseauSouterrain" id="2153" name="Faire mouvement via reseau souterrain">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="enter" name="Entrée du reseau souterrain" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="exit" name="Sortie du reseau souterrain" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="objective" name="Destination" optional="false" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ALAT Aller Se Recompleter">
@@ -5049,4 +5058,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0537315483" -->
+<!-- signature="0750523418" -->

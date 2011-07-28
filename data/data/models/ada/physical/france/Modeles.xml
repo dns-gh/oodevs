@@ -130,6 +130,10 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PIA">
       <missions>
+        <mission name="Entrer dans un reseau souterrain"/>
+        <mission name="Sortir du reseau souterrain"/>
+        <mission name="Faire mouvement dans reseau souterrain"/>
+        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -391,6 +395,12 @@
         </mission>
         <mission name="Animer"/>
         <mission name="Detruire point du reseau"/>
+        <mission name="Activer reseau souterrain"/>
+        <mission name="Desactiver reseau souterrain"/>
+        <mission name="Entrer dans un reseau souterrain"/>
+        <mission name="Sortir du reseau souterrain"/>
+        <mission name="Faire mouvement dans reseau souterrain"/>
+        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="Produire"/>
       </missions>
       <fragorders>
@@ -915,6 +925,12 @@
         </mission>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
+        <mission name="Activer reseau souterrain"/>
+        <mission name="Desactiver reseau souterrain"/>
+        <mission name="Entrer dans un reseau souterrain"/>
+        <mission name="Sortir du reseau souterrain"/>
+        <mission name="Faire mouvement dans reseau souterrain"/>
+        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="Produire"/>
       </missions>
       <fragorders>
@@ -1111,6 +1127,12 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
+        <mission name="Activer reseau souterrain"/>
+        <mission name="Desactiver reseau souterrain"/>
+        <mission name="Entrer dans un reseau souterrain"/>
+        <mission name="Sortir du reseau souterrain"/>
+        <mission name="Faire mouvement dans reseau souterrain"/>
+        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="ASY Prendre en Otage"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Harceler"/>
@@ -8119,6 +8141,12 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="Reparer point du reseau"/>
+        <mission name="Activer reseau souterrain"/>
+        <mission name="Desactiver reseau souterrain"/>
+        <mission name="Entrer dans un reseau souterrain"/>
+        <mission name="Sortir du reseau souterrain"/>
+        <mission name="Faire mouvement dans reseau souterrain"/>
+        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="Produire"/>
         <mission name="COMMUNES Renforcer"/>
       </missions>
@@ -13887,4 +13915,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1471188392" -->
+<!-- signature="3356418626" -->

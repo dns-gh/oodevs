@@ -15,6 +15,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
@@ -490,7 +491,7 @@ bool DEC_AgentFunctions::AreHumanTransportersReady( const MIL_Agent_ABC& callerA
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanMount( DEC_Decision_ABC& callerAgent )
 {
-    return callerAgent.GetPion().Get< PHY_RoleInterface_UrbanLocation >().CanMount();
+    return callerAgent.GetPion().Get< PHY_RoleInterface_UrbanLocation >().CanMount() && !callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().IsUnderground();
 }
 
 // -----------------------------------------------------------------------------

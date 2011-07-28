@@ -544,8 +544,8 @@
   <report category="operational" id="374" message="Arrival in %1 minute(s)">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="375" message="Invalid underground network"/>
-  <report category="operational" id="376" message="Underground network is not activated"/>
+  <report category="operational" id="375" message="Invalid underground network issue"/>
+  <report category="operational" id="376" message="Underground network issue is not operationnal(state inactivated) or the unit is already underground"/>
   <report category="operational" id="377" message="Cannot reach objective"/>
   <report category="operational" id="3015" message="need technical backup"/>
   <report category="operational" id="3016" message="need %1 firetrucks backup to fight fire of class %2">
@@ -558,4 +558,4 @@
   <report category="operational" id="3018" message="need police backup"/>
   <report category="operational" id="3019" message="need medical backup"/>
 </reports>
-<!-- signature="1456799603" -->
+<!-- signature="1741602011" -->
