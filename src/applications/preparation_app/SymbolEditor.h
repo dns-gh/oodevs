@@ -66,12 +66,15 @@ private slots:
     //! @name Slots
     //@{
     void Update();
+    void OnChangeSymbol( int id );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, QPixmap > T_Symbols;
+    typedef std::map< int, std::string >   T_Identifier;
+    typedef T_Identifier::const_iterator CIT_Identifier;
     //@}
 
 private:
@@ -80,6 +83,7 @@ private:
     void Update( const kernel::Entity_ABC& entity, QPopupMenu* menu );
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     bool IsValid( const T_Symbols& symbols ) const;
+    void UpdateHierarchies( const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -90,6 +94,7 @@ private:
     std::auto_ptr< kernel::SymbolFactory > pFactory_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QPopupMenu* menu_;
+    T_Identifier identifiers_;
     //@}
 };
 

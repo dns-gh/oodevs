@@ -40,6 +40,7 @@
 #include "Stocks.h"
 #include "TacticalLines.h"
 #include "Color.h"
+#include "Symbol.h"
 #include "AgentAffinities.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -51,6 +52,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -113,6 +115,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     Automat* result = new Automat( type, controllers_.controller_, idManager_, name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     Entity_ABC* kg = FindorCreateKnowledgeGroup( parent );
@@ -239,6 +242,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
     Automat* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );

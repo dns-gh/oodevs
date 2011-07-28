@@ -20,9 +20,11 @@
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "StaticModel.h"
 #include "Color.h"
+#include "Symbol.h"
 
 using namespace kernel;
 
@@ -58,6 +60,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
     if( !name.isEmpty() )
         formation->Rename( name );
+    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
@@ -78,6 +81,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
 {
     Formation* formation = new Formation( xis, controllers_.controller_, levels, idManager_ );
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
+    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
