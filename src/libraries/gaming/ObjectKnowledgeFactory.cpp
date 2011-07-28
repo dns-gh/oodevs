@@ -48,7 +48,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // -----------------------------------------------------------------------------
 kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message )
 {
-    ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.GetObjectResolver(), model_.urbanObjects_, static_.objectTypes_ );
+    ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.GetObjectResolver(), static_.objectTypes_ );
     knowledge->Attach< kernel::Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge ) );
     knowledge->Attach( *new ObjectPerceptions( controllers_.controller_, model_.agents_ ) );
     knowledge->Polish();

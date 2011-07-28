@@ -46,7 +46,7 @@ MIL_IDManager DEC_Knowledge_Object::idManager_;
 // Name: DEC_Knowledge_Object constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown, bool sendCreation /*= true*/ )
     : DEC_Knowledge_ABC()
     , pArmyKnowing_            ( &armyKnowing )
     , pGroupKnowing_           ( 0 )
@@ -64,7 +64,8 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
 {
-    SendMsgCreation();
+    if( sendCreation )
+        SendMsgCreation();
 }
 
 // -----------------------------------------------------------------------------

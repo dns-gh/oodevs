@@ -29,7 +29,7 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanObjectWrapper& wrapper )
-    : DEC_Knowledge_Object( army, const_cast< UrbanObjectWrapper& >( wrapper ) )
+    : DEC_Knowledge_Object( army, const_cast< UrbanObjectWrapper& >( wrapper ), false )
     , armyId_                 ( army.GetID() )
     , objectId_               ( wrapper.GetID() )
     , rProgressPercent_       ( 0. )
@@ -41,8 +41,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanO
     , bLastPerceived_         ( false )
     , rLastProgressSent_      ( 0. )
 {
-    if( bCreatedOnNetwork_ )
-        SendMsgCreation();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +55,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban()
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
-    , bCreatedOnNetwork_      ( false )
+    , bCreatedOnNetwork_      ( true )
     , bCurrentProgressUpdated_( false )
     , bMaxProgressUpdated_    ( false )
     , bLastPerceived_         ( false )
@@ -71,8 +70,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 {
-    if( bCreatedOnNetwork_ )
-        SendMsgDestruction();
+    SendMsgDestruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +85,6 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned in
          >> armyId_
          >> rProgressPercent_
          >> rMaxProgressPercent_
-         >> bCreatedOnNetwork_
          >> bCurrentProgressUpdated_
          >> bMaxProgressUpdated_;
 }
@@ -104,7 +101,6 @@ void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const unsigned i
          << armyId_
          << rProgressPercent_
          << rMaxProgressPercent_
-         << bCreatedOnNetwork_
          << bCurrentProgressUpdated_
          << bMaxProgressUpdated_;
 }
@@ -269,10 +265,11 @@ void DEC_Knowledge_Urban::SendFullState()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::UpdateOnNetwork()
 {
+    // $$$$ _RC_ JSR 2011-07-28: A quoi ça sert d'envoyer les messages de création après le premier tick, et pas dans le constructeur? virer bCreatedOnNetwork_ si ça sert à rien.
     if( !bCreatedOnNetwork_ )
     {
-        SendMsgCreation();
         bCreatedOnNetwork_ = true;
+        SendMsgCreation();
         SendFullState();
         return;
     }
@@ -285,12 +282,8 @@ void DEC_Knowledge_Urban::UpdateOnNetwork()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::SendStateToNewClient()
 {
-    if( bCreatedOnNetwork_ )
-    {
-        SendMsgCreation();
-        SendFullState();
-        DEC_Knowledge_Object::SendStateToNewClient();
-    }
+    SendMsgCreation();
+    SendFullState();
 }
 
 // -----------------------------------------------------------------------------

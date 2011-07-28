@@ -22,8 +22,6 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
-#include "UrbanModel.h"
 #include "Tools.h"
 #include "statusicons.h"
 
@@ -34,19 +32,15 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter,
-                                 const tools::Resolver_ABC< Object_ABC >& objectResolver, const UrbanModel& urbanResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
+                                  const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , converter_     ( converter )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
-    , urbanResolver_ ( urbanResolver )
     , type_          ( & typeResolver.Get( message.type().id() ) )
     , pRealObject_   ( objectResolver_.Find( message.object().id() ) )
     , pTeam_         ( 0 )
 {
-    if( !pRealObject_ )
-        pRealObject_ = urbanResolver_.Find( message.object().id() );
-
     RegisterSelf( *this );
 
     //$$ NLD - 2010-11-03 - Ce bloc sucks
@@ -76,11 +70,7 @@ ObjectKnowledge::~ObjectKnowledge()
 void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.has_object()  )
-    {
         pRealObject_ = objectResolver_.Find( message.object().id() );
-        if( !pRealObject_ )
-            pRealObject_ = urbanResolver_.Find( message.object().id() );
-    }
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
     if( message.has_perceived() )

@@ -99,8 +99,8 @@ private:
     //! @name Network operations
     //@{
     void WriteMsgPerceptionSources( sword::UrbanKnowledgeUpdate& asnMsg ) const;
-    void SendMsgCreation() const;
-    void SendMsgDestruction() const;
+    virtual void SendMsgCreation() const;
+    virtual void SendMsgDestruction() const;
     void SendChangedState();
     void SendFullState();
     //@}

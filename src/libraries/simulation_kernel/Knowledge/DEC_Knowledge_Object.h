@@ -47,7 +47,7 @@ class DEC_Knowledge_Object : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown );
+             DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown, bool sendCreation = true );
              DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowing, MIL_Object_ABC& objectKnown );
              DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup* pGroupKnowing );
              DEC_Knowledge_Object();
@@ -163,8 +163,8 @@ private:
     void BuildMsgLocalisations( sword::ObjectKnowledgeUpdate& asnMsg ) const;
     void BuildMsgCurrentPerceptionLevel( sword::ObjectKnowledgeUpdate& asnMsg ) const;
     void BuildMsgAttributes( sword::ObjectKnowledgeUpdate& asnMsg ) const;
-    void SendMsgCreation() const;
-    void SendMsgDestruction() const;
+    virtual void SendMsgCreation() const;
+    virtual void SendMsgDestruction() const;
     //@}
 
 private:
