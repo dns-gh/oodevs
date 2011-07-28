@@ -11,6 +11,7 @@
 #define __SymbolFactory_h_
 
 #include <boost/noncopyable.hpp>
+#include <set>
 
 namespace tools
 {
