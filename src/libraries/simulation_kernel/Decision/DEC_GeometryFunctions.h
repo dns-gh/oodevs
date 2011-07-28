@@ -168,7 +168,7 @@ public:
 
     // Fuseau
     static double GetWidth( const MIL_Fuseau* pFuseau );
-    static std::vector< boost::shared_ptr< TER_Localisation > > SplitFuseauWithParams( const MIL_Fuseau* pFuseau, const double rSectionLength );
+    static bool IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pPoint );
 
     //@}
 

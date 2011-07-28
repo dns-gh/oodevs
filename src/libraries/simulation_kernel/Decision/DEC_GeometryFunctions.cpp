@@ -1899,15 +1899,10 @@ double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitFuseauWithParams
-// Created: EVH 2011-07-22
+// Name: DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau
+// Created: EVH 2011-07-26
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitFuseauWithParams( const MIL_Fuseau* pFuseau, const double rSectionLength )
+bool DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pPoint )
 {
-    
-    const MT_Line& globalDirection = pFuseau->GetGlobalDirection();
-    MT_Vector2D vDirection( globalDirection.GetPosEnd() - globalDirection.GetPosStart() );
-    vDirection.Normalize();
-
-    return SplitLocalisation( TER_Localisation( TER_Localisation::ePolygon, pFuseau->GetBorderPoints() ), globalDirection.GetPosStart(), vDirection , rSectionLength );
+    return pFuseau->IsInside( *pPoint );
 }

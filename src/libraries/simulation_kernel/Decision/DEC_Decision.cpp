@@ -250,8 +250,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, double ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) );
     brain[ "DEC_Geometrie_CalculerPointArriveePourFuseau" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( MIL_Fuseau& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDestPointForFuseau, _1 ) );
-    brain[ "DEC_Geometrie_DecoupeFuseauEnTronconAvecParametre" ] = &DEC_GeometryFunctions::SplitFuseauWithParams;
     brain[ "DEC_Geometrie_CalculerLocalisationsBU" ] = &DEC_GeometryFunctions::ComputeUrbanBlockLocalisations;
+    brain[ "DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau" ] = &DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau;
 }
 
 // -----------------------------------------------------------------------------
