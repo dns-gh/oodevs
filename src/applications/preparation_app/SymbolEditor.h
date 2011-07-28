@@ -83,7 +83,7 @@ private:
     void Update( const kernel::Entity_ABC& entity, QPopupMenu* menu );
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     bool IsValid( const T_Symbols& symbols ) const;
-    void UpdateHierarchies( const kernel::Entity_ABC& entity );
+    void UpdateHierarchies();
     //@}
 
 private:

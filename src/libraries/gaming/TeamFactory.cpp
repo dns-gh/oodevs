@@ -34,7 +34,6 @@
 #include "TeamsModel.h"
 #include "Troops.h"
 #include "Color.h"
-#include "Symbol.h"
 #include "UrbanKnowledges.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
@@ -43,6 +42,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/SymbolHierarchy.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
@@ -103,7 +103,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new kernel::SymbolHierarchy() );
     result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_ ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
     if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )

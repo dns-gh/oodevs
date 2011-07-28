@@ -10,7 +10,7 @@
 #ifndef __Symbol_h_
 #define __Symbol_h_
 
-#include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/SymbolHierarchy.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace xml
@@ -25,7 +25,7 @@ namespace xml
 */
 // Created: LGY 2011-07-28
 // =============================================================================
-class Symbol : public kernel::SymbolHierarchy_ABC
+class Symbol : public kernel::SymbolHierarchy
              , public kernel::Serializable_ABC
 {
 public:
@@ -38,16 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual const std::string& GetValue() const;
-    virtual void SetValue( const std::string& value );
-
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::string symbol_;
     //@}
 };
 

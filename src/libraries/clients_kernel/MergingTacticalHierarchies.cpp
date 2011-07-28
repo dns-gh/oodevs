@@ -60,7 +60,7 @@ void MergingTacticalHierarchies::UpdateSymbol( bool up /*= true*/ )
                 const_cast< TacticalHierarchies* >( child )->UpdateSymbol( false );
         }
     }
-    const std::string oldSymbol = entity_.Get< SymbolHierarchy_ABC >().GetValue();
+    const std::string oldSymbol = GetSymbol();
     const std::string oldLevel = GetLevel();
     std::string symbol;
     tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();

@@ -132,7 +132,7 @@ void SymbolEditor::OnChangeSymbol( int id )
     if( it != identifiers_.end() && selected_ )
     {
         const_cast< kernel::SymbolHierarchy_ABC* >( selected_->Retrieve< kernel::SymbolHierarchy_ABC >() )->SetValue( it->second );
-        UpdateHierarchies( *selected_ );
+        UpdateHierarchies();
     }
 }
 
@@ -168,12 +168,12 @@ void SymbolEditor::Update( const kernel::Entity_ABC& entity, QPopupMenu* menu )
 // Name: SymbolEditor::UpdateHierarchies
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-void SymbolEditor::UpdateHierarchies( const kernel::Entity_ABC& entity )
+void SymbolEditor::UpdateHierarchies()
 {
-    if( const kernel::TacticalHierarchies* pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
+    if( const kernel::TacticalHierarchies* pTactical = selected_->Retrieve< kernel::TacticalHierarchies >() )
     {
         controllers_.controller_.Update( *pTactical );
-        if( const kernel::CommunicationHierarchies* pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
+        if( const kernel::CommunicationHierarchies* pCommunication = selected_->Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
         else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );

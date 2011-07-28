@@ -7,41 +7,43 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "Symbol.h"
+#include "clients_kernel_pch.h"
+#include "SymbolHierarchy.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Symbol constructor
+// Name: SymbolHierarchy constructor
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-Symbol::Symbol()
+SymbolHierarchy::SymbolHierarchy()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Symbol destructor
+// Name: SymbolHierarchy destructor
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-Symbol::~Symbol()
+SymbolHierarchy::~SymbolHierarchy()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Symbol::GetValue
+// Name: SymbolHierarchy::GetValue
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-const std::string& Symbol::GetValue() const
+const std::string& SymbolHierarchy::GetValue() const
 {
     return symbol_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Symbol::SetValue
+// Name: SymbolHierarchy::SetValue
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-void Symbol::SetValue( const std::string& value )
+void SymbolHierarchy::SetValue( const std::string& value )
 {
     symbol_ = value;
 }

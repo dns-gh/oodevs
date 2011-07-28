@@ -7,24 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __Symbol_h_
-#define __Symbol_h_
+#ifndef __SymbolHierarchy_h_
+#define __SymbolHierarchy_h_
 
-#include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "SymbolHierarchy_ABC.h"
 
+namespace kernel
+{
 // =============================================================================
-/** @class  Symbol
-    @brief  Symbol
+/** @class  SymbolHierarchy
+    @brief  SymbolHierarchy
 */
 // Created: LGY 2011-07-28
 // =============================================================================
-class Symbol : public kernel::SymbolHierarchy_ABC
+class SymbolHierarchy : public SymbolHierarchy_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Symbol();
-    virtual ~Symbol();
+             SymbolHierarchy();
+    virtual ~SymbolHierarchy();
     //@}
 
     //! @name Operations
@@ -33,11 +35,13 @@ public:
     virtual void SetValue( const std::string& value );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     std::string symbol_;
     //@}
 };
 
-#endif // __Symbol_h_
+}
+
+#endif // __SymbolHierarchy_h_

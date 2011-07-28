@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "AgentFactory.h"
-
 #include "Affinities.h"
 #include "Agent.h"
 #include "AgentConvexHulls.h"
@@ -77,7 +76,6 @@
 #include "VisionCones.h"
 #include "Weapons.h"
 #include "Color.h"
-#include "Symbol.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CommandPostAttributes.h"
@@ -90,6 +88,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/SymbolHierarchy.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -124,7 +123,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 {
     Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new kernel::SymbolHierarchy() );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     kernel::Entity_ABC* superior = 0;
 

@@ -16,6 +16,7 @@
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
 Symbol::Symbol()
+    : SymbolHierarchy()
 {
     // NOTHING
 }
@@ -25,9 +26,12 @@ Symbol::Symbol()
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
 Symbol::Symbol( xml::xistream& xis )
+    : SymbolHierarchy()
 {
+    std::string symbol;
     xis >> xml::optional
-        >> xml::attribute( "symbol", symbol_ );
+        >> xml::attribute( "symbol", symbol );
+    SetValue( symbol );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,24 +41,6 @@ Symbol::Symbol( xml::xistream& xis )
 Symbol::~Symbol()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Symbol::GetValue
-// Created: LGY 2011-07-28
-// -----------------------------------------------------------------------------
-const std::string& Symbol::GetValue() const
-{
-    return symbol_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Symbol::SetValue
-// Created: LGY 2011-07-28
-// -----------------------------------------------------------------------------
-void Symbol::SetValue( const std::string& value )
-{
-    symbol_ = value;
 }
 
 // -----------------------------------------------------------------------------
