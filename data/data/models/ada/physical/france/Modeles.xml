@@ -362,7 +362,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE ActiverObstacles"/>
         <mission name="GENIE Appui Mobilite"/>
-        <mission name="GENIE Contourner obstacle">
+        <mission name="GENIE Contourner obstacles">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="MELEE Controler">
@@ -480,7 +480,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Appui Mobilite"/>
-        <mission name="GENIE Contourner obstacle">
+        <mission name="GENIE Contourner obstacles">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="GENIE Degager Obstacles">
@@ -9903,6 +9903,7 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="GENIE Franchir de vive force"/>
         <mission name="GENIE Reconnaitre"/>
         <mission name="LOGISTIQUE Se Deployer"/>
         <mission name="Produire"/>
@@ -9936,6 +9937,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Degager Obstacles"/>
+        <mission name="GENIE Franchir de vive force"/>
         <mission name="GENIE Ouvrir Itineraire"/>
         <mission name="GENIE Realiser Travaux"/>
         <mission name="GENIE Reconnaitre"/>
@@ -13915,4 +13917,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3356418626" -->
+<!-- signature="0705543869" -->
