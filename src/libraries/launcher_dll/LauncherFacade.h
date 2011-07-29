@@ -40,6 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LauncherFacade();
+    explicit LauncherFacade( const std::string& path );
     virtual ~LauncherFacade();
     //@}
 

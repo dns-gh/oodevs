@@ -65,9 +65,10 @@ namespace
 // Created: JSR 2011-05-10
 // -----------------------------------------------------------------------------
 LauncherService::LauncherService( const boost::filesystem::path& path )
-    : pFacade_  ( new LauncherFacade )
+    : pFacade_  ( 0 )
     , path_     ( path )
     , name_     ( "Launcher" )
+    , port_     ( "33000" )
     , isRunning_( false )
     , isPaused_ ( false )
 {
@@ -82,12 +83,8 @@ LauncherService::LauncherService( const boost::filesystem::path& path )
         xml::xifstream xis( configuration.string() );
         xis >> xml::start( "configuration" )
                 >> xml::start( "launcher" )
-                    >> xml::attribute( "port", port );
+                    >> xml::attribute( "port", port_ );
     }
-    std::vector< char > appName = MakeArg( path.leaf() );
-    std::vector< char > arg = MakeArg( std::string( "--launcher-port=" + port ) );
-    std::vector< char* > args = boost::assign::list_of< char* >( &appName[ 0 ] )( &arg[ 0 ] );
-    pFacade_->Initialize( args.size(), &args[ 0 ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,6 +249,13 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "SetServiceStatus failed, error code = %d", GetLastError() ).c_str() );
     }
+
+    std::vector< char > appName = MakeArg( pInstance_->path_.leaf() );
+    std::vector< char > arg = MakeArg( std::string( "--launcher-port=" + pInstance_->port_ ) );
+    std::vector< char* > args = boost::assign::list_of< char* >( &appName[ 0 ] )( &arg[ 0 ] );
+
+    pInstance_->pFacade_.reset( new LauncherFacade( pInstance_->path_.parent_path().string() ) );
+    pInstance_->pFacade_->Initialize( args.size(), &args[ 0 ] );
     pInstance_->isRunning_ = true;
 
     MT_LOG_INFO_MSG( "ServiceMain running" );

@@ -14,6 +14,7 @@
 #include "shield/Server.h"
 #include "shield/Listener_ABC.h"
 #include <boost/lexical_cast.hpp>
+#include <windows.h>
 
 namespace
 {
@@ -44,6 +45,18 @@ LauncherFacade::LauncherFacade()
     , proxy_   ( 0 )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherFacade constructor
+// Created: LGY 2011-07-29
+// -----------------------------------------------------------------------------
+LauncherFacade::LauncherFacade( const std::string& path )
+    : launcher_( 0 )
+    , proxy_   ( 0 )
+{
+    ::SetCurrentDirectory( path.c_str() );
+    config_.reset( new launcher::Config() );
 }
 
 // -----------------------------------------------------------------------------

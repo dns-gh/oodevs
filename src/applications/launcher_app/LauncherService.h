@@ -63,6 +63,7 @@ private:
     SERVICE_STATUS_HANDLE hServiceStatusHandle_;
     SERVICE_STATUS ServiceStatus_;
     const boost::filesystem::path& path_;
+    std::string port_;
     const std::string name_;
     bool isRunning_;
     bool isPaused_;
