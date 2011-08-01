@@ -109,6 +109,12 @@
         <xs:documentation xml:lang="fr">Définit si c'est neccessaire de recharger l'exercice apres l'execution du filtre.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="directory" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the directory where the command will be. Default value is '.'. The program will also look in the $PATH environment variable and in the 'Filters' directory.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit le répertoire où est la commande. La valeur par défaut est '.'. Le programme cherchera également dans la variable d'environnement $PATH et dans le répertoire 'Filters'.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="T_Argument">
     <xs:annotation>

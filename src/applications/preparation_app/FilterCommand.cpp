@@ -44,6 +44,7 @@ FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& c
     , config_        ( config )
     , command_       ( xis.attribute< std::string >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
+    , path_          ( xis.attribute< std::string >( "directory", "." ) )
 {
     assert( !command_.empty() );
     ReadDescriptions( xis );
@@ -123,9 +124,26 @@ void FilterCommand::ComputePath()
     std::vector< std::string > valuesVector;
     boost::split( valuesVector, path, boost::algorithm::is_any_of( ";" ) );
     valuesVector.insert( valuesVector.begin(), config_.BuildPhysicalChildFile( "Filters/" ) );
+    if( path_.size() > 0 && path_[ 0 ] == '.' ) // $$$$ ABR 2011-08-01: If directory begin with '.', concat to current directory
+    {
+        TCHAR current[ 512 ];
+        int done = GetCurrentDirectory( 512, current );
+        if( done < 512 )
+            path_ = ( bfs::path( current ) / bfs::path( path_ ) ).string();
+    }
+    valuesVector.insert( valuesVector.begin(), path_ );
+    path_.clear();
 
     bool founded = false;
-    for( std::vector< std::string >::const_iterator it = valuesVector.begin(); it != valuesVector.end() && !founded; ++it )
+    for( std::vector< std::string >::iterator it = valuesVector.begin(); it != valuesVector.end() && !founded; ++it )
+    {
+        if( it->find( "%" ) != std::string::npos ) // $$$$ ABR 2011-08-01: If an environment variable is given, expand it.
+        {
+            TCHAR result[ 512 ];
+            int done = ExpandEnvironmentStrings( it->c_str(), result, 512 );
+            if( done < 512 )
+                *it = result;
+        }
         if( bfs::exists( *it ) && bfs::is_directory( *it ) )
         {
             bfs::directory_iterator end_itr;
@@ -141,6 +159,7 @@ void FilterCommand::ComputePath()
                     }
                 }
         }
+    }
     emit statusChanged( IsValid() );
 }
 
@@ -182,6 +201,7 @@ void FilterCommand::Execute()
     assert( !path_.empty() );
     boost::shared_ptr< frontend::SpawnCommand > command(
         new frontend::SpawnCommand( config_, ( bfs::path( bfs::path( path_, bfs::native ) / bfs::path( command_, bfs::native ) ).string() + argumentsLine_ ).c_str(), true ) );
+    command->SetWorkingDirectory( path_.c_str() );
     boost::shared_ptr< frontend::ProcessWrapper > process(
         new frontend::ProcessWrapper( *this, command ) );
     process->StartAndBlockMainThread();

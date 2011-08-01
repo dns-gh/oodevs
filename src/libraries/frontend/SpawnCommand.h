@@ -48,6 +48,7 @@ public:
     virtual QString GetStatus() const;
     virtual std::string GetStartedExercise() const;
     void Attach( boost::shared_ptr< Process_ABC > process );
+    void SetWorkingDirectory( const QString& directory );
     //@}
 
 protected:
@@ -57,7 +58,6 @@ protected:
     void AddExerciseArgument( const QString& exercise );
     void AddSessionArgument ( const QString& session );
     void AddArgument( const QString& arg );
-    void SetWorkingDirectory( const QString& directory );
     //@}
 
 private:
