@@ -128,6 +128,10 @@ void LauncherService::Install() const
         );
         if( IsValid( schService, MT_FormatString( "Failed to create service %s, error code = %d", GetLastError() ) ) )
         {
+            LPTSTR desc = TEXT( "Launcher SCIPIO" );
+            SERVICE_DESCRIPTION sd;
+            sd.lpDescription = desc;
+            ChangeServiceConfig2( schService, SERVICE_CONFIG_DESCRIPTION, &sd );
             MT_LOG_INFO_MSG( MT_FormatString( "Service %s installed", name_.c_str() ).c_str() );
             CloseServiceHandle( schService );
         }
