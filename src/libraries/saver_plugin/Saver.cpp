@@ -186,7 +186,9 @@ void Saver::SaveKeyFrame( const Savable_ABC& message )
     }
     {
         tools::OutputBinaryWrapper wrapper( keyIndex_ );
-        wrapper << frame;
+        wrapper << frame.frameNumber_;
+        wrapper << frame.offset_;
+        wrapper << frame.size_;
     }
 }
 
@@ -200,7 +202,8 @@ void Saver::Flush()
     {
         current_.size_ = static_cast< unsigned >( update_.tellp() ) - current_.offset_;
         tools::OutputBinaryWrapper wrapper( index_ );
-        wrapper << current_;
+        wrapper << current_.offset_;
+        wrapper << current_.size_;
         current_.Reset();
         index_.flush(); keyIndex_.flush(); key_.flush(); update_.flush();
     }

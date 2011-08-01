@@ -57,7 +57,7 @@ namespace
 
         virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
-            output << buffer_.size();
+            output << static_cast< unsigned int >( buffer_.size() );
             output.Write( buffer_.c_str(), buffer_.size() );
         }
 

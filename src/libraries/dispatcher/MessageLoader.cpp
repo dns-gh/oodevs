@@ -275,17 +275,50 @@ bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, 
 
 namespace
 {
-    template< typename C >
-    void LoadIndexes( C& frames, std::ifstream& file )
+    // $$$$ JSR 2011-07-29: temporaire : tentative fix 5947
+    void LoadIndexes( std::vector< Frame >& frames, std::ifstream& file )
     {
-        typedef typename C::value_type T;
         tools::InputBinaryWrapper input( file );
-        T frame;
-        input >> frame;
-        while( file )
+        Frame frame;
+        input >> frame.offset_;
+        if( file )
         {
-            frames.push_back( frame );
-            input >> frame;
+            input >> frame.size_;
+            while( file )
+            {
+                frames.push_back( frame );
+                input >> frame.offset_;
+                if( !file )
+                    break;
+                input >> frame.size_;
+            }
+        }
+        file.clear();
+    }
+
+    void LoadIndexes( std::vector< KeyFrame >& frames, std::ifstream& file )
+    {
+        tools::InputBinaryWrapper input( file );
+        KeyFrame frame;
+        input >> frame.frameNumber_;
+        if( file )
+        {
+            input >> frame.offset_;
+            if( file )
+            {
+                input >> frame.size_;
+                while( file )
+                {
+                    frames.push_back( frame );
+                    input >> frame.frameNumber_;
+                    if( !file )
+                        break;
+                    input >> frame.offset_;
+                    if( !file )
+                        break;
+                    input >> frame.size_;
+                 }
+            }
         }
         file.clear();
     }
@@ -437,8 +470,8 @@ void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, Messa
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& handler )
 {
-    unsigned long messageSize = *reinterpret_cast< const unsigned long* >( input );
-    input += sizeof( unsigned long );
+    unsigned int messageSize = *reinterpret_cast< const unsigned int* >( input );
+    input += sizeof( unsigned int );
     sword::SimToClient message;
     if( ! message.ParseFromArray( input, messageSize ) )
         throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
