@@ -284,6 +284,7 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
         message.set_error_code( sword::CheckpointListResponse::invalid_session_name );
     else
     {
+        message.set_error_code( sword::CheckpointListResponse::success );
         const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
         for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
             message.add_checkpoint( ( *it ).ascii() );
@@ -303,6 +304,7 @@ void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message,
         message.set_error_code( sword::CheckpointDeleteResponse::invalid_session_name );
     else
     {
+        message.set_error_code( sword::CheckpointDeleteResponse::success );
         const std::vector< std::string > result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoints );
         BOOST_FOREACH( const std::string& name, result )
             message.add_checkpoint( name );
