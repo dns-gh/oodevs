@@ -328,6 +328,8 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int curr
     dataDetection_.Update( knowledge.dataDetection_ );
     dataRecognition_.Update( knowledge.dataRecognition_ );
     dataIdentification_.Update( knowledge.dataIdentification_ );
+    if( criticalIntelligence_.empty() && !knowledge.GetCriticalIntelligence().empty() )
+        criticalIntelligence_ = knowledge.GetCriticalIntelligence();
     ChangeRelevance( std::max( rRelevance_, knowledge.GetRelevance() ) );
     pMaxPerceptionLevel_ = &std::max( *pMaxPerceptionLevel_, knowledge.GetMaxPerceptionLevel() );
     bRelevanceUpdated_ = true;
