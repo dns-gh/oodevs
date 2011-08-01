@@ -167,9 +167,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     if( message.type() == sword::SessionStartRequest::simulation )
         command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false ) );
     else if( message.type() == sword::SessionStartRequest::dispatch )
-    {
         command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str() ) );
-    }
     else
         command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true ) );
 

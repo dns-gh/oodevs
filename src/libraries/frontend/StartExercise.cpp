@@ -44,8 +44,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
-        std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
-        dispatcher_.reset( new frontend::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
+        QString dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ).c_str() );
+        dispatcher_.reset( new frontend::StartDispatcher( config, attach, exercise, session, "", dispatcher_path ) );
     }
     AddRootDirArgument();
     AddExerciseArgument( exercise );
@@ -66,9 +66,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
-        std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
-        std::auto_ptr< StartDispatcher > dispatcher( new frontend::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session, checkpoint ) );
-        dispatcher_ = dispatcher;
+        QString dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ).c_str() );
+        dispatcher_.reset( new frontend::StartDispatcher( config, attach, exercise, session, checkpoint, dispatcher_path ) );
     }
     AddRootDirArgument();
     AddExerciseArgument( exercise );

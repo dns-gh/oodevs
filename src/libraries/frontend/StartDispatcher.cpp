@@ -11,39 +11,25 @@
 #include "StartDispatcher.h"
 #include "clients_gui/Tools.h"
 
-namespace frontend
-{
-
-// -----------------------------------------------------------------------------
-// Name: StartDispatcher constructor
-// Created: AHC 2011-05-16
-// -----------------------------------------------------------------------------
-StartDispatcher::StartDispatcher( const tools::GeneralConfig& config, bool attach, const QString& dispatcher_path,
-    const QString& exercise, const QString& session, const QString& checkpoint )
-    : SpawnCommand( config, "dispatcher_app.exe", attach )
-{
-    if( dispatcher_path.length() > 0 )
-       SetWorkingDirectory( dispatcher_path );
-    AddRootDirArgument();
-    AddExerciseArgument( exercise );
-    AddSessionArgument( session );
-    if( !checkpoint.isEmpty() )
-       AddArgument( "--checkpoint=" + checkpoint );
-}
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: StartDispatcher constructor
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
 StartDispatcher::StartDispatcher( const tools::GeneralConfig& config,
-    const QString& exercise, const QString& session, bool attach, const QString& checkpoint )
+                                  bool attach,
+                                  const QString& exercise,
+                                  const QString& session,
+                                  const QString& checkpoint /*= ""*/,
+                                  const QString& dispatcher_path /*= ""*/ )
     : SpawnCommand( config, "dispatcher_app.exe", attach )
 {
+    if( !dispatcher_path.isEmpty() )
+        SetWorkingDirectory( dispatcher_path );
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
     if( !checkpoint.isEmpty() )
-       AddArgument( "--checkpoint=" + checkpoint );
-}
-
+        AddArgument( "--checkpoint=" + checkpoint );
 }

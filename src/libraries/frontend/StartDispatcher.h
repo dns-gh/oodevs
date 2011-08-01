@@ -25,10 +25,12 @@ class StartDispatcher : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-    StartDispatcher(const tools::GeneralConfig& config, bool attach, const QString& dispatcher_path,
-            const QString& exercise, const QString& session, const QString& checkpoint = "" );
-    StartDispatcher(const tools::GeneralConfig& config,
-            const QString& exercise, const QString& session, bool attach, const QString& checkpoint = "" );
+    StartDispatcher( const tools::GeneralConfig& config,
+                     bool attach,
+                     const QString& exercise,
+                     const QString& session,
+                     const QString& checkpoint = "",
+                     const QString& dispatcher_path = "" );
     //@}
 };
 
