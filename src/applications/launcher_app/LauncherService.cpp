@@ -128,7 +128,7 @@ void LauncherService::Install() const
         );
         if( IsValid( schService, MT_FormatString( "Failed to create service %s, error code = %d", GetLastError() ) ) )
         {
-            LPTSTR desc = TEXT( "Launcher SCIPIO" );
+            LPTSTR desc = TEXT( "Launcher MASA Sword SCIPIO" );
             SERVICE_DESCRIPTION sd;
             sd.lpDescription = desc;
             ChangeServiceConfig2( schService, SERVICE_CONFIG_DESCRIPTION, &sd );
