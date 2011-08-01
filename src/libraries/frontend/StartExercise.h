@@ -27,8 +27,8 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach );
-             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach );
+             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded = true );
+             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded = true );
     virtual ~StartExercise();
     //@}
 

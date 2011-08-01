@@ -165,7 +165,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true ) );
+        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false ) );
     else if( message.type() == sword::SessionStartRequest::dispatch )
     {
         command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str() ) );

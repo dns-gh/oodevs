@@ -35,14 +35,14 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/ )
     : SpawnCommand( config, "simulation_app.exe", attach )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
     , percentage_( 0 )
 {
-    if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
+    if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
         std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
         dispatcher_.reset( new frontend::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
@@ -57,14 +57,14 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/ )
     : SpawnCommand( config, "simulation_app.exe", attach )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
     , percentage_( 0 )
 {
-    if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
+    if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
         std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
         std::auto_ptr< StartDispatcher > dispatcher( new frontend::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session, checkpoint ) );
