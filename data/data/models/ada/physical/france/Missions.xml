@@ -2612,7 +2612,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.terrorism.tasks.CommettreAttentat" dia-type="france.military.platoon.terrorism.tasks.CommettreAttentat" id="2132" name="ASY Commettre un Attentat">
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.CommettreAttentat" dia-type="france.military.platoon.terrorism.tasks.CommettreAttentat" id="2132" name="ASYMETRIQUE Commettre un Attentat">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2634,7 +2634,7 @@
       </parameter>
       <parameter dia-name="dotation" name="Munition" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.terrorism.tasks.CommettreAttentatSuicide" dia-type="france.military.platoon.terrorism.tasks.CommettreAttentatSuicide" id="2133" name="ASY Commettre un Attentat Suicide">
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.CommettreAttentatSuicide" dia-type="france.military.platoon.terrorism.tasks.CommettreAttentatSuicide" id="2133" name="ASYMETRIQUE Commettre un Attentat Suicide">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2649,7 +2649,7 @@
       </parameter>
       <parameter dia-name="dotation" name="Munition" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.terrorism.tasks.SeDissimuler" dia-type="france.military.platoon.terrorism.tasks.SeDissimuler" id="2134" name="ASY Se Dissimuler">
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.SeDissimuler" dia-type="france.military.platoon.terrorism.tasks.SeDissimuler" id="2134" name="ASYMETRIQUE Se Dissimuler">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2661,7 +2661,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.terrorism.tasks.AssassinerOfficiers" dia-type="france.military.platoon.terrorism.tasks.AssassinerOfficiers" id="2141" name="ASY Assassiner Officiers">
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.AssassinerOfficiers" dia-type="france.military.platoon.terrorism.tasks.AssassinerOfficiers" id="2141" name="ASYMETRIQUE Assassiner Officiers">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2703,7 +2703,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.terrorism.tasks.PrendreOtage" dia-type="france.military.platoon.terrorism.tasks.PrendreOtage" id="2138" name="ASY Prendre en Otage">
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.PrendreOtage" dia-type="france.military.platoon.terrorism.tasks.PrendreOtage" id="2138" name="ASYMETRIQUE Prendre en Otage">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2753,7 +2753,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.terrorism.tasks.SInfiltrer" dia-type="france.military.platoon.tasks.ASYSInfiltrer" id="28747" name="ASY S'Infiltrer">
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.SInfiltrer" dia-type="france.military.platoon.tasks.ASYSInfiltrer" id="28747" name="ASYMETRIQUE S'Infiltrer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -5067,4 +5067,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1334246001" -->
+<!-- signature="2757461531" -->
