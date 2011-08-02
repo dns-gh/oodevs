@@ -15,14 +15,19 @@
 #include "ObjectCollisionNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
-namespace posture
+namespace location
 {
-    class PostureComputer_ABC;
+    class LocationComputer_ABC;
 }
 
 namespace moving
 {
     class SpeedComputer_ABC;
+}
+
+namespace posture
+{
+    class PostureComputer_ABC;
 }
 
 class MIL_Object_ABC;
@@ -36,8 +41,9 @@ class UrbanBlockPosition_ABC;
 // =============================================================================
 class PHY_RolePion_UrbanLocation : public PHY_RoleInterface_UrbanLocation
                                  , public terrain::ObjectCollisionNotificationHandler_ABC
-                                 , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
+                                 , public tools::AlgorithmModifier_ABC< location::LocationComputer_ABC >
                                  , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
+                                 , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -65,6 +71,7 @@ public:
     virtual double ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const;
     void Execute( posture::PostureComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
+    void Execute( location::LocationComputer_ABC& algorithm ) const;
     virtual bool CanMount() const;
     //@}
 

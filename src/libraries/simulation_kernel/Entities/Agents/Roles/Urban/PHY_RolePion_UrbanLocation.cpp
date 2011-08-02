@@ -11,6 +11,7 @@
 #include "PHY_RolePion_UrbanLocation.h"
 #include "AlgorithmsFactories.h"
 #include "InsideUrbanBlockPosition.h"
+#include "LocationComputer_ABC.h"
 #include "OutsideUrbanBlockPosition.h"
 #include "PostureComputer_ABC.h"
 #include "SpeedComputer_ABC.h"
@@ -268,4 +269,14 @@ bool PHY_RolePion_UrbanLocation::CanMount() const
     if( urbanObject_ )
         return urbanObject_->GetTrafficability() >= pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::Execute
+// Created: LDC 2011-08-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_UrbanLocation::Execute( location::LocationComputer_ABC& algorithm ) const
+{
+    if( urbanObject_ )
+        algorithm.IncreaseHeight( urbanObject_->GetHeight() );
 }

@@ -185,7 +185,8 @@ bool PHY_RoleAction_Flying::IsFlying() const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Execute( location::LocationComputer_ABC& algorithm ) const
 {
-    algorithm.SetHeight( rHeight_ );
+    algorithm.IncreaseHeight( rHeight_ );
+    algorithm.SetFlying();
 }
 
 // -----------------------------------------------------------------------------

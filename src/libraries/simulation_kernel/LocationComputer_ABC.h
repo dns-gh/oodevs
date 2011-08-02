@@ -29,7 +29,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetHeight( double height ) = 0;
+    virtual void IncreaseHeight( double height ) = 0;
+    virtual void SetFlying() = 0;
     virtual double GetHeight() const = 0;
     //@}
 };

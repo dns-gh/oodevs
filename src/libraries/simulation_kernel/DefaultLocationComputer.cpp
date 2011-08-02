@@ -18,6 +18,7 @@ using namespace location;
 // -----------------------------------------------------------------------------
 DefaultLocationComputer::DefaultLocationComputer()
     : height_( 0 )
+    , flying_( false )
 {
     // NOTHING
 }
@@ -35,9 +36,9 @@ DefaultLocationComputer::~DefaultLocationComputer()
 // Name: DefaultLocationComputer::SetHeight
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-void DefaultLocationComputer::SetHeight( double height )
+void DefaultLocationComputer::IncreaseHeight( double height )
 {
-    height_ = height;
+    height_ += height;
 }
 
 // -----------------------------------------------------------------------------
@@ -46,5 +47,14 @@ void DefaultLocationComputer::SetHeight( double height )
 // -----------------------------------------------------------------------------
 double DefaultLocationComputer::GetHeight() const
 {
-    return height_;
+    return flying_ ? height_ : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultLocationComputer::SetFlying
+// Created: LDC 2011-08-02
+// -----------------------------------------------------------------------------
+void DefaultLocationComputer::SetFlying()
+{
+    flying_ = true;
 }

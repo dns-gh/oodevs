@@ -31,7 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetHeight( double height );
+    virtual void IncreaseHeight( double height );
+    virtual void SetFlying();
     virtual double GetHeight() const;
     //@}
 
@@ -39,6 +40,7 @@ private:
     //! @name Member data
     //@{
     double height_;
+    bool flying_;
     //@}
 };
 
