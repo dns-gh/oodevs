@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamLocationComposite.h"
 #include "InterfaceBuilder_ABC.h"
+#include "actions/Parameter_ABC.h"
 #include <Qt/QWidgetStack.h>
 class QWidget;
 
@@ -128,6 +129,12 @@ void ParamLocationComposite::CommitTo( actions::ParameterContainer_ABC& containe
 {
     if( selectedParam_ )
         selectedParam_->CommitTo( container );
+    else
+    {
+        std::auto_ptr< actions::Parameter_ABC > emptyParam( new actions::Parameter_ABC( QString::null ) );
+        emptyParam->Set( false );
+        container.AddParameter( *emptyParam.release() );
+    }
 }
 
 // -----------------------------------------------------------------------------
