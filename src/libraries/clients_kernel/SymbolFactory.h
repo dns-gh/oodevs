@@ -55,6 +55,7 @@ public:
     SymbolRule* GetSymbolRule() const;
     bool IsThisChainAvailable( const std::string& chain ) const;
     void Load( const tools::ExerciseConfig& config );
+    void Unload();
     const std::vector< std::string >& GetAvailableSymbols() const;
     void FillSymbols( const std::string& symbol, const std::string& karma, std::set< std::string >& result ) const;
     //@}

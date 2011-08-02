@@ -36,11 +36,11 @@ SymbolEditor::SymbolEditor( QWidget* parent, kernel::Controllers& controllers, c
     : QObject( parent )
     , controllers_( controllers )
     , symbols_    ( symbols )
+    , config_     ( config )
     , pFactory_   ( new kernel::SymbolFactory() )
     , selected_   ( controllers )
     , menu_       ( 0 )
 {
-    pFactory_->Load( config );
     controllers_.Register( *this );
 }
 
@@ -69,6 +69,24 @@ void SymbolEditor::NotifyContextMenu( const kernel::Formation_ABC& entity, kerne
 void SymbolEditor::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
 {
     Update( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolEditor::NotifyUpdated
+// Created: JSR 2011-08-02
+// -----------------------------------------------------------------------------
+void SymbolEditor::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    pFactory_->Load( config_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolEditor::NotifyUpdated
+// Created: JSR 2011-08-02
+// -----------------------------------------------------------------------------
+void SymbolEditor::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    pFactory_->Unload();
 }
 
 namespace

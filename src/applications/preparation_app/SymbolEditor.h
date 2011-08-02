@@ -11,16 +11,19 @@
 #define __SymbolEditor_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
-    class Entity_ABC;
-    class Formation_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class Entity_ABC;
     class Controllers;
+    class Formation_ABC;
+    class ModelLoaded;
+    class ModelUnLoaded;
     class SymbolFactory;
 }
 
@@ -44,6 +47,8 @@ class SymbolEditor: public QObject
                   , public tools::Observer_ABC
                   , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                  , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                   , private boost::noncopyable
 {
     Q_OBJECT;
@@ -60,6 +65,8 @@ public:
     //@{
     virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     //@}
 
 private slots:
@@ -91,6 +98,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const gui::EntitySymbols& symbols_;
+    const tools::ExerciseConfig& config_;
     std::auto_ptr< kernel::SymbolFactory > pFactory_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QPopupMenu* menu_;

@@ -80,6 +80,18 @@ void SymbolFactory::Load( const tools::ExerciseConfig& config )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SymbolFactory::Unload
+// Created: JSR 2011-08-02
+// -----------------------------------------------------------------------------
+void SymbolFactory::Unload()
+{
+    currentChain_.clear();
+    currentSymbol_.clear();
+    availableSymbols_.clear();
+    initialized_ = false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SymbolFactory::ListSymbols
 // Created: RPD 2011-01-26
 // -----------------------------------------------------------------------------
