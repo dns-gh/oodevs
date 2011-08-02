@@ -148,4 +148,12 @@ void ParamLocationComposite::NotifyChanged( Param_ABC& param )
         }
     }
 }
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::IsOptional
+// Created: GGE 2011-08-02
+// -----------------------------------------------------------------------------
+bool ParamLocationComposite::IsOptional() const
+{
+    return parameter_.IsOptional();
+}
 
