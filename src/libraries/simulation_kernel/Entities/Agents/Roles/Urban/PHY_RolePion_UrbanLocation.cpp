@@ -18,8 +18,9 @@
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <urban/TerrainObject_ABC.h>
@@ -52,6 +53,7 @@ PHY_RolePion_UrbanLocation::PHY_RolePion_UrbanLocation( MIL_Agent_ABC& pion )
     , urbanObject_( 0 )
     , delegate_   ( new OutsideUrbanBlockPosition() )
     , isInCity_   ( false )
+    , isFlying_   ( false )
 {
     // NOTHING
 }
@@ -121,7 +123,8 @@ void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& objec
         if( !urbanObject->HasChild() )
         {
             urbanObject_ = urbanObject;
-            delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
+            if( !isFlying_ )
+                delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
         }
         isInCity_ = true;
     }
@@ -256,7 +259,7 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& /*algori
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    if( urbanObject_ )
+    if( urbanObject_ && !isFlying_ )
         algorithm.AddModifier( 1. - urbanObject_->GetOccupation(), true );
 }
 
@@ -279,4 +282,26 @@ void PHY_RolePion_UrbanLocation::Execute( location::LocationComputer_ABC& algori
 {
     if( urbanObject_ )
         algorithm.IncreaseHeight( urbanObject_->GetHeight() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::TakeOff
+// Created: LDC 2011-08-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_UrbanLocation::TakeOff()
+{
+    isFlying_ = true;
+    if( urbanObject_ )
+        delegate_.reset( new OutsideUrbanBlockPosition() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::Land
+// Created: LDC 2011-08-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_UrbanLocation::Land()
+{
+    isFlying_ = false;
+    if( urbanObject_ )
+        delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
 }

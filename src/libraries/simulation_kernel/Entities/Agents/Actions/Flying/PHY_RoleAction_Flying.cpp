@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Flying.h"
 #include "AlgorithmsFactories.h"
+#include "FlyListener_ABC.h"
 #include "LocationComputer_ABC.h"
 #include "PostureComputer_ABC.h"
 #include "MoveComputer_ABC.h"
@@ -83,6 +84,7 @@ bool PHY_RoleAction_Flying::TakeOff()
 
     pActionFly_.reset( new PHY_ActionFly( entity_ ) );
     entity_.RegisterAction( pActionFly_ );
+    entity_.Apply( &FlyListener_ABC::TakeOff );
     return true;
 }
 
@@ -98,6 +100,7 @@ bool PHY_RoleAction_Flying::Land()
     entity_.UnregisterAction( pActionFly_->GetId() );
     rHeight_ = 0.;
     pActionFly_.reset();
+    entity_.Apply( &FlyListener_ABC::Land );
     return true;
 }
 

@@ -14,6 +14,7 @@
 #include "PHY_RoleInterface_UrbanLocation.h"
 #include "ObjectCollisionNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "Entities/Agents/Actions/Flying/FlyListener_ABC.h"
 
 namespace location
 {
@@ -44,6 +45,7 @@ class PHY_RolePion_UrbanLocation : public PHY_RoleInterface_UrbanLocation
                                  , public tools::AlgorithmModifier_ABC< location::LocationComputer_ABC >
                                  , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
                                  , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
+                                 , public FlyListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -73,6 +75,9 @@ public:
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     void Execute( location::LocationComputer_ABC& algorithm ) const;
     virtual bool CanMount() const;
+    
+    virtual void TakeOff();
+    virtual void Land();
     //@}
 
     //! @name Event handlers
@@ -96,6 +101,7 @@ private:
     const UrbanObjectWrapper* urbanObject_;
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     bool isInCity_;
+    bool isFlying_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );
