@@ -18,8 +18,6 @@
 #include "meteo/MeteoLocal.h"
 #include "preparation/WeatherModel.h"
 #include "WeatherListView.h"
-#include <qhgroupbox.h>
-#include <qgrid.h>
 
 using namespace kernel;
 
@@ -33,17 +31,17 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     , currentModel_( 0 )
 {
     // Current date & Time
-    QHBox* timeBox = new QHBox( headerLayout_ );
+    Q3HBox* timeBox = new Q3HBox( headerLayout_ );
     new QLabel( tr( "Exercise date:" ), timeBox );
-    time_ = new QDateTimeEdit( timeBox );
+    time_ = new Q3DateTimeEdit( timeBox );
     time_->setDateTime( QDateTime::currentDateTime() );
 
     // Ephemerides
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
+ 	Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
     new QLabel( tr( "Sunrise:" ), group );
-    sunrise_ = new QTimeEdit( group );
+    sunrise_ = new Q3TimeEdit( group );
     new QLabel( tr( "Sunset:" ), group );
-    sunset_ = new QTimeEdit( group );
+    sunset_ = new Q3TimeEdit( group );
     new QLabel( tr( "Day lighting:" ), group );
     dayLighting_ = new gui::ValuedComboBox< E_DayLightingType >( group );
     for( int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )

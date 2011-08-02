@@ -35,18 +35,18 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
     , userRoleDico_( 0 )
 {
     {
-        QVBox* box = new QVBox( this );
+        Q3VBox* box = new Q3VBox( this );
         box->setSpacing( 5 );
-        QGroupBox* group = new QGroupBox( 2,  Qt::Horizontal, tr( "Profile information" ), box );
+        Q3GroupBox* group = new Q3GroupBox( 2,  Qt::Horizontal, tr( "Profile information" ), box );
         group->setMargin( 5 );
         new QLabel( tr( "Login:" ), group );
         login_ = new QLineEdit( group );
         new QLabel( tr( "Password:" ), group );
         password_ = new QLineEdit( group );
-        userRoleGroup_ = new QGroupBox( 1, Qt::Horizontal,  tr( "User role" ), box );
+        userRoleGroup_ = new Q3GroupBox( 1, Qt::Horizontal,  tr( "User role" ), box );
         userRoleGroup_->setCheckable( true );
         userRoleGroup_->setMargin( 5 );
-        QHBox* roleBox = new QHBox( userRoleGroup_ );
+        Q3HBox* roleBox = new Q3HBox( userRoleGroup_ );
         userRoleLabel_ = new QLabel( roleBox );
         userRole_ = new QComboBox( roleBox );
         userRoleLabel_->setText( tr( "Role" ));
@@ -60,10 +60,10 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         connect( password_, SIGNAL( textChanged( const QString& ) ), SLOT( OnPasswordChanged( const QString& ) ) );
     }
     {
-        QVBox* box = new QVBox( this );
-        QGroupBox* group = new QGroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
+        Q3VBox* box = new Q3VBox( this );
+        Q3GroupBox* group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
         group->setMargin( 5 );
-        QHBox* holder = new QHBox( group );
+        Q3HBox* holder = new Q3HBox( group );
         new QLabel( tr( "Supervisor actions:" ), holder );
         supervisor_ = new QCheckBox( holder );
         QTabWidget* tabs = new QTabWidget( group );
@@ -170,7 +170,7 @@ void UserProfileWidget::OnLoginChanged( const QString& text )
     }
     catch( std::exception& e )
     {
-        QMessageBox::warning( this, tr( "Invalid profile information" ), e.what(), QMessageBox::Ok, QMessageBox::NoButton );
+        QMessageBox::warning( this, tr( "Invalid profile information" ), e.what(), QMessageBox::Ok, Qt::NoButton );
         login_->setText( profile_->GetLogin() );
     }
 }

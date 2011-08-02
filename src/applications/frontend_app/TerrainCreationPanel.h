@@ -11,7 +11,8 @@
 #define __TerrainCreationPanel_h_
 
 #include "Panel_ABC.h"
-#include <qobject.h>
+#include <QtCore/qobject.h>
+#include <Qt3Support/q3action.h>
 
 namespace tools
 {
@@ -35,7 +36,7 @@ class TerrainCreationPanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
+             TerrainCreationPanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~TerrainCreationPanel();
     //@}
 

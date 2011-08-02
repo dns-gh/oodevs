@@ -19,12 +19,12 @@ using namespace kernel;
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 SupplyQuotasWidget::SupplyQuotasWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& /*factory*/ )
-    : QVBox       ( parent )
+    : Q3VBox       ( parent )
     , controllers_( controllers )
 {
     controllers_.Register( *this );
 
-    QHBox* test = new QHBox( (QVBox*)this );
+    Q3HBox* test = new Q3HBox( (Q3VBox*)this );
     /*QLabel* label =*/ new QLabel( tr( "Logistic superior" ), test );
     //label->setMaximumWidth( 150 );
     superior_ = new ValuedComboBox< const Entity_ABC* >( test );

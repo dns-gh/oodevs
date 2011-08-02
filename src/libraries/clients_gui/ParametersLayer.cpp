@@ -93,7 +93,7 @@ bool ParametersLayer::HandleKeyPress( QKeyEvent* key )
         return false;
     switch( key->key() )
     {
-        case Qt::Key_BackSpace:
+        case Qt::Key_Backspace:
         case Qt::Key_Delete:
             current_->PopPoint();
             return true;

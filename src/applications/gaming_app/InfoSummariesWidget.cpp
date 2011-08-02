@@ -22,11 +22,11 @@ using namespace kernel;
 // Created: SBO 2007-02-28
 // -----------------------------------------------------------------------------
 InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, Controllers& controllers )
-    : QVBox( parent, "InfoSummariesWidget" )
+    : Q3VBox( parent, "InfoSummariesWidget" )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, this );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, this );
     group->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
     group->setMinimumWidth( 250 );
     display_.reset( new SummariesDisplayer( group ) );

@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <qtoolbar.h>
 
 namespace kernel
 {

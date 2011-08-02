@@ -11,7 +11,7 @@
 #define __weather_MeteoLocal_h_
 
 #include "Meteo/Meteo.h"
-#include <QDateTime.h>
+#include <QtCore/QDateTime.h>
 
 namespace sword
 {

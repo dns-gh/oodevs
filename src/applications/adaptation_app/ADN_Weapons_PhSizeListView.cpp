@@ -71,12 +71,12 @@ private:
 // Name: ADN_Weapons_PhSizeListView constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent, const char* szName, WFlags f )
+ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Target size" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
     setSorting( -1 );
 
     this->setMaximumHeight( 300 );

@@ -50,7 +50,7 @@ private slots:
     void OnDown();
     void OnAdd( int index );
     void OnRemove();
-    void OnContextMenu( QListViewItem* item, const QPoint& point, int col );
+    void OnContextMenu( Q3ListViewItem* item, const QPoint& point, int col );
     //@}
 
 private:
@@ -63,7 +63,7 @@ private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;
-    QListView* list_;
+    Q3ListView* list_;
     //@}
 };
 

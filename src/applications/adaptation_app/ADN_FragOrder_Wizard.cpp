@@ -19,7 +19,7 @@ typedef ADN_Missions_Data::FragOrder FragOrder;
 // Name: ADN_FragOrder_Wizard constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_FragOrder_Wizard::ADN_FragOrder_Wizard( ADN_Missions_Data::T_FragOrder_Vector& fragOrders, QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
+ADN_FragOrder_Wizard::ADN_FragOrder_Wizard( ADN_Missions_Data::T_FragOrder_Vector& fragOrders, QWidget* pParent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_Wizard_ABC< FragOrder >( pParent, szName )
     , secondPage_ ( 0 )
     , name_ ( "" )

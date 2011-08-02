@@ -19,13 +19,13 @@
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorActionsEditor::SuccessFactorActionsEditor( QWidget* parent, const SuccessFactorActionTypes& actionTypes )
-    : QScrollView( parent )
+    : Q3ScrollView( parent )
     , mainWidget_( 0 )
     , actionTypes_( actionTypes )
 {
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setResizePolicy( AutoOneFit );
-    setFrameStyle( QFrame::Panel | QFrame::Sunken );
+    setHScrollBarMode( Q3ScrollView::AlwaysOff );
+    setResizePolicy( Q3ScrollView::AutoOneFit );
+    setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ void SuccessFactorActionsEditor::StartEdit( const SuccessFactorActions& actions 
 {
     items_.clear();
     delete mainWidget_;
-    mainWidget_ = new QVBox( viewport() );
+    mainWidget_ = new Q3VBox( viewport() );
     addChild( mainWidget_ );
     tools::Iterator< const SuccessFactorAction& > it( actions.CreateIterator() );
     while( it.HasMoreElements() )
@@ -72,6 +72,7 @@ void SuccessFactorActionsEditor::CommitTo( SuccessFactorActions& actions ) const
 SuccessFactorActionItem* SuccessFactorActionsEditor::CreateItem()
 {
     SuccessFactorActionItem* item = new SuccessFactorActionItem( mainWidget_, actionTypes_ );
+    addChild( mainWidget_ );
     items_.push_back( item );
     items_.front()->EnableDeletion( items_.size() > 1 );
     connect( item, SIGNAL( Add() ), SLOT( CreateItem() ) );
@@ -94,5 +95,6 @@ void SuccessFactorActionsEditor::OnDelete( SuccessFactorActionItem& item )
         item.deleteLater();
         if( items_.size() == 1 )
             items_.front()->EnableDeletion( false );
+        addChild( mainWidget_ );
     }
 }

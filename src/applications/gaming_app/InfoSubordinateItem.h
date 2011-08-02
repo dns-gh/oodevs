@@ -11,7 +11,7 @@
 #define __InfoSubordinateItem_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <qiconview.h>
+#include <Qt3Support/q3iconview.h>
 
 namespace kernel
 {
@@ -31,14 +31,14 @@ namespace gui
 */
 // Created: SBO 2007-02-22
 // =============================================================================
-class InfoSubordinateItem : public QIconViewItem
+class InfoSubordinateItem : public Q3IconViewItem
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSubordinateItem( QIconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity );
+             InfoSubordinateItem( Q3IconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity );
     virtual ~InfoSubordinateItem();
     //@}
 

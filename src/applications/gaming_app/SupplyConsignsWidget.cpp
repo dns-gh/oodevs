@@ -48,8 +48,8 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
     LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, LogSupplyConsigns >::Display( consign, displayer, item );
 
     // $$$$ AGE 2006-02-28: crado
-    QListViewItem* last  = item->firstChild();
-    QListViewItem* child = last;
+    Q3ListViewItem* last  = item->firstChild();
+    Q3ListViewItem* child = last;
     while( child && child->text( 0 ) != tools::translate( "SupplyConsignsWidget", "Resources requested/granted/convoyed" ) )
     {
         last = child;

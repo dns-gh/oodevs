@@ -18,7 +18,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
-#include <qsettings.h>
+#include <QtCore/qsettings.h>
 
 namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;

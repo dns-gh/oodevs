@@ -19,7 +19,7 @@ namespace gui
 */
 // Created: AGE 2007-10-15
 // =============================================================================
-class ValuedDragObject : public QStoredDrag
+class ValuedDragObject : public Q3StoredDrag
 {
 public:
     //! @name Statics
@@ -66,12 +66,11 @@ private:
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedDragObject::ValuedDragObject( const T* element, QWidget* dragSource /*= 0*/ )
-    : QStoredDrag( MimeType( element ), dragSource )
+ValuedDragObject::ValuedDragObject( const T* element, QWidget* dragSource /* = 0*/ )
+    : Q3StoredDrag( MimeType( element ), dragSource )
 {
-    QByteArray* pBytes = new QByteArray();
-    pBytes->setRawData( (const char*)&element, sizeof( T* ) );
-    setEncodedData( *pBytes );
+    const QByteArray pBytes( reinterpret_cast< const char* >( &element ), sizeof( T** ) );
+    setEncodedData( pBytes );
 }
 
 // -----------------------------------------------------------------------------

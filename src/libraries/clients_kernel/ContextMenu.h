@@ -12,7 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 
-class QPopupMenu;
+class Q3PopupMenu;
 class QObject;
 class QWidget;
 class QPoint;
@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddCategory( const std::string& text, int position = -1 );
+    void AddCategory( const std::string& text );
 
     void Clear();
     void SetItemEnabled( int id, bool enable );
@@ -51,10 +51,9 @@ public:
     int InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member );
     int InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel, int id = -1 );
     int InsertItem( const std::string& category, const QString& text, int id = -1 );
-    int InsertItem( const std::string& category, const QString& text, QPopupMenu* popup, int id = -1 );
-    int InsertItem( const std::string& category, QWidget* widget, int id = -1 );
+    int InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int id = -1 );
 
-    QPopupMenu* SubMenu( const std::string& category, const QString& text );
+    Q3PopupMenu* SubMenu( const std::string& category, const QString& text );
 
     void Popup( const QPoint& where );
     //@}
@@ -67,23 +66,21 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::string >     T_Categories;
-    typedef T_Categories::iterator        IT_Categories;
-    typedef T_Categories::const_iterator CIT_Categories;
+    typedef std::vector< std::string > T_OrderedCategories;
+    typedef std::map< std::string, Q3PopupMenu* > T_CategoryMenus;
     //@}
 
     //! @name Helpers
     //@{
     int InsertCategory( const std::string& category );
-    void InsertSeparators();
     //@}
 
 private:
     //! @name Member data
     //@{
-    QPopupMenu* menu_;
-    T_Categories categories_;
-    T_Categories insertedCategories_;
+    Q3PopupMenu* menu_;
+    T_OrderedCategories categories_;
+    T_CategoryMenus menus_;
     //@}
 };
 

@@ -16,19 +16,19 @@
 // Name: ADN_FragOrder_WizardSecondPage constructor
 // Created: HBD 2010-09-02
 // -----------------------------------------------------------------------------
-ADN_FragOrder_WizardSecondPage::ADN_FragOrder_WizardSecondPage( QWizard* pParent, const char* szName /*= 0*/, const char* szImageName /*= "adn_wizard.bmp"*/ )
+ADN_FragOrder_WizardSecondPage::ADN_FragOrder_WizardSecondPage( Q3Wizard* pParent, const char* szName /* = 0*/, const char* szImageName /* = "adn_wizard.bmp"*/ )
   : ADN_WizardPage_ABC( pParent, szName, szImageName )
 {
-    QVBox* groupbox = new QVBox( pRightSide_ );
-    QHBox* box1 = new QHBox( groupbox );
+    Q3VBox* groupbox = new Q3VBox( pRightSide_ );
+    Q3HBox* box1 = new Q3HBox( groupbox );
     addForAllUnits_ = new QCheckBox( box1 );
     QLabel* label1 = new QLabel( box1 );
     label1->setText(  qApp->translate( "ADN_FragOrder_WizardSecondPage",  "Add for all Units" ) );
-    QHBox* box2 = new QHBox( groupbox );
+    Q3HBox* box2 = new Q3HBox( groupbox );
     addForAllAutomata_ = new QCheckBox( box2 );
     QLabel* label2 = new QLabel( box2,qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Automata") );
     label2->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage",  "Add for all Automata" ) );
-    QHBox* box3 = new QHBox( groupbox );
+    Q3HBox* box3 = new Q3HBox( groupbox );
     addForAllPops_ = new QCheckBox( box3 );
     QLabel* label3 = new QLabel( box3, qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds") );
     label3->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds" ) );

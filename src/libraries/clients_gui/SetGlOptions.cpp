@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "SetGlOptions.h"
-#include <qgl.h>
 
 using namespace gui;
 

@@ -209,7 +209,7 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
         const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() );
-        QDragObject* drag = new gui::ValuedDragObject( pos );
+        Q3DragObject* drag = new gui::ValuedDragObject( pos );
         drag->drag();
     }
     return result;

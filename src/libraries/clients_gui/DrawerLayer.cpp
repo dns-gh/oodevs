@@ -127,7 +127,7 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* k )
     if( !selected_ )
         return false;
     const int key = k->key();
-    if( key == Qt::Key_BackSpace || key == Qt::Key_Delete )
+    if( key == Qt::Key_Backspace || key == Qt::Key_Delete )
     {
         OnDeleteDrawing();
         return true;

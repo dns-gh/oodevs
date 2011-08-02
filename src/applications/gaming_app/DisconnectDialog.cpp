@@ -17,12 +17,12 @@
 // Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
-    : QDialog( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
+    : QDialog( pParent, 0, true, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title )
     , network_( network )
 {
     setCaption( tr("Disconnect") );
 
-    QGridLayout* pMainLayout = new QGridLayout( this, 5, 5 );
+    Q3GridLayout* pMainLayout = new Q3GridLayout( this, 5, 5 );
     pMainLayout->setMargin( 10 );
     pMainLayout->setSpacing( 10 );
 

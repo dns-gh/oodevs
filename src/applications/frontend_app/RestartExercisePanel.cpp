@@ -15,14 +15,17 @@
 #include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
-#include <qaction.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtextedit.h>
-#include <qtimer.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3action.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlineedit.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpushbutton.h>
+#include <QtGui/qspinbox.h>
+#include <Qt3Support/q3textedit.h>
+#include <Qtcore/qtimer.h>
+#pragma warning( pop )
 
 using namespace frontend;
 
@@ -30,16 +33,16 @@ using namespace frontend;
 // Name: RestartExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-RestartExercisePanel::RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+RestartExercisePanel::RestartExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context )
     : StartExercisePanel( widget, action, config, context, "RestartExercisePanel" )
 {
     {
         new QLabel( tr( "Choose the session to restart:" ), listBox_ );
-        sessionList_ = new QListBox( listBox_ );
+        sessionList_ = new Q3ListBox( listBox_ );
     }
     {
         new QLabel( tr( "Choose the checkpoint to load:" ), listBox_ );
-        checkpointList_ = new QListBox( listBox_ );
+        checkpointList_ = new Q3ListBox( listBox_ );
     }
     connect( sessionList_,    SIGNAL( selectionChanged() ), SLOT( SessionSelected() ) );
     connect( checkpointList_, SIGNAL( selectionChanged() ), SLOT( CheckpointSelected() ) );
@@ -85,7 +88,7 @@ void RestartExercisePanel::OnTimer()
 void RestartExercisePanel::ExerciseSelected()
 {
     sessionList_->clear();
-    if( QListBoxItem* item = list_->selectedItem() )
+    if( Q3ListBoxItem* item = list_->selectedItem() )
     {
         sessionList_->insertStringList( commands::ListSessions( config_, item->text().ascii() ) );
         context_.Load( "session", sessionList_ );
@@ -100,7 +103,7 @@ void RestartExercisePanel::ExerciseSelected()
 void RestartExercisePanel::SessionSelected()
 {
     checkpointList_->clear();
-    if( QListBoxItem* item = sessionList_->selectedItem() )
+    if( Q3ListBoxItem* item = sessionList_->selectedItem() )
     {
         checkpointList_->insertStringList( commands::ListCheckpoints( config_, list_->selectedItem()->text().ascii(), item->text().ascii() ) );
         checkpointList_->setSelected( 0, true );

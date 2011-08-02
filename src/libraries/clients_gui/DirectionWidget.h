@@ -19,7 +19,7 @@ namespace gui
 */
 // Created: AGE 2007-01-02
 // =============================================================================
-class DirectionWidget : public QFrame
+class DirectionWidget : public Q3Frame
 {
     Q_OBJECT
 

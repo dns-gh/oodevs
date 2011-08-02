@@ -12,9 +12,11 @@
 #include "ADN_RunProcessDialog.h"
 #include "moc_ADN_RunProcessDialog.cpp"
 
-#include <qtextedit.h>
-#include <qprocess.h>
-#include <qlayout.h>
+#include <Qt3Support/q3textedit.h>
+#include <Qt3Support/q3process.h>
+#include <QtGui/qlayout.h>
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_RunProcessDialog::ADN_RunProcessDialog
@@ -26,10 +28,10 @@ ADN_RunProcessDialog::ADN_RunProcessDialog( QWidget* pParent, const char* szDial
 , pProcess_       ( 0 )
 {
     setCaption( szDialogName );
-    QGridLayout* pGrid = new QGridLayout( this, 1, 1 );
-    pOutputField_ = new QTextEdit( this );
+    Q3GridLayout* pGrid = new Q3GridLayout( this, 1, 1 );
+    pOutputField_ = new Q3TextEdit( this );
     pOutputField_->setReadOnly( true );
-    pOutputField_->setWordWrap( QTextEdit::NoWrap );
+    pOutputField_->setWordWrap( Q3TextEdit::NoWrap );
     pOutputField_->setMinimumSize( 500, 300 );
     pGrid->addWidget( pOutputField_, 0, 0 );
     pGrid->setColStretch( 0, 1 );
@@ -50,7 +52,7 @@ ADN_RunProcessDialog::~ADN_RunProcessDialog()
 // -----------------------------------------------------------------------------
 void ADN_RunProcessDialog::RunCommand( const std::string& strCommandLine )
 {
-    pProcess_ = new QProcess( QString( strCommandLine.c_str() ) );
+    pProcess_ = new Q3Process( QString( strCommandLine.c_str() ) );
 
     connect( pProcess_, SIGNAL( readyReadStdout() ), this, SLOT( ReadFromStdout() ) );
     connect( pProcess_, SIGNAL( readyReadStderr() ), this, SLOT( ReadFromStderr() ) );

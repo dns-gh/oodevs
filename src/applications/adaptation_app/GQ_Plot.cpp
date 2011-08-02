@@ -21,12 +21,18 @@
 #include "moc_GQ_Plot.cpp"
 #include "GQ_PlotToolTip.h"
 #include "ADN_DataException.h"
-#include <qpainter.h>
-#include <qpalette.h>
-#include <qstringlist.h>
 #include <cassert>
 
+#pragma warning( push, 0 )
+#include <QtGui/qpainter.h>
+#include <QtGui/qpalette.h>
+#include <QtCore/qstringlist.h>
+#include <QtGui/qevent.h>
+#pragma warning( pop )
+
 #pragma warning( disable : 4355 )
+
+#define ignore (void)
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot constructor
@@ -109,7 +115,8 @@ void GQ_Plot::ShowPlotFrame( bool bShow )
 // -----------------------------------------------------------------------------
 void GQ_Plot::ShowToolTips( bool bShow )
 {
-    pToolTip_->group()->setEnabled( bShow );
+    ignore( bShow );
+  //  pToolTip_->group()->setEnabled( bShow ); $$$$ FPT  qt3 tooltip api
 }
 
 // -----------------------------------------------------------------------------
@@ -463,8 +470,8 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
     uint nXCaptionSize = x_.GetCaptionSize().height();
     uint nYCaptionSize = y_.GetCaptionSize().width ();
 
-    uint nLeftMargin   = std::max( nPlotMargin_, nYCaptionSize );
-    uint nBottomMargin = std::max( nPlotMargin_, nXCaptionSize );
+    uint nLeftMargin   = std::max< uint >( nPlotMargin_, nYCaptionSize );
+    uint nBottomMargin = std::max< uint >( nPlotMargin_, nXCaptionSize );
 
     uint nTotalXMargin = nPlotMargin_ + nLeftMargin;
     uint nTotalYMargin = nPlotMargin_ + nBottomMargin;
@@ -777,6 +784,7 @@ GQ_PlotData* GQ_Plot::GetPlotData( uint nPlotIndex, int nDepth ) const
 }
 
 // -----------------------------------------------------------------------------
+
 // Name: GQ_Plot::FindPlotData
 /** @param  nUserID
     @return

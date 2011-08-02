@@ -29,7 +29,7 @@ public:
              ADN_App( int argc, char** argv );
     virtual ~ADN_App();
 
-    bool Initialize( const std::string& inputFile, const std::string& outputFile );
+    bool Initialize( const std::string& inputFile, const std::string& outputFile, int argc, char ** argv );
 
 public:
     ADN_MainWindow* GetMainWindow();

@@ -17,12 +17,12 @@
 #include <algorithm>
 #include <boost/bind.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include <qapplication.h>
-#include <qgroupbox.h>
-#include <qscrollview.h>
-#include <qsettings.h>
-#include <qtextcodec.h>
-#include <qtooltip.h>
+#include <Qt/qapplication.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3scrollview.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
+#include <QtGui/qtooltip.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace frontend;
@@ -78,12 +78,12 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     DescriptionReader reader( xis, ReadLang() );
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
-    view_ = Style( new QScrollView( this ) );
-    view_->setHScrollBarMode( QScrollView::AlwaysOff );
+    view_ = Style( new Q3ScrollView( this ) );
+    view_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
     view_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    view_->setResizePolicy( QScrollView::AutoOneFit );
+    view_->setResizePolicy( Q3ScrollView::AutoOneFit );
     view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    box_ = Style( new QGroupBox( 2, Horizontal, tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" )
+    box_ = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" )
                                                                     .arg( reader.name_.c_str() )
                                                                     .arg( version_.c_str() ), view_->viewport() ) );
     view_->addChild( box_ );
@@ -187,9 +187,9 @@ void PluginConfig::ReadSetting( xml::xistream& xis, QWidget* parent )
 void PluginConfig::ReadGroup( xml::xistream& xis, QWidget* parent )
 {
     DescriptionReader reader( xis, ReadLang() );
-    QGroupBox* box = Style( new QGroupBox( 2, Horizontal, reader.name_.c_str(), parent ) );
+    Q3GroupBox* box = Style( new Q3GroupBox( 2, Qt::Horizontal, reader.name_.c_str(), parent ) );
     box->setMargin( 5 );
-    static_cast< QGroupBox* >( parent )->setColumns( 1 );
+    static_cast< Q3GroupBox* >( parent )->setColumns( 1 );
     QToolTip::add( box_, reader.description_.c_str() );
     xis >> xml::start( "settings" )
             >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box )

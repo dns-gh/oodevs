@@ -70,8 +70,8 @@ signals:
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnSelectionChange( QListViewItem* item );
-    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    virtual void OnSelectionChange( Q3ListViewItem* item );
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     void OnAddItem();
     void OnRemoveItem();
     void OnFilterChanged( int );
@@ -97,7 +97,7 @@ private:
     const QPixmap                             basePixmap_;
     const QPixmap                             selectedPixmap_;
     const QPixmap                             recipientsPixmap_;
-    QPopupMenu                                popupMenu_;
+    Q3PopupMenu                                popupMenu_;
     QString                                   filterLine_;
     std::vector< QColor >                     filters_;
     EFilter                                   filter_;

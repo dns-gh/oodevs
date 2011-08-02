@@ -11,6 +11,7 @@
 #define __StartAnalysisPanel_h_
 
 #include "Panel_ABC.h"
+#include <Qt3Support/q3action.h>
 
 namespace tools
 {
@@ -18,7 +19,7 @@ namespace tools
 }
 
 class InfoBubble;
-class QListBox;
+class Q3ListBox;
 class QPushButton;
 class QSpinBox;
 
@@ -35,7 +36,7 @@ class StartAnalysisPanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
+             StartAnalysisPanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~StartAnalysisPanel();
     //@}
 
@@ -64,8 +65,8 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QListBox* exercises_;
-    QListBox* replays_;
+    Q3ListBox* exercises_;
+    Q3ListBox* replays_;
     QPushButton* okay_;
     InfoBubble* bubble_;
     QSpinBox* exerciseNumber_;

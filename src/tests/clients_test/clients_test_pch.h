@@ -19,6 +19,21 @@
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
 #include <turtle/mock.hpp>
+#pragma warning( push, 0 )
+#include <QtCore/QString>
+#pragma warning( pop )
+#include <xeumeuleu/xml.hpp>
+
+inline std::ostream& operator<<( std::ostream& os, const QString& s )
+{
+    return os << s.toStdString();
+}
+
+inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
+{
+    return xos << s.toStdString();
+}
+
 #pragma warning( disable : 4505 )
 
 std::string BOOST_RESOLVE( const std::string& filename );

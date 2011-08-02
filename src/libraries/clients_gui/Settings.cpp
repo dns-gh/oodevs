@@ -11,9 +11,6 @@
 #include "Settings.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
-#include <qapplication.h>
-#include <qdockwindow.h>
-#include <qmainwindow.h>
 
 using namespace kernel;
 using namespace gui;
@@ -23,18 +20,6 @@ using namespace gui;
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
 Settings::Settings()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Settings constructor
-/** @param  nFormat
-*/
-// Created: APE 2004-06-01
-// -----------------------------------------------------------------------------
-Settings::Settings( QSettings::Format nFormat )
-    : QSettings( nFormat )
 {
     // NOTHING
 }

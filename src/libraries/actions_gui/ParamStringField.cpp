@@ -43,7 +43,7 @@ ParamStringField::~ParamStringField()
 // -----------------------------------------------------------------------------
 QWidget* ParamStringField::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
+    Q3HBox* box = new Q3HBox( parent );
     box->setSpacing( 5 );
     pLabel_ = new ::gui::RichLabel( GetName(), box );
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );

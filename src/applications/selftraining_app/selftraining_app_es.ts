@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>Application</name>
     <message>
@@ -415,15 +417,15 @@
     </message>
     <message>
         <source>English</source>
-        <translation>Ingles</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fran&#xe7;ais</source>
-        <translation>Francés</translation>
+        <source>Français</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Espa&#xf1;ol</source>
-        <translation>Español</translation>
+        <source>Español</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -574,16 +576,16 @@
         <translation>Escenario</translation>
     </message>
     <message>
-        <source>Starting %1</source>
-        <translation>Iniciando %1</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>General</translation>
     </message>
     <message>
         <source>Settings</source>
         <translation>Configuración</translation>
+    </message>
+    <message>
+        <source>Starting %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

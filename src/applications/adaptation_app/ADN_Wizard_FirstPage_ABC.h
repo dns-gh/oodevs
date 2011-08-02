@@ -29,7 +29,7 @@ class ADN_Wizard_FirstPage_ABC : public ADN_WizardPage_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Wizard_FirstPage_ABC( QWizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
+    explicit ADN_Wizard_FirstPage_ABC( Q3Wizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
     virtual ~ADN_Wizard_FirstPage_ABC();
     //@}
 

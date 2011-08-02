@@ -23,9 +23,9 @@
 #undef GetMessage
 
 #pragma warning( push, 0 )
-#include <qstring.h>
-#include <qgl.h>
-#include <qdatetime.h>
+#include <QtCore/qstring.h>
+#include <QtOpenGL/qgl.h>
+#include <QtCore/qdatetime.h>
 #pragma warning( pop )
 
 #include <stdexcept>
@@ -47,5 +47,17 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 #include "clients_kernel/Extension_ABC.h"
 
 #undef uint
+
+#include <xeumeuleu/xml.hpp>
+
+inline std::ostream& operator<<( std::ostream& os, const QString& s )
+{
+    return os << s.toStdString();
+}
+
+inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
+{
+    return xos << s.toStdString();
+}
 
 #endif // __gaming_pch_h_

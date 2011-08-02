@@ -52,7 +52,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void Clicked( QListViewItem* item );
+    void Clicked( Q3ListViewItem* item );
     //@}
 
 private:
@@ -67,7 +67,7 @@ private:
     //@{
     kernel::OrderParameter parameter_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
-    QListView* list_;
+    Q3ListView* list_;
     //@}
 };
 

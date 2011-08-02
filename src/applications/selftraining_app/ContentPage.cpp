@@ -14,7 +14,7 @@
 // Name: ContentPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ContentPage::ContentPage( QWidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags )
+ContentPage::ContentPage( Q3WidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags )
     : Page_ABC( pages, previous, buttonFlags )
 {
     AddTitle( title );

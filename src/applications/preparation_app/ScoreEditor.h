@@ -94,9 +94,9 @@ private:
     //@{
     Score_ABC* current_;
     QLineEdit* name_;
-    QTextEdit* formula_;
+    Q3TextEdit* formula_;
     QLabel* checkResult_;
-    QButton* ok_;
+    QPushButton* ok_;
     QLabel* help_;
     ScoreVariablesList* variables_;
     ScoreGaugeConfiguration* gauge_;

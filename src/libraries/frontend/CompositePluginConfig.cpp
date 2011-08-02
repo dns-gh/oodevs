@@ -13,9 +13,9 @@
 #include <clients_kernel/Tools.h>
 #include <algorithm>
 #include <boost/bind.hpp>
-#include <qgroupbox.h>
-#include <qtabbar.h>
-#include <qtabwidget.h>
+#include <Qt3Support/q3groupbox.h>
+#include <QtGui/qtabbar.h>
+#include <QtGui/qtabwidget.h>
 
 using namespace frontend;
 
@@ -40,9 +40,9 @@ namespace
 CompositePluginConfig::CompositePluginConfig( QTabWidget* parent )
     : PluginConfig_ABC( parent )
 {
-    QGroupBox* pluginsBox = new QGroupBox( 1, Qt::Vertical, this );
+    Q3GroupBox* pluginsBox = new Q3GroupBox( 1, Qt::Vertical, this );
     pluginsBox->setMargin( 5 );
-    pluginsBox->setFrameShape( QFrame::NoFrame );
+    pluginsBox->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     pluginsBox->setBackgroundOrigin( QWidget::WindowOrigin );
     tabs_ = new TabWidget( pluginsBox );
     parent->addTab( this, tools::translate( "CompositePluginConfig", "Plugins" ) );

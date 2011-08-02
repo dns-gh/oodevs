@@ -105,13 +105,12 @@ namespace
     {
     public:
         explicit DecimalSpinBox( QWidget* parent, unsigned short decimals = 0 )
-                     : QSpinBox( parent )
-                     , decimals_( static_cast< unsigned int >( std::pow( 10.f, decimals ) ) )
+             : QSpinBox( parent )
+             , decimals_  ( decimals )
+             , multiplier_( static_cast< unsigned int >( std::pow( 10.f, decimals ) ) )
         {
             setMinValue( 0 );
             setMaxValue( std::numeric_limits< int >::max() );
-            if( decimals != 0 )
-                setValidator( new QDoubleValidator ( 0, std::numeric_limits< int >::max(), decimals, this ) );
         }
 
         virtual ~DecimalSpinBox()
@@ -119,39 +118,46 @@ namespace
             // NOTHING
         }
 
-        virtual QString mapValueToText( int value )
+        virtual QValidator::State validate( QString& input, int& pos ) const
         {
-            if( decimals_ > 1 )
-                return QString( "%1.%2" ).arg( value / decimals_ ).arg( value % decimals_ );
+            return QDoubleValidator( 0, std::numeric_limits< int >::max(), decimals_, 0 ).validate( input, pos );
+        }
+
+        virtual QString textFromValue( int value ) const
+        {
+            if( multiplier_ > 1 )
+                return QString( "%1.%2" ).arg( value / multiplier_ ).arg( value % multiplier_ );
             return QString::number( value );
         }
 
-        virtual int mapTextToValue( bool *ok )
+        virtual int valueFromText( const QString& text ) const
         {
-            QString textValue = text().mid( prefix().length(), text().length() - prefix().length() - suffix().length() );
+            QString textValue = text.mid( prefix().length(), text.length() - prefix().length() - suffix().length() );
             const char* ascii = textValue.ascii();
             if( !ascii )
                 return 0;
-            if( decimals_ > 1 )
-                return static_cast< int >( textValue.toDouble( ok ) * decimals_ );
-            return textValue.toInt( ok );
+            bool ok = true;
+            if( multiplier_ > 1 )
+                return static_cast< int >( textValue.toDouble( &ok ) * multiplier_ );
+            return textValue.toInt( &ok );
         }
 
     protected:
         template< typename T >
         T DecimalValue()
         {
-            return static_cast< T >( value() ) / static_cast< T >( decimals_ );
+            return static_cast< T >( value() ) / static_cast< T >( multiplier_ );
         }
 
         template< typename T >
         void SetValue( const T& value )
         {
-            setValue( static_cast< int >( value * static_cast< T >( decimals_ ) + 0.5 ) );
+            setValue( static_cast< int >( value * static_cast< T >( multiplier_ ) + 0.5 ) );
         }
 
     private:
-        unsigned int decimals_;
+        int decimals_;
+        unsigned int multiplier_;
     };
 
     template< typename T >

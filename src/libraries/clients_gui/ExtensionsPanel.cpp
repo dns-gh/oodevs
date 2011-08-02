@@ -33,8 +33,6 @@
 #include "DiffusionListLineEdit.h"
 #include "DiffusionListHierarchy.h"
 #include <boost/lexical_cast.hpp>
-#include <qtextcodec.h>
-#include <qobjectlist.h>
 
 using namespace gui;
 using namespace kernel;
@@ -54,8 +52,8 @@ namespace
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
 ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents,
-                                  ItemFactory_ABC& factory, const EntitySymbols& icons, const Profile_ABC& profile, const char* name /*= 0*/ )
-    : QDockWindow( parent, name )
+                                  ItemFactory_ABC& factory, const EntitySymbols& icons, const Profile_ABC& profile, const char* name /* = 0*/ )
+    : QDockWidget( name, parent )
     , controllers_    ( controllers )
     , extensions_     ( extensions )
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, extensions, factory, icons, profile, "ExtensionPanel_DiffusionListDialog" ) )
@@ -63,18 +61,11 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , pGroupBox_      ( 0 )
     , updating_       ( false )
 {
-    setResizeEnabled( true );
-    setCloseMode( QDockWindow::Always );
-    setCaption( tr( "Extensions" ) );
-    QScrollView* scrollView = new QScrollView( this );
-    scrollView->setHScrollBarMode( QScrollView::AlwaysOff );
-    scrollView->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    scrollView->setResizePolicy( QScrollView::AutoOneFit );
-    scrollView->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    setWidget( scrollView );
-    pMainLayout_ = new QVBox( scrollView->viewport() );
-    pExtensionLayout_ = new QVBox( pMainLayout_ );
-    scrollView->addChild( pMainLayout_ );
+    setObjectName( "extensions" );
+    pMainLayout_ = new Q3VBox( this );
+    pExtensionLayout_ = new Q3VBox( pMainLayout_ );
+    setWindowTitle( tr( "Extensions" ) );
+    setWidget( pMainLayout_ );
     controllers_.Register( *this );
 }
 
@@ -119,7 +110,7 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "party", attributes );
             if( attributes.size() )
             {
-                pGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pExtensionLayout_ );
+                pGroupBox_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pExtensionLayout_ );
                 pGroupBox_->setCheckable( true );
                 pGroupBox_->setMargin( 5 );
                 for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it )
@@ -259,7 +250,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     int min;
     int max;
     attribute.GetMinMaxLength( min, max );
-    QHBox* box = new QHBox( pGroupBox_ );
+    Q3HBox* box = new Q3HBox( pGroupBox_ );
     box->setStretchFactor( new QLabel( attribute.GetLabel( language, "" ).c_str(), box ), 1 );
     switch( attribute.GetType() )
     {

@@ -22,7 +22,7 @@
 #include "frontend/ProcessWrapper.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
-#include <qspinbox.h>
+#include <QtGui/qspinbox.h>
 
 namespace
 {
@@ -45,7 +45,7 @@ namespace
 // Name: BattleCenterJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
+BattleCenterJoinPage::BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous, eButtonBack | eButtonJoin, launcher )
     , controllers_      ( controllers )
     , config_           ( config )
@@ -53,12 +53,12 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
     , progressPage_     ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ) ) )
     , exercise_         ( 0 )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     {
-        QGroupBox* hbox = new QGroupBox( 1, Qt::Vertical, box );
+        Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, box );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         QLabel* label = new QLabel( tools::translate( "BattleCenterJoinPage", "Host:" ), hbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );

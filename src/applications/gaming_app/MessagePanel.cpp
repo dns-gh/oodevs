@@ -14,25 +14,32 @@
 #include "gaming/CommandHandler.h"
 #include "gaming/CommandPublisher.h"
 #include <string>
-#include <qhbuttongroup.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3buttongroup.h>
+#include <Qt3Support/q3button.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: MessagePanel constructor
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
 MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler )
-    : QDockWindow( mainWindow, "message" )
+    : QDockWidget( "message", mainWindow )
     , mainWindow_( mainWindow )
     , handler_( handler )
     , publisher_( new CommandPublisher( controllers, publisher ) )
 {
-    setResizeEnabled( false );
-    setMovingEnabled( false );
+    setObjectName( "message" );
+    QStyleOptionDockWidget* style = new QStyleOptionDockWidget();
+    style->movable = false;
+    style->closable = false;
+    initStyleOption( style );
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Maximum );
     setPaletteBackgroundColor( QColor( 255, 255, 225 ) );
 
-    QHBox* box = new QHBox( this );
-    box->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+    Q3HBox* box = new Q3HBox( this );
+    box->setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
     box->setMargin( 5 );
     {
         text_ = new QLabel( box );
@@ -43,8 +50,8 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
         text_->setTextFormat( Qt::RichText );
     }
     {
-        buttons_ = new QHButtonGroup( box );
-        buttons_->setFrameStyle( QFrame::Plain );
+        buttons_ = new Q3HButtonGroup( box );
+        buttons_->setFrameStyle( Q3Frame::Plain );
         buttons_->setInsideMargin( 5 );
         buttons_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
         buttons_->hide();
@@ -104,7 +111,7 @@ void MessagePanel::Display( const QString& message )
     QString formatted( message );
     formatted.replace( '\n', "<br>" );
     text_->setText( formatted );
-    mainWindow_->moveDockWindow( this, Qt::DockTop, true, -1 );
+    mainWindow_->addDockWidget( Qt::TopDockWidgetArea, this );
     show();
 }
 
@@ -136,7 +143,7 @@ void MessagePanel::ClearButtons()
 {
     const int count = buttons_->count();
     for( int i = 0; i < count; ++i )
-        if( QButton* button = buttons_->find( i ) )
+        if( QAbstractButton* button = buttons_->find( i ) )
         {
             buttons_->remove( button );
             button->deleteLater();
@@ -150,7 +157,7 @@ void MessagePanel::ClearButtons()
 // -----------------------------------------------------------------------------
 void MessagePanel::OnButtonPressed( int id )
 {
-    if( QButton* button = buttons_->find( id ) )
+    if( QAbstractButton* button = buttons_->find( id ) )
     {
         const std::string message = "/choose " + activePrompt_ + " \"" + button->text().ascii() + "\"";
         publisher_->Send( "", message );

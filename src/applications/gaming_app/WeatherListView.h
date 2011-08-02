@@ -43,7 +43,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    virtual void ContextMenuRequested( QListViewItem* item, const QPoint& point, int column );
+    virtual void ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int column );
     virtual void CreateItem();
     //@}
 

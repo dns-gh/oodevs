@@ -32,12 +32,16 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
     , controllers_( controllers )
     , selected_   ( 0 )
 {
-    list_ = new PopulationTypesListView( this, controllers_, types, factory );
-    connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );
-    QHBox* box = new QHBox( this );
-    new QLabel( tools::translate( "gui::PopulationsPanel", "Healthy number:" ), box );
-    number_ = new QLineEdit( QString::number( 1000 ), box );
-    number_->setValidator( new QIntValidator( 1, 1000000, number_ ) );
+    Q3VBox* vbox = new Q3VBox( this );
+    {
+        list_ = new PopulationTypesListView( vbox, controllers_, types, factory );
+        connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );
+        Q3HBox* box = new Q3HBox( vbox );
+        new QLabel( tools::translate( "gui::PopulationsPanel", "Healthy number:" ), box );
+        number_ = new QLineEdit( QString::number( 1000 ), box );
+        number_->setValidator( new QIntValidator( 1, 1000000, number_ ) );
+    }
+    setWidget( vbox );
     controllers_.Register( *this );
 }
 
@@ -69,7 +73,7 @@ void PopulationsPanel::OnStartDrag( const PopulationType* type )
         return;
     prototype_.type_ = type;
     prototype_.number_ = number_->text().toInt();
-    QDragObject* drag = new gui::ValuedDragObject( &prototype_, this );
+    Q3DragObject* drag = new gui::ValuedDragObject( &prototype_, this );
     drag->drag();
 }
 

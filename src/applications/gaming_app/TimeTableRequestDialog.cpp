@@ -18,7 +18,7 @@
 // Created: JSR 2011-07-26
 // -----------------------------------------------------------------------------
 TimeTableRequestDialog::TimeTableRequestDialog( QWidget* parent, Publisher_ABC& network, unsigned int maxTick )
-    : QDialog ( parent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
+: QDialog ( parent, 0, true, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title )
     , network_( network )    
 {
     setCaption( tr( "Time Table Request" ) );
@@ -27,7 +27,7 @@ TimeTableRequestDialog::TimeTableRequestDialog( QWidget* parent, Publisher_ABC& 
     pMainLayout->setMargin( 10 );
     pMainLayout->setSpacing( 10 );
 
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Time range" ), this );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Time range" ), this );
     pMainLayout->addMultiCellWidget( box, 0, 1, 0, 2 );
 
     new QLabel( tr( "Begin tick:" ), box );

@@ -23,7 +23,7 @@ IntelligenceListView::IntelligenceListView( QWidget* parent, Controllers& contro
     : HierarchyListView< IntelligenceHierarchies >( parent, controllers, factory, profile, icons )
     , icons_( icons )
 {
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,14 +60,14 @@ void IntelligenceListView::keyPressEvent( QKeyEvent* event )
 //                event->accept();
 //                return;
 //            }
-    QListView::keyPressEvent( event );
+    Q3ListView::keyPressEvent( event );
 }
 
 // -----------------------------------------------------------------------------
 // Name: IntelligenceListView::OnRename
 // Created: SBO 2007-10-19
 // -----------------------------------------------------------------------------
-void IntelligenceListView::OnRename( QListViewItem* item, int /*col*/, const QString& name )
+void IntelligenceListView::OnRename( Q3ListViewItem* item, int /*col*/, const QString& name )
 {
     if( const Entity_ABC* entity = static_cast< ValuedListItem* >( item )->GetValue< const Entity_ABC >() )
         // $$$$ SBO 2007-10-19: could rename any team/formation/intelligence, maybe add Entity_ABC::Rename( const QString& )

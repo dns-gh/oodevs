@@ -21,7 +21,7 @@ using namespace gui;
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
 DrawingCategoryItem::DrawingCategoryItem( QWidget* parent, const DrawingCategory& category )
-    : QVButtonGroup( parent )
+    : Q3VButtonGroup( parent )
 {
     setExclusive( true );
     setMargin( 0 );

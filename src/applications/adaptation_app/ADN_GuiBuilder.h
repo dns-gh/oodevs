@@ -19,9 +19,9 @@
 #ifndef __ADN_GuiBuilder_h_
 #define __ADN_GuiBuilder_h_
 
-#include <qlabel.h>
-#include <qtable.h>
-#include <qlineedit.h>
+#include <QtGui/qlabel.h>
+#include <Qt3Support/q3table.h>
+#include <QtGui/qlineedit.h>
 #include <boost/noncopyable.hpp>
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Enum.h"
@@ -100,13 +100,13 @@ public:
     ADN_Table* CreateTable( QWidget* pParent );
 
     template< class T >
-        T* AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, ADN_Connector_ABC& itemConnector, E_Validator nValidator = eNone, QTableItem::EditType nEditType = QTableItem::OnTyping );
+        T* AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, ADN_Connector_ABC& itemConnector, E_Validator nValidator = eNone, Q3TableItem::EditType nEditType = Q3TableItem::OnTyping );
 
     template< class T >
-        T* AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, int nRowSpan, int nColSpan, ADN_Connector_ABC& itemConnector, E_Validator nValidator = eNone, QTableItem::EditType nEditType = QTableItem::OnTyping );
+        T* AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, int nRowSpan, int nColSpan, ADN_Connector_ABC& itemConnector, E_Validator nValidator = eNone, Q3TableItem::EditType nEditType = Q3TableItem::OnTyping );
 
-    QTableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, const char* strText = 0, QTableItem::EditType nEditType = QTableItem::Never );
-    QTableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText = 0, QTableItem::EditType nEditType = QTableItem::Never );
+    Q3TableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, const char* strText = 0, Q3TableItem::EditType nEditType = Q3TableItem::Never );
+    Q3TableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText = 0, Q3TableItem::EditType nEditType = Q3TableItem::Never );
     //@}
 
 private:
@@ -304,7 +304,7 @@ ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, ADN_Connector_ABC& itemConnector, E_Validator nValidator, QTableItem::EditType nEditType )
+T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, ADN_Connector_ABC& itemConnector, E_Validator nValidator, Q3TableItem::EditType nEditType )
 {
     T* pItem = new T( pParent, pData, nEditType );
     pParent->setItem( nRow, nCol, pItem );
@@ -318,7 +318,7 @@ T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int 
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, int nRowSpan, int nColSpan, ADN_Connector_ABC& itemConnector, E_Validator nValidator, QTableItem::EditType nEditType )
+T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, int nRowSpan, int nColSpan, ADN_Connector_ABC& itemConnector, E_Validator nValidator, Q3TableItem::EditType nEditType )
 {
     assert( nRowSpan > 0 );
     T* pItem = new T( pParent, pData, nEditType );

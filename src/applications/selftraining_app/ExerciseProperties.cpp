@@ -16,9 +16,13 @@
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
-#include <qcombobox.h>
-#include <qsettings.h>
-#include <qtextcodec.h>
+
+#pragma warning( push, 0 )
+#include <QtGui/qcombobox.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
+#pragma warning( pop )
+
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -43,7 +47,7 @@ namespace
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
 ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
-    : QVBox        ( parent )
+    : Q3VBox        ( parent )
     , config_      ( config )
     , fileLoader_  ( fileLoader )
     , language_    ( ReadLang() )
@@ -56,21 +60,21 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
     setSpacing( 5 );
     if( briefing )
     {
-        QVBox* box = Style( new QVBox( this ) );
+        Q3VBox* box = Style( new Q3VBox( this ) );
         box->setMinimumWidth( 200 );
         box->setSpacing( 5 );
         briefingImage_ = Style( new QLabel( box ) );
-        briefingText_ = Style( new QTextEdit( box ) );
+        briefingText_ = Style( new Q3TextEdit( box ) );
         briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
         briefingText_->setReadOnly( true );
         briefingText_->hide();
     }
     if( models )
     {
-        QGroupBox* box = Style( new QGroupBox( 1, Qt::Vertical, this ) );
+        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Vertical, this );
         box->setEnabled( editable );
         box->setMaximumHeight( 100 );
-        QVBox* editBox = Style( new QVBox( box ) );
+        Q3VBox* editBox = Style( new Q3VBox( box ) );
         editBox->setMinimumWidth( 200 );
         editBox->setSpacing( 5 );
         Style( new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox ) );
@@ -158,7 +162,9 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
             {
                 const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).ascii() );
                 const QImage pix( imagePath.c_str() );
-                briefingImage_->setPixmap( pix );
+                QPixmap px;
+                px.fromImage( pix );
+                briefingImage_->setPixmap( px );
             }
         }
         if( terrainList_ )

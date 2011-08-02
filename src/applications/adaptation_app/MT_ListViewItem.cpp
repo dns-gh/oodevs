@@ -9,14 +9,14 @@
 
 #include "adaptation_app_pch.h"
 #include "MT_ListViewItem.h"
-#include <qpainter.h>
+#include <QtGui/qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListView * parent )
-    : QListViewItem( parent )
+MT_ListViewItem::MT_ListViewItem( Q3ListView * parent )
+    : Q3ListViewItem( parent )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -28,8 +28,8 @@ MT_ListViewItem::MT_ListViewItem( QListView * parent )
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListView * parent, QListViewItem * after )
-    : QListViewItem( parent, after )
+MT_ListViewItem::MT_ListViewItem( Q3ListView * parent, Q3ListViewItem * after )
+    : Q3ListViewItem( parent, after )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -41,8 +41,8 @@ MT_ListViewItem::MT_ListViewItem( QListView * parent, QListViewItem * after )
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListView * parent, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
-    : QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+MT_ListViewItem::MT_ListViewItem( Q3ListView * parent, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
+    : Q3ListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -54,8 +54,8 @@ MT_ListViewItem::MT_ListViewItem( QListView * parent, QString label1, QString la
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListView * parent, QListViewItem * after, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
-    : QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
+MT_ListViewItem::MT_ListViewItem( Q3ListView * parent, Q3ListViewItem * after, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
+    : Q3ListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -69,8 +69,8 @@ MT_ListViewItem::MT_ListViewItem( QListView * parent, QListViewItem * after, QSt
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListViewItem * parent )
-    : QListViewItem( parent )
+MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent )
+    : Q3ListViewItem( parent )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -82,8 +82,8 @@ MT_ListViewItem::MT_ListViewItem( QListViewItem * parent )
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListViewItem * parent, QListViewItem * after )
-    : QListViewItem( parent, after )
+MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent, Q3ListViewItem * after )
+    : Q3ListViewItem( parent, after )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -95,8 +95,8 @@ MT_ListViewItem::MT_ListViewItem( QListViewItem * parent, QListViewItem * after 
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListViewItem * parent, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
-    : QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
+    : Q3ListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -108,8 +108,8 @@ MT_ListViewItem::MT_ListViewItem( QListViewItem * parent, QString label1, QStrin
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-MT_ListViewItem::MT_ListViewItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
-    : QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
+MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent, Q3ListViewItem * after, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 )
+    : Q3ListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
     , pFont_       ( 0 )
     , pFontColor_  ( 0 )
     , pBackgroundColor_( 0 )
@@ -263,7 +263,7 @@ void MT_ListViewItem::paintCell( QPainter *painter, const QColorGroup &cg, int c
         grp.setColor(QColorGroup::Base, backgrounds_[column]);
 
     // Draw the cell.
-    QListViewItem::paintCell(painter, grp, column, width, align);
+    Q3ListViewItem::paintCell(painter, grp, column, width, align);
 
     // Restore the painter.
     painter->restore();
@@ -279,21 +279,21 @@ void MT_ListViewItem::paintCell( QPainter *painter, const QColorGroup &cg, int c
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
-int MT_ListViewItem::width( const QFontMetrics &fm, const QListView *lv, int column ) const
+int MT_ListViewItem::width( const QFontMetrics &fm, const Q3ListView *lv, int column ) const
 {
     int width;
     if( column >= 0 && column < (int)fonts_.size())
     {
         QFontMetrics fm2(fonts_[column]);
-        width = QListViewItem::width(fm2, lv, column);
+        width = Q3ListViewItem::width(fm2, lv, column);
     }
     else if( pFont_ != 0 )
     {
         QFontMetrics fm2( *pFont_ );
-        width = QListViewItem::width(fm2, lv, column);
+        width = Q3ListViewItem::width(fm2, lv, column);
     }
     else
-        width = QListViewItem::width(fm, lv, column);
+        width = Q3ListViewItem::width(fm, lv, column);
 
     return width;
 }

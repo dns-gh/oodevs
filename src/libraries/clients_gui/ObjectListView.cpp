@@ -79,9 +79,9 @@ void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
 
 namespace
 {
-    void DeleteHierarchy( QListViewItem* item )
+    void DeleteHierarchy( Q3ListViewItem* item )
     {
-        QListViewItem* parent = item ? item->parent() : 0;
+        Q3ListViewItem* parent = item ? item->parent() : 0;
         delete item;
         if( parent && ! parent->childCount() )
             DeleteHierarchy( parent );

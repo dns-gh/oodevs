@@ -14,9 +14,6 @@
 #include "clients_gui/ListDisplayer.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "NoteDialog.h"
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qdialog.h>
 
 namespace gui
 {
@@ -33,7 +30,7 @@ class Publisher_ABC;
 */
 // Created: HBD 2010-01-19
 // =============================================================================
-class NotesPanel : public QDockWindow
+class NotesPanel : public QDockWidget
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< Note >
                  , public tools::ElementObserver_ABC< Simulation >{
@@ -49,7 +46,7 @@ public:
  private slots:
     //! @name Slots
     //@{
-     void OnContextMenu( QListViewItem* item, const QPoint& point, int);
+     void OnContextMenu( Q3ListViewItem* item, const QPoint& point, int);
      void ConfirmDeleteAllTreeNote();
      void ConfirmDeleteNote();
      void PreCreationProcess();
@@ -70,22 +67,22 @@ private:
     virtual void NotifyDeleted( const Note& element );
     virtual void NotifyUpdated( const Simulation& simulation );
 
-    void Display( const Note& note, QListViewItem* item );
+    void Display( const Note& note, Q3ListViewItem* item );
 
-    QListViewItem*  FindItem( unsigned int parent ) const;
-    QListViewItem*  FindItem(const Note* element ) const;
+    Q3ListViewItem*  FindItem( unsigned int parent ) const;
+    Q3ListViewItem*  FindItem(const Note* element ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< QListViewItem*, const Note*> T_Items;
+    typedef std::map< Q3ListViewItem*, const Note*> T_Items;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    QListView* notes_;
+    Q3ListView* notes_;
     gui::ItemFactory_ABC& factory_;
     NoteDialog* noteDialog_;
     NotesModel& model_;

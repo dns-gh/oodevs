@@ -24,7 +24,7 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new MaintenanceConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
-    QVBox* box = new QVBox( tabs );
+    Q3VBox* box = new Q3VBox( tabs );
     new MaintenanceHaulersListView( box, controllers, factory );
     new MaintenanceRepairersListView( box, controllers, factory );
     tabs->addTab( box, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );

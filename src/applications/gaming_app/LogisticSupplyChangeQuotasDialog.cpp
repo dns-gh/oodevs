@@ -154,16 +154,16 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     , selected_( controllers )
 {
     setCaption( tr( "Supply quotas allocation" ) );
-    QVBoxLayout* layout = new QVBoxLayout( this );
+    Q3VBoxLayout* layout = new Q3VBoxLayout( this );
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     box->setMargin( 5 );
     new QLabel( tr( "Target:" ), box );
     targetCombo_ = new ValuedComboBox< const Entity_ABC* >( box );
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
 
-    table_ = new QTable( 0, 2, this );
+    table_ = new Q3Table( 0, 2, this );
     table_->setMargin( 5 );
     table_->horizontalHeader()->setLabel( 0, tr( "Resource" ) );
     table_->horizontalHeader()->setLabel( 1, tr( "Quota" ) );
@@ -171,7 +171,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     table_->setMinimumSize( 220, 200 );
     layout->addWidget( table_ );
 
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     box->setMargin( 5 );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), box );

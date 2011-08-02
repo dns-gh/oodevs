@@ -13,7 +13,7 @@
 
 #include "ADN_ListView.h"
 
-#include <qpainter.h>
+#include <QtGui/qpainter.h>
 
 QColor ADN_Rich_ListViewItem::warningColor_( 255, 185, 125 );
 QColor ADN_Rich_ListViewItem::errorColor_  ( 255, 125, 125 );
@@ -23,7 +23,7 @@ QColor ADN_Rich_ListViewItem::errorColor_  ( 255, 125, 125 );
 // Created: SBO 2006-01-04
 // -----------------------------------------------------------------------------
 ADN_Rich_ListViewItem::ADN_Rich_ListViewItem( ADN_ListView* parent, bool bGrid )
-: QListViewItem       ( parent )
+: Q3ListViewItem       ( parent )
 , backgroundColors_   ()
 , bGrid_              ( bGrid )
 , eSortingConstraint_ ( eSortingConstraint_Default )
@@ -35,8 +35,8 @@ ADN_Rich_ListViewItem::ADN_Rich_ListViewItem( ADN_ListView* parent, bool bGrid )
 // Name: ADN_Rich_ListViewItem constructor
 // Created: SBO 2006-01-04
 // -----------------------------------------------------------------------------
-ADN_Rich_ListViewItem::ADN_Rich_ListViewItem( QListViewItem* parent, bool bGrid )
-: QListViewItem     ( parent )
+ADN_Rich_ListViewItem::ADN_Rich_ListViewItem( Q3ListViewItem* parent, bool bGrid )
+: Q3ListViewItem     ( parent )
 , backgroundColors_ ()
 , bGrid_            ( bGrid )
 , eSortingConstraint_ ( eSortingConstraint_Default )
@@ -89,22 +89,21 @@ void ADN_Rich_ListViewItem::paintCell( QPainter* pPainter, const QColorGroup& cg
 {
     if( isSelected() || nColumn >= (int)backgroundColors_.size() || !backgroundColors_[ nColumn ] )
     {
-        QListViewItem::paintCell( pPainter, cg, nColumn, nWidth, nAlign );
+        Q3ListViewItem::paintCell( pPainter, cg, nColumn, nWidth, nAlign );
     }
     else
     {
         QColorGroup cg2( cg );
         cg2.setColor( QColorGroup::Base, *backgroundColors_[ nColumn ] );
-        QListViewItem::paintCell( pPainter, cg2, nColumn, nWidth, nAlign );
+        Q3ListViewItem::paintCell( pPainter, cg2, nColumn, nWidth, nAlign );
     }
     if( bGrid_ )
     {
         QPen pen;
         pen.setWidth( 1 );
         pPainter->setPen( pen );
-        pPainter->moveTo( 0, 0 );
-        pPainter->lineTo( nWidth - 1, 0 );
-        pPainter->lineTo( nWidth - 1, height() - 1 );
+        pPainter->drawLine( 0, 0, nWidth - 1, 0 );
+        pPainter->drawLine( 0, 0, nWidth - 1, height() - 1 );
         //pPainter->lineTo( 0, height() - 1 );
     }
 }

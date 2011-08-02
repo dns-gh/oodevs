@@ -73,7 +73,7 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     pLayout->addWidget( new QLabel( tr( "Stress:" ), this ), 4, 0 );
     pStressCombo_ = new ValuedComboBox< E_UnitStress >( this );
     pLayout->addWidget( pStressCombo_, 4, 1 );
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
@@ -217,7 +217,7 @@ void ChangeHumanFactorsDialog::DoContextMenu( const kernel::Entity_ABC& entity, 
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         int id = subMenu->insertItem( tr( "Human factors" ), this, SLOT( Show() ) );
         bool isAutonomous = entity.Get< Troops >().GetTotalHumans() == 0;
         subMenu->setItemEnabled( id, !isAutonomous );

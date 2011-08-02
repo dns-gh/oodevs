@@ -62,7 +62,7 @@ ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModi
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setMinimumHeight( 80 );
     setLeftMargin( 0 );

@@ -33,11 +33,11 @@ MedicalCapacityUpdateDialog::Capacity::Capacity( QWidget* parent, const MedicalT
     : name_ ( capacity.name_ )
     , id_ ( capacity.type_->GetId() )
 {
-    QHBox* box = new QHBox( parent );
-    QHBox* lhs = new QHBox( box );
+    Q3HBox* box = new Q3HBox( parent );
+    Q3HBox* lhs = new Q3HBox( box );
     new QLabel( QString( name_.c_str() ), lhs );
 
-    QHBox* rhs = new QHBox( box );
+    Q3HBox* rhs = new Q3HBox( box );
     patients_ = new QSpinBox( 0, capacity.baseline_, 1, rhs );
     patients_->setValue( capacity.baseline_ - capacity.available_ );
 
@@ -96,7 +96,7 @@ MedicalCapacityUpdateDialog::MedicalCapacityUpdateDialog( QWidget* parent, kerne
 void MedicalCapacityUpdateDialog::CreateCanvas()
 {
     setCaption( tr( "Update medical capacity" ) );
-    QVBoxLayout* layout = new QVBoxLayout( this );
+    Q3VBoxLayout* layout = new Q3VBoxLayout( this );
     layout->setSpacing( 5 );
     layout->setMargin( 5 );
 //
@@ -104,7 +104,7 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
 
     // QVBox* vbox = new QVBox( this, tr( "MedicalTreatment Type:" ) );
     {
-        QGroupBox* canvas = new QGroupBox( 1, Qt::Horizontal, tr( "MedicalTreatment Type" ), this );
+        Q3GroupBox* canvas = new Q3GroupBox( 1, Qt::Horizontal, tr( "MedicalTreatment Type" ), this );
         canvas->setFlat( true );
         new QLabel( tr( "Hospital ID:" ), canvas );
         referenceID_ = new QLineEdit( canvas );
@@ -113,27 +113,27 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
         layout->add( canvas );
     }
     {
-        QGroupBox* canvas = new QGroupBox( 1, Qt::Horizontal, tr( "Status" ), this );
+        Q3GroupBox* canvas = new Q3GroupBox( 1, Qt::Horizontal, tr( "Status" ), this );
         new QLabel( tr( "Status:" ), canvas );
         status_ = new gui::ValuedComboBox< std::string >( canvas );
         status_->setDisabled( true );
         layout->add( canvas );
     }
     {
-        QGroupBox* canvas = new QGroupBox( 1, Qt::Horizontal, tr( "Doctors" ), this );
+        Q3GroupBox* canvas = new Q3GroupBox( 1, Qt::Horizontal, tr( "Doctors" ), this );
         new QLabel( tr( "Doctors:" ), canvas );
         doctors_ = new QSpinBox( 0, 1000, 1, canvas );
         layout->add( canvas );
     }
     {
-        QGroupBox* canvas = new QGroupBox( 1, Qt::Horizontal, tr( "Bed Capacities (Patients/Baseline)" ), this );
-        vbox_ = new QVBox( canvas );
+        Q3GroupBox* canvas = new Q3GroupBox( 1, Qt::Horizontal, tr( "Bed Capacities (Patients/Baseline)" ), this );
+        vbox_ = new Q3VBox( canvas );
         // new QLabel( tr( "Bed Capacities:" ), vbox_ );
         // FillCapacityTypes( vbox_ );
         layout->add( canvas );
     }
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     layout->addWidget( box );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), box );
@@ -161,7 +161,7 @@ void MedicalCapacityUpdateDialog::NotifyContextMenu( const kernel::Object_ABC& o
     if( profile_.CanDoMagic( object ) && ( object.GetType().HasMedicalCapacity() || object.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() ) )
     {
         selected_ = &object;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Update medical capacity" ), this, SLOT( Show() ) );
     }
 }

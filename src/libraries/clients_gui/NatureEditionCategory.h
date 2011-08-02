@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: AGE 2006-10-24
 // =============================================================================
-class NatureEditionCategory : public QHBox, public kernel::SymbolVisitor_ABC
+class NatureEditionCategory : public Q3HBox, public kernel::SymbolVisitor_ABC
 {
     Q_OBJECT;
 

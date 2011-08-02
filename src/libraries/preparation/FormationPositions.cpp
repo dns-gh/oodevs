@@ -88,7 +88,7 @@ float FormationPositions::GetHeight( bool aggregated ) const
 // Name: FormationPositions::IsAt
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
-bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
+bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
     if( !IsAggregated( formation_ ) && HasSubordinate( formation_, boost::bind( &FormationPositions::IsAggregated, this, _1 ) ) )
     {

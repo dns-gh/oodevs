@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_TargetsListView.h"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Sensors_Data.h"
 #include "ADN_Sensors_GUI.h"
@@ -32,12 +32,12 @@ typedef ADN_Sensors_Data::TargetInfos TargetInfos;
 // Name: ADN_Sensors_TargetsListView constructor
 // Created: APE 2005-01-18
 // -----------------------------------------------------------------------------
-ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Targets" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<TargetInfos>(*this);
@@ -81,8 +81,8 @@ void ADN_Sensors_TargetsListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu addMenu( &popupMenu );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu addMenu( &popupMenu );
 
     // Add the available targets to the 'add target' submenu.
     ADN_Objects_Data::T_ObjectsInfos_Vector& vObjects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
@@ -128,7 +128,7 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_Sensors_TargetsListView::Contains( const ADN_Objects_Data::ObjectInfos* pInfo )
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();

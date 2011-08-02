@@ -24,7 +24,7 @@ PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& c
     , modelBuilder_( modelBuilder )
     , selected_    ( controllers )
 {
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
 // Name: PopulationListView::dragObject
 // Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
-QDragObject* PopulationListView::dragObject()
+Q3DragObject* PopulationListView::dragObject()
 {
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )

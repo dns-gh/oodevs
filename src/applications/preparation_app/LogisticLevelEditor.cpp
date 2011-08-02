@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: LogisticLevelEditor constructor
 // Created: NLD 2010-11-25
 // -----------------------------------------------------------------------------
-LogisticLevelEditor::LogisticLevelEditor( QWidget* parent, const kernel::Entity_ABC& selected )
+LogisticLevelEditor::LogisticLevelEditor( QWidget* parent, const kernel::Entity_ABC& /*selected*/ )
     : gui::ValuedComboBox< const LogisticLevel* >( parent )
 {
     AddItem( QString( LogisticLevel::none_.GetName().c_str() ), &LogisticLevel::none_ );

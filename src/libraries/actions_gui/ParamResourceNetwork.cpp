@@ -54,7 +54,7 @@ ParamResourceNetwork::~ParamResourceNetwork()
 // -----------------------------------------------------------------------------
 QWidget* ParamResourceNetwork::BuildInterface( QWidget* parent )
 {
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, GetName(), parent );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, GetName(), parent );
     objectLabel_ = new ::gui::RichLabel( tools::translate( "ParamResourceNetwork", "Object" ), false, group );
     objectName_ = new QLabel( "---", group );
     objectName_->setMinimumWidth( 100 );
@@ -120,7 +120,7 @@ void ParamResourceNetwork::NotifyContextMenu( const kernel::Object_ABC& entity, 
         if( nodes.size() > 0 )
         {
             current_ = &entity;
-            QPopupMenu* popupMenu = new QPopupMenu( menu );
+            Q3PopupMenu* popupMenu = new Q3PopupMenu( menu );
             int index = 0;
             for( kernel::ResourceNetwork_ABC::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it, ++index )
             {

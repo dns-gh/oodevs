@@ -21,7 +21,6 @@
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
-#include <qimage.h>
 
 namespace
 {
@@ -49,22 +48,22 @@ namespace
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
 ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Controllers& controllers, const indicators::GaugeTypes& gaugeTypes )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
     , gaugeTypes_( gaugeTypes )
 {
     setMargin( 5 );
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         new QLabel( tr( "Representation type: " ), box );
         type_ = new gui::ValuedComboBox< const indicators::GaugeType* >( box );
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     }
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Value normalization" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Value normalization" ), this );
         box->setMargin( 5 );
         {
-            QHBox* hbox = new QHBox( box );
+            Q3HBox* hbox = new Q3HBox( box );
             {
                 QLabel* label = new QLabel( tr( "Steps: " ), hbox );
                 steps_ = new QSpinBox( 1, 100, 1, hbox );
@@ -88,18 +87,18 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
                 connect( max_, SIGNAL( textChanged( const QString& ) ), SLOT( OnChangeBoundaries() ) );
             }
             {
-                QButton* reverse = new QPushButton( tr( "Reverse" ), hbox );
+                QPushButton* reverse = new QPushButton( tr( "Reverse" ), hbox );
                 connect( reverse, SIGNAL( clicked() ), SLOT( OnReverseSymbols() ) );
             }
         }
         {
-            intervals_ = new QTable( 0, 3, box );
+            intervals_ = new Q3Table( 0, 3, box );
             intervals_->horizontalHeader()->setLabel( 0, tr( "Min" ) );
             intervals_->horizontalHeader()->setLabel( 1, tr( "Max" ) );
             intervals_->horizontalHeader()->setLabel( 2, tr( "Symbol" ) );
             intervals_->setFixedHeight( 150 );
             intervals_->setLeftMargin( 0 );
-            intervals_->setHScrollBarMode( QScrollView::AlwaysOff );
+            intervals_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
             AddInterval();
             connect( intervals_, SIGNAL( valueChanged( int, int ) ), SLOT( OnChangeValue( int, int ) ) );
         }
@@ -243,7 +242,7 @@ void ScoreGaugeConfiguration::OnReverseSymbols()
 // Name: ScoreGaugeConfiguration::AddInterval
 // Created: SBO 2009-05-06
 // -----------------------------------------------------------------------------
-void ScoreGaugeConfiguration::AddInterval( double min /*= 0*/, double max /*= 0*/, double key /*= 0*/ )
+void ScoreGaugeConfiguration::AddInterval( double min /* = 0*/, double max /* = 0*/, double key /* = 0*/ )
 {
     const int rows = intervals_->numRows();
     intervals_->setNumRows( rows + 1 );
@@ -268,7 +267,7 @@ namespace
                              , public tools::Caller< QPixmap >
     {
     public:
-        explicit GaugeItemDisplayer( QTableItem* item ) : item_( item ) {}
+        explicit GaugeItemDisplayer( Q3TableItem* item ) : item_( item ) {}
 
         virtual void Hide() {}
         virtual void Clear() {}
@@ -295,7 +294,7 @@ namespace
             item_->setPixmap( pixmap_ );
         }
     private:
-        QTableItem* item_;
+        Q3TableItem* item_;
         QPixmap pixmap_;
         QString text_;
     };

@@ -35,10 +35,10 @@ namespace
         typedef boost::function1< void, int > T_Callback;
     public:
         ConfirmationBox( const QString& title, T_Callback callback )
-            : QMessageBox( title, "", QMessageBox::Question, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, QMessageBox::NoButton )
+            : QMessageBox( title, "", QMessageBox::Question, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, Qt::NoButton )
             , callback_( callback )
         {
-            setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+            setIcon( QMessageBox::Information );
             hide();
         }
 
@@ -53,7 +53,7 @@ namespace
 
     QPixmap MakePixmap( const std::string& name )
     {
-        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
+        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
     }
 }
 
@@ -64,7 +64,7 @@ using namespace actions;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const tools::SessionConfig& config, kernel::Controllers& controllers )
-    : QHBox       ( parent, "ActionsToolbar" )
+    : Q3HBox       ( parent, "ActionsToolbar" )
     , controllers_( controllers )
     , actions_    ( actions )
     , config_     ( config )
@@ -74,7 +74,7 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
-    setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
+    setFrameStyle( Q3Frame::StyledPanel | Q3Frame::Raised );
 
     setMaximumHeight( 32 );
     loadBtn_ = new QToolButton( this );
@@ -89,15 +89,16 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
     saveBtn_->setTextLabel( tr( "Save actions in active timeline to file" ) );
 
     QToolButton* planningBtn = new gui::BooleanOptionButton( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), this, controllers.options_, "DesignMode" );
+    QAction* action = new QAction( this );
+    planningBtn->addAction( action );
+    action->setCheckable( true );
     planningBtn->setAutoRaise( true );
-    connect( planningBtn, SIGNAL( stateChanged( int ) ), this, SIGNAL( PlanificationModeChange() ) );
+  //  connect( planningBtn, SIGNAL( QAction::triggered() ), this, SIGNAL( PlanificationModeChange() ) ); $$$$ FPT : stateChanged doesnt exists anymore
     purgeBtn_ = new QToolButton( this );
     purgeBtn_->setAutoRaise( true );
     purgeBtn_->setPixmap( MAKE_PIXMAP( trash2 ) );
     purgeBtn_->setTextLabel( tr( "Delete recorded actions" ) );
-
     confirmation_ = new ConfirmationBox( tr( "Actions recorder" ), boost::bind( &ActionsToolbar::PurgeConfirmed, this, _1 ) );
-
     controllers_.Register( *this );
 
     connect( loadBtn_ , SIGNAL( clicked() ), SLOT( Load()  ) );
@@ -130,7 +131,7 @@ void ActionsToolbar::SetFilter( const actions::ActionsFilter_ABC& filter )
 void ActionsToolbar::Load()
 {
     const std::string rootDir = config_.BuildExerciseChildFile( "orders.ord" );
-    const QString filename = QFileDialog::getOpenFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
+    const QString filename = Q3FileDialog::getOpenFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
     if( filename.isEmpty() )
         return;
     try
@@ -150,7 +151,7 @@ void ActionsToolbar::Load()
 void ActionsToolbar::Save()
 {
     const std::string rootDir = config_.BuildExerciseChildFile( "orders" );
-    QString filename = QFileDialog::getSaveFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
+    QString filename = Q3FileDialog::getSaveFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
     if( filename == QString::null )
         return;
     if( filename.right( 4 ) != ".ord" )

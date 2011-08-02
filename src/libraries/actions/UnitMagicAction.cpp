@@ -27,7 +27,7 @@ using namespace actions;
 // Name: UnitMagicAction::MagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-UnitMagicAction::UnitMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered /*= true*/)
+UnitMagicAction::UnitMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered /* = true*/)
     : ActionWithTarget_ABC ( controller, magic, entity )
     , controller_( controller )
     , registered_( registered )

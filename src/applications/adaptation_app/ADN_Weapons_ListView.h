@@ -26,7 +26,7 @@ class ADN_Weapons_ListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Weapons_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Weapons_ListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_Weapons_ListView();
     //@}
 
@@ -35,7 +35,7 @@ public:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
 
-    std::string GetToolTipFor( QListViewItem& item );
+    std::string GetToolTipFor( Q3ListViewItem& item );
     //@}
 
     //! @name Event Handler

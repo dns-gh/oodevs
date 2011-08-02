@@ -24,7 +24,7 @@ InhabitantListView::InhabitantListView( QWidget* pParent, kernel::Controllers& c
     , modelBuilder_( modelBuilder )
     , selected_    ( controllers )
 {
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void InhabitantListView::NotifyCreated( const kernel::Team_ABC& team )
 // Name: InhabitantListView::dragObject
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-QDragObject* InhabitantListView::dragObject()
+Q3DragObject* InhabitantListView::dragObject()
 {
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )

@@ -11,10 +11,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_TableItem_ComboBox.h"
 
-#include <qstyle.h>
-#include <qpainter.h>
-#include <qwidget.h>
-#include <qcombobox.h>
+#pragma warning( push, 0 )
+#include <QtGui/qstyle.h>
+#include <QtGui/qpainter.h>
+#include <QtGui/qwidget.h>
+#include <QtGui/qcombobox.h>
+#include <QtCore/qrect.h>
+#pragma warning( pop )
 
 
 QComboBox *ADN_TableItem_ComboBox::fakeCombo = 0;
@@ -208,7 +211,8 @@ void ADN_TableItem_ComboBox::setContentFromEditor( QWidget *w )
     for ( int i = 0; i < cb->count(); ++i )
         entries << cb->text( i );
     current = cb->currentItem();
-    setText( *entries.at( current ) );
+    QString str = entries.at( current );
+    setText( str );
     }
 }
 
@@ -227,13 +231,21 @@ void ADN_TableItem_ComboBox::paint( QPainter *p, const QColorGroup &cg,
     c.setBrush( QColorGroup::Base, cg.brush( QColorGroup::Highlight ) );
     c.setColor( QColorGroup::Text, cg.highlightedText() );
     }
+    QStyleOptionComplex opt;
+    QPalette pal( c, c, c );
 
-    table()->style().drawComplexControl( QStyle::CC_ComboBox, p, fakeCombo, fakeCombo->rect(), c );
-
+    opt.palette = pal;
+    opt.rect = fakeCombo->rect();
+    
+    table()->style()->drawComplexControl( QStyle::CC_ComboBox, &opt, p );
+    
     p->save();
-    QRect textR = table()->style().querySubControlMetrics(QStyle::CC_ComboBox, fakeCombo,
+    QRect textR = table()->style()->subControlRect(QStyle::CC_ComboBox, &opt,
                              QStyle::SC_ComboBoxEditField);
-    p->drawText( textR, wordWrap() ? ( alignment() | QTableItem::WordBreak ) : alignment(), *entries.at( current ) );
+    //QRect textR = table()->style()->querySubControlMetrics(QStyle::CC_ComboBox, fakeCombo,
+    //                       QStyle::SC_ComboBoxEditField);
+    QString str = entries.at( current );
+    p->drawText( textR , wordWrap() ? ( alignment() | Qt::TextWordWrap ) : alignment(), str );
     p->restore();
 }
 
@@ -251,7 +263,8 @@ void ADN_TableItem_ComboBox::setCurrentItem( int i )
     setText( ( (QComboBox*)w )->currentText() );
     } else {
     current = i;
-    setText( *entries.at( i ) );
+    QString str = entries.at( i );
+    setText( str );
     table()->updateCell( row(), col() );
     }
 }

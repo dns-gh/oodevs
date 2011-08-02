@@ -10,7 +10,7 @@
 #ifndef __CreateExercise_h_
 #define __CreateExercise_h_
 
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 
 namespace tools
 {
@@ -29,7 +29,7 @@ namespace frontend
         std::string terrain_;
         std::string model_;
         std::string physical_;
-        QListViewItemIterator iterator_;
+        Q3ListViewItemIterator iterator_;
     };
 
     void CreateExercise( const tools::GeneralConfig& config, const std::string& name,

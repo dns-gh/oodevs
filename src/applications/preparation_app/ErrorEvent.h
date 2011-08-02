@@ -10,7 +10,7 @@
 #ifndef __ErrorEvent_h_
 #define __ErrorEvent_h_
 
-#include <qevent.h>
+#include <QtGui/qevent.h>
 
 // =============================================================================
 /** @class  ErrorEvent

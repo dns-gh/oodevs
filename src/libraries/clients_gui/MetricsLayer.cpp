@@ -15,7 +15,6 @@
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "Tools.h"
-#include <qfont.h>
 
 using namespace kernel;
 using namespace gui;
@@ -123,7 +122,7 @@ float MetricsLayer::ComputeAngle() const
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( ( event->button() & Qt::LeftButton ) && event->state() == Qt::ShiftButton )
+    if( ( event->button() & Qt::LeftButton ) && event->state() == Qt::ShiftModifier )
     {
         metricPoints_.push_back( point );
         return false;
@@ -137,7 +136,7 @@ bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->state() == Qt::ShiftButton  )
+    if( event->state() == Qt::ShiftModifier  )
     {
         multiRulingMode_ = true;
         end_ = point;

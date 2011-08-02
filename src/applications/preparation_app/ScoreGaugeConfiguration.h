@@ -13,7 +13,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include <qvgroupbox.h>
 
 namespace indicators
 {
@@ -35,7 +34,7 @@ namespace kernel
 */
 // Created: SBO 2009-05-05
 // =============================================================================
-class ScoreGaugeConfiguration : public QVBox
+class ScoreGaugeConfiguration : public Q3VBox
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
@@ -90,11 +89,11 @@ private:
     kernel::Controllers& controllers_;
     const indicators::GaugeTypes& gaugeTypes_;
     gui::ValuedComboBox< const indicators::GaugeType* >* type_;
-    QGroupBox* normalizationBox_;
+    Q3GroupBox* normalizationBox_;
     QSpinBox* steps_;
     QLineEdit* min_;
     QLineEdit* max_;
-    QTable* intervals_;
+    Q3Table* intervals_;
     //@}
 };
 

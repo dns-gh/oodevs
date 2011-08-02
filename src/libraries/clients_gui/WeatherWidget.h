@@ -29,7 +29,7 @@ namespace gui
 */
 // Created: ABR 2011-05-30
 // =============================================================================
-class WeatherWidget : public QGroupBox
+class WeatherWidget : public Q3GroupBox
                     , private boost::noncopyable
 {
 public:

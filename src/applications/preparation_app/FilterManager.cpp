@@ -13,7 +13,6 @@
 #include "FilterCommand.h"
 #include "FilterXsl.h"
 #include "preparation/Tools.h"
-#include <qtextcodec.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -30,7 +29,7 @@ namespace
 // Name: FilterManager constructor
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, QListBox& list, QWidgetStack& stack )
+FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack )
     : config_         ( config )
     , id_             ( xis.attribute< std::string >( "id" ) )
     , currentLanguage_( GetCurrentLanguage() )
@@ -97,7 +96,7 @@ void FilterManager::ReadDescription( xml::xistream& xis )
 // Name: FilterManager::ReadFilter
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-void FilterManager::ReadFilter( xml::xistream& xis, QListBox& list, QWidgetStack& stack )
+void FilterManager::ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetStack& stack )
 {
     Filter_ABC* filter;
     if( xis.has_attribute( "command" ) )
@@ -115,7 +114,7 @@ void FilterManager::ReadFilter( xml::xistream& xis, QListBox& list, QWidgetStack
 // Name: FilterManager::AddFilter
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-void FilterManager::AddFilter( Filter_ABC& filter, QListBox& list, QWidgetStack& stack )
+void FilterManager::AddFilter( Filter_ABC& filter, Q3ListBox& list, Q3WidgetStack& stack )
 {
     list.insertItem( filter.GetName().c_str() );
     stack.addWidget( filter.CreateParametersWidget( &stack ), filters_.size() );

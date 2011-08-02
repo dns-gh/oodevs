@@ -11,13 +11,13 @@
 #include "QuitPage.h"
 #include "moc_QuitPage.cpp"
 #include "clients_gui/Tools.h"
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 // -----------------------------------------------------------------------------
 // Name: QuitPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-QuitPage::QuitPage( QWidgetStack* pages, Page_ABC& previous )
+QuitPage::QuitPage( Q3WidgetStack* pages, Page_ABC& previous )
     : MenuPage( pages, *this, 0, tools::translate( "QuitPage", "Please confirm" )  )
 {
     AddLink( tools::translate( "QuitPage", "Yes" ), *this, " ", SLOT( OnQuit() ) );

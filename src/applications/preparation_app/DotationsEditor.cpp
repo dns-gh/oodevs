@@ -14,7 +14,6 @@
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "preparation/Dotation.h"
 #include "preparation/DotationsItem.h"
-#include <qtable.h>
 
 using namespace kernel;
 using namespace gui;
@@ -30,18 +29,18 @@ DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const tools::
     , self_( self )
 {
     setCaption( tr( "Resources editor" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this );
 
-    QVBox* vBox = new QVBox( this );
-    table_ = new QTable( 0, 2, vBox );
+    Q3VBox* vBox = new Q3VBox( this );
+    table_ = new Q3Table( 0, 2, vBox );
     table_->setColumnWidth( 0, 250 );
     table_->horizontalHeader()->setLabel( 0, tr( "Type" ) );
     table_->horizontalHeader()->setLabel( 1, tr( "Quantity" ) );
     table_->setMargin( 5 );
 
-    QHBox* box = new QHBox( vBox );
-    QButton* ok     = new QPushButton( tr( "Ok" ), box );
-    QButton* cancel = new QPushButton( tr( "Cancel" ), box );
+    Q3HBox* box = new Q3HBox( vBox );
+    QPushButton* ok     = new QPushButton( tr( "Ok" ), box );
+    QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
     pMainLayout->addWidget( vBox );
 
     tools::Iterator< const DotationType& > it = dotationTypes_.CreateIterator();
@@ -151,7 +150,7 @@ void DotationsEditor::OnValueChanged( int row, int col )
 // Name: DotationsEditor::AddItem
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void DotationsEditor::AddItem( const Dotation* dotation /*=0*/ )
+void DotationsEditor::AddItem( const Dotation* dotation /* =0*/ )
 {
     const unsigned int row = table_->numRows();
     table_->setNumRows( row + 1 );

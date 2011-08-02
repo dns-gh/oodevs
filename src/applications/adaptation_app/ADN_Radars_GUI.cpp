@@ -11,11 +11,11 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_GUI.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qvbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3vbox.h>
 
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
@@ -67,7 +67,7 @@ void ADN_Radars_GUI::Build()
     T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Radar data
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Special sensor" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Special sensor" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vConnectors[eName] );
@@ -106,7 +106,7 @@ void ADN_Radars_GUI::Build()
     pRadars->SetItemConnectors(vConnectors);
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pRadars, 1 );
     pMainLayout->addWidget( pGroup, 4 );
 }

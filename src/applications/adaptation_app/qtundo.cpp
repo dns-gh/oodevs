@@ -23,11 +23,12 @@
 
 #include "moc_qtundo.cpp"
 
-#include <qapplication.h>
-#include <qiconset.h>
-#include <qdragobject.h>
-#include <qpixmap.h>
-#include <qwidget.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qicon.h>
+#include <Qt3Support/q3dragobject.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qwidget.h>
+#include <Qt3Support/q3mimefactory.h>
 
 
 
@@ -806,7 +807,7 @@ void QtUndoStack::clear()
 {
     bool old_clean = isClean();
 
-    QPtrList<QtCommand>::clear();
+    Q3PtrList<QtCommand>::clear();
     m_macro_nest = 0;
     m_num_commands = 0;
     m_have_clean_command = true;
@@ -967,9 +968,9 @@ QStringList QtUndoStack::redoList() const
 
 static bool loadPixmapFromMimeSource(const QString &abs_name, QPixmap &pm)
 {
-    const QMimeSource *ms = QMimeSourceFactory::defaultFactory()->data(abs_name);
+    const QMimeSource *ms = Q3MimeSourceFactory::defaultFactory()->data(abs_name);
     if (ms)
-    return QImageDrag::decode(ms, pm);
+    return Q3ImageDrag::decode(ms, pm);
     else
     return false;
 }
@@ -1500,7 +1501,7 @@ static const QString g_empty_text = "<empty>";
 */
 
 QtUndoListBox::QtUndoListBox(QWidget *parent, const char *name)
-    : QListBox(parent, name)
+    : Q3ListBox(parent, name)
 {
     connect(QtUndoManager::manager(), SIGNAL(changed()),
         this, SLOT(updateContents()));

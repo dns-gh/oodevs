@@ -13,7 +13,6 @@
 #include "tools/WinArguments.h"
 #include "tools/Win32/BugTrap.h"
 #include "gaming/Tools.h"
-#include <qmessagebox.h>
 #include <windows.h>
 
 //#define NO_LICENSE_CHECK
@@ -30,14 +29,25 @@ int main( int argc, char** argv )
     expiration = pLicense->GetExpirationDate().c_str();
 #endif
 
-    QApplication::setStyle( "windowsxp" );
+    QApplication::setStyle( new QCleanlooksStyle() );
     Application app( argc, argv, expiration );
+
+    QFile file( "style.qss" );
+    if( !file.open( QIODevice::Text | QFile::ReadOnly ) )
+        QMessageBox::warning( 0, tools::translate( "Application", "Warning" ), "Style file missing. Loading default parameters." );
+    else
+    {
+        app.setStyleSheet( file.readAll () );
+        file.close();
+    }
+
     BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
             .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).ascii() )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
+
     try
     {
-        app.Initialize();
+        app.Initialize( argc, argv );
         app.exec();
     }
     catch( std::runtime_error& e )

@@ -10,8 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_SupplyUnitSelector.h"
 #include "moc_ADN_SupplyUnitSelector.cpp"
-#include <qpopupmenu.h>
-#include <qcursor.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <QtGui/qcursor.h>
 #include "ADN_Workspace.h"
 #include "ADN_Units_Data.h"
 
@@ -44,7 +44,7 @@ ADN_SupplyUnitSelector::~ADN_SupplyUnitSelector()
 // -----------------------------------------------------------------------------
 void ADN_SupplyUnitSelector::OnButtonPressed()
 {
-    QPopupMenu* pPopup = new QPopupMenu( this );
+    Q3PopupMenu* pPopup = new Q3PopupMenu( this );
 
     // Get the unit list.
     ADN_Units_Data::T_UnitInfos_Vector& units

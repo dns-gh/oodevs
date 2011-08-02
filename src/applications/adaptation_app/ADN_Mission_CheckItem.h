@@ -10,7 +10,7 @@
 #ifndef __ADN_Mission_CheckItem_h_
 #define __ADN_Mission_CheckItem_h_
 
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 
 #include "ADN_Models_Data.h"
 #include "ADN_Missions_Data.h"
@@ -21,13 +21,13 @@
 */
 // Created: AGN 2004-04-28
 // =============================================================================
-class ADN_Mission_CheckItem : public QCheckListItem
+class ADN_Mission_CheckItem : public Q3CheckListItem
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Mission_CheckItem( QListView* pParent, ADN_Missions_Data::Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
-             ADN_Mission_CheckItem( QCheckListItem* pParent, ADN_Missions_Data::Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
+             ADN_Mission_CheckItem( Q3ListView* pParent, ADN_Missions_Data::Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
+             ADN_Mission_CheckItem( Q3CheckListItem* pParent, ADN_Missions_Data::Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
     virtual ~ADN_Mission_CheckItem();
     //@}
 

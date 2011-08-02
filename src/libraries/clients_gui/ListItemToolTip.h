@@ -10,27 +10,25 @@
 #ifndef __ListItemToolTip_h_
 #define __ListItemToolTip_h_
 
-#include <qtooltip.h>
-
 // =============================================================================
 /** @class  ListItemToolTip
     @brief  ListItemToolTip
 */
 // Created: SBO 2007-01-08
 // =============================================================================
-class ListItemToolTip : public QToolTip
+class ListItemToolTip
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ListItemToolTip( QWidget* parent, QListView& list );
+    explicit ListItemToolTip( Q3ListView& list );
     virtual ~ListItemToolTip();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ListItemToolTip( const ListItemToolTip& );            //!< Copy constructor
+    ListItemToolTip(ListItemToolTip& );            //!< Copy constructor
     ListItemToolTip& operator=( const ListItemToolTip& ); //!< Assignment operator
     //@}
 
@@ -42,7 +40,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QListView& listView_;
+    Q3ListView& listView_;
     //@}
 };
 

@@ -14,13 +14,49 @@ class ScoresModel;
 class SuccessFactorConditions;
 class SuccessFactorConditionItem;
 
+namespace
+{
+    class ScrollView : public Q3ScrollView
+    {
+    public:
+        explicit ScrollView( QWidget* parent )
+            : Q3ScrollView( parent )
+            , mainWidget_( new Q3VBox( viewport() ) )
+        {
+            setMargin( 2 );
+            setHScrollBarMode( Q3ScrollView::AlwaysOff );
+            setResizePolicy( Q3ScrollView::AutoOneFit );
+            setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
+            addChild( mainWidget_ );
+        }
+        virtual ~ScrollView() {}
+
+        virtual void insertChild( QObject* object )
+        {
+            mainWidget_->insertChild( object );
+        }
+
+        virtual void removeChild( QObject* object )
+        {
+            mainWidget_->removeChild( object );
+        }
+
+        Q3VBox* getMainWidget() const
+        {
+            return mainWidget_;
+        }
+    private:
+        Q3VBox* mainWidget_;
+    };
+}
+
 // =============================================================================
 /** @class  SuccessFactorConditionsEditor
     @brief  SuccessFactorConditionsEditor
 */
 // Created: SBO 2009-06-16
 // =============================================================================
-class SuccessFactorConditionsEditor : public QVBox
+class SuccessFactorConditionsEditor : public Q3VBox
 {
     Q_OBJECT;
 
@@ -60,8 +96,8 @@ private:
     //! @name Member data
     //@{
     const ScoresModel& scores_;
-    QButtonGroup* operator_;
-    QScrollView* scrollView_;
+    Q3ButtonGroup* operator_;
+    ScrollView* scrollView_;
     T_Items items_;
     //@}
 };

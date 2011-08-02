@@ -55,7 +55,7 @@ private:
     QLineEdit*                   exerciseName_;
     QComboBox*                   editTerrainList_;
     QComboBox*                   editModelList_;
-    QButton*                     ok_;
+    QPushButton*                     ok_;
     //@}
 };
 

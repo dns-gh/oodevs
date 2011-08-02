@@ -22,12 +22,6 @@
 
 #include <vector>
 #include <stdexcept>
-
-#include <qpalette.h>
-#include <qfontmetrics.h>
-#include <qpainter.h>
-#include <qpoint.h>
-
 #include <cassert>
 #include <cmath>
 

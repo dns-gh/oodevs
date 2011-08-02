@@ -13,10 +13,12 @@
 #include "Application.h"
 #include "clients_gui/Tools.h"
 #include "Config.h"
-#include <qcombobox.h>
-#include <qfiledialog.h>
-#include <qsettings.h>
-#include <qtextcodec.h>
+#include <QtGui/qcombobox.h>
+#include <Qt3Support/q3filedialog.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
+
+#include <Qt3Support/q3button.h>
 #include <boost/foreach.hpp>
 
 namespace
@@ -33,7 +35,7 @@ namespace
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& config )
+OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& config )
     : ContentPage( pages, tools::translate( "OptionsPage", "Options" ), previous, eButtonBack | eButtonQuit )
     , config_( config )
     , selectedLanguage_( ReadLang() )
@@ -42,11 +44,11 @@ OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& confi
     languages_[ tools::translate( "OptionsPage", "Français" ) ] = "fr";
     languages_[ tools::translate( "OptionsPage", "Español" ) ] = "es";
 
-    QVBox* mainBox = new QVBox( this );
+    Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setBackgroundOrigin( QWidget::WindowOrigin );
     mainBox->setMargin( 10 );
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, mainBox );
-    box->setFrameShape( NoFrame );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, mainBox );
+    box->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     {
         QLabel* label = new QLabel( tools::translate( "OptionsPage", "Language: " ), box );
@@ -63,11 +65,11 @@ OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& confi
     {
         QLabel* label = new QLabel( tools::translate( "OptionsPage", "Data directory: " ), box );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        QHBox* hbox = new QHBox( box );
+        Q3HBox* hbox = new Q3HBox( box );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         dataDirectory_ = new QLineEdit( hbox );
         dataDirectory_->setText( QDir::convertSeparators( config.GetRootDir().c_str() ) );
-        QButton* browse = new QPushButton( tools::translate( "OptionsPage", "..." ), hbox );
+        QPushButton* browse = new QPushButton( tools::translate( "OptionsPage", "..." ), hbox );
         connect( browse, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
     }
     {
@@ -123,7 +125,7 @@ void OptionsPage::Commit()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnChangeDataDirectory()
 {
-    const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
+    const QString directory = QDir::convertSeparators( Q3FileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
     if( directory.isEmpty() )
         return;
     dataDirectory_->setText( directory );

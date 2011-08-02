@@ -13,7 +13,6 @@
 #include "NoLinkDisplayer.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/GlTooltip_ABC.h"
-#include <qimage.h>
 #include <boost/function.hpp>
 
 namespace gui

@@ -70,7 +70,7 @@ ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( QWidget* pParent )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
 

@@ -64,7 +64,7 @@ void TeamHierarchies::SerializeLogistics( xml::xostream& xos ) const
 // Name: TeamHierarchies::UpdateSymbol
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void TeamHierarchies::UpdateSymbol( bool up /*= true*/ )
+void TeamHierarchies::UpdateSymbol( bool up /* = true*/ )
 {
     if( ! up )
     {

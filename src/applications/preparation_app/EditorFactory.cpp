@@ -33,7 +33,6 @@
 #include "clients_kernel/CoordinateSystems.h"
 #include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
-#include <qvalidator.h>
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory constructor
@@ -181,12 +180,12 @@ void EditorFactory::Call( kernel::NBCAgent** const& value )
 namespace
 {
     template< typename Entity, typename Resolver >
-    class MultipleResolverEditor : public QListBox
+    class MultipleResolverEditor : public Q3ListBox
                                  , public kernel::ValueEditor< std::vector< Entity* > >
     {
     public:
         MultipleResolverEditor( QWidget* parent, const Resolver& resolver )
-            : QListBox( parent )
+            : Q3ListBox( parent )
         {
             tools::Iterator< const Entity& > it = resolver.CreateIterator();
             while( it.HasMoreElements() )
@@ -194,7 +193,7 @@ namespace
                 const Entity& entity = it.NextElement();
                 AddItem( entity.GetName().c_str(), &entity );
             }
-            setSelectionMode( QListBox::Multi );
+            setSelectionMode( Q3ListBox::Multi );
             setMinimumHeight( 3 * itemHeight() );
         }
         virtual ~MultipleResolverEditor() {}

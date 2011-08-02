@@ -20,8 +20,8 @@ using namespace gui;
 // Name: PropertyTableItem constructor
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-PropertyTableItem::PropertyTableItem( QTable* table, Property_ABC& property, TableItemDisplayer& displayer, EditorFactory_ABC& factory )
-    : QTableItem( table, QTableItem::WhenCurrent, "" )
+PropertyTableItem::PropertyTableItem( Q3Table* table, Property_ABC& property, TableItemDisplayer& displayer, EditorFactory_ABC& factory )
+    : Q3TableItem( table, Q3TableItem::WhenCurrent, "" )
     , factory_( factory )
     , displayer_( displayer )
     , property_( property )
@@ -78,5 +78,5 @@ void PropertyTableItem::paint( QPainter* p, const QColorGroup& cg, const QRect& 
 {
     displayer_.SetItem( this );
     property_.Display( displayer_ );
-    QTableItem::paint( p, cg, cr, selected );
+    Q3TableItem::paint( p, cg, cr, selected );
 }

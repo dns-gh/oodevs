@@ -13,7 +13,10 @@
 #pragma warning( push )
 #pragma warning( disable : 4996 )
 
-#include <qapplication.h>
+#pragma warning( push, 0 )
+#include <QtGui/qapplication.h>
+#pragma warning( pop )
+
 #include <assert.h>
 #include <string>
 #include <algorithm>

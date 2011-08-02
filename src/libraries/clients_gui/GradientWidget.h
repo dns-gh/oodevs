@@ -32,7 +32,7 @@ namespace gui
 */
 // Created: SBO 2007-07-02
 // =============================================================================
-class GradientWidget : public QVBox
+class GradientWidget : public Q3VBox
                      , public tools::Observer_ABC
                      , public kernel::OptionsObserver_ABC
 {

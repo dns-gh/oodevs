@@ -19,12 +19,12 @@ using namespace gui;
 // Name: PreferencesList constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-PreferencesList::PreferencesList( QWidget* parent, QWidgetStack& pages )
-    : QListView( parent )
+PreferencesList::PreferencesList( QWidget* parent, QStackedWidget& pages )
+    : Q3ListView( parent )
     , pages_( pages )
 {
     addColumn( tools::translate( "gui::PreferencesList", "Category" ) );
-    setColumnWidthMode( 0, QListView::Maximum );
+    setColumnWidthMode( 0, Q3ListView::Maximum );
     header()->hide();
     setRootIsDecorated( true );
     setSorting( -1 );
@@ -47,16 +47,16 @@ PreferencesList::~PreferencesList()
 void PreferencesList::AddPage( const QString& name, QWidget* widget )
 {
     QStringList list = QStringList::split( '/', name );
-    QListViewItem* parent = 0;
-    for( unsigned int i = 0; i < list.count() - 1; ++i )
+    Q3ListViewItem* parent = 0;
+    for( int i = 0; i < list.count() - 1; ++i )
         parent = findItem( list[i], 0 );
     widgets_[name] = widget;
     pages_.addWidget( widget );
-    QListViewItem* item;
+    Q3ListViewItem* item;
     if( parent )
-        item = new QListViewItem( parent );
+        item = new Q3ListViewItem( parent );
     else
-        item = new QListViewItem( this );
+        item = new Q3ListViewItem( this );
     item->setText( 0, list.last() );
 }
 
@@ -64,9 +64,9 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
 // Name: PreferencesList::setCurrentItem
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-void PreferencesList::setCurrentItem( QListViewItem* item )
+void PreferencesList::setCurrentItem( Q3ListViewItem* item )
 {
-    QListView::setCurrentItem( item );
+    Q3ListView::setCurrentItem( item );
     if( item )
     {
         QString name = item->text( 0 );
@@ -76,6 +76,6 @@ void PreferencesList::setCurrentItem( QListViewItem* item )
             item = item->parent();
         }
         QWidget* widget = widgets_[name];
-        pages_.raiseWidget( widget );
+		pages_.setCurrentWidget( widget );
     }
 }

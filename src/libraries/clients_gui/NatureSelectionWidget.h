@@ -10,7 +10,6 @@
 #ifndef __NatureSelectionWidget_h_
 #define __NatureSelectionWidget_h_
 
-#include <qlistview.h>
 #include "clients_kernel/SymbolVisitor_ABC.h"
 
 namespace tools
@@ -31,7 +30,7 @@ namespace gui
 */
 // Created: SBO 2007-10-12
 // =============================================================================
-class NatureSelectionWidget : public QListView
+class NatureSelectionWidget : public Q3ListView
                             , public kernel::SymbolVisitor_ABC
 {
     Q_OBJECT;
@@ -53,7 +52,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( QListViewItem* item );
+    void OnSelectionChanged( Q3ListViewItem* item );
     //@}
 
 private:
@@ -75,8 +74,8 @@ private:
 private:
     //! @name Member data
     //@{
-    QListViewItem* category_;
-    QListViewItem* current_;
+    Q3ListViewItem* category_;
+    Q3ListViewItem* current_;
     //@}
 };
 

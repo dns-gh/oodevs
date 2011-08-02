@@ -12,8 +12,6 @@
 
 #include "Layer_ABC.h"
 
-class QImage;
-
 namespace gui
 {
 

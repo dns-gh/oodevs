@@ -11,16 +11,16 @@
 #include "MenuPage.h"
 #include "moc_MenuPage.cpp"
 #include "MenuButton.h"
-#include <qlayout.h>
-#include <qpainter.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qpainter.h>
 
 namespace
 {
-    class TransparentContainer : public QHBox
+    class TransparentContainer : public Q3HBox
     {
     public:
         explicit TransparentContainer( QWidget* parent )
-            : QHBox( parent )
+            : Q3HBox( parent )
             , mask_( "resources/images/selftraining/menu-mask.png" )
         {
             setFixedSize( 800, 112 );
@@ -29,7 +29,7 @@ namespace
         virtual void drawContents( QPainter* painter )
         {
             painter->drawImage( frameRect(), mask_ );
-            QHBox::drawContents( painter );
+            Q3HBox::drawContents( painter );
         }
 
     private:
@@ -41,10 +41,10 @@ namespace
 // Name: MenuPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuPage::MenuPage( QWidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title )
+MenuPage::MenuPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title )
     : Page_ABC( pages, previous, buttonFlags )
 {
-    QVBox* box = new QVBox(this);
+    Q3VBox* box = new Q3VBox(this);
     AddContent( box );
     box->setSpacing( 5 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -85,7 +85,7 @@ MenuPage::~MenuPage()
 // Name: MenuPage::AddLink
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuButton* MenuPage::AddLink( const QString& title, Page_ABC& page, const QString& subTitle, const char* slot /*= 0*/ )
+MenuButton* MenuPage::AddLink( const QString& title, Page_ABC& page, const QString& subTitle, const char* slot /* = 0*/ )
 {
     MenuButton* button = new MenuButton( title, container_ );
     subTitles_[ button ] = subTitle ;

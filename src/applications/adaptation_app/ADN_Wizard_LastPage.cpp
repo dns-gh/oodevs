@@ -23,7 +23,7 @@
 // Name: ADN_Wizard_LastPage constructor
 // Created: APE 2005-01-11
 // -----------------------------------------------------------------------------
-ADN_Wizard_LastPage::ADN_Wizard_LastPage( QWizard* pParent, const QString& strTitle, const QString& strText, const char* szName, const char* szImageName )
+ADN_Wizard_LastPage::ADN_Wizard_LastPage( Q3Wizard* pParent, const QString& strTitle, const QString& strText, const char* szName, const char* szImageName )
 : ADN_WizardPage_ABC( pParent, szName, szImageName )
 {
     new QLabel( strText, pRightSide_ );

@@ -11,8 +11,8 @@
 
 #include "import/Parser.h"
 #pragma warning( push, 0 )
-#include <qapplication.h>
-#include <qmessagebox.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qmessagebox.h>
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <iostream>

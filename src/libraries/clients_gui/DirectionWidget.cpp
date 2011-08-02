@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "DirectionWidget.h"
 #include "moc_DirectionWidget.cpp"
-#include <qpainter.h>
 
 using namespace gui;
 
@@ -19,7 +18,7 @@ using namespace gui;
 // Created: AGE 2007-01-02
 // -----------------------------------------------------------------------------
 DirectionWidget::DirectionWidget( QWidget* parent )
-    : QFrame( parent )
+    : Q3Frame( parent )
     , old_  ( 0, 0 )
     , point_( 0, 0 )
 {

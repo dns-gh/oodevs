@@ -23,14 +23,14 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     , model_( model )
 {
     setCaption( tr( "User profiles" ) );
-    QGridLayout* grid = new QGridLayout( this, 3, 2 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2 );
     grid->setColStretch( 0, 1 );
     grid->setColStretch( 1, 3 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 5 );
     grid->setRowStretch( 2, 1 );
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     QLabel* title = new QLabel( caption(), box );
     QFont font;
     font.setBold( true );
@@ -44,23 +44,23 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     icon->setBackgroundColor( Qt::white );
     grid->addMultiCellWidget( box, 0, 0, 0, 1 );
 
-    box = new QVBox( this );
+    box = new Q3VBox( this );
     box->setMargin( 5 );
     pages_ = new UserProfileWidget( box, controllers, factory, icons, extensions );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 
-    box = new QVBox( this );
+    box = new Q3VBox( this );
     box->setMargin( 5 );
     list_ = new UserProfileList( box, *pages_, controllers, model );
     grid->addWidget( box, 1, 0 );
 
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     box->setMargin( 5 );
     box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     okBtn->setDefault( true );
-    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );

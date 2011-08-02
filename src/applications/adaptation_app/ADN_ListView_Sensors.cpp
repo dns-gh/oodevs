@@ -11,8 +11,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Sensors.h"
 
-#include <qpopupmenu.h>
-#include <qtooltip.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <QtGui/qtooltip.h>
 
 #include "ADN_Connector_ListView.h"
 #include "ADN_Sensors_Data.h"
@@ -28,19 +28,19 @@ typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 // Name: ADN_ListView_Sensors constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Sensors" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<SensorInfos>( *this );
 
     this->SetDeletionEnabled( true );
 
-    connect( this, SIGNAL( onItem( QListViewItem* ) ), this, SLOT( OnOnItem( QListViewItem* ) ) );
+    connect( this, SIGNAL( onItem( Q3ListViewItem* ) ), this, SLOT( OnOnItem( Q3ListViewItem* ) ) );
 }
 
 
@@ -108,7 +108,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Sensors::OnContextMenu( const QPoint& pt)
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_Sensor_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
@@ -119,7 +119,7 @@ void ADN_ListView_Sensors::OnContextMenu( const QPoint& pt)
 // Name: ADN_ListView_Sensors::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Sensors::GetToolTipFor( QListViewItem& item )
+std::string ADN_ListView_Sensors::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     SensorInfos* pCastData = (SensorInfos*)pData;

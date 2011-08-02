@@ -51,7 +51,7 @@ namespace
 // Created: LGY 2011-06-01
 // -----------------------------------------------------------------------------
 DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers, const std::string& category )
-    : QVBox( parent, "DensityWidget" )
+    : Q3VBox( parent, "DensityWidget" )
     , category_   ( category )
     , pPainter_   ( new Painter() )
     , controllers_( controllers )
@@ -62,7 +62,7 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers,
 {
     setMaximumHeight( 150 );
 
-    QHBox* valueBox = new QHBox( this );
+    Q3HBox* valueBox = new Q3HBox( this );
     valueBox->setSpacing( 4 );
     new QLabel( "Min : ", valueBox );
 
@@ -74,18 +74,18 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers,
     max_->setValidator( new QDoubleValidator( 0., 100.f, 2, valueBox ) );
     max_->setText( "1" );
 
-    QHBox* graphicBox = new QHBox( this );
+    Q3HBox* graphicBox = new Q3HBox( this );
     graphicBox->layout()->setAlignment( Qt::AlignCenter );
     graphicBox->setMaximumHeight( 100 );
     densityEditor_ = new GradientButton( graphicBox, *pPainter_, false, Qt::green, Qt::red );
     color_ = new ColorButton( graphicBox );
     color_->setMaximumHeight( 30 );
-    QHBox* unoccupiedBox = new QHBox( this );
+    Q3HBox* unoccupiedBox = new Q3HBox( this );
     QLabel* label = new QLabel( unoccupiedBox );
     label->setText( tr( "Unoccupied:" ) );
     unoccupiedColor_ = new ColorButton( unoccupiedBox );
     unoccupiedColor_->setMaximumHeight( 30 );
-    QButton* button = new QPushButton( tr( "Reset" ), this );
+    QPushButton* button = new QPushButton( tr( "Reset" ), this );
 
     connect( densityEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
     connect( densityEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );

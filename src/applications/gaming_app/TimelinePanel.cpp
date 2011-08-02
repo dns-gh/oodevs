@@ -17,7 +17,6 @@
 #include "actions/ActionTasker.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/Tools.h"
-#include <qtabbar.h>
 
 using namespace actions;
 
@@ -92,24 +91,22 @@ namespace
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const tools::SessionConfig& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
-    : QDockWindow( parent, "timeline" )
+    : QDockWidget( "timeline", parent )
 {
-    setResizeEnabled( true );
-    setNewLine( true );
+    setObjectName( "timeLine" );
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
-    setCloseMode( QDockWindow::Always );
     tabs_ = new TabWidget( this );
-    QVBox* box = new QVBox( tabs_ );
+    Q3VBox* box = new Q3VBox( tabs_ );
     toolbar_ = new ActionsToolbar( box, model, config, controllers );
     connect( toolbar_, SIGNAL(PlanificationModeChange() ), this, SIGNAL( PlanificationModeChange()) );
     timeline_ = new TimelineWidget( box, controllers, model, scheduler, factory );
     {
-        tabs_->addTab( box, tools::translate( "TimelinePanel", "Global view" ) );
         filters_.push_back( new GlobalFilter( profile ) );
+        tabs_->addTab( box, tools::translate( "TimelinePanel", "Global view" ) );
     }
     {
-        tabs_->addTab( box, tools::translate( "TimelinePanel", "Current session" ) );
         filters_.push_back( new CurrentSessionFilter( profile ) );
+        tabs_->addTab( box, tools::translate( "TimelinePanel", "Current session" ) );
     }
     setWidget( tabs_ );
 }

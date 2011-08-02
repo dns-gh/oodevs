@@ -47,13 +47,13 @@ class Application : public Application_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv, const QString& expiration );
+             Application( int& argc, char** argv, const QString& expiration );
     virtual ~Application();
     //@}
 
     //! @name
     //@{
-    void Initialize();
+    void Initialize( int argc, char** argv );
     //@}
 
 private slots:
@@ -69,9 +69,14 @@ private:
     Application& operator=( const Application& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual bool notify( QObject* receiver, QEvent* e );
+    //@}
+
     //! @name Helpers
     //@{
-    void Initialize( int argc, char** argv );
+    void DisplayError( const QString& text ) const;
     //@}
 
 private:

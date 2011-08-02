@@ -15,7 +15,7 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Sensors_Data.h"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 typedef ADN_Sensors_Data::TargetInfos TargetInfos;
@@ -67,7 +67,7 @@ ADN_Sensors_Targets_GUI::ADN_Sensors_Targets_GUI(QWidget * parent )
 {
     // peut etre selectionne & trie
     setSorting(true);
-    setSelectionMode(QTable::Single);
+    setSelectionMode(Q3Table::Single);
     setShowGrid(false);
     setLeftMargin(0);
 
@@ -110,7 +110,7 @@ ADN_Sensors_Targets_GUI::~ADN_Sensors_Targets_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Targets_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint& pt)
 {
-    std::auto_ptr< QPopupMenu > pTargetMenu( new QPopupMenu(this) );
+    std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu(this) );
 
 
     // Get the list of the possible munitions
@@ -131,7 +131,7 @@ void ADN_Sensors_Targets_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint
     if( ! bDisplayAdd && !bDisplayRem )
         return;
 
-    QPopupMenu * pMenu=new QPopupMenu(this);
+    Q3PopupMenu * pMenu=new Q3PopupMenu(this);
     if( bDisplayAdd )
         pMenu->insertItem( tr( "Add object" ), pTargetMenu.get() ,0 );
     if( bDisplayRem )

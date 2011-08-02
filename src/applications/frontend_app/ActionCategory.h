@@ -10,7 +10,7 @@
 #ifndef __ActionCategory_h_
 #define __ActionCategory_h_
 
-#include <qvbuttongroup.h>
+#include <Qt3Support/q3buttongroup.h>
 
 class QAction;
 class ActionList;
@@ -21,7 +21,7 @@ class ActionList;
 */
 // Created: SBO 2007-10-04
 // =============================================================================
-class ActionCategory : public QVButtonGroup
+class ActionCategory : public Q3VButtonGroup
 {
     Q_OBJECT;
 
@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddAction( QAction& action );
+    void AddAction( Q3Action& action );
     void ClearSelection();
     //@}
 

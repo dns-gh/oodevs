@@ -65,11 +65,11 @@ void FragOrderType::ReadParameter( xml::xistream& xis )
 bool FragOrderType::IsAvailableFor( const kernel::Entity_ABC& entity ) const
 {
     const QString typeName = entity.GetTypeName();
-    if( boost::starts_with( diaType_, "Rep_OrderConduite_Pion_" ) )
+    if( 0 == diaType_.find( "Rep_OrderConduite_Pion_" ) )
         return typeName == "agent";
-    if( boost::starts_with( diaType_, "Rep_OrderConduite_Automate_" ) )
+    if( 0 == diaType_.find( "Rep_OrderConduite_Automate_" ) )
         return typeName == "automat";
-    if( boost::starts_with( diaType_, "Rep_OrderConduite_Population_" ) )
+    if( 0 == diaType_.find( "Rep_OrderConduite_Population_" ) )
         return typeName == "population";
     return true;
 }

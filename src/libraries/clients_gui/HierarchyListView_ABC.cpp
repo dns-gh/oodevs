@@ -43,7 +43,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     , symbols_    ( symbols )
     , selected_   ( controllers_ )
 {
-    new ListItemToolTip( viewport(), *this );
+    new ListItemToolTip(*this);
 
     timer_ = new QTimer( this );
 
@@ -55,10 +55,10 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
 //    viewport()->setAcceptDrops( true ); // $$$$ SBO 2010-08-12: needed to enable autoscroll
     header()->hide();
 
-    connect( this,   SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
-    connect( this,   SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-    connect( this,   SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
-    connect( this,   SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this,   SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
+    connect( this,   SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    connect( this,   SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
+    connect( this,   SIGNAL( selectionChanged    ( Q3ListViewItem* ) ),                     this, SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
     connect( timer_, SIGNAL( timeout() ),                                                  this, SLOT( Update() ) );
 }
 
@@ -154,7 +154,7 @@ void HierarchyListView_ABC::DisplayIcon( const Entity_ABC& entity, ValuedListIte
 // Name: HierarchyListView_ABC::SetVisible
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::SetVisible( QListViewItem* item, bool visible )
+void HierarchyListView_ABC::SetVisible( Q3ListViewItem* item, bool visible )
 {
     if( item )
     {
@@ -170,7 +170,7 @@ void HierarchyListView_ABC::SetVisible( QListViewItem* item, bool visible )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func )
 {
-    for( QListViewItemIterator it = firstChild(); it.current(); ++it )
+    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
     {
         gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
         item->setVisible( HasAnyChildVisible( item, func ) );
@@ -188,7 +188,7 @@ bool HierarchyListView_ABC::HasAnyChildVisible( gui::ValuedListItem* item, boost
         bool isVisible = func( item );
         gui::ValuedListItem* child = static_cast< gui::ValuedListItem* >( item->firstChild() );
         if( child )
-            for( QListViewItemIterator it = child; it.current(); ++it )
+            for( Q3ListViewItemIterator it = child; it.current(); ++it )
                 if( static_cast< gui::ValuedListItem* >( it.current()->parent() ) == item )
                     isVisible = isVisible || HasAnyChildVisible( static_cast< gui::ValuedListItem* >( it.current() ), func );
         return isVisible;
@@ -200,7 +200,7 @@ bool HierarchyListView_ABC::HasAnyChildVisible( gui::ValuedListItem* item, boost
 // Name: HierarchyListView_ABC::OnSelectionChange
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::OnSelectionChange( QListViewItem* item )
+void HierarchyListView_ABC::OnSelectionChange( Q3ListViewItem* item )
 {
     if( item )
         static_cast< ValuedListItem* >( item )->Select( controllers_.actions_ );
@@ -210,7 +210,7 @@ void HierarchyListView_ABC::OnSelectionChange( QListViewItem* item )
 // Name: HierarchyListView_ABC::OnContextMenuRequested
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int )
+void HierarchyListView_ABC::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int )
 {
     if( item )
         static_cast< ValuedListItem* >( item )->ContextMenu( controllers_.actions_, pos );
@@ -255,72 +255,6 @@ void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
         }
         ensureItemVisible( selectedItem() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::dragObject
-// Created: SBO 2006-04-18
-// -----------------------------------------------------------------------------
-QDragObject* HierarchyListView_ABC::dragObject()
-{
-    ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
-    if( !pItem )
-        return 0;
-    return new ValuedDragObject( pItem->GetValue< const Entity_ABC >(), this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::dragEnterEvent
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
-{
-    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::dragMoveEvent
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void HierarchyListView_ABC::dragMoveEvent( QDragMoveEvent* pEvent )
-{
-    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::dropEvent
-// Created: SBO 2006-04-18
-// -----------------------------------------------------------------------------
-void HierarchyListView_ABC::dropEvent( QDropEvent* pEvent )
-{
-    if( const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent ) )
-    {
-        QPoint position = viewport()->mapFromParent( pEvent->pos() );
-        ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
-        if( !entity || !targetItem || !Drop( *entity, *targetItem ) )
-            pEvent->ignore();
-        else
-            pEvent->accept();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool HierarchyListView_ABC::Drop( const Entity_ABC& entity, ValuedListItem& target )
-{
-    return target.IsA< const Entity_ABC >()
-        && Drop( entity, *target.GetValue< const Entity_ABC >() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::Drop
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-bool HierarchyListView_ABC::Drop( const Entity_ABC& , const Entity_ABC& )
-{
-    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -397,4 +331,71 @@ void HierarchyListView_ABC::focusInEvent( QFocusEvent* event )
         if( item )
             item->Select( controllers_.actions_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::dragObject
+// Created: SBO 2006-04-18
+// -----------------------------------------------------------------------------
+Q3DragObject* HierarchyListView_ABC::dragObject()
+{
+    ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
+    if( !pItem )
+        return 0;
+    return new ValuedDragObject( pItem->GetValue< const Entity_ABC >(), this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::dragEnterEvent
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
+{
+    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::dragMoveEvent
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::dragMoveEvent( QDragMoveEvent* pEvent )
+{
+    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::dropEvent
+// Created: SBO 2006-04-18
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::dropEvent( QDropEvent* pEvent )
+{
+    const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent );
+    if( entity )
+    {
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
+        if( !entity || !targetItem || !Drop( *entity, *targetItem ) )
+            pEvent->ignore();
+        else
+            pEvent->accept();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::Drop( const Entity_ABC& entity, ValuedListItem& target )
+{
+    return target.IsA< const Entity_ABC >()
+        && Drop( entity, *target.GetValue< const Entity_ABC >() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::Drop
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::Drop( const Entity_ABC& , const Entity_ABC& )
+{
+    return false;
 }

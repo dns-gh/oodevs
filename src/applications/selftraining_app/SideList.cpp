@@ -13,19 +13,19 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <qpixmap.h>
-#include <qpainter.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: SideList constructor
 // Created: SBO 2008-02-22
 // -----------------------------------------------------------------------------
 SideList::SideList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : QListBox( parent )
+    : Q3ListBox( parent )
     , config_( config )
     , fileLoader_( fileLoader )
 {
-    setSelectionMode( QListBox::NoSelection ) ;
+    setSelectionMode( Q3ListBox::NoSelection ) ;
 }
 
 // -----------------------------------------------------------------------------

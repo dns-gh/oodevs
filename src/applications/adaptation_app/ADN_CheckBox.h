@@ -13,7 +13,7 @@
 #define __ADN_CheckBox_h_
 
 #include "ADN_Gfx_ABC.h"
-#include <qcheckbox.h>
+#include <QtGui/qcheckbox.h>
 
 
 //*****************************************************************************

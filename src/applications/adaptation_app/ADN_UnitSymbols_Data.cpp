@@ -26,8 +26,6 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
-#include <qbitmap.h>
-#include <qgl.h>
 #include <xeumeuleu/streams/xistreamstream.hpp>
 #include <zipstream/zipstream.h>
 

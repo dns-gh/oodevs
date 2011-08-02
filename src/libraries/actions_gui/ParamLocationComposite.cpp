@@ -11,7 +11,8 @@
 #include "ParamLocationComposite.h"
 #include "InterfaceBuilder_ABC.h"
 #include "actions/Parameter_ABC.h"
-#include <Qt/QWidgetStack.h>
+#include <Qt3Support/Q3widgetstack.h>
+
 class QWidget;
 
 using namespace actions::gui;
@@ -102,7 +103,7 @@ void ParamLocationComposite::Draw( const geometry::Point2f& point, const kernel:
 // -----------------------------------------------------------------------------
 QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
 {
-    stack_ = new QWidgetStack( parent );
+    stack_ = new Q3WidgetStack( parent );
     for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
         widgets_.push_back( (*it)->BuildInterface( stack_ ) );
     return stack_;

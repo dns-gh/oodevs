@@ -76,7 +76,7 @@ ADN_Urban_AttritionTable::ADN_Urban_AttritionTable( QWidget* pParent )
     //$$$$ Find a better policy
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
     setMinimumHeight( 160 );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
 
     // Set up the columns.

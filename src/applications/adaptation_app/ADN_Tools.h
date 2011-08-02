@@ -22,7 +22,7 @@ namespace xml
 enum E_UnitPosture;
 enum E_TempsBordee;
 
-class QPopupMenu;
+class Q3PopupMenu;
 
 // =============================================================================
 /** @class  ADN_Tools
@@ -72,7 +72,7 @@ public:
 
     static std::string SecondToString( double rSecond );
 
-    static void SortMenu( QPopupMenu& menu );
+    static void SortMenu( Q3PopupMenu& menu );
 
     static void AddSchema( xml::xostream& xos, const std::string& name );
 

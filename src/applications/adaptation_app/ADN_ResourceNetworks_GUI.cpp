@@ -54,7 +54,7 @@ void ADN_ResourceNetworks_GUI::Build()
     pResourceNetworks_->GetConnector().Connect( &data_.GetResourceNetworksInfos() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    QGroupBox* pResourceNetwork = new QGroupBox( 3, Qt::Vertical, tr( "Resource network" ), pMainWidget_ );
+    Q3GroupBox* pResourceNetwork = new Q3GroupBox( 3, Qt::Vertical, tr( "Resource network" ), pMainWidget_ );
     {
         QWidget* pHolder = builder.AddFieldHolder( pResourceNetwork );
         builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vInfosConnectors[ eName ] );
@@ -68,7 +68,7 @@ void ADN_ResourceNetworks_GUI::Build()
     }
     pResourceNetworks_->SetItemConnectors( vInfosConnectors );
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pResourceNetworks_, 1 );
     pMainLayout->addWidget( pResourceNetwork, 4 );
 }

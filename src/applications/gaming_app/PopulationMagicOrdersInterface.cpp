@@ -105,11 +105,11 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
         return;
 
     selectedEntity_ = &entity;
-    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
     AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );
-    QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
+    Q3PopupMenu* choiceMenu = new Q3PopupMenu( magicMenu );
     for( unsigned int i = 0; i < unsigned int( eNbrPopulationAttitude ); ++i )
         choiceMenu->insertItem( tools::ToString( static_cast< E_PopulationAttitude >( i ) ), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
     magicMenu->insertItem( tr( "Change crowd attitude" ), choiceMenu );
@@ -211,7 +211,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
 // Name: PopulationMagicOrdersInterface::AddMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-int PopulationMagicOrdersInterface::AddMagic( const QString& label, const char* slot, QPopupMenu* menu )
+int PopulationMagicOrdersInterface::AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu )
 {
     return menu->insertItem( label, this, slot );
 }
@@ -220,11 +220,11 @@ int PopulationMagicOrdersInterface::AddMagic( const QString& label, const char* 
 // Name: PopulationMagicOrdersInterface::AddValuedMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void PopulationMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, ContextMenu& menu, const QString& label, const char* slot )
+void PopulationMagicOrdersInterface::AddValuedMagic( Q3PopupMenu* parent, ContextMenu& menu, const QString& label, const char* slot )
 {
-    QPopupMenu* valueMenu = new QPopupMenu( parent );
+    Q3PopupMenu* valueMenu = new Q3PopupMenu( parent );
     QLineEdit* valueEditor = new InitializedLineEdit( valueMenu, tr( "Enter value" ) );
-    valueMenu->insertItem( valueEditor );
+    valueMenu->insertItem( valueEditor->text() );
     parent->insertItem( label, valueMenu );
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );

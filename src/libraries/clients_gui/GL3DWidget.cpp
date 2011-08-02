@@ -99,7 +99,7 @@ void Gl3dWidget::Paint( const ViewFrustum& view )
 // Name: Gl3dWidget::StipplePattern
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-unsigned short Gl3dWidget::StipplePattern( int factor /*= 1*/ ) const
+unsigned short Gl3dWidget::StipplePattern( int factor /* = 1*/ ) const
 {
     static unsigned short pattern[] = {
         0x00FF, 0x01FE, 0x03FC, 0x07F8,
@@ -141,7 +141,7 @@ float Gl3dWidget::Zoom() const
 // Name: Gl3dWidget::DrawCross
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void Gl3dWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( size < 0 )
         size = 10.f * Pixels( at );
@@ -261,7 +261,7 @@ void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const
 // Name: Gl3dWidget::DrawArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( size < 0 )
         size = 15.f * Pixels( to );
@@ -316,7 +316,7 @@ void Gl3dWidget::DrawArc( const Point2f& center, const Point2f& from, const Poin
 // Name: Gl3dWidget::DrawCurvedArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /* = 0.2f*/, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( curveRatio == 0 )
     {
@@ -352,7 +352,7 @@ void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float 
 // Name: Gl3dWidget::DrawCircle
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void Gl3dWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     static const float twoPi = 2.f * std::acos( -1.f );
     if( radius < 0 )
@@ -375,7 +375,7 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_U
 // Name: Gl3dWidget::DrawDisc
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void Gl3dWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( radius < 0 )
         radius = 10.f * Pixels( center );
@@ -398,7 +398,7 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Uni
 // Name: Gl3dWidget::DrawLife
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /*= 1.f*/ ) const
+void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f*/ ) const
 {
     // $$$$ AGE 2006-09-11:
     const float halfWidth   = factor * 600.f * 0.5f;
@@ -459,7 +459,7 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /*= 1.f*/, float /*thickness = 1.f*/ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/ ) const
 {
     if( factor < 0 )
         factor = 1;
@@ -487,7 +487,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
 {
     DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness );
 }
@@ -510,7 +510,7 @@ void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kern
 // Name: Gl3dWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawIcon( const char** /*xpm*/, const Point2f& /*where*/, float /*size*/ /*= -1.f*/, E_Unit /*unit*/ /*= meters*/ ) const
+void Gl3dWidget::DrawIcon( const char** /*xpm*/, const Point2f& /*where*/, float /*size*/ /* = -1.f*/, E_Unit /*unit*/ /* = meters*/ ) const
 {
     // $$$$ AGE 2006-05-16: ca va dégager de toute facon...
 }
@@ -561,7 +561,7 @@ void Gl3dWidget::DrawCell( const Point2f& center ) const
 // Name: Gl3dWidget::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /*= 1.f*/ ) const
+void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/ ) const
 {
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), ElevationAt( center ) );
@@ -599,7 +599,7 @@ void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
 {
     if( event )
     {
-        const float speedFactor = ( event->state() == Qt::ShiftButton ) ? 10.f : 1.f;
+        const float speedFactor = ( event->state() == Qt::ShiftModifier ) ? 10.f : 1.f;
 
         if( event->key() == Qt::Key_Plus )
             zRatio_ *= 1.1f;

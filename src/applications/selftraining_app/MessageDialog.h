@@ -45,7 +45,7 @@ private:
     //! @name Helpers
     //@{
     QSize sizeHint() const;
-    QButton* CreateButton( QWidget* parent, int );
+    QPushButton* CreateButton( QWidget* parent, int );
     //@}
 };
 

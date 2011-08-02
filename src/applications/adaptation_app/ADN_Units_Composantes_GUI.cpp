@@ -20,14 +20,70 @@
 #include "ADN_Workspace.h"
 #include "ADN_TableItem_CheckItem.h"
 #include "MT_ValuedListViewItem.h"
-#include <qpopmenu.h>
-#include <qeventloop.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3popupmenu.h>
+#include <QtCore/qeventloop.h>
+#include <QtGui/qwidgetaction.h>
+#include <Qt3Support/q3table.h>
+#pragma warning( pop )
 
 typedef ADN_Units_Data::ComposanteInfos ComposanteInfos;
 
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with
 //-----------------------------------------------------------------------------
+
+namespace
+{
+    class MenuListView : public QWidgetAction
+    {
+    public:
+        explicit MenuListView( ADN_Units_Composantes_GUI* receiver, QObject* parent )
+            : QWidgetAction( parent )
+            , receiver_( receiver )
+            , listView_( 0 )
+        {}
+        virtual ~MenuListView() {}
+        virtual QWidget* createWidget( QWidget* parent )
+        {
+            ADN_Composantes_Data::T_ComposanteInfos_Vector& vAllComposantes = ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes();
+
+            listView_ = new Q3ListView( parent );
+            listView_->addColumn( "" );
+            listView_->header()->hide();
+            listView_->setAllColumnsShowFocus( true );
+            listView_->setResizeMode( Q3ListView::AllColumns );
+            listView_->setMinimumSize( 200, std::min( 500, (int)vAllComposantes.size() * 17 ) );
+            for( ADN_Composantes_Data::T_ComposanteInfos_Vector::iterator it = vAllComposantes.begin(); it != vAllComposantes.end(); ++it )
+            {
+                MT_ValuedListViewItem<int>* pItem = new MT_ValuedListViewItem<int>( (int)(*it), listView_, (*it)->strName_.GetData().c_str() );
+                for( int i = 0; i < receiver_->numRows(); ++i )
+                    if( !strcmp( QAction::text(), (*it)->strName_.GetData().c_str() ) )
+                    {
+                        pItem->setEnabled( false );
+                        break;
+                    }
+            }
+            connect( listView_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( MenuListItemSelected() ) );
+            connect( listView_, SIGNAL( returnPressed( Q3ListViewItem* ) ), this, SLOT( MenuListItemSelected() ) );            
+            return listView_;
+        }
+
+        int SelectedValue() const
+        {
+            if( listView_ )
+            {
+                MT_ValuedListViewItem< int >* pItem = (MT_ValuedListViewItem< int >*)listView_->selectedItem();
+                return pItem->GetValue();
+            }
+            return -1;
+        }
+        ADN_Units_Composantes_GUI* receiver_;
+        Q3ListView* listView_;
+    };
+}
+
 class ADN_Units_Composantes_GUI_Connector
 :public ADN_Connector_Table_ABC
 {
@@ -40,7 +96,7 @@ public:
     void  AddSubItems( int nRow, void* pObj )
     {
         assert( pObj != 0 );
-        ADN_TableItem_String*    pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_String*    pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Int*       pItemNbr = new ADN_TableItem_Int( &tab_, pObj );
         ADN_TableItem_CheckItem* pItemMajor = new ADN_TableItem_CheckItem( &tab_, pObj );
         ADN_TableItem_CheckItem* pItemLoadable = new ADN_TableItem_CheckItem( &tab_, pObj );
@@ -79,7 +135,7 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( QWidget * parent )
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
 
@@ -117,49 +173,23 @@ ADN_Units_Composantes_GUI::~ADN_Units_Composantes_GUI()
 //-----------------------------------------------------------------------------
 void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint& pt)
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu& addMenu = *new QPopupMenu( &popupMenu );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu& addMenu = *new Q3PopupMenu( &popupMenu );
 
+    MenuListView* list = new MenuListView( this, &addMenu );
+    addMenu.addAction( list );
     // Get the list of the possible munitions
-    ADN_Composantes_Data::T_ComposanteInfos_Vector& vAllComposantes = ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes();
-
-    QListView& listView = *new QListView( &addMenu );
-    listView.addColumn( "" );
-    listView.header()->hide();
-    listView.setAllColumnsShowFocus( true );
-    listView.setResizeMode( QListView::AllColumns );
-    listView.setMinimumSize( 200, std::min( 500, (int)vAllComposantes.size() * 17 ) );
-
-    for( ADN_Composantes_Data::T_ComposanteInfos_Vector::iterator it = vAllComposantes.begin(); it != vAllComposantes.end(); ++it )
-    {
-        MT_ValuedListViewItem<int>* pItem = new MT_ValuedListViewItem<int>( (int)(*it), &listView, (*it)->strName_.GetData().c_str() );
-        for( int i = 0; i < numRows(); ++i )
-            if( !strcmp( text( i, 0 ), (*it)->strName_.GetData().c_str() ) )
-            {
-                pItem->setEnabled( false );
-                break;
-            }
-    }
-    addMenu.insertItem( &listView );
 
     popupMenu.insertItem( tr( "Add equipment"), &addMenu ,0 );
     if( GetCurrentData() != 0 )
         popupMenu.insertItem( tr( "Remove equipment"), 1 );
 
     bMenuListItemSelected_ = false;
-    connect( &listView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( MenuListItemSelected() ) );
-    connect( &listView, SIGNAL( returnPressed( QListViewItem* ) ), this, SLOT( MenuListItemSelected() ) );
     int nMenuResult = popupMenu.exec(pt);
     if( nMenuResult == 1 )
-    {
         RemoveCurrentElement();
-    }
     else if( bMenuListItemSelected_ )
-    {
-        assert( listView.selectedItem() != 0 );
-        MT_ValuedListViewItem<int>* pItem = (MT_ValuedListViewItem<int>*)listView.selectedItem();
-        AddNewElement( pItem->GetValue() );
-    }
+        AddNewElement( list ->SelectedValue() );     
 }
 
 // -----------------------------------------------------------------------------
@@ -200,5 +230,5 @@ void ADN_Units_Composantes_GUI::RemoveCurrentElement()
 void ADN_Units_Composantes_GUI::MenuListItemSelected()
 {
     bMenuListItemSelected_ = true;
-    qApp->eventLoop()->exitLoop();
+    QApplication::exit_loop();
 }

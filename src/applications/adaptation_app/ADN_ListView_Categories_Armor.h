@@ -25,7 +25,7 @@ class ADN_ListView_Categories_Armor
 : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Categories_Armor( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_ListView_Categories_Armor( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView_Categories_Armor();
     void CreateDefaultAttritionHumanEffect();
 

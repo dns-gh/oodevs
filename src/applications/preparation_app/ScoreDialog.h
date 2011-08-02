@@ -87,7 +87,7 @@ private:
     ScoresModel& model_;
     ScoreList* scores_;
     QLineEdit* editor_;
-    QButton* createButton_;
+    QPushButton* createButton_;
     const kernel::GlTools_ABC& tools_;
     //@}
 };

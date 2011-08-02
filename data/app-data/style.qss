@@ -1,0 +1,12 @@
+QDockWidget
+{
+	color:white;
+}
+
+QDockWidget::title 
+{
+	text-align: center;
+    background-color: rgb( 165, 193, 221);
+    padding-top: 3px;
+	
+}

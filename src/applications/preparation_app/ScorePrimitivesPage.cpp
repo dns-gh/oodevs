@@ -19,7 +19,7 @@
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives, const T_Filter& filter )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
     , filter_( filter )
     , primitives_( primitives )
@@ -28,11 +28,11 @@ ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& 
     {
         list_->AddColumn( tr( "Name" ) );
         list_->header()->hide();
-        connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged() ) );
-        connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnInsert() ) );
+        connect( list_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChanged() ) );
+        connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnInsert() ) );
     }
     {
-        QButton* insert = new QPushButton( tr( "Insert" ), this );
+        QPushButton* insert = new QPushButton( tr( "Insert" ), this );
         connect( insert, SIGNAL( clicked() ), SLOT( OnInsert() ) );
     }
     controllers_.Register( *this );

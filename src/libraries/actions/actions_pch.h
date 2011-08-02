@@ -13,8 +13,8 @@
 #pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 
 #pragma warning( push, 0 )
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qStringlist.h>
 #pragma warning( pop )
 
 #include <string>
@@ -24,5 +24,15 @@
 
 #include <geometry/types.h>
 #include <xeumeuleu/xml.hpp>
+
+inline std::ostream& operator<<( std::ostream& os, const QString& s )
+{
+    return os << s.toStdString();
+}
+
+inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
+{
+    return xos << s.toStdString();
+}
 
 #endif // __actions_pch_h_

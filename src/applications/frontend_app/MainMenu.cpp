@@ -9,16 +9,16 @@
 
 #include "frontend_app_pch.h"
 #include "MainMenu.h"
-#include <qmainwindow.h>
-#include <qmenubar.h>
-#include <qpopupmenu.h>
-#include <qaction.h>
+#include <Qt3Support/q3mainwindow.h>
+#include <QtGui/qmenubar.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <Qt3Support/q3action.h>
 
 // -----------------------------------------------------------------------------
 // Name: MainMenu constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-MainMenu::MainMenu( QMainWindow* mainWindow )
+MainMenu::MainMenu( Q3MainWindow* mainWindow )
     : QObject( mainWindow )
     , mainWindow_( mainWindow )
 {
@@ -38,12 +38,12 @@ MainMenu::~MainMenu()
 // Name: MainMenu::AddAction
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-void MainMenu::AddAction( const QString& category, QAction& action )
+void MainMenu::AddAction( const QString& category, Q3Action& action )
 {
-    QPopupMenu*& menu = menus_[ category ];
+    Q3PopupMenu*& menu = menus_[ category ];
     if( !menu )
     {
-        menu = new QPopupMenu( mainWindow_ );
+        menu = new Q3PopupMenu( mainWindow_ );
         mainWindow_->menuBar()->insertItem( category, menu );
     }
     action.addTo( menu );

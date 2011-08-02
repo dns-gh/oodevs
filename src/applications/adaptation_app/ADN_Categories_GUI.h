@@ -13,7 +13,7 @@
 #define __ADN_Categories_GUI_h_
 
 #include "ADN_GUI_ABC.h"
-#include <qobject.h>
+#include <QtCore/qobject.h>
 
 class ADN_Categories_Data;
 class ADN_ListView_Categories_Armor;
@@ -76,8 +76,8 @@ private:
     ADN_Categories_AttritionEffect_Table*   pAttritionEffects_;
 
     ADN_ComboBox* pComboType_;
-    QGroupBox*    pArmorBreakdownGroup_;
-    QGroupBox*    pAttritionEffectGroup_;
+    Q3GroupBox*    pArmorBreakdownGroup_;
+    Q3GroupBox*    pAttritionEffectGroup_;
 };
 
 

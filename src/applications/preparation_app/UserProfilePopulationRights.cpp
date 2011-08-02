@@ -22,7 +22,7 @@ UserProfilePopulationRights::UserProfilePopulationRights( QWidget* pParent, kern
     : gui::PopulationListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , UserProfileRights_ABC( this )
 {
-    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( QListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ UserProfilePopulationRights::~UserProfilePopulationRights()
 // -----------------------------------------------------------------------------
 void UserProfilePopulationRights::viewportResizeEvent( QResizeEvent* e )
 {
-    QScrollView::viewportResizeEvent( e );
+    Q3ScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
@@ -50,14 +50,14 @@ void UserProfilePopulationRights::viewportResizeEvent( QResizeEvent* e )
 // -----------------------------------------------------------------------------
 void UserProfilePopulationRights::setColumnWidth( int column, int w )
 {
-    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
+    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfilePopulationRights::OnItemClicked( QListViewItem* item, const QPoint& point, int column )
+void UserProfilePopulationRights::OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column )
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
 }

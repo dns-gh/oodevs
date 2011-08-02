@@ -12,11 +12,11 @@
 #ifndef __ADN_ConfigDialog_h_
 #define __ADN_ConfigDialog_h_
 
-#include <qdialog.h>
+#include <QtGui/qdialog.h>
 
 class ADN_Config;
 class QLineEdit;
-class QButton;
+class QPushButton;
 
 //*****************************************************************************
 // Created: JDY 03-09-08
@@ -38,10 +38,10 @@ private:
     ADN_Config* pConfig_;
 
     QLineEdit*  pSimPath_;
-    QButton*    pSimPathBrowser_;
+    QPushButton*    pSimPathBrowser_;
     QLineEdit*  pSimArguments_;
-    QButton*    pOk_;
-    QButton*    pCancel_;
+    QPushButton*    pOk_;
+    QPushButton*    pCancel_;
 };
 
 #endif // __ADN_ConfigDialog_h_

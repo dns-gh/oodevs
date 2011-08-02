@@ -32,32 +32,34 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
     , options_           ( controllers.options_ )
     , currentLayer_      ( -1 )
 {
+    Q3VBox* container = new Q3VBox( this );
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Vertical, tr( "Fog of war" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Fog of war" ), container );
         fogOfWar_ = new CheckBox( tr( "Display fog of war" ), box );
         connect( fogOfWar_, SIGNAL( toggled( bool ) ), SLOT( OnFogOfWarChanged( bool ) ) );
     }
 
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Vertical, tr( "Infrastructures" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Infrastructures" ), container );
         infra_ = new CheckBox( tr( "Display Infrastructures" ), box );
         connect( infra_, SIGNAL( toggled( bool ) ), SLOT( OnInfraChanged( bool ) ) );
     }
 
     {
-        QGroupBox* groupBox = new QGroupBox( 1, Qt::Vertical, tr( "Layer display order and transparency" ), this );
-        QVBox* vBox = new QVBox( groupBox );
+        Q3GroupBox* groupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Layer display order and transparency" ), container );
+        Q3VBox* vBox = new Q3VBox( groupBox );
         vBox->setSpacing( 6 );
-        QHBox* box = new QHBox( vBox );
+        Q3HBox* box = new Q3HBox( vBox );
         box->setSpacing( 5 );
-        layersList_ = new QListView( box );
+        layersList_ = new Q3ListView( box );
         layersList_->addColumn( tr( "Layer" ) );
-        layersList_->setResizeMode( QListView::LastColumn );
+        layersList_->setResizeMode( Q3ListView::LastColumn );
         layersList_->header()->hide();
         layersList_->setSorting( -1 );
-        connect( layersList_, SIGNAL( selectionChanged( QListViewItem * ) ), SLOT( OnSelectionChanged( QListViewItem * ) ) );
+        layersList_->setBackgroundColor( Qt::white );
+        connect( layersList_, SIGNAL( selectionChanged( Q3ListViewItem * ) ), SLOT( OnSelectionChanged( Q3ListViewItem * ) ) );
 
-        QVBox* buttonBox = new QVBox( box );
+        Q3VBox* buttonBox = new Q3VBox( box );
         buttonBox->layout()->setAlignment( Qt::AlignVCenter );
         QPushButton* up   = new QPushButton( MAKE_PIXMAP( arrow_up ), QString::null, buttonBox );
         up->setFixedSize( 32, 32 );
@@ -73,6 +75,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
         transparency_->setMaximumWidth( 258 );
         connect( transparency_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
     }
+    setWidget( container );
     controllers_.Register( *this );
 }
 
@@ -159,7 +162,7 @@ void LayersPanel::UpdateLeastAndMostVisible()
 {
     if( layersList_->childCount() > 1 )
     {
-        for( QListViewItem* item = layersList_->firstChild(); item; item = item->nextSibling() )
+        for( Q3ListViewItem* item = layersList_->firstChild(); item; item = item->nextSibling() )
             for( T_Names::const_iterator it = names_.begin(); it != names_.end(); ++it )
                 if( item->text( 0 ).contains( *it ) )
                     item->setText( 0, "  " + *it );
@@ -185,7 +188,7 @@ void LayersPanel::OnValueChanged()
 // Name: LayersPanel::OnSelectionChanged
 // Created: AGE 2007-04-27
 // -----------------------------------------------------------------------------
-void LayersPanel::OnSelectionChanged( QListViewItem* i )
+void LayersPanel::OnSelectionChanged( Q3ListViewItem* i )
 {
     currentLayer_ = -1;
     ValuedListItem* item = static_cast< ValuedListItem* >( i );

@@ -12,7 +12,6 @@
 #include "moc_TimelineRuler.cpp"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
-#include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineRuler constructor
@@ -133,7 +132,7 @@ void TimelineRuler::DrawDates( QPainter& painter ) const
 {
     const QFontMetrics metrics( painter.font() );
     QDateTime current = initialDateTime_.addSecs( ConvertToSeconds( startX_ ) );
-    QDate     next    = current.date().addDays( 1 );
+    QDateTime     next( current.date().addDays( 1 ) );
     long lastX = 0;
     while( lastX < width() )
     {
@@ -183,7 +182,7 @@ void TimelineRuler::SetContentsPos( int x, int )
 
 // -----------------------------------------------------------------------------
 // Name: TimelineRuler::ConvertToPosition
-// Created: SBO 2008-04-28
+// Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
 unsigned long TimelineRuler::ConvertToPosition( const QDateTime& datetime ) const
 {

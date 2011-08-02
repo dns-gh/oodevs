@@ -11,12 +11,13 @@
 #define __JoinAnalysisPanel_h_
 
 #include "Panel_ABC.h"
+#include <Qt3Support/q3action.h>
 
 namespace tools
 {
     class GeneralConfig;
 }
-class QListBox;
+class Q3ListBox;
 class InfoBubble;
 class QSpinBox;
 
@@ -33,7 +34,7 @@ class JoinAnalysisPanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
+             JoinAnalysisPanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~JoinAnalysisPanel();
     //@}
 
@@ -59,7 +60,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QListBox* list_;
+    Q3ListBox* list_;
     InfoBubble* bubble_;
     QSpinBox* exerciseNumber_;
     //@}

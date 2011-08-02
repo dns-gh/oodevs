@@ -10,15 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListViewDialog.h"
 #include "moc_ADN_ListViewDialog.cpp"
-#include <qpopupmenu.h>
-#include <qcursor.h>
-#include <qlayout.h>
-#include <qrect.h>
-#include <qpainter.h>
-#include <qprinter.h>
-#include <qpaintdevicemetrics.h>
-#include <qhbox.h>
-#include <qpushbutton.h>
 #include "ADN_ListView.h"
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
@@ -34,13 +25,13 @@ ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCapt
     assert( pListView != 0 );
     this->setCaption( strCaption );
     pListView->reparent( this, QPoint(0,0) );
-    connect( pListView, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu() ) );
-    QHBox* pHBox = new QHBox( this );
+    connect( pListView, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenu() ) );
+    Q3HBox* pHBox = new Q3HBox( this );
     QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
     QPushButton* pCloseButton = new QPushButton( tr( "Close" ), pHBox );
     connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintListView() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
-    QVBoxLayout* pLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
     pLayout->addWidget( pListView );
     pLayout->addWidget( pHBox );
     QMainWindow* pMainWindow = ADN_App::pApplication_->GetMainWindow();
@@ -63,7 +54,7 @@ ADN_ListViewDialog::~ADN_ListViewDialog()
 // -----------------------------------------------------------------------------
 void ADN_ListViewDialog::OnContextMenu()
 {
-    QPopupMenu popup( this );
+    Q3PopupMenu popup( this );
     popup.insertItem( tr( "Print" ), 1 );
     int nResult = popup.exec( QCursor::pos() );
     if( nResult == 1 )
@@ -85,12 +76,12 @@ void ADN_ListViewDialog::PrintListView()
     if( !painter.device() )
         return;
     // Compute the printing rectangle.
-    QPaintDeviceMetrics metrics( painter.device() );
+    Q3PaintDeviceMetrics metrics( painter.device() );
     const float rMarginInInches = 0.5f;
     const int nXMargin = static_cast< int >( rMarginInInches * metrics.logicalDpiX() );
     const int nYMargin = static_cast< int >( rMarginInInches * metrics.logicalDpiY() );
     QRect pageRect( nXMargin, nYMargin, metrics.width() - nXMargin * 2, metrics.height() - nYMargin * 2 );
-    painter.setClipRect( pageRect, QPainter::CoordDevice );
+    painter.setClipRect( pageRect, Qt::ReplaceClip );
     painter.translate( nXMargin, nYMargin );
     const double rScale = 1;
     painter.scale( rScale, rScale );

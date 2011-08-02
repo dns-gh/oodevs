@@ -22,7 +22,7 @@ namespace
 {
     QPixmap MakePixmap( const std::string& name )
     {
-        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
+        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
     }
 }
 
@@ -31,11 +31,11 @@ namespace
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
 InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : QGroupBox( 2, Qt::Horizontal, widget, "InfoButtonsWidget" )
+    : Q3GroupBox( 2, Qt::Horizontal, widget, "InfoButtonsWidget" )
 {
     setFlat( true );
     setFixedWidth( 100 );
-    setFrameStyle( QFrame::Panel | QFrame::Sunken );
+    setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
     layout()->setMargin( 0 );
     setInsideMargin( 0 );
     setInsideSpacing( 0 );

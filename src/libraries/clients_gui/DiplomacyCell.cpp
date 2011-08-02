@@ -11,7 +11,6 @@
 #include "DiplomacyCell.h"
 #include "moc_DiplomacyCell.cpp"
 #include "clients_kernel/Karma.h"
-#include <qpainter.h>
 
 using namespace gui;
 
@@ -31,8 +30,8 @@ namespace
 // Name: DiplomacyCell constructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-DiplomacyCell::DiplomacyCell( QTable* table )
-    : QComboTableItem( table, MakeValueList() )
+DiplomacyCell::DiplomacyCell( Q3Table* table )
+    : Q3ComboTableItem( table, MakeValueList() )
     , valueSet_( false )
 {
     SetColor( kernel::Karma::friend_ , QColor( 200, 200, 255 ) );
@@ -67,10 +66,10 @@ void DiplomacyCell::SetColor( const kernel::Karma& diplomacy, const QColor& colo
 void DiplomacyCell::paint( QPainter* p, const QColorGroup& cg, const QRect& cr, bool selected )
 {
     QColorGroup newCg( cg );
-    newCg.setColor( QColorGroup::Base, colors_[QTableItem::text()] );
+    newCg.setColor( QColorGroup::Base, colors_[Q3TableItem::text()] );
 
-    p->setBackgroundColor( colors_[QTableItem::text()] );
-    QTableItem::paint( p, newCg, cr, selected );
+    p->setBackgroundColor( colors_[Q3TableItem::text()] );
+    Q3TableItem::paint( p, newCg, cr, selected );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +78,7 @@ void DiplomacyCell::paint( QPainter* p, const QColorGroup& cg, const QRect& cr, 
 // -----------------------------------------------------------------------------
 kernel::Karma DiplomacyCell::GetValue() const
 {
-    std::map< const QString, kernel::Karma >::const_iterator it = diplomacies_.find( QTableItem::text() );
+    std::map< const QString, kernel::Karma >::const_iterator it = diplomacies_.find( Q3TableItem::text() );
     if( it != diplomacies_.end() )
         return it->second;
     return kernel::Karma::neutral_;
@@ -91,7 +90,7 @@ kernel::Karma DiplomacyCell::GetValue() const
 // -----------------------------------------------------------------------------
 QWidget* DiplomacyCell::createEditor() const
 {
-    QWidget* widget = QComboTableItem::createEditor();
+    QWidget* widget = Q3ComboTableItem::createEditor();
     connect( (QComboBox*)widget, SIGNAL( activated( const QString& ) ), this, SLOT( OnTextChanged( const QString& ) ) );
     return widget;
 }

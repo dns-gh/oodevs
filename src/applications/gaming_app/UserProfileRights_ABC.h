@@ -28,7 +28,7 @@ class UserProfileRights_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UserProfileRights_ABC( QListView* listView );
+    explicit UserProfileRights_ABC( Q3ListView* listView );
     virtual ~UserProfileRights_ABC();
     //@}
 
@@ -45,7 +45,7 @@ public:
 protected:
     //! @name Slots
     //@{
-    void OnItemClicked( QListViewItem* item, const QPoint& point, int column );
+    void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
     void OnShow();
     void OnHide();
     //@}
@@ -73,17 +73,17 @@ private:
     //@{
     void CloseAll();
 
-    void SetStatus( QListViewItem* item, Status status );
+    void SetStatus( Q3ListViewItem* item, Status status );
     void SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable );
     void SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
     Status MakeStatus( bool read, bool write, bool inheritedRead, bool inheritedWrite );
-    void SetInheritedStatus( QListViewItem* item, Status status );
+    void SetInheritedStatus( Q3ListViewItem* item, Status status );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QListView* listView_;
+    Q3ListView* listView_;
     UserProfile* selectedProfile_;
     bool needsSaving_;
 

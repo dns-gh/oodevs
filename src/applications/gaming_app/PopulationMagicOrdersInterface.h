@@ -80,8 +80,8 @@ private:
 
     //! @name Helpers
     //@{
-    int AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
-    void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
+    int AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu );
+    void AddValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
     //@}
 
 private:

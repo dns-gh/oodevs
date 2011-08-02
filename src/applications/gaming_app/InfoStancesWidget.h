@@ -29,7 +29,7 @@ class Attributes;
 */
 // Created: SBO 2007-02-09
 // =============================================================================
-class InfoStancesWidget : public QVBox
+class InfoStancesWidget : public Q3VBox
                         , public tools::Observer_ABC
                         , public tools::SelectionObserver< kernel::Entity_ABC >
                         , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
@@ -62,8 +62,8 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
-    QProgressBar* movement_;
-    QProgressBar* installation_;
+    Q3ProgressBar* movement_;
+    Q3ProgressBar* installation_;
     //@}
 };
 

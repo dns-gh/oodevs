@@ -22,7 +22,7 @@ namespace gui
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableField : public QHBox
+class LoadableField : public Q3HBox
                     , private boost::noncopyable
 {
     Q_OBJECT

@@ -21,7 +21,7 @@
 
 #include "ADN_Gfx_ABC.h"
 
-#include <qgroupbox.h>
+#include <Qt3Support/q3groupbox.h>
 
 // =============================================================================
 /** @class  ADN_GroupBox
@@ -34,7 +34,7 @@
 // Created: APE 2005-01-03
 // =============================================================================
 class ADN_GroupBox
-: public QGroupBox
+: public Q3GroupBox
 , public ADN_Gfx_ABC
 {
     Q_OBJECT
@@ -44,8 +44,8 @@ public:
     //@{
     ADN_GroupBox( QWidget * parent = 0, const char * name = 0 );
     ADN_GroupBox( const QString & title, QWidget * parent = 0, const char * name = 0 );
-    ADN_GroupBox( int strips, Orientation orientation, QWidget * parent = 0, const char * name = 0 );
-    ADN_GroupBox( int strips, Orientation orientation, const QString & title, QWidget * parent = 0, const char * name = 0 );
+    ADN_GroupBox( int strips, Qt::Orientation orientation, QWidget * parent = 0, const char * name = 0 );
+    ADN_GroupBox( int strips, Qt::Orientation orientation, const QString & title, QWidget * parent = 0, const char * name = 0 );
     virtual ~ADN_GroupBox();
     //@}
 

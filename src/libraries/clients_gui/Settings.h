@@ -11,9 +11,6 @@
 #define __Settings_h_
 
 #include "clients_kernel/Settings_ABC.h"
-#include <qsettings.h>
-
-class QWidget;
 
 namespace kernel
 {
@@ -23,7 +20,6 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 // Created: APE 2004-06-01
 // =============================================================================
@@ -33,7 +29,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              Settings();
-    explicit Settings( QSettings::Format nFormat );
     virtual ~Settings();
     //@}
 

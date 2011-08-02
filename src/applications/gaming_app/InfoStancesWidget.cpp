@@ -19,11 +19,11 @@ using namespace kernel;
 
 namespace
 {
-    class InstallationProgress : public QProgressBar
+    class InstallationProgress : public Q3ProgressBar
     {
     public:
         explicit InstallationProgress( QWidget* parent )
-            : QProgressBar( 100, parent )
+            : Q3ProgressBar( 100, parent )
             , reflection_( new QImage( "resources/images/gaming/lifebarmask.png" ) )
         {
             setProgress( 0 );
@@ -31,34 +31,39 @@ namespace
         }
         virtual ~InstallationProgress() {}
 
-    protected:
-        void drawContents( QPainter* painter )
+    private:
+        virtual void paintEvent( QPaintEvent* )
         {
-            const QRect bar = contentsRect();
-            painter->fillRect( bar, QColor( 200, 200, 200 ) );
-            QRect progBar = bar;
-            progBar.setRight( bar.left() + int( float( bar.width() ) * float( progress() ) / 100.f ) );
-            QColor color;
-            color.setHsv( 225, progress() * 255 / 100, 200 );
-            painter->fillRect( progBar, color );
-            if( reflection_ )
-                painter->drawImage( bar, *reflection_ );
-            for( int i = 1; i < 4; ++i )
+            QPainter* painter = new QPainter();
+            if ( painter->begin( this ) )
             {
-                const int x = bar.left() + i * width() / 4;
-                painter->drawLine( x, bar.top(), x, bar.bottom() );
+                const QRect bar = contentsRect();
+                painter->fillRect( bar, QColor( 200, 200, 200 ) );
+                QRect progBar = bar;
+                progBar.setRight( bar.left() + int( float( bar.width() ) * float( progress() ) / 100.f ) );
+                QColor color;
+                color.setHsv( 225, progress() * 255 / 100, 200 );
+                painter->fillRect( progBar, color );
+                if( reflection_ )
+                    painter->drawImage( bar, *reflection_ );
+                for( int i = 1; i < 4; ++i )
+                {
+                    const int x = bar.left() + i * width() / 4;
+                    painter->drawLine( x, bar.top(), x, bar.bottom() );
+                }
+                painter->drawRect( bar );
+                painter->end();
             }
-            painter->drawRect( bar );
         }
 
         QImage* reflection_;
     };
 
-    class MovementProgress : public QProgressBar
+    class MovementProgress : public Q3ProgressBar
     {
     public:
         explicit MovementProgress( QWidget* parent )
-            : QProgressBar( 100, parent )
+            : Q3ProgressBar( 100, parent )
             , reflection_( new QImage( "resources/images/gaming/lifebarmask.png" ) )
         {
             setProgress( 0 );
@@ -66,16 +71,21 @@ namespace
         }
         virtual ~MovementProgress() {}
 
-    protected:
-        void drawContents( QPainter* painter )
+    private:
+        virtual void paintEvent( QPaintEvent* )
         {
-            static const QColor colors[] = { QColor( 255,  50, 50 ), QColor( 255, 50, 50 )
-                                           , QColor( 255, 255, 50 ), QColor( 50, 255, 50 ) };
-            const QRect bar = contentsRect();
-            painter->fillRect( bar, colors[ progress() / 33 ] );
-            if( reflection_ )
-                painter->drawImage( bar, *reflection_ );
-            painter->drawRect( bar );
+            QPainter* painter = new QPainter();
+            if ( painter->begin( this ) )
+            {
+                static const QColor colors[] = { QColor( 255,  50, 50 ), QColor( 255, 50, 50 )
+                                               , QColor( 255, 255, 50 ), QColor( 50, 255, 50 ) };
+                const QRect bar = contentsRect();
+                painter->fillRect( bar, colors[ progress() / 33 ] );
+                if( reflection_ )
+                    painter->drawImage( bar, *reflection_ );
+                painter->drawRect( bar );
+                painter->end();
+            }
         }
 
         QImage* reflection_;
@@ -87,12 +97,12 @@ namespace
 // Created: SBO 2007-02-09
 // -----------------------------------------------------------------------------
 InfoStancesWidget::InfoStancesWidget( QWidget* parent, kernel::Controllers& controllers )
-    : QVBox( parent, "InfoStancesWidget" )
+    : Q3VBox( parent, "InfoStancesWidget" )
     , controllers_( controllers )
     , selected_( controllers )
 {
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     {
         QFont font( "Arial", 7 );
         QLabel* label = new QLabel( tools::translate( "InfoStancesWidget", "Movement" ), box );
@@ -103,7 +113,7 @@ InfoStancesWidget::InfoStancesWidget( QWidget* parent, kernel::Controllers& cont
         label->setFont( font );
         label->setAlignment( Qt::AlignRight );
     }
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     {
         movement_ = new MovementProgress( box );
         movement_->setFixedSize( 50, 8 );

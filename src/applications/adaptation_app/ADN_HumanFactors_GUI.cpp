@@ -24,10 +24,10 @@
 #include "ADN_EditLine.h"
 #include "ADN_Weapons_GUI.h"
 
-#include <qgroupbox.h>
-#include <qvbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3vbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_PH_EditLine_Double
@@ -80,23 +80,23 @@ void ADN_HumanFactors_GUI::Build()
     // Create the main widget.
     pMainWidget_ = new QWidget( 0 );
 
-    QGroupBox* pGroupBox1 = new QGroupBox( 3, Qt::Horizontal, tr( "Experience modifiers" ), pMainWidget_ );
+    Q3GroupBox* pGroupBox1 = new Q3GroupBox( 3, Qt::Horizontal, tr( "Experience modifiers" ), pMainWidget_ );
     this->BuildModifiers( pGroupBox1, data_.newbieModifiers_, tr( "Newbie" ) );
     this->BuildModifiers( pGroupBox1, data_.xpModifiers_, tr( "Experienced" ) );
     this->BuildModifiers( pGroupBox1, data_.veteranModifiers_, tr( "Veteran" ) );
 
-    QGroupBox* pGroupBox2 = new QGroupBox( 3, Qt::Horizontal, tr( "Tiredness modifiers" ), pMainWidget_ );
+    Q3GroupBox* pGroupBox2 = new Q3GroupBox( 3, Qt::Horizontal, tr( "Tiredness modifiers" ), pMainWidget_ );
     this->BuildModifiers( pGroupBox2, data_.normalModifiers_, tr( "Not tired" ) );
     this->BuildModifiers( pGroupBox2, data_.tiredModifiers_, tr( "Tired" ) );
     this->BuildModifiers( pGroupBox2, data_.exhaustedModifiers_, tr( "Exhausted" ) );
 
-    QGroupBox* pGroupBox3 = new QGroupBox( 3, Qt::Horizontal, tr( "Stress modifiers" ), pMainWidget_ );
+    Q3GroupBox* pGroupBox3 = new Q3GroupBox( 3, Qt::Horizontal, tr( "Stress modifiers" ), pMainWidget_ );
     this->BuildModifiers( pGroupBox3, data_.calmModifiers_, tr( "Calm" ) );
     this->BuildModifiers( pGroupBox3, data_.worriedModifiers_, tr( "Worried" ) );
     this->BuildModifiers( pGroupBox3, data_.stressedModifiers_, tr( "Stressed" ) );
 
     // Layout
-    QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
     pLayout->setAlignment( Qt::AlignTop );
     pLayout->addWidget( pGroupBox1 );
     pLayout->addWidget( pGroupBox2 );
@@ -112,7 +112,7 @@ QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactor
 {
     ADN_GuiBuilder builder;
 
-    QGroupBox* pGroupBox = new QGroupBox( 3, Qt::Horizontal, szName, pParent );
+    Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, szName, pParent );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );

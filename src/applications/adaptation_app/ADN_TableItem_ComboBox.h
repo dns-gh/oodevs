@@ -17,7 +17,10 @@
 #include "ADN_TableItem_ComboBoxItem.h"
 #include "ADN_Connector_Enum.h"
 #include "ADN_Connector_Combo_ABC.h"
-#include <qtable.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3table.h>
+#pragma warning( pop )
 
 class ADN_TableItem_ComboBoxItem;
 

@@ -17,7 +17,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 namespace bfs = boost::filesystem;
 
@@ -26,7 +26,7 @@ namespace bfs = boost::filesystem;
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
 SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , config_( config )
     , fileLoader_( fileLoader )
 {
@@ -35,11 +35,11 @@ SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, c
     {
         QLabel* label = new QLabel( tools::translate( "SessionList", "Session:" ), this );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        list_ = new QListBox( this );
+        list_ = new Q3ListBox( this );
         connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectSession( int ) ) );
     }
     {
-        comments_ = new QTextEdit( this );
+        comments_ = new Q3TextEdit( this );
         comments_->setMaximumHeight( 200 );
         comments_->setReadOnly( true );
         comments_->hide();

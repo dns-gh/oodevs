@@ -22,7 +22,9 @@
 #include "ADN_Table.h"
 #include "ADN_TableItem_ABC.h"
 
-#include <qtable.h>
+#pragma warning( push, 0 )
+#include <Qt3Support/q3table.h>
+#pragma warning( pop )
 
 class ADN_TimeField;
 class QRegExpValidator;
@@ -44,7 +46,7 @@ class ADN_TableItem_TimeField : public ADN_TableItem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_TableItem_TimeField( ADN_Table* parent, void *data, QTableItem::EditType nEditType = OnTyping );
+    explicit ADN_TableItem_TimeField( ADN_Table* parent, void *data, Q3TableItem::EditType nEditType = OnTyping );
     virtual ~ADN_TableItem_TimeField();
     //@}
 

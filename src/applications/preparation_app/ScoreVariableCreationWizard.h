@@ -40,7 +40,7 @@ namespace indicators
 }
 
 class StaticModel;
-class QVGroupBox;
+class Q3VGroupBox;
 
 // =============================================================================
 /** @class  ScoreVariableCreationWizard
@@ -97,9 +97,9 @@ private:
     gui::ParametersLayer& layer_;
     const StaticModel& staticModel_;
     QLineEdit* name_;
-    QButton* ok_;
+    QPushButton* ok_;
     gui::ValuedComboBox< std::string >* type_;
-    QVGroupBox* paramBox_;
+    Q3VGroupBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;
     const kernel::GlTools_ABC& tools_;
     //@}

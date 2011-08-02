@@ -12,14 +12,12 @@
 #include "moc_ADN_TableItem_TimeField.cpp"
 #include "ADN_TimeField.h"
 #include "ADN_Connector_String.h"
-#include <qvalidator.h>
-#include <qlineedit.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_TimeField constructor
 // Created: SBO 2005-09-13
 // -----------------------------------------------------------------------------
-ADN_TableItem_TimeField::ADN_TableItem_TimeField( ADN_Table* parent, void *data, QTableItem::EditType nEditType /*= OnTyping*/ )
+ADN_TableItem_TimeField::ADN_TableItem_TimeField( ADN_Table* parent, void *data, Q3TableItem::EditType nEditType /* = OnTyping*/ )
     : ADN_TableItem_ABC( parent, data, nEditType )
     , pTimeField_      ( 0 )
     , pValidator_      ( new QRegExpValidator( this ) )
@@ -116,6 +114,6 @@ void ADN_TableItem_TimeField::SetAlignment( int nAlignment )
 int ADN_TableItem_TimeField::alignment() const
 {
     if( nAlignment_ == -1 )
-        return QTableItem::alignment();
+        return Q3TableItem::alignment();
     return nAlignment_;
 }

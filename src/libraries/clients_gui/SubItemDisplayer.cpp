@@ -60,7 +60,7 @@ SubItemDisplayer& SubItemDisplayer::AddChild( const QString& child )
 // Name: SubItemDisplayer::operator()
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-Displayer_ABC& SubItemDisplayer::operator()( QListViewItem* item )
+Displayer_ABC& SubItemDisplayer::operator()( Q3ListViewItem* item )
 {
     parent_ = item;
     return *this;
@@ -108,14 +108,14 @@ void SubItemDisplayer::EndDisplay()
 // Name: SubItemDisplayer::FindChild
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-QListViewItem* SubItemDisplayer::FindChild( const QString& name )
+Q3ListViewItem* SubItemDisplayer::FindChild( const QString& name )
 {
     if( ! parent_ )
         throw std::runtime_error( "Parent not set" );
     if( name == name_ )
         return parent_;
-    QListViewItem* previous = parent_->firstChild();
-    QListViewItem* child = previous;
+    Q3ListViewItem* previous = parent_->firstChild();
+    Q3ListViewItem* child = previous;
     for( unsigned int i = 0; i < children_.size(); ++i )
     {
         if( ! child )

@@ -13,12 +13,16 @@
 #include "dispatcher/Registrable_ABC.h"
 #pragma warning( push, 0 )
 #pragma warning( disable : 4996 )
-#include <qdatetime.h>
+#include <QtCore/qdatetime.h>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <map>
+
+#pragma warning( push )
+#include <QtCore/qdatetime.h>
+#pragma warning( pop )
 
 namespace sword
 {

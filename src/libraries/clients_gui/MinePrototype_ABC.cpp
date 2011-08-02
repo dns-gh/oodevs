@@ -14,7 +14,7 @@
 #include "clients_kernel/Units.h"
 #include "Tools.h"
 #include "LoadableLineEdit.h"
-#include <qvalidator.h>
+
 
 using namespace kernel;
 using namespace gui;
@@ -27,7 +27,7 @@ MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Mine parameters" ) )
 {
     densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Density:" ), this );
-    densityBox_ = new QHBox( this );
+    densityBox_ = new Q3HBox( this );
     density_ = new LoadableLineEdit( densityBox_ );
     density_->setText( QString::number( 0. ) );
     density_->setValidator( new QDoubleValidator( 0, 5, 3, density_ ) );

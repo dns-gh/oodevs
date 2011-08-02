@@ -28,14 +28,14 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_TimeField.h"
 
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qgrid.h>
+#include <Qt3Support/q3frame.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3vbox.h>
+#include <Qt3Support/q3grid.h>
 
 
 // -----------------------------------------------------------------------------
@@ -72,31 +72,31 @@ void ADN_AiEngine_GUI::Build()
     pMainWidget_ = new QWidget( 0, "Ai main widget" );
 
     // Danger
-    QGroupBox* pDangerBox = new QGroupBox( 3, Qt::Horizontal, tr( "Threat management" ), pMainWidget_ );
+    Q3GroupBox* pDangerBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Threat management" ), pMainWidget_ );
 
     builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Operational state maximum effect on threat" ), data_.rOperationalStateMaxDecrease_, tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Information relevance maximum effect on threat" ), data_.rPertinenceMaxDecrease_, tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Neutralization state maximum effect on threat" ), data_.rNeutralizedStateMaxDecrease_, tr( "%" ), ePercentage );
 
     // Operational state
-    QGroupBox* pOpStateBox = new QGroupBox( 3, Qt::Horizontal, tr( "Operational state computation" ), pMainWidget_ );
+    Q3GroupBox* pOpStateBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Operational state computation" ), pMainWidget_ );
 
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Non major equipments state weight" ), data_.rMinorEquipmentWeight_, 0, eZeroOne );
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Major equipments state weight" ), data_.rMajorEquipmentWeight_, 0, eZeroOne );
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Crew state weight" ), data_.rHumanWeight_, 0, eZeroOne );
 
     // Urban area effect on fire
-    QGroupBox* pUrbanStateBox = new QGroupBox( 3, Qt::Horizontal, tr( "Urban combat computation" ), pMainWidget_ );
+    Q3GroupBox* pUrbanStateBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Urban combat computation" ), pMainWidget_ );
     builder.AddField<ADN_EditLine_Double>( pUrbanStateBox, tr( "Urban combat hit ratio" ), data_.rUrbanCombatWeight_, tr( "%" ), ePercentage );
 
     // Critical Intelligence
-    QGroupBox* pCriticalIntelligenceBox = new QGroupBox( 3, Qt::Horizontal, tr( "Time to acquire critical intelligence" ), pMainWidget_ );
+    Q3GroupBox* pCriticalIntelligenceBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Time to acquire critical intelligence" ), pMainWidget_ );
     builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Minimum affinity" ), data_.rMinimumAffinity_ );
     builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Neutral affinity" ), data_.rNeutralAffinity_ );
     builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Maximum affinity" ), data_.rMaximumAffinity_ );
 
     // Wound effects modificators
-    QGroupBox* pWoundEffectsBox = new QGroupBox( 3, Qt::Horizontal, tr( "Equipment state on power indicators" ), pMainWidget_ );
+    Q3GroupBox* pWoundEffectsBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Equipment state on power indicators" ), pMainWidget_ );
     builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Available" ), data_.rAvailableModificator_, tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Unavailable" ), data_.rUnavailableModificator_, tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Repairable" ), data_.rRepairableModificator_, tr( "%" ), ePercentage );
@@ -104,7 +104,7 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Captured" ), data_.rCapturedModificator_, tr( "%" ), ePercentage );
 
     // Layout
-    QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pDangerBox );
     pMainLayout->addWidget( pOpStateBox );
     pMainLayout->addWidget( pUrbanStateBox );

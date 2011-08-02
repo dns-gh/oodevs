@@ -22,9 +22,9 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     : QTabWidget( parent, "UserProfileWidget" )
     , selectedProfile_( controllers )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setSpacing( 5 );
-    QGroupBox* group = new QGroupBox( 2,  Qt::Horizontal, tr( "Profile information" ), box );
+    Q3GroupBox* group = new Q3GroupBox( 2,  Qt::Horizontal, tr( "Profile information" ), box );
     group->setMargin( 5 );
     new QLabel( tr( "Login:" ), group );
     login_ = new QLineEdit( group );
@@ -34,10 +34,10 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     role_->hide();
     addTab( box, tr( "General" ) );
 
-    box = new QVBox( this );
-    group = new QGroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
+    box = new Q3VBox( this );
+    group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
     group->setMargin( 5 );
-    QHBox* holder = new QHBox( group );
+    Q3HBox* holder = new Q3HBox( group );
     new QLabel( tr( "Supervisor actions:" ), holder );
     supervisor_ = new QCheckBox( holder );
     QTabWidget* tabs = new QTabWidget( group );

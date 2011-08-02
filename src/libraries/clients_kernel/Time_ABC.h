@@ -11,7 +11,7 @@
 #define __Time_ABC_h_
 
 #pragma warning( push, 0 )
-#include <qdatetime.h>
+#include <QtCore/qdatetime.h>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
 

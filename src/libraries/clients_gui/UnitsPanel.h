@@ -55,7 +55,7 @@ private slots:
     void Sort();
     void OpenList();
     void CloseList();
-    void SelectionChanged( QListViewItem* item );
+    void SelectionChanged( Q3ListViewItem* item );
     void IconDragged();
     //@}
 

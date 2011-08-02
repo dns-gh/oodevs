@@ -19,13 +19,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_SplashScreen.h"
 
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen constructor
 // Created: APE 2005-03-18
 // -----------------------------------------------------------------------------
-ADN_SplashScreen::ADN_SplashScreen( const QPixmap& pixmap, WFlags f )
+ADN_SplashScreen::ADN_SplashScreen( const QPixmap& pixmap, Qt::WFlags f )
 : QSplashScreen            ( pixmap, f )
 , ADN_ProgressIndicator_ABC()
 , textColor_               ( Qt::black )
@@ -87,7 +87,7 @@ void ADN_SplashScreen::Increment( int /*n*/ )
 void ADN_SplashScreen::Increment( const char* szText, int /*n*/ )
 {
     if( IsValid() )
-        this->message( szText, AlignBottom | AlignHCenter, textColor_ );
+        this->message( szText, Qt::AlignBottom | Qt::AlignHCenter, textColor_ );
     qApp->processEvents();
 }
 
@@ -99,7 +99,7 @@ void ADN_SplashScreen::Increment( const char* szText, int /*n*/ )
 void ADN_SplashScreen::Reset( const char* szMsg )
 {
     if( IsValid() )
-        this->message( szMsg, AlignBottom | AlignHCenter, textColor_ );
+        this->message( szMsg, Qt::AlignBottom | Qt::AlignHCenter, textColor_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,5 +108,5 @@ void ADN_SplashScreen::Reset( const char* szMsg )
 // -----------------------------------------------------------------------------
 bool ADN_SplashScreen::IsValid() const
 {
-    return !pixmap()->isNull();
+    return !pixmap().isNull();
 }

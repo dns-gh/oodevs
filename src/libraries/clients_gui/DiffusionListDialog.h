@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "clients_kernel/SafePointer.h"
+#include "DiffusionListLegendBar.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -90,7 +91,7 @@ private:
     DiffusionListHierarchy*                     list_;
     QLineEdit*                                  text_;
     QLabel*                                     transmitterName_;
-    QButtonGroup*                               filtersButtons_;
+    Q3ButtonGroup*                              filtersButtons_;
     QLineEdit*                                  filterLine_;
     //@}
 };

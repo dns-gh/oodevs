@@ -10,7 +10,7 @@
 #ifndef __Application_h_
 #define __Application_h_
 
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 namespace frontend
 {
@@ -84,7 +84,7 @@ private:
     std::auto_ptr< Launcher > launcher_;
     std::auto_ptr< frontend::LauncherClient > launcherClient_;
     std::auto_ptr< SessionTray > sessionTray_;
-    QMainWindow* mainWindow_;
+    Q3MainWindow* mainWindow_;
     QTimer* timer_;
     //@}
 

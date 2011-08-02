@@ -53,7 +53,7 @@ class ScenarioLauncherPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
+             ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
                  , const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
     virtual ~ScenarioLauncherPage();
     //@}

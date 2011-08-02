@@ -46,7 +46,7 @@ TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& c
 TerrainPreference::~TerrainPreference()
 {
     controllers_.Unregister( *this );
-}
+} 
 
 // -----------------------------------------------------------------------------
 // Name: TerrainPreference::Display
@@ -54,7 +54,7 @@ TerrainPreference::~TerrainPreference()
 // -----------------------------------------------------------------------------
 void TerrainPreference::Display( QWidget* parent )
 {
-    QHBox* pBox = new QHBox( parent );
+    Q3HBox* pBox = new Q3HBox( parent );
     showCheckbox_ = new QCheckBox( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( name_ ), ENT_Tr::eToTr ).c_str(), pBox );
     showCheckbox_->setChecked( shown_ );
     pBox->setStretchFactor( showCheckbox_, 2 );

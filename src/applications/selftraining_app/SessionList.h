@@ -10,6 +10,9 @@
 #ifndef __SessionList_h_
 #define __SessionList_h_
 
+#include <Qt3Support/q3listbox.h>
+#include <Qt3Support/q3textedit.h>
+
 namespace tools
 {
     class GeneralConfig;
@@ -22,7 +25,7 @@ namespace tools
 */
 // Created: SBO 2009-12-13
 // =============================================================================
-class SessionList : public QVBox
+class SessionList : public Q3VBox
 {
     Q_OBJECT;
 
@@ -67,8 +70,8 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
-    QListBox* list_;
-    QTextEdit* comments_;
+    Q3ListBox* list_;
+    Q3TextEdit* comments_;
     QString exercise_;
     //@}
 };

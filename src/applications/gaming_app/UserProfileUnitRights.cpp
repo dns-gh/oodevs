@@ -26,7 +26,7 @@ UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& cont
     , UserProfileRights_ABC( this )
 {
     controllers_.Register( *this );
-    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( QListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ UserProfileUnitRights::~UserProfileUnitRights()
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::viewportResizeEvent( QResizeEvent* e )
 {
-    QScrollView::viewportResizeEvent( e );
+    Q3ScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
@@ -54,7 +54,7 @@ void UserProfileUnitRights::viewportResizeEvent( QResizeEvent* e )
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::setColumnWidth( int column, int w )
 {
-    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
+    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void UserProfileUnitRights::hideEvent( QHideEvent* event )
 // Name: UserProfileUnitRights::OnItemClicked
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::OnItemClicked( QListViewItem* item, const QPoint& point, int column )
+void UserProfileUnitRights::OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column )
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
 }

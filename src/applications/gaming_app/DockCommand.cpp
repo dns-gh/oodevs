@@ -11,8 +11,6 @@
 #include "DockCommand.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/Command.h"
-#include <qmainwindow.h>
-#include <qdockwindow.h>
 #include <string>
 #include <boost/function.hpp>
 
@@ -45,12 +43,12 @@ void DockCommand::Receive( const Command& command )
     if( command.ArgumentCount() == 0 )
         return;
 
-    boost::function1< void, QDockWindow* > func = command.Argument( 1 ) == "show" ? std::mem_fun( &QDockWindow::show ) : std::mem_fun( &QDockWindow::hide );
+    boost::function1< void, QDockWidget* > func = command.Argument( 1 ) == "show" ? std::mem_fun( &QDockWidget::show ) : std::mem_fun( &QDockWidget::hide );
     QStringList list;
     for( unsigned int i = 2; i <= command.ArgumentCount(); ++i )
         list.append( command.Argument( i ).c_str() );
-    QPtrList< QDockWindow > docks = mainWindow_.dockWindows();
-    for( QPtrList< QDockWindow >::iterator it = docks.begin(); it != docks.end(); ++it )
+    QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( &mainWindow_, QString() );
+    for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
         if( !(*it)->inherits( "QToolBar" ) && ( list.empty() || list.contains( (*it)->name() ) ) )
             func( *it );
 }

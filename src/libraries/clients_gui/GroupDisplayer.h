@@ -11,9 +11,6 @@
 #define __GroupDisplayer_h_
 
 #include "clients_kernel/Displayer_ABC.h"
-
-#include <qlabel.h>
-#include <qgroupbox.h>
 #include <map>
 
 namespace gui
@@ -27,7 +24,7 @@ namespace gui
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class GroupDisplayer : public kernel::Displayer_ABC, public QGroupBox
+class GroupDisplayer : public kernel::Displayer_ABC, public Q3GroupBox
 {
 public:
     //! @name Constructors/Destructor

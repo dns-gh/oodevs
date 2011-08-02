@@ -28,7 +28,7 @@ class ADN_Composantes_RadarsListView
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_RadarsListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Composantes_RadarsListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_Composantes_RadarsListView();
 
 private:

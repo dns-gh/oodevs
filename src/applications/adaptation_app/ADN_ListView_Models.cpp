@@ -18,9 +18,9 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Population_Data.h"
-#include <qheader.h>
-#include <qpopmenu.h>
-#include <qmessagebox.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <QtGui/qmessagebox.h>
 
 typedef ADN_Models_Data::ModelInfos ModelInfos;
 
@@ -28,13 +28,13 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 // Name: ADN_ListView_Models constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 , eEntityType_( eEntityType )
 {
     // Add one column.
     addColumn( tr( "Models" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<ModelInfos>( *this );
@@ -79,7 +79,7 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        QPopupMenu popupMenu( this );
+        Q3PopupMenu popupMenu( this );
         ADN_Model_Wizard wizard( eEntityType_, this );
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );
@@ -90,7 +90,7 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Models::GetToolTipFor
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Models::GetToolTipFor( QListViewItem& item )
+std::string ADN_ListView_Models::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     ModelInfos* pCastData = (ModelInfos*)pData;

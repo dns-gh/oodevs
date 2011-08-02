@@ -20,11 +20,11 @@ using namespace gui;
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
 Panels::Panels( QWidget* pParent )
-    : QVBox( pParent )
+    : Q3VBox( pParent )
 {
     setMinimumSize( 1, 1 );
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     box->setMaximumHeight( 20 );
     previous_ = new QPushButton( box );
     previous_->setPixmap( MAKE_PIXMAP( left_arrow ) );
@@ -35,9 +35,9 @@ Panels::Panels( QWidget* pParent )
     next_->setMaximumSize( 20, 20 );
     next_->setFlat( true );
     combo_ = new QComboBox( box );
-    combo_->setFocusPolicy( QWidget::StrongFocus );
+    combo_->setFocusPolicy( Qt::StrongFocus );
 
-    stack_ = new QWidgetStack( this );
+    stack_ = new Q3WidgetStack( this );
 
     dummy_ = new QWidget( stack_ );
     stack_->addWidget( dummy_ );

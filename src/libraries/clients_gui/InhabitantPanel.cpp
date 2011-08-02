@@ -29,12 +29,13 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
     , controllers_( controllers )
     , options_    ( controllers.options_ )
 {
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Colors" ), this );
-    QVBox* hBox = new QVBox( box );
-    QGroupBox* densityGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Density Gradient map" ), hBox );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Colors" ), this );
+    Q3VBox* hBox = new Q3VBox( box );
+    Q3GroupBox* densityGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Density Gradient map" ), hBox );
     new DensityWidget( densityGroup, controllers, "Density" );
-    QGroupBox* occupationGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Occupation Gradient map" ), hBox );
+    Q3GroupBox* occupationGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Occupation Gradient map" ), hBox );
     new DensityWidget( occupationGroup, controllers, "Accommodation" );
+    setWidget( box );
 }
 
 // -----------------------------------------------------------------------------

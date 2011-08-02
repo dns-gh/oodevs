@@ -12,10 +12,10 @@
 #ifndef __ADN_RunProcessDialog_h_
 #define __ADN_RunProcessDialog_h_
 
-#include <qdialog.h>
+#include <QtGui/qdialog.h>
 
-class QTextEdit;
-class QProcess;
+class Q3TextEdit;
+class Q3Process;
 
 //*****************************************************************************
 // Created: SBO 02-01-2006
@@ -49,8 +49,8 @@ private:
     //@}
 
 private:
-    QTextEdit* pOutputField_;
-    QProcess*  pProcess_;
+    Q3TextEdit* pOutputField_;
+    Q3Process*  pProcess_;
 };
 
 #endif // __ADN_RunProcessDialog_h_

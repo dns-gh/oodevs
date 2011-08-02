@@ -12,7 +12,7 @@
 #define __ADN_FileChooser_h_
 
 #include "ADN_Connector_ABC.h"
-#include <qwidget.h>
+#include <QtGui/qwidget.h>
 
 class QLineEdit;
 class QPushButton;

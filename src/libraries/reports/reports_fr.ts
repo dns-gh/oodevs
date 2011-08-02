@@ -1,36 +1,38 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>Localisation</name>
     <message>
         <source>Circle</source>
-        <translation>Cercle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Ligne</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation>Polygone</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sector</source>
-        <translation>Secteur</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ReportFactory</name>
     <message>
         <source>Unhandled report parameter type: &apos;%1&apos;.</source>
-        <translation>Paramètre de compte-rendu non supporté: &apos;%1&apos;.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -45,7 +47,7 @@
     </message>
     <message>
         <source>Received</source>
-        <translation>Reçu</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

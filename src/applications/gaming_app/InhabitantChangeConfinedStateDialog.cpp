@@ -38,11 +38,11 @@ InhabitantChangeConfinedStateDialog::InhabitantChangeConfinedStateDialog( QWidge
     setCaption( tools::translate( "InhabitantChangeConfinedStateDialog", "Change confine state" ) );
     resize( 320, 150 );
     // Main layout
-    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
     pConfinedCheckBox_ = new QCheckBox( tools::translate( "InhabitantChangeConfinedStateDialog", "Confined" ), this );
     mainLayout->addWidget( pConfinedCheckBox_ );
     // ok / cancel butons
-    QHBox* buttonLayout = new QHBox( this );
+    Q3HBox* buttonLayout = new Q3HBox( this );
     QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttonLayout );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout );
     okButton->setDefault( TRUE );
@@ -121,7 +121,7 @@ void InhabitantChangeConfinedStateDialog::NotifyContextMenu( const kernel::Inhab
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "InhabitantChangeConfinedStateDialog", "Change confine state" ), this, SLOT( Show() ) );
     }
 }

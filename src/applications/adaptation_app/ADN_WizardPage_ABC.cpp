@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_WizardPage_ABC.h"
 
-#include <qwizard.h>
+#include <Qt3Support/q3wizard.h>
 
 #include "ADN_ImageViewer.h"
 
@@ -28,16 +28,16 @@
 // Name: ADN_WizardPage_ABC constructor
 // Created: AGN 2003-11-18
 // -----------------------------------------------------------------------------
-ADN_WizardPage_ABC::ADN_WizardPage_ABC( QWizard* pParent, const char* name, const char* imageName )
-: QHBox         ( pParent, name )
-, pWizard_      ( pParent )
+ADN_WizardPage_ABC::ADN_WizardPage_ABC( Q3Wizard* pParent, const char* name, const char* imageName )
+    : Q3HBox  ( pParent, name )
+    , pWizard_( pParent )
 {
     setSpacing( 30 );
 
     pImage_ = new ADN_ImageViewer( imageName, true, this );
     pImage_->setFixedSize( 131, 324 );
 
-    pRightSide_ = new QVBox( this );
+    pRightSide_ = new Q3VBox( this );
 }
 
 

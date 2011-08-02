@@ -21,7 +21,7 @@ using namespace kernel;
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
 NatureEditionCategory::NatureEditionCategory( QWidget* parent )
-    : QHBox( parent )
+    : Q3HBox( parent )
     , rule_( 0 )
     , current_( QString::null )
     , next_( 0 )

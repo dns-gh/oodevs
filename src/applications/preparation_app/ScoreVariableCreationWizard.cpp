@@ -27,7 +27,6 @@
 #include "clients_kernel/Tools.h"
 #include "preparation/StaticModel.h"
 #include <boost/assign/list_of.hpp>
-#include <qvgroupbox.h>
 
 using namespace kernel;
 
@@ -45,11 +44,11 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
 {
     setCaption( tr( "Create variable" ) );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 1, 5 );
     {
-        QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
         new QLabel( tr( "Name: " ), box );
         name_ = new QLineEdit( box );
         connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( OnChangeName() ) );
@@ -78,13 +77,13 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
         grid->addWidget( box, 0, 0 );
     }
     {
-        paramBox_ = new QVGroupBox( tr( "Value" ), this );
+        paramBox_ = new Q3VGroupBox( tr( "Value" ), this );
         grid->addWidget( paramBox_, 1, 0 );
     }
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         ok_ = new QPushButton( tr( "Ok" ), box );
-        QButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 2, 0 );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
@@ -172,7 +171,7 @@ void ScoreVariableCreationWizard::OnChangeName()
 
     if( name_->text().isEmpty() )
     {
-        name_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
+        name_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
         variableName = tr( "Variable value: " );
     }
     else
@@ -207,8 +206,8 @@ void ScoreVariableCreationWizard::OnChangeType()
     if( paramBox_ )
     {
         delete paramBox_;
-        paramBox_ = new QVGroupBox( tr( "Value" ), this );
-        static_cast< QGridLayout* >( layout() )->addWidget( paramBox_, 1, 0 );
+        paramBox_ = new Q3VGroupBox( tr( "Value" ), this );
+        static_cast< Q3GridLayout* >( layout() )->addWidget( paramBox_, 1, 0 );
     }
 
     if( parameter_ )

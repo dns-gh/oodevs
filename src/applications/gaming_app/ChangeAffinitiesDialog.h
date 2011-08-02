@@ -88,10 +88,10 @@ private:
     //! @name Member data
     //@{
     bool optional_;
-    QVBoxLayout* mainLayout_;
+    Q3VBoxLayout* mainLayout_;
     QCheckBox* checkBox_;
-    QGrid* affinitiesGrid_;
-    QHBox* buttonLayout_;
+    Q3Grid* affinitiesGrid_;
+    Q3HBox* buttonLayout_;
     T_SpinBoxs affinitiesSpinboxs_;
     T_Affinities affinities_;
     //@}

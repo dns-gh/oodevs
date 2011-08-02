@@ -19,8 +19,8 @@
 #ifndef __ADN_ImageViewer_h_
 #define __ADN_ImageViewer_h_
 
-#include <qwidget.h>
-#include <qimage.h>
+#include <QtGui/qwidget.h>
+#include <QtGui/qimage.h>
 
 // =============================================================================
 /** @class  ADN_ImageViewer

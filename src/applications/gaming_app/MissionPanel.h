@@ -49,7 +49,7 @@ namespace actions
     }
 }
 
-class QPopupMenu;
+class Q3PopupMenu;
 class Decisions_ABC;
 class Decisions;
 class AutomatDecisions;
@@ -63,7 +63,7 @@ class CommandPublisher;
 // =============================================================================
 // Created: APE 2004-03-19
 // =============================================================================
-class MissionPanel : public QDockWindow
+class MissionPanel : public QDockWidget
                    , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
@@ -84,7 +84,6 @@ public:
     //! @name Operations
     //@{
     void Draw( kernel::Viewport_ABC& viewport );
-    void hideEvent( QHideEvent* pEvent );
     //@}
 
 public slots:
@@ -125,7 +124,7 @@ private:
     void NotifyMission();
 
     template< typename E, typename T >
-    void AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
+    void AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
     //@}
 
 private:

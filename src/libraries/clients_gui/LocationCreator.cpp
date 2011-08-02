@@ -137,7 +137,7 @@ void LocationCreator::NotifyContextMenu( const kernel::Nothing&, kernel::Context
 {
     if( lineAllowed_ || polygonAllowed_ || circleAllowed_ )
     {
-        QPopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
         if( lineAllowed_ )
             subMenu->insertItem( tools::translate( "gui::LocationCreator", "Line" ), this, SLOT( StartLine() ) );
         if( polygonAllowed_ )
@@ -158,7 +158,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     if( pointAllowed_ )
     {
         popupPoint_ = point;
-        QPopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
         subMenu->insertItem( tools::translate( "gui::LocationCreator", "Point" ), this, SLOT( StartPoint() ) );
     }
 }

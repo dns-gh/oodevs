@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_DataException.h"
 
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException constructor

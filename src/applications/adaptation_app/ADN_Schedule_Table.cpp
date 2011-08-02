@@ -12,7 +12,7 @@
 #include "moc_ADN_Schedule_Table.cpp"
 #include "ADN_Urban_Data.h"
 #include "ADN_People_Data.h"
-#include <qdatetimeedit.h>
+#include <Qt3Support/q3datetimeedit.h>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
@@ -23,7 +23,7 @@
 // Created: LGY 2011-01-17
 // -----------------------------------------------------------------------------
 ADN_Schedule_Table::ADN_Schedule_Table( QWidget* pParent )
-    : QTable( pParent )
+    : Q3Table( pParent )
 {
     setNumCols( 4 );
     horizontalHeader()->setLabel( 0, qApp->translate( "ADN_Schedule_Table", "Day" ) );
@@ -76,10 +76,10 @@ QStringList ADN_Schedule_Table::CreateAccommodations() const
 
 namespace
 {
-    QTimeEdit* CreateItem( QWidget* pParent, const std::string& date )
+    Q3TimeEdit* CreateItem( QWidget* pParent, const std::string& date )
     {
-        QTimeEdit* pItem = new QTimeEdit( pParent );
-        pItem->setDisplay( QTimeEdit::Hours + QTimeEdit::Minutes );
+        Q3TimeEdit* pItem = new Q3TimeEdit( pParent );
+        pItem->setDisplay( Q3TimeEdit::Hours + Q3TimeEdit::Minutes );
         std::vector< std::string > result;
         boost::algorithm::split( result, date, boost::algorithm::is_any_of( ":" ) );
         if( result.size() != 2 )
@@ -103,7 +103,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::OnContextMenu( int row, int col, const QPoint& point )
 {
-    QPopupMenu menu( this );
+    Q3PopupMenu menu( this );
     menu.insertItem( qApp->translate( "ADN_Schedule_Table", "Add" ), 0 );
     menu.insertItem( qApp->translate( "ADN_Schedule_Table", "Remove" ), 1 );
     int nMenuResult = menu.exec( point );
@@ -113,8 +113,8 @@ void ADN_Schedule_Table::OnContextMenu( int row, int col, const QPoint& point )
     {
         int rows = numRows();
         AddRow( rows );
-        QTime toTime = static_cast< QTimeEdit* >( cellWidget( rows, 2 ) )->time();
-        QTime fromTime = static_cast< QTimeEdit* >( cellWidget( rows, 1 ) )->time();
+        QTime toTime = static_cast< Q3TimeEdit* >( cellWidget( rows, 2 ) )->time();
+        QTime fromTime = static_cast< Q3TimeEdit* >( cellWidget( rows, 1 ) )->time();
         AddEvent( rows, 0u, fromTime.toString( "hh:mm" ).ascii(),
                   toTime.toString( "hh:mm" ).ascii(), item( rows, 3 )->text().ascii() );
     }
@@ -188,9 +188,9 @@ void ADN_Schedule_Table::OnValueChanged( int row, int /*col*/ )
 {
     if( pCurData_ )
     {
-        QTime toTime = static_cast< QTimeEdit* >( cellWidget( row, 2 ) )->time();
-        QTime fromTime = static_cast< QTimeEdit* >( cellWidget( row, 1 ) )->time();
-        QComboTableItem* pDay = static_cast< QComboTableItem* >( item( row, 0 ) );
+        QTime toTime = static_cast< Q3TimeEdit* >( cellWidget( row, 2 ) )->time();
+        QTime fromTime = static_cast< Q3TimeEdit* >( cellWidget( row, 1 ) )->time();
+        Q3ComboTableItem* pDay = static_cast< Q3ComboTableItem* >( item( row, 0 ) );
         AddEvent( row, pDay->currentItem(), fromTime.toString( "hh:mm" ).ascii(),
                   toTime.toString( "hh:mm" ).ascii(), item( row, 3 )->text().ascii() );
     }
@@ -223,19 +223,19 @@ void ADN_Schedule_Table::AddRow( int rows, unsigned int day, const std::string& 
 {
     insertRows( rows );
 
-    QComboTableItem* pCombo = new QComboTableItem( this, CreateWeek() );
+    Q3ComboTableItem* pCombo = new Q3ComboTableItem( this, CreateWeek() );
     pCombo->setCurrentItem( day );
     setItem( rows, 0, pCombo );
 
-    QTimeEdit* pFrom = CreateItem( this, from );
+    Q3TimeEdit* pFrom = CreateItem( this, from );
     connect( pFrom, SIGNAL( valueChanged( const QTime& ) ), this, SLOT( OnTimeChanged( const QTime& ) ) );
     setCellWidget( rows, 1, pFrom );
 
-    QTimeEdit* pTo = CreateItem( this, to );
+    Q3TimeEdit* pTo = CreateItem( this, to );
     connect( pTo, SIGNAL( valueChanged( const QTime& ) ), this, SLOT( OnTimeChanged( const QTime& ) ) );
     setCellWidget( rows, 2, pTo );
 
-    QComboTableItem* pAccommodation = new QComboTableItem( this, CreateAccommodations() );
+    Q3ComboTableItem* pAccommodation = new Q3ComboTableItem( this, CreateAccommodations() );
     pAccommodation->setCurrentItem( accommodation.c_str() );
     setItem( rows, 3, pAccommodation );
 }

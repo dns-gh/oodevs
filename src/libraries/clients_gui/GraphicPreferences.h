@@ -13,7 +13,11 @@
 #include <spatialcontainer/TerrainData.h>
 #include <graphics/GraphicSetup_ABC.h>
 
-namespace xml { class xistream; class xostream; };
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
 
 namespace kernel
 {
@@ -46,6 +50,7 @@ public:
     void Display( QWidget* parent ) const;
 
     virtual void SetupLineGraphics  ( const Data_ABC* pData );
+    virtual void SetupLineGraphics  ( unsigned int offset );
     virtual void SetupBorderGraphics( const Data_ABC* pData );
     virtual void SetupAreaGraphics  ( const Data_ABC* pData );
 

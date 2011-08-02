@@ -10,8 +10,6 @@
 #ifndef __PreferencesDialog_h_
 #define __PreferencesDialog_h_
 
-#include <qdialog.h>
-
 namespace kernel
 {
     class CoordinateSystems;

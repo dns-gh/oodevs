@@ -19,13 +19,13 @@
 #ifndef __ADN_Wizard_FirstPage_Default_h_
 #define __ADN_Wizard_FirstPage_Default_h_
 
-#include <qlabel.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlineedit.h>
-#include <qlistview.h>
-#include <qwizard.h>
-#include <qmessagebox.h>
+#include <QtGui/qlabel.h>
+#include <Qt3Support/q3buttongroup.h>
+#include <QtGui/qradiobutton.h>
+#include <QtGui/qlineedit.h>
+#include <Qt3Support/q3listview.h>
+#include <Qt3Support/q3wizard.h>
+#include <QtGui/qmessagebox.h>
 #include "ADN_Wizard_FirstPage_ABC.h"
 
 // =============================================================================
@@ -46,7 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Wizard_FirstPage_Default( T_ItemVector& existingItemsList, QWizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
+             ADN_Wizard_FirstPage_Default( T_ItemVector& existingItemsList, Q3Wizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
     virtual ~ADN_Wizard_FirstPage_Default();
     //@}
 
@@ -72,7 +72,7 @@ protected:
 
     QLabel*    pNameLabel_;
     QLineEdit* pNameEdit_;
-    QListView* pExistingItemsListView_;
+    Q3ListView* pExistingItemsListView_;
     QRadioButton* pNewRadioButton_;
     QRadioButton* pCopyRadioButton_;
     //@}

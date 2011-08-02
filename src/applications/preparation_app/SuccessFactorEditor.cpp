@@ -24,35 +24,35 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
     , current_( 0 )
 {
     setCaption( tr( "Success factor editor" ) );
-    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setColStretch( 1, 5 );
     grid->setRowStretch( 1, 5 );
     {
-        QGroupBox* box = new QHGroupBox( tr( "Information" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
         name_ = new QLineEdit( box );
         grid->addMultiCellWidget( box, 0, 0, 0, 1 );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Profiles" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Profiles" ), this );
         profiles_ = new SuccessFactorProfileList( box, controllers );
         grid->addMultiCellWidget( box, 1, 2, 0, 0 );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Conditions" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Conditions" ), this );
         conditions_ = new SuccessFactorConditionsEditor( box, scores );
         grid->addWidget( box, 1, 1 );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Actions" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Actions" ), this );
         actions_ = new SuccessFactorActionsEditor( box, actionTypes );
         grid->addWidget( box, 2, 1 );
     }
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         ok_ = new QPushButton( tr( "Ok" ), box );
-        QButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 3, 1, Qt::AlignRight );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );

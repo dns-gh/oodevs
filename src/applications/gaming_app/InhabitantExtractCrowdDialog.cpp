@@ -22,6 +22,8 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
 #include "gaming/Inhabitant.h"
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantExtractCrowdDialog constructor
@@ -40,7 +42,7 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     setCaption( tools::translate( "InhabitantExtractCrowdDialog", "Extract crowd" ) );
     resize( 250, 150 );
     // Main layout
-    QGridLayout* grid = new QGridLayout( this, 8, 2, 5, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 8, 2, 5, 5 );
     // Type & SpinBoxs
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Crowd type:" ), this ), 0, 0 );
     crowdTypeLabel_ = new QLabel( "0", this );
@@ -55,8 +57,8 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     deadSizeLabel_ = new QLabel ( "0", this );
     grid->addWidget( deadSizeLabel_, 3, 1 );
     // Separator
-    QFrame* hline = new QFrame( this );
-    hline->setFrameStyle( QFrame::HLine | QFrame::Sunken );
+    Q3Frame* hline = new Q3Frame( this );
+    hline->setFrameStyle( Q3Frame::HLine | Q3Frame::Sunken );
     grid->addMultiCellWidget( hline, 4, 4, 0, 1 );
     // Labels
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Crowd size:" ), this ), 5, 0 );
@@ -73,13 +75,13 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     woundedSpinBox_->setMaxValue( std::numeric_limits< int >::max() );
     woundedSpinBox_->setLineStep( 10 );
     crowdTypeLabel_->setAlignment( Qt::AlignCenter );
-    crowdTypeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    crowdTypeLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     crowdSizeLabel_->setAlignment( Qt::AlignCenter );
-    crowdSizeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    crowdSizeLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     remainingInhabitantLabel_->setAlignment( Qt::AlignCenter );
-    remainingInhabitantLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    remainingInhabitantLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     // Buttons
-    QHBox* buttonLayout = new QHBox( this );
+    Q3HBox* buttonLayout = new Q3HBox( this );
     QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttonLayout );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout );
     grid->addMultiCellWidget( buttonLayout, 7, 7, 0, 1 );
@@ -195,7 +197,7 @@ void InhabitantExtractCrowdDialog::NotifyContextMenu( const kernel::Inhabitant_A
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "InhabitantExtractCrowdDialog", "Extract crowd" ), this, SLOT( Show() ) );
     }
 }

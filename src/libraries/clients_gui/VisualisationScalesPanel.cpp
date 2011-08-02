@@ -37,7 +37,7 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     : PreferencePanel_ABC( parent, "VisualisationScalesPanel" )
     , controllers_( controllers )
 {
-    QGroupBox* box = new QGroupBox( 3, Qt::Horizontal, tr( "Visualisation scales" ), this );
+    Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tr( "Visualisation scales" ), this );
 
     const QString elements[ 14 ] =
     { tr( "Large texts" ), tr( "Small texts" ), tr( "Edges" ),           tr( "Cliffs" ),
@@ -80,6 +80,7 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
 
     QPushButton* button = new QPushButton( tr( "Reset" ), box );
     connect( button, SIGNAL( clicked() ), this, SLOT( OnReset() ) );
+    setWidget( box );
     controllers_.Register( *this );
 }
 

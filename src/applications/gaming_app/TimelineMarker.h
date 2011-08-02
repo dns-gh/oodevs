@@ -37,7 +37,7 @@ class TimelineMarker : public TimelineItem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineMarker( QCanvas* canvas, ActionsScheduler& scheduler, kernel::Controllers& controllers, const TimelineRuler& ruler );
+             TimelineMarker( Q3Canvas* canvas, ActionsScheduler& scheduler, kernel::Controllers& controllers, const TimelineRuler& ruler );
     virtual ~TimelineMarker();
     //@}
 

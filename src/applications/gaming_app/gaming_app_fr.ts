@@ -1,31 +1,6 @@
-<!DOCTYPE TS><TS>
-<context>
-    <name>@default</name>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Time Table</source>
-        <translation>Table de Temps</translation>
-    </message>
-    <message>
-        <source>Tick</source>
-        <translation>Pas de temps</translation>
-    </message>
-    <message>
-        <source>Sim time</source>
-        <translation>Temps Sim</translation>
-    </message>
-    <message>
-        <source>Real time</source>
-        <translation>Temps réel</translation>
-    </message>
-</context>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>ActionProperties</name>
     <message>
@@ -190,6 +165,17 @@
     </message>
 </context>
 <context>
+    <name>AlarmEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+</context>
+<context>
     <name>AlarmsWidget</name>
     <message>
         <source>Alarms</source>
@@ -245,6 +231,14 @@
     <message>
         <source>Error</source>
         <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Unknown exception caught</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Avertissement</translation>
     </message>
 </context>
 <context>
@@ -695,6 +689,14 @@ Reason: %3
     <name>ExtensionsPanel</name>
     <message>
         <source>Change extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1295,6 +1297,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>LineEdit</name>
+    <message>
+        <source>Checkpoint name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LivingAreaDialog</name>
     <message>
         <source>Living area</source>
@@ -1617,84 +1626,12 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <source> - Not connected</source>
-        <translation> - Non connecté</translation>
-    </message>
-    <message>
-        <source>Tactical</source>
-        <translation>Tactique</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Communication</translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation>Objets</translation>
     </message>
     <message>
-        <source>Orbat</source>
-        <translation>ODB</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propriétés</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Journal</translation>
-    </message>
-    <message>
-        <source>Profiling</source>
-        <translation>Performances</translation>
-    </message>
-    <message>
-        <source>Logo</source>
-        <translation>Logo</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unités</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation>Automates</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Elévation</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Cartes raster</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>Intelligences</source>
-        <translation>Renseignements</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation>Création</translation>
-    </message>
-    <message>
-        <source>Intelligence</source>
-        <translation>Renseignement</translation>
-    </message>
-    <message>
-        <source>Knowledge</source>
-        <translation>Connaissance</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation>Erreur lors du chargement de l&apos;exercice: </translation>
-    </message>
-    <message>
-        <source>Watershed</source>
-        <translation>Montée des eaux</translation>
     </message>
     <message>
         <source>Crowds</source>
@@ -1705,12 +1642,84 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Populations</translation>
     </message>
     <message>
-        <source>Formations</source>
-        <translation>Formations</translation>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Propriétés</translation>
+    </message>
+    <message>
+        <source>Knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profiling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Contour Lines</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Unités</translation>
+    </message>
+    <message>
+        <source>Automats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Not connected</source>
+        <translation type="unfinished"> - Non connecté</translation>
     </message>
 </context>
 <context>
@@ -2078,10 +2087,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Profi&amp;ls</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Fenêtres</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>A propos</translation>
     </message>
@@ -2144,6 +2149,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Toggle dock windows</source>
         <translation>Basculer affichage des fenêtres</translation>
+    </message>
+    <message>
+        <source>&amp;Windows</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2709,10 +2718,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Créer une sauvegarde</translation>
     </message>
     <message>
-        <source>Checkpoint name: </source>
-        <translation>Nom de la sauvegarde: </translation>
-    </message>
-    <message>
         <source>Connecting</source>
         <translation>Connexion en cours</translation>
     </message>
@@ -2819,6 +2824,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Saving checkpoint...</source>
         <translation>Sauvegarde en cours...</translation>
     </message>
+    <message>
+        <source>Last tick speed factor/Mean speed factor</source>
+        <translation type="unfinished">Facteur d&apos;accélération dernier tick/moyen</translation>
+    </message>
 </context>
 <context>
     <name>SupplyConsignsWidget</name>
@@ -2893,6 +2902,29 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Change Formation Superior</source>
         <translation>Changer le supérieur de la formation</translation>
+    </message>
+</context>
+<context>
+    <name>TimeTableDialog</name>
+    <message>
+        <source>Time Table</source>
+        <translation type="unfinished">Table de Temps</translation>
+    </message>
+    <message>
+        <source>Tick</source>
+        <translation type="unfinished">Pas de temps</translation>
+    </message>
+    <message>
+        <source>Sim time</source>
+        <translation type="unfinished">Temps Sim</translation>
+    </message>
+    <message>
+        <source>Real time</source>
+        <translation type="unfinished">Temps réel</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
     </message>
 </context>
 <context>
@@ -3199,6 +3231,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Invalid local weather %1, please correct time or position settings</source>
         <translation>Météo locale invalide %1, merci de corriger les paramètres de temps ou de position</translation>
     </message>
+    <message>
+        <source>Weather parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gamig_app::Action</name>
@@ -3223,29 +3259,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>gui</name>
-    <message>
-        <source>Weather parameters</source>
-        <translation>Paramètres de météo</translation>
-    </message>
-    <message>
-        <source>Last tick speed factor/Mean speed factor</source>
-        <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
-    </message>
-    <message>
-        <source>Validate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>tools</name>
     <message>
         <source> - Not connected</source>
-        <translation> - Non connecté</translation>
+        <translation type="unfinished"> - Non connecté</translation>
     </message>
 </context>
 </TS>

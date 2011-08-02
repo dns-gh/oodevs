@@ -26,7 +26,7 @@ class ADN_ListView_Units
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ListView_Units( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_ListView_Units( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView_Units();
 
     void ConnectNatureSymbol( ADN_Units_Data::UnitInfos* pValidData );
@@ -37,7 +37,7 @@ private:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    std::string GetToolTipFor( QListViewItem& item );
+    std::string GetToolTipFor( Q3ListViewItem& item );
     //@}
 };
 

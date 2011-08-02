@@ -11,7 +11,7 @@
 #define __TristateOption_h_
 
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 namespace kernel

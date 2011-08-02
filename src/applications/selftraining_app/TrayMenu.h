@@ -18,7 +18,7 @@ class Session;
 */
 // Created: RDS 2008-08-21
 // =============================================================================
-class TrayMenu : public QPopupMenu
+class TrayMenu : public Q3PopupMenu
 {
     Q_OBJECT;
 

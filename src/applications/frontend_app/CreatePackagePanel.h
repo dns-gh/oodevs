@@ -11,6 +11,7 @@
 #define __frontend_app_CreatePackagePanel_h_
 
 #include "Panel_ABC.h"
+#include <Qt3Support/q3action.h>
 
 namespace frontend
 {
@@ -23,12 +24,12 @@ namespace zip
 
 class InfoBubble;
 class QLineEdit;
-class QListView;
-class QProgressBar;
+class Q3ListView;
+class Q3ProgressBar;
 class QPushButton;
-class QTextEdit;
-class QListBoxItem;
-class QCheckListItem;
+class Q3TextEdit;
+class Q3ListBoxItem;
+class Q3CheckListItem;
 
 // =============================================================================
 /** @class  CreatePackagePanel
@@ -43,7 +44,7 @@ class CreatePackagePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CreatePackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config, ActionsContext& context );
+             CreatePackagePanel( Q3WidgetStack* widget, Q3Action& action, const frontend::Config& config, ActionsContext& context );
     virtual ~CreatePackagePanel();
     //@}
 
@@ -51,7 +52,7 @@ private slots:
     //! @name Operations
     //@{
     void CreatePackage();
-    void OnSelectionChanged( QListBoxItem* item );
+    void OnSelectionChanged( Q3ListBoxItem* item );
     //@}
 
 private:
@@ -68,9 +69,9 @@ private:
     std::string GetDestinationDirectory() const;
 
     bool BrowseClicked();
-    QListViewItem* BuildExerciseFeatures( const std::string& exercise );
-    QListViewItem* BuildExerciseData( const std::string& exercise );
-    void BuildCategory( QListViewItem* parent, const QStringList& list, const QString& base, const std::string& category );
+    Q3ListViewItem* BuildExerciseFeatures( const std::string& exercise );
+    Q3ListViewItem* BuildExerciseData( const std::string& exercise );
+    void BuildCategory( Q3ListViewItem* parent, const QStringList& list, const QString& base, const std::string& category );
     void WriteContent( zip::ozipfile& archive ) const;
     //@}
 
@@ -80,11 +81,11 @@ private:
     //! @name Member data
     //@{
     const frontend::Config& config_;
-    QListBox*  list_;
+    Q3ListBox*  list_;
     T_Package package_;
-    QTextEdit* description_;
-    QListView* content_;
-    QProgressBar* progress_;
+    Q3TextEdit* description_;
+    Q3ListView* content_;
+    Q3ProgressBar* progress_;
     QPushButton* okay_;
     InfoBubble* bubble_;
     //@}

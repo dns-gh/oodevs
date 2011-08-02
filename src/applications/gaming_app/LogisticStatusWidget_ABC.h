@@ -35,7 +35,7 @@ namespace gui
 // Created: SBO 2007-02-19
 // =============================================================================
 template< typename Extension >
-class LogisticStatusWidget_ABC : public QVBox
+class LogisticStatusWidget_ABC : public Q3VBox
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< Extension >
                                , public tools::SelectionObserver< kernel::Entity_ABC >
@@ -81,7 +81,7 @@ protected:
 // -----------------------------------------------------------------------------
 template< typename Extension >
 LogisticStatusWidget_ABC< Extension >::LogisticStatusWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
     , selected_( controllers )
 {

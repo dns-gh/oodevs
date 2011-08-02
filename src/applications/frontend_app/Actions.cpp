@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 Actions::Actions( QObject* parent )
     : QObject( parent )
-    , group_( new QActionGroup( this, "Action group", true ) )
+    , group_( new Q3ActionGroup( this, "Action group", true ) )
 {
     // NOTHING
 }
@@ -38,9 +38,9 @@ Actions::~Actions()
 // Name: Actions::CreateAction
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::CreateAction( const QString& name, const char* cname )
+Q3Action& Actions::CreateAction( const QString& name, const char* cname )
 {
-    QAction* result = new QAction( parent(), cname );
+    Q3Action* result = new Q3Action( parent(), cname );
     result->setToggleAction( true );
     result->setMenuText( name );
     result->setText( name );
@@ -52,9 +52,9 @@ QAction& Actions::CreateAction( const QString& name, const char* cname )
 // Name: Actions::CreateTerrain
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::CreateTerrain()
+Q3Action& Actions::CreateTerrain()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Create terrain" ), "Create terrain" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Create terrain" ), "Create terrain" );
     result.setIconSet( MAKE_PIXMAP( terrain_create ) );
     result.setToolTip( tools::translate( "Actions", "Import new terrain from VMap, DTED and USRP bases" ) );
     return result;
@@ -64,9 +64,9 @@ QAction& Actions::CreateTerrain()
 // Name: Actions::CreateExercise
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::CreateExercise()
+Q3Action& Actions::CreateExercise()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Create exercise" ), "Create exercise" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Create exercise" ), "Create exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_create ) );
     result.setToolTip( tools::translate( "Actions", "Create new exercise using an existing terrain and an existing physical/decisional data set" ) );
     return result;
@@ -76,9 +76,9 @@ QAction& Actions::CreateExercise()
 // Name: Actions::EditExercise
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::EditExercise()
+Q3Action& Actions::EditExercise()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Edit exercise" ), "Edit exercise" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Edit exercise" ), "Edit exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_edit ) );
     result.setToolTip( tools::translate( "Actions", "Change exercise Order of Battle, User Profiles and Weather settings" ) );
     return result;
@@ -88,9 +88,9 @@ QAction& Actions::EditExercise()
 // Name: Actions::StartExercise
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::StartExercise()
+Q3Action& Actions::StartExercise()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Start exercise" ), "Start exercise" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Start exercise" ), "Start exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_start ) );
     result.setToolTip( tools::translate( "Actions", "Start a new simulation session using an existing exercise" ) );
     return result;
@@ -100,9 +100,9 @@ QAction& Actions::StartExercise()
 // Name: Actions::RestartExercise
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::RestartExercise()
+Q3Action& Actions::RestartExercise()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Restart exercise" ), "Restart exercise" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Restart exercise" ), "Restart exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_restart ) );
     result.setToolTip( tools::translate( "Actions", "Restart a simulation session using an existing checkpoint" ) );
     return result;
@@ -112,9 +112,9 @@ QAction& Actions::RestartExercise()
 // Name: Actions::JoinExercise
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::JoinExercise()
+Q3Action& Actions::JoinExercise()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Join exercise" ), "Join exercise" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Join exercise" ), "Join exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_join ) );
     result.setToolTip( tools::translate( "Actions", "Join a simulation session" ) );
     return result;
@@ -124,9 +124,9 @@ QAction& Actions::JoinExercise()
 // Name: Actions::StartAnalysis
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::StartAnalysis()
+Q3Action& Actions::StartAnalysis()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Start analysis" ), "Start analysis" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Start analysis" ), "Start analysis" );
     result.setIconSet( MAKE_PIXMAP( analyse_create ) );
     result.setToolTip( tools::translate( "Actions", "Start the analysis of a previous simulation session" ) );
     return result;
@@ -136,9 +136,9 @@ QAction& Actions::StartAnalysis()
 // Name: Actions::JoinAnalysis
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-QAction& Actions::JoinAnalysis()
+Q3Action& Actions::JoinAnalysis()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Join analysis" ), "Join analysis" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Join analysis" ), "Join analysis" );
     result.setIconSet( MAKE_PIXMAP( analyse_join ) );
     result.setToolTip( tools::translate( "Actions", "Join an analysis session" ) );
     return result;
@@ -148,9 +148,9 @@ QAction& Actions::JoinAnalysis()
 // Name: Actions::InstallPackage
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
-QAction& Actions::InstallPackage()
+Q3Action& Actions::InstallPackage()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Install package" ), "Install package" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Install package" ), "Install package" );
     result.setIconSet( MAKE_PIXMAP( exercise_create ) );
     result.setToolTip( tools::translate( "Actions", "Install a data package" ) );
     return result;
@@ -160,9 +160,9 @@ QAction& Actions::InstallPackage()
 // Name: Actions::CreatePackage
 // Created: JCR 2009-11-09
 // -----------------------------------------------------------------------------
-QAction& Actions::CreatePackage()
+Q3Action& Actions::CreatePackage()
 {
-    QAction& result = CreateAction( tools::translate( "Actions", "Create package" ), "Create package" );
+    Q3Action& result = CreateAction( tools::translate( "Actions", "Create package" ), "Create package" );
     result.setIconSet( MAKE_PIXMAP( exercise_create ) );
     result.setToolTip( tools::translate( "Actions", "Generate a data package (.otpack) easily exportable" ) );
     return result;

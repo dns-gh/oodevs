@@ -20,8 +20,8 @@
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/Tools.h"
 #include <boost/filesystem.hpp>
-#include <qheader.h>
-#include <qlistview.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3listview.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -30,13 +30,14 @@ namespace
 {
     static int clearEvent = 4242;
 
+
     class MyListViewItem : public gui::ValuedListItem
     {
     public:
-        MyListViewItem( QListView* parent, const std::string& fullpath )
+        MyListViewItem( Q3ListView* parent, const std::string& fullpath )
             : gui::ValuedListItem( parent )
             , fullpath_( fullpath.c_str() ) {}
-        MyListViewItem( QListViewItem* parent, const std::string& fullpath )
+        MyListViewItem( Q3ListViewItem* parent, const std::string& fullpath )
             : gui::ValuedListItem( parent )
             , fullpath_( fullpath.c_str() ) {}
         virtual QString key( int column, bool /*ascending*/ ) const
@@ -53,30 +54,30 @@ namespace
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, bool showBrief /*= true*/, bool showProfile /*=true*/, bool showParams /*= true*/, bool enableParams /*= true*/ )
-    : QVBox             ( parent )
+ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
+    : Q3VBox             ( parent )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
     , filter_           ( 0 )
     , defaultFilter_    ( new frontend::LocalExerciseFilter() )
 {
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     box->setMargin( 5 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setSpacing( 50 );
     {
-        QVBox* leftBox = new QVBox( box );
+        Q3VBox* leftBox = new Q3VBox( box );
         leftBox->setSpacing( 5 );
         leftBox->setBackgroundOrigin( QWidget::WindowOrigin );
         QLabel* label = new QLabel( tools::translate( "ExerciseList", "Exercise:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        exercises_ = new QListView( leftBox );
+        exercises_ = new Q3ListView( leftBox );
         exercises_->addColumn( "exercise" );
         exercises_->header()->hide();
         exercises_->setAllColumnsShowFocus( true );
         exercises_->setSortColumn( 0 );
-        exercises_->setResizeMode( QListView::LastColumn );
+        exercises_->setResizeMode( Q3ListView::LastColumn );
 
         label = new QLabel( tools::translate( "ExerciseList", "Profile:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -87,7 +88,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         profiles_->setShown( showProfile );
 
         connect( profiles_ , SIGNAL( Select( const frontend::Profile& ) ), this, SLOT( SelectProfile( const frontend::Profile& ) ) );
-        connect( exercises_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
+        connect( exercises_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( SelectExercise( Q3ListViewItem* ) ) );
     }
     {
         properties_ = new ExerciseProperties( box, config, fileLoader_, showBrief, showParams, enableParams );
@@ -145,7 +146,7 @@ void ExerciseList::SetFilter( const frontend::ExerciseFilter_ABC& filter )
 // Name: ExerciseList::SelectExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectExercise( QListViewItem* item )
+void ExerciseList::SelectExercise( Q3ListViewItem* item )
 {
     const QString exercise( item ? static_cast< MyListViewItem* >( item )->fullpath_ : "" );
     profiles_->Update( exercise.ascii() );
@@ -192,7 +193,7 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
 // -----------------------------------------------------------------------------
 const frontend::Exercise_ABC* ExerciseList::GetSelectedExercise() const
 {
-    QListViewItem* item = exercises_->currentItem();
+    Q3ListViewItem* item = exercises_->currentItem();
     if( gui::ValuedListItem* value = static_cast< gui::ValuedListItem* >( item ) )
         if( value->IsA< const frontend::Exercise_ABC >() )
             return value->GetValue< const frontend::Exercise_ABC >();
@@ -241,16 +242,21 @@ void ExerciseList::AddExerciseEntry( const frontend::Exercise_ABC& exercise )
 {
     static const QImage directory( "resources/images/selftraining/directory.png" );
     static const QImage mission( "resources/images/selftraining/mission.png" );
+    QPixmap pxDir;
+    QPixmap pxMiss;
 
-    qApp->setOverrideCursor( QCursor::WaitCursor );
+    pxDir.fromImage( directory );
+    pxMiss.fromImage( mission );
+
+    qApp->setOverrideCursor( Qt::WaitCursor );
     QStringList path( QStringList::split( '/', exercise.GetName().c_str() ) );
     QStringList complete;
-    QListViewItem* parent = 0;
+    Q3ListViewItem* parent = 0;
     for( QStringList::iterator it( path.begin() ); it != path.end(); ++it )
     {
         complete.append( *it );
         const QString current( complete.join( "/" ) );
-        QListViewItem* item = FindExerciseItem( "/" + current );
+        Q3ListViewItem* item = FindExerciseItem( "/" + current );
         if( !item )
         {
             const std::string fullpath( complete.size() < path.size() ? "/" + current : current );
@@ -259,13 +265,15 @@ void ExerciseList::AddExerciseEntry( const frontend::Exercise_ABC& exercise )
             else
                 item = new MyListViewItem( exercises_, fullpath );
             item->setText( 0, GetExerciseDisplayName( *it ) );
-            item->setPixmap( 0, directory );
+            QPixmap p;
+            p.convertFromImage( directory );
+            item->setPixmap( 0, p );
         }
         parent = item;
     }
     if( parent )
     {
-        parent->setPixmap( 0, mission );
+        parent->setPixmap( 0, pxMiss );
         static_cast< gui::ValuedListItem* >( parent )->SetValue( &exercise );
     }
     qApp->restoreOverrideCursor();
@@ -275,9 +283,9 @@ void ExerciseList::AddExerciseEntry( const frontend::Exercise_ABC& exercise )
 // Name: ExerciseList::FindExerciseItem
 // Created: SBO 2011-05-27
 // -----------------------------------------------------------------------------
-QListViewItem* ExerciseList::FindExerciseItem( const QString& path ) const
+Q3ListViewItem* ExerciseList::FindExerciseItem( const QString& path ) const
 {
-    for( QListViewItemIterator it = exercises_->firstChild(); it.current(); ++it )
+    for( Q3ListViewItemIterator it = exercises_->firstChild(); it.current(); ++it )
         if( static_cast< MyListViewItem* >( it.current() )->fullpath_ == path )
             return it.current();
     return 0;
@@ -307,7 +315,7 @@ void ExerciseList::DeleteExerciseEntry( const frontend::Exercise_ABC& exercise )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &exercise, exercises_->firstChild() ) )
     {
-        QListViewItem* parent = item->parent();
+        Q3ListViewItem* parent = item->parent();
         delete item;
         if( parent && parent->childCount() == 0 )
             delete parent;
@@ -320,7 +328,7 @@ void ExerciseList::DeleteExerciseEntry( const frontend::Exercise_ABC& exercise )
 // -----------------------------------------------------------------------------
 bool ExerciseList::Exists( const QString& exercise ) const
 {
-    return exercises_->findItem( exercise, 0, Qt::ExactMatch ) != 0;
+    return exercises_->findItem( exercise, 0, Q3ListView::ExactMatch ) != 0;
 }
 
 // -----------------------------------------------------------------------------

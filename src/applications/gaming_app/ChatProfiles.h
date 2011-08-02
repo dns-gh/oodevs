@@ -25,7 +25,7 @@ class UserProfile;
 */
 // Created: SBO 2008-06-11
 // =============================================================================
-class ChatProfiles : public QListBox
+class ChatProfiles : public Q3ListBox
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< UserProfile >
 {
@@ -47,7 +47,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnSelected( QListBoxItem* item );
+    void OnSelected( Q3ListBoxItem* item );
     //@}
 
 private:

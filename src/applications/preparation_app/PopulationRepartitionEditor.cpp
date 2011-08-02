@@ -26,7 +26,7 @@ PopulationRepartitionEditor::PopulationRepartitionEditor( QDialog*& self, QWidge
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setMargin( 10 );
     pMainLayout->setSpacing( 10 );
-    QGroupBox* vBox = new QGroupBox( 2, Qt::Horizontal, this );
+    Q3GroupBox* vBox = new Q3GroupBox( 2, Qt::Horizontal, this );
     pMainLayout->addWidget( vBox );
     {
         new QLabel( tr( "Male (%)" ), vBox );
@@ -52,7 +52,7 @@ PopulationRepartitionEditor::PopulationRepartitionEditor( QDialog*& self, QWidge
     warning_ = new QLabel( this );
     pMainLayout->addWidget( warning_ );
 
-    QHBox* pbuttonBox = new QHBox( this );
+    Q3HBox* pbuttonBox = new Q3HBox( this );
     okBtn_ = new QPushButton( tr( "Ok" ), pbuttonBox );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), pbuttonBox );
     okBtn_->setDefault( true );

@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "GradientItem.h"
 #include "Painter_ABC.h"
-#include <qpainter.h>
 
 using namespace gui;
 
@@ -18,9 +17,9 @@ using namespace gui;
 // Name: GradientItem constructor
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientItem::GradientItem( QCanvas* canvas, const Painter_ABC& painter,
+GradientItem::GradientItem( Q3Canvas* canvas, const Painter_ABC& painter,
                             unsigned short percentage, const QColor& color, bool disableState )
-    : QCanvasLine( canvas )
+    : Q3CanvasLine( canvas )
     , painter_     ( painter )
     , percentage_  ( percentage )
     , color_       ( color )
@@ -96,7 +95,7 @@ void GradientItem::draw( QPainter& painter )
         setPen( QColor( Qt::white ) );
     else
         setPen( QColor( Qt::black ) );
-    QCanvasLine::draw( painter );
+    Q3CanvasLine::draw( painter );
     painter.fillRect( startPoint().x() - 3, startPoint().y(), 7, 7, pen().color() );
     if( ! disableState_ )
         painter_.Draw( painter, percentage_, GetX(), canvas()->rect().height() - 20 );
@@ -106,9 +105,9 @@ void GradientItem::draw( QPainter& painter )
 // Name: GradientItem::areaPoints
 // Created: SBO 2008-01-16
 // -----------------------------------------------------------------------------
-QPointArray GradientItem::areaPoints() const
+Q3PointArray GradientItem::areaPoints() const
 {
-    return QPointArray( QRect( startPoint().x(), startPoint().y(), 7, canvas()->rect().height() ) );
+    return Q3PointArray( QRect( startPoint().x(), startPoint().y(), 7, canvas()->rect().height() ) );
 }
 
 // -----------------------------------------------------------------------------

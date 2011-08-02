@@ -10,9 +10,6 @@
 #ifndef __NoteDialog_h_
 #define __NoteDialog_h_
 
-#include <qdialog.h>
-#include <qtextedit.h>
-
 class Note;
 class Publisher_ABC;
 class Simulation;
@@ -29,7 +26,7 @@ class NoteDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             NoteDialog( QDockWindow* parent, Publisher_ABC &publisher );
+             NoteDialog( QDockWidget* parent, Publisher_ABC &publisher );
     virtual ~NoteDialog();
     //@}
 
@@ -62,7 +59,7 @@ private:
     Publisher_ABC   &publisher_;
     QLineEdit*      textName_;
     QLineEdit*      textId_;
-    QTextEdit*      textDesc_;
+    Q3TextEdit*      textDesc_;
     QPushButton*    buttonOk_;
     unsigned int    note_;
     bool            update_;

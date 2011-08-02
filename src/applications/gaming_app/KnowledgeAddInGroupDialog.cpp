@@ -36,7 +36,7 @@ using namespace kernel;
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
 KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, const kernel::Profile_ABC& profile, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel )
-    : QDialog( pParent, 0, 0, WStyle_Customize | WStyle_NormalBorder | WStyle_Title | WStyle_SysMenu )
+: QDialog( pParent, 0, 0, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu )
     , controllers_( controllers )
     , profile_( profile )
     , simulation_( simulation )
@@ -72,8 +72,8 @@ KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, const ke
         grid->addWidget( pPerceptionCombo_, 1, 1 );
     }
     {
-        QButton* ok     = new QPushButton( tools::translate( "KnowledgeAddInGroupDialog", "Ok" ), this );
-        QButton* cancel = new QPushButton( tools::translate( "KnowledgeAddInGroupDialog", "Cancel" ), this );
+        QPushButton* ok     = new QPushButton( tools::translate( "KnowledgeAddInGroupDialog", "Ok" ), this );
+        QPushButton* cancel = new QPushButton( tools::translate( "KnowledgeAddInGroupDialog", "Cancel" ), this );
         grid->addWidget( ok, 2, 1 );
         grid->addWidget( cancel, 2, 2 );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );

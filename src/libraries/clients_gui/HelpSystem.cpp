@@ -14,7 +14,6 @@
 #include "moc_HelpSystem.cpp"
 #include "Tools.h"
 #include "tools/GeneralConfig.h"
-#include <qobjectlist.h>
 #include <xeumeuleu/xml.hpp>
 #include <htmlhelp.h>
 
@@ -32,7 +31,7 @@ HelpSystem::HelpSystem( QWidget* root, const std::string& config )
     xis >> xml::start( "widgets" )
             >> xml::list( "widget", *this, &HelpSystem::ReadWidget )
         >> xml::end;
-    QAction* helpAction = new QAction( "Help", QKeySequence( Qt::Key_F1 ), this );
+    Q3Action* helpAction = new Q3Action( "Help", QKeySequence( Qt::Key_F1 ), this );
     connect( helpAction, SIGNAL( activated() ), this, SLOT( ShowHelp() ) );
 }
 
@@ -65,16 +64,18 @@ std::string HelpSystem::FindWidget( const QWidget* root )
         CIT_Anchors it = anchors_.find( root->name() );
         if( it != anchors_.end() && root->hasMouse() )
             return it->second;
-        if( const QObjectList* l = root->children() )
+        if( const QObjectList* l = &root->children() )
         {
             QObjectList children( *l );
-            for( const QObject* child = children.first(); child; child = children.next() )
-                if( child && child->inherits( "QWidget" ) )
+            for (QObjectList::iterator it = children.begin() ; it != children.end() ; ++it )
+            {
+                if( ( *it ) && ( *it )->inherits( "QWidget" ) )
                 {
-                    const std::string result = FindWidget( static_cast< const QWidget* >( child ) );
+                    const std::string result = FindWidget( static_cast< const QWidget* >( (*it ) ) );
                     if( ! result.empty() )
                         return result;
                 }
+            }
         }
     }
     return std::string();

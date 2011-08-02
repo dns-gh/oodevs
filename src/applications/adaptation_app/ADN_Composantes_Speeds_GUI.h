@@ -14,7 +14,7 @@
 
 #include "ADN_CommonGfx.h"
 
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 //*****************************************************************************
 // Created: JDY 03-07-15

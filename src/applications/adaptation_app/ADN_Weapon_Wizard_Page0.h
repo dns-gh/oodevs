@@ -15,7 +15,7 @@
 
 class QComboBox;
 class QRadioButton;
-class QListView;
+class Q3ListView;
 
 // =============================================================================
 /** @class  ADN_Weapon_Wizard_Page0
@@ -33,7 +33,7 @@ class ADN_Weapon_Wizard_Page0 : public ADN_Wizard_FirstPage_ABC<ADN_Weapons_Data
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Weapon_Wizard_Page0( QWizard* pParent, const char* szName = 0 );
+    explicit ADN_Weapon_Wizard_Page0( Q3Wizard* pParent, const char* szName = 0 );
     virtual ~ADN_Weapon_Wizard_Page0();
     //@}
 
@@ -48,7 +48,7 @@ private:
     QComboBox* pComboLauncher_;
     QComboBox* pComboAmmo_;
     QRadioButton* pCopyRadioButton_;
-    QListView* pWeaponList_;
+    Q3ListView* pWeaponList_;
     //@}
 };
 

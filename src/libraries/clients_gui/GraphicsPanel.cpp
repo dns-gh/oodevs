@@ -21,7 +21,9 @@ GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::Controllers& controllers 
     : PreferencePanel_ABC( parent, "GraphicsPanel" )
     , preferences_( *new GraphicPreferences( controllers ) )
 {
-    preferences_.Display( this );
+    Q3VBox* container = new Q3VBox( this );
+    preferences_.Display( container );
+    setWidget( container );
 }
 
 // -----------------------------------------------------------------------------

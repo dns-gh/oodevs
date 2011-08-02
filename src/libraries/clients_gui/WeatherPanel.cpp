@@ -32,18 +32,17 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     , selectedLocal_( 0 )
     , currentType_  ( eWeatherGlobal )
 {
-    layout()->setAlignment( Qt::AlignTop );
     // Layouts
-    QVBox* mainLayout = new QVBox( this );
-    headerLayout_ = new QVBox( mainLayout );
-    QVBox* contentLayout = new QVBox( mainLayout );
-    QHBox* buttonsLayout = new QHBox( mainLayout );
+    Q3VBox* mainLayout = new Q3VBox( this );
+    headerLayout_ = new Q3VBox( mainLayout );
+    Q3VBox* contentLayout = new Q3VBox( mainLayout );
+    Q3HBox* buttonsLayout = new Q3HBox( mainLayout );
     buttonsLayout->setMinimumHeight( 30 );
     buttonsLayout->setMaximumHeight( 30 );
     // Weather
-    QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, tr( "Weather" ), contentLayout );
+    Q3GroupBox* group = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather" ), contentLayout );
     {
-        QHBox* box = new QHBox( group );
+        Q3HBox* box = new Q3HBox( group );
         new QLabel( tr( "Weather type:" ), box );
         gui::ValuedComboBox< E_WeatherType >* weatherTypeCombo = new gui::ValuedComboBox< E_WeatherType >( box );
         weatherTypeCombo->AddItem( tr( "Global weather" ), eWeatherGlobal );
@@ -51,14 +50,15 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
         connect( weatherTypeCombo, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
     }
     // Global weather layout
-    globalLayout_ = new QVBox( group );
+    globalLayout_ = new Q3VBox( group );
     // Local weather layout
-    localLayout_ = new QVBox( group );
+    localLayout_ = new Q3VBox( group );
     // Buttons
-    QButton* okBtn     = new QPushButton( tr( "Validate" ) , buttonsLayout );
-    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), buttonsLayout );
-    connect( okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
+    setWidget( mainLayout );
+    Q3Button okBtn     = new QPushButton( tr( "Validate" ) , buttonsLayout );
+    Q3Button cancelBtn = new QPushButton( tr( "Cancel" ), buttonsLayout );
+    connect( &okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    connect( &cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,14 +76,15 @@ WeatherPanel::~WeatherPanel()
 // -----------------------------------------------------------------------------
 void WeatherPanel::CreateLocalParameters()
 {
-    parametersGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Time and position parameters" ), localLayout_ );
+    parametersGroup_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Time and position parameters" ), localLayout_ );
+    localLayout_->setMinimumHeight( 150 );
     new QLabel( tr( "Start time:" ), parametersGroup_ );
     startTime_ = new QDateTimeEdit( parametersGroup_ );
     new QLabel( tr( "End time:" ), parametersGroup_ );
     endTime_ = new QDateTimeEdit( parametersGroup_ );
 
-    QButton* btn = new QPushButton( tr( "Set location" ), localLayout_ );
-    connect( btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
+    Q3Button btn = new QPushButton( tr( "Set location" ), localLayout_ );
+    connect( &btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
 
     OnTypeChanged( 0 );
 }

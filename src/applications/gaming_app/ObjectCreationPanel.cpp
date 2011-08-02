@@ -27,9 +27,12 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     , static_( staticModel )
     , simulation_( simulation )
     , tools_( tools )
-    , created_( new ObjectPrototype( this, controllers, staticModel, layer ) )
 {
-    QPushButton* ok = new QPushButton( tools::translate( "ObjectCreationPanel", "Create" ), this );
+    Q3VBox* box = new Q3VBox( this );
+    box->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    created_ = new ObjectPrototype( box, controllers, staticModel, layer );
+    QPushButton* ok = new QPushButton( tools::translate( "ObjectCreationPanel", "Create" ), box );
+    setWidget( box );
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }

@@ -24,10 +24,14 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     : InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
     , tools_      ( tools )
-    , created_    ( new ObjectPrototype( this, controllers, model, objectsModel, urbanModel, layer, config ) )
 {
-    QButton* ok = new QPushButton( tr( "Create" ), this );
-    connect( ok, SIGNAL( clicked() ), created_, SLOT( Commit() ) );
+    Q3VBox* vbox = new Q3VBox( this );
+    {
+        created_ = new ObjectPrototype( vbox, controllers, model, objectsModel, urbanModel, layer, config );
+        QPushButton* ok = new QPushButton( tr( "Create" ), vbox );
+        connect( ok, SIGNAL( clicked() ), created_, SLOT( Commit() ) );
+    }
+    setWidget( vbox );
     controllers_.Register( *this );
 }
 

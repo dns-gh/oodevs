@@ -11,7 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_Postures_GUI.h"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -61,7 +61,7 @@ ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& strColC
     : ADN_Table2( pParent, "ADN_Equipement_Postures_GUI" )
 {
     // Setup the table properties.
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setSorting( true );
     setShowGrid( false );
     setLeftMargin( 0 );

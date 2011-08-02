@@ -11,6 +11,7 @@
 #define __InstallPackagePanel_h_
 
 #include "Panel_ABC.h"
+#include <Qt3Support/q3action.h>
 
 namespace zip
 {
@@ -24,10 +25,10 @@ namespace frontend
 
 class InfoBubble;
 class QLineEdit;
-class QListBox;
-class QProgressBar;
+class Q3ListBox;
+class Q3ProgressBar;
 class QPushButton;
-class QTextEdit;
+class Q3TextEdit;
 
 // =============================================================================
 /** @class  InstallPackagePanel
@@ -42,7 +43,7 @@ class InstallPackagePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InstallPackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config, ActionsContext& context );
+             InstallPackagePanel( Q3WidgetStack* widget, Q3Action& action, const frontend::Config& config, ActionsContext& context );
     virtual ~InstallPackagePanel();
     //@}
 
@@ -73,9 +74,9 @@ private:
     const frontend::Config& config_;
     QLineEdit* package_;
     QLineEdit* name_;
-    QTextEdit* description_;
-    QListBox* content_;
-    QProgressBar* progress_;
+    Q3TextEdit* description_;
+    Q3ListBox* content_;
+    Q3ProgressBar* progress_;
     QPushButton* okay_;
     InfoBubble* bubble_;
     //@}

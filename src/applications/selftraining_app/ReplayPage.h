@@ -46,7 +46,7 @@ class ReplayPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+             ReplayPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ReplayPage();
     //@}
 
@@ -85,7 +85,7 @@ private:
     const frontend::Exercise_ABC* exercise_;
     frontend::Profile profile_;
     QString session_;
-    QListBox* sessionList_;
+    Q3ListBox* sessionList_;
     //@}
 };
 

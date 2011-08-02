@@ -39,7 +39,7 @@ namespace
 // -----------------------------------------------------------------------------
 OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
                             gui::AutomatsLayer& automats, gui::FormationLayer& formations )
-    : QHBox( parent )
+    : Q3HBox( parent )
     , controllers_    ( controllers )
     , filter_         ( filter )
     , entity_         ( controllers_ )
@@ -48,16 +48,19 @@ OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, P
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
-    setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
+    setFrameStyle( QFrame::StyledPanel | QFrame::Raised );
+    setMinimumWidth( 150 );
+    setMaximumWidth( 440 );
 
     QToolButton* btn = new QToolButton( this );
     btn->setAutoRaise( true );
     btn->setPopupDelay( 0 );
     btn->setIconSet( MAKE_ICON( aggregate ) );
+    btn->setPopupMode( QToolButton::MenuButtonPopup );
     QToolTip::add( btn, tr( "Aggregate all automats" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Aggregate() ) );
 
-    menu_ = new QPopupMenu( btn );
+    menu_ = new Q3PopupMenu( btn );
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
         menu_->insertItem( LEVELS[ i ].c_str(), i );
     btn->setPopup( menu_ );

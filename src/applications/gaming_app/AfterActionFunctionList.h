@@ -43,7 +43,7 @@ class StaticModel;
 */
 // Created: AGE 2007-09-21
 // =============================================================================
-class AfterActionFunctionList : public QVBox
+class AfterActionFunctionList : public Q3VBox
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< Simulation >
                               , private boost::noncopyable
@@ -66,7 +66,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChange( QListViewItem* item );
+    void OnSelectionChange( Q3ListViewItem* item );
     void Request();
     //@}
 
@@ -92,8 +92,8 @@ private:
     gui::ParametersLayer& layer_;
     const StaticModel& staticModel_;
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
-    QGroupBox* parameters_;
-    QVGroupBox* timeGroup_;
+    Q3GroupBox* parameters_;
+    Q3VGroupBox* timeGroup_;
     QSpinBox* firstTick_;
     QSpinBox* duration_;
     QPushButton* request_;

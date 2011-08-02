@@ -68,7 +68,7 @@ namespace kernel
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 template< typename T >
-SafePointer< T >::SafePointer( kernel::Controllers& controllers, const T* element /*= 0*/ )
+SafePointer< T >::SafePointer( kernel::Controllers& controllers, const T* element /* = 0*/ )
     : controllers_( &controllers )
     , element_( element )
 {

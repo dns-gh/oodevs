@@ -49,7 +49,7 @@ GLSymbols::~GLSymbols()
 // Name: GLSymbols::PrintApp6
 // Created: SBO 2006-12-15
 // -----------------------------------------------------------------------------
-void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/ )
+void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/ )
 {
     const T_SymbolKey key( symbol, style );
     const bool create = ! symbol.empty() && symbols_.find( key ) == symbols_.end();

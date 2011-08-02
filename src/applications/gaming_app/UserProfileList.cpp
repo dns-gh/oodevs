@@ -14,22 +14,21 @@
 #include "gaming/UserProfile.h"
 #include "gaming/UserProfileFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include <qlistbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers, UserProfileFactory_ABC& factory )
-    : QVBox( parent, "UserProfileList" )
+    : Q3VBox( parent, "UserProfileList" )
     , controllers_( controllers )
     , pages_( pages )
     , factory_( factory )
 {
-    list_ = new QListBox( this );
-    QHBox* box = new QHBox( this );
-    QButton* createBtn = new QPushButton( tr( "Create" ), box );
-    QButton* deleteBtn = new QPushButton( tr( "Delete" ), box );
+    list_ = new Q3ListBox( this );
+    Q3HBox* box = new Q3HBox( this );
+    QPushButton* createBtn = new QPushButton( tr( "Create" ), box );
+    QPushButton* deleteBtn = new QPushButton( tr( "Delete" ), box );
     connect( createBtn, SIGNAL( clicked() ), SLOT( OnCreate() ) );
     connect( deleteBtn, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     connect( list_, SIGNAL( selectionChanged() ), SLOT( OnSelectionChanged() ) );

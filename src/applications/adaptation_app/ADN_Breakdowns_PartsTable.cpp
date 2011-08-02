@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_PartsTable.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Equipement_Data.h"
 #include "ADN_Breakdowns_Data.h"
@@ -46,7 +46,7 @@ public:
         assert( pObj );
 
         // Add a new row.
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Int* pItemNbr = new ADN_TableItem_Int( &tab_, pObj );
         tab_.setItem( i, 0, pItemName );
         tab_.setItem( i, 1, pItemNbr );
@@ -68,7 +68,7 @@ ADN_Breakdowns_PartsTable::ADN_Breakdowns_PartsTable( QWidget* pParent )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
 
@@ -107,8 +107,8 @@ ADN_Breakdowns_PartsTable::~ADN_Breakdowns_PartsTable()
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_PartsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt )
 {
-    QPopupMenu menu( this );
-    QPopupMenu subMenu( &menu );
+    Q3PopupMenu menu( this );
+    Q3PopupMenu subMenu( &menu );
 
     ADN_Equipement_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).categories_;
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = parts.begin(); it != parts.end(); ++it )

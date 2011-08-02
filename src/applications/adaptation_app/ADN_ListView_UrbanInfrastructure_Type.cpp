@@ -11,7 +11,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_UrbanInfrastructure_Type.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Connector_ListView.h"
 #include "ADN_Urban_Data.h"
@@ -51,13 +51,13 @@ private:
 // Name: ADN_ListView_UrbanInfrastructure_Type constructor
 // Created: SLG 2010-12-20
 //-----------------------------------------------------------------------------
-ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWidget * parent, const char * name, WFlags f)
+ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWidget * parent, const char * name, Qt::WFlags f)
 :   ADN_ListView(parent,name,f)
 {
     // Add a column && disable sorting
     addColumn( tr( name ) );
     setSorting( -1, true );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<ADN_Urban_Data::InfrastructureInfos>(*this);
@@ -107,7 +107,7 @@ void ADN_ListView_UrbanInfrastructure_Type::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void  ADN_ListView_UrbanInfrastructure_Type::OnContextMenu( const QPoint& pt)
 {
-    QPopupMenu popuMenu( this );
+    Q3PopupMenu popuMenu( this );
 
     popuMenu.insertItem( tr( "New" ), 0 );
     popuMenu.insertItem( tr( "Delete" ), 1 );

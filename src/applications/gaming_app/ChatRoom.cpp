@@ -20,15 +20,15 @@
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
 ChatRoom::ChatRoom( QWidget* parent, CommandPublisher& publisher, CommandHandler& handler, QString filter )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , publisher_( publisher )
     , handler_( handler )
     , filter_( filter )
 {
-    history_ = new QTextEdit( this );
+    history_ = new Q3TextEdit( this );
     history_->setReadOnly( true );
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         text_ = new QLineEdit( box );
         sendBtn_ = new QPushButton( tr( "Send" ), box );
         sendBtn_->setDisabled( true );

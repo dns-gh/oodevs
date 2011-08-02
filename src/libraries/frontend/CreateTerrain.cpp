@@ -12,8 +12,8 @@
 #include "tools/GeneralConfig.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include <qapplication.h>
-#include <qsettings.h>
+#include <QtGui/qapplication.h>
+#include <QtCore/qsettings.h>
 
 namespace bfs = boost::filesystem;
 

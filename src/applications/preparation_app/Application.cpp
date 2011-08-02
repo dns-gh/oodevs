@@ -18,8 +18,6 @@
 #include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Tr.h"
 #include "preparation/Tools.h"
-#include <qsettings.h>
-#include <qtextcodec.h>
 
 namespace
 {
@@ -35,7 +33,7 @@ namespace
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv, const QString& license )
+Application::Application( int& argc, char** argv, const QString& license )
     : Application_ABC( argc, argv )
     , mainWindow_( 0 )
     , license_( license )
@@ -107,11 +105,6 @@ bool Application::notify( QObject* pReceiver, QEvent* pEvent )
 {
     try
     {
-        if( ErrorEvent* pErrorEvent = dynamic_cast< ErrorEvent* >( pEvent ) )
-        {
-            DisplayError( pErrorEvent->reason_ );
-            return true;
-        }
         return QApplication::notify( pReceiver, pEvent );
     }
     catch( std::exception& e )
@@ -120,14 +113,9 @@ bool Application::notify( QObject* pReceiver, QEvent* pEvent )
     }
     catch( ... )
     {
-        DisplayError( tr("Unknown exception caught" ) );
+        DisplayError( tr( "Unknown exception caught" ) );
     }
     return true;
-}
-
-namespace
-{
-    bool active = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,10 +124,11 @@ namespace
 // -----------------------------------------------------------------------------
 void Application::DisplayError( const QString& text ) const
 {
-     if( ! active )
+    static bool active = false;
+    if( ! active )
     {
         active = true;
         QMessageBox::critical( activeWindow(),  tools::translate( "Application", "SWORD" ), text, "Ok" );
         active = false;
-     }
+    }
 }

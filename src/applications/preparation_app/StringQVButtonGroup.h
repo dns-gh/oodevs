@@ -10,8 +10,6 @@
 #ifndef __StringQVButtonGroup_h_
 #define __StringQVButtonGroup_h_
 
-#include <qvbuttongroup.h>
-
 #include <vector>
 
 // =============================================================================
@@ -20,7 +18,7 @@
 */
 // Created: HBD 2010-09-16
 // =============================================================================
-class StringQVButtonGroup : public QVButtonGroup
+class StringQVButtonGroup : public Q3VButtonGroup
 {
     Q_OBJECT;
 public:

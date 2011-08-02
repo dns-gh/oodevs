@@ -15,7 +15,6 @@
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 #include "gaming/Simulation.h"
-#include <qdatetime.h>
 
 using namespace gui;
 
@@ -24,24 +23,25 @@ using namespace gui;
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
 Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation, const std::string& filename )
-    : QListView  ( pParent )
+    : Q3ListView  ( pParent )
     , factory_   ( factory )
     , simulation_( simulation )
     , log_       ( filename.c_str(), std::ios::out | std::ios::app )
 {
-    setMinimumSize( 1, 1 );
+    setBackgroundColor( Qt::white );
+    setMinimumSize( 40, 40 );
     setShowSortIndicator( true );
     setSorting( -1 );
     setRootIsDecorated( true );
     addColumn( tr( "Real time" ) );
     addColumn( tr( "Simulation time" ) );
     addColumn( tr( "Message" ) );
-    setResizeMode( QListView::LastColumn );
+    setResizeMode( Q3ListView::LastColumn );
     setAllColumnsShowFocus ( true );
 
     popupMenu_.insertItem( tr( "Clear list" ), this, SLOT( clear() ) );
 
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
 }
 
 namespace
@@ -127,7 +127,7 @@ void Logger::End( std::stringstream& output )
 // Name: Logger::OnRequestPopup
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-void Logger::OnRequestPopup( QListViewItem* /*pItem*/, const QPoint& pos )
+void Logger::OnRequestPopup( Q3ListViewItem* /*pItem*/, const QPoint& pos )
 {
     popupMenu_.popup( pos );
 }

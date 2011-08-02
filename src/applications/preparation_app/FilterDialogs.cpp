@@ -19,9 +19,6 @@
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
-
 // -----------------------------------------------------------------------------
 // Name: FilterDialogs constructor
 // Created: ABR 2011-06-21
@@ -51,13 +48,7 @@ FilterDialogs::~FilterDialogs()
 void FilterDialogs::Load()
 {
     assert( elements_.empty() );
-    //config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );// $$$$ ABR 2011-07-21: Commented for PIV3, will be back soon
-    {
-        const std::string filename = config_.BuildPhysicalChildFile( "Filters/Filters.xml" );
-        if( bfs::exists( filename ) )
-            config_.GetLoader().LoadFile( filename, boost::bind( &FilterDialogs::Load, this, _1 ) );// $$$$ ABR 2011-07-21: Added for PIV3, will be removed soon
-    }
-
+    config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
     if( !Find( "import" ) )
         CreateImportDialog();
     Get( "import" ).AddFilter( *new FilterOrbatReIndexer( config_, model_ ) );

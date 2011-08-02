@@ -9,7 +9,9 @@
 
 #include "clients_kernel_pch.h"
 #include "ContextMenu.h"
-#include <qpopupmenu.h>
+#pragma warning( push, 0 )
+#include <Qt3Support/q3popupmenu.h>
+#pragma warning( pop )
 
 using namespace kernel;
 
@@ -18,7 +20,7 @@ using namespace kernel;
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
 ContextMenu::ContextMenu()
-    : menu_( new QPopupMenu() )
+    : menu_( new Q3PopupMenu() )
 {
     // NOTHING
 }
@@ -36,12 +38,10 @@ ContextMenu::~ContextMenu()
 // Name: ContextMenu::AddCategory
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
-void ContextMenu::AddCategory( const std::string& text, int position /*= -1*/ )
+void ContextMenu::AddCategory( const std::string& text )
 {
-    if( position < 0 || position >= int( categories_.size() ) )
-        categories_.push_back( text );
-    else
-        categories_.insert( categories_.begin() + position, text );
+    categories_.push_back( text );
+    menus_[ text ] = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,8 @@ void ContextMenu::AddCategory( const std::string& text, int position /*= -1*/ )
 void ContextMenu::Clear()
 {
     menu_->clear();
-    insertedCategories_.clear();
+    categories_.clear();
+    menus_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,14 +97,20 @@ void ContextMenu::SetPixmap( int id, const QPixmap& pixmap )
 // -----------------------------------------------------------------------------
 int ContextMenu::InsertCategory( const std::string& category )
 {
+    T_OrderedCategories::iterator it = std::find( categories_.begin(), categories_.end(), category );
+    if( it == categories_.end() )
+        AddCategory( category );
     int result = 0;
-    for( CIT_Categories itCategory = categories_.begin(); itCategory != categories_.end() && *itCategory != category; ++itCategory )
+    for( T_OrderedCategories::const_iterator it = categories_.begin(); it != categories_.end(); ++it )
     {
-        const std::string& category = *itCategory;
-        while( result < int( insertedCategories_.size() ) && insertedCategories_.at( result ) == category )
-            ++result;
+        T_CategoryMenus::const_iterator itMenu = menus_.find( *it );
+        if( itMenu != menus_.end() )
+        {
+            result += itMenu->second == 0 ? 0 : itMenu->second->count();
+            if( *it == category )
+                break;
+        }
     }
-    insertedCategories_.insert( insertedCategories_.begin() + result, category );
     return result;
 }
 
@@ -120,7 +127,7 @@ int ContextMenu::InsertItem( const std::string& category, const QString& text, c
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
-int ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel /*= 0*/, int id /*= -1*/ )
+int ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel /* = 0*/, int id /* = -1*/ )
 {
     return menu_->insertItem( text, receiver, member, accel, id, InsertCategory( category ) );
 }
@@ -129,7 +136,7 @@ int ContextMenu::InsertItem( const std::string& category, const QString& text, c
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
-int ContextMenu::InsertItem( const std::string& category, const QString& text, int id /*= -1*/ )
+int ContextMenu::InsertItem( const std::string& category, const QString& text, int id /* = -1*/ )
 {
     return menu_->insertItem( text, id, InsertCategory( category ) );
 }
@@ -138,42 +145,27 @@ int ContextMenu::InsertItem( const std::string& category, const QString& text, i
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
-int ContextMenu::InsertItem( const std::string& category, const QString& text, QPopupMenu* popup, int id /*= -1*/ )
+int ContextMenu::InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int id /* = -1*/ )
 {
     return menu_->insertItem( text, popup, id, InsertCategory( category ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ContextMenu::InsertItem
-// Created: AGE 2006-08-04
-// -----------------------------------------------------------------------------
-int ContextMenu::InsertItem( const std::string& category, QWidget* widget, int id /*= -1*/ )
-{
-    return menu_->insertItem( widget, id, InsertCategory( category ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::SubMenu
 // Created: SBO 2006-08-10
 // -----------------------------------------------------------------------------
-QPopupMenu* ContextMenu::SubMenu( const std::string& category, const QString& text )
+Q3PopupMenu* ContextMenu::SubMenu( const std::string& category, const QString& text )
 {
-    unsigned int index = 0;
-    for( IT_Categories it = categories_.begin(); it != categories_.end(); ++it )
-        if( *it != category )
-            while( index < insertedCategories_.size() && insertedCategories_.at( index ) == *it )
-                ++index;
-        else
-            while( index < insertedCategories_.size() && insertedCategories_.at( index ) == category )
-            {
-                QMenuItem* menu = menu_->findItem( menu_->idAt( index ) );
-                if( menu && menu->text() == text && menu->popup() )
-                    return menu->popup();
-                ++index;
-            }
-    QPopupMenu* subMenu = new QPopupMenu( menu_ );
-    InsertItem( category, text, subMenu );
-    return subMenu;
+    T_OrderedCategories::iterator it = std::find( categories_.begin(), categories_.end(), category );
+    if( it == categories_.end() )
+        AddCategory( category );
+    T_CategoryMenus::iterator itMenu = menus_.find( category );
+    if( itMenu == menus_.end() )
+        return 0;
+    if( itMenu->second == 0 )
+        itMenu->second = new Q3PopupMenu( menu_ );
+    InsertItem( category, text, itMenu->second );
+    return itMenu->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -182,34 +174,19 @@ QPopupMenu* ContextMenu::SubMenu( const std::string& category, const QString& te
 // -----------------------------------------------------------------------------
 void ContextMenu::Popup( const QPoint& where )
 {
-    if( !insertedCategories_.empty() )
-    {
-        InsertSeparators();
+    if( menu_ && menu_->count() > 0 )
         menu_->popup( where );
-    }
 }
-
+/*
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::InsertSeparators
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
 void ContextMenu::InsertSeparators()
 {
-    std::string previous;
-    for( IT_Categories it = insertedCategories_.begin(); it != insertedCategories_.end(); ++it )
-    {
-        const std::string current = *it;
-        if( !previous.empty() && previous != current )
-        {
-            const int index = (int)(it - insertedCategories_.begin());
-            menu_->insertSeparator( index );
-            it = insertedCategories_.insert( it, "__separator__" );
-            ++it;
-        }
-        previous = current;
-    };
-}
 
+}
+*/
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::operator QWidget*
 // Created: AGE 2006-08-04

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #pragma warning( push, 0 )
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 #pragma warning( pop )
 #include "clients_kernel/Controllers.h"
 #include "frontend/Config.h"

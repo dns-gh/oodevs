@@ -69,7 +69,7 @@ ADN_Sensors_Meteos_GUI::ADN_Sensors_Meteos_GUI(QWidget * parent)
 {
     // peut etre selectionne & trie
     setSorting(true);
-    setSelectionMode(QTable::NoSelection);
+    setSelectionMode(Q3Table::NoSelection);
     setShowGrid(false);
     setLeftMargin(0);
 

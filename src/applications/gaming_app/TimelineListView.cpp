@@ -17,14 +17,13 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_gui/ValuedListItem.h"
-#include <qpainter.h>
 
 namespace
 {
     class TimeLineEntityListItem : public gui::ValuedListItem
     {
     public:
-        TimeLineEntityListItem( QListView* parent, QListViewItem* after ) : gui::ValuedListItem( parent, after )
+        TimeLineEntityListItem( Q3ListView* parent, Q3ListViewItem* after ) : gui::ValuedListItem( parent, after )
         {
             setVisible( false );
         }
@@ -53,14 +52,15 @@ using namespace actions;
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
 TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& controllers )
-    : QListView( parent, "TimelineListView" )
+    : Q3ListView( parent, "TimelineListView" )
     , controllers_( controllers )
     , filter_     ( 0 )
 {
     setMinimumWidth( 200 );
     addColumn( tr( "Units" ) );
+    setBackgroundColor( Qt::white );
     setResizeMode( LastColumn );
-    setHScrollBarMode( QScrollView::AlwaysOn ); //--> to have the same height as canvasview
+    setHScrollBarMode( Q3ScrollView::AlwaysOn ); //--> to have the same height as canvasview
     setSortColumn( -1 ); // $$$$ SBO 2008-04-25: TODO
     gui::ValuedListItem* item = new TimeLineEntityListItem( this, lastItem() );
     item->Set( &Action_ABC::actionTypeMagic_, tr( "Magic" ) );
@@ -68,7 +68,7 @@ TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& contro
     item->Set( &Action_ABC::actionTypeWeather_, tr( "Weather" ) );
     item = new TimeLineEntityListItem( this, lastItem() );
     item->Set( &Action_ABC::actionTypeObjects_, tr( "Objects" ) );
-    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
     controllers_.Register( *this );
 }
 
@@ -212,7 +212,7 @@ void TimelineListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 void TimelineListView::setContentsPos( int x, int y )
 {
     blockSignals( true );
-    QListView::setContentsPos( x, y );
+    Q3ListView::setContentsPos( x, y );
     blockSignals( false );
 }
 
@@ -220,7 +220,7 @@ void TimelineListView::setContentsPos( int x, int y )
 // Name: TimelineListView::OnSelectionChange
 // Created: SBO 2008-04-29
 // -----------------------------------------------------------------------------
-void TimelineListView::OnSelectionChange( QListViewItem* item )
+void TimelineListView::OnSelectionChange( Q3ListViewItem* item )
 {
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) ;
     if( valuedItem && valuedItem->IsA< const kernel::Entity_ABC >() )
@@ -246,7 +246,7 @@ void TimelineListView::SetFilter( const ActionsFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void TimelineListView::Update()
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while( it.current() )
     {
         gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );

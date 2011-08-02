@@ -11,7 +11,6 @@
 #include "IconsRenderPass.h"
 #include "IconHandler_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include <qbitmap.h>
 
 using namespace gui;
 

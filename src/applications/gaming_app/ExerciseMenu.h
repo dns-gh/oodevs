@@ -11,7 +11,6 @@
 #define __ExerciseMenu_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <qpopupmenu.h>
 
 namespace kernel
 {
@@ -42,7 +41,7 @@ namespace tools
 */
 // Created: SBO 2008-08-27
 // =============================================================================
-class ExerciseMenu : public QPopupMenu
+class ExerciseMenu : public Q3PopupMenu
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >

@@ -27,12 +27,14 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qdialog.h>
-#include <qvbox.h>
-#include <qgrid.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3groupbox.h>
+#include <QtGui/qdialog.h>
+#include <Qt3Support/q3vbox.h>
+#include <Qt3Support/q3grid.h>
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_GUI constructor
@@ -73,11 +75,11 @@ void ADN_Population_GUI::Build()
     pPopulationList_->GetConnector().Connect( &data_.GetPopulation() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QVBox* pMainBox = new QVBox( pMainWidget_ );
+    Q3VBox* pMainBox = new Q3VBox( pMainWidget_ );
 
     // Global parameters
-    QGroupBox* pGlobalGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
-    QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units firing capability" ), pGlobalGroup );
+    Q3GroupBox* pGlobalGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
+    Q3GroupBox* pReloadingEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units firing capability" ), pGlobalGroup );
 
     //Time between NBC application
     builder.AddField< ADN_TimeField >( pGlobalGroup, tr( "Time between two NBC applications" ), vInfosConnectors[ eTimeBetweenNBCApplication ] );
@@ -92,9 +94,9 @@ void ADN_Population_GUI::Build()
     vInfosConnectors[eReloadingEffectModifier]->Connect( &data_.reloadingSpeedEffectInfos_.rModifier_ );
 
     // Population parameters
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Crowd" ), pMainBox );
+    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Crowd" ), pMainBox );
 
-    QGroupBox* pPropertiesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
+    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
 
     // Name
     builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vInfosConnectors[eName] );
@@ -123,7 +125,7 @@ void ADN_Population_GUI::Build()
 
     // Speed effects
     //@{
-    QGroupBox* pSpeedEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units movement capability" ), pGroup );
+    Q3GroupBox* pSpeedEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units movement capability" ), pGroup );
 
     ADN_Population_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = new ADN_Population_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
     vInfosConnectors[eSpeedEffectAttitude] = &pSpeedEffectAttitudeList->GetConnector();
@@ -131,7 +133,7 @@ void ADN_Population_GUI::Build()
     ADN_Population_SpeedEffect_Volume_ListView* pVolumeList = new ADN_Population_SpeedEffect_Volume_ListView( pSpeedEffectGroup );
     vInfosConnectors[eSpeedEffectVolume] = &pVolumeList->GetConnector();
 
-    QGroupBox* pSpeedEffectVolumeGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Effect" ), pSpeedEffectGroup );
+    Q3GroupBox* pSpeedEffectVolumeGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect" ), pSpeedEffectGroup );
 
     builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Max speed" ), vInfosConnectors[eSpeedEffectMaxSpeed], tr( "km/h" ), eGreaterEqualZero );
@@ -139,13 +141,13 @@ void ADN_Population_GUI::Build()
 
     // Fire effects
     //@{
-    QGroupBox* pFireEffectGlobalGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Attritions" ), pGroup );
+    Q3GroupBox* pFireEffectGlobalGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Attritions" ), pGroup );
 
-    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd -> Units" ), pFireEffectGlobalGroup );
+    Q3GroupBox* pFireEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd -> Units" ), pFireEffectGlobalGroup );
     ADN_Population_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Population_FireEffect_Attitude_ListView( pFireEffectGroup );
     vInfosConnectors[eFireEffectAttitude] = &pFireEffectAttitudeList->GetConnector();
 
-    QVBox* pFireEffectProtectionBox = new QVBox( pFireEffectGroup );
+    Q3VBox* pFireEffectProtectionBox = new Q3VBox( pFireEffectGroup );
     pFireEffectProtectionBox->setSpacing( 5 );
 
     // Protection
@@ -153,14 +155,14 @@ void ADN_Population_GUI::Build()
     vInfosConnectors[eFireEffectProtection] = &pProtectionList->GetConnector();
 
     // Intensity
-    QGroupBox* pFireEffectIntensityGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Intensity" ), pFireEffectProtectionBox );
+    Q3GroupBox* pFireEffectIntensityGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Intensity" ), pFireEffectProtectionBox );
     builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, tr( "Density" ), vInfosConnectors[eFireEffectIntensityDensity], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, tr( "Intensity" ), vInfosConnectors[eFireEffectIntensityFactor], 0, eGreaterEqualZero );
 
     // Effects
-    QGroupBox* pFireEffectProtectionGroup = new QGroupBox( 2, Qt::Vertical, tr( "Effect" ), pFireEffectGroup );
+    Q3GroupBox* pFireEffectProtectionGroup = new Q3GroupBox( 2, Qt::Vertical, tr( "Effect" ), pFireEffectGroup );
 
-    QGroupBox* pFireEffectUnarmedProtectionGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Unarmed" ), pFireEffectProtectionGroup );
+    Q3GroupBox* pFireEffectUnarmedProtectionGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Unarmed" ), pFireEffectProtectionGroup );
     ADN_EditLine_Double* pDestruField       = builder.AddField< ADN_EditLine_Double >( pFireEffectUnarmedProtectionGroup, tr( "Destruction" ), vInfosConnectors[eFireEffectUnarmedDestruction], tr( "%" ) );
     ADN_EditLine_Double* pWithEvacField     = builder.AddField< ADN_EditLine_Double >( pFireEffectUnarmedProtectionGroup, tr( "Fixable with evacuation" ), vInfosConnectors[eFireEffectUnarmedFixableWithEvacuation], tr( "%" ) );
     ADN_EditLine_Double* pWithoutEvacField  = builder.AddField< ADN_EditLine_Double >( pFireEffectUnarmedProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectUnarmedFixableWithoutEvacuation], tr( "%" ) );
@@ -173,7 +175,7 @@ void ADN_Population_GUI::Build()
     pWithEvacField->setValidator( pValidatorEvacUnarmed_ );
     pWithoutEvacField->setValidator( pValidatorWithoutUnarmed_ );
 
-    QGroupBox* pFireEffectArmedProtectionGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Armed" ), pFireEffectProtectionGroup );
+    Q3GroupBox* pFireEffectArmedProtectionGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Armed" ), pFireEffectProtectionGroup );
     pDestruField       = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Destruction" ), vInfosConnectors[eFireEffectArmedDestruction], tr( "%" ) );
     pWithEvacField     = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Fixable with evacuation" ), vInfosConnectors[eFireEffectArmedFixableWithEvacuation], tr( "%" ) );
     pWithoutEvacField  = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectArmedFixableWithoutEvacuation], tr( "%" ) );
@@ -189,18 +191,18 @@ void ADN_Population_GUI::Build()
 
     // Fire Roe effects
     //@{
-    QGroupBox* pFireEffectRoeGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Units -> Crowd" ), pFireEffectGlobalGroup );
+    Q3GroupBox* pFireEffectRoeGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Units -> Crowd" ), pFireEffectGlobalGroup );
     ADN_Population_FireEffectRoe_GUI* pFireEffectRoe = new ADN_Population_FireEffectRoe_GUI( pFireEffectRoeGroup );
     vInfosConnectors[eFireEffectRoe] = &pFireEffectRoe->GetConnector();
     //@}
 
     // Urban area destruction
     //@{
-    QGroupBox* pUrbanAreaDestructionlGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Urban area destruction" ), pGroup );
+    Q3GroupBox* pUrbanAreaDestructionlGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Urban area destruction" ), pGroup );
     ADN_Population_UrbanEffect_Attitude_ListView* pUrbanEffectAttitudeList = new ADN_Population_UrbanEffect_Attitude_ListView( pUrbanAreaDestructionlGroup );
     vInfosConnectors[eUrbanBlocDestructionAttitude] = &pUrbanEffectAttitudeList->GetConnector();
 
-    QGroupBox* pTimeDestructUrbanGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Time to destruct a urban block" ), pUrbanAreaDestructionlGroup );
+    Q3GroupBox* pTimeDestructUrbanGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Time to destruct a urban block" ), pUrbanAreaDestructionlGroup );
     builder.AddField< ADN_EditLine_Double >( pTimeDestructUrbanGroup, tr( "Density" ), vInfosConnectors[eUrbanBlocDestructionDensity], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField< ADN_TimeField >( pTimeDestructUrbanGroup, tr( "Time" ), vInfosConnectors[ eUrbanBlocDestructionTime ] );
     //@}
@@ -215,11 +217,11 @@ void ADN_Population_GUI::Build()
     pUrbanEffectAttitudeList->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pPopulationList_, 1 );
     pMainLayout->addWidget( pMainBox, 3 );
 
-    QGridLayout* pFireEffectLayout = new QGridLayout( pFireEffectGlobalGroup->layout(), 1, 4, 5 );
+    Q3GridLayout* pFireEffectLayout = new Q3GridLayout( pFireEffectGlobalGroup->layout(), 1, 4, 5 );
     pFireEffectLayout->addWidget( pFireEffectGroup   , 0, 0 );
     pFireEffectLayout->addWidget( pFireEffectRoeGroup, 0, 3 );
     pFireEffectLayout->setColStretch( 0, 3 );

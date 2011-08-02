@@ -18,7 +18,6 @@
 #include "preparation/AutomatCommunications.h"
 #include "preparation/KnowledgeGroupCommunications.h" // LTO
 #include "preparation/Tools.h"
-#include <qevent.h> // LTO
 
 using namespace kernel;
 
@@ -32,7 +31,7 @@ CommunicationListView::CommunicationListView( QWidget* parent, Controllers& cont
     , modelBuilder_( modelBuilder )
 {
     controllers_.Register( *this );
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +197,7 @@ void CommunicationListView::keyPressEvent( QKeyEvent* event )
     if( selectedItem() && event->key() == Qt::Key_Delete )
         modelBuilder_.DeleteEntity( *((gui::ValuedListItem*)selectedItem())->GetValue< const Entity_ABC >() );
     else
-        QListView::keyPressEvent( event );
+        Q3ListView::keyPressEvent( event );
 }
 
 // -----------------------------------------------------------------------------

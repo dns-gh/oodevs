@@ -19,7 +19,7 @@
 #ifndef __ADN_OpenMode_Dialog_h_
 #define __ADN_OpenMode_Dialog_h_
 
-#include <qdialog.h>
+#include <QtGui/qdialog.h>
 
 class QLineEdit;
 class QRadioButton;

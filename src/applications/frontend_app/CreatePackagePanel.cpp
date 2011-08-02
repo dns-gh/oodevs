@@ -20,20 +20,21 @@
 #include <xeumeuleu/xml.hpp>
 #include <zipstream/zipstream.h>
 
-#include <qaction.h>
-#include <qcursor.h>
-#include <qfiledialog.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qprogressbar.h>
-#include <qtextedit.h>
-#include <qapplication.h>
-#include <qlistview.h>
+
 
 #pragma warning( push, 0 )
+#include <Qt3Support/q3action.h>
+#include <QtGui/qcursor.h>
+#include <Qt3Support/q3filedialog.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlineedit.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpushbutton.h>
+#include <Qt3Support/q3progressbar.h>
+#include <Qt3Support/q3textedit.h>
+#include <QtGui/qapplication.h>
+#include <Qt3Support/q3listview.h>
 #pragma warning( disable: 4127 4244 4245 4996 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -46,44 +47,44 @@ namespace bfs = boost::filesystem;
 // Name: CreatePackagePanel constructor
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
-CreatePackagePanel::CreatePackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config, ActionsContext& context )
+CreatePackagePanel::CreatePackagePanel( Q3WidgetStack* widget, Q3Action& action, const frontend::Config& config, ActionsContext& context )
     : Panel_ABC( widget, action, context, "CreatePackagePanel" )
     , config_( config )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, action.text(), box );
     {
         new QLabel( tr( "Exercise to package:" ), group );
-        list_ = new QListBox( group );
+        list_ = new Q3ListBox( group );
     }
     {
         new QLabel( tr( "Package description:" ), group );
-        description_ = new QTextEdit( group );
+        description_ = new Q3TextEdit( group );
         description_->setMaximumHeight( 30 );
         description_->setReadOnly( false );
     }
     {
         new QLabel( tr( "Package content:" ), group );
-        content_ = new QListView( group );
+        content_ = new Q3ListView( group );
         content_->addColumn( "exercise features" );
         content_->adjustSize();
     }
 
-    progress_ = new QProgressBar( box );
+    progress_ = new Q3ProgressBar( box );
     progress_->hide();
 
     bubble_ = new InfoBubble( box );
-    QHBox* btnBox = new QHBox( box );
+    Q3HBox* btnBox = new Q3HBox( box );
     btnBox->layout()->setAlignment( Qt::AlignRight );
     okay_ = new QPushButton( MAKE_PIXMAP( next ), action.text(), btnBox );
     QFont font( "Arial", 10, QFont::Bold );
     okay_->setFont( font );
 
     connect( okay_, SIGNAL( pressed() ), SLOT( CreatePackage() ) );
-    connect( list_, SIGNAL( clicked( QListBoxItem * ) ), SLOT( OnSelectionChanged( QListBoxItem * ) ) );
+    connect( list_, SIGNAL( clicked( Q3ListBoxItem * ) ), SLOT( OnSelectionChanged( Q3ListBoxItem * ) ) );
 
     // package_->setText( config_.GetPackageFile().c_str() );
     package_.first = config_.GetRootDir();
@@ -105,7 +106,7 @@ CreatePackagePanel::~CreatePackagePanel()
 // -----------------------------------------------------------------------------
 bool CreatePackagePanel::BrowseClicked()
 {
-    const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tr( "Select a package" ) );
+    const QString filename = Q3FileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tr( "Select a package" ) );
     if( filename.isEmpty() )
         return false;
     const bfs::path file = bfs::path( std::string( filename.ascii() ), bfs::native );
@@ -122,7 +123,7 @@ bool CreatePackagePanel::BrowseClicked()
 // Name: CreatePackagePanel::OnSelectionChanged
 // Created: JCR 2009-11-10
 // -----------------------------------------------------------------------------
-void CreatePackagePanel::OnSelectionChanged( QListBoxItem* item )
+void CreatePackagePanel::OnSelectionChanged( Q3ListBoxItem* item )
 {
     if( item )
     {
@@ -136,13 +137,13 @@ namespace
 {
     struct Progress
     {
-        Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
+        Progress( Q3ProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
         void operator()()
         {
             progress_->setProgress( ++count_ );
             qApp->processEvents();
         }
-        QProgressBar* progress_;
+        Q3ProgressBar* progress_;
         unsigned count_;
     };
 }
@@ -204,9 +205,9 @@ namespace
             BrowseDirectory( root, name, zos );
     }
 
-    void BrowseChildren( const std::string& base, QListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback )
+    void BrowseChildren( const std::string& base, Q3ListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback )
     {
-        while ( item != 0 && ! dynamic_cast< QCheckListItem* >( item ) )
+        while ( item != 0 && ! dynamic_cast< Q3CheckListItem* >( item ) )
         {
             std::string file( item->text( 0 ).ascii() );
             Serialize( base, file, zos );
@@ -215,11 +216,11 @@ namespace
         }
     }
 
-    void BrowseFiles( const std::string& base, QListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
+    void BrowseFiles( const std::string& base, Q3ListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
     {
         while ( iterator.current() )
         {
-            QCheckListItem* item = dynamic_cast< QCheckListItem* >( iterator.current() );
+            Q3CheckListItem* item = dynamic_cast< Q3CheckListItem* >( iterator.current() );
             if( item && item->isOn() )
             {
                 std::string file( iterator.current()->text( 0 ).ascii() );
@@ -232,7 +233,7 @@ namespace
         }
     }
 
-    int ListViewSize( QListViewItemIterator iterator )
+    int ListViewSize( Q3ListViewItemIterator iterator )
     {
         int i = 0;
         for ( ; iterator.current(); ++iterator, ++i )
@@ -301,13 +302,13 @@ void CreatePackagePanel::CreatePackage()
     if( archive.isOk() )
     {
         progress_->show();
-        progress_->setProgress( 0, ListViewSize( QListViewItemIterator( content_ ) ) );
-        setCursor( QCursor::waitCursor );
+        progress_->setProgress( 0, ListViewSize( Q3ListViewItemIterator( content_ ) ) );
+        setCursor( Qt::waitCursor );
         {
             WriteContent( archive );
-            BrowseFiles( config_.GetRootDir(), QListViewItemIterator( content_ ), archive, Progress( progress_ ) );
+            BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( content_ ), archive, Progress( progress_ ) );
         }
-        setCursor( QCursor::arrowCursor );
+        setCursor( Qt::arrowCursor );
     }
     bubble_->ShowInfo( tr( "Package successfully created." ) );
 }
@@ -327,14 +328,14 @@ void CreatePackagePanel::UpdateExercises()
 // Name: CreatePackagePanel::BuildCategory
 // Created: JCR 2009-11-12
 // -----------------------------------------------------------------------------
-void CreatePackagePanel::BuildCategory( QListViewItem* parent, const QStringList& list, const QString& base, const std::string& category )
+void CreatePackagePanel::BuildCategory( Q3ListViewItem* parent, const QStringList& list, const QString& base, const std::string& category )
 {
     if( !list.isEmpty() )
     {
-        QListViewItem* item = new QListViewItem( parent, category.c_str() );
+        Q3ListViewItem* item = new Q3ListViewItem( parent, category.c_str() );
         item->setOpen( true );
         for ( QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it )
-            item->insertItem( new QCheckListItem( item, base + std::string( "/" + category + "/" ).c_str() + *it, QCheckListItem::CheckBox ) );
+            item->insertItem( new Q3CheckListItem( item, base + std::string( "/" + category + "/" ).c_str() + *it, Q3CheckListItem::CheckBox ) );
         parent->insertItem( item );
     }
 }
@@ -343,21 +344,21 @@ void CreatePackagePanel::BuildCategory( QListViewItem* parent, const QStringList
 // Name: CreatePackagePanel::BuildExerciseFeatures
 // Created: JCR 2009-11-12
 // -----------------------------------------------------------------------------
-QListViewItem* CreatePackagePanel::BuildExerciseFeatures( const std::string& exercise )
+Q3ListViewItem* CreatePackagePanel::BuildExerciseFeatures( const std::string& exercise )
 {
     QString base( std::string( "exercises/" + exercise ).c_str() );
 
-    QListViewItem* rootItem = new QListViewItem( content_, "exercises" );
+    Q3ListViewItem* rootItem = new Q3ListViewItem( content_, "exercises" );
     rootItem->setOpen( true );
 
-    QCheckListItem* exerciseItem = new QCheckListItem( rootItem, base, QCheckListItem::CheckBox );
+    Q3CheckListItem* exerciseItem = new Q3CheckListItem( rootItem, base, Q3CheckListItem::CheckBox );
     exerciseItem->setOpen( true );
     exerciseItem->setOn( true );
     exerciseItem->setEnabled( false );
     QStringList sessions( frontend::commands::ListSessions( config_, exercise ) );
     for ( QStringList::const_iterator it = sessions.constBegin(); it != sessions.constEnd(); ++it )
     {
-        QCheckListItem* sessionItem = new QCheckListItem( exerciseItem, base + "/sessions/" + *it, QCheckListItem::CheckBox );
+        Q3CheckListItem* sessionItem = new Q3CheckListItem( exerciseItem, base + "/sessions/" + *it, Q3CheckListItem::CheckBox );
         sessionItem->setOpen( true );
 
         std::string category( QString( "sessions/" + *it + "/checkpoints" ).ascii() );
@@ -377,9 +378,9 @@ QListViewItem* CreatePackagePanel::BuildExerciseFeatures( const std::string& exe
 
 namespace
 {
-    QListViewItem* InsertValidatedEntry( QListViewItem* parent, const std::string& entry, const std::string& root )
+    Q3ListViewItem* InsertValidatedEntry( Q3ListViewItem* parent, const std::string& entry, const std::string& root )
     {
-        QCheckListItem* item = new QCheckListItem( parent, entry.c_str(), QCheckListItem::CheckBox );
+        Q3CheckListItem* item = new Q3CheckListItem( parent, entry.c_str(), Q3CheckListItem::CheckBox );
         if( ! bfs::exists( bfs::path( root + "/" + entry ) ) )
         {
             item->setEnabled( false );
@@ -394,7 +395,7 @@ namespace
 // Name: CreatePackagePanel::BuildExerciseData
 // Created: JCR 2009-11-12
 // -----------------------------------------------------------------------------
-QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercise )
+Q3ListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercise )
 {
     std::string terrain, population, dataset, physical;
     xml::xifstream xis( config_.GetExerciseFile( exercise ) );
@@ -404,15 +405,15 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
             >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end
         >> xml::end;
 
-    QListViewItem* dataItem = new QListViewItem( content_, "data" );
+    Q3ListViewItem* dataItem = new Q3ListViewItem( content_, "data" );
     dataItem->setOpen( true );
 
-    QListViewItem* terrainItem = InsertValidatedEntry( dataItem, "data/terrains/" + terrain, config_.GetRootDir() );
+    Q3ListViewItem* terrainItem = InsertValidatedEntry( dataItem, "data/terrains/" + terrain, config_.GetRootDir() );
     if( terrainItem )
     {
-        terrainItem->insertItem( new QListViewItem( terrainItem, std::string( "data/terrains/" + terrain + "/Detection" ).c_str() ) );
-        terrainItem->insertItem( new QListViewItem( terrainItem, std::string( "data/terrains/" + terrain + "/Graphics" ).c_str() ) );
-        terrainItem->insertItem( new QListViewItem( terrainItem, std::string( "data/terrains/" + terrain + "/Pathfind" ).c_str() ) );
+        terrainItem->insertItem( new Q3ListViewItem( terrainItem, std::string( "data/terrains/" + terrain + "/Detection" ).c_str() ) );
+        terrainItem->insertItem( new Q3ListViewItem( terrainItem, std::string( "data/terrains/" + terrain + "/Graphics" ).c_str() ) );
+        terrainItem->insertItem( new Q3ListViewItem( terrainItem, std::string( "data/terrains/" + terrain + "/Pathfind" ).c_str() ) );
     }
 
     QStringList propagations( frontend::commands::ListPropagations( config_ ) );
@@ -420,9 +421,9 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
 
     if( ! population.empty() )
     {
-        QListViewItem* populationItem = InsertValidatedEntry( dataItem, "data/population/" + population, config_.GetRootDir() );
-        populationItem->insertItem( new QListViewItem( populationItem, std::string( "data/population/" + population + "/model" ).c_str() ) );
-        populationItem->insertItem( new QListViewItem( populationItem, std::string( "data/population/" + population + "/navteq" ).c_str() ) );
+        Q3ListViewItem* populationItem = InsertValidatedEntry( dataItem, "data/population/" + population, config_.GetRootDir() );
+        populationItem->insertItem( new Q3ListViewItem( populationItem, std::string( "data/population/" + population + "/model" ).c_str() ) );
+        populationItem->insertItem( new Q3ListViewItem( populationItem, std::string( "data/population/" + population + "/navteq" ).c_str() ) );
     }
     InsertValidatedEntry( dataItem, "data/models/" + dataset + "/physical/" + physical, config_.GetRootDir() );
     return dataItem;
@@ -436,7 +437,7 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
 // -----------------------------------------------------------------------------
 void CreatePackagePanel::Update()
 {
-    QListBoxItem* item = list_->selectedItem();
+    Q3ListBoxItem* item = list_->selectedItem();
     if( item )
     {
         std::string exercise( item->text().ascii() );

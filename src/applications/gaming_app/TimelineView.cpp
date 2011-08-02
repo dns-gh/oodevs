@@ -21,7 +21,6 @@
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "icons.h"
-#include <qpainter.h>
 
 using namespace kernel;
 using namespace actions;
@@ -32,8 +31,8 @@ const unsigned int TimelineView::rowHeight_ = 25;
 // Name: TimelineView constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler )
-    : QCanvasView( canvas, parent, "TimelineView" )
+TimelineView::TimelineView( QWidget* parent, Q3Canvas* canvas, Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler )
+    : Q3CanvasView( canvas, parent, "TimelineView" )
     , controllers_   ( controllers )
     , model_         ( model )
     , magicVisible_  ( false )
@@ -45,7 +44,7 @@ TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& contr
     , filter_        ( 0 )
 {
     // initialize some elements needed in action tooltips
-    QMimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
+    Q3MimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
 
     viewport()->setMouseTracking( true );
     controllers_.Register( *this );
@@ -57,7 +56,7 @@ TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& contr
 // -----------------------------------------------------------------------------
 TimelineView::~TimelineView()
 {
-    QMimeSourceFactory::defaultFactory()->setData( "mission", 0 );
+    Q3MimeSourceFactory::defaultFactory()->setData( "mission", 0 );
     controllers_.Unregister( *this );
 }
 
@@ -238,11 +237,11 @@ void TimelineView::DrawActions( T_Actions& actions, int& row )
 void TimelineView::Select( const QPoint& point )
 {
     grabPoint_ = point;
-    QCanvasItemList list = canvas()->collisions( grabPoint_ );
+    Q3CanvasItemList list = canvas()->collisions( grabPoint_ );
     if( list.empty() )
         ClearSelection();
     else
-        for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
+        for( Q3CanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
             if( *it != selectedItem_ )
             {
                 TimelineItem_ABC* item = dynamic_cast< TimelineItem_ABC* >( *it );
@@ -256,11 +255,11 @@ void TimelineView::Select( const QPoint& point )
 // Name: TimelineView::contentsMousePressEvent
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-void TimelineView::contentsMousePressEvent( QMouseEvent* event )
+void TimelineView::contentsMousePressEvent( QMouseEvent* evt )
 {
     setFocus();
-    if( ( event->button() & Qt::LeftButton ) == Qt::LeftButton )
-        Select( event->pos() );
+    if( ( evt->button() & Qt::LeftButton ) == Qt::LeftButton )
+        Select( evt->pos() );
     if( selectedItem_ )
         ensureVisible( int( selectedItem_->x() ), int( selectedItem_->y() ) );
 }
@@ -269,22 +268,22 @@ void TimelineView::contentsMousePressEvent( QMouseEvent* event )
 // Name: TimelineView::contentsMouseMoveEvent
 // Created: SBO 2007-07-19
 // -----------------------------------------------------------------------------
-void TimelineView::contentsMouseMoveEvent( QMouseEvent* event )
+void TimelineView::contentsMouseMoveEvent( QMouseEvent* evt )
 {
-    if( event->state() & Qt::LeftButton )
+    if( evt->state() & Qt::LeftButton )
     {
         if( !selectedItem_ )
             Select( grabPoint_ );
         if( selectedItem_ )
         {
-            selectedItem_->Move( event->pos().x() - grabPoint_.x() );
+            selectedItem_->Move( evt->pos().x() - grabPoint_.x() );
             ensureVisible( int( selectedItem_->x() ), int( selectedItem_->y() ) );
-            grabPoint_ = event->pos();
-            setCursor( QCursor::sizeHorCursor );
+            grabPoint_ = evt->pos();
+            setCursor( Qt::sizeHorCursor );
         }
     }
     Update();
-    QCanvasItemList list = canvas()->collisions( event->pos() );
+    Q3CanvasItemList list = canvas()->collisions( evt->pos() );
     if( list.empty() )
         QToolTip::remove( this );
     else if( const TimelineItem_ABC* item = dynamic_cast< const TimelineItem_ABC* >( *list.begin() ) )
@@ -299,18 +298,18 @@ void TimelineView::contentsMouseReleaseEvent( QMouseEvent* )
 {
     if( selectedItem_ == marker_ )
         marker_->CommitMove();
-    setCursor( QCursor::arrowCursor );
+    setCursor( Qt::arrowCursor );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineView::contentsContextMenuEvent
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineView::contentsContextMenuEvent( QContextMenuEvent* event )
+void TimelineView::contentsContextMenuEvent( QContextMenuEvent* evt )
 {
     if( !selectedItem_ )
-        Select( event->pos() );
-    QPopupMenu* menu = new QPopupMenu( this );
+        Select( evt->pos() );
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
     if( selectedItem_ )
     {
         selectedItem_->DisplayContextMenu( menu );
@@ -318,28 +317,28 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* event )
     }
     menu->insertItem( tools::translate( "TimelineView", "Zoom In" ), &ruler_, SLOT( ZoomIn() ), Qt::Key_Plus );
     menu->insertItem( tools::translate( "TimelineView", "Zoom Out" ), &ruler_, SLOT( ZoomOut() ), Qt::Key_Minus );
-    menu->popup( event->globalPos() );
-    event->accept();
+    menu->popup( evt->globalPos() );
+    evt->accept();
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineView::keyPressEvent
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-void TimelineView::keyPressEvent( QKeyEvent* event )
+void TimelineView::keyPressEvent( QKeyEvent* evt )
 {
-    if( event->key() == Qt::Key_Plus )
+    if( evt->key() == Qt::Key_Plus )
         ruler_.ZoomIn();
-    else if( event->key() == Qt::Key_Minus )
+    else if( evt->key() == Qt::Key_Minus )
         ruler_.ZoomOut();
     if( selectedItem_ && selectedItem_->isActive() )
     {
-        if( event->key() == Qt::Key_Delete )
+        if( evt->key() == Qt::Key_Delete )
             selectedItem_->Delete();
-        else if( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right )
+        else if( evt->key() == Qt::Key_Left || evt->key() == Qt::Key_Right )
         {
-            const short sign = event->key() == Qt::Key_Left ? -1 : 1;
-            const long seconds = ( event->state() & Qt::ShiftButton ) ? 3600 * 24 : 3600;
+            const short sign = evt->key() == Qt::Key_Left ? -1 : 1;
+            const long seconds = ( evt->state() & Qt::ShiftModifier ) ? 3600 * 24 : 3600;
             selectedItem_->Move( ruler_.ConvertToPixels( sign * seconds ) );
         }
     }
@@ -403,7 +402,7 @@ void TimelineView::NotifySelected( const actions::Action_ABC* action )
 void TimelineView::setContentsPos( int x, int y )
 {
     blockSignals( true );
-    QCanvasView::setContentsPos( x, y );
+    Q3CanvasView::setContentsPos( x, y );
     blockSignals( false );
 }
 

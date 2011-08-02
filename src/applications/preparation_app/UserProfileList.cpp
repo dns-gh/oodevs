@@ -15,22 +15,21 @@
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "clients_kernel/Controllers.h"
-#include <qlistbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers, ProfilesModel& model )
-    : QVBox( parent, "UserProfileList" )
+    : Q3VBox( parent, "UserProfileList" )
     , controllers_( controllers )
     , pages_( pages )
     , model_( model )
 {
-    list_ = new QListBox( this );
-    QHBox* box = new QHBox( this );
-    QButton* createBtn = new QPushButton( tr( "Create" ), box );
-    QButton* deleteBtn = new QPushButton( tr( "Delete" ), box );
+    list_ = new Q3ListBox( this );
+    Q3HBox* box = new Q3HBox( this );
+    QPushButton* createBtn = new QPushButton( tr( "Create" ), box );
+    QPushButton* deleteBtn = new QPushButton( tr( "Delete" ), box );
     connect( createBtn, SIGNAL( clicked() ), SLOT( OnCreate() ) );
     connect( deleteBtn, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     connect( list_, SIGNAL( selectionChanged() ), SLOT( OnSelectionChanged() ) );
@@ -169,6 +168,6 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileList::showEvent( QShowEvent* event )
 {
-    QVBox::showEvent( event );
+    Q3VBox::showEvent( event );
     OnSelectionChanged();
 }

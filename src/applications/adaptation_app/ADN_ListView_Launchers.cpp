@@ -12,7 +12,7 @@
 #include "ADN_ListView_Launchers.h"
 #include "moc_ADN_ListView_Launchers.cpp"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Weapons_Data.h"
 #include "ADN_Connector_ListView.h"
@@ -30,12 +30,12 @@ typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
 // Name: ADN_ListView_Launchers constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Launchers" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<LauncherInfos>( *this );
@@ -97,7 +97,7 @@ void ADN_ListView_Launchers::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_Launcher_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
@@ -107,7 +107,7 @@ void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Launchers::GetToolTipFor
 // Created: SBO 2005-09-06
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Launchers::GetToolTipFor( QListViewItem& item )
+std::string ADN_ListView_Launchers::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     LauncherInfos* pCastData = (LauncherInfos*)pData;

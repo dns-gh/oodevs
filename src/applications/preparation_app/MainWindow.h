@@ -10,7 +10,6 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include <qmainwindow.h>
 #include "tools/ControllerObserver_ABC.h"
 
 namespace kernel
@@ -149,10 +148,11 @@ private:
     gui::ParametersLayer* parameters_;
     Menu* menu_;
     FileToolbar* fileToolBar_;
-    QDockWindow* pExtensionsPanel_;
+    QDockWidget* pExtensionsPanel_;
     bool loading_;
     bool needsSaving_;
     QString savedState_;
+    QByteArray docks_;
     CreationPanels* pCreationPanel_;
     ScoreDialog* pScoreDialog_;
     QDialog* loadingDialog_;

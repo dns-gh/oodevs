@@ -12,7 +12,7 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_CommonGfx.h"
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 namespace
 {
@@ -93,7 +93,7 @@ void ADN_MissionParameterValues_Table::RemoveCurrentElement()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameterValues_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
 {
-    QPopupMenu popup( this );
+    Q3PopupMenu popup( this );
 
     popup.insertItem( tr( "Add value"), 0 );
     if( GetCurrentData() != 0 )

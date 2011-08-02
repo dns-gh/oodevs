@@ -20,18 +20,18 @@
 // Created: JSR 2010-06-07
 // -----------------------------------------------------------------------------
 EfficientRangeDialog::EfficientRangeDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::VolumeType >& resolver, kernel::Options& options )
-    : QDialog ( parent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
+    : QDialog ( parent, 0, true, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title )
     , controllers_    ( controllers )
     , resolver_( resolver )
     , options_( options )
 {
     setCaption( tr("Efficient Range") );
 
-    QGridLayout* pMainLayout = new QGridLayout( this, 3, 2 );
+    Q3GridLayout* pMainLayout = new Q3GridLayout( this, 3, 2 );
     pMainLayout->setMargin( 10 );
     pMainLayout->setSpacing( 10 );
 
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Display Parameters" ), this );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Display Parameters" ), this );
     pMainLayout->addMultiCellWidget( box, 0, 1, 0, 2 );
 
     new QLabel( tr( "Percentage (PH):" ), box );

@@ -12,11 +12,11 @@
 #include "clients_gui/tools.h"
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qtextedit.h>
-#include <qvbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlineedit.h>
+#include <QtGui/qspinbox.h>
+#include <Qt3Support/q3textedit.h>
+#include <Qt3Support/q3vbox.h>
 
 using namespace frontend;
 
@@ -38,24 +38,24 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    QVBox* exerciseBox = Style( new QVBox( this ) );
+    Q3VBox* exerciseBox = Style( new Q3VBox( this ) );
     exerciseBox->setMargin( 5 );
     {
-        QHBox* sessionBox = Style( new QHBox( exerciseBox ) );
+        Q3HBox* sessionBox = Style( new Q3HBox( exerciseBox ) );
         sessionBox->setStretchFactor( Style( new QLabel( tools::translate( "SessionConfigPanel", "Session name:" ), sessionBox ) ), 1 );
         sessionName_ = Style( new QLineEdit( sessionBox ) );
         sessionBox->setStretchFactor( sessionName_, 2 );
         sessionName_->setText( "" );
     }
     {
-        QHBox* commentBox = Style( new QHBox( exerciseBox ) );
+        Q3HBox* commentBox = Style( new Q3HBox( exerciseBox ) );
         commentBox->setStretchFactor( Style( new QLabel( tools::translate( "SessionConfigPanel", "Session comments:" ), commentBox ) ), 1 );
-        sessionComment_ = Style( new QTextEdit( commentBox ) );
+        sessionComment_ = Style( new Q3TextEdit( commentBox ) );
         commentBox->setStretchFactor( sessionComment_, 2 );
         sessionComment_->setText( "" );
     }
     {
-        QHBox* exerciseNumberBox = Style( new QHBox( exerciseBox ) );
+        Q3HBox* exerciseNumberBox = Style( new Q3HBox( exerciseBox ) );
         exerciseNumberBox->setStretchFactor( Style( new QLabel( tools::translate( "SessionConfigPanel", "Exercise number:" ), exerciseNumberBox ) ), 1 );
         exerciseNumber_ = Style( new QSpinBox( 1, 10, 1, exerciseNumberBox ) );
         exerciseNumberBox->setStretchFactor( exerciseNumber_, 2 );

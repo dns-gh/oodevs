@@ -74,8 +74,8 @@ namespace
                 xis >> xml::end;
             }
     }
-    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QListViewItemIterator* files, int depth = -1 );
-    void CopyDirectory( const bfs::path& from, const bfs::path& baseFrom, const bfs::path& baseTo, const QListViewItemIterator* files, int depth )
+    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const Q3ListViewItemIterator* files, int depth = -1 );
+    void CopyDirectory( const bfs::path& from, const bfs::path& baseFrom, const bfs::path& baseTo, const Q3ListViewItemIterator* files, int depth )
     {
         bfs::directory_iterator end_itr;
         for( bfs::directory_iterator it( from ); it != end_itr; ++it )
@@ -83,7 +83,7 @@ namespace
             if( files )
             {
                 bool founded = false;
-                for( QListViewItemIterator iterator = *files; iterator.current() && !founded; ++iterator )
+                for( Q3ListViewItemIterator iterator = *files; iterator.current() && !founded; ++iterator )
                     if( std::string( iterator.current()->text( 0 ).ascii() ).find( it->path().leaf() ) != std::string::npos )
                         founded = true;
                 if( founded )
@@ -94,7 +94,7 @@ namespace
             Copy( it->path(), filename, baseFrom, baseTo, files, ( depth > 0 ) ? depth - 1 : depth );
         }
     }
-    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QListViewItemIterator* files, int depth )
+    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const Q3ListViewItemIterator* files, int depth )
     {
         if( bfs::exists( from ) )
         {
@@ -150,9 +150,9 @@ namespace frontend
             tools::WriteXmlCrc32Signature( filenameTo );
         }
         // Copy checked path
-        for( QListViewItemIterator iterator = params.iterator_; iterator.current(); ++iterator )
+        for( Q3ListViewItemIterator iterator = params.iterator_; iterator.current(); ++iterator )
         {
-            QCheckListItem* item = static_cast< QCheckListItem* >( iterator.current() );
+            Q3CheckListItem* item = static_cast< Q3CheckListItem* >( iterator.current() );
             if( item && item->isOn() )
             {
                 std::string file( item->text( 0 ).ascii() );

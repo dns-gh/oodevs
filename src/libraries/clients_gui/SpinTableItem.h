@@ -11,7 +11,7 @@
 #define __SpinTableItem_h_
 
 #include <boost/noncopyable.hpp>
-#include <QTable.h>
+#include <Qt3Support/Q3Table.h>
 
 namespace gui
 {
@@ -23,13 +23,13 @@ namespace gui
 // Created: JSR 2010-08-30
 // =============================================================================
 template< typename T >
-class SpinTableItem : public QTableItem
+class SpinTableItem : public Q3TableItem
                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SpinTableItem( QTable* table, T minValue, T maxValue, T step = 1 );
+             SpinTableItem( Q3Table* table, T minValue, T maxValue, T step = 1 );
     virtual ~SpinTableItem();
     //@}
 
@@ -55,8 +55,8 @@ private:
 // Created: JSR 2010-08-30
 // -----------------------------------------------------------------------------
 template< typename T >
-SpinTableItem< T >::SpinTableItem( QTable* table, T minValue, T maxValue, T step /*= 1*/ )
-    : QTableItem( table, QTableItem::WhenCurrent )
+SpinTableItem< T >::SpinTableItem( Q3Table* table, T minValue, T maxValue, T step /* = 1*/ )
+    : Q3TableItem( table, Q3TableItem::WhenCurrent )
     , minValue_( minValue )
     , maxValue_( maxValue )
     , step_( step )

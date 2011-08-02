@@ -38,7 +38,7 @@ namespace gui
 */
 // Created: ABR 2011-05-10
 // =============================================================================
-class ExtensionsPanel : public QDockWindow
+class ExtensionsPanel : public QDockWidget
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
@@ -86,9 +86,9 @@ protected:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     const kernel::ExtensionTypes&             extensions_;
     DiffusionListDialog*                      diffusionDialog_;
-    QVBox*                                    pMainLayout_;
-    QVBox*                                    pExtensionLayout_;
-    QGroupBox*                                pGroupBox_;
+    Q3VBox*                                    pMainLayout_;
+    Q3VBox*                                    pExtensionLayout_;
+    Q3GroupBox*                                pGroupBox_;
     T_Widgets                                 widgets_;
     bool                                      updating_;
     //@}

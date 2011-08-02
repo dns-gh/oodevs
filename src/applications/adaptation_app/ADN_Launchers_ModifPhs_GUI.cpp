@@ -18,7 +18,7 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Weapons_GUI.h"
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 #include "ENT/ENT_Tr.h"
 
 typedef ADN_Launchers_Data::ModifPhsInfos ModifPhsInfos;
@@ -66,7 +66,7 @@ ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( QWidget * parent )
 :   ADN_Table2( parent, "ADN_Launchers_ModifPhs_GUI" )
 {
     // peut etre selectionne & trie
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
 
     // columns

@@ -12,7 +12,7 @@
 #ifndef __ADN_Rich_ListViewItem_h_
 #define __ADN_Rich_ListViewItem_h_
 
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 
 class ADN_ListView;
 class ADN_ListViewItem;
@@ -24,7 +24,7 @@ class QColorGroup;
 // Created: SBO 2006-01-04
 //*****************************************************************************
 class ADN_Rich_ListViewItem
-:   public QListViewItem
+:   public Q3ListViewItem
 {
 public:
     //! @name Enums
@@ -45,7 +45,7 @@ public:
 
 public:
     explicit ADN_Rich_ListViewItem( ADN_ListView* parent, bool bGrid = false );
-    explicit ADN_Rich_ListViewItem( QListViewItem* parent, bool bGrid = false );
+    explicit ADN_Rich_ListViewItem( Q3ListViewItem* parent, bool bGrid = false );
     virtual ~ADN_Rich_ListViewItem();
 
     //! @name Operations
@@ -123,7 +123,7 @@ void ADN_Rich_ListViewItem::SetValueGreaterThan( uint nColumn, const T& value, c
 // Created: SBO 2006-01-12
 // -----------------------------------------------------------------------------
 template< typename T >
-QString ADN_Rich_ListViewItem::ToString( const T& value, E_FieldUnits eUnit /*= eUnitNone*/ ) const
+QString ADN_Rich_ListViewItem::ToString( const T& value, E_FieldUnits eUnit /* = eUnitNone*/ ) const
 {
     if( eUnit == eUnitHour )
     {

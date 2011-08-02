@@ -20,7 +20,7 @@ using namespace actions::gui;
 // Name: ParamBool constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue /*= false*/ )
+ParamBool::ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue /* = false*/ )
     : QObject( parent )
     , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )

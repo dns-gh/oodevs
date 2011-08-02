@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void FillPopupMenu( QPopupMenu* menu );
+    void FillPopupMenu( Q3PopupMenu* menu );
     //@}
 
 private slots:

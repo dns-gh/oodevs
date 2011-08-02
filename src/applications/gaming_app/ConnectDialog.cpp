@@ -19,13 +19,13 @@
 // Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 ConnectDialog::ConnectDialog( QWidget* pParent, Network& network, kernel::Logger_ABC& logger )
-    : QDialog ( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
+    : QDialog ( pParent, 0, true, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title )
     , network_( network )
     , logger_ ( logger )
 {
     setCaption( tr("Connection parameters") );
 
-    QGridLayout* pMainLayout = new QGridLayout( this, 3, 2 );
+    Q3GridLayout* pMainLayout = new Q3GridLayout( this, 3, 2 );
     pMainLayout->setMargin( 10 );
     pMainLayout->setSpacing( 10 );
 
@@ -104,11 +104,11 @@ void ConnectDialog::LoadDefaultConfig()
     settings.endGroup();
     if( list.empty() )
         list.push_back( "localhost" );
-    const QString currentItem = nIndex < int( list.count() ) ? list[ nIndex ] : list[0];
+    const QString currentItem = ( nIndex > 0 && nIndex < int( list.count() ) ) ? list[ nIndex ] : list[0];
     list.sort();
     QStringList uniqList;
     for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
-        if( *it != uniqList.back() )
+        if( uniqList.isEmpty() || *it != uniqList.back() )
             uniqList.append( *it );
     pHostNameComboBox_->insertStringList( uniqList );
     pHostNameComboBox_->setCurrentText( currentItem );
@@ -135,7 +135,7 @@ void ConnectDialog::SaveConfig()
 // Name: ConnectDialog::FillPopupMenu
 // Created: SBO 2008-09-18
 // -----------------------------------------------------------------------------
-void ConnectDialog::FillPopupMenu( QPopupMenu* menu )
+void ConnectDialog::FillPopupMenu( Q3PopupMenu* menu )
 {
     const QString port = QString::number( pPortSpinBox_->value() );
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )

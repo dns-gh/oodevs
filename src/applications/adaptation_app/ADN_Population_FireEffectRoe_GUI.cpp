@@ -65,7 +65,7 @@ ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI( QWidget * pa
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
     // hide vertical header

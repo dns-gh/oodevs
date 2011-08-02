@@ -19,7 +19,7 @@
 #ifndef __ADN_UserData_ListViewItem_h_
 #define __ADN_UserData_ListViewItem_h_
 
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 
 // =============================================================================
 /** @class  ADN_UserData_ListViewItem
@@ -33,12 +33,12 @@
 // =============================================================================
 template< class PointerType >
 class ADN_UserData_ListViewItem
-: public QListViewItem
+: public Q3ListViewItem
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_UserData_ListViewItem( QListView* pParent, const std::string& strName, PointerType* pPointer );
+    ADN_UserData_ListViewItem( Q3ListView* pParent, const std::string& strName, PointerType* pPointer );
     virtual ~ADN_UserData_ListViewItem();
     //@}
 

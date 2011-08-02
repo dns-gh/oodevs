@@ -27,7 +27,7 @@ namespace bfs = boost::filesystem;
 ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
                       ScoresModel& model, const StaticModel& staticModel, const tools::ExerciseConfig& config,
                       const kernel::GlTools_ABC& tools )
-    : QVBox       ( parent )
+    : Q3VBox       ( parent )
     , controllers_( controllers )
     , factory_    ( factory )
     , model_      ( model )
@@ -38,19 +38,19 @@ ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::It
     layout()->setAlignment( Qt::AlignRight );
     scores_->AddColumn( tr( "Name" ) );
     {
-        QHBox* box = new QHBox( this );
-        QButton* editButton = new QPushButton( tr( "Edit..." ), box );
-        QButton* deleteButton = new QPushButton( tr( "Delete" ), box );
+        Q3HBox* box = new Q3HBox( this );
+        QPushButton* editButton = new QPushButton( tr( "Edit..." ), box );
+        QPushButton* deleteButton = new QPushButton( tr( "Delete" ), box );
         connect( editButton, SIGNAL( clicked() ), SLOT( OnEdit() ) );
         connect( deleteButton, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }
     {
-        generatorBox_ = new QHBox( this );
-        QButton* defaultIndicators = new QPushButton( tr( "Generate default indicators" ), generatorBox_ );
-        connect( defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
+        generatorBox_ = new Q3HBox( this );
+        Q3Button defaultIndicators = new QPushButton( tr( "Generate default indicators" ), generatorBox_ );
+        connect( &defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
         generatorBox_->hide();
     }
-    connect( scores_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );
+    connect( scores_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );
     connect( editor_, SIGNAL( Show() ), SIGNAL( Hide() ) );
     connect( editor_, SIGNAL( Hide() ), SIGNAL( Show() ) );
     controllers_.Register( *this );

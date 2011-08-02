@@ -117,9 +117,9 @@ bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mous
 bool LimitsLayer::MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point )
 {
     const float precision = Precision( point );
-    if( mouse->state() == Qt::ShiftButton )
+    if( mouse->state() == Qt::ShiftModifier )
         static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->InsertPoint( point, precision );
-    else if( mouse->state() == Qt::AltButton )
+    else if( mouse->state() == Qt::AltModifier )
         static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->RemovePoint( point, precision );
 
     if( entity.Get< Positions >().IsAt( point, precision ) )

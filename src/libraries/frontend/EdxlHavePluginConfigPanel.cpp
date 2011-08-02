@@ -12,12 +12,12 @@
 #include "CreateSession.h"
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qgroupbox.h>
-#include <qdatetimeedit.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
+#include <QtGui/qlineedit.h>
+#include <QtGui/qspinbox.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3datetimeedit.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qcheckbox.h>
 #include <boost/filesystem.hpp>
 
 using namespace frontend;
@@ -39,28 +39,28 @@ EdxlHavePluginConfigPanel::EdxlHavePluginConfigPanel( QWidget* parent, const too
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    box_ = Style( new QGroupBox( 1, Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Enable EDXL-HAVE exchange" ), this ) );
+    box_ = Style( new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Enable EDXL-HAVE exchange" ), this ) );
     box_->setCheckable( true );
     box_->setChecked( false );
     {
-        QHBox* box = Style( new QHBox( box_ ) );
+        Q3HBox* box = Style( new Q3HBox( box_ ) );
         Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Host: " ), box ) );
         host_ = Style( new QLineEdit( "www.ewaphoenix.com", box ) );
     }
     {
-        QHBox* box = Style( new QHBox( box_ ) );
+        Q3HBox* box = Style( new Q3HBox( box_ ) );
         Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ), box ) );
         ssl_ = Style( new QCheckBox( box ) );
         ssl_->setChecked( true );
     }
     {
-        QHBox* box = Style( new QHBox( box_ ) );
+        Q3HBox* box = Style( new Q3HBox( box_ ) );
         Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ), box ) );
         log_ = Style( new QCheckBox( box ) );
         log_->setChecked( true );
     }
     {
-        QGroupBox* services = new QGroupBox( 2, Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Services configuration:" ), box_ );
+        Q3GroupBox* services = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Services configuration:" ), box_ );
         {
             Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Initialization service: " ), services ) );
             initializeServiceURI_ = Style( new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize", services ) );
@@ -70,8 +70,8 @@ EdxlHavePluginConfigPanel::EdxlHavePluginConfigPanel( QWidget* parent, const too
             updateServiceURI_ = Style( new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=update", services ) );
 
             Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Frequency: " ), services ) );
-            frequency_ = new QTimeEdit( services );
-            frequency_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds  );
+            frequency_ = new Q3TimeEdit( services );
+            frequency_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds  );
             frequency_->setTime( QTime().addSecs( 120 ) );
         }
     }

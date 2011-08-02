@@ -56,7 +56,7 @@ public slots:
     //! @name Slots
     //@{
     void OnOptionsChanged();
-    void OnRequestPopup( QListViewItem*, const QPoint&, int );
+    void OnRequestPopup( Q3ListViewItem*, const QPoint&, int );
     void OnSelectionChanged();
     void OnReadTimerOut();
     void OnClearAll();
@@ -91,7 +91,7 @@ private:
     const ReportFilterOptions& filter_;
 
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    QPopupMenu*                               menu_;
+    Q3PopupMenu*                               menu_;
     QTimer*                                   readTimer_;
     //@}
 };

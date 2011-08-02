@@ -10,10 +10,10 @@
 #ifndef __MT_ListViewItem_h_
 #define __MT_ListViewItem_h_
 
-#include <qlistview.h>
-#include <qfont.h>
-#include <qcolor.h>
-#include <qvaluevector.h>
+#include <Qt3Support/q3listview.h>
+#include <QtGui/qfont.h>
+#include <QtGui/qcolor.h>
+#include <Qt3Support/q3valuevector.h>
 #include <boost/noncopyable.hpp>
 
 // =============================================================================
@@ -26,22 +26,22 @@
 */
 // Created: APE 2004-03-16
 // =============================================================================
-class MT_ListViewItem : public QListViewItem
+class MT_ListViewItem : public Q3ListViewItem
                       , private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    MT_ListViewItem( QListView * parent );
-    MT_ListViewItem( QListView * parent, QListViewItem * after );
-    MT_ListViewItem( QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    MT_ListViewItem( QListView * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    MT_ListViewItem( Q3ListView * parent );
+    MT_ListViewItem( Q3ListView * parent, Q3ListViewItem * after );
+    MT_ListViewItem( Q3ListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    MT_ListViewItem( Q3ListView * parent, Q3ListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
 
-    MT_ListViewItem( QListViewItem * parent );
-    MT_ListViewItem( QListViewItem * parent, QListViewItem * after );
-    MT_ListViewItem( QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    MT_ListViewItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    MT_ListViewItem( Q3ListViewItem * parent );
+    MT_ListViewItem( Q3ListViewItem * parent, Q3ListViewItem * after );
+    MT_ListViewItem( Q3ListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    MT_ListViewItem( Q3ListViewItem * parent, Q3ListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
     virtual ~MT_ListViewItem();
     //@}
 
@@ -60,13 +60,13 @@ protected:
     //! @name Redefinitions
     //@{
     void paintCell( QPainter *painter, const QColorGroup &cg, int column, int width, int align );
-    int width( const QFontMetrics &fm, const QListView *lv, int column ) const;
+    int width( const QFontMetrics &fm, const Q3ListView *lv, int column ) const;
     //@}
 
 private:
-    QValueVector<QFont> fonts_;
-    QValueVector<QColor> fontColors_;
-    QValueVector<QColor> backgrounds_;
+    Q3ValueVector<QFont> fonts_;
+    Q3ValueVector<QColor> fontColors_;
+    Q3ValueVector<QColor> backgrounds_;
 
     QFont* pFont_;
     QColor* pFontColor_;

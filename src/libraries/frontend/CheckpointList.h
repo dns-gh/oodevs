@@ -10,8 +10,8 @@
 #ifndef __CheckpointList_h_
 #define __CheckpointList_h_
 
-#include <qlistbox.h>
-#include <qvbox.h>
+#include <Qt3Support/q3listbox.h>
+#include <Qt3Support/q3vbox.h>
 
 namespace tools
 {
@@ -27,7 +27,7 @@ namespace frontend
 */
 // Created: SBO 2010-04-21
 // =============================================================================
-class CheckpointList : public QVBox
+class CheckpointList : public Q3VBox
 {
     Q_OBJECT;
 
@@ -73,7 +73,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QListBox* list_;
+    Q3ListBox* list_;
     QString exercise_;
     QString session_;
     QStringList checkpoints_;

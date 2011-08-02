@@ -26,7 +26,7 @@
 
 #include "protocol/ClientSenders.h"
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 

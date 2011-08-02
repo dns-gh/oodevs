@@ -35,7 +35,7 @@ namespace gui
 */
 // Created: SBO 2007-10-16
 // =============================================================================
-class UnitPreviewIcon : public QHBox
+class UnitPreviewIcon : public Q3HBox
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver_ABC
                       , public tools::SelectionObserver_Base< kernel::Formation_ABC >

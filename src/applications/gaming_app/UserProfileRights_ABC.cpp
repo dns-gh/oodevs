@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: UserProfileRights_ABC constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-UserProfileRights_ABC::UserProfileRights_ABC( QListView* listView )
+UserProfileRights_ABC::UserProfileRights_ABC( Q3ListView* listView )
     : listView_( listView )
     , selectedProfile_( 0 )
     , needsSaving_( false )
@@ -55,8 +55,8 @@ void UserProfileRights_ABC::Commit( bool savedStatus )
     needsSaving_ = savedStatus;
     if( !selectedProfile_ )
         return;
-    QListViewItemIterator it( listView_ );
-    while( QListViewItem* item = it.current() )
+    Q3ListViewItemIterator it( listView_ );
+    while( Q3ListViewItem* item = it.current() )
     {
         if( const ValuedListItem* value = static_cast< const ValuedListItem* >( item ) )
         {
@@ -102,7 +102,7 @@ void UserProfileRights_ABC::Display( UserProfile& profile )
 // Name: UserProfileRights_ABC::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, int column )
+void UserProfileRights_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&, int column )
 {
     if( column == 0 || !item )
         return;
@@ -146,7 +146,7 @@ void UserProfileRights_ABC::OnHide()
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::CloseAll()
 {
-    for( QListViewItemIterator it( listView_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
         listView_->setOpen( *it, false );
 }
 
@@ -154,7 +154,7 @@ void UserProfileRights_ABC::CloseAll()
 // Name: UserProfileRights_ABC::SetStatus
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( QListViewItem* item, Status status )
+void UserProfileRights_ABC::SetStatus( Q3ListViewItem* item, Status status )
 {
     item->setText( 3, QString::number( status ) );
     if( status == eNothing )
@@ -239,11 +239,11 @@ UserProfileRights_ABC::Status UserProfileRights_ABC::MakeStatus( bool read, bool
 // Name: UserProfileRights_ABC::SetInheritedStatus
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetInheritedStatus( QListViewItem* item, Status status )
+void UserProfileRights_ABC::SetInheritedStatus( Q3ListViewItem* item, Status status )
 {
     if( !item )
         return;
-    for( QListViewItem* child = item->firstChild(); child; child = child->nextSibling() )
+    for( Q3ListViewItem* child = item->firstChild(); child; child = child->nextSibling() )
         SetStatus( child, status );
 }
 

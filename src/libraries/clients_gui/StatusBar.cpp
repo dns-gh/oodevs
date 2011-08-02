@@ -19,7 +19,6 @@
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/Ent_Tr.h"
-#include <qstatusbar.h>
 #include <boost/format.hpp>
 
 using namespace kernel;
@@ -38,9 +37,9 @@ StatusBar::StatusBar( QStatusBar* parent, TerrainPicker& picker, const Detection
     toolButton->setPopupDelay( 0 );
     toolButton->adjustSize();
     parent->addWidget( toolButton, 0, true );
-    pMenu_ = new QPopupMenu( toolButton );
-    pMenu_->setCheckable( true );
+    pMenu_ = new QMenu( toolButton );
     toolButton->setPopup( pMenu_ );
+    pMenu_->menuAction()->setCheckable( true );
 
     AddField( parent, 155, CoordinateSystems::E_Local, true );
     AddField( parent, 105, CoordinateSystems::E_Mgrs, true );
@@ -91,7 +90,7 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, int id, bool
 {
     kernel::CoordinateSystems::CIT_spatialReference it = converter_.GetCoordSystem().systems_.find( id );
     if( it != converter_.GetCoordSystem().systems_.end() )
-    {
+    {   
         QLabel* field = AddField( parent, size, it->second->c_str(), checked );
         coordinateFields_[id] = field;
         return field;
@@ -150,8 +149,9 @@ void StatusBar::OnMouseMove( const geometry::Point3f& position )
 // -----------------------------------------------------------------------------
 void StatusBar::ParameterSelected( int index )
 {
-    pMenu_->setItemChecked( index, !pMenu_->isItemChecked( index ) );
-    if( QLabel* field = menuFields_[index - 1] )
+    QLabel* field = menuFields_[index - 1];
+    pMenu_->setItemChecked( index, field->isHidden() );
+    if( field )
         field->setShown( field->isHidden() );
 }
 

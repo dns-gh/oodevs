@@ -11,11 +11,11 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Launchers_GUI.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qvbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3vbox.h>
 
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
@@ -67,7 +67,7 @@ void ADN_Launchers_GUI::Build()
     T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Launcher data
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Launcher" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Launcher" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vConnectors[eName] );
@@ -76,12 +76,12 @@ void ADN_Launchers_GUI::Build()
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Direct fire" ), pGroup );
     vConnectors[eDirect] = &pDirectGroup->GetConnector();
 
-    QGroupBox* pGroupModificators = new QHGroupBox( tr( "Phs modifiers" ), pDirectGroup );
+    Q3GroupBox* pGroupModificators = new Q3HGroupBox( tr( "Phs modifiers" ), pDirectGroup );
 
     // modificators headers
     QLabel* pLabel = new QLabel( tr( "Shooter's\nstance" ), pGroupModificators );
     pLabel->setAlignment( Qt::AlignVCenter );
-    QVBox* pBox = new QVBox( pGroupModificators );
+    Q3VBox* pBox = new Q3VBox( pGroupModificators );
     pLabel = new QLabel( tr( "Target's stance" ), pBox );
     pLabel->setAlignment( Qt::AlignHCenter );
 
@@ -98,7 +98,7 @@ void ADN_Launchers_GUI::Build()
     pLaunchers_->SetItemConnectors(vConnectors);
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pLaunchers_, 1 );
     pMainLayout->addWidget( pGroup, 4 );
 }

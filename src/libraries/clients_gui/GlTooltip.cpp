@@ -11,7 +11,6 @@
 #include "GlTooltip.h"
 #include "TooltipsLayer_ABC.h"
 #include "clients_kernel/Styles.h"
-#include <qpainter.h>
 #include <boost/bind.hpp>
 
 using namespace gui;
@@ -228,7 +227,7 @@ void GlTooltip::DirtyImage()
 // Name: GlTooltip::Draw
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void GlTooltip::Draw( const geometry::Point2f& position, int width /*= 0*/, int height /*= 0*/, float factor /*= 1.f*/ )
+void GlTooltip::Draw( const geometry::Point2f& position, int width /* = 0*/, int height /* = 0*/, float factor /* = 1.f*/ )
 {
     if( image_.isNull() )
         GenerateImage( std::abs( width ), std::abs( height ) );
@@ -249,13 +248,12 @@ void GlTooltip::GenerateImage( unsigned int width, unsigned int height )
 {
     if( new_.empty() )
         return;
-    QPainter p;
-    QFontMetrics metrics( p.font() );
-    int fontHeight = metrics.height();
-
     QPixmap pixmap( CreatePixmap( width, height ) );
     pixmap.fill( Qt::magenta );
+    QPainter p;
     p.begin( &pixmap );
+        QFontMetrics metrics( p.font() );
+        int fontHeight = metrics.height();
         frameDrawer_( p, pixmap.rect() );
         int x = 4;
         int y = fontHeight;
@@ -352,7 +350,7 @@ QPixmap GlTooltip::CreatePixmap( unsigned int width, unsigned int height )
     }
     w = std::max< int >( w + 8, width );
     h = std::max< int >( h + 4, height );
-    return QPixmap( w, h, 32 );
+    return QPixmap( w, h);
 }
 
 // -----------------------------------------------------------------------------

@@ -39,10 +39,12 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
-    pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
+    Q3VBox* box = new Q3VBox( this );
+    box->setMinimumWidth( 200 );
+    pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( box, *this, factory );
     pKnowledgeListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Known objects" ) );
 
-    display_ = new DisplayBuilder( this, factory );
+    display_ = new DisplayBuilder( box, factory );
     display_->AddGroup( tools::findTranslation( "Object", "Information" ) )
                 .AddLabel( tools::findTranslation( "Object", "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Associated object:" ) )
@@ -86,11 +88,13 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Fire temperature:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
+    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( box, *this, factory );
     pPerceptionListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Agent" ) );
 
-    connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+    setWidget( box );
+
+    connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
+    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
 
     controllers_.Register( *this );
 }
@@ -322,7 +326,7 @@ void ObjectKnowledgePanel::UpdateExtension( const ObjectKnowledge_ABC& k )
 // Name: ObjectKnowledgePanel::OnSelectionChanged
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
+void ObjectKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
     if( item->IsA< const ObjectKnowledge_ABC >() )
@@ -353,7 +357,7 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 // Name: ObjectKnowledgePanel::OnContextMenuRequested
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
+void ObjectKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
 {
     if( i )
     {

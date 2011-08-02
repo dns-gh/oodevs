@@ -32,7 +32,7 @@ class BooleanOptionButton : public QToolButton, public tools::Observer_ABC, publ
 public:
     //! @name Constructors/Destructor
     //@{
-             BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options, const std::string& option );
+             BooleanOptionButton( const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options, const std::string& option );
     virtual ~BooleanOptionButton();
     //@}
 

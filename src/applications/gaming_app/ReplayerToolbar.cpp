@@ -15,7 +15,6 @@
 #include "clients_kernel/Controllers.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include <qtable.h>
 
 using namespace sword;
 
@@ -31,11 +30,10 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , slider_     ( 0 )
     , userMove_   ( true )
 {
-    setLabel( tr( "Replay control" ) );
+    setWindowTitle( tr( "Replay control" ) );
     QLabel* label = new QLabel( this );
+    addWidget( label );
     label->setPixmap( MAKE_PIXMAP( replayer ) );
-    addSeparator();
-    mainWindow()->setAppropriate( this, false );
     controllers_.Register( *this );
 }
 
@@ -60,12 +58,14 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         if( ! slider_ )
         {
             slider_ = new QSlider( Qt::Horizontal, this );
+            addWidget( slider_ );
             slider_->setMinValue( 0 );
             slider_->setPageStep( 1 );
             slider_->setMinimumWidth( 200 );
-            slider_->setTickmarks( QSlider::Below );
+            slider_->setTickmarks( QSlider::TicksBelow );
             addSeparator();
             value_ = new QLabel( this );
+            addWidget( value_ );
             value_->setMargin( 5 );
             addSeparator();
             QToolButton* pTimeTableButton = new QToolButton( this );
@@ -84,7 +84,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         if( ! isVisible() )
         {
             show();
-            mainWindow()->setAppropriate( this, true );
+           // mainWindow()->setAppropriate( this, true );
         }
     }
     else if( isVisible() )
@@ -104,10 +104,10 @@ namespace
             QLayout* layout = new QVBoxLayout( this );
             layout->setMargin( 5 );
             setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-            QVBox* box = new QVBox( this );
+            Q3VBox* box = new Q3VBox( this );
             layout->add( box );
 
-            QTable* table = new QTable( timeTable.time_table_item_size(), 3, box );
+            Q3Table* table = new Q3Table( timeTable.time_table_item_size(), 3, box );
             table->verticalHeader()->hide();
             table->setLeftMargin( 0 );
             table->horizontalHeader()->setLabel( 0, tr( "Tick" ) );
@@ -116,9 +116,9 @@ namespace
             for( int i = 0; i < timeTable.time_table_item_size(); ++i )
             {
                 const sword::TimeTable_TimeMapping& map = timeTable.time_table_item( i );
-                table->setItem( i, 0, new QTableItem( table, QTableItem::Never, QString::number( map.tick() ) ) );
-                table->setItem( i, 1, new QTableItem( table, QTableItem::Never, map.simulation_time().data().c_str() ) );
-                table->setItem( i, 2, new QTableItem( table, QTableItem::Never, map.real_time().data().c_str() ) );
+                table->setItem( i, 0, new Q3TableItem( table, Q3TableItem::Never, QString::number( map.tick() ) ) );
+                table->setItem( i, 1, new Q3TableItem( table, Q3TableItem::Never, map.simulation_time().data().c_str() ) );
+                table->setItem( i, 2, new Q3TableItem( table, Q3TableItem::Never, map.real_time().data().c_str() ) );
             }
             connect( new QPushButton( tr( "Ok" ), box ), SIGNAL( clicked() ), SLOT( accept() ) );
         }

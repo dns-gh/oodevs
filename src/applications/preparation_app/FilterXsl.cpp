@@ -109,7 +109,7 @@ const std::string FilterXsl::GetName() const
 void FilterXsl::OnBrowse()
 {
     assert( !exerciseFile_.empty() );
-    QString directory = QFileDialog::getExistingDirectory( exerciseFile_.c_str(), QApplication::activeModalWidget(), 0, tools::translate( "FilterXsl", "Select output directory" ) );
+    QString directory = Q3FileDialog::getExistingDirectory( exerciseFile_.c_str(), QApplication::activeModalWidget(), 0, tools::translate( "FilterXsl", "Select output directory" ) );
     if( directory.startsWith( "//" ) )
         directory.replace( "/", "\\" );
     output_->setText( directory );
@@ -131,7 +131,7 @@ void FilterXsl::OnTextChanged()
 // -----------------------------------------------------------------------------
 bool FilterXsl::IsValid() const
 {
-    return output_ && output_->text() && !output_->text().isEmpty() && bfs::exists( output_->text().ascii() );
+    return output_ && output_->text().ascii() && !output_->text().isEmpty() && bfs::exists( output_->text().ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ bool FilterXsl::IsValid() const
 // -----------------------------------------------------------------------------
 QWidget* FilterXsl::CreateParametersWidget( QWidget* parent )
 {
-    QGroupBox* parametersWidget = new QGroupBox( 3, Qt::Horizontal, tools::translate( "FilterXsl", "Select output directory" ), parent, "FilterXsl_ParameterGroupBox" );
+    Q3GroupBox* parametersWidget = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "FilterXsl", "Select output directory" ), parent, "FilterXsl_ParameterGroupBox" );
     new QLabel( tools::translate( "FilterXsl", "Output to:" ), parametersWidget, "FilterXsl_ParameterLabel" );
     output_ = new QLineEdit( tools::translate( "FilterXsl", "Enter output directory here" ), parametersWidget, "FilterXsl_ParameterLineEdit" );
     connect( output_, SIGNAL( textChanged( const QString& ) ), SLOT( OnTextChanged() ) );
@@ -155,7 +155,7 @@ QWidget* FilterXsl::CreateParametersWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 void FilterXsl::Execute()
 {
-    assert( output_ && output_->text() && !output_->text().isEmpty() && !inputFile_.empty() );
+    assert( output_ && output_->text().ascii() && !output_->text().isEmpty() && !inputFile_.empty() );
     xsl::xftransform xft( xslFile_, MakeOutputFile( output_->text().ascii(), inputFile_, outputExtension_ ) );
     xft << xml::xifstream( inputFile_ );
 }

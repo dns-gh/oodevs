@@ -10,7 +10,6 @@
 #ifndef __ADN_TableDialog_h_
 #define __ADN_TableDialog_h_
 
-#include <qdialog.h>
 #include <boost/noncopyable.hpp>
 
 class ADN_Table;

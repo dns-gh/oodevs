@@ -10,7 +10,7 @@
 #ifndef __ADN_Ref_ABC_h_
 #define __ADN_Ref_ABC_h_
 
-#include <qobject.h>
+#include <QtCore/qobject.h>
 
 class ADN_Connector_ABC;
 class ADN_Connector_Vector_ABC;

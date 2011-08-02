@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: AGE 2006-10-24
 // =============================================================================
-class NatureEditionWidget : public QVBox
+class NatureEditionWidget : public Q3VBox
                           , private boost::noncopyable
 {
     Q_OBJECT;

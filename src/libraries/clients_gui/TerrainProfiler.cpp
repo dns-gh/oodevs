@@ -28,18 +28,19 @@ using namespace gui;
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
 TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
-    : QDockWindow( parent, "terrain-profiler" )
+    : QDockWidget( "terrain-profiler", parent )
     , controllers_( controllers )
     , detection_  ( detection )
     , layer_      ( layer )
 {
+    setObjectName( "terrainProfiler" );
     setCaption( tools::translate( "gui::TerrainProfiler", "Terrain profile" ) );
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         {
-            QVBox* vbox = new QVBox( box );
+            Q3VBox* vbox = new Q3VBox( box );
             height_ = new QSlider( -100, 0, 1, 2, Qt::Vertical, vbox );
-            height_->setTickmarks( QSlider::Right );
+            height_->setTickmarks( QSlider::TicksRight );
             height_->setTickInterval( 10 );
             heightValue_ = new QSpinBox( 0, 100, 1, vbox );
             heightValue_->setSuffix( QString( " %1" ).arg( kernel::Units::meters.AsString() ) );
@@ -50,11 +51,9 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( SliderChanged( int ) ) );
         connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged( int ) ) );
     }
-    setResizeEnabled( true );
-    setCloseMode( QDockWindow::Always );
-    undock();
+    parent->addDockWidget( Qt::RightDockWidgetArea, this );
     hide();
-    parent->setAppropriate( this, false );
+    setFloating( true );
     controllers_.Register( *this );
 }
 
@@ -147,7 +146,7 @@ void TerrainProfiler::SetToUnitPosition()
 // Name: TerrainProfiler::SetFromPosition
 // Created: SBO 2010-04-01
 // -----------------------------------------------------------------------------
-void TerrainProfiler::SetFromPosition( const geometry::Point2f& point, float height /*= 2.f*/ )
+void TerrainProfiler::SetFromPosition( const geometry::Point2f& point, float height /* = 2.f*/ )
 {
     from_ = point;
     height_->setValue( ( int )height );

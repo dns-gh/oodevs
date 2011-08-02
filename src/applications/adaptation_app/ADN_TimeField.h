@@ -12,7 +12,7 @@
 
 #include "ADN_Connector_ABC.h"
 #include "ADN_Gfx_ABC.h"
-#include <qwidget.h>
+#include <QtGui/qwidget.h>
 
 class ADN_TimeField_EditLine;
 class QComboBox;

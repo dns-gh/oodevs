@@ -54,7 +54,7 @@ ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( QWidget* pParent, ADN_Connecto
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
     // hide vertical header

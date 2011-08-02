@@ -33,7 +33,7 @@ namespace
         {
             // NOTHING
         }
-        virtual QDragObject* dragObject()
+        virtual Q3DragObject* dragObject()
         {
             ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
             if( !item )
@@ -49,7 +49,7 @@ namespace
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
 AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory )
-    : QVBox( parent, "AfterActionRequestList" )
+    : Q3VBox( parent, "AfterActionRequestList" )
     , controllers_  ( controllers )
     , factory_      ( factory )
     , plotFactory_  ( plotFactory )
@@ -60,10 +60,9 @@ AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& co
     requests_ = new MyList( this, factory );
     requests_->AddColumn( tr( "Request" ) );
     requests_->AddColumn( tr( "Status" ) );
-    new ListItemToolTip( requests_->viewport(), *requests_ );
 
-    connect( requests_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
-    connect( requests_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnDoubleClicked( QListViewItem* ) ) );
+    connect( requests_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
+    connect( requests_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnDoubleClicked( Q3ListViewItem* ) ) );
 
     controllers_.Register( *this );
 }
@@ -81,7 +80,7 @@ AfterActionRequestList::~AfterActionRequestList()
 // Name: AfterActionRequestList::OnDoubleClicked
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::OnDoubleClicked( QListViewItem * i )
+void AfterActionRequestList::OnDoubleClicked( Q3ListViewItem * i )
 {
     if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
     {
@@ -95,7 +94,7 @@ void AfterActionRequestList::OnDoubleClicked( QListViewItem * i )
 // Name: AfterActionRequestList::OnRequestPopup
 // Created: ABR 2011-02-17
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
+void AfterActionRequestList::OnRequestPopup( Q3ListViewItem* pItem, const QPoint& pos )
 {
     popupMenu_.clear();
     if( pItem != 0 )

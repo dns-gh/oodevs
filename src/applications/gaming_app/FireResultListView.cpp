@@ -32,7 +32,7 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
     , factory_( factory )
     , selected_( controllers )
 {
-    setFrameStyle( QFrame::Plain );
+    setFrameStyle( Q3Frame::Plain );
     setMargin( 2 );
     AddColumn( tools::translate( "FireResultListView", "Date" ) );
     AddColumn( tools::translate( "FireResultListView", "Target" ) );
@@ -99,12 +99,12 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC& 
     displayer.Display( tools::translate( "FireResultListView", "Equipments" ), tools::translate( "FireResultListView", " (avail, unavail, repairable):" ) );
     displayer.Display( tools::translate( "FireResultListView", "Troops" ), tools::translate( "FireResultListView", " (officer, warrant-off., private)" ) );
 
-    QListViewItem* equipments = item->firstChild();
+    Q3ListViewItem* equipments = item->firstChild();
     DeleteTail(
         DisplayList( result->CreateIterator(), equipments )
     );
 
-    QListViewItem* humans = equipments->nextSibling();
+    Q3ListViewItem* humans = equipments->nextSibling();
     DeleteTail(
         DisplayList( &* result->casualties_, result->casualties_ + eNbrHumanWound, humans )
     );

@@ -20,7 +20,7 @@ class SuccessFactorActionTypes;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorActionsEditor : public QScrollView
+class SuccessFactorActionsEditor : public Q3ScrollView
 {
     Q_OBJECT;
 
@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     const SuccessFactorActionTypes& actionTypes_;
-    QVBox* mainWidget_;
+    Q3VBox* mainWidget_;
     T_Items items_;
     //@}
 };

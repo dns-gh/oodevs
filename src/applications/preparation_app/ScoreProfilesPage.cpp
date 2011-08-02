@@ -12,22 +12,21 @@
 #include "clients_kernel/Controllers.h"
 #include "preparation/ProfileSelection.h"
 #include "preparation/UserProfile.h"
-#include <qlistview.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreProfilesPage constructor
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
 ScoreProfilesPage::ScoreProfilesPage( QWidget* parent, kernel::Controllers& controllers )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
 {
     setMargin( 5 );
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Access rights" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Access rights" ), this );
         box->setMargin( 5 );
         new QLabel( tr( "Selected profiles will have access to the score during the exercise." ), box );
-        list_ = new QListView( box );
+        list_ = new Q3ListView( box );
         list_->addColumn( tr( "Profile" ) );
     }
     controllers_.Register( *this );
@@ -48,7 +47,7 @@ ScoreProfilesPage::~ScoreProfilesPage()
 // -----------------------------------------------------------------------------
 void ScoreProfilesPage::NotifyCreated( const UserProfile& profile )
 {
-    QCheckListItem* item = new QCheckListItem( list_, profile.GetLogin(), QCheckListItem::CheckBox );
+    Q3CheckListItem* item = new Q3CheckListItem( list_, profile.GetLogin(), Q3CheckListItem::CheckBox );
     item->setOn( true );
     list_->insertItem( item );
     profiles_[ &profile ] = item;
@@ -75,7 +74,7 @@ void ScoreProfilesPage::NotifyDeleted( const UserProfile& profile )
     T_Profiles::iterator it = profiles_.find( &profile );
     if( it != profiles_.end() )
     {
-        if( QListViewItem* item = list_->findItem( profile.GetLogin(), 0 ) )
+        if( Q3ListViewItem* item = list_->findItem( profile.GetLogin(), 0 ) )
             list_->removeItem( item );
         profiles_.erase( it );
     }

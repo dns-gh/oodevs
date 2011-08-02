@@ -30,7 +30,7 @@ class ChatRoom;
 */
 // Created: SBO 2008-06-11
 // =============================================================================
-class ChatWidget : public QHBox
+class ChatWidget : public Q3HBox
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< UserProfile >
                  , public CommandHandler_ABC
@@ -76,7 +76,7 @@ private:
     CommandHandler& handler_;
     std::auto_ptr< CommandPublisher > publisher_;
     QTabWidget* tabs_;
-    QListBox* profiles_;
+    Q3ListBox* profiles_;
     T_Rooms rooms_;
     //@}
 };

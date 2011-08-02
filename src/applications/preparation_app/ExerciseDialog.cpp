@@ -14,7 +14,6 @@
 #include <boost/algorithm/string.hpp>
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem/path.hpp>
-#include <qvgroupbox.h>
 
 namespace bfs = boost::filesystem;
 
@@ -31,7 +30,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
 {
     setModal( false );
     setCaption( tr( "Exercise" ) );
-    QGridLayout* grid = new QGridLayout( this, 4, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 4, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 10 );
@@ -39,14 +38,14 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     grid->setRowStretch( 3, 1 );
     grid->setRowStretch( 4, 1 );
     {
-        QGroupBox* box = new QHGroupBox( tr( "Information" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
         name_ = new QLineEdit( box );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
     }
     {
-        QGroupBox* box = new QVGroupBox( tr( "Briefing" ), this );
-        QHBox* hbox = new QHBox( box );
+        Q3GroupBox* box = new Q3VGroupBox( tr( "Briefing" ), this );
+        Q3HBox* hbox = new Q3HBox( box );
         new QLabel( tr( "Language" ), hbox );
         lang_ = new gui::ValuedComboBox< QString >( hbox );
         lang_->AddItem( tr( "English" ), "en" );
@@ -56,36 +55,36 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         QPushButton* textFormat = new QPushButton( tr( "source" ), hbox );
         textFormat->setToggleButton( true );
         connect( textFormat, SIGNAL( toggled( bool ) ), this, SLOT( OnToggleDisplayMode( bool ) ) );
-        briefing_ = new QTextEdit( box );
+        briefing_ = new Q3TextEdit( box );
         briefing_->setTextFormat( Qt::RichText );
         grid->addMultiCellWidget( box, 1, 1, 0, 2 );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Files" ), this );
-        resources_ = new QListView( box );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Files" ), this );
+        resources_ = new Q3ListView( box );
         resources_->addColumn( tr( "Name" ) );
         resources_->addColumn( tr( "File" ) );
         resources_->header()->setMovingEnabled( false );
         resources_->setAllColumnsShowFocus( true );
-        resources_->setResizeMode( QListView::LastColumn );
-        QVBox* tools = new QVBox( box );
-        QButton* add = new QPushButton( tr( "+" ), tools );
+        resources_->setResizeMode( Q3ListView::LastColumn );
+        Q3VBox* tools = new Q3VBox( box );
+        QPushButton* add = new QPushButton( tr( "+" ), tools );
         add->setMaximumWidth( 40 );
         connect( add, SIGNAL( clicked() ), this, SLOT( OnAddResource() ) );
-        QButton* del = new QPushButton( tr( "-" ), tools );
+        QPushButton* del = new QPushButton( tr( "-" ), tools );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteResource() ) );
         grid->addMultiCellWidget( box, 2, 2, 0, 2 );
     }
     {
-        QGroupBox* box = new QVGroupBox( tr( "Parameters" ), this );
+        Q3GroupBox* box = new Q3VGroupBox( tr( "Parameters" ), this );
         infiniteDotationsCB_ = new QCheckBox( tr( "Infinite resources" ), box );
         grid->addMultiCellWidget( box, 3, 3, 0, 2 );
     }
     {
-        QHBox* box = new QHBox( this );
-        QButton* ok = new QPushButton( tr( "Ok" ), box );
-        QButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        Q3HBox* box = new Q3HBox( this );
+        QPushButton* ok = new QPushButton( tr( "Ok" ), box );
+        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 4, 2 );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
@@ -180,7 +179,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ExerciseDialog::AddResource( const QString& name, const QString& file )
 {
-    QListViewItem* item = new QListViewItem( resources_ );
+    Q3ListViewItem* item = new Q3ListViewItem( resources_ );
     item->setRenameEnabled( 0, true );
     item->setText( 0, name );
     item->setText( 1, MakeRelativePath( file, config_ ) );
@@ -208,7 +207,7 @@ void ExerciseDialog::OnAccept()
     for( T_Briefings::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
         exercise_.SetBriefing( it->first, it->second );
     exercise_.ClearResources();
-    for( QListViewItemIterator it( resources_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it( resources_ ); it.current(); ++it )
         exercise_.AddResource( it.current()->text( 0 ), it.current()->text( 1 ) );
     infiniteDotations_ = infiniteDotationsCB_->isChecked();
     accept();
@@ -250,7 +249,7 @@ QSize ExerciseDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnAddResource()
 {
-    const QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str() );
+    const QString filename = Q3FileDialog::getOpenFileName( config_.GetExerciseFile().c_str() );
     if( !filename.isNull() )
         AddResource( QFileInfo( filename ).baseName(), filename );
 }
@@ -261,6 +260,6 @@ void ExerciseDialog::OnAddResource()
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnDeleteResource()
 {
-    if( QListViewItem* item = resources_->currentItem() )
+    if( Q3ListViewItem* item = resources_->currentItem() )
         delete item;
 }

@@ -13,7 +13,9 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include <qdatetime.h>
+#pragma warning( push, 0 )
+#include <QtCore/qdatetime.h>
+#pragma warning( pop )
 
 namespace xml
 {

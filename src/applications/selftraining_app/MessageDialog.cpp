@@ -12,14 +12,15 @@
 #include "moc_MessageDialog.cpp"
 #include "MenuButton.h"
 #include "clients_gui/Tools.h"
+#include <Qt3Support/q3boxlayout.h>
 
 namespace
 {
-    class TransparentContainer : public QHBox
+    class TransparentContainer : public Q3HBox
     {
     public:
         explicit TransparentContainer( QWidget* parent )
-            : QHBox( parent )
+            : Q3HBox( parent )
             , mask_( "resources/images/selftraining/menu-mask.png" )
         {
             setFixedSize( 800, 300 );
@@ -28,7 +29,7 @@ namespace
         virtual void drawContents( QPainter* painter )
         {
             painter->drawImage( frameRect(), mask_ );
-            QHBox::drawContents( painter );
+            Q3HBox::drawContents( painter );
         }
 
     private:
@@ -41,7 +42,7 @@ namespace
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
 MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 )
-    : QDialog( parent, title, true, WStyle_DialogBorder )
+    : QDialog( parent, title, true, Qt::WStyle_DialogBorder )
 {
     setCaption( title );
     if( parent )
@@ -51,17 +52,17 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
     font.setItalic( true );
     setFont( font );
 
-    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
 
-    QVBox* vbox = new QVBox( this );
+    Q3VBox* vbox = new Q3VBox( this );
     vbox->setBackgroundOrigin( QWidget::WindowOrigin );
     vbox->setSpacing( 10 );
     QLabel* label = new QLabel( vbox );
     label->setBackgroundOrigin( QWidget::WindowOrigin );
     label->setText( message );
-    label->setAlignment( Qt::AlignCenter | Qt::WordBreak );
+    label->setAlignment( Qt::AlignCenter | Qt::TextWordWrap );
     label->setMinimumHeight( 50 );
-    QHBox* hbox = new QHBox( vbox );
+    Q3HBox* hbox = new Q3HBox( vbox );
 
     CreateButton( hbox, button1 );
     CreateButton( hbox, button2 );
@@ -86,9 +87,9 @@ MessageDialog::~MessageDialog()
 // Name: MessageDialog::CreateButton
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
-QButton* MessageDialog::CreateButton( QWidget* parent, int button )
+QPushButton* MessageDialog::CreateButton( QWidget* parent, int button )
 {
-    QButton* buttonWidget = 0;
+    QPushButton* buttonWidget = 0;
     switch( button )
     {
     case QMessageBox::Ok:

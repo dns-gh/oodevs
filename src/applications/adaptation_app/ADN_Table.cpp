@@ -12,10 +12,10 @@
 #include  "adaptation_app_pch.h"
 #include "ADN_Table.h"
 #include "moc_ADN_Table.cpp"
-#include <qpainter.h>
-#include <qprinter.h>
-#include <qpaintdevicemetrics.h>
-#include <qlineedit.h>
+#include <QtGui/qpainter.h>
+#include <QtGui/qprinter.h>
+#include <Qt3Support/q3paintdevicemetrics.h>
+#include <QtGui/qlineedit.h>
 #include "ADN_TableItem_ABC.h"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
@@ -29,7 +29,7 @@
 // Created: JDY 03-07-07
 //-----------------------------------------------------------------------------
 ADN_Table::ADN_Table( QWidget* pParent, const char* szName )
-    : QTable             ( pParent, szName )
+    : Q3Table             ( pParent, szName )
     , ADN_Gfx_ABC        ()
     , bRefreshingEnabled_( true )
     , bPrinting_         ( false )
@@ -58,7 +58,7 @@ ADN_Table::~ADN_Table()
 void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, bool bSelected, const QColorGroup& cg )
 {
     if( bRefreshingEnabled_ )
-        QTable::paintCell( p, nRow, nCol, cr, bSelected, cg );
+        Q3Table::paintCell( p, nRow, nCol, cr, bSelected, cg );
 }
 
 //-----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, boo
 void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, bool bSelected )
 {
     if( bRefreshingEnabled_ )
-        QTable::paintCell( p, nRow, nCol, cr, bSelected );
+        Q3Table::paintCell( p, nRow, nCol, cr, bSelected );
 }
 
 //-----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ void ADN_Table::paintEmptyArea( QPainter* pPainter, int nX, int nY, int nWidth, 
 {
     // Prevent the function from being called when printing.
     if( ! bPrinting_ )
-        QTable::paintEmptyArea( pPainter, nX, nY, nWidth, nHeight );
+        Q3Table::paintEmptyArea( pPainter, nX, nY, nWidth, nHeight );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void ADN_Table::AdjustColumns( int nMinWidth )
     for( int n = 0; n < this->numCols(); ++n )
     {
         this->adjustColumn( n );
-        this->setColumnWidth( n, std::max( this->columnWidth( n ) + 5, nMinWidth ) );
+        this->setColumnWidth( n, std::max< int >( this->columnWidth( n ) + 5, nMinWidth ) );
     }
 }
 
@@ -121,7 +121,7 @@ void ADN_Table::StopEditing()
 {
     clearSelection( false );
     if( isEditing() )
-        QTable::endEdit( currEditRow(), currEditCol(), false, false );
+        Q3Table::endEdit( currEditRow(), currEditCol(), false, false );
 }
 
 //-----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ void ADN_Table::StopEditing()
 //-----------------------------------------------------------------------------
 void ADN_Table::sortColumn( int nCol, bool bAscending, bool /*wholerows*/ )
 {
-    QTable::sortColumn( nCol, bAscending, true );
+    Q3Table::sortColumn( nCol, bAscending, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -158,9 +158,9 @@ void* ADN_Table::GetCurrentData()
 void ADN_Table::setEnabled( bool b )
 {
     if( bEnabledOnlyInAdminMode_ && b )
-        QTable::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
+        Q3Table::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
     else
-        QTable::setEnabled( b );
+        Q3Table::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +179,7 @@ void ADN_Table::UpdateEnableState()
 // -----------------------------------------------------------------------------
 void ADN_Table::drawContents( QPainter * p, int cx, int cy, int cw, int ch )
 {
-    QTable::drawContents( p, cx, cy, cw, ch );
+    Q3Table::drawContents( p, cx, cy, cw, ch );
 
     QPen pen( p->pen() );
     p->setPen( QPen( Qt::black, 2 ) );
@@ -243,10 +243,10 @@ QWidget *ADN_Table::createEditor( int nRow, int nCol, bool bInitFromCell ) const
     QWidget *e = 0;
 
     // the current item in the cell should be edited if possible
-    QTableItem *i = item( nRow, nCol );
+    Q3TableItem *i = item( nRow, nCol );
     if( bInitFromCell || ( i && !i->isReplaceable() ) ) {
         if( i ) {
-            if( i->editType() == QTableItem::Never )
+            if( i->editType() == Q3TableItem::Never )
                 return 0;
 
             e = i->createEditor();
@@ -257,7 +257,7 @@ QWidget *ADN_Table::createEditor( int nRow, int nCol, bool bInitFromCell ) const
     // no contents in the cell yet, so open the default editor
     if( !e ) {
         if( i ) {
-            if( i->editType() == QTableItem::Never )
+            if( i->editType() == Q3TableItem::Never )
                 return 0;
 
             e = i->createEditor();

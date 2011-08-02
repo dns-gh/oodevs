@@ -13,10 +13,12 @@
 #define __ADN_DialogLog_h_
 
 
-#include <qdialog.h>
+#include <QtGui/qdialog.h>
+//Added by qt3to4:
+#include <Qt3Support/q3button.h>
 
 class QLabel;
-class QButton;
+class QPushButton;
 class QMessageTextView;
 
 //*****************************************************************************
@@ -47,7 +49,7 @@ private:
     std::list<std::string>  lMsg_;
     QLabel*                 pMsg_;
     QMessageTextView*       pText_;
-    QButton*                pOk_;
+    QPushButton*                pOk_;
 };
 
 

@@ -10,7 +10,7 @@
 #ifndef __ListViewHelper_h_
 #define __ListViewHelper_h_
 
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 
 namespace tools
 {
@@ -18,21 +18,21 @@ namespace tools
     class Loader_ABC;
 }
 
-class QListView;
-class QListViewItem;
+class Q3ListView;
+class Q3ListViewItem;
 
 namespace frontend
 {
-    class CheckListItem : public QCheckListItem
+    class CheckListItem : public Q3CheckListItem
     {
     public:
-        CheckListItem( QCheckListItem *parent, const QString &text, bool recursive )
-            : QCheckListItem( parent, text, QCheckListItem::CheckBox )
+        CheckListItem( Q3CheckListItem *parent, const QString &text, bool recursive )
+            : Q3CheckListItem( parent, text, Q3CheckListItem::CheckBox )
             , recursive_( recursive )
         {}
 
-        CheckListItem( QListViewItem *parent, const QString &text, bool recursive )
-            : QCheckListItem( parent, text, QCheckListItem::CheckBox )
+        CheckListItem( Q3ListViewItem *parent, const QString &text, bool recursive )
+            : Q3CheckListItem( parent, text, Q3CheckListItem::CheckBox )
             , recursive_( recursive )
         {}
 
@@ -45,8 +45,8 @@ namespace frontend
         bool recursive_;
     };
 
-    QListViewItem* BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, QListView* content, const tools::Loader_ABC& fileLoader );
-    QListViewItem* BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, QListView* content );
+    Q3ListViewItem* BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content, const tools::Loader_ABC& fileLoader );
+    Q3ListViewItem* BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content );
 }
 
 #endif // __ListViewHelper_h_

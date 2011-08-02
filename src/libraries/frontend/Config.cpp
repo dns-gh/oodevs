@@ -17,8 +17,8 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <shlobj.h>
-#include <qsettings.h>
-#include <qapplication.h>
+#include <QtCore/qsettings.h>
+#include <QtGui/qapplication.h>
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;

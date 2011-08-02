@@ -49,7 +49,7 @@ void NBCPrototype::Commit()
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_nbc );
     list.AddQuantity( "DangerLevel", danger_->value() );
     actions::parameters::ParameterList& agents = list.AddList( "NBCAgents" );
-    for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
+    for( Q3ListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
             agents.AddIdentifier( "Id", static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId() );
     list.AddQuantity( "State", nbcStates_->GetValue() == "liquid" ? eLiquid : eGas );

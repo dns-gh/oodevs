@@ -9,6 +9,19 @@
 
 #include "launcher_test_pch.h"
 #include "Tools.h"
+#include "clients_kernel/Controllers.h"
+#include "frontend/Config.h"
+#include "frontend/ConnectionHandler_ABC.h"
+#include "frontend/Exercise_ABC.h"
+#include "frontend/LauncherClient.h"
+#include "frontend/ResponseHandler_ABC.h"
+#include "launcher_dll/LauncherFacade.h"
+#include "protocol/LauncherSenders.h"
+#include <tools/ElementObserver_ABC.h>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( push, 0 )
+#include <QtGui/qapplication.h>
+#pragma warning( pop )
 
 using namespace launcher_test;
 

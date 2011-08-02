@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Ref_ABC.h"
 #include "moc_ADN_Ref_ABC.cpp"
-#include <qtimer.h>
+#include <Qtcore/qtimer.h>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC constructor

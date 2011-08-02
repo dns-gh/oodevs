@@ -12,7 +12,7 @@
 #include "ADN_Composantes_WeaponsListView.h"
 #include "moc_ADN_Composantes_WeaponsListView.cpp"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_Data.h"
@@ -25,7 +25,7 @@ typedef ADN_Composantes_Data::WeaponInfos WeaponInfos;
 // Name: ADN_Composantes_WeaponsListView constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
@@ -68,8 +68,8 @@ void ADN_Composantes_WeaponsListView::ConnectItem( bool /*bConnect*/ )
 //-----------------------------------------------------------------------------
 void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu addMenu( this );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu addMenu( this );
 
     // Add the available weapons to the 'add weapons' submenu.
     ADN_Weapons_Data::T_WeaponInfosVector& vWeapons = ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos();
@@ -115,7 +115,7 @@ void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_Composantes_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponInfos* pInfo )
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();

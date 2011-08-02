@@ -85,7 +85,7 @@ private:
     QLineEdit* login_;
     QLineEdit* password_;
     QCheckBox* supervisor_;
-    QGroupBox* userRoleGroup_;
+    Q3GroupBox* userRoleGroup_;
     QLabel* userRoleLabel_;
     QComboBox* userRole_;
     UserProfileRights_ABC* unitRights_;

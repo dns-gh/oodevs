@@ -10,7 +10,7 @@
 #ifndef __ExerciseProperties_h_
 #define __ExerciseProperties_h_
 
-#include <qvbox.h>
+#include <Qt3Support/q3vbox.h>
 
 namespace frontend
 {
@@ -34,7 +34,7 @@ namespace xml
 */
 // Created: SBO 2010-11-12
 // =============================================================================
-class ExerciseProperties : public QVBox
+class ExerciseProperties : public Q3VBox
 {
     Q_OBJECT;
 
@@ -77,7 +77,7 @@ private:
     const tools::Loader_ABC& fileLoader_;
     const QString language_;
     QLabel* briefingImage_;
-    QTextEdit* briefingText_;
+    Q3TextEdit* briefingText_;
     QComboBox* terrainList_;
     QComboBox* modelList_;
     bool dataChanged_;

@@ -28,6 +28,7 @@ using namespace gui;
 InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation  )
     : Panels( parent )
 {
+    setMinimumWidth( 200 );
     AddPanel( new AgentKnowledgePanel     ( this, *this, controllers, factory ) );
     AddPanel( new PopulationPanel         ( this, *this, controllers, factory ) );
     AddPanel( new PopulationKnowledgePanel( this, *this, controllers, factory ) );

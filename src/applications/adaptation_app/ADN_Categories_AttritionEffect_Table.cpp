@@ -54,12 +54,12 @@ public:
 // Name: ADN_Categories_AttritionEffect_Table constructor
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( QWidget* pParent /*= 0*/ )
+ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( QWidget* pParent /* = 0*/ )
     : ADN_Table2( pParent, "ADN_Categories_AttritionEffect_Table" )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
     this->setMaximumHeight( 300 );

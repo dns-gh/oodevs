@@ -15,11 +15,11 @@
 
 namespace
 {
-    class ProfileItem : public QListBoxText
+    class ProfileItem : public Q3ListBoxText
     {
     public:
-        ProfileItem( QListBox* parent, const UserProfile& profile )
-            : QListBoxText( parent, profile.GetLogin() )
+        ProfileItem( Q3ListBox* parent, const UserProfile& profile )
+            : Q3ListBoxText( parent, profile.GetLogin() )
             , profile_( &profile )
         {}
         const UserProfile* profile_;
@@ -31,10 +31,10 @@ namespace
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
 ChatProfiles::ChatProfiles( QWidget* parent, kernel::Controllers& controllers )
-    : QListBox( parent )
+    : Q3ListBox( parent )
     , controllers_( controllers )
 {
-    connect( this, SIGNAL( selected( QListBoxItem* ) ), SLOT( OnSelected( QListBoxItem* ) ) );
+    connect( this, SIGNAL( selected( Q3ListBoxItem* ) ), SLOT( OnSelected( Q3ListBoxItem* ) ) );
     controllers_.Register( *this );
 }
 
@@ -53,7 +53,7 @@ ChatProfiles::~ChatProfiles()
 // -----------------------------------------------------------------------------
 void ChatProfiles::NotifyUpdated( const UserProfile& profile )
 {
-    QListBoxItem* item = findItem( profile.GetLogin(), Qt::ExactMatch );
+    Q3ListBoxItem* item = findItem( profile.GetLogin() );
     if( !item )
         new ProfileItem( this, profile );
 }
@@ -64,7 +64,7 @@ void ChatProfiles::NotifyUpdated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void ChatProfiles::NotifyDeleted( const UserProfile& profile )
 {
-    QListBoxItem* item = findItem( profile.GetLogin(), Qt::ExactMatch );
+    Q3ListBoxItem* item = findItem( profile.GetLogin() );
     if( isSelected( item ) )
         setSelected( item, false );
     delete item;
@@ -74,7 +74,7 @@ void ChatProfiles::NotifyDeleted( const UserProfile& profile )
 // Name: ChatProfiles::OnSelected
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatProfiles::OnSelected( QListBoxItem* item )
+void ChatProfiles::OnSelected( Q3ListBoxItem* item )
 {
     ProfileItem* profileItem = dynamic_cast< ProfileItem* >( item );
     if( profileItem )

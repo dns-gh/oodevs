@@ -65,7 +65,7 @@ float LocationPositions::GetHeight( bool ) const
 // Name: LocationPositions::IsAt
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-bool LocationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
+bool LocationPositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor*/ ) const
 {
     precision*=precision;
     if( points_.empty() )

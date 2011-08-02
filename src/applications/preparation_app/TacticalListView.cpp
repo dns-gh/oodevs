@@ -43,7 +43,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
     controllers.Update( *this );
 }
 
@@ -62,7 +62,7 @@ TacticalListView::~TacticalListView()
 // -----------------------------------------------------------------------------
 void TacticalListView::viewportResizeEvent( QResizeEvent* e )
 {
-    QScrollView::viewportResizeEvent( e );
+    Q3ScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
@@ -72,7 +72,7 @@ void TacticalListView::viewportResizeEvent( QResizeEvent* e )
 // -----------------------------------------------------------------------------
 void TacticalListView::setColumnWidth( int column, int w )
 {
-    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
+    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +91,7 @@ void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* i
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::NotifyUpdated
+
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
@@ -124,22 +125,29 @@ void TacticalListView::keyPressEvent( QKeyEvent* event )
     if( selectedItem() && event->key() == Qt::Key_Delete )
         modelBuilder_.DeleteEntity( *((ValuedListItem*)selectedItem())->GetValue< const Entity_ABC >() );
     else
-        QListView::keyPressEvent( event );
+        Q3ListView::keyPressEvent( event );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::OnContextMenuRequested
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void TacticalListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
+void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int index )
 {
-    HierarchyListView_ABC::OnContextMenuRequested( item, pos, index );
-    if( item || !isVisible() )
-        return;
-    modelBuilder_.ClearSelection();
-    QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
-    menu->exec( pos, index );
+    static int flag =  0;
+    if ( flag == 0 )
+    {
+        flag = 1;
+        HierarchyListView_ABC::OnContextMenuRequested( item, pos, index );
+        if( item || !isVisible() )
+            return;
+        modelBuilder_.ClearSelection();
+        Q3PopupMenu* menu = new Q3PopupMenu( this );
+        menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
+        menu->exec( pos, index );
+    }
+    else 
+        flag  = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,6 +169,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 {
     if( const kernel::HierarchyLevel_ABC* root = levels_.GetRoot() )
         AddFormationMenu( menu, *root );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -181,9 +190,10 @@ void TacticalListView::AddFormationMenu( kernel::ContextMenu& menu, const kernel
 {
     if( !isVisible() )
         return;
-    QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+    Q3PopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
     for( const kernel::HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
         subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+
 }
 
 // -----------------------------------------------------------------------------

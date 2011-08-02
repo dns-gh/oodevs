@@ -25,14 +25,14 @@ PositionEditor::PositionEditor( QDialog*& self, QWidget* parent, kernel::Control
     , self_( self )
 {
     setCaption( tr( "Position Editor" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this );
     pMainLayout->setMargin( 10 );
 
     locBox_ =  new gui::LocationEditorBox( this, controllers, converter );
     locBox_->SelectDefaultParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
     pMainLayout->addWidget( locBox_ );
 
-    QHBox* pbuttonBox = new QHBox( this );
+    Q3HBox* pbuttonBox = new Q3HBox( this );
     QPushButton* okBtn     = new QPushButton( tr( "Ok" ), pbuttonBox );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), pbuttonBox );
     okBtn->setDefault( true );
@@ -88,7 +88,7 @@ void PositionEditor::OnAccept()
         {
             if( !converter_.IsInBoundaries( point ) )
             {
-                QMessageBox::warning( this, tr( "Invalid coordinates" ), tr( " Location is outside terrain bounding box " ), QMessageBox::Ok, QMessageBox::NoButton );
+                QMessageBox::warning( this, tr( "Invalid coordinates" ), tr( " Location is outside terrain bounding box " ), QMessageBox::Ok, Qt::NoButton );
                 return;
             }
             else

@@ -19,8 +19,8 @@
 #ifndef __ADN_GuiTools_h_
 #define __ADN_GuiTools_h_
 
-#include <qwidget.h>
-#include <qlabel.h>
+#include <QtGui/qwidget.h>
+#include <QtGui/qlabel.h>
 #include "ADN_Connector_ABC.h"
 #include "ADN_ComboBox_Enum.h"
 

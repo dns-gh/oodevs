@@ -22,7 +22,7 @@ using namespace actions;
 // Name: AutomatMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-AutomatMission::AutomatMission( const Entity_ABC& entity, const kernel::MissionType& mission, Controller& controller, bool registered /*= true*/ )
+AutomatMission::AutomatMission( const Entity_ABC& entity, const kernel::MissionType& mission, Controller& controller, bool registered /* = true*/ )
     : Mission( entity, mission, controller, registered )
 {
     // NOTHING

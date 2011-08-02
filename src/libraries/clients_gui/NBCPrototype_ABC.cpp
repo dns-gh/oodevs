@@ -33,7 +33,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     new QLabel( tools::translate( "gui::NBCPrototype_ABC", "Danger level:" ), this );
     danger_ = new LoadableSpinBox( 0, 10, 1, this );
     nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ), this );
-    nbcAgents_ = new QListView( this );
+    nbcAgents_ = new Q3ListView( this );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
     nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
 
@@ -63,9 +63,9 @@ NBCPrototype_ABC::~NBCPrototype_ABC()
 void NBCPrototype_ABC::UpdateSelection()
 {
     if( maxToxic_ == 1 )
-        nbcAgents_->setSelectionMode( QListView::Single );
+        nbcAgents_->setSelectionMode( Q3ListView::Single );
     else
-        nbcAgents_->setSelectionMode( QListView::Multi );
+        nbcAgents_->setSelectionMode( Q3ListView::Multi );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ void NBCPrototype_ABC::FillTypes()
 void NBCPrototype_ABC::showEvent( QShowEvent* e )
 {
     FillTypes();
-    QGroupBox::showEvent( e );
+    Q3GroupBox::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ bool NBCPrototype_ABC::CheckValidity() const
 unsigned NBCPrototype_ABC::GetAgentCount() const
 {
     unsigned selected = 0;
-    for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
+    for( Q3ListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
             ++selected;
     return selected;

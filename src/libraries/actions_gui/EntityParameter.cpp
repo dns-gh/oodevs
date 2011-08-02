@@ -40,13 +40,13 @@ EntityParameterBase::~EntityParameterBase()
 // -----------------------------------------------------------------------------
 QWidget* EntityParameterBase::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
+    Q3HBox* box = new Q3HBox( parent );
     box->setSpacing( 5 );
     pLabel_ = new ::gui::RichLabel( GetName(), false, box );
     entityLabel_ = new QLabel( "---", box );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
-    entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     box->setStretchFactor( entityLabel_, 1 );
     return box;
 }

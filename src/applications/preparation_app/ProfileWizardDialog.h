@@ -54,9 +54,9 @@ private:
     //@{
     std::auto_ptr< ProfilesGenerator > generator_;
     ProfilesModel& profiles_;
-    QButtonGroup* profileTypes_;
-    QButtonGroup* creationMode_;
-    QButtonGroup* creationRight_;
+    Q3ButtonGroup* profileTypes_;
+    Q3ButtonGroup* creationMode_;
+    Q3ButtonGroup* creationRight_;
     //@}
 };
 

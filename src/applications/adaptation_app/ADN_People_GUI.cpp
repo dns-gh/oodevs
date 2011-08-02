@@ -55,12 +55,12 @@ void ADN_People_GUI::Build()
     pPeopleList_->GetConnector().Connect( &data_.GetPeople() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    QVBox* pMainBox = new QVBox( pMainWidget_ );
+    Q3VBox* pMainBox = new Q3VBox( pMainWidget_ );
 
     // Population parameters
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Population" ), pMainBox );
+    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Population" ), pMainBox );
 
-    QGroupBox* pPropertiesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
+    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
 
     builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[ eModel ] );
@@ -72,26 +72,26 @@ void ADN_People_GUI::Build()
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
     pMultiPercentage->AddWarning();
 
-    QGroupBox* pSecurityGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ), pGroup );
+    Q3GroupBox* pSecurityGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ), pGroup );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Gain per hour" ), vInfosConnectors[ eGainPerHour ], tr( "%" ), ePercentage );
 
-    QGroupBox* pHealthGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Health satisfaction" ), pGroup );
+    Q3GroupBox* pHealthGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Health satisfaction" ), pGroup );
     builder.AddField< ADN_EditLine_Int >( pHealthGroup, tr( "Number of people per medical infrastructure" ), vInfosConnectors[ eHealthNeed ], 0, eGreaterEqualZero );
 
-    QGroupBox* pScheduleGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ), pGroup );
+    Q3GroupBox* pScheduleGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ), pGroup );
     builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
     ADN_Schedule_Table* pTable = new ADN_Schedule_Table( pScheduleGroup );
     connect( pPeopleList_, SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
 
-    QHGroupBox* pConsumptionsGroup = new QHGroupBox( tr( "Consumptions" ), pGroup );
+    Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ), pGroup );
     ADN_Consumptions_Table* pConsumptions = new ADN_Consumptions_Table( pConsumptionsGroup );
     vInfosConnectors[ eConsumptions ] = &pConsumptions->GetConnector();
 
     pPeopleList_->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pPeopleList_, 1 );
     pMainLayout->addWidget( pMainBox, 3 );
 }

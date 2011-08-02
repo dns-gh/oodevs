@@ -25,20 +25,20 @@ AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, c
     , remove_     ( 0 )
 {
     setCaption( tr( "Alarms" ) );
-    QGridLayout* pLayout = new QGridLayout( this, 2, 1 );
+    Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 1 );
     pLayout->setMargin( 10 );
     pLayout->setSpacing( 10 );
 
-    list_ = new QListView( this );
+    list_ = new Q3ListView( this );
     list_->addColumn( tr( "Trigger date" ) );
     list_->addColumn( tr( "Message" ) );
-    list_->setSelectionMode( QListView::Single );
+    list_->setSelectionMode( Q3ListView::Single );
     pLayout->addWidget( list_, 0, 0 );
 
-    connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ),                  SLOT( OnSelectionChange( QListViewItem* ) ) );
-    connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( ShowEditor( QListViewItem* ) ) );
+    connect( list_, SIGNAL( selectionChanged( Q3ListViewItem* ) ),                  SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
+    connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( ShowEditor( Q3ListViewItem* ) ) );
 
-    QHBox* buttons = new QHBox( this );
+    Q3HBox* buttons = new Q3HBox( this );
     {
         QPushButton* create = new QPushButton( tr( "Create new alarm" ), buttons );
         connect( create, SIGNAL( clicked() ), SLOT( OnCreate() ) );
@@ -49,7 +49,7 @@ AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, c
     }
     pLayout->addWidget( buttons, 1, 0 );
 
-    messageBox_ = new QMessageBox( tr( "Alarm triggered" ), "", QMessageBox::Information, QMessageBox::Ok | QMessageBox::Default, QMessageBox::NoButton, QMessageBox::NoButton );
+    messageBox_ = new QMessageBox( tr( "Alarm triggered" ), "", QMessageBox::Information, QMessageBox::Ok | QMessageBox::Default, Qt::NoButton, Qt::NoButton );
     messageBox_->hide();
 
     controllers_.Register( *this );
@@ -71,7 +71,7 @@ AlarmsWidget::~AlarmsWidget()
 void AlarmsWidget::NotifyUpdated( const Simulation& simulation )
 {
     const QDateTime date = simulation.GetDateTime();
-    QListViewItem* item = list_->firstChild();
+    Q3ListViewItem* item = list_->firstChild();
     while( item )
     {
         if( IsAfter( item, date ) )
@@ -85,7 +85,7 @@ void AlarmsWidget::NotifyUpdated( const Simulation& simulation )
 // Name: AlarmsWidget::IsAfter
 // Created: AGE 2007-05-09
 // -----------------------------------------------------------------------------
-bool AlarmsWidget::IsAfter( QListViewItem* item, const QDateTime& date )
+bool AlarmsWidget::IsAfter( Q3ListViewItem* item, const QDateTime& date )
 {
     if( !item
      || item->text( 0 ).isEmpty() )
@@ -99,11 +99,11 @@ bool AlarmsWidget::IsAfter( QListViewItem* item, const QDateTime& date )
 // Name: AlarmsWidget::Trigger
 // Created: AGE 2007-05-09
 // -----------------------------------------------------------------------------
-QListViewItem* AlarmsWidget::Trigger( QListViewItem* item )
+Q3ListViewItem* AlarmsWidget::Trigger( Q3ListViewItem* item )
 {
     messageBox_->setText( item->text( 1 ) );
     messageBox_->show();
-    QListViewItem* next = item->nextSibling();
+    Q3ListViewItem* next = item->nextSibling();
     remove_->setDisabled( true );
     delete item;
     return next;
@@ -115,7 +115,7 @@ QListViewItem* AlarmsWidget::Trigger( QListViewItem* item )
 // -----------------------------------------------------------------------------
 void AlarmsWidget::OnCreate()
 {
-    QListViewItem* item = new QListViewItem( list_ );
+    Q3ListViewItem* item = new Q3ListViewItem( list_ );
     ShowEditor( item );
 }
 
@@ -132,7 +132,7 @@ void AlarmsWidget::OnDelete()
 // Name: AlarmsWidget::OnSelectionChange
 // Created: AGE 2007-05-07
 // -----------------------------------------------------------------------------
-void AlarmsWidget::OnSelectionChange( QListViewItem* item )
+void AlarmsWidget::OnSelectionChange( Q3ListViewItem* item )
 {
     remove_->setDisabled( item == 0 );
 }
@@ -148,16 +148,16 @@ namespace
             , item_      ( 0 )
         {
             setCaption( tools::translate( "AlarmsWidget", "Alarm parameters" ) );
-            QGridLayout* pLayout = new QGridLayout( this, 2, 3 );
+            Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 3 );
             pLayout->setMargin( 10 );
             pLayout->setSpacing( 10 );
 
-            time_ = new QDateTimeEdit( this );
+            time_ = new Q3DateTimeEdit( this );
             pLayout->addMultiCellWidget( time_, 0, 0, 0, 1 );
             text_ = new QLineEdit( this );
             pLayout->addWidget( text_, 0, 2 );
 
-            QHBox* buttonBox = new QHBox( this );
+            Q3HBox* buttonBox = new Q3HBox( this );
             QPushButton* ok = new QPushButton( tr( "Ok" ), buttonBox );
             connect( ok, SIGNAL( clicked() ), SLOT( accept() ) );
             QPushButton* cancel = new QPushButton( tr( "Cancel" ), buttonBox );
@@ -167,7 +167,7 @@ namespace
 
             Show( 0 );
         }
-        void Show( QListViewItem* item )
+        void Show( Q3ListViewItem* item )
         {
             item_ = item;
             if( item_ && ! item_->text( 0 ).isEmpty() )
@@ -192,8 +192,8 @@ namespace
     private:
         AlarmEditor& operator=( const AlarmEditor& );
         const Simulation& simulation_;
-        QListViewItem* item_;
-        QDateTimeEdit* time_;
+        Q3ListViewItem* item_;
+        Q3DateTimeEdit* time_;
         QLineEdit*     text_;
     };
 }
@@ -202,7 +202,7 @@ namespace
 // Name: AlarmsWidget::ShowEditor
 // Created: AGE 2007-05-07
 // -----------------------------------------------------------------------------
-void AlarmsWidget::ShowEditor( QListViewItem* item )
+void AlarmsWidget::ShowEditor( Q3ListViewItem* item )
 {
     static AlarmEditor* editor = new AlarmEditor( this, simulation_ );
     editor->Show( item );

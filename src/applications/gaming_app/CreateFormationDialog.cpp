@@ -75,7 +75,7 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity,
     if( profile_.CanDoMagic( entity ) )
     {
         currentEntity_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
         while( level && ( level = level->GetNext() ) )
             subMenu->insertItem( level->GetName(), this, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
     }

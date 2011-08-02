@@ -10,8 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_EquipementSelector.h"
 #include "moc_ADN_EquipementSelector.cpp"
-#include <qpopupmenu.h>
-#include <qcursor.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <QtGui/qcursor.h>
 #include "ADN_Workspace.h"
 #include "ADN_Equipement_Data.h"
 
@@ -45,7 +45,7 @@ ADN_EquipementSelector::~ADN_EquipementSelector()
 // -----------------------------------------------------------------------------
 void ADN_EquipementSelector::OnButtonPressed()
 {
-    QPopupMenu* pPopup = new QPopupMenu( this );
+    Q3PopupMenu* pPopup = new Q3PopupMenu( this );
 
     // Get the dotation list.
     ADN_Equipement_Data::T_ResourceInfos_Vector& dotations
@@ -54,7 +54,7 @@ void ADN_EquipementSelector::OnButtonPressed()
     // Fill the popup menu with submenus, one for each dotation.
     for( ADN_Equipement_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
     {
-        QPopupMenu* pSubMenu = new QPopupMenu( pPopup );
+        Q3PopupMenu* pSubMenu = new Q3PopupMenu( pPopup );
 
         // Fill the submenu with an entry for each equipement category.
         ADN_Equipement_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();

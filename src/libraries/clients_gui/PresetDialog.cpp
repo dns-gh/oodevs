@@ -24,7 +24,7 @@ using namespace gui;
 PresetDialog::PresetDialog( QWidget* parent, Gradient& gradient, kernel::Options& options,
                             const std::vector< std::string >& presets )
     : QDialog( parent )
-    , pLayout_ ( new QVBoxLayout( this ) )
+    , pLayout_ ( new Q3VBoxLayout( this ) )
     , gradient_( gradient )
     , options_ ( options )
     , presets_ ( presets )
@@ -51,7 +51,7 @@ PresetDialog::~PresetDialog()
 // -----------------------------------------------------------------------------
 void PresetDialog::CreateContent()
 {
-    QHBoxLayout* pEditLayout = new QHBoxLayout( pLayout_ );
+    Q3HBoxLayout* pEditLayout = new Q3HBoxLayout( pLayout_ );
     QLabel* pLabel = new QLabel( this );
     pLabel->setText( tr( "New Name:" ) );
     pEditLayout->addWidget( pLabel );
@@ -65,7 +65,7 @@ void PresetDialog::CreateContent()
 // -----------------------------------------------------------------------------
 void PresetDialog::CreateButton()
 {
-    QHBoxLayout* pButtonLayout = new QHBoxLayout( pLayout_ );
+    Q3HBoxLayout* pButtonLayout = new Q3HBoxLayout( pLayout_ );
     pAcceptButton_ = new QPushButton( tr( "Ok" ), this );
     pAcceptButton_->setDefault( true );
     pAcceptButton_->setMaximumWidth( 100 );

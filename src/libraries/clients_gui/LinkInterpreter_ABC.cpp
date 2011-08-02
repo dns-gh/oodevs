@@ -13,8 +13,6 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
 
-#include <qprocess.h>
-
 using namespace kernel;
 using namespace gui;
 
@@ -44,14 +42,14 @@ LinkInterpreter_ABC::~LinkInterpreter_ABC()
 // -----------------------------------------------------------------------------
 bool LinkInterpreter_ABC::Interprete( const QString& link )
 {
-    return Interprete( QUrl( link ) );
+    return Interprete( Q3Url( link ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter_ABC::Interprete
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter_ABC::Interprete( const QUrl& url )
+bool LinkInterpreter_ABC::Interprete( const Q3Url& url )
 {
     const QString protocol = url.protocol();
     if( protocol == "cmd" )
@@ -67,9 +65,9 @@ bool LinkInterpreter_ABC::Interprete( const QUrl& url )
 // Name: LinkInterpreter_ABC::ExecuteCommand
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter_ABC::ExecuteCommand( const QUrl& url )
+bool LinkInterpreter_ABC::ExecuteCommand( const Q3Url& url )
 {
-    QProcess openPage(0);
+    Q3Process openPage(0);
     openPage.addArgument( "cmd" );
     openPage.addArgument( "/c" );
     openPage.addArgument( "start" );
@@ -81,7 +79,7 @@ bool LinkInterpreter_ABC::ExecuteCommand( const QUrl& url )
 // Name: LinkInterpreter_ABC::InterpreteId
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter_ABC::InterpreteId( const QUrl& url )
+bool LinkInterpreter_ABC::InterpreteId( const Q3Url& url )
 {
     const QString classId = url.host();
     const QString strId = url.fileName();

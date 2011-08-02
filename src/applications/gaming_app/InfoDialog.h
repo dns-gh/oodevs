@@ -67,7 +67,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    QVBox* box_;
+    Q3VBox* box_;
     bool disconnected_;
     //@}
 };

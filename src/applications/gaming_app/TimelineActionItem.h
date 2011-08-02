@@ -43,7 +43,7 @@ class TimelineActionItem : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, actions::ActionsModel& model, const actions::Action_ABC& action );
+             TimelineActionItem( Q3Canvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, actions::ActionsModel& model, const actions::Action_ABC& action );
     virtual ~TimelineActionItem();
     //@}
 
@@ -53,7 +53,7 @@ public:
     virtual void Move( long offset );
     virtual void Delete();
     virtual void DisplayToolTip( QWidget* parent ) const;
-    virtual void DisplayContextMenu( QPopupMenu* menu ) const;
+    virtual void DisplayContextMenu( Q3PopupMenu* menu ) const;
     //@}
 
 private slots:

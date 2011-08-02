@@ -28,17 +28,12 @@
 #include "clients_gui/HelpSystem.h"
 #include "tools/GeneralConfig.h"
 
-#include <qapplication.h>
-#include <qaction.h>
-#include <qwidgetstack.h>
-#include <qtimer.h>
-
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: SBO 2007-01-26
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow()
-    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    : Q3MainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( new frontend::Config() )
 {
     config_->Parse( qApp->argc(), qApp->argv() );
@@ -48,11 +43,11 @@ MainWindow::MainWindow()
 
     menu_ = new MainMenu( this );
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     list_ = new ActionList( box );
     box->setStretchFactor( list_, 1 );
 
-    pages_ = new QWidgetStack( box );
+    pages_ = new Q3WidgetStack( box );
     pages_->addWidget( new QWidget( this ) );
     box->setStretchFactor( pages_, 3 );
 
@@ -69,7 +64,7 @@ MainWindow::MainWindow()
     AddAction< StartAnalysisPanel >( tools::translate( "MainWindow", "Analyse" ), actions.StartAnalysis() );
     AddAction< JoinAnalysisPanel >( tools::translate( "MainWindow", "Analyse" ), actions.JoinAnalysis() );
 
-    QAction& installAction = actions.InstallPackage();
+    Q3Action& installAction = actions.InstallPackage();
     AddAction< InstallPackagePanel >( tools::translate( "MainWindow", "Manage" ), installAction );
     AddAction< CreatePackagePanel >( tools::translate( "MainWindow", "Manage" ), actions.CreatePackage() );
 
@@ -111,7 +106,7 @@ void MainWindow::CenterWindow()
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
 template< typename Page >
-void MainWindow::AddAction( const QString& category, QAction& action )
+void MainWindow::AddAction( const QString& category, Q3Action& action )
 {
     menu_->AddAction( category, action );
     list_->AddAction( category, action );

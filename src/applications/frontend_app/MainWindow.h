@@ -10,12 +10,12 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include <qmainwindow.h>
+#include <Qt3Support/q3mainwindow.h>
 #include "ActionLinker.h"
 #include "ActionsContext.h"
 
-class QAction;
-class QWidgetStack;
+class Q3Action;
+class Q3WidgetStack;
 
 class MainMenu;
 class ActionList;
@@ -31,7 +31,7 @@ namespace frontend
 */
 // Created: SBO 2007-01-26
 // =============================================================================
-class MainWindow : public QMainWindow
+class MainWindow : public Q3MainWindow
 {
 public:
     //! @name Constructors/Destructor
@@ -51,7 +51,7 @@ private:
     //@{
     void CenterWindow();
     template< typename Page >
-    void AddAction( const QString& category, QAction& action );
+    void AddAction( const QString& category, Q3Action& action );
     //@}
 
 private:
@@ -62,7 +62,7 @@ private:
     ActionLinker linker_;
     ActionList* list_;
     MainMenu*   menu_;
-    QWidgetStack* pages_;
+    Q3WidgetStack* pages_;
     //@}
 };
 

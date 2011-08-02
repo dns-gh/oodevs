@@ -10,8 +10,6 @@
 #ifndef __ColorButton_h_
 #define __ColorButton_h_
 
-#include <qpushbutton.h>
-
 namespace gui
 {
 
@@ -28,15 +26,17 @@ class ColorButton : public QToolButton
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ColorButton( QWidget* parent = 0, const char* name = 0, QColor color = black );
+    explicit ColorButton( QWidget* parent = 0, const char* name = 0, QColor color = Qt::black );
     virtual ~ColorButton();
     //@}
 
     //! @name Operations
     //@{
+
     void SetColor( const QColor& rgb );
     QColor GetColor() const;
-    void Revert();
+    
+	void Revert();
     void Commit();
     //@}
 
@@ -59,6 +59,7 @@ private slots:
     //@}
 
 private:
+    virtual void paintEvent( QPaintEvent* = 0);
     //! @name Copy/Assignment
     //@{
     ColorButton( const ColorButton& );            //!< Copy constructor

@@ -36,6 +36,7 @@ InhabitantChangeAffinitiesDialog::InhabitantChangeAffinitiesDialog( QWidget* pPa
     , profile_     ( profile )
     , actionsModel_( actionsModel )
 {
+
     controllers_.Register( *this );
 }
 
@@ -57,9 +58,10 @@ void InhabitantChangeAffinitiesDialog::NotifyContextMenu( const kernel::Inhabita
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
     }
+
 }
 
 // -----------------------------------------------------------------------------
@@ -78,3 +80,4 @@ void InhabitantChangeAffinitiesDialog::DoValidate()
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
+

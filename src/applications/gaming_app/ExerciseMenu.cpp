@@ -27,7 +27,7 @@ namespace bfs = boost::filesystem;
 // Created: SBO 2008-08-27
 // -----------------------------------------------------------------------------
 ExerciseMenu::ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter )
-    : QPopupMenu( parent )
+    : Q3PopupMenu( parent )
     , controllers_( controllers )
     , interpreter_( interpreter )
 {
@@ -107,11 +107,11 @@ void ExerciseMenu::OnSelect( int index )
             const QString drive = path.front();
             path.pop_front();
             tmp = path.join( ":" );
-            QUrl::encode( tmp );
+            Q3Url::encode( tmp );
             tmp = QString( "%1:%2" ).arg( drive ).arg( tmp );
         }
         else
-            QUrl::encode( tmp );
+            Q3Url::encode( tmp );
         interpreter_.Interprete( QString( "file://%1" ).arg( tmp ) );
     }
 }

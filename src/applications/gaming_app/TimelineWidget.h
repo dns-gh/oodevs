@@ -36,7 +36,7 @@ class TimelineView;
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelineWidget : public QHBox
+class TimelineWidget : public Q3HBox
 {
 public:
     //! @name Constructors/Destructor

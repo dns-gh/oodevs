@@ -30,7 +30,7 @@ class ADN_MultiPercentage : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MultiPercentage( QGroupBox* pParent, ADN_GuiBuilder& builder );
+             ADN_MultiPercentage( Q3GroupBox* pParent, ADN_GuiBuilder& builder );
     virtual ~ADN_MultiPercentage();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QGroupBox*                          parent_;
+    Q3GroupBox*                          parent_;
     ADN_GuiBuilder&                     builder_;
     std::vector< ADN_EditLine_Double* > lines_;
     QLabel*                             warning_;

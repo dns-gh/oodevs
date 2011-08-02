@@ -18,7 +18,7 @@ using namespace gui;
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( QListView * parent )
+ValuedListItem::ValuedListItem( Q3ListView * parent )
     : RichListItem( parent )
     , container_( 0 )
 {
@@ -29,7 +29,7 @@ ValuedListItem::ValuedListItem( QListView * parent )
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( QListViewItem * parent )
+ValuedListItem::ValuedListItem( Q3ListViewItem * parent )
     : RichListItem( parent )
     , container_( 0 )
 {
@@ -40,7 +40,7 @@ ValuedListItem::ValuedListItem( QListViewItem * parent )
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( QListViewItem * parent, QListViewItem* after )
+ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Q3ListViewItem* after )
     : RichListItem( parent, after )
     , container_( 0 )
 {
@@ -51,7 +51,7 @@ ValuedListItem::ValuedListItem( QListViewItem * parent, QListViewItem* after )
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( QListView* parent, QListViewItem* after )
+ValuedListItem::ValuedListItem( Q3ListView* parent, Q3ListViewItem* after )
     : RichListItem( parent, after )
     , container_( 0 )
 {

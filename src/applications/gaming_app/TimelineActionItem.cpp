@@ -19,8 +19,6 @@
 #include "gaming/Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
-#include <qpainter.h>
-#include <qfontmetrics.h>
 
 using namespace actions;
 
@@ -28,7 +26,7 @@ using namespace actions;
 // Name: TimelineActionItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineActionItem::TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, ActionsModel& model, const Action_ABC& action )
+TimelineActionItem::TimelineActionItem( Q3Canvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, ActionsModel& model, const Action_ABC& action )
     : QObject         ( canvas )
     , TimelineItem_ABC( canvas )
     , ruler_          ( ruler )
@@ -164,7 +162,7 @@ namespace
 
 namespace
 {
-    QColor SelectForegroundColor( QCanvasItem& item, bool valid )
+    QColor SelectForegroundColor( Q3CanvasItem& item, bool valid )
     {
         if( item.isSelected() )
             return QColor( 50, 105, 200 );
@@ -177,7 +175,7 @@ namespace
         return QColor( 40, 40, 40 );
     }
 
-    QColor SelectBackgroundColor( QCanvasItem& item, bool valid )
+    QColor SelectBackgroundColor( Q3CanvasItem& item, bool valid )
     {
         if( !valid )
         {
@@ -233,7 +231,7 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
     else
         tip += tools::translate( "TimelineActionItem", "<table cellspacing='0' cellpadding='0'><tr><td>Starts: </td><td><i>%1</i></td></tr></table>" )
               .arg( action_.Get< ActionTiming >().GetTime().toString() );
-    if( QToolTip::textFor( parent ) != tip )
+    if( parent->toolTip() != tip )
     {
         QToolTip::remove( parent );
         QToolTip::add( parent, tip );
@@ -244,7 +242,7 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
 // Name: TimelineActionItem::DisplayContextMenu
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineActionItem::DisplayContextMenu( QPopupMenu* menu ) const
+void TimelineActionItem::DisplayContextMenu( Q3PopupMenu* menu ) const
 {
     if( !nameEditor_ )
     {
@@ -289,7 +287,7 @@ void TimelineActionItem::OnRename()
     int vx = int( x() ), vy = int( y() );
     if( nameEditor_->parentWidget()->inherits( "QScrollView" ) )
     {
-        QScrollView* view = (QScrollView*)( nameEditor_->parentWidget() );
+        Q3ScrollView* view = (Q3ScrollView*)( nameEditor_->parentWidget() );
         view->contentsToViewport( vx, vy, vx, vy );
     }
     nameEditor_->setGeometry( vx + 4, vy + 2, width(), height() - 4 );

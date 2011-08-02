@@ -11,10 +11,6 @@
 #define __Menu_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <qmenubar.h>
-
-class QMainWindow;
-class QDialog;
 
 namespace kernel
 {

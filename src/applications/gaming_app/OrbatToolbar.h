@@ -37,7 +37,7 @@ class ProfileFilter;
 */
 // Created: SBO 2007-03-05
 // =============================================================================
-class OrbatToolbar : public QHBox
+class OrbatToolbar : public Q3HBox
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                    , public tools::ElementObserver_ABC< kernel::Formation_ABC >
@@ -108,7 +108,7 @@ private:
     T_Automats automats_;
     T_Formations formations_;
     QToolButton* filterBtn_;
-    QPopupMenu* menu_;
+    Q3PopupMenu* menu_;
     //@}
 };
 

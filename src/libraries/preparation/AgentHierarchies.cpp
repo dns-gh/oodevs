@@ -83,7 +83,7 @@ void AgentHierarchies::UpdateKarma( const kernel::Entity_ABC& superior )
 // Name: AgentHierarchies::UpdateSymbol
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void AgentHierarchies::UpdateSymbol( bool up /*= true*/ )
+void AgentHierarchies::UpdateSymbol( bool up /* = true*/ )
 {
     if( ! up && GetSuperior() )
         UpdateKarma( *GetSuperior() );

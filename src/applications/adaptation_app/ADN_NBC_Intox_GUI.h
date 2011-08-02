@@ -12,7 +12,7 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
-#include <qvbox.h>
+#include <Qt3Support/q3vbox.h>
 
 // =============================================================================
 /** @class  ADN_NBC_Intox_GUI
@@ -20,7 +20,7 @@
 */
 // Created: SBO 2006-10-30
 // =============================================================================
-class ADN_NBC_Intox_GUI : public QVBox
+class ADN_NBC_Intox_GUI : public Q3VBox
                         , public ADN_Gfx_ABC
 {
     Q_OBJECT

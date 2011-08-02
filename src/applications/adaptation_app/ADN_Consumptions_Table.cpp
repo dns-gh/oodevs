@@ -31,7 +31,7 @@ public:
         ADN_TableItem_String* pItemCombo = 0;
         ADN_TableItem_Int* pItemInt = 0;
         // add a new row & set new values
-        tab_.setItem( i, 0, pItemCombo = new ADN_TableItem_String( &tab_, obj, QTableItem::Never ) );
+        tab_.setItem( i, 0, pItemCombo = new ADN_TableItem_String( &tab_, obj, Q3TableItem::Never ) );
         tab_.setItem( i, 1, pItemInt = new ADN_TableItem_Int( &tab_, obj ) );
         tab_.adjustColumn( 0 );
         tab_.adjustColumn( 1 );
@@ -49,12 +49,12 @@ private:
 // Name: ADN_Consumptions_Table constructor
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-ADN_Consumptions_Table::ADN_Consumptions_Table( QWidget* parent /*= 0*/ )
+ADN_Consumptions_Table::ADN_Consumptions_Table( QWidget* parent /* = 0*/ )
     : ADN_Table2( parent, "ADN_Consumptions_Table" )
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::Single );
+    setSelectionMode( Q3Table::Single );
     setShowGrid( false );
     setLeftMargin( 0 );
     // hide vertical header
@@ -83,7 +83,7 @@ ADN_Consumptions_Table::~ADN_Consumptions_Table()
 // -----------------------------------------------------------------------------
 void ADN_Consumptions_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
 {
-    std::auto_ptr< QPopupMenu > pTargetMenu( new QPopupMenu( this ) );
+    std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
     bool bDisplayRem = GetCurrentData() != 0;
@@ -98,7 +98,7 @@ void ADN_Consumptions_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoi
     ADN_Tools::SortMenu( *pTargetMenu );
     if( !bDisplayAdd && !bDisplayRem )
         return;
-    QPopupMenu* pMenu = new QPopupMenu( this );
+    Q3PopupMenu* pMenu = new Q3PopupMenu( this );
     if( bDisplayAdd )
         pMenu->insertItem( tr( "Add resource" ), pTargetMenu.get(), 0 );
     if( bDisplayRem )

@@ -13,9 +13,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "ParameterContainer_ABC.h"
 #pragma warning( push, 0 )
-#pragma warning( push, 0 )
-#include <qstring.h>
-#pragma warning( pop )
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 namespace sword

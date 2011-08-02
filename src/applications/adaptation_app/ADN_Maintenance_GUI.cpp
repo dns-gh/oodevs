@@ -20,12 +20,12 @@
 
 #include "ENT/ENT_Tr.h"
 
-#include <qgroupbox.h>
-#include <qhgroupbox.h>
-#include <qhbox.h>
-#include <qgrid.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3grid.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
 
 
 // -----------------------------------------------------------------------------
@@ -56,19 +56,19 @@ void ADN_Maintenance_GUI::Build()
 {
     pMainWidget_ = new QWidget( 0 );
 
-    QHGroupBox* pGroup = new QHGroupBox( tr( "Maintenance system data" ), pMainWidget_ );
+    Q3HGroupBox* pGroup = new Q3HGroupBox( tr( "Maintenance system data" ), pMainWidget_ );
     BuildWorkingSchemeTable( pGroup );
 
-    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Equipments availability warnings" ), pGroup );
-    QHGroupBox* pRepairerGroup = new QHGroupBox( tr( "Repairers" ), pWarningGroup );
+    Q3HGroupBox* pWarningGroup = new Q3HGroupBox( tr( "Equipments availability warnings" ), pGroup );
+    Q3HGroupBox* pRepairerGroup = new Q3HGroupBox( tr( "Repairers" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pRepairerWarningTable = new ADN_AvailabilityWarningTable( pRepairerGroup );
     pRepairerWarningTable->GetConnector().Connect( & data_.vRepairerWarnings_ );
-    QHGroupBox* pHaulerGroup = new QHGroupBox( tr( "Tow trucks" ), pWarningGroup );
+    Q3HGroupBox* pHaulerGroup = new Q3HGroupBox( tr( "Tow trucks" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pHaulerWarningTable = new ADN_AvailabilityWarningTable( pHaulerGroup );
     pHaulerWarningTable->GetConnector().Connect( & data_.vHaulerWarnings_ );
 
     // Layout
-    QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
     pLayout->addWidget( pGroup );
 }
 
@@ -80,7 +80,7 @@ void ADN_Maintenance_GUI::BuildWorkingSchemeTable( QWidget* parent )
 {
     ADN_GuiBuilder builder;
 
-    QGroupBox* pGroup = new QHGroupBox( tr( "Shifts durations" ), parent );
+    Q3GroupBox* pGroup = new Q3HGroupBox( tr( "Shifts durations" ), parent );
 
     ADN_Table* pTable = builder.CreateTable( pGroup );
     pTable->setNumCols( static_cast< int >( data_.vWorkingSchemes_.size() ) );

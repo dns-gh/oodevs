@@ -100,7 +100,7 @@ private:
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Entity_ABC* >* targetCombo_;
-    QTable* table_;
+    Q3Table* table_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;

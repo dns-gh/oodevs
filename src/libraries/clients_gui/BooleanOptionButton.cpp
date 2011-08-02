@@ -18,7 +18,7 @@ using namespace gui;
 // Name: BooleanOptionButton constructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-BooleanOptionButton::BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options, const std::string& option)
+BooleanOptionButton::BooleanOptionButton( const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options, const std::string& option)
     : QToolButton( parent )
     , options_( options )
     , option_( option )

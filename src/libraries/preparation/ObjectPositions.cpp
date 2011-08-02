@@ -115,7 +115,7 @@ float ObjectPositions::GetHeight( bool ) const
 // Name: ObjectPositions::IsAt
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
+bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
     precision*=precision;
     if( points_.empty() )

@@ -15,8 +15,6 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
-class QToolBox;
-
 namespace kernel
 {
     class Automat_ABC;

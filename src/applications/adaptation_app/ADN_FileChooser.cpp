@@ -14,11 +14,11 @@
 
 #include "ADN_Tools.h"
 
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qfiledialog.h>
-#include <qpushbutton.h>
-#include <qmessagebox.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlineedit.h>
+#include <Qt3Support/q3filedialog.h>
+#include <QtGui/qpushbutton.h>
+#include <QtGui/qmessagebox.h>
 
 QString ADN_FileChooser::szDefaultFilter_="All Files (*.*)";
 
@@ -76,7 +76,7 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
 ,   vConnectors_(2,(ADN_Connector_ABC*)0 )
 {
     // objects
-    QHBoxLayout *pLayout = new QHBoxLayout( this );
+    Q3HBoxLayout *pLayout = new Q3HBoxLayout( this );
     pLayout->setMargin( 0 );
 
     pLineEdit_ = new QLineEdit( this );
@@ -134,12 +134,12 @@ std::string GetPartPath(const std::string szWorking,const std::string& full)
 //-----------------------------------------------------------------------------
 void ADN_FileChooser::ChooseFile()
 {
-    QString qfilename= eMode_==eDirectory ? QFileDialog::getExistingDirectory(
+    QString qfilename= eMode_==eDirectory ? Q3FileDialog::getExistingDirectory(
                                                         szDirectory_,
                                                         this,
                                                         "get existing directory"
                                                         "Choose a directory")
-                                             : QFileDialog::getOpenFileName(
+                                             : Q3FileDialog::getOpenFileName(
                                                                 szDirectory_,
                                                                 szFilter_,
                                                                 this,

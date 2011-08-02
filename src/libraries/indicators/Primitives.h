@@ -12,7 +12,7 @@
 
 #include "tools/Resolver.h"
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 namespace tools

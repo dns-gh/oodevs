@@ -18,7 +18,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_FragOrder_Wizard.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Missions_Data::FragOrder FragOrder;
 
@@ -26,12 +26,12 @@ typedef ADN_Missions_Data::FragOrder FragOrder;
 // Name: ADN_ListView_FragOrderTypes constructor
 // Created: SBO 2006-12-06
 // -----------------------------------------------------------------------------
-ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* parent /*= 0*/, const char* szName /*= 0*/ )
+ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_ListView( parent, szName )
     , orders_( orders )
 {
     addColumn( tr( "Fragmentary order" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     pConnector_ = new ADN_Connector_ListView< FragOrder >( *this );
     SetDeletionEnabled( true );
@@ -71,7 +71,7 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
 {
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        QPopupMenu popupMenu( this );
+        Q3PopupMenu popupMenu( this );
         ADN_FragOrder_Wizard wizard( orders_, this );
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );

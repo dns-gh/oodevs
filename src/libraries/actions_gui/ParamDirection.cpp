@@ -14,7 +14,7 @@
 #include "actions/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "ENT/Ent_Tr.h"
-#include <qdial.h>
+#include <QtGui/qdial.h>
 
 using namespace actions::gui;
 
@@ -46,7 +46,7 @@ ParamDirection::~ParamDirection()
 // -----------------------------------------------------------------------------
 QWidget* ParamDirection::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent ); // $$$$ SBO 2007-03-16: should be removed... but need some changes in order context interface
+    Q3HBox* box = new Q3HBox( parent ); // $$$$ SBO 2007-03-16: should be removed... but need some changes in order context interface
     box->setSpacing( 5 );
     new QLabel( GetName(), box );
     QDial* dial = new QDial( 0, 359, 1, 0, box );

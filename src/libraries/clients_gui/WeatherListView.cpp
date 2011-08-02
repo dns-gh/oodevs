@@ -22,12 +22,12 @@ using namespace gui;
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
 WeatherListView::WeatherListView( QWidget* parent, const kernel::CoordinateConverter_ABC& converter )
-    : QListView( parent, "WeatherListView" )
+    : Q3ListView( parent, "WeatherListView" )
     , converter_( converter )
 {
     addColumn( tr( "Local weathers" ) );
-    setResizeMode( QListView::LastColumn );
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( ContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
+    setResizeMode( Q3ListView::AllColumns );
+    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( ContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,9 +53,9 @@ void WeatherListView::Clear()
 // Name: WeatherListView::ContextMenuRequested
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
-void WeatherListView::ContextMenuRequested( QListViewItem* item, const QPoint& point, int /*column*/ )
+void WeatherListView::ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
 {
-    QPopupMenu* menu = new QPopupMenu( this );
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
     menu->insertItem( tr( "Add" ), this, SLOT( CreateItem() ) );
     if( item )
         menu->insertItem(tr( "Delete" ), this, SLOT( DeleteItem() ) );

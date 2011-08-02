@@ -71,7 +71,7 @@ private:
     //@{
     const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes_;
     DotationsItem** value_;
-    QTable* table_;
+    Q3Table* table_;
     QStringList types_;
     QDialog*& self_;
     //@}

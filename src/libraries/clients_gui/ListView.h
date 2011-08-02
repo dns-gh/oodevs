@@ -15,6 +15,10 @@
 #include "ItemFactory_ABC.h"
 #include <boost/noncopyable.hpp>
 
+#pragma warning( push, 0 )
+#include <QtGui/QWindowsStyle>
+#pragma warning( pop )
+
 namespace gui
 {
 // =============================================================================
@@ -24,19 +28,21 @@ namespace gui
 // Created: AGE 2006-02-20
 // =============================================================================
 template< typename ConcreteList >
-class ListView : public QListView
+class ListView : public Q3ListView
                , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              ListView( QWidget* parent, ConcreteList& list, ItemFactory_ABC& factory, const char* name = 0 )
-                 : QListView( parent, name )
+                 : Q3ListView( parent, name )
                  , list_( list )
                  , factory_( factory )
                  , toSkip_( 0 )
              {
-                 setDefaultRenameAction( QListView::Accept );
+                 setDefaultRenameAction( Q3ListView::Accept );
+                 setBackgroundColor( Qt::white );
+                 setAcceptDrops( true );
              }
     virtual ~ListView() {}
     //@}

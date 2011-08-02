@@ -14,7 +14,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "tools/Resolver_ABC.h"
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 namespace kernel

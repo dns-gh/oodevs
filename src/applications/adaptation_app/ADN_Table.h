@@ -11,13 +11,16 @@
 #define __ADN_Table_h_
 
 #include "ADN_Gfx_ABC.h"
-#include <qtable.h>
-#include <qapplication.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3table.h>
+#include <QtGui/qapplication.h>
+#pragma warning( pop )
 
 //*****************************************************************************
 // Created: JDY 03-07-07
 //*****************************************************************************
-class ADN_Table : public QTable, public ADN_Gfx_ABC
+class ADN_Table : public Q3Table, public ADN_Gfx_ABC
 {
     Q_OBJECT
 

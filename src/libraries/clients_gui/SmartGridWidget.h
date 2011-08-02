@@ -24,7 +24,7 @@ class SmartGridWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             SmartGridWidget( QWidget* parent, int strips, Orientation o, const char* name = 0 );
+             SmartGridWidget( QWidget* parent, int strips, Qt::Orientation o, const char* name = 0 );
     virtual ~SmartGridWidget();
     //@}
 
@@ -45,9 +45,9 @@ private:
 private:
     //! @name Member data
     //@{
-    QGridLayout* layout_;
+    Q3GridLayout* layout_;
     int strips_;
-    Orientation o_;
+    Qt::Orientation o_;
     unsigned int childCount_;
     //@}
 };

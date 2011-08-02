@@ -17,7 +17,7 @@
 #include <direct.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 #include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ struct ItemSort
 // Name: ADN_Tools::SortMenu
 // Created: APE 2005-04-05
 // -----------------------------------------------------------------------------
-void ADN_Tools::SortMenu( QPopupMenu& menu )
+void ADN_Tools::SortMenu( Q3PopupMenu& menu )
 {
     T_MenuItemVector vItems;
     while( menu.count() > 0 )

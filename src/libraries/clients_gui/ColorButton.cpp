@@ -11,16 +11,13 @@
 #include "ColorButton.h"
 #include "moc_ColorButton.cpp"
 
-#include <qpainter.h>
-#include <qcolordialog.h>
-
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ColorButton constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-ColorButton::ColorButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, QColor color /*= black*/ )
+ColorButton::ColorButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, QColor color /* = black*/ )
     : QToolButton( parent, name )
     , previous_( color )
     , current_( color )
@@ -44,11 +41,24 @@ ColorButton::~ColorButton()
 // Name: ColorButton::drawButton
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-void ColorButton::drawButton( QPainter* painter )
+void ColorButton::drawButton( QPainter* )
 {
-    QToolButton::drawButton( painter );
-    painter->fillRect( 4, 4, width() - 8, height() - 8, QBrush( QColor( current_ ) ) );
-    painter->drawRect( 4, 4, width() - 8, height() - 8 );
+    paintEvent();
+} 
+
+// -----------------------------------------------------------------------------
+// Name: ColorButton::paintEvent
+// Created: FPT 2011-05-03
+// -----------------------------------------------------------------------------
+void ColorButton::paintEvent( QPaintEvent* )
+{
+     QPainter paint;
+    if ( paint.begin( this ) )
+    {
+        paint.fillRect( 4, 4, width() - 8, height() - 8, current_ );
+        paint.drawRect( 4, 4, width() - 8, height() - 8 );
+        paint.end();
+    }
 }
 
 // -----------------------------------------------------------------------------

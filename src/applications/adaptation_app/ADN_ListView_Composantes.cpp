@@ -19,7 +19,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_GUI.h"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 
@@ -28,12 +28,12 @@ typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 // Name: ADN_ListView_Composantes constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Equipments" ) );
-    setResizeMode(QListView::AllColumns);
+    setResizeMode(Q3ListView::AllColumns);
 
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<ComposanteInfos>( *this );
@@ -168,7 +168,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_Composante_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
@@ -179,7 +179,7 @@ void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Composantes::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Composantes::GetToolTipFor( QListViewItem& item )
+std::string ADN_ListView_Composantes::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     ComposanteInfos* pCastData = (ComposanteInfos*)pData;

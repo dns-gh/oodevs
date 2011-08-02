@@ -11,11 +11,11 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView.h"
 #include "moc_ADN_ListView.cpp"
-#include <qpopupmenu.h>
-#include <qtooltip.h>
-#include <qpainter.h>
-#include <qprinter.h>
-#include <qpaintdevicemetrics.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <QtGui/qtooltip.h>
+#include <QtGui/qpainter.h>
+#include <QtGui/qprinter.h>
+#include <Qt3Support/q3paintdevicemetrics.h>
 #include "ADN_ListViewItem.h"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
@@ -26,13 +26,16 @@
 #include "ADN_GuiTools.h"
 #include "ADN_Wizard_ABC.h"
 
+#pragma warning( push, 0 )
+#include <QtGui/qevent.h>
+#pragma warning( pop )
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView constructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
-ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, WFlags f )
-    : QListView         ( pParent, szName, f )
+ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
+    : Q3ListView         ( pParent, szName, f )
     , ADN_Gfx_ABC       ()
     , pCurData_         ( 0 )
     , pObjectCreator_   ( 0 )
@@ -40,11 +43,11 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, WFlags f )
     , bDeletionWarning_ ( true )
     , bPrinting_        ( false )
 {
-    connect( this, SIGNAL( onItem( QListViewItem* ) ), this, SLOT( OnOnItem( QListViewItem* ) ) );
+    connect( this, SIGNAL( onItem( Q3ListViewItem* ) ), this, SLOT( OnOnItem( Q3ListViewItem* ) ) );
 
-    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( SetCurrentItem( QListViewItem* ) ) );
-    connect( this, SIGNAL( currentChanged( QListViewItem* ) ), this, SLOT( SetCurrentItem( QListViewItem * ) ) );
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint &, int ) ) );
+    connect( this, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( SetCurrentItem( Q3ListViewItem* ) ) );
+    connect( this, SIGNAL( currentChanged( Q3ListViewItem* ) ), this, SLOT( SetCurrentItem( Q3ListViewItem * ) ) );
+    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ) );
 
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
@@ -66,7 +69,7 @@ ADN_ListView::~ADN_ListView()
 int ADN_ListView::FindNdx(void *data)
 {
     int ndx=0;
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while ( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
@@ -86,7 +89,7 @@ int ADN_ListView::FindNdx(void *data)
 ADN_ListViewItem* ADN_ListView::ItemAt(int i)
 {
     int ndx=0;
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while ( it.current() != 0 && ndx < i )
     {
         ++it;
@@ -102,7 +105,7 @@ ADN_ListViewItem* ADN_ListView::ItemAt(int i)
 //-----------------------------------------------------------------------------
 ADN_ListViewItem* ADN_ListView::FindItem(void* data)
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while ( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
@@ -141,7 +144,7 @@ void  ADN_ListView::SetCurrentItem( void* pData )
         SetAutoClear( vItemConnectors_, false );
 
     this->blockSignals( true );
-    QListViewItem* pItem = this->FindItem( pData );
+    Q3ListViewItem* pItem = this->FindItem( pData );
     this->setSelected( pItem, true );
     this->blockSignals( false );
 
@@ -162,7 +165,7 @@ void ADN_ListView::OnContextMenu( const QPoint& /*pt*/ )
 // Name: ADN_ListView::FillContextMenuWithDefault
 // Created: APE 2005-01-28
 // -----------------------------------------------------------------------------
-void ADN_ListView::FillContextMenuWithDefault( QPopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator )
+void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator )
 {
     pObjectCreator_ = &objectCreator;
     popupMenu.insertItem( tr( "Create new" ), this, SLOT( ContextMenuNew() ) );
@@ -224,7 +227,7 @@ void ADN_ListView::ContextMenuDelete()
 // Name: ADN_ListView::SetCurrentItem
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-void  ADN_ListView::SetCurrentItem( QListViewItem* pItem )
+void  ADN_ListView::SetCurrentItem( Q3ListViewItem* pItem )
 {
     if( pItem != 0 )
         SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
@@ -236,7 +239,7 @@ void  ADN_ListView::SetCurrentItem( QListViewItem* pItem )
 // Name: ADN_ListView::OnContextMenuRequested
 // Created: JDY 03-07-28
 //-----------------------------------------------------------------------------
-void ADN_ListView::OnContextMenuRequested( QListViewItem* /*pItem*/, const QPoint& pt, int /*nCol*/ )
+void ADN_ListView::OnContextMenuRequested( Q3ListViewItem* /*pItem*/, const QPoint& pt, int /*nCol*/ )
 {
     OnContextMenu( pt );
 }
@@ -248,9 +251,9 @@ void ADN_ListView::OnContextMenuRequested( QListViewItem* /*pItem*/, const QPoin
 void ADN_ListView::setEnabled( bool b )
 {
     if( bEnabledOnlyInAdminMode_ && b )
-        QListView::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
+        Q3ListView::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
     else
-        QListView::setEnabled( b );
+        Q3ListView::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,7 +275,7 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
     if( pCurData_ == 0 || ! bDeletionEnabled_ )
         return;
 
-    if( pEvent->key() == Qt::Key_BackSpace || pEvent->key() == Qt::Key_Delete )
+    if( pEvent->key() == Qt::Key_Backspace || pEvent->key() == Qt::Key_Delete )
     {
         ADN_Ref_ABC* pCurrentData = (ADN_Ref_ABC*)pCurData_;
 
@@ -288,7 +291,7 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
 // Name: ADN_ListView::OnOnItem
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-void ADN_ListView::OnOnItem( QListViewItem* pItem )
+void ADN_ListView::OnOnItem( Q3ListViewItem* pItem )
 {
     if( pItem == 0 )
         return;
@@ -297,7 +300,7 @@ void ADN_ListView::OnOnItem( QListViewItem* pItem )
     if( strToolTip == "" )
         return;
 
-    QToolTip::remove( this, toolTipRect_ );
+    QToolTip::remove(this);
     QRect itemRect = this->itemRect( pItem );
     QToolTip::add( this->viewport() , itemRect, strToolTip.c_str() );
     toolTipRect_ = itemRect;
@@ -331,7 +334,7 @@ void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize
 
     painter.save();
     painter.translate( -nX * painterSize.width(), -nY * painterSize.height() );
-    QListView::drawContentsOffset( &painter, 0, 0, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
+    Q3ListView::drawContentsOffset( &painter, 0, 0, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
     painter.restore();
     bPrinting_ = false;
 }

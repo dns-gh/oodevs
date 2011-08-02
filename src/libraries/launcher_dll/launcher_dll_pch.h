@@ -15,7 +15,7 @@
 #include <memory>
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 #endif // __launcher_dll_pch_h_

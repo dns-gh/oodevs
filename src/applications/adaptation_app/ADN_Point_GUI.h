@@ -14,7 +14,7 @@
 
 #include "ADN_Table.h"
 #include "ADN_Enums.h"
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 
 //*****************************************************************************

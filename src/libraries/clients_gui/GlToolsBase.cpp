@@ -75,7 +75,7 @@ void GlToolsBase::Select( bool b1, bool b2 ) const
 // Name: GlToolsBase::ShouldDisplay
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-bool GlToolsBase::ShouldDisplay( const std::string& name /*= std::string()*/ ) const
+bool GlToolsBase::ShouldDisplay( const std::string& name /* = std::string()*/ ) const
 {
     return ShouldDisplay( name, selected_, superiorSelected_ );
 }
@@ -143,7 +143,7 @@ void GlToolsBase::BindIcon( const char** xpm )
 // Name: GlToolsBase::SetCurrentColor
 // Created: AGE 2007-05-25
 // -----------------------------------------------------------------------------
-void GlToolsBase::SetCurrentColor( float r, float g, float b, float a /*= 1*/ )
+void GlToolsBase::SetCurrentColor( float r, float g, float b, float a /* = 1*/ )
 {
     glColor4f( r, g, b, a );
     renderer_->SetCurrentColor( r, g, b, a );
@@ -163,7 +163,7 @@ std::string GlToolsBase::DefaultStyle()
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlToolsBase::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/  )
+void GlToolsBase::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/  )
 {
     symbols_->PrintApp6( symbol, style, viewport, vWidth, vHeight );
 }
@@ -172,7 +172,7 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const std::string& style
 // Name: GlToolsBase::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlToolsBase::DrawSvg( const std::string& filename, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/ )
+void GlToolsBase::DrawSvg( const std::string& filename, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/ )
 {
     svgl_->Draw( filename, viewport, vWidth, vHeight );
 }

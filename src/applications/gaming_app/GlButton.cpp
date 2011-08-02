@@ -11,8 +11,10 @@
 #include "GlButton.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/GlTooltip.h"
+
+#pragma warning( push , 0 )
 #include <boost/bind.hpp>
-#include <qstyle.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: GlButton constructor
@@ -132,15 +134,14 @@ bool GlButton::HandleMouseMove( const geometry::Point2f& point )
 // Name: GlButton::DrawFrame
 // Created: SBO 2008-07-04
 // -----------------------------------------------------------------------------
-void GlButton::DrawFrame( QPainter& painter, const QRect& rect, bool hover )
+void GlButton::DrawFrame( QPainter& painter, const QRect& rect, bool /*hover*/ )
 {
-    QStyle& style = QApplication::style();
+    QStyleOption* opt = new QStyleOption();
+    QStyle* style = QApplication::style();
     QPushButton button( label_, 0 );
-    QStyle::WFlags flags = QStyle::Style_Enabled | QStyle::Style_Raised;
-    if( hover )
-        flags |= QStyle::Style_HasFocus | QStyle::Style_Active | QStyle::Style_MouseOver;
     painter.fillRect( rect, QColor( 159, 174, 216 ) );
-    style.drawControl( QStyle::CE_PushButton, &painter, &button, rect, button.colorGroup(), flags );
+    opt->rect = rect;
+    style->drawControl( QStyle::CE_PushButton, opt, &painter);
 }
 
 // -----------------------------------------------------------------------------

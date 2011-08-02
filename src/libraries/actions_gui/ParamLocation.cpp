@@ -55,13 +55,13 @@ ParamLocation::~ParamLocation()
 // -----------------------------------------------------------------------------
 QWidget* ParamLocation::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
+    Q3HBox* box = new Q3HBox( parent );
     box->setSpacing( 5 );
     pLabel_ = new ::gui::RichLabel( GetName(), false, box );
     pShapeLabel_ = new QLabel( "---", box );
     pShapeLabel_->setMinimumWidth( 100 );
     pShapeLabel_->setAlignment( Qt::AlignCenter );
-    pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    pShapeLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     creator_ = new ::gui::LocationCreator( box, GetName(), layer_, *this );
     SetShapeFilter( filter_.point_, filter_.line_, filter_.polygon_, filter_.circle_, filter_.rectangle_ );
     box->setStretchFactor( pShapeLabel_, 1 );

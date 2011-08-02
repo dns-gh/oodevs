@@ -13,7 +13,7 @@
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
-class QWidgetStack;
+class Q3WidgetStack;
 
 namespace actions
 {
@@ -70,7 +70,7 @@ private:
     const kernel::OrderParameter& parameter_;
     std::vector<Param_ABC*> params_;
     std::vector<QWidget*> widgets_;
-    QWidgetStack* stack_;
+    Q3WidgetStack* stack_;
     Param_ABC* selectedParam_;
     //@}
 };

@@ -10,15 +10,16 @@
 #include "selftraining_app_pch.h"
 #include "MenuButton.h"
 #include "moc_MenuButton.cpp"
-#include <qpainter.h>
-#include <qimage.h>
+#include <QtGui/qpainter.h>
+#include <QtGui/qimage.h>
+#include <QtGui/QPushButton.h>
 
 // -----------------------------------------------------------------------------
 // Name: MenuButton constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 MenuButton::MenuButton( const QString& text, QWidget* parent )
-    : QButton( parent )
+    : QPushButton( parent )
     , mask_( "resources/images/selftraining/menu-mask.png" )
     , baseFont_( "Century Gothic", 16, QFont::Bold )
     , selectedFont_( "Century Gothic", 18, QFont::Bold )

@@ -115,7 +115,7 @@ QStringList ObjectPrototypeShapeFileLoader::GetFields() const
 // -----------------------------------------------------------------------------
 QString ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsString( const QString& fieldName ) const
 {
-    return currentFeature_->GetFieldAsString( fieldName );
+    return currentFeature_->GetFieldAsString( fieldName.ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ QString ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsString( const QStr
 // -----------------------------------------------------------------------------
 int ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsInt( const QString& fieldName ) const
 {
-    return currentFeature_->GetFieldAsInteger( fieldName );
+    return currentFeature_->GetFieldAsInteger( fieldName.ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ int ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsInt( const QString& fi
 // -----------------------------------------------------------------------------
 bool ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsBool( const QString& fieldName ) const
 {
-    return currentFeature_->GetFieldAsInteger( fieldName ) != 0;
+    return currentFeature_->GetFieldAsInteger( fieldName.ascii() ) != 0;
 }
 
 // -----------------------------------------------------------------------------

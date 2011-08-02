@@ -20,7 +20,7 @@ using namespace actions;
 // Name: KnowledgeGroupMagicAction constructor
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
+KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
     : ActionWithTarget_ABC ( controller, magic, entity )
     , controller_( controller )
     , registered_( registered )

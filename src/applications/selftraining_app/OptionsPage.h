@@ -28,7 +28,7 @@ class OptionsPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& config );
+             OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& config );
     virtual ~OptionsPage();
     //@}
 

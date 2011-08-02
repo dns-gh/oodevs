@@ -14,7 +14,7 @@
 #include "ADN_Radars_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Radars_Wizard.h"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Radars_Data::RadarInfos RadarInfos;
 
@@ -22,12 +22,12 @@ typedef ADN_Radars_Data::RadarInfos RadarInfos;
 // Name: ADN_Radars_ListView constructor
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
-ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Special sensors" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<RadarInfos>(*this);
     this->SetDeletionEnabled( true );
@@ -91,7 +91,7 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_Radars_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

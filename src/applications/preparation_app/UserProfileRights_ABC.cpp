@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: UserProfileRights_ABC constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-UserProfileRights_ABC::UserProfileRights_ABC( QListView* listView )
+UserProfileRights_ABC::UserProfileRights_ABC( Q3ListView* listView )
     : listView_( listView )
     , profile_( 0 )
     , check_( MAKE_PIXMAP( check ) )
@@ -53,7 +53,7 @@ void UserProfileRights_ABC::Commit()
 {
     if( !profile_ )
         return;
-    for( QListViewItemIterator it( listView_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
         if( const ValuedListItem* item = static_cast< const ValuedListItem* >( *it ) )
         {
             const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
@@ -86,7 +86,7 @@ void UserProfileRights_ABC::Display( UserProfile& profile )
 // Name: UserProfileRights_ABC::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, int column )
+void UserProfileRights_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&, int column )
 {
     if( column == 0 || !item )
         return;
@@ -110,7 +110,7 @@ void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, i
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::Clear()
 {
-    for( QListViewItemIterator it( listView_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
     {
         (*it)->setPixmap( 1, QPixmap() );
         (*it)->setPixmap( 2, QPixmap() );
@@ -122,7 +122,7 @@ void UserProfileRights_ABC::Clear()
 // Name: UserProfileRights_ABC::SetStatus
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( QListViewItem* item, Status status )
+void UserProfileRights_ABC::SetStatus( Q3ListViewItem* item, Status status )
 {
     item->setText( 3, QString::number( status ) );
     if( status == eNothing )

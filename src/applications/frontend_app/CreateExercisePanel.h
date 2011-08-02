@@ -11,6 +11,7 @@
 #define __CreateExercisePanel_h_
 
 #include "Panel_ABC.h"
+#include <Qt3Support/q3action.h>
 
 namespace tools
 {
@@ -20,7 +21,7 @@ namespace tools
 class InfoBubble;
 class QLabel;
 class QLineEdit;
-class QListBox;
+class Q3ListBox;
 class QPushButton;
 
 // =============================================================================
@@ -36,7 +37,7 @@ class CreateExercisePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
+             CreateExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~CreateExercisePanel();
     //@}
 
@@ -67,10 +68,10 @@ private:
     const tools::GeneralConfig& config_;
     QStringList existingExercises_;
     QLineEdit* name_;
-    QListBox* modelList_;
+    Q3ListBox* modelList_;
     QLabel* physicalLabel_;
-    QListBox* physicalList_;
-    QListBox* terrainList_;
+    Q3ListBox* physicalList_;
+    Q3ListBox* terrainList_;
     QPushButton* okay_;
     InfoBubble* bubble_;
     //@}

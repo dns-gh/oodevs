@@ -12,15 +12,18 @@
 #include "moc_RandomPluginConfigPanel.cpp"
 #include "CreateSession.h"
 #include "clients_gui/Tools.h"
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qsettings.h>
-#include <qspinbox.h>
-#include <qvalidator.h>
+#pragma warning( push, 0 )
+#include "QtCore/qcoreapplication.h"
+#include <QtGui/qcheckbox.h>
+#include <QtGui/qcombobox.h>
+#include <Qt3Support/q3groupbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlineedit.h>
+#include <QtGui/qpushbutton.h>
+#include <QtCore/qsettings.h>
+#include <QtGui/qspinbox.h>
+#include <QtGui/qvalidator.h>
+#pragma warning( pop )
 
 using namespace frontend;
 
@@ -130,7 +133,7 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
 
-    QGroupBox* hbox = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "RandomPluginConfigPanel", "Random Generator" ), this ) );
+    Q3GroupBox* hbox = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "RandomPluginConfigPanel", "Random Generator" ), this ) );
     hasSeed_ = Style( new QCheckBox( tools::translate( "RandomPluginConfigPanel", "Seed:" ), hbox ) );
     connect( hasSeed_, SIGNAL( toggled( bool ) ), SLOT( OnSeedToggled() ) );
     seed_ = Style( new QSpinBox( 1, std::numeric_limits< int >::max(), 1, hbox ) );

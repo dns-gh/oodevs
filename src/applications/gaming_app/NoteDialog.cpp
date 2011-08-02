@@ -15,10 +15,6 @@
 #include "gaming/Tools.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qtextview.h>
 
 // -----------------------------------------------------------------------------
 // Name: NoteDialog constructor
@@ -27,31 +23,31 @@
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-NoteDialog::NoteDialog( QDockWindow* parent, Publisher_ABC &publisher )
+NoteDialog::NoteDialog( QDockWidget* parent, Publisher_ABC &publisher )
     : QDialog( parent, "New Note" )
     , publisher_( publisher )
 {
     setCaption( tools::translate( "NoteDialog", "Create note" ) );
-    setFixedSize( 400, 150 );
+    setFixedSize( 400, 200 );
 
-    QGroupBox* boxId = new QGroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Value" ), this );
-    QGroupBox* boxName = new QGroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Name" ), this );
-    QGroupBox* boxDesc = new QGroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Text" ), this );
+    Q3GroupBox* boxId = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Value" ), this );
+    Q3GroupBox* boxName = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Name" ), this );
+    Q3GroupBox* boxDesc = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Text" ), this );
 
     textName_ = new QLineEdit( boxName );
     textId_  = new QLineEdit( boxId );
-    textDesc_ = new QTextEdit( boxDesc );
+    textDesc_ = new Q3TextEdit( boxDesc );
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     buttonOk_ = new QPushButton( tools::translate( "Notes", "Ok" ), box );
     buttonOk_->setEnabled( false );
-    QButton* buttonCancel_ = new QPushButton( tools::translate( "Notes", "Cancel" ), box );
+    QPushButton* buttonCancel_ = new QPushButton( tools::translate( "Notes", "Cancel" ), box );
 
     connect( buttonOk_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( buttonCancel_, SIGNAL( clicked() ), SLOT( OnReject() ) );
     connect( textName_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFileChanged() ) );
 
-    QGridLayout* grid_ = new QGridLayout( this, 4, 1, 0, 0, "layout");
+    Q3GridLayout* grid_ = new Q3GridLayout( this, 4, 1, 0, 0, "layout");
 
     grid_->setRowStretch( 0, 4 );
     grid_->setRowStretch( 1, 4 );

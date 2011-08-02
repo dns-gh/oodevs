@@ -16,7 +16,7 @@ using namespace gui;
 // Name: SmartGridWidget constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-SmartGridWidget::SmartGridWidget( QWidget* parent, int strips, Orientation o, const char* name )
+SmartGridWidget::SmartGridWidget( QWidget* parent, int strips, Qt::Orientation o, const char* name )
     : QWidget( parent, name )
     , strips_    ( strips )
     , o_         ( o )
@@ -24,7 +24,7 @@ SmartGridWidget::SmartGridWidget( QWidget* parent, int strips, Orientation o, co
 {
     if( strips_ <= 0 )
         strips_ = 1;
-    layout_ = new QGridLayout( this );
+    layout_ = new Q3GridLayout( this );
     layout_->setSpacing( 4 );
 }
 
@@ -58,7 +58,7 @@ void SmartGridWidget::AddChild( QWidget* child )
 {
     unsigned int row = childCount_ % strips_;
     unsigned int col = childCount_ / strips_;
-    if( o_ == Vertical )
+    if( o_ == Qt::Vertical )
         std::swap( row, col );
     layout_->addWidget( child, row, col );
     ++childCount_;

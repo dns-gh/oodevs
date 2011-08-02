@@ -21,7 +21,9 @@
 
 #include "ADN_Wizard_Image.h"
 
-#include <qpainter.h>
+#pragma warning( push, 0 )
+#include <QtGui/qevent.h>
+#pragma warning ( pop )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ImageViewer constructor
@@ -31,9 +33,9 @@
 */
 // Created: AGN 2003-11-18
 // -----------------------------------------------------------------------------
-ADN_ImageViewer::ADN_ImageViewer( const char* fileName, bool bFromRessouce, QWidget* pParent /*= 0*/, const char* name )
-: QWidget( pParent, name )
-, alloc_context_( 0 )
+ADN_ImageViewer::ADN_ImageViewer( const char* fileName, bool bFromRessouce, QWidget* pParent /* = 0*/, const char* name )
+    : QWidget( pParent, name )
+    , alloc_context_( 0 )
 {
     LoadImage( fileName, bFromRessouce );
 }
@@ -44,8 +46,6 @@ ADN_ImageViewer::ADN_ImageViewer( const char* fileName, bool bFromRessouce, QWid
 // -----------------------------------------------------------------------------
 ADN_ImageViewer::~ADN_ImageViewer()
 {
-    if( alloc_context_ != 0 )
-        QColor::destroyAllocContext( alloc_context_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,14 +83,6 @@ bool ADN_ImageViewer::ReconvertImage()
 
     if( image_.isNull() ) return false;
 
-    if( alloc_context_ )
-    {
-        QColor::destroyAllocContext( alloc_context_ );
-        alloc_context_ = 0;
-    }
-
-    alloc_context_ = QColor::enterAllocContext();
-
     // Clear the image to hide flickering palette
     QPainter painter(this);
     painter.eraseRect( 0, 0, width(), height());
@@ -106,8 +98,6 @@ bool ADN_ImageViewer::ReconvertImage()
     {
         pm_.resize(0,0);                // couldn't load image
     }
-
-    QColor::leaveAllocContext();
 
     return success;             // TRUE if loaded OK
 }
@@ -167,7 +157,7 @@ void ADN_ImageViewer::Scale()
     }
     else
     {
-        QWMatrix m;             // transformation matrix
+        QMatrix m;             // transformation matrix
         m.scale(((double)width())/pm_.width(),// define scale factors
             ((double)h)/pm_.height());
         pmScaled_ = pm_.xForm( m );     // create scaled pixmap

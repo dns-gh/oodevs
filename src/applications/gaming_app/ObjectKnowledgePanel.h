@@ -86,8 +86,8 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( QListViewItem* );
-    void OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos );
+    void OnSelectionChanged( Q3ListViewItem* );
+    void OnContextMenuRequested( Q3ListViewItem* pItem, const QPoint& pos );
     //@}
 
 private:

@@ -21,13 +21,14 @@ using namespace kernel;
 // Created: SBO 2006-10-17
 // -----------------------------------------------------------------------------
 PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
-    : QTable( parent )
+    : Q3Table( parent )
     , factory_( factory )
     , itemDisplayer_( displayer )
     , row_( 0 )
 {
-    setSelectionMode( QTable::SingleRow );
+    setSelectionMode( Q3Table::SingleRow );
     setNumCols( 2 );
+    setFixedHeight( 64 );
     setColumnReadOnly( 0, true );
     verticalHeader()->hide();
     setLeftMargin( 0 );
@@ -35,10 +36,10 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
     setTopMargin( 0 );
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed );
+    setHScrollBarMode( Q3ScrollView::AlwaysOff );
+    setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum);
     setFrameStyle( MenuBarPanel );
-    setResizePolicy( QScrollView::AutoOne );
+    setResizePolicy( Q3ScrollView::AutoOne );
 
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
 }
@@ -58,7 +59,7 @@ PropertiesTable::~PropertiesTable()
 // -----------------------------------------------------------------------------
 QSize PropertiesTable::sizeHint() const
 {
-    QSize original = QTable::sizeHint();
+    QSize original = Q3Table::sizeHint();
     if( numRows() > 0 )
         // $$$$ SBO 2006-11-16: ahahah: not -4, not -6, -5!
         // $$$$ SBO 2006-11-16: hack to get rid of this weird bug where table grows when elements are inserted after a showEvent()
@@ -168,7 +169,7 @@ void PropertiesTable::Call( kernel::Property_ABC* const& property )
 void PropertiesTable::focusOutEvent( QFocusEvent* event )
 {
     clearSelection();
-    QTable::focusOutEvent( event );
+    Q3Table::focusOutEvent( event );
 }
 
 // -----------------------------------------------------------------------------

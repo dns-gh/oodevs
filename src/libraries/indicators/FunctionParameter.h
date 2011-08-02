@@ -13,7 +13,7 @@
 #include "Element_ABC.h"
 #pragma warning( push, 0 )
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 #pragma warning( pop )
 

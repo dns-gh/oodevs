@@ -23,7 +23,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/AutomatComposition.h"
 #include <xeumeuleu/xml.hpp>
-#include <qmessagebox.h>
 
 using namespace kernel;
 

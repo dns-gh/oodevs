@@ -20,7 +20,7 @@ using namespace actions;
 // Name: MagicAction constructor
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered /*= true*/ )
+MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered /* = true*/ )
     : Action_ABC ( controller, magic )
     , controller_( controller )
     , registered_( registered )

@@ -31,13 +31,13 @@ ChangeAffinitiesDialog::ChangeAffinitiesDialog( QWidget* pParent, kernel::Contro
 {
     setCaption( tools::translate( "ChangeAffinitiesDialog", "Change affinities" ) );
     resize( 320, 150 );
-    mainLayout_ = new QVBoxLayout( this );
+    mainLayout_ = new Q3VBoxLayout( this );
     checkBox_ = new QCheckBox( tools::translate( "AffinitiesDialog", "Activate" ), this );
     connect( checkBox_, SIGNAL( toggled( bool ) ), this, SLOT( Activated( bool ) ) );
     checkBox_->setChecked( false );
     checkBox_->setShown( optional );
     mainLayout_->addWidget( checkBox_ );
-    buttonLayout_ = new QHBox( this );
+    buttonLayout_ = new Q3HBox( this );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), buttonLayout_ );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout_ );
     okButton->setDefault( TRUE );
@@ -81,7 +81,7 @@ void ChangeAffinitiesDialog::Show()
     mainLayout_->remove( buttonLayout_ );
     if( affinitiesGrid_ != 0 )
         delete affinitiesGrid_;
-    affinitiesGrid_ = new QGrid( 2, this );
+    affinitiesGrid_ = new Q3Grid( 2, this );
     mainLayout_->add( affinitiesGrid_ );
     mainLayout_->add( buttonLayout_ );
     bool result = selected_.ConstCast()->Get< Affinities >().Accept( *this );

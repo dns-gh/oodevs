@@ -44,6 +44,6 @@ void SelectionCommand::NotifySelected( const kernel::Entity_ABC* element )
     std::stringstream ss;
     ss << "/select";
     if( element )
-        ss << " " << element->GetTypeName() << " " << element->GetId();
+        ss << " " << element->GetTypeName().toStdString() << " " << element->GetId();
     publisher_.Send( "", ss.str() );
 }

@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <qmenubar.h>
 
 class QMainWindow;
 class QDialog;
@@ -75,7 +74,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     std::vector< int >   exerciseItems_;
-    QPopupMenu*          fileMenu_;
+    Q3PopupMenu*          fileMenu_;
     int                  saveItem_;
     //@}
 };

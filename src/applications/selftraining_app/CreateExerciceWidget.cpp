@@ -19,8 +19,8 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <qheader.h>
-#include <qcombobox.h>
+#include <Qt3Support/q3header.h>
+#include <QtGui/qcombobox.h>
 
 namespace
 {
@@ -37,21 +37,21 @@ namespace
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : QGroupBox( 3, Qt::Vertical, parent )
+    : Q3GroupBox( 3, Qt::Vertical, parent )
     , config_( config )
     , fileLoader_  ( fileLoader )
     , page_( page )
 {
     Style( this );
-    setFrameShape( QFrame::NoFrame );
+    setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     setMargin( 5 );
     {
-        QHBox* saveBox = Style( new QHBox( this ) );
+        Q3HBox* saveBox = Style( new Q3HBox( this ) );
         Style( new QLabel( tools::translate( "CreateExerciceWidget", "Create new exercise:" ), saveBox ) );
         editName_ = Style( new QLineEdit( tools::translate( "CreateExerciceWidget", "Enter exercise name" ), saveBox ) );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), &page, SLOT( EditNameChanged( const QString& ) ) );
         {
-            QVBox* box = Style( new QVBox( saveBox ) );
+            Q3VBox* box = Style( new Q3VBox( saveBox ) );
             editTerrainList_ = Style( new QComboBox( box ) );
             connect( editTerrainList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
             editModelList_ = Style( new QComboBox( box ) );
@@ -61,20 +61,20 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
         }
     }
     {
-        saveAsGroupBox_ = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "CreateExerciceWidget", "Create as copy of:" ), this ) );
+        saveAsGroupBox_ = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "CreateExerciceWidget", "Create as copy of:" ), this ) );
         saveAsGroupBox_->setCheckable( true );
         saveAsGroupBox_->setChecked( false );
         connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
         {
             Style( new QLabel( tools::translate( "CreateExerciceWidget", "Exercise to copy:" ), saveAsGroupBox_ ) );
-            exerciseList_ = Style( new QListBox( saveAsGroupBox_ ) );
-            connect( exerciseList_, SIGNAL( clicked( QListBoxItem* ) ), SLOT( OnSelectionChanged( QListBoxItem* ) ) );
+            exerciseList_ = Style( new Q3ListBox( saveAsGroupBox_ ) );
+            connect( exerciseList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
         }
         {
             Style( new QLabel( tools::translate( "CreateExerciceWidget", "Content to copy:" ), saveAsGroupBox_ ) );
-            contentList_ = Style( new QListView( saveAsGroupBox_ ) );
+            contentList_ = Style( new Q3ListView( saveAsGroupBox_ ) );
             contentList_->addColumn( "exercise features" );
-            contentList_->setResizeMode( QListView::AllColumns );
+            contentList_->setResizeMode( Q3ListView::AllColumns );
             contentList_->header()->hide();
             contentList_->adjustSize();
         }
@@ -97,7 +97,7 @@ CreateExerciceWidget::~CreateExerciceWidget()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::Update()
 {
-    QListBoxItem* item = exerciseList_->selectedItem();
+    Q3ListBoxItem* item = exerciseList_->selectedItem();
     if( item )
     {
         std::string exercise( item->text().ascii() );
@@ -151,7 +151,7 @@ void CreateExerciceWidget::CreateExercise()
 
         if( saveAsGroupBox_->isChecked() )
         {
-            QListBoxItem* item = exerciseList_->selectedItem();
+            Q3ListBoxItem* item = exerciseList_->selectedItem();
             if( item == 0 )
                 return;
             frontend::ExerciseCopyParameters params;
@@ -160,7 +160,7 @@ void CreateExerciceWidget::CreateExercise()
             params.terrain_ = terrain;
             params.model_ = model.front().ascii();
             params.physical_ = model.back().ascii();
-            params.iterator_ = QListViewItemIterator( contentList_ );
+            params.iterator_ = Q3ListViewItemIterator( contentList_ );
             frontend::CreateExerciseAsCopyOf( config_, params );
         }
         else
@@ -186,7 +186,7 @@ bool CreateExerciceWidget::EnableEditButton()
 // Name: CreateExerciceWidget::OnSelectionChanged
 // Created: ABR 2011-04-14
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::OnSelectionChanged( QListBoxItem* item )
+void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
 {
     if( !item )
         return;

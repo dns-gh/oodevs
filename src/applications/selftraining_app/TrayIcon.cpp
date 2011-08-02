@@ -1,6 +1,7 @@
 #include "selftraining_app_pch.h"
 #include "trayicon.h"
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <QtGui/qevent.h>
 #include "moc_TrayIcon.cpp"
 
 /*!
@@ -26,7 +27,7 @@ TrayIcon::TrayIcon( QObject *parent, const char *name )
 
   \sa show
 */
-TrayIcon::TrayIcon( const QPixmap &icon, const QString &tooltip, QPopupMenu *popup, QObject *parent, const char *name )
+TrayIcon::TrayIcon( const QPixmap &icon, const QString &tooltip, Q3PopupMenu *popup, QObject *parent, const char *name )
 : QObject(parent, name), pop(popup), pm(icon), tip(tooltip), d(0)
 {
 }
@@ -43,7 +44,7 @@ TrayIcon::~TrayIcon()
   Sets the context menu to \a popup. The context menu will pop up when the
   user clicks the system tray entry with the right mouse button.
 */
-void TrayIcon::setPopup( QPopupMenu* popup )
+void TrayIcon::setPopup( Q3PopupMenu* popup )
 {
     pop = popup;
 }
@@ -53,7 +54,7 @@ void TrayIcon::setPopup( QPopupMenu* popup )
 
   \sa setPopup
 */
-QPopupMenu* TrayIcon::popup() const
+Q3PopupMenu* TrayIcon::popup() const
 {
     return pop;
 }
@@ -172,7 +173,7 @@ void TrayIcon::mousePressEvent( QMouseEvent *e )
 void TrayIcon::mouseReleaseEvent( QMouseEvent *e )
 {
     switch ( e->button() ) {
-    case RightButton:
+    case Qt::RightButton:
     if( pop ) {
         // Necessary to make keyboard focus
         // and menu closing work on Windows.
@@ -182,7 +183,7 @@ void TrayIcon::mouseReleaseEvent( QMouseEvent *e )
         e->accept();
     }
     break;
-    case LeftButton:
+    case Qt::LeftButton:
     emit clicked( e->globalPos() );
     break;
     default:
@@ -203,7 +204,7 @@ void TrayIcon::mouseReleaseEvent( QMouseEvent *e )
 */
 void TrayIcon::mouseDoubleClickEvent( QMouseEvent *e )
 {
-    if( e->button() == LeftButton )
+    if( e->button() == Qt::LeftButton )
     emit doubleClicked( e->globalPos() );
     e->ignore();
 }

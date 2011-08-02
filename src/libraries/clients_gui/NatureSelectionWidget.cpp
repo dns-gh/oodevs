@@ -22,16 +22,16 @@ using namespace gui;
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
 NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const tools::Loader_ABC& loader )
-    : QListView( parent )
+    : Q3ListView( parent )
     , category_( 0 )
     , current_ ( 0 )
 {
     addColumn( "" );
     header()->hide();
     setRootIsDecorated( true );
-    setResizeMode( QListView::LastColumn );
+    setResizeMode( Q3ListView::LastColumn );
     loader.LoadPhysicalFile( "symbols", boost::bind( &NatureSelectionWidget::LoadSymbols, this, _1 ) );
-    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    connect( this, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,14 +81,14 @@ void NatureSelectionWidget::EndCategory()
 void NatureSelectionWidget::AddChoice( kernel::SymbolRule* rule, const std::string& name, const std::string& /*value*/ )
 {
     if( !category_ )
-        current_ = new QListViewItem( this );
+        current_ = new Q3ListViewItem( this );
     else
-        current_ = new QListViewItem( category_ );
+        current_ = new Q3ListViewItem( category_ );
     current_->setText( 0, name.c_str() );
     current_->setDragEnabled( true );
     if( rule )
     {
-        QListViewItem* category = category_;
+        Q3ListViewItem* category = category_;
         rule->Accept( *this );
         category_ = category;
     }
@@ -98,7 +98,7 @@ void NatureSelectionWidget::AddChoice( kernel::SymbolRule* rule, const std::stri
 // Name: NatureSelectionWidget::OnSelectionChanged
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-void NatureSelectionWidget::OnSelectionChanged( QListViewItem* item )
+void NatureSelectionWidget::OnSelectionChanged( Q3ListViewItem* item )
 {
     QStringList list;
     while( item )

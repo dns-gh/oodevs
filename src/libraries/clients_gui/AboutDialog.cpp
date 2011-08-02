@@ -24,20 +24,17 @@ using namespace gui;
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
 AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QString& line, const QString& license )
-: QDialog( parent, 0, true, Qt::WStyle_Splash )
+    : QDialog( parent, 0, true, Qt::WStyle_Splash )
 {
-    setCaption( tr( "About" ) );
+    setCaption( tools::translate( "Application", "About" ) );
     QPixmap pixmap( GetSplashScreen() );
-    sizeHint_.setWidth ( pixmap.width() );
-    sizeHint_.setHeight( pixmap.height() + 50 );
-    setMaximumSize( sizeHint_ );
-    setMinimumSize( sizeHint_ );
-
-    QVBox* vbox = new QVBox( this );
-    vbox->setMinimumSize( sizeHint_ );
-    QVBox* box = new QVBox( vbox );
-    box->setBackgroundPixmap( pixmap );
-    QHBox* hbox = new QHBox( vbox );
+    setMinimumSize( pixmap.width(), pixmap.height() + 50 );
+    Q3VBox* vbox = new Q3VBox( this );
+    {
+        QLabel* label = new QLabel( vbox );
+        label->setPixmap( pixmap );
+    }
+    Q3HBox* hbox = new Q3HBox( vbox );
     hbox->setMaximumHeight( 50 );
     QString message;
     message = QString( "%1 - %2<br>%3 <a href=\"http://%4\">%5</a>" )
@@ -50,7 +47,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     if( ! license.isNull() )
         message += tr( "<br>License will expire on " ) + license;
     RichLabel* label = factory.CreateLabel( message, hbox );
-    label->setAlignment( Qt::SingleLine | Qt::AlignCenter );
+    label->setAlignment( Qt::TextSingleLine | Qt::AlignCenter );
     QPushButton* button = new QPushButton( tr( "Close" ), hbox );
     connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
 }

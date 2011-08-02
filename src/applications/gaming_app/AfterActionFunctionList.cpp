@@ -40,7 +40,7 @@ using namespace gui;
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
 AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const ::StaticModel& staticModel )
-    : QVBox( parent, "AfterActionFunctionList" )
+    : Q3VBox( parent, "AfterActionFunctionList" )
     , controllers_( controllers )
     , model_      ( model )
     , layer_      ( layer )
@@ -50,22 +50,22 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
 {
     functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
     functions_->AddColumn( tr( "Name" ) );
-    new ListItemToolTip( functions_->viewport(), *functions_ );
-    parameters_ = new QVGroupBox( tr( "Parameters" ), this );
-    timeGroup_ = new QVGroupBox( tr( "Time range" ), this );
+    new ListItemToolTip( *functions_ );
+    parameters_ = new Q3VGroupBox( tr( "Parameters" ), this );
+    timeGroup_ = new Q3VGroupBox( tr( "Time range" ), this );
     timeGroup_->setCheckable( true );
     timeGroup_->setChecked( false );
     {
-        QHBox* box = new QHBox( timeGroup_ );
+        Q3HBox* box = new Q3HBox( timeGroup_ );
         new QLabel( tr( "First tick" ), box );
         firstTick_ = new QSpinBox( box );
     }
     {
-        QHBox* box = new QHBox( timeGroup_ );
+        Q3HBox* box = new Q3HBox( timeGroup_ );
         new QLabel( tr( "Duration" ), box );
         duration_ = new QSpinBox( box );
     }
-    connect( functions_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( functions_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
 
     CreateRequestButton();
     request_->setEnabled( false );
@@ -123,14 +123,14 @@ void AfterActionFunctionList::Display( const AfterActionFunction& function, Disp
 // Name: AfterActionFunctionList::OnSelectionChange
 // Created: AGE 2007-09-24
 // -----------------------------------------------------------------------------
-void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
+void AfterActionFunctionList::OnSelectionChange( Q3ListViewItem* i )
 {
     delete request_;
     request_ = 0;
     std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &actions::gui::Param_ABC::RemoveFromController, _1 ) );
     paramList_.clear();
     delete parameters_;
-    parameters_ = new QVGroupBox( tr( "Parameters" ), this );
+    parameters_ = new Q3VGroupBox( tr( "Parameters" ), this );
     if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
     {
         const AfterActionFunction* function = item->GetValue< const AfterActionFunction >();

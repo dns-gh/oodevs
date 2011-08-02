@@ -45,15 +45,12 @@ IndicatorPlotFactory::~IndicatorPlotFactory()
 // -----------------------------------------------------------------------------
 IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request )
 {
-    QDockWindow* dock = new QDockWindow( mainWindow_, "indicatorplot", Qt::WDestructiveClose );
-    QVBox* vbox = new QVBox( dock );
-    QVBox* box = new QVBox( vbox );
+    QDockWidget* dock = new QDockWidget( "indicatorplot", mainWindow_, Qt::WDestructiveClose );
+    Q3VBox* vbox = new Q3VBox( dock );
+    Q3VBox* box = new Q3VBox( vbox );
     IndicatorPlot* plot = new IndicatorPlot( box, controllers_, publisher_, dock, exportDialog_, hasReplay_, request, simulation_.GetCurrentTick(), vbox );
     dock->setWidget( vbox );
-    dock->setResizeEnabled( true );
-    dock->setCloseMode( QDockWindow::Always );
-    dock->undock();
-    mainWindow_->setAppropriate( dock, false );
+    dock->setFeatures( QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable );
     vbox->show();
     return plot;
 }

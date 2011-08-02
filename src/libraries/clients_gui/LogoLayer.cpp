@@ -17,7 +17,7 @@ using namespace gui;
 // Name: LogoLayer constructor
 // Created: AGE 2007-02-12
 // -----------------------------------------------------------------------------
-LogoLayer::LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha /*= -1*/ )
+LogoLayer::LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha /* = -1*/ )
     : tools_( tools )
     , image_( image )
 {

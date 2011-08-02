@@ -12,9 +12,9 @@
 
 #include <geometry/Types.h>
 #pragma warning( push, 0 )
-#include <qstring.h>
-#include <qdatetime.h>
-#include <qcolor.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qdatetime.h>
+#include <QtGui/qcolor.h>
 #pragma warning( pop )
 
 namespace kernel

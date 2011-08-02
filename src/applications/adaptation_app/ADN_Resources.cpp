@@ -10,13 +10,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Resources.h"
 
-#include <qiconset.h>
-#include <qpixmap.h>
+#include <QtGui/qicon.h>
+#include <QtGui/qpixmap.h>
 
-#include <qimage.h>
-#include <qdict.h>
-#include <qmime.h>
-#include <qdragobject.h>
+#include <QtGui/qimage.h>
+#include <Qt3Support/q3dict.h>
+#include <QtGui/qmime.h>
+#include <Qt3Support/q3dragobject.h>
 
 // images\undo
 static const unsigned char image_4_data[] = {
@@ -78,35 +78,35 @@ static QImage uic_findImage( const QString& name )
     return QImage();
 }
 
-class MimeSourceFactory_example : public QMimeSourceFactory
+class MimeSourceFactory_example : public Q3MimeSourceFactory
 {
 public:
     MimeSourceFactory_example() {}
     ~MimeSourceFactory_example() {}
     const QMimeSource* data( const QString& abs_name ) const {
-    const QMimeSource* d = QMimeSourceFactory::data( abs_name );
+    const QMimeSource* d = Q3MimeSourceFactory::data( abs_name );
     if( d || abs_name.isNull() ) return d;
     QImage img = uic_findImage( abs_name );
     if( !img.isNull() )
-        ((QMimeSourceFactory*)this)->setImage( abs_name, img );
-    return QMimeSourceFactory::data( abs_name );
+        ((Q3MimeSourceFactory*)this)->setImage( abs_name, img );
+    return Q3MimeSourceFactory::data( abs_name );
     };
 };
 
-static QMimeSourceFactory* factory = 0;
+static Q3MimeSourceFactory* factory = 0;
 
 void qInitImages_example()
 {
     if( !factory ) {
     factory = new MimeSourceFactory_example;
-    QMimeSourceFactory::defaultFactory()->addFactory( factory );
+    Q3MimeSourceFactory::defaultFactory()->addFactory( factory );
     }
 }
 
 void qCleanupImages_example()
 {
     if( factory ) {
-    QMimeSourceFactory::defaultFactory()->removeFactory( factory );
+    Q3MimeSourceFactory::defaultFactory()->removeFactory( factory );
     delete factory;
     factory = 0;
     }

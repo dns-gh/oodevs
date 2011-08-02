@@ -34,15 +34,15 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& 
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setCaption( tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this );
 
-    table_ = new QTable( this );
-    table_->setSelectionMode( QTable::NoSelection );
+    table_ = new Q3Table( this );
+    table_->setSelectionMode( Q3Table::NoSelection );
     table_->setMinimumSize( 400, 200 );
     pMainLayout->addWidget( table_ );
 
-    QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
-    pButtonLayout->setAlignment( Qt::Right );
+    Q3HBoxLayout* pButtonLayout = new Q3HBoxLayout( pMainLayout );
+    pButtonLayout->setAlignment( Qt::AlignRight );
     QPushButton* okBtn     = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
     QPushButton* cancelBtn = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Cancel" ), this );
     pButtonLayout->addWidget( okBtn );
@@ -138,13 +138,13 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
             if( i == j )
             {
                 if( !table_->item( i, j ) )
-                    table_->setItem( i, j, new QTableItem( table_, QTableItem::Never ) );
+                    table_->setItem( i, j, new Q3TableItem( table_, Q3TableItem::Never ) );
                 table_->item( i, j )->setEnabled( false );
             }
             else
             {
                 const kernel::Karma& diplomacy = teams_[i]->Get< Diplomacies_ABC >().GetDiplomacy( *teams_[j] );
-                QTableItem* item = table_->item( i, j );
+                Q3TableItem* item = table_->item( i, j );
                 if( !item )
                 {
                     item = new DiplomacyCell( table_ );

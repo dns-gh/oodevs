@@ -42,7 +42,7 @@ InhabitantChangeAlertedStateDialog::InhabitantChangeAlertedStateDialog( QWidget*
     pAlertedCheckBox_ = new QCheckBox( tools::translate( "InhabitantChangeAlertedStateDialog", "Alerted" ), this );
     mainLayout->addWidget( pAlertedCheckBox_ );
     // ok / cancel butons
-    QHBox* buttonLayout = new QHBox( this );
+    Q3HBox* buttonLayout = new Q3HBox( this );
     QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttonLayout );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout );
     okButton->setDefault( TRUE );
@@ -121,7 +121,7 @@ void InhabitantChangeAlertedStateDialog::NotifyContextMenu( const kernel::Inhabi
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "InhabitantChangeAlertedStateDialog", "Change alert state" ), this, SLOT( Show() ) );
     }
 }

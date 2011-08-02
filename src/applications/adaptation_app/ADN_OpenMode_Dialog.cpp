@@ -21,15 +21,15 @@
 
 #include "ADN_Enums.h"
 
-#include <qapp.h>
-#include <qlayout.h>
-#include <qbuttongroup.h>
-#include <qlineedit.h>
-#include <qradiobutton.h>
-#include <qgrid.h>
-#include <qlabel.h>
-#include <qhbox.h>
-#include <qpushbutton.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3buttongroup.h>
+#include <QtGui/qlineedit.h>
+#include <QtGui/qradiobutton.h>
+#include <Qt3Support/q3grid.h>
+#include <QtGui/qlabel.h>
+#include <Qt3Support/q3hbox.h>
+#include <QtGui/qpushbutton.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenMode_Dialog constructor
@@ -38,19 +38,19 @@
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------
 ADN_OpenMode_Dialog::ADN_OpenMode_Dialog( QWidget* pParent )
-: QDialog( pParent, 0, true, WType_Dialog | WStyle_Customize | WStyle_NoBorder | WStyle_Title | WStyle_Dialog )
+: QDialog( pParent, 0, true, Qt::WType_Dialog | Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Title | Qt::WType_Dialog )
 , pPassword_( 0 )
 , pNormalMode_( 0 )
 , pAdminMode_( 0 )
 {
     setCaption( qApp->translate("ADN_OpenMode_Dialog","Open mode configuration") );
 
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
 
     // Mode selection
-    QButtonGroup* pModeGroup = new QButtonGroup( 2, Qt::Vertical, this );
+    Q3ButtonGroup* pModeGroup = new Q3ButtonGroup( 2, Qt::Vertical, this );
     pModeGroup->setRadioButtonExclusive( true );
 
     pNormalMode_ = new QRadioButton( qApp->translate("ADN_OpenMode_Dialog","Normal mode"), pModeGroup );
@@ -61,7 +61,7 @@ ADN_OpenMode_Dialog::ADN_OpenMode_Dialog( QWidget* pParent )
     pMainLayout->addWidget( pModeGroup );
 
     // Password edition
-    QGrid* pPasswordGrid = new QGrid( 2, this );
+    Q3Grid* pPasswordGrid = new Q3Grid( 2, this );
     pPasswordGrid->setSpacing( 10 );
 
     new QLabel( qApp->translate("ADN_OpenMode_Dialog","Password:"), pPasswordGrid );
@@ -75,7 +75,7 @@ ADN_OpenMode_Dialog::ADN_OpenMode_Dialog( QWidget* pParent )
     connect( pAdminMode_, SIGNAL( toggled( bool ) ), pPassword_, SLOT( setEnabled( bool ) ) );
 
     // add a ok/cancel button group
-    QHBox* pButtonLayout = new QHBox( this );
+    Q3HBox* pButtonLayout = new Q3HBox( this );
     pButtonLayout->setSpacing( 10 );
 
     QPushButton* pButton = new QPushButton( qApp->translate("ADN_OpenMode_Dialog","Ok"), pButtonLayout );

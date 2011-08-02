@@ -40,7 +40,7 @@ class StaticModel;
 */
 // Created: SBO 2009-04-20
 // =============================================================================
-class ScoreVariablesList : public QVBox
+class ScoreVariablesList : public Q3VBox
                          , private boost::noncopyable
 {
     Q_OBJECT;

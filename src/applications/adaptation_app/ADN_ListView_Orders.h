@@ -32,7 +32,7 @@ class ADN_ListView_Orders
 : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Orders( bool usedWithMission, QWidget * parent = 0, const char * name = 0, WFlags f = 0);
+    explicit ADN_ListView_Orders( bool usedWithMission, QWidget * parent = 0, const char * name = 0, Qt::WFlags f = 0);
     virtual ~ADN_ListView_Orders();
 
     virtual void OnContextMenu( const QPoint& pt );

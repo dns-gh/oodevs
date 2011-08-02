@@ -24,7 +24,7 @@
 // Name: ADN_Equipement_Wizard_Page0 constructor
 // Created: APE 2005-01-20
 // -----------------------------------------------------------------------------
-ADN_Equipement_Wizard_Page0::ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::ResourceInfos& parentDotation, QWizard* pParent, const char* szName )
+ADN_Equipement_Wizard_Page0::ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::ResourceInfos& parentDotation, Q3Wizard* pParent, const char* szName )
 : ADN_Wizard_FirstPage_Default<ADN_Equipement_Data::CategoryInfo>( parentDotation.categories_, pParent, szName )
 , parentResource_   ( parentDotation )
 {

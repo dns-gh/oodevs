@@ -14,7 +14,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Workspace.h"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons ActiveProtectionsInfosWeapons;
 
@@ -36,7 +36,7 @@ public:
         assert( pObj != 0 );
         ActiveProtectionsInfosWeapons* pWeapons = static_cast< ActiveProtectionsInfosWeapons* >( pObj );
 
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Double* pItemOdds = new ADN_TableItem_Double( &tab_, pObj );
 
         pItemOdds->GetValidator().setRange( 0, 1, 2 );
@@ -70,7 +70,7 @@ ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const st
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::Single );
+    setSelectionMode( Q3Table::Single );
     setShowGrid( false );
 
     setMinimumHeight( 150 );
@@ -107,8 +107,8 @@ ADN_ActiveProtections_WeaponsTable::~ADN_ActiveProtections_WeaponsTable()
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_WeaponsTable::OnContextMenu( int , int , const QPoint& pt )
 {
-    QPopupMenu menu( this );
-    QPopupMenu addMenu( &menu );
+    Q3PopupMenu menu( this );
+    Q3PopupMenu addMenu( &menu );
 
     ADN_Equipement_Data::T_CategoryInfos_Vector& pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_;
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = pWeapon.begin(); it != pWeapon.end(); ++it )

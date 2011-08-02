@@ -10,10 +10,11 @@
 #ifndef __ADN_Resources_h_
 #define __ADN_Resources_h_
 
-class QIconSet;
+class QIcon;
+
 
 #define MAKE_PIXMAP( name ) QPixmap( xpm_##name )
-#define MAKE_ICON( name )   QIconSet( QPixmap( xpm_##name ) )
+#define MAKE_ICON( name )   QIcon( QPixmap( xpm_##name ) )
 #define DECLARE_ICON( name ) extern const char *xpm_##name[]
 
 // Declaration

@@ -12,18 +12,22 @@
 #include "PluginSettingVisitor_ABC.h"
 #include "moc_PluginSetting.cpp"
 #include "tools/GeneralConfig.h"
-#include <qapplication.h>
-#include <qcheckbox.h>
-#include <qdatetimeedit.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qsettings.h>
-#include <qspinbox.h>
-#include <qtextcodec.h>
-#include <qtooltip.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qfiledialog.h>
+
+#pragma warning( push, 0 )
+#include <Qt/qapplication.h>
+#include <QtGui/qcheckbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlineedit.h>
+#include <QtCore/qsettings.h>
+#include <QtGui/qspinbox.h>
+#include <QtCore/qtextcodec.h>
+#include <QtGui/qtooltip.h>
+#include <QtGui/qcombobox.h>
+#include <QtGui/qpushbutton.h>
+#include <Qt3Support/q3filedialog.h>
+#include <Qt3Support/q3datetimeedit.h>
+#pragma warning( pop )
+
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
@@ -115,8 +119,8 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     }
     else if( type_ == "time" )
     {
-        timeValue_ = Style( new QTimeEdit( parent ) );
-        timeValue_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds );
+        timeValue_ = Style( new Q3TimeEdit( parent ) );
+        timeValue_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds );
         timeValue_->setTime( QTime().addSecs( xis.attribute< int >( "default", 0 ) ) );
     }
     else if( type_ == "file" )
@@ -179,7 +183,7 @@ void PluginSetting::OnFileClicked()
 {
     const int max_size = 20;
 
-    QString fileName = QFileDialog::getOpenFileName(
+    QString fileName = Q3FileDialog::getOpenFileName(
                                 QString( config_.GetExercisesDir().c_str() ), "Order File (*.ord)",
                                 0, "Select", "Select recorded orders" );
     if( !fileName.isNull() && !fileName.isEmpty() )

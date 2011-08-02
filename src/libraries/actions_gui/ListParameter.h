@@ -66,8 +66,8 @@ protected slots:
     void OnCreate();
     void OnDeleteSelectedItem();
     void OnClear();
-    void OnRequestPopup( QListViewItem* item, const QPoint& pos );
-    void OnSelectionChanged( QListViewItem* item );
+    void OnRequestPopup( Q3ListViewItem* item, const QPoint& pos );
+    void OnSelectionChanged( Q3ListViewItem* item );
     void TurnHeaderBlack();
     //@}
 
@@ -76,7 +76,7 @@ private:
     //@{
     virtual bool IsOptional() const;
     virtual Param_ABC* CreateElement() = 0;
-    void DeleteItem( QListViewItem* item );
+    void DeleteItem( Q3ListViewItem* item );
     void Clear();
     bool Invalid();
     //@}
@@ -90,8 +90,8 @@ private:
     //! @name Member data
     //@{
     kernel::ActionController& controller_;
-    QListView* list_;
-    QListViewItem* selected_;
+    Q3ListView* list_;
+    Q3ListViewItem* selected_;
     T_Widgets widgets_;
     unsigned int min_;
     unsigned int max_;

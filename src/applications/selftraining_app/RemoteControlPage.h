@@ -46,7 +46,7 @@ class RemoteControlPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
+             RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
     virtual ~RemoteControlPage();
     //@}
 

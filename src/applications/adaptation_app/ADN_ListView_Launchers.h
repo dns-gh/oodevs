@@ -29,7 +29,7 @@ class ADN_ListView_Launchers
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_ListView_Launchers( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    ADN_ListView_Launchers( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView_Launchers();
     //@}
 
@@ -38,7 +38,7 @@ private:
     //@{
     void        ConnectItem  ( bool           bConnect );
     void        OnContextMenu( const QPoint&  pt       );
-    std::string GetToolTipFor( QListViewItem& item     );
+    std::string GetToolTipFor( Q3ListViewItem& item     );
     //@}
 };
 

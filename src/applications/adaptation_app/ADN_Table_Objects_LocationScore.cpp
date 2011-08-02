@@ -26,7 +26,7 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Objects_Data::ScoreLocationInfos ScoreLocationInfos;
 
@@ -83,7 +83,7 @@ ADN_Table_Objects_LocationScore::ADN_Table_Objects_LocationScore(QWidget * paren
 
     // peut etre selectionne & trie
     setSorting(true);
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid(false);
     setMinimumHeight( 205 );
 
@@ -119,8 +119,8 @@ ADN_Table_Objects_LocationScore::~ADN_Table_Objects_LocationScore()
 // -----------------------------------------------------------------------------
 void ADN_Table_Objects_LocationScore::OnContextMenu(int /*row*/,int /*col*/,const QPoint& pt)
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu addMenu( &popupMenu );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu addMenu( &popupMenu );
 
     // Get the list of the possible munitions
     for( int i = 0; i < eNbrLocation; ++i )

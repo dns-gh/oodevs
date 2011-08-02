@@ -10,11 +10,11 @@
 #ifndef __RichListItem_h_
 #define __RichListItem_h_
 
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 #include <boost/noncopyable.hpp>
 #include <vector>
 
-class QSimpleRichText;
+class Q3SimpleRichText;
 
 namespace gui
 {
@@ -25,21 +25,21 @@ namespace gui
 */
 // Created: APE 2004-09-07
 // =============================================================================
-class RichListItem : public QListViewItem
+class RichListItem : public Q3ListViewItem
                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RichListItem( QListView * parent );
-             RichListItem( QListView * parent, QListViewItem * after );
-             RichListItem( QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-             RichListItem( QListView * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    explicit RichListItem( Q3ListView * parent );
+             RichListItem( Q3ListView * parent, Q3ListViewItem * after );
+             RichListItem( Q3ListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+             RichListItem( Q3ListView * parent, Q3ListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
 
-    explicit RichListItem( QListViewItem * parent );
-             RichListItem( QListViewItem * parent, QListViewItem * after );
-             RichListItem( QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-             RichListItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    explicit RichListItem( Q3ListViewItem * parent );
+             RichListItem( Q3ListViewItem * parent, Q3ListViewItem * after );
+             RichListItem( Q3ListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+             RichListItem( Q3ListViewItem * parent, Q3ListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
     virtual ~RichListItem();
     //@}
 
@@ -59,7 +59,7 @@ public:
     //! @name Operations
     //@{
     virtual void paintCell( QPainter* pPainter, const QColorGroup& cg, int nColumn, int nWidth, int nAlign );
-    virtual int  width( const QFontMetrics& fm, const QListView* pListView, int nColumn ) const;
+    virtual int  width( const QFontMetrics& fm, const Q3ListView* pListView, int nColumn ) const;
     virtual void setText( int column, const QString& text );
     virtual QString text( int column ) const;
     virtual void setPixmap( int column, const QPixmap & pm );
@@ -73,7 +73,7 @@ private:
     bool InitializeColor();
     void AddColumns( const QString& label1, const QString& label2, const QString& label3, const QString& label4,
                      const QString& label5, const QString& label6, const QString& label7, const QString& label8 );
-    QSimpleRichText* CreateRichText( const QString& label );
+    Q3SimpleRichText* CreateRichText( const QString& label );
     int Width( int nColumn ) const;
     int Height() const;
     //@}
@@ -82,10 +82,10 @@ private:
     //@{
     struct RichText
     {
-        RichText() : rich( 0 ), pixMap( 0 ) {}
-        RichText( const QString& s, QSimpleRichText* rich ) : base( s ), rich( rich ), pixMap( 0 ) {}
+        RichText() : rich( 0 ), pixMap() {}
+        RichText( const QString& s, Q3SimpleRichText* rich ) : base( s ), rich( rich ), pixMap() {}
         QString          base;
-        QSimpleRichText* rich;
+        Q3SimpleRichText* rich;
         QPixmap          pixMap;
     };
     typedef std::vector< RichText > T_RichTexts;

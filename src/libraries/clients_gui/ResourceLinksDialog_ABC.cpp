@@ -29,36 +29,35 @@ using namespace kernel;
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::StringResolver< ResourceNetworkType >& resources )
-    : QDockWindow      ( parent, "resource" )
+    : QDockWidget      ( "resource", parent )
     , controllers_     ( controllers )
     , selected_        ( 0 )
     , selectedItem_    ( 0 )
     , resources_       ( resources )
     , linkToChange_    ( 0 )
 {
-    setResizeEnabled( true );
-    setCloseMode( QDockWindow::Always );
+    setObjectName( "resource" );
     setCaption( tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ) );
-    QVBox* mainLayout = new QVBox( this );
+    Q3VBox* mainLayout = new Q3VBox( this );
     setWidget( mainLayout );
-    pMainLayout_ = new QVBox( mainLayout );
+    pMainLayout_ = new Q3VBox( mainLayout );
     pMainLayout_->setSpacing( 5 );
     pMainLayout_->setMargin( 5 );
-    QVBox* pNodeBox = new QVBox( pMainLayout_ );
-    dotationList_ = new QListBox( pNodeBox );
+    Q3VBox* pNodeBox = new Q3VBox( pMainLayout_ );
+    dotationList_ = new Q3ListBox( pNodeBox );
     dotationList_->setMaximumHeight( 60 );
     connect( dotationList_, SIGNAL( selectionChanged() ), this, SLOT( Update() ) );
-    groupBox_ = new QGroupBox( 1, Qt::Horizontal, tools::translate( "gui::ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );
+    groupBox_ = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "gui::ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );
     groupBox_->setCheckable( true );
     connect( groupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
     {
-        QHBox* box = new QHBox( groupBox_ );
+        Q3HBox* box = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Production:" ), box );
         production_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( production_, SIGNAL( valueChanged( int ) ), this, SLOT( OnProductionChanged( int ) ) );
     }
     {
-        QHBox* box = new QHBox( groupBox_ );
+        Q3HBox* box = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Consumption:" ), box );
         consumption_  = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( consumption_, SIGNAL( valueChanged( int ) ), this, SLOT( OnConsumptionChanged( int ) ) );
@@ -66,20 +65,20 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     critical_ = new QCheckBox( tools::translate( "gui::ResourceLinksDialog_ABC", "Vital consumption" ), groupBox_ );
     connect( critical_, SIGNAL( toggled( bool ) ), this, SLOT( OnCriticalChanged( bool ) ) );
     {
-        QHBox* box = new QHBox( groupBox_ );
+        Q3HBox* box = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Maximal stock:" ), box );
         maxStock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( maxStock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMaxStockChanged( int ) ) );
     }
     {
-        stockBox_ = new QHBox( groupBox_ );
+        stockBox_ = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Initial stock:" ), stockBox_ );
         stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, stockBox_ );
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
         stockBox_->hide();
     }
-    table_ = new QTable( groupBox_ );
-    table_->setSelectionMode( QTable::NoSelection );
+    table_ = new Q3Table( groupBox_ );
+    table_->setSelectionMode( Q3Table::NoSelection );
     table_->setNumCols( 3 );
     table_->horizontalHeader()->setLabel( 0, tools::translate( "gui::ResourceLinksDialog_ABC", "Target" ) );
     table_->horizontalHeader()->setLabel( 1, tools::translate( "gui::ResourceLinksDialog_ABC", "Limited" ) );
@@ -152,7 +151,7 @@ void ResourceLinksDialog_ABC::Select( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
-    QListBoxItem* item = dotationList_->selectedItem();
+    Q3ListBoxItem* item = dotationList_->selectedItem();
     if( !item )
     {
         dotationList_->setSelected( selectedItem_, true );
@@ -172,11 +171,11 @@ void ResourceLinksDialog_ABC::Update()
     for( unsigned int j = 0; j < node.links_.size(); ++j )
     {
         table_->setText( j, 0, selected_->GetLinkName( resource, j ) );
-        table_->setItem( j, 1, new QCheckTableItem( table_, ""  ) );
+        table_->setItem( j, 1, new Q3CheckTableItem( table_, ""  ) );
         table_->setItem( j, 2, new SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max() ) );
         bool limited = node.links_[ j ].capacity_ != -1;
         table_->item( j, 2 )->setEnabled( limited );
-        static_cast< QCheckTableItem* >( table_->item( j, 1 ) )->setChecked( limited );
+        static_cast< Q3CheckTableItem* >( table_->item( j, 1 ) )->setChecked( limited );
         table_->setText( j, 2, QString::number( limited ? node.links_[ j ].capacity_ : 0 ) );
     }
 }
@@ -252,7 +251,7 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
         std::string resource = dotationList_->selectedItem()->text().ascii();
         for( int j = 0; j < table_->numRows(); ++j )
         {
-            QCheckTableItem* item = static_cast< QCheckTableItem* >( table_->item( j, 1 ) );
+            Q3CheckTableItem* item = static_cast< Q3CheckTableItem* >( table_->item( j, 1 ) );
             if( item )
             {
                 bool enable = item->isChecked();
@@ -307,13 +306,13 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, Conte
     if( !node || !selected_ || selected_ == node )
         return;
     linkToChange_ = &object;
-    QPopupMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
+    Q3PopupMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
     tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
     int resourceId = 0;
     while( it.HasMoreElements() )
     {
         const ResourceNetworkType& resource = it.NextElement();
-        QPopupMenu* resourceMenu = new QPopupMenu( subMenu );
+        Q3PopupMenu* resourceMenu = new Q3PopupMenu( subMenu );
         subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
         resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
     }
@@ -330,11 +329,11 @@ void ResourceLinksDialog_ABC::Show()
     for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         if( it == resourceNodes_.begin() )
         {
-            selectedItem_ = new QListBoxText( dotationList_, it->second.resource_.c_str() );
+            selectedItem_ = new Q3ListBoxText( dotationList_, it->second.resource_.c_str() );
             dotationList_->setSelected( selectedItem_, true );
         }
         else
-            dotationList_->setSelected( new QListBoxText( dotationList_, it->second.resource_.c_str() ), false );
+            dotationList_->setSelected( new Q3ListBoxText( dotationList_, it->second.resource_.c_str() ), false );
 
     if( dotationList_->count() > 0 )
         groupBox_->setEnabled( true );

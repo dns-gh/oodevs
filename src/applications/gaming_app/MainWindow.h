@@ -13,7 +13,6 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
-#include <qmainwindow.h>
 
 namespace kernel
 {
@@ -152,9 +151,10 @@ private:
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer* agents_;
     StatusBar* pStatus_;
+    QByteArray docks_;
     bool connected_;
     MissionPanel* pMissionPanel_;
-    QDockWindow* pExtensionsPanel_;
+    QDockWidget* pExtensionsPanel_;
     QString planifName_;
     bool onPlanif_;
     QString savedState_;

@@ -38,7 +38,7 @@ class ConnectionMenu : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectionMenu( QPopupMenu* parent, kernel::Controllers& controllers, Network& network, kernel::Logger_ABC& logger );
+             ConnectionMenu( Q3PopupMenu* parent, kernel::Controllers& controllers, Network& network, kernel::Logger_ABC& logger );
     virtual ~ConnectionMenu();
     //@}
 
@@ -65,8 +65,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    QPopupMenu* menu_;
-    QPopupMenu* hosts_;
+    Q3PopupMenu* menu_;
+    Q3PopupMenu* hosts_;
     ConnectDialog* connectDialog_;
     DisconnectDialog* disconnectDialog_;
     int connectItem_, disconnectItem_, recentItem_;

@@ -27,7 +27,7 @@
 // -----------------------------------------------------------------------------
 ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers, gui::ParametersLayer& layer,
                                         const StaticModel& staticModel, const kernel::GlTools_ABC& tools )
-    : QVBox   ( parent )
+    : Q3VBox   ( parent )
     , factory_( factory )
     , tools_  ( tools )
     , wizard_ ( new ScoreVariableCreationWizard( this, controllers, layer, staticModel, tools_ ) )
@@ -39,13 +39,13 @@ ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& f
         list_->AddColumn( tr( "Name" ) );
         list_->AddColumn( tr( "Type" ) );
         list_->AddColumn( tr( "Value" ) );
-        connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnPaste() ) );
+        connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnPaste() ) );
     }
     {
-        QHBox* box = new QHBox( this );
-        QButton* add = new QPushButton( tr( "Add" ), box );
-        QButton* del = new QPushButton( tr( "Del" ), box );
-        QButton* paste = new QPushButton( tr( "Paste" ), box );
+        Q3HBox* box = new Q3HBox( this );
+        QPushButton* add = new QPushButton( tr( "Add" ), box );
+        QPushButton* del = new QPushButton( tr( "Del" ), box );
+        QPushButton* paste = new QPushButton( tr( "Paste" ), box );
         connect( add, SIGNAL( clicked() ), SLOT( OnAdd() ) );
         connect( del, SIGNAL( clicked() ), SLOT( OnDelete() ) );
         connect( paste, SIGNAL( clicked() ), SLOT( OnPaste() ) );
@@ -96,7 +96,7 @@ indicators::Variables ScoreVariablesList::GetValue() const
 {
     indicators::Variables result;
     indicators::DataTypeFactory types;
-    for( QListViewItemIterator it( list_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
         if( const gui::ValuedListItem* item = static_cast< const gui::ValuedListItem* >( *it ) )
         {
             const QString name  = item->text( 0 ).remove( 0, 1 );
@@ -136,7 +136,7 @@ void ScoreVariablesList::OnAdd()
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::OnDelete()
 {
-    if( QListViewItem* item = list_->selectedItem() )
+    if( Q3ListViewItem* item = list_->selectedItem() )
     {
         list_->removeItem( item );
         emit Updated();
@@ -150,7 +150,7 @@ void ScoreVariablesList::OnDelete()
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::OnPaste()
 {
-    if( QListViewItem* item = list_->selectedItem() )
+    if( Q3ListViewItem* item = list_->selectedItem() )
         emit Insert( item->text( 0 ) );
 }
 
@@ -175,7 +175,7 @@ void ScoreVariablesList::Draw( kernel::Viewport_ABC& viewport )
 void ScoreVariablesList::OnItemClick()
 {
     location_.reset();
-    if( QListViewItem* item = list_->selectedItem() )
+    if( Q3ListViewItem* item = list_->selectedItem() )
     {
         if( item->text( 1 ) == "zone" )
         {

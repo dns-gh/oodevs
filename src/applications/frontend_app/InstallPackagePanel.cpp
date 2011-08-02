@@ -16,24 +16,24 @@
 #include "frontend/Config.h"
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
+
 #pragma warning( disable: 4996 )
 #include <zipstream/zipstream.h>
-#pragma warning( pop )
-
-#include <qaction.h>
-#include <qcursor.h>
-#include <qfiledialog.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qprogressbar.h>
-#include <qtextedit.h>
-#include <qapplication.h>
 
 #pragma warning( push, 0 )
+#include <Qt3Support/q3action.h>
+#include <QtGui/qcursor.h>
+#include <Qt3Support/q3filedialog.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlineedit.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpushbutton.h>
+#include <Qt3Support/q3progressbar.h>
+#include <Qt3Support/q3textedit.h>
+#include <QtGui/qapplication.h>
+#include <Qt3Support/q3button.h>
+
 #pragma warning( disable: 4127 4244 4245 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -45,39 +45,39 @@ namespace bfs = boost::filesystem;
 // Name: InstallPackagePanel constructor
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
-InstallPackagePanel::InstallPackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config, ActionsContext& context )
+InstallPackagePanel::InstallPackagePanel( Q3WidgetStack* widget, Q3Action& action, const frontend::Config& config, ActionsContext& context )
     : Panel_ABC( widget, action, context, "InstallPackagePanel" )
     , config_( config )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, action.text(), box );
     {
         new QLabel( tr( "Package to be installed:" ), group );
-        QHBox* hBox = new QHBox( group );
+        Q3HBox* hBox = new Q3HBox( group );
         package_ = new QLineEdit( hBox );
-        QButton* browseBtn = new QPushButton( tr( "Browse..." ), hBox );
+        QPushButton* browseBtn = new QPushButton( tr( "Browse..." ), hBox );
         connect( browseBtn, SIGNAL( clicked() ), SLOT( BrowseClicked() ) );
     }
     {
         QLabel* label = new QLabel( tr( "Package content:" ), group );
         label->setAlignment( Qt::AlignTop );
-        QVBox* vBox = new QVBox( group );
+        Q3VBox* vBox = new Q3VBox( group );
         vBox->setSpacing( 5 );
         name_ = new QLineEdit( vBox );
         name_->setReadOnly( true );
-        description_ = new QTextEdit( vBox );
+        description_ = new Q3TextEdit( vBox );
         description_->setMaximumHeight( 80 );
         description_->setReadOnly( true );
-        content_ = new QListBox( vBox );
+        content_ = new Q3ListBox( vBox );
     }
-    progress_ = new QProgressBar( box );
+    progress_ = new Q3ProgressBar( box );
     progress_->hide();
 
     bubble_ = new InfoBubble( box );
-    QHBox* btnBox = new QHBox( box );
+    Q3HBox* btnBox = new Q3HBox( box );
     btnBox->layout()->setAlignment( Qt::AlignRight );
     okay_ = new QPushButton( MAKE_PIXMAP( next ), action.text(), btnBox );
     QFont font( "Arial", 10, QFont::Bold );
@@ -105,7 +105,7 @@ InstallPackagePanel::~InstallPackagePanel()
 // -----------------------------------------------------------------------------
 void InstallPackagePanel::BrowseClicked()
 {
-    const QString filename = QFileDialog::getOpenFileName( "", "Officer Training packages (*.otpak)", this, "", tr( "Select a package" ) );
+    const QString filename = Q3FileDialog::getOpenFileName( "", "Officer Training packages (*.otpak)", this, "", tr( "Select a package" ) );
     package_->setText( filename );
     if( filename.isEmpty() )
         return;
@@ -139,13 +139,13 @@ namespace
 {
     struct Progress
     {
-        Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
+        Progress( Q3ProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
         void operator()()
         {
             progress_->setProgress( ++count_ );
             qApp->processEvents();
         }
-        QProgressBar* progress_;
+        Q3ProgressBar* progress_;
         unsigned count_;
     };
 }
@@ -163,10 +163,10 @@ void InstallPackagePanel::InstallPackage()
         {
             progress_->show();
             progress_->setProgress( 0, content_->count() );
-            setCursor( QCursor::waitCursor );
+            setCursor( Qt::waitCursor );
             okay_->setDisabled( true );
             frontend::commands::InstallPackageFile( archive, GetDestinationDirectory(), Progress( progress_ ) );
-            setCursor( QCursor::arrowCursor );
+            setCursor( Qt::arrowCursor );
             okay_->setDisabled( false );
         }
     }

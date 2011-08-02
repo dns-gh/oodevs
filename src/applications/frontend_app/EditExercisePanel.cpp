@@ -15,11 +15,11 @@
 #include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/EditExercise.h"
-#include <qaction.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
+#include <Qt3Support/q3action.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpushbutton.h>
 
 using namespace frontend;
 
@@ -27,26 +27,26 @@ using namespace frontend;
 // Name: EditExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+EditExercisePanel::EditExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context )
     : Panel_ABC( widget, action, context, "EditExercisePanel" )
     , config_( config )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Vertical, action.text(), box );
     new QLabel( tr( "Choose the exercise to edit:" ), group );
-    list_ = new QListBox( group );
+    list_ = new Q3ListBox( group );
 
     bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
-    QHBox* btnBox = new QHBox( box );
+    Q3HBox* btnBox = new Q3HBox( box );
     btnBox->layout()->setAlignment( Qt::AlignRight );
     QPushButton* okay = new QPushButton( MAKE_PIXMAP( next ), tr( "Edit exercise" ), btnBox );
     QFont font( "Arial", 10, QFont::Bold );
     okay->setFont( font );
     connect( okay, SIGNAL( pressed() ), SLOT( EditExercise() ) );
-    connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( EditExercise() ) );
+    connect( list_, SIGNAL( doubleClicked( Q3ListBoxItem* ) ), SLOT( EditExercise() ) );
 
     Update();
 }

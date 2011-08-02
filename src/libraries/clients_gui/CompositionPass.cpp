@@ -24,7 +24,7 @@ using namespace gui;
 // Name: CompositionPass constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-CompositionPass::CompositionPass( TextureRenderPass& first, TextureRenderPass& second, kernel::Controllers& controllers, const std::string& option /*= ""*/ )
+CompositionPass::CompositionPass( TextureRenderPass& first, TextureRenderPass& second, kernel::Controllers& controllers, const std::string& option /* = ""*/ )
     : controllers_ ( controllers )
     , first_       ( first )
     , second_      ( second )

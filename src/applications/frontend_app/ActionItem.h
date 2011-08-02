@@ -10,7 +10,10 @@
 #ifndef __ActionItem_h_
 #define __ActionItem_h_
 
-#include <qtoolbutton.h>
+#pragma warning( push, 0)
+#include <Qt3Support/q3action.h>
+#include <QtGui/qtoolbutton.h>
+#pragma warning( pop )
 
 class QAction;
 
@@ -25,7 +28,7 @@ class ActionItem : public QToolButton
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionItem( QWidget* parent, QAction& action );
+             ActionItem( QWidget* parent, Q3Action& action );
     virtual ~ActionItem();
     //@}
 
@@ -39,7 +42,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QAction& action_;
+    Q3Action& action_;
     //@}
 };
 

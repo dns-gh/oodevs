@@ -10,9 +10,9 @@
 #ifndef __ImportWidget_h_
 #define __ImportWidget_h_
 
-#include <qgroupbox.h>
+#include <Qt3Support/q3groupbox.h>
 
-class QProgressBar;
+class Q3ProgressBar;
 class ScenarioEditPage;
 namespace
 {
@@ -30,7 +30,7 @@ namespace tools
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class ImportWidget : public QGroupBox
+class ImportWidget : public Q3GroupBox
 {
     Q_OBJECT
 
@@ -62,10 +62,10 @@ private:
 
     // LTO begin
     void ImportScenario();
-    void AddModelChoice( QGroupBox* box );
-    void AddOutput( QGroupBox* box );
-    void AddInput( QGroupBox* box );
-    void AddTerrainChoice( QGroupBox* box );
+    void AddModelChoice( Q3GroupBox* box );
+    void AddOutput( Q3GroupBox* box );
+    void AddInput( Q3GroupBox* box );
+    void AddTerrainChoice( Q3GroupBox* box );
     // LTO end
     //@}
 
@@ -89,9 +89,9 @@ private:
     TabWidget* tabs_;
     QLineEdit* package_;
     QLineEdit* packageName_;
-    QTextEdit* packageDescription_;
-    QListBox* packageContent_;
-    QProgressBar* packageProgress_;
+    Q3TextEdit* packageDescription_;
+    Q3ListBox* packageContent_;
+    Q3ProgressBar* packageProgress_;
     // LTO begin
     QString model_;
     QLineEdit* inputEdit_;

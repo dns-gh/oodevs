@@ -47,7 +47,7 @@ class BattleCenterJoinPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
+             BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
     virtual ~BattleCenterJoinPage();
     //@}
 

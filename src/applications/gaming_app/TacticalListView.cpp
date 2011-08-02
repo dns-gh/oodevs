@@ -61,7 +61,7 @@ TacticalListView::~TacticalListView()
 // -----------------------------------------------------------------------------
 void TacticalListView::viewportResizeEvent( QResizeEvent* e )
 {
-    QScrollView::viewportResizeEvent( e );
+    Q3ListView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
@@ -71,7 +71,7 @@ void TacticalListView::viewportResizeEvent( QResizeEvent* e )
 // -----------------------------------------------------------------------------
 void TacticalListView::setColumnWidth( int column, int w )
 {
-    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
+    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
 }
 
 // -----------------------------------------------------------------------------

@@ -23,7 +23,7 @@ using namespace kernel;
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
 NatureEditionWidget::NatureEditionWidget( QWidget* parent )
-    : QVBox( parent )
+    : Q3VBox( parent )
 {
     rootWidget_ = new NatureEditionCategory( this );
     connect( rootWidget_, SIGNAL( NatureChanged( const QString& ) ), this, SIGNAL( textChanged( const QString& ) ) );

@@ -15,19 +15,22 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "actions_gui/resources.h"
-#include <qtabwidget.h>
-#include <qscrollview.h>
+
+#pragma warning( push, 0 )
+#include <QtGui/qtabwidget.h>
+#include <Qt3Support/q3scrollview.h>
+#pragma warning( pop )
 
 using namespace actions::gui;
 
 namespace
 {
-    QVBox* CreateTab( QTabWidget* parent, const QString& title, bool enabled = true )
+    Q3VBox* CreateTab( QTabWidget* parent, const QString& title, bool enabled = true )
     {
-        QScrollView* sc = new QScrollView( parent );
-        sc->setResizePolicy( QScrollView::AutoOneFit );
-        sc->setFrameStyle( QFrame::NoFrame );
-        QVBox* tab = new QVBox( sc );
+        Q3ScrollView* sc = new Q3ScrollView( parent );
+        sc->setResizePolicy( Q3ScrollView::AutoOneFit );
+        sc->setFrameStyle( Q3Frame::NoFrame );
+        Q3VBox* tab = new Q3VBox( sc );
         tab->setMargin( 5 );
         tab->setSpacing( 5 );
         sc->addChild( tab );
@@ -43,7 +46,7 @@ namespace
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller )
-    : QVBox      ( parent )
+    : Q3VBox      ( parent )
     , title_     ( order.GetName().c_str() )
     , controller_( controller )
     , entity_    ( entity )
@@ -56,18 +59,18 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
     {
         const std::string doctrine = order.GetDoctrineInformation();
         const std::string usage = order.GetUsageInformation();
-        QVBox* helpTab = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Help" ), !doctrine.empty() || !usage.empty() );
+        Q3VBox* helpTab = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Help" ), !doctrine.empty() || !usage.empty() );
         if( !doctrine.empty() )
         {
-            QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Doctrine" ), helpTab );
+            Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Doctrine" ), helpTab );
             QLabel* label = new QLabel( doctrine.c_str(), box );
-            label->setAlignment( Qt::WordBreak );
+            label->setAlignment( Qt::TextWordWrap );
         }
         if( !usage.empty() )
         {
-            QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Usage" ), helpTab );
+            Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Usage" ), helpTab );
             QLabel* label = new QLabel( usage.c_str(), box );
-            label->setAlignment( Qt::WordBreak );
+            label->setAlignment( Qt::TextWordWrap );
         }
     }
     CreateOkCancelButtons();
@@ -121,17 +124,7 @@ const kernel::Entity_ABC& MissionInterface_ABC::GetEntity() const
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateTitle( const QString& title )
 {
-    QHBox* box = new QHBox( this );
-    box->setPaletteBackgroundColor( Qt::white );
-    box->setFixedHeight( 32 );
-    QLabel* label = new QLabel( " " + title, box );
-    QFont font = label->font();
-    font.setBold( true );
-    font.setPixelSize( 16 );
-    label->setFont( font );
-    label = new QLabel( box );
-    label->setPixmap( MAKE_PIXMAP( mission_title ) );
-    label->setAlignment( Qt::AlignRight );
+    paintEvent( 0 , title);
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +133,7 @@ void MissionInterface_ABC::CreateTitle( const QString& title )
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateOkCancelButtons()
 {
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     box->setMargin( 5 );
     box->setSpacing( 5 );
     box->layout()->setAlignment( Qt::AlignRight );
@@ -157,7 +150,7 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 // Created: HBD 2010-09-06
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::ChangeOkValueButton( bool planningMode )
-{
+{ 
    if( ok_ )
    {
        if( planningMode )
@@ -222,3 +215,23 @@ QString MissionInterface_ABC::Title() const
 {
     return title_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::paintEvent
+// Created: FPT 2011-06-28
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::paintEvent( QPaintEvent*, QString title )
+{
+    Q3HBox* box = new Q3HBox( this );
+    box->setPaletteBackgroundColor( Qt::white );
+    box->setFixedHeight( 32 );
+    QLabel* label = new QLabel( " " + title, box );
+    QFont font = label->font();
+    font.setBold( true );
+    font.setPixelSize( 16 );
+    label->setFont( font );
+    label = new QLabel( box );
+    label->setPixmap( MAKE_PIXMAP( mission_title ) );
+    label->setAlignment( Qt::AlignRight );
+}
+

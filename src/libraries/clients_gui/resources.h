@@ -9,12 +9,12 @@
 
 #define DECLARE_ICON( name )   extern const char *xpm_##name[]
 #define MAKE_PIXMAP( name )   QPixmap( xpm_##name )
-#define MAKE_ICON( name )   QIconSet( QPixmap( xpm_##name ) )
+#define MAKE_ICON( name )   QIcon( QPixmap( xpm_##name ) )
 #define MAKE_ICON_X( name, name_disabled ) MakeExtendedIcon( xpm_##name, xpm_##name_disabled )
 
-class QIconSet;
+class QIcon;
 
-QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] );
+QIcon MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] );
 
 // Declare the icon here and include the xpm file in resources.cpp
 DECLARE_ICON( csword );

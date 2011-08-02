@@ -18,9 +18,11 @@
 #include "ADN_MissionParameterValues_Table.h"
 #include "ADN_ComboBox_Vector.h"
 
-#include <qtabwidget.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
+#include <QtGui/qtabwidget.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
@@ -61,7 +63,7 @@ void ADN_Missions_GUI::Build()
     pTabWidget->addTab( BuildPopulationMissions( pTabWidget ), tr( "Crowd missions" ) );
     pTabWidget->addTab( BuildFragOrders( pTabWidget ), tr( "Fragmentary orders" ) );
 
-    QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
+    Q3GridLayout* pMainLayout = new Q3GridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
 }
 
@@ -69,7 +71,7 @@ void ADN_Missions_GUI::Build()
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat )
+QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat )
 {
     ADN_GuiBuilder builder;
 
@@ -82,7 +84,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
     listMissions->GetConnector().Connect( &missions );
 
     // Mission data
-    pGroup = new QVGroupBox( tr( "Mission" ), mainWidget );
+    pGroup = new Q3VGroupBox( tr( "Mission" ), mainWidget );
     QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
@@ -96,14 +98,14 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
     else
         builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Behavior" ), vInfosConnectors[eBehavior] );
 
-    QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
+    Q3GroupBox* pParameters = new Q3GroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
     vInfosConnectors[eParameters] = &paramList->GetConnector();
-    QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
+    Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
 
-    QGroupBox* pChoice = new QGroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
+    Q3GroupBox* pChoice = new Q3GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
     ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
     vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
 
@@ -112,7 +114,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
     listMissions->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QBoxLayout* pLayout = new QHBoxLayout( mainWidget, 5, 5 );
+    Q3BoxLayout* pLayout = new Q3HBoxLayout( mainWidget, 5, 5 );
     pLayout->addWidget( listMissions, 1 );
     pLayout->addWidget( pGroup, 5 );
 
@@ -163,7 +165,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     listFragOrders->GetConnector().Connect( &data_.fragOrders_ );
 
     // Mission data
-    pFragOrderGroup_ = new QVGroupBox( tr( "Fragmentary orders" ), mainWidget );
+    pFragOrderGroup_ = new Q3VGroupBox( tr( "Fragmentary orders" ), mainWidget );
     QWidget* pParamHolder = builder.AddFieldHolder( pFragOrderGroup_ );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
@@ -172,14 +174,14 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     QCheckBox* available = builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
     connect( available, SIGNAL( toggled ( bool ) ), listFragOrders, SLOT( OnToogled( bool ) ) );
 
-    QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pFragOrderGroup_ );
+    Q3GroupBox* pParameters = new Q3GroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pFragOrderGroup_ );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
     vInfosConnectors[eParameters] = &paramList->GetConnector();
-    QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
+    Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
 
-    QGroupBox* pChoice = new QGroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
+    Q3GroupBox* pChoice = new Q3GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
     ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
     vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
 
@@ -188,7 +190,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     listFragOrders->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QBoxLayout* pLayout = new QHBoxLayout( mainWidget, 5, 5 );
+    Q3BoxLayout* pLayout = new Q3HBoxLayout( mainWidget, 5, 5 );
     pLayout->addWidget( listFragOrders, 1 );
     pLayout->addWidget( pFragOrderGroup_, 5 );
 

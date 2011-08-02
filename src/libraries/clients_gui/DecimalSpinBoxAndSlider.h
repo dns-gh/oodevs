@@ -10,9 +10,6 @@
 #ifndef __DecimalSpinBoxAndSlider_h_
 #define __DecimalSpinBoxAndSlider_h_
 
-class QBoxLayout;
-class QSlider;
-
 namespace gui
 {
 
@@ -73,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QBoxLayout* layout_;
+    Q3BoxLayout* layout_;
     DecimalSpinBox* spinbox_;
     QSlider* slider_;
     const float precision_;

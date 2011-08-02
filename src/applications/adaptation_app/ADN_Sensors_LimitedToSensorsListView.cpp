@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_LimitedToSensorsListView.h"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Sensors_Data.h"
 #include "ADN_Connector_ListView.h"
@@ -22,12 +22,12 @@ typedef ADN_Sensors_Data::LimitedToSensorsInfos LimitedToSensorsInfos;
 // Name: ADN_Sensors_LimitedToSensorsListView constructor
 // Created: JSR 2010-03-17
 // -----------------------------------------------------------------------------
-ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView( QWidget* pParent /*= 0*/, const char* szName /*= 0*/, WFlags f /*= 0*/ )
+ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView( QWidget* pParent /* = 0*/, const char* szName /* = 0*/, Qt::WFlags f /* = 0*/ )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Sensors" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<LimitedToSensorsInfos>(*this);
@@ -50,9 +50,9 @@ ADN_Sensors_LimitedToSensorsListView::~ADN_Sensors_LimitedToSensorsListView()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu addSensorMenu( &popupMenu );
-    QPopupMenu addRadarMenu( &popupMenu );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu addSensorMenu( &popupMenu );
+    Q3PopupMenu addRadarMenu( &popupMenu );
 
     // Add the available sensors to the 'add sensor' submenu.
     ADN_Sensors_Data::T_SensorsInfos_Vector& vSensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
@@ -110,7 +110,7 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Sensors_Data::SensorInfos* pInfo )
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
@@ -129,7 +129,7 @@ bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Sensors_Data::SensorInf
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Radars_Data::RadarInfos* pInfo )
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();

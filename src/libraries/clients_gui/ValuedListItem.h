@@ -39,10 +39,10 @@ class ValuedListItem : public RichListItem
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ValuedListItem( QListView* parent );
-             ValuedListItem( QListView* parent, QListViewItem* after );
-    explicit ValuedListItem( QListViewItem* parent );
-             ValuedListItem( QListViewItem* parent, QListViewItem* after );
+    explicit ValuedListItem( Q3ListView* parent );
+             ValuedListItem( Q3ListView* parent, Q3ListViewItem* after );
+    explicit ValuedListItem( Q3ListViewItem* parent );
+             ValuedListItem( Q3ListViewItem* parent, Q3ListViewItem* after );
     virtual ~ValuedListItem();
     //@}
 
@@ -89,12 +89,12 @@ protected:
 // Created: APE 2004-04-19
 // =============================================================================
 template< typename T >
-ValuedListItem* FindItem( T* searched, QListViewItem* root )
+ValuedListItem* FindItem( T* searched, Q3ListViewItem* root )
 {
     if( ! root )
         return 0;
 
-    QListViewItemIterator it( root );
+    Q3ListViewItemIterator it( root );
     while( it.current() )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
@@ -110,7 +110,7 @@ ValuedListItem* FindItem( T* searched, QListViewItem* root )
 // Created: SBO 2006-08-03
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem* FindItem( const kernel::SafePointer< T >& searched, QListViewItem* root )
+ValuedListItem* FindItem( const kernel::SafePointer< T >& searched, Q3ListViewItem* root )
 {
     return FindItem( (const T*)searched, root );
 }
@@ -123,7 +123,7 @@ ValuedListItem* FindItem( const kernel::SafePointer< T >& searched, QListViewIte
 // Created: APE 2004-04-19
 // =============================================================================
 template< typename T >
-ValuedListItem* FindSibling( T* searched, QListViewItem* child )
+ValuedListItem* FindSibling( T* searched, Q3ListViewItem* child )
 {
     while( child )
     {
@@ -142,7 +142,7 @@ ValuedListItem* FindSibling( T* searched, QListViewItem* child )
 // Created: APE 2004-04-19
 // =============================================================================
 template< typename T >
-ValuedListItem* FindChild( T* searched, QListViewItem* root )
+ValuedListItem* FindChild( T* searched, Q3ListViewItem* root )
 {
     if( ! root )
         return 0;
@@ -341,7 +341,7 @@ void ValuedListItem::SetValue( T* value )
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
 template< typename T >
-void ValuedListItem::Set( T* value, QString label1 /*= QString::null*/, QString label2 /*= QString::null*/ )
+void ValuedListItem::Set( T* value, QString label1 /* = QString::null*/, QString label2 /* = QString::null*/ )
 {
     SetValue( value );
     setText( 0, label1 );

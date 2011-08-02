@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>Application</name>
     <message>
@@ -10,12 +12,16 @@
         <translation>www.masagroup.net</translation>
     </message>
     <message>
-        <source>&#xa9; 2011 MASA Group</source>
+        <source>© 2011 MASA Group</source>
         <translation>© 2011 MASA Group</translation>
     </message>
     <message>
         <source>images/gui/splash_swordot.png</source>
         <translation>images/gui/splash_swordot.png</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">A propos</translation>
     </message>
 </context>
 <context>
@@ -90,33 +96,11 @@
     </message>
 </context>
 <context>
-    <name>FormationLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation>Agréger</translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
-        <translation>Désagréger</translation>
-    </message>
-</context>
-<context>
-    <name>LodgingPrototype_ABC</name>
-    <message>
-        <source>Lodging</source>
-        <translation>Hébergement</translation>
-    </message>
-    <message>
-        <source>Capacity:</source>
-        <translation>Capacité:</translation>
-    </message>
-</context>
-<context>
-    <name>R&#xe8;gle GL</name>
+    <name>Règle GL</name>
     <message>
         <source>2D: %1m
 3D: %2m
-%3&#xb0;</source>
+%3°</source>
         <translation>2D: %1m
 3D: %2m
 %3°</translation>
@@ -156,10 +140,6 @@
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>A propos</translation>
     </message>
 </context>
 <context>
@@ -271,7 +251,7 @@
 </context>
 <context>
     <name>gui::DiffusionListDialog</name>
-    <message>
+    <message id="0">
         <source>Edit diffusion list</source>
         <translation>Modifier la liste de diffusion</translation>
     </message>
@@ -570,6 +550,17 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::FormationLayer</name>
+    <message>
+        <source>Aggregate</source>
+        <translation type="unfinished">Agréger</translation>
+    </message>
+    <message>
+        <source>Disaggregate</source>
+        <translation type="unfinished">Désagréger</translation>
+    </message>
+</context>
+<context>
     <name>gui::GisToolBar</name>
     <message>
         <source>GIS tools</source>
@@ -719,16 +710,8 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::IntelligencesPanel</name>
     <message>
-        <source>Intelligence</source>
-        <translation>Renseignement</translation>
-    </message>
-    <message>
         <source>Intelligence description</source>
         <translation>Description du renseignement</translation>
-    </message>
-    <message>
-        <source>Superior:</source>
-        <translation>Supérieur:</translation>
     </message>
     <message>
         <source>Level: </source>
@@ -745,6 +728,10 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Drag and drop symbol to map to create a new intelligence unit.</source>
         <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau renseignement.</translation>
+    </message>
+    <message>
+        <source>Superior:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -934,6 +921,17 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Feature</source>
         <translation>Element</translation>
+    </message>
+</context>
+<context>
+    <name>gui::LodgingPrototype_ABC</name>
+    <message>
+        <source>Lodging</source>
+        <translation type="unfinished">Hébergement</translation>
+    </message>
+    <message>
+        <source>Capacity:</source>
+        <translation type="unfinished">Capacité:</translation>
     </message>
 </context>
 <context>
@@ -1462,7 +1460,7 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::TerrainPicker</name>
     <message>
-        <source>Wind speed: %1km/h, direction: %2&#xb0;</source>
+        <source>Wind speed: %1km/h, direction: %2°</source>
         <translation>Vitesse du vent: %1km/h, direction: %2°</translation>
     </message>
 </context>
@@ -1470,7 +1468,7 @@ Voulez-vous le supprimer?</translation>
     <name>gui::TerrainPreference</name>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source> px</source>

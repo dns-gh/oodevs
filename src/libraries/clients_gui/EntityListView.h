@@ -57,13 +57,13 @@ protected:
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int );
+    virtual void OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChange( QListViewItem* item );
+    void OnSelectionChange( Q3ListViewItem* item );
     void OnRequestCenter();
     //@}
 

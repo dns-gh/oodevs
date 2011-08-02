@@ -69,8 +69,8 @@ public:
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnSelectionChange( QListViewItem* item );
-    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    virtual void OnSelectionChange( Q3ListViewItem* item );
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     void OnRequestCenter();
     void Update();
     //@}
@@ -88,7 +88,7 @@ protected:
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
     virtual void focusInEvent( QFocusEvent* );
     virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
-    static void SetVisible( QListViewItem* item, bool visible );
+    static void SetVisible( Q3ListViewItem* item, bool visible );
     void ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func );
     //@}
 
@@ -97,10 +97,10 @@ private:
     //@{
     ValuedListItem* FindOrCreate( const kernel::Entity_ABC* entity );
     void UpdateItem( ValuedListItem* item );
-    virtual QDragObject* dragObject();
+    virtual Q3DragObject* dragObject();
     virtual void dropEvent( QDropEvent* pEvent );
-    virtual void dragEnterEvent( QDragEnterEvent* pEvent );
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
+    virtual void dragEnterEvent( QDragEnterEvent* pEvent );
     bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     bool HasAnyChildVisible( gui::ValuedListItem* item, boost::function< bool ( gui::ValuedListItem* ) > func );
@@ -115,6 +115,7 @@ private:
     const EntitySymbols&                      symbols_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QTimer*                                   timer_;
+    QPoint                                   dragStartPosition_;
     //@}
 };
 

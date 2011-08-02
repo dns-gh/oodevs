@@ -10,8 +10,6 @@
 #ifndef __CheckBox_h_
 #define __CheckBox_h_
 
-#include <qcheckbox.h>
-
 namespace gui
 {
 // =============================================================================

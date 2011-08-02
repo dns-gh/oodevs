@@ -20,12 +20,12 @@
 #ifndef QTUNDO_H
 #define QTUNDO_H
 
-#include <qobject.h>
-#include <qmap.h>
-#include <qptrlist.h>
-#include <qlistbox.h>
-#include <qstringlist.h>
-#include <qaction.h>
+#include <QtCore/qobject.h>
+#include <QtCore/qmap.h>
+#include <Qt3Support/q3ptrlist.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtCore/qstringlist.h>
+#include <QtGui/qaction.h>
 
 class QWidget;
 class QAction;
@@ -79,7 +79,7 @@ class QtCommand : public QObject
 };
 
 
-class QtUndoStack : public QObject, private QPtrList<QtCommand>
+class QtUndoStack : public QObject, private Q3PtrList<QtCommand>
 {
     Q_OBJECT
 
@@ -109,7 +109,7 @@ class QtUndoStack : public QObject, private QPtrList<QtCommand>
     void commandExecuted();
 
     private:
-    typedef QPtrListIterator<QtCommand> CommandIter;
+    typedef Q3PtrListIterator<QtCommand> CommandIter;
 
     void undoMacro();
     void redoMacro();
@@ -175,7 +175,7 @@ class QtUndoManager : public QObject
     QtUndoStack *currentStack() const;
 
     StackMap m_stack_map;
-    QListBox *m_undo_list;
+    Q3ListBox *m_undo_list;
     mutable QtUndoStack *m_current_stack;
 
     static QtUndoManager *m_manager; // singleton
@@ -185,7 +185,7 @@ class QtUndoManager : public QObject
     QString m_undo_description, m_redo_description;
 };
 
-class QtUndoListBox : public QListBox
+class QtUndoListBox : public Q3ListBox
 {
     Q_OBJECT
 

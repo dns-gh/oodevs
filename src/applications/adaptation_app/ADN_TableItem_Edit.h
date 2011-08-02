@@ -19,8 +19,9 @@
 #include "ADN_Connector_Int.h"
 #include "ADN_Connector_Double.h"
 
-
-#include <qtable.h>
+#pragma warning( push, 0 )
+#include <Qt3Support/q3table.h>
+#pragma warning( pop )
 
 //*****************************************************************************
 // Created: JDY 03-07-09
@@ -34,7 +35,7 @@ public:
     typedef Connector   T_Connector ;
 
 public:
-    explicit ADN_TableItem_Edit(ADN_Table* parent,void *data, QTableItem::EditType nEditType = OnTyping );
+    explicit ADN_TableItem_Edit(ADN_Table* parent,void *data, Q3TableItem::EditType nEditType = OnTyping );
     virtual ~ADN_TableItem_Edit();
 
     Validator& GetValidator();

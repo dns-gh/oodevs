@@ -109,7 +109,7 @@ void ParamLimaList::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
     else
     {
         potential_ = &entity;
-        QPopupMenu* limaMenu = new QPopupMenu( menu );
+        Q3PopupMenu* limaMenu = new Q3PopupMenu( menu );
         for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
         {
             int id = limaMenu->insertItem( tools::ToString( (kernel::E_FuncLimaType)i ), this, SLOT( MenuItemValidated( int ) ) );

@@ -21,7 +21,7 @@ class CommandHandler;
 */
 // Created: SBO 2008-06-11
 // =============================================================================
-class ChatRoom : public QVBox
+class ChatRoom : public Q3VBox
                , public CommandHandler_ABC
 {
     Q_OBJECT;
@@ -65,7 +65,7 @@ private:
     CommandPublisher& publisher_;
     CommandHandler& handler_;
     QString filter_;
-    QTextEdit* history_;
+    Q3TextEdit* history_;
     QLineEdit* text_;
     QPushButton* sendBtn_;
     //@}

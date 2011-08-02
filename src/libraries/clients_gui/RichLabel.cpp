@@ -11,7 +11,7 @@
 #include "RichLabel.h"
 #include "moc_RichLabel.cpp"
 #include "SimplerRichText.h"
-#include <qprocess.h>
+#include <Qt3Support/q3process.h>
 
 using namespace gui;
 
@@ -19,11 +19,11 @@ using namespace gui;
 // Name: RichLabel constructor
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel::RichLabel( QWidget* parent /*= 0*/, const char* name /*= 0*/ )
+RichLabel::RichLabel( QWidget* parent /* = 0*/, const char* name /* = 0*/ )
     : QLabel( parent, name )
     , richText_( new SimplerRichText( "", font() ) )
 {
-    setAlignment( AlignVCenter | AlignLeft );
+    setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
 
@@ -35,7 +35,7 @@ RichLabel::RichLabel( const QString& text, QWidget* parent, const char* name )
     : QLabel( text, parent, name )
     , richText_( new SimplerRichText( text, font() ) )
 {
-    setAlignment( AlignVCenter | AlignLeft );
+    setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
 
@@ -54,7 +54,7 @@ RichLabel::RichLabel( const QString& text, bool required, QWidget* parent, const
         setFont( font );
         richText_->setDefaultFont( font );
     }
-    setAlignment( AlignVCenter | AlignLeft );
+    setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
 
@@ -107,7 +107,7 @@ void RichLabel::mouseReleaseEvent( QMouseEvent* e )
     if( ! url.isEmpty() )
     {
         emit LinkClicked( url );
-        setCursor( QCursor::arrowCursor );
+        setCursor( Qt::arrowCursor );
     }
 }
 
@@ -119,9 +119,9 @@ void RichLabel::mouseMoveEvent( QMouseEvent* e )
 {
     const QString url = richText_->anchorAt( e->pos() );
     if( url.isEmpty() )
-        setCursor( QCursor::arrowCursor );
+        setCursor( Qt::arrowCursor );
     else
-        setCursor( QCursor::pointingHandCursor );
+        setCursor( Qt::pointingHandCursor );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,6 +130,6 @@ void RichLabel::mouseMoveEvent( QMouseEvent* e )
 // -----------------------------------------------------------------------------
 void RichLabel::drawContents( QPainter* p )
 {
-//    richText_->setWidth( p, width() );
-    QLabel::drawContents( p );
+    render( p ) ;
 }
+ 

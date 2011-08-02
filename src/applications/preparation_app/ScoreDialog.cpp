@@ -47,11 +47,11 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
 {
     setModal( false );
     setCaption( tr( "Scores" ) );
-    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 4 );
     {
-        QGroupBox* box = new QHGroupBox( tr( "Scores" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Scores" ), this );
         scores_ = new ScoreList( box, controllers, factory, layer, model, staticModel, config, tools_ );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
@@ -59,7 +59,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
         connect( scores_, SIGNAL( Hide() ), SLOT( hide() ) );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Create new score" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Create new score" ), this );
         new QLabel( tr( "Name: " ), box );
         editor_ = new QLineEdit( box );
         editor_->setValidator( new NameValidator( editor_, model_ ) );
@@ -70,7 +70,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
         connect( createButton_, SIGNAL( clicked() ), SLOT( OnCreateButtonClicked() ) );
     }
     {
-        QButton* ok = new QPushButton( tr( "Ok" ), this );
+        QPushButton* ok = new QPushButton( tr( "Ok" ), this );
         grid->addWidget( ok, 2, 2 );
         connect( ok, SIGNAL( clicked() ), SLOT( accept() ) );
     }

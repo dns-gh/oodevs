@@ -11,8 +11,8 @@
 #include "StartTerrainWorkshop.h"
 #include <boost/filesystem/convenience.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <qapplication.h>
-#include <qsettings.h>
+#include <QtGui/qapplication.h>
+#include <QtCore/qsettings.h>
 
 namespace bfs = boost::filesystem;
 
@@ -40,7 +40,7 @@ namespace
 // Name: StartTerrainWorkshop constructor
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
-StartTerrainWorkshop::StartTerrainWorkshop( const tools::GeneralConfig& config, bool attach /*= false*/ )
+StartTerrainWorkshop::StartTerrainWorkshop( const tools::GeneralConfig& config, bool attach /* = false*/ )
     : SpawnCommand( config, GetExecutable().c_str(), attach )
 {
     SetWorkingDirectory( GetDirectory() );

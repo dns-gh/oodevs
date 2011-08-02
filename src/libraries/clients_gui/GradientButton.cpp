@@ -12,18 +12,16 @@
 #include "moc_GradientButton.cpp"
 #include "GradientItem.h"
 #include "Gradient.h"
-#include <qcanvas.h>
-#include <qpainter.h>
 
 using namespace gui;
 
 namespace
 {
-    class GradientCanvas : public QCanvas
+    class GradientCanvas : public Q3Canvas
     {
     public:
         GradientCanvas( QWidget* parent, const std::vector< GradientItem* >& colors )
-            : QCanvas( parent )
+            : Q3Canvas( parent )
             , colors_      ( colors )
             , topMargin_   ( 5 )
             , bottomMargin_( 40 )
@@ -43,7 +41,7 @@ namespace
             if( colors_.size() < 2 )
                 return;
             QRect area( rect() );
-            QCanvas::drawBackground( painter, area );
+            Q3Canvas::drawBackground( painter, area );
             const float xStep = float( area.width() ) / 100;
             QRect current( area );
             current.setTop( current.top() + topMargin_ );
@@ -115,24 +113,25 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: GradientButton constructor
+
 // Created: LGY 2011-01-06
 // -----------------------------------------------------------------------------
 GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin /*= Qt::white*/, QColor end /*= Qt::black*/ )
-    : QCanvasView( new GradientCanvas( parent, colors_ ), parent )
+    : Q3CanvasView( new GradientCanvas( parent, colors_ ), parent )
     , painter_     ( painter )
     , selected_    ( 0 )
     , disableState_( disableState )
 {
-    setFrameStyle( QFrame::Raised | QFrame::Box );
+    setFrameStyle( Q3Frame::Raised | Q3Frame::Box );
 
     setMargin( 5 );
     setFixedHeight( 80 );
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setVScrollBarMode( QScrollView::AlwaysOff );
+    setHScrollBarMode( Q3ScrollView::AlwaysOff );
+    setVScrollBarMode( Q3ScrollView::AlwaysOff );
 
     AddItem( 0, begin );
     AddItem( 100, end );
-    setFocusPolicy( QWidget::StrongFocus );
+    setFocusPolicy( Qt::StrongFocus );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +152,8 @@ void GradientButton::mousePressEvent( QMouseEvent* event )
     if( !canvas()->onCanvas( event->pos() ) )
         return;
     ClearSelection();
-    QCanvasItemList list = canvas()->collisions( inverseWorldMatrix().map( event->pos() ) );
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
+    Q3CanvasItemList list = canvas()->collisions( inverseWorldMatrix().map( event->pos() ) );
+    for( Q3CanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
     {
         SetSelected( static_cast< GradientItem& >( **it ) ); // $$$$ SBO 2007-07-02: rotate through selection...
         return;
@@ -283,8 +282,8 @@ void GradientButton::ClearSelection()
 {
     if( !selected_ )
         return;
-    QCanvasItemList list = canvas()->allItems();
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
+    Q3CanvasItemList list = canvas()->allItems();
+    for( Q3CanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
         (*it)->setSelected( false );
     selected_ = 0;
 }
@@ -297,8 +296,8 @@ void GradientButton::Update()
 {
     canvas()->setAllChanged();
     Gradient gradient;
-    QCanvasItemList list = canvas()->allItems();
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
+    Q3CanvasItemList list = canvas()->allItems();
+    for( Q3CanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
     {
         GradientItem* item = static_cast< GradientItem* >( *it );
         item->ToggleScale( disableState_ );
@@ -326,7 +325,7 @@ GradientItem* GradientButton::AddItem( unsigned int percentage, const QColor& co
 // -----------------------------------------------------------------------------
 void GradientButton::resizeEvent( QResizeEvent* event )
 {
-    QCanvasView::resizeEvent( event );
+    Q3CanvasView::resizeEvent( event );
     canvas()->resize( event->size().width(), event->size().height() );
     canvas()->setAllChanged();
     canvas()->update();

@@ -11,7 +11,7 @@
 #define __MessagePanel_h_
 
 #include "gaming/CommandHandler_ABC.h"
-#include <QDockWindow.h>
+#include <QtGui/QDockWidget.h>
 
 namespace kernel
 {
@@ -28,7 +28,7 @@ class Publisher_ABC;
 */
 // Created: SBO 2009-03-04
 // =============================================================================
-class MessagePanel : public QDockWindow
+class MessagePanel : public QDockWidget
                    , public CommandHandler_ABC
 {
     Q_OBJECT;
@@ -74,7 +74,7 @@ private:
     CommandHandler& handler_;
     std::auto_ptr< CommandPublisher > publisher_;
     QLabel* text_;
-    QButtonGroup* buttons_;
+    Q3ButtonGroup* buttons_;
     std::string activePrompt_;
     //@}
 };

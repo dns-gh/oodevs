@@ -11,7 +11,7 @@
 #define __PluginSetting_h_
 
 #include <boost/noncopyable.hpp>
-#include <qobject.h>
+#include <QtCore/qobject.h>
 
 class QCheckBox;
 class QLineEdit;
@@ -20,6 +20,7 @@ class QTimeEdit;
 class QWidget;
 class QComboBox;
 class QPushButton;
+class Q3TimeEdit;
 
 
 namespace tools
@@ -91,7 +92,7 @@ private:
     QLineEdit* stringValue_;
     QSpinBox* integerValue_;
     QCheckBox* booleanValue_;
-    QTimeEdit* timeValue_;
+    Q3TimeEdit* timeValue_;
     QComboBox* enumerationValue_;
     std::string fileName_;
     std::auto_ptr< FileButtonEvent > fileValue_;

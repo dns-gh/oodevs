@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <Qt3Support/q3button.h>
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -59,7 +61,7 @@ private:
     QLineEdit* file_;
     QLineEdit* separator_;
     QCheckBox* header_;
-    QButton* ok_;
+    QPushButton* ok_;
     //@}
 };
 

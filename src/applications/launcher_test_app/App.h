@@ -15,7 +15,7 @@
 #include <list>
 #include <fstream>
 #include <boost/thread.hpp>
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 #include "clients_kernel/Controllers.h"
 #include "frontend/LauncherClient.h"

@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: HierarchyTemplate constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root /*=true*/ )
+HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root /* =true*/ )
     : name_( "" )
 {
     element_.reset( CreateElement( agents, formations, base ) );

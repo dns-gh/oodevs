@@ -19,8 +19,8 @@
 #include "svgl/TextRenderer.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
-#include <qbitmap.h>
-#include <qgl.h>
+#include <QtGui/qbitmap.h>
+#include <Qt/qgl.h>
 
 namespace
 {
@@ -177,6 +177,13 @@ void ADN_Drawings_Data::DrawingInfo::Initialize()
     glColor3f( 1.f, 1.f, 1.f );
     glDisable( GL_DEPTH_TEST );
     glBindTexture( GL_TEXTURE_2D, 0 );
+
+    //glEnable( GL_TEXTURE_2D );
+    //glEnableClientState( GL_VERTEX_ARRAY );
+    //gl::Initialize();
+    //glShadeModel( GL_SMOOTH );
+    //glEnable( GL_LINE_SMOOTH );
+    //glEnable( GL_BLEND );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,12 +228,12 @@ void ADN_Drawings_Data::DrawingInfo::Draw()
     }
 
     // $$$$ ABR 2011-04-21: draw icon
-    if( geometry == "polygon" )
-        DrawOnPolygon();
-    else if( geometry == "line" )
-        DrawOnLine();
-    else if( geometry == "point" )
-        DrawOnPoint();
+    //if( geometry == "polygon" )
+    //    DrawOnPolygon();
+    //else if( geometry == "line" )
+    //    DrawOnLine();
+    //else if( geometry == "point" )
+    //    DrawOnPoint();
 
     glPopMatrix();
     glPopAttrib();

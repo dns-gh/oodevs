@@ -16,7 +16,7 @@ using namespace frontend;
 // Name: StartAuthoring constructor
 // Created: JSR 2010-06-10
 // -----------------------------------------------------------------------------
-StartAuthoring::StartAuthoring( const tools::GeneralConfig& config, bool attach /*= false*/ )
+StartAuthoring::StartAuthoring( const tools::GeneralConfig& config, bool attach /* = false*/ )
     : SpawnCommand( config, "adaptation_app.exe", attach )
 {
     // NOTHING

@@ -83,7 +83,7 @@ private:
     kernel::Options& options_;
     Elevation2dLayer& layer_;
     GradientPreferences& preferences_;
-    QGroupBox* hsBox_;
+    Q3GroupBox* hsBox_;
     CheckBox* fitColorGradienttoViewPort_;
     QDial* hsDial_;
     QSlider* hillShadeStrength_;

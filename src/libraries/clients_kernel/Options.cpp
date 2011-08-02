@@ -16,7 +16,7 @@
 #include "FourStateOption.h"
 #include "Settings_ABC.h"
 #include <algorithm>
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 #include <boost/foreach.hpp>
 
 using namespace kernel;

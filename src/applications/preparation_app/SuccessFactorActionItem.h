@@ -24,7 +24,7 @@ class SuccessFactorActionTypeParameter;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorActionItem : public QVBox
+class SuccessFactorActionItem : public Q3VBox
 {
     Q_OBJECT;
 
@@ -78,9 +78,9 @@ private:
     //! @name Member data
     //@{
     gui::ValuedComboBox< const SuccessFactorActionType* >* type_;
-    QGroupBox* parameters_;
+    Q3GroupBox* parameters_;
     T_ParameterEditors editors_;
-    QButton* deleteButton_;
+    QPushButton* deleteButton_;
     //@}
 };
 

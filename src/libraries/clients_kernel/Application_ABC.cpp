@@ -9,14 +9,14 @@
 
 #include "clients_kernel_pch.h"
 #include "Application_ABC.h"
-#include <qtranslator.h>
+#include <QtCore/qtranslator.h>
 
 // -----------------------------------------------------------------------------
 // Name: Application_ABC constructor
 // Created: HBD 2010-06-28
 // -----------------------------------------------------------------------------
 Application_ABC::Application_ABC( int& argc, char** argv )
-: QApplication( argc, argv )
+    : QApplication( argc, argv )
 {
     // NOTHING
 }

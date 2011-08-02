@@ -15,6 +15,7 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Tr.h"
 #include "moc_ADN_Equipement_AttritionGraph.cpp"
+#include <QtGui/qevent.h>
 #include <boost/noncopyable.hpp>
 
 //-----------------------------------------------------------------------------
@@ -75,33 +76,10 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::ADN_AttritionGraphTooltip
-// Created: JSR 2010-06-01
-// -----------------------------------------------------------------------------
-ADN_Equipement_AttritionGraph::ADN_GraphTooltip::ADN_GraphTooltip( ADN_Equipement_AttritionGraph* parent )
-    : QToolTip( parent )
-    , graph( parent )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::maybeTip
-// Created: JSR 2010-06-01
-// -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::ADN_GraphTooltip::maybeTip( const QPoint& point)
-{
-    QRect rc;
-    QString s = graph->GetTextTooltip( point, rc );
-    if( !s.isEmpty() )
-        tip( rc, s );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_AttritionGraph constructor
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /*= 0*/ )
+ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /* = 0*/ )
     : QWidget( pParent )
 {
     setMinimumWidth( 500 );
@@ -128,8 +106,6 @@ ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /
     effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_U2 ).c_str() ) );
     effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_U3 ).c_str() ) );
     effectStrings_.push_back( tr( "Unwounded" ) );
-
-    tooltip_ = new ADN_GraphTooltip( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +115,6 @@ ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /
 ADN_Equipement_AttritionGraph::~ADN_Equipement_AttritionGraph()
 {
     delete pConnector_;
-    delete tooltip_;
 }
 
 // -----------------------------------------------------------------------------
@@ -289,6 +264,26 @@ QString ADN_Equipement_AttritionGraph::GetTextTooltip( const QPoint& point, QRec
     }
 
     return QString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AttritionGraph::paintEvent
+// Created: JSR 2010-04-29
+// -----------------------------------------------------------------------------
+bool ADN_Equipement_AttritionGraph::event( QEvent* e )
+{
+    if( e->type() == QEvent::ToolTip )
+    {
+        QHelpEvent* help = dynamic_cast< QHelpEvent* >( e );
+        QRect rc;
+        const QString s = this->GetTextTooltip( help->pos(), rc );
+        if( !s.isEmpty() )
+        {
+            setToolTip( s );
+            return true;
+        }
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

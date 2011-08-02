@@ -37,7 +37,7 @@ class StaticModel;
 */
 // Created: AGE 2006-08-29
 // =============================================================================
-class AgentList : public QVBox
+class AgentList : public Q3VBox
 {
 public:
     //! @name Constructors/Destructor

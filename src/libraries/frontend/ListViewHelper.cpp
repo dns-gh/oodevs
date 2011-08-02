@@ -20,7 +20,7 @@ namespace bfs = boost::filesystem;
 
 namespace
 {
-    void InsertValidatedEntry( QListViewItem* parent, const std::string& entry, const std::string& root )
+    void InsertValidatedEntry( Q3ListViewItem* parent, const std::string& entry, const std::string& root )
     {
         frontend::CheckListItem* item = new frontend::CheckListItem( parent, entry.c_str(), true );
         if( ! bfs::exists( bfs::path( root + "/" + entry ) ) )
@@ -37,7 +37,7 @@ namespace frontend
     // Name: BuildExerciseData
     // Created: JSR 2010-07-15
     // -----------------------------------------------------------------------------
-    QListViewItem* BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, QListView* content, const tools::Loader_ABC& fileLoader )
+    Q3ListViewItem* BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content, const tools::Loader_ABC& fileLoader )
     {
         std::string terrain, population, dataset, physical;
         std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( config.GetExerciseFile( exercise ) );
@@ -47,7 +47,7 @@ namespace frontend
             >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end()
             >> xml::end();
 
-        QListViewItem* dataItem = new QListViewItem( content, "data" );
+        Q3ListViewItem* dataItem = new Q3ListViewItem( content, "data" );
         dataItem->setOpen( true );
 
         InsertValidatedEntry( dataItem, "data/terrains/" + terrain, config.GetRootDir() );
@@ -63,10 +63,10 @@ namespace frontend
     // Name: BuildExerciseFeatures
     // Created: JSR 2010-07-15
     // -----------------------------------------------------------------------------
-    QListViewItem* BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, QListView* content )
+    Q3ListViewItem* BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content )
     {
         QString base( std::string( "exercises/" + exercise ).c_str() );
-        QListViewItem* rootItem = new QListViewItem( content, "exercises" );
+        Q3ListViewItem* rootItem = new Q3ListViewItem( content, "exercises" );
         rootItem->setOpen( true );
 
         CheckListItem* exerciseItem = new CheckListItem( rootItem, base, false );

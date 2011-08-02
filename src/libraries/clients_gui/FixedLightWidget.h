@@ -22,7 +22,7 @@ namespace gui
 */
 // Created: AGE 2007-01-03
 // =============================================================================
-class FixedLightWidget : public QHBox
+class FixedLightWidget : public Q3HBox
 {
     Q_OBJECT
 

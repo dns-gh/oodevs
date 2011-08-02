@@ -133,10 +133,10 @@ private:
     ADN_Equipement_AttritionGraph* pAttritionGraph_;
     ADN_ComboBox_Vector< helpers::ArmorInfos >* pArmorCombo_;
     ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >* pMaterialCombo_;
-    QGroupBox* pExplosiveParametersGroup_;
-    QGroupBox* pFlareParametersGroup_;
-    QGroupBox* pEffectParametersGroup_;
-    QGroupBox* pMineParametersGroup_;
+    Q3GroupBox* pExplosiveParametersGroup_;
+    Q3GroupBox* pFlareParametersGroup_;
+    Q3GroupBox* pEffectParametersGroup_;
+    Q3GroupBox* pMineParametersGroup_;
     //@}
 };
 

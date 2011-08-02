@@ -10,11 +10,12 @@
 #ifndef __MainMenu_h_
 #define __MainMenu_h_
 
-#include <qobject.h>
+#include <QtCore/qobject.h>
+#include <Qt3Support/q3action.h>
 
-class QMainWindow;
+class Q3MainWindow;
 class QAction;
-class QPopupMenu;
+class Q3PopupMenu;
 
 // =============================================================================
 /** @class  MainMenu
@@ -27,13 +28,13 @@ class MainMenu : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MainMenu( QMainWindow* mainWindow );
+    explicit MainMenu( Q3MainWindow* mainWindow );
     virtual ~MainMenu();
     //@}
 
     //! @name Operations
     //@{
-    void AddAction( const QString& category, QAction& action );
+    void AddAction( const QString& category, Q3Action& action );
     //@}
 
 private:
@@ -45,13 +46,13 @@ private:
 
     //! @name Helpers
     //@{
-    typedef std::map< QString, QPopupMenu* > T_Menus;
+    typedef std::map< QString, Q3PopupMenu* > T_Menus;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QMainWindow* mainWindow_;
+    Q3MainWindow* mainWindow_;
     T_Menus menus_;
     //@}
 };

@@ -27,7 +27,7 @@ namespace gui
 */
 // Created: AGE 2006-06-23
 // =============================================================================
-class MiniView : public QFrame
+class MiniView : public Q3Frame
 {
 public:
     //! @name Constructors/Destructor

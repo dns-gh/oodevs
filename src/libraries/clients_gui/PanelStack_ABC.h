@@ -10,9 +10,6 @@
 #ifndef __PanelStack_ABC_h_
 #define __PanelStack_ABC_h_
 
-class QWidget;
-class QString;
-
 namespace gui
 {
 

@@ -20,6 +20,17 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_Data.h"
 
+#pragma warning( push, 0 )
+#include <Qt3Support/q3frame.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3vbox.h>
+#include <QtGui/qpushbutton.h>
+#include <Qt3Support/q3whatsthis.h>
+#pragma warning( pop )
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_GUI constructor
 // Created: SLG 2010-03-08
@@ -55,17 +66,17 @@ void ADN_Urban_GUI::Build()
     pMainWidget_ = new QWidget( 0, "Urban main widget" );
 
     // horizontal layout
-    QHBoxLayout* pLayout = new QHBoxLayout( pMainWidget_ );
+    Q3HBoxLayout* pLayout = new Q3HBoxLayout( pMainWidget_ );
     pLayout->setMargin( 20 );
     pLayout->setSpacing( 20 );
     pLayout->setAutoAdd( true );
 
-    QGroupBox* pBox = new QGroupBox( 2, Qt::Horizontal, pMainWidget_ );
+    Q3GroupBox* pBox = new Q3GroupBox( 2, Qt::Horizontal, pMainWidget_ );
 
     ///////////////////
     // Materials
-    QGroupBox* pGroupMaterials = new QVGroupBox( tr( "Materials" ), pBox );
-    QHBox* pGroupMaterial = new QHBox( pGroupMaterials );
+    Q3GroupBox* pGroupMaterials = new Q3VGroupBox( tr( "Materials" ), pBox );
+    Q3HBox* pGroupMaterial = new Q3HBox(pGroupMaterials);
 
     // materials list
     T_ConnectorVector vMaterialInfosConnectors( eNbrUrbanMaterialGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
@@ -73,7 +84,7 @@ void ADN_Urban_GUI::Build()
     static_cast< ADN_Connector_Vector_ABC* >( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
     // material
-    pGroupMaterials = new QVGroupBox( tr( "Material" ),pGroupMaterials);
+    pGroupMaterials = new Q3VGroupBox( tr( "Material" ),pGroupMaterials);
     pGroupMaterials->setInsideMargin( 20 );
     pGroupMaterials->setInsideSpacing( 20 );
     ADN_EditLine_ABC* pEdit = new ADN_EditLine_String( pGroupMaterials );
@@ -84,8 +95,8 @@ void ADN_Urban_GUI::Build()
 
     ///////////////////
     // Facades
-    QGroupBox* pGroupFacades = new QVGroupBox( tr( "Facades" ), pBox );
-    QHBox* pGroupFacade = new QHBox( pGroupFacades );
+    Q3GroupBox* pGroupFacades = new Q3VGroupBox( tr( "Facades" ), pBox );
+    Q3HBox* pGroupFacade = new Q3HBox(pGroupFacades);
 
     // facades list
     T_ConnectorVector vFacadeInfosConnectors( eNbrUrbanGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
@@ -93,39 +104,39 @@ void ADN_Urban_GUI::Build()
     static_cast< ADN_Connector_Vector_ABC* >( &pListFacade_->GetConnector() )->Connect( &data_.GetFacadesInfos() );
 
     // facade
-    pGroupFacades = new QVGroupBox( tr( "Facade" ), pGroupFacades );
-    pGroupFacades->setInsideMargin( 20 );
-    pGroupFacades->setInsideSpacing( 20 );
-    pEdit = new ADN_EditLine_String( pGroupFacades );
+    pGroupFacades = new Q3VGroupBox( tr( "Facade" ),pGroupFacades);
+    pGroupFacades->setInsideMargin(20);
+    pGroupFacades->setInsideSpacing(20);
+    pEdit = new ADN_EditLine_String(pGroupFacades);
     vFacadeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
 
     ///////////////////
     // RoofShapes
-    QGroupBox* pGroupRoofShapes = new QVGroupBox( tr( "RoofShapes" ), pBox );
-    QHBox* pGroupRoofShape = new QHBox(pGroupRoofShapes);
+    Q3GroupBox* pGroupRoofShapes = new Q3VGroupBox( tr( "RoofShapes" ), pBox );
+    Q3HBox* pGroupRoofShape = new Q3HBox(pGroupRoofShapes);
 
     // roofshapes list
     T_ConnectorVector vRoofShapeInfosConnectors( eNbrUrbanGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     pListRoofShape_= new ADN_ListView_Urban_Type( pGroupRoofShape, "RoofShape" );
     static_cast< ADN_Connector_Vector_ABC* >( &pListRoofShape_->GetConnector() )->Connect( &data_.GetRoofShapesInfos() );
 
-    // roofshape
-    pGroupRoofShapes = new QVGroupBox( tr( "RoofShape" ), pGroupRoofShapes );
-    pGroupRoofShapes->setInsideMargin( 20 );
-    pGroupRoofShapes->setInsideSpacing( 20 );
-    pEdit = new ADN_EditLine_String( pGroupRoofShapes );
+    // roofsape
+    pGroupRoofShapes = new Q3VGroupBox( tr( "RoofShape" ),pGroupRoofShapes);
+    pGroupRoofShapes->setInsideMargin(20);
+    pGroupRoofShapes->setInsideSpacing(20);
+    pEdit = new ADN_EditLine_String(pGroupRoofShapes);
     vRoofShapeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
 
     ///////////////////
     // Accommodations
-    QGroupBox* pGroupAccommodations = new QVGroupBox( tr( "Activities" ), pBox );
+    Q3GroupBox* pGroupAccommodations = new Q3VGroupBox( tr( "Activities" ), pBox );
     ADN_GuiBuilder builder;
     QWidget* pHolder = builder.AddFieldHolder( pGroupAccommodations );
 
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Default nominal capacity" ), data_.defaultNominalCapacity_, tr( "persons/m2" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Default maximal capacity" ), data_.defaultMaxCapacity_, tr( "persons/m2" ), eGreaterZero );
 
-    QHBox* pGroupAccommodation = new QHBox( pGroupAccommodations );
+    Q3HBox* pGroupAccommodation = new Q3HBox( pGroupAccommodations );
 
     // accommodations list
     T_ConnectorVector vAccommodationInfosConnectors( eNbrUrbanAccommodationGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
@@ -133,9 +144,9 @@ void ADN_Urban_GUI::Build()
     static_cast< ADN_Connector_Vector_ABC* >( &pListAccommodation_->GetConnector() )->Connect( &data_.GetAccommodationsInfos() );
 
     // accommodation
-    pGroupAccommodations = new QHGroupBox( tr( "Activity" ), pGroupAccommodations );
-    pGroupAccommodations->setInsideMargin( 20 );
-    pGroupAccommodations->setInsideSpacing( 20 );
+    pGroupAccommodations = new Q3HGroupBox( tr( "Activity" ),pGroupAccommodations);
+    pGroupAccommodations->setInsideMargin(20);
+    pGroupAccommodations->setInsideSpacing(20);
     pHolder = builder.AddFieldHolder( pGroupAccommodations );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
@@ -144,8 +155,8 @@ void ADN_Urban_GUI::Build()
 
     ///////////////////
     // Infrastructures
-    QGroupBox* pGroupInfrastructures = new QVGroupBox( tr( "Infrastructures" ), pBox );
-    QHBox* pGroupInfrastructure = new QHBox( pGroupInfrastructures );
+    Q3GroupBox* pGroupInfrastructures = new Q3VGroupBox( tr( "Infrastructures" ), pBox );
+    Q3HBox* pGroupInfrastructure = new Q3HBox( pGroupInfrastructures );
 
     // infrastructures list
     T_ConnectorVector vInfrastructureInfosConnectors( eNbrUrbanInfrastructureGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
@@ -153,9 +164,9 @@ void ADN_Urban_GUI::Build()
     static_cast< ADN_Connector_Vector_ABC* >( &pListInfrastructure_->GetConnector() )->Connect( &data_.GetInfrastructuresInfos() );
 
     // infrastructures
-    pGroupInfrastructures = new QHGroupBox( tr( "Infrastructure" ), pGroupInfrastructures );
-    pGroupInfrastructures->setInsideMargin( 20 );
-    pGroupInfrastructures->setInsideSpacing( 20 );
+    pGroupInfrastructures = new Q3HGroupBox( tr( "Infrastructure" ),pGroupInfrastructures);
+    pGroupInfrastructures->setInsideMargin(20);
+    pGroupInfrastructures->setInsideSpacing(20);
     pHolder = builder.AddFieldHolder( pGroupInfrastructures );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );

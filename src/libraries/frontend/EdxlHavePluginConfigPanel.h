@@ -18,8 +18,8 @@ namespace tools
 }
 
 class QLineEdit;
-class QGroupBox;
-class QTimeEdit;
+class Q3GroupBox;
+class Q3TimeEdit;
 class QCheckBox;
 
 namespace frontend
@@ -50,13 +50,13 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QGroupBox* box_;
+    Q3GroupBox* box_;
     QLineEdit* host_;
     QCheckBox* ssl_;
     QCheckBox* log_;
     QLineEdit* initializeServiceURI_;
     QLineEdit* updateServiceURI_;
-    QTimeEdit* frequency_;
+    Q3TimeEdit* frequency_;
     //@}
 };
 }

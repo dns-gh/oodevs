@@ -20,14 +20,7 @@
 #include "ADN_Validator.h"
 #include "ADN_TimeField.h"
 #include "ADN_GroupBox.h"
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qgrid.h>
+
 
 
 // -----------------------------------------------------------------------------
@@ -68,22 +61,22 @@ void ADN_NBC_GUI::Build()
     pNBCAgentListView->GetConnector().Connect( &data_.GetNbcAgentVector() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pPropagationGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Propagation" ), pMainWidget_ );
+    Q3GroupBox* pPropagationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Propagation" ), pMainWidget_ );
     builder.AddField< ADN_EditLine_Double >( pPropagationGroup, tr( "Contamination distance" ), data_.rContaminationDistance_, tr( "m" ), eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pPropagationGroup, tr( "Contamination quantity given" ), data_.rContaminationQuantityGiven_, 0, eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pPropagationGroup, tr( "Wind speed limit" ), data_.rWindSpeedLimitForSpreading_, tr( "km/h" ), eGreaterEqualZero );
 
-    QGroupBox* pNBCSuitGroup = new QGroupBox( 3, Qt::Horizontal, tr( "NBC Suit" ), pMainWidget_ );
+    Q3GroupBox* pNBCSuitGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "NBC Suit" ), pMainWidget_ );
     builder.AddField< ADN_EditLine_Double >( pNBCSuitGroup, tr( "Max speed modifier" ), data_.rNbcSuitMaxSpeedMultiplier_, 0, eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pNBCSuitGroup, tr( "Reloading time modifier" ), data_.rNbcSuitReloadSpeedMultiplier_, 0, eGreaterEqualZero );
 
     // NBC agent data
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "NBC Agent" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "NBC Agent" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
 
-    QHBox* hBox = new QHBox( pGroup );
+    Q3HBox* hBox = new Q3HBox( pGroup );
     hBox->setSpacing( 5 );
 
     ADN_GroupBox* liquidGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Liquid" ), hBox );
@@ -103,14 +96,14 @@ void ADN_NBC_GUI::Build()
     pNBCAgentListView->SetItemConnectors( vInfosConnectors );
 
     // Main vertical layout
-    QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
 
-    QHBoxLayout* pLayout = new QHBoxLayout();
+    Q3HBoxLayout* pLayout = new Q3HBoxLayout();
     pLayout->addWidget( pPropagationGroup );
     pLayout->addWidget( pNBCSuitGroup );
 
     // Top horizontal layout
-    QBoxLayout* pListAndDataLayout = new QHBoxLayout( 0, 10, 10 );
+    Q3BoxLayout* pListAndDataLayout = new Q3HBoxLayout( 0, 10, 10 );
     pListAndDataLayout->addWidget( pNBCAgentListView, 1 );
     pListAndDataLayout->addWidget( pGroup, 4 );
 

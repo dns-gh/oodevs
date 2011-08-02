@@ -58,8 +58,9 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
     , location_( 0 )
     , isLocationRegistered_ ( false )
 {
-    layout()->setAlignment( Qt::AlignTop );
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tools::translate( "FireCreationPanel", "Strike order description" ), this );
+  //this->layout()->setAlignment( this, Qt::AlignTop );
+    Q3VBox* box = new Q3VBox( this );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "FireCreationPanel", "Strike order description" ), box );
     {
         new QLabel( tools::translate( "FireCreationPanel", "Strike type:" ), group );
         strikeCombo_ = new gui::ValuedComboBox< E_StrikeType >( group );
@@ -68,30 +69,30 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
         connect( strikeCombo_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
         locationTitle_ = new QLabel( tools::translate( "FireCreationPanel", "Location target:" ), group );
-        locationBox_ = new QHBox( group );
+        locationBox_ = new Q3HBox( group );
         locationBox_->setSpacing( 5 );
         locationLabel_ = new QLabel( tools::translate( "FireCreationPanel", "---" ), locationBox_ );
         locationLabel_->setMinimumWidth( 100 );
         locationLabel_->setAlignment( Qt::AlignCenter );
-        locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+        locationLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
         locationCreator_ = new gui::LocationCreator( group, tools::translate( "FireCreationPanel", "Strike order: location target" ), paramLayer, *this );
         locationCreator_->Allow( true, false, false, false, false );
 
         targetTitle_ = new QLabel( tools::translate( "FireCreationPanel", "Target:" ), group );
-        targetBox_ = new QHBox( group );
+        targetBox_ = new Q3HBox( group );
         targetBox_->setSpacing( 5 );
         targetLabel_ = new QLabel( tools::translate( "FireCreationPanel", "---" ), targetBox_ );
         targetLabel_->setMinimumWidth( 100 );
         targetLabel_->setAlignment( Qt::AlignCenter );
-        targetLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+        targetLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
         reporterTitle_ = new QLabel( tools::translate( "FireCreationPanel", "Reporter:" ), group );
-        reporterBox_ = new QHBox( group );
+        reporterBox_ = new Q3HBox( group );
         reporterBox_->setSpacing( 5 );
         reporterLabel_ = new QLabel( tools::translate( "FireCreationPanel", "---" ), reporterBox_ );
         reporterLabel_->setMinimumWidth( 100 );
         reporterLabel_->setAlignment( Qt::AlignCenter );
-        reporterLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+        reporterLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
         new QLabel( tools::translate( "FireCreationPanel", "Ammunition:" ), group );
         ammunitionsBox_ = new gui::ValuedComboBox< int >( group );
@@ -101,8 +102,8 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
         interventionType_ = new QLineEdit( "1", group );
         connect( interventionType_, SIGNAL( textChanged( const QString & ) ), this, SLOT( UpdateCommitButton() ) );
     }
-
-    ok_ = new QPushButton( tools::translate( "FireCreationPanel", "Launch strike" ), this );
+    setWidget( box );
+    ok_ = new QPushButton( tools::translate( "FireCreationPanel", "Launch strike" ), group );
     connect( ok_, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }
@@ -151,7 +152,7 @@ void FireCreationPanel::UnregisterIfNeeded()
 void FireCreationPanel::showEvent( QShowEvent* e )
 {
     OnTypeChanged();
-    QScrollView::showEvent( e );
+    QScrollArea::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

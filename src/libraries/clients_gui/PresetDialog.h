@@ -60,7 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QVBoxLayout* pLayout_;
+    Q3VBoxLayout* pLayout_;
     QLineEdit* pLineEdit_;
     QPushButton* pAcceptButton_;
     QPushButton* pRejectButton_;

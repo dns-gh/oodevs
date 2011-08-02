@@ -18,7 +18,7 @@ typedef ADN_Missions_Data::Mission Mission;
 // Name: ADN_Mission_Wizard constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Mission_Wizard::ADN_Mission_Wizard( ADN_Missions_Data::T_Mission_Vector& missions, QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
+ADN_Mission_Wizard::ADN_Mission_Wizard( ADN_Missions_Data::T_Mission_Vector& missions, QWidget* pParent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_Wizard_ABC< Mission >( pParent, szName )
 {
     setCaption( qApp->translate( "ADN_Mission_Wizard", "New mission creation" ) );

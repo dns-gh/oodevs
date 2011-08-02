@@ -65,7 +65,7 @@ float IntelligencePositions::GetHeight( bool ) const
 // Name: IntelligencePositions::IsAt
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-bool IntelligencePositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1*/ ) const
+bool IntelligencePositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor = 1*/ ) const
 {
     const float halfSizeX = 500.f * 0.5f; // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f;

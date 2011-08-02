@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#include <qapplication.h>
-#include <qpushbutton.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qpushbutton.h>
 
 #include "ADN_WizardPage_ABC.h"
 
@@ -28,7 +28,7 @@
 // -----------------------------------------------------------------------------
 template< typename T >
 ADN_Wizard_ABC<T>::ADN_Wizard_ABC( QWidget* pParent, const char* szName )
-: QWizard              ( pParent, szName )
+: Q3Wizard              ( pParent, szName )
 , ADN_ObjectCreator_ABC()
 , pResult_             ( 0 )
 , pFirstPage_          ( 0 )
@@ -85,7 +85,7 @@ void ADN_Wizard_ABC<T>::showPage( QWidget* pPage )
             return;
     }
 
-    QWizard::showPage( pPage );
+    Q3Wizard::showPage( pPage );
 }
 
 

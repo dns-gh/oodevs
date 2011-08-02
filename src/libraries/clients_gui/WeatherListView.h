@@ -36,7 +36,7 @@ namespace gui
 */
 // Created: ABR 2011-05-30
 // =============================================================================
-class WeatherListView : public QListView
+class WeatherListView : public Q3ListView
                       , private boost::noncopyable
 {
     Q_OBJECT;
@@ -64,7 +64,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    virtual void ContextMenuRequested( QListViewItem* item, const QPoint& point, int column );
+    virtual void ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int column );
     virtual void CreateItem() = 0;
     void DeleteItem();
     //@}

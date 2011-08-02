@@ -44,7 +44,7 @@ void SpinTableItem< int >::setContentFromEditor( QWidget* widget )
     if( widget->inherits( "QSpinBox" ) )
         setText( static_cast< QSpinBox* >( widget )->text() );
     else
-        QTableItem::setContentFromEditor( widget );
+        Q3TableItem::setContentFromEditor( widget );
 }
 
 // =============================================================================
@@ -78,5 +78,5 @@ void SpinTableItem< double >::setContentFromEditor( QWidget* widget )
     if( widget->inherits( "QSpinBox" ) )
         setText( static_cast< QSpinBox* >( widget )->text() );
     else
-        QTableItem::setContentFromEditor( widget );
+        Q3TableItem::setContentFromEditor( widget );
 }

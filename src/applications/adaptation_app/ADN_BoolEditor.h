@@ -19,7 +19,7 @@
 #ifndef __ADN_BoolEditor_h_
 #define __ADN_BoolEditor_h_
 
-#include <qframe.h>
+#include <Qt3Support/q3frame.h>
 
 class QPixmap;
 
@@ -34,7 +34,7 @@ class QPixmap;
 // Created: AGN 2004-03-11
 // =============================================================================
 class ADN_BoolEditor
-: public QFrame
+: public Q3Frame
 {
     Q_OBJECT
 

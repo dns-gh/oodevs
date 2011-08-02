@@ -21,78 +21,55 @@
 #undef GetMessage
 
 #pragma warning( push, 0 )
-#include <qaction.h>
-#include <qapplication.h>
-#include <qbrush.h>
-#include <qbuttongroup.h>
-#include <qcanvas.h>
-#include <qcheckbox.h>
-#include <qcolor.h>
-#include <qcombobox.h>
-#include <qcursor.h>
-#include <qdatetimeedit.h>
-#include <qdial.h>
-#include <qdialog.h>
-#include <qdockwindow.h>
-#include <qdragobject.h>
-#include <qfile.h>
-#include <qfiledialog.h>
-#include <qfont.h>
-#include <qfontmetrics.h>
-#include <qframe.h>
-#include <qgl.h>
-#include <qgrid.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qheader.h>
-#include <qhgroupbox.h>
-#include <qiconset.h>
-#include <qiconview.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qlistview.h>
-#include <qmainwindow.h>
-#include <qmenubar.h>
-#include <qmessagebox.h>
-#include <qobject.h>
-#include <qobjectlist.h>
-#include <qpainter.h>
-#include <qpalette.h>
-#include <qpen.h>
-#include <qpixmap.h>
-#include <qpoint.h>
-#include <qpointarray.h>
-#include <qpopupmenu.h>
-#include <qprogressbar.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qrect.h>
-#include <qsettings.h>
-#include <qsignalmapper.h>
-#include <qsimplerichtext.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qsplashscreen.h>
-#include <qsplitter.h>
-#include <qstatusbar.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qtabwidget.h>
-#include <qtextedit.h>
-#include <qtimer.h>
-#include <qtoolbar.h>
-#include <qtoolbox.h>
-#include <qtoolbutton.h>
-#include <qtooltip.h>
-#include <qvalidator.h>
-#include <qvaluelist.h>
-#include <qvbox.h>
-#include <qvgroupbox.h>
-#include <qwidget.h>
-#include <qwidgetstack.h>
+
+#include <QtGui/QtGui>
+
+#include <QtOpenGL/qgl.h>
+
+#include <Qtcore/qtimer.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qobject.h>
+#include <QtCore/qpoint.h>
+#include <QtCore/qrect.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qsignalmapper.h>
+#include <QtCore/qfile.h>
+#include <QtCore/qtextcodec.h>
+
+#include <Qt3Support/q3action.h>
+#include <Qt3Support/q3grid.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3iconview.h>
+#include <Qt3Support/q3listbox.h>
+#include <Qt3Support/q3listview.h>
+#include <Qt3Support/q3frame.h>
+#include <Qt3Support/q3pointarray.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <Qt3Support/q3progressbar.h>
+#include <Qt3Support/q3filedialog.h>
+#include <Qt3Support/q3simplerichtext.h>
+#include <Qt3Support/q3textedit.h>
+#include <Qt3Support/q3buttongroup.h>
+#include <Qt3Support/q3canvas.h>
+#include <Qt3Support/q3datetimeedit.h>
+#include <Qt3Support/q3dragobject.h>
+#include <Qt3Support/q3toolbar.h>
+#include <Qt3Support/q3valuelist.h>
+#include <Qt3Support/q3vbox.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3widgetstack.h>
+#include <Qt3Support/q3boxlayout.h>
+#include <Qt3Support/q3textstream.h>
+#include <Qt3Support/q3button.h>
+#include <Qt3Support/q3datetimeedit.h>
+#include <Qt3Support/q3gridlayout.h>
+#include <Qt3Support/q3textbrowser.h>
+#include <Qt3Support/q3table.h>
+
 #pragma warning( pop )
 
 #include <map>
@@ -103,5 +80,17 @@
 typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
+
+#include <xeumeuleu/xml.hpp>
+
+inline std::ostream& operator<<( std::ostream& os, const QString& s )
+{
+    return os << s.toStdString();
+}
+
+inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
+{
+    return xos << s.toStdString();
+}
 
 #endif // __gaming_app_pch_h_

@@ -14,8 +14,8 @@
 // Name: InitialStateTable_ABC constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-InitialStateTable_ABC::InitialStateTable_ABC( int numRows, int numCols, QWidget* parent, const char* name /*= 0*/ )
-    : QTable( numRows, numCols, parent, name )
+InitialStateTable_ABC::InitialStateTable_ABC( int numRows, int numCols, QWidget* parent, const char* name /* = 0*/ )
+    : Q3Table( numRows, numCols, parent, name )
 {
     setShowGrid( false );
     setLeftMargin( 0 );

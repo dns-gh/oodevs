@@ -14,8 +14,8 @@
 // Name: TimelineItem_ABC constructor
 // Created: SBO 2007-07-06
 // -----------------------------------------------------------------------------
-TimelineItem_ABC::TimelineItem_ABC( QCanvas* canvas )
-    : QCanvasRectangle( canvas )
+TimelineItem_ABC::TimelineItem_ABC( Q3Canvas* canvas )
+    : Q3CanvasRectangle( canvas )
 {
     // NOTHING
 }
@@ -60,7 +60,7 @@ void TimelineItem_ABC::DisplayToolTip( QWidget* ) const
 // Name: TimelineItem_ABC::DisplayContextMenu
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineItem_ABC::DisplayContextMenu( QPopupMenu* ) const
+void TimelineItem_ABC::DisplayContextMenu( Q3PopupMenu* ) const
 {
     // NOTHING
 }

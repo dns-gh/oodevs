@@ -76,7 +76,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
-    QDockWindow* terrainProfiler_;
+    QDockWidget* terrainProfiler_;
     QCheckBox* watershedEnabled_;
     QComboBox* mode_;
     QSpinBox* height_;

@@ -24,7 +24,7 @@ class Simulation;
 */
 // Created: SBO 2007-04-17
 // =============================================================================
-class ClockDock : public QDockWindow
+class ClockDock : public QDockWidget
 {
 public:
     //! @name Constructors/Destructor

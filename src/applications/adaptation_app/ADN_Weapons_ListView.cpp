@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_ListView.h"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Composantes_Data.h"
 #include "ADN_Weapons_Data.h"
@@ -34,12 +34,12 @@ typedef ADN_Weapons_Data::WeaponInfos WeaponInfos;
 // Name: ADN_Weapons_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Weapon system" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<WeaponInfos>(*this);
@@ -103,7 +103,7 @@ void ADN_Weapons_ListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_ListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_Weapon_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
@@ -114,7 +114,7 @@ void ADN_Weapons_ListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Weapons_ListView::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_Weapons_ListView::GetToolTipFor( QListViewItem& item )
+std::string ADN_Weapons_ListView::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     WeaponInfos* pCastData = (WeaponInfos*)pData;

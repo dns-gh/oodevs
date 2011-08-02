@@ -11,7 +11,7 @@
 #define __Application_ABC_h_
 
 #pragma warning( push, 0 )
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 #pragma warning( pop )
 
 // =============================================================================

@@ -69,13 +69,13 @@ bool ListParameter::CheckValidity()
 // -----------------------------------------------------------------------------
 QWidget* ListParameter::BuildInterface( QWidget* parent )
 {
-    QVBox* box = new QVBox( parent );
-    list_ = new QListView( box );
+    Q3VBox* box = new Q3VBox( parent );
+    list_ = new Q3ListView( box );
     list_->setMaximumHeight( 100 );
     list_->addColumn( GetName() );
-    list_->setResizeMode( QListView::LastColumn );
-    connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    list_->setResizeMode( Q3ListView::LastColumn );
+    connect( list_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
+    connect( list_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
     return box;
 }
 
@@ -83,9 +83,9 @@ QWidget* ListParameter::BuildInterface( QWidget* parent )
 // Name: ListParameter::OnRequestPopup
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::OnRequestPopup( QListViewItem* item, const QPoint& pos )
+void ListParameter::OnRequestPopup( Q3ListViewItem* item, const QPoint& pos )
 {
-    QPopupMenu* menu = new QPopupMenu( list_ );
+    Q3PopupMenu* menu = new Q3PopupMenu( list_ );
     if( createEnabled_ )
         menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
     if( item )
@@ -112,7 +112,7 @@ void ListParameter::OnCreate()
     if( ! list_ || ( list_->childCount() && ! CheckValidity() ) )
         return;
     Param_ABC* param = CreateElement();
-    QVBox* widget = new QVBox( list_->parentWidget() );
+    Q3VBox* widget = new Q3VBox( list_->parentWidget() );
     widgets_[param] = widget;
     param->BuildInterface( widget );
     ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_, list_->lastItem() );
@@ -144,7 +144,7 @@ void ListParameter::OnClear()
 // Name: ListParameter::OnSelectionChanged
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::OnSelectionChanged( QListViewItem* item )
+void ListParameter::OnSelectionChanged( Q3ListViewItem* item )
 {
     if( selected_ == item )
         return;
@@ -177,7 +177,7 @@ void ListParameter::OnSelectionChanged( QListViewItem* item )
 // Name: ListParameter::DeleteItem
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::DeleteItem( QListViewItem* item )
+void ListParameter::DeleteItem( Q3ListViewItem* item )
 {
     if( item == selected_ )
     {
@@ -223,7 +223,7 @@ void ListParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
 {
     if( !list_ )
         return;
-    QListViewItemIterator it( list_ );
+    Q3ListViewItemIterator it( list_ );
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
@@ -248,7 +248,7 @@ void ListParameter::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) 
 {
     if( !list_ )
         return;
-    for( QListViewItemIterator it = QListViewItemIterator( list_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it = Q3ListViewItemIterator( list_ ); it.current(); ++it )
     {
         ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
         item->GetValue< Param_ABC >()->CommitTo( parent );

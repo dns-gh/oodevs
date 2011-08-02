@@ -49,7 +49,7 @@ ActionsModel::~ActionsModel()
 // Name: ActionsModel::Purge
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-void ActionsModel::Purge( const ActionsFilter_ABC* filter /*= 0*/ )
+void ActionsModel::Purge( const ActionsFilter_ABC* filter /* = 0*/ )
 {
     if( !filter )
         DeleteAll();
@@ -227,7 +227,7 @@ void ActionsModel::Destroy( const Action_ABC& action )
 // Name: ActionsModel::Load
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly /*= false*/ )
+void ActionsModel::Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly /* = false*/ )
 {
     fileLoader.LoadFile( filename, boost::bind( &ActionsModel::ReadActions, this, _1, readonly ) );
 }
@@ -281,7 +281,7 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
 // Name: ActionsModel::Save
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* filter /*= 0*/ ) const
+void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* filter /* = 0*/ ) const
 {
     xml::xofstream xos( filename );
     xos << xml::start( "actions" );

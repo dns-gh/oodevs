@@ -18,7 +18,7 @@
 #pragma warning( pop )
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 namespace bfs = boost::filesystem;
 

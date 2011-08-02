@@ -21,7 +21,7 @@ using namespace gui;
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
 EntitySearchBox_ABC::EntitySearchBox_ABC( QWidget* parent, ActionController& actions )
-    : QHBox( parent, "EntitySearchBox" )
+    : Q3HBox( parent, "EntitySearchBox" )
     , actions_ ( actions )
     , lastItem_( items_.end() )
 {
@@ -29,7 +29,7 @@ EntitySearchBox_ABC::EntitySearchBox_ABC( QWidget* parent, ActionController& act
     setSpacing( 10 );
 
     QLineEdit* edit = new QLineEdit( this );
-    QPushButton* next = new QPushButton( QIconSet( MAKE_ICON( search ) ), "", this );
+    QPushButton* next = new QPushButton( QIcon( MAKE_ICON( search ) ), "", this );
     next->setAccel( Qt::Key_F3 );
     next->setMaximumWidth( edit->height() );
     next->setMaximumHeight( edit->height() );

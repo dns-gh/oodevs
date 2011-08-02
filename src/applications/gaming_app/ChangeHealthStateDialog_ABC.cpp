@@ -52,7 +52,7 @@ ChangeHealthStateDialog_ABC::ChangeHealthStateDialog_ABC( QWidget* pParent, kern
     originalTotalLabel_->setAlignment( Qt::AlignCenter );
     originalTotalLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     // Buttons
-    QHBox* buttonLayout = new QHBox( this );
+    Q3HBox* buttonLayout = new Q3HBox( this );
     QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttonLayout );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout );
     grid_->addMultiCellWidget( buttonLayout, numberOfLines + 3, numberOfLines + 3, 0, 1 );
@@ -122,7 +122,7 @@ void ChangeHealthStateDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC&
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "ChangeHealthStateDialog_ABC", "Change health state" ), this, SLOT( Show() ) );
     }
 }

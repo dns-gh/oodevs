@@ -19,7 +19,7 @@ namespace kernel
 }
 
 class ActionsScheduler;
-class QDateTimeEdit;
+class Q3DateTimeEdit;
 class Simulation;
 
 // =============================================================================
@@ -65,7 +65,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ActionsScheduler& scheduler_;
-    QDateTimeEdit* editor_;
+    Q3DateTimeEdit* editor_;
     //@}
 };
 

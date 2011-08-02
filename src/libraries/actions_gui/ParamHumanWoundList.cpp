@@ -47,16 +47,16 @@ ParamHumanWoundList::~ParamHumanWoundList()
 // -----------------------------------------------------------------------------
 QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 {
-    QHBox* hBox = new QHBox( parent );
-    list_ = new QListView( hBox );
+    Q3HBox* hBox = new Q3HBox( parent );
+    list_ = new Q3ListView( hBox );
     list_->addColumn( "", 0 );
     list_->addColumn( "" );
     list_->header()->hide();
     list_->setSorting( -1, true );
-    list_->setResizeMode( QListView::LastColumn );
+    list_->setResizeMode( Q3ListView::LastColumn );
     list_->setAllColumnsShowFocus( true );
 
-    QVBox* buttonBox = new QVBox( hBox );
+    Q3VBox* buttonBox = new Q3VBox( hBox );
     buttonBox->layout()->setAlignment( Qt::AlignVCenter );
     QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, buttonBox );
     upBtn->setFixedSize( 32, 32 );
@@ -65,7 +65,7 @@ QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 
     connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
     connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
-    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( QListViewItem*, const QPoint&, int ) ) );
+    connect( list_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( Q3ListViewItem*, const QPoint&, int ) ) );
     return hBox;
 }
 
@@ -76,7 +76,7 @@ QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     std::auto_ptr< actions::parameters::MedicalPriorities > param( new actions::parameters::MedicalPriorities( parameter_ ) );
-    for( QListViewItemIterator it( list_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
         param->AddMedicalPriority( E_HumanWound( it.current()->text( 0 ).toUInt() ) );
     action.AddParameter( *param.release() );
 }
@@ -87,7 +87,7 @@ void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) co
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnUp()
 {
-    QListViewItem* item = list_->currentItem();
+    Q3ListViewItem* item = list_->currentItem();
     if( item && item->itemAbove() )
         item->itemAbove()->moveItem( item );
 }
@@ -98,7 +98,7 @@ void ParamHumanWoundList::OnUp()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnDown()
 {
-    QListViewItem* item = list_->currentItem();
+    Q3ListViewItem* item = list_->currentItem();
     if( item && item->itemBelow() )
         item->moveItem( item->itemBelow() );
 }
@@ -109,7 +109,7 @@ void ParamHumanWoundList::OnDown()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnAdd( int value )
 {
-    QListViewItem* item = new QListViewItem( list_, list_->lastItem() );
+    Q3ListViewItem* item = new Q3ListViewItem( list_, list_->lastItem() );
     item->setText( 1, tools::ToString( E_HumanWound( value ) ) );
     item->setText( 0, QString::number( value ) );
 }
@@ -127,10 +127,10 @@ void ParamHumanWoundList::OnRemove()
 // Name: ParamHumanWoundList::OnContextMenu
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::OnContextMenu( QListViewItem* item, const QPoint& point, int )
+void ParamHumanWoundList::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int )
 {
-    QPopupMenu* menu = new QPopupMenu( list_ );
-    QPopupMenu* items = new QPopupMenu( menu );
+    Q3PopupMenu* menu = new Q3PopupMenu( list_ );
+    Q3PopupMenu* items = new Q3PopupMenu( menu );
     for( unsigned int i = eHumanWound_BlesseUrgence1; i < int( eNbrHumanWound ); ++i )
     {
         const QString name = tools::ToString( ( E_HumanWound )i );

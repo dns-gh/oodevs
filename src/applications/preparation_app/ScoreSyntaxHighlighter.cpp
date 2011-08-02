@@ -17,8 +17,8 @@
 // Name: ScoreSyntaxHighlighter constructor
 // Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------
-ScoreSyntaxHighlighter::ScoreSyntaxHighlighter( QTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives )
-    : QSyntaxHighlighter( editor )
+ScoreSyntaxHighlighter::ScoreSyntaxHighlighter( Q3TextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives )
+    : Q3SyntaxHighlighter( editor )
     , controllers_( controllers )
     , primitives_( primitives )
     , varColor_( 44, 146, 30 )

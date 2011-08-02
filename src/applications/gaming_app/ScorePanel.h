@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
-#include <QDockWindow.h>
 
 namespace gui
 {
@@ -43,7 +42,7 @@ class ScoreModel;
 */
 // Created: SBO 2009-03-12
 // =============================================================================
-class ScorePanel : public QDockWindow
+class ScorePanel : public QDockWidget
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< Score >
                  , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
@@ -61,7 +60,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnContextMenu( QListViewItem* item, const QPoint& point, int column );
+    void OnContextMenu( Q3ListViewItem* item, const QPoint& point, int column );
     void OnShowGraph();
     void OnExportData();
     //@}

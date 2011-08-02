@@ -119,7 +119,7 @@ template< typename ConcreteDisplayer, typename Extension >
 void ResourcesListView_ABC< ConcreteDisplayer, Extension >::polish()
 {
     gui::ListDisplayer< ConcreteDisplayer >::polish();
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 }
 
 // -----------------------------------------------------------------------------

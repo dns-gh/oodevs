@@ -25,7 +25,7 @@ using namespace tools;
 // Name: ClientNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry /*= false*/ )
+ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry /* = false*/ )
     : service_         ( new boost::asio::io_service() )
     , connectionBuffer_( new BufferedConnectionCallback() )
     , messageBuffer_   ( new BufferedMessageCallback() )

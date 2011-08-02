@@ -15,7 +15,7 @@
 #include "clients_kernel/LogisticHierarchies.h"
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include <qmessagebox.h>
+#include <QtGui/qmessagebox.h>
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLevelAttritube constructor

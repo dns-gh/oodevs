@@ -10,7 +10,9 @@
 #ifndef __ExclusiveComboTableItem_h_
 #define __ExclusiveComboTableItem_h_
 
-#include <qtable.h>
+#pragma warning( push, 0 )
+#include <Qt3Support/q3table.h>
+#pragma warning( pop )
 
 namespace gui
 {
@@ -21,13 +23,13 @@ namespace gui
 */
 // Created: SBO 2006-06-27
 // =============================================================================
-class ExclusiveComboTableItem : public QComboTableItem
+class ExclusiveComboTableItem : public Q3ComboTableItem
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ExclusiveComboTableItem( QTable* table, const QStringList& list )
-        : QComboTableItem( table, list )
+    ExclusiveComboTableItem( Q3Table* table, const QStringList& list )
+        : Q3ComboTableItem( table, list )
         , list_( list ) {}
 
     virtual ~ExclusiveComboTableItem() {}
@@ -45,7 +47,7 @@ public:
                 list.remove( text );
         }
         const_cast< ExclusiveComboTableItem* >( this )->setStringList( list );
-        return QComboTableItem::createEditor();
+        return Q3ComboTableItem::createEditor();
     }
     //@}
 

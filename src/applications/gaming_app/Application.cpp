@@ -27,8 +27,6 @@
 #include "clients_kernel/Workers.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "ENT/ENT_Tr.h"
-#include <qsettings.h>
-#include <qtextcodec.h>
 
 using namespace kernel;
 
@@ -46,7 +44,7 @@ namespace
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv, const QString& expiration )
+Application::Application( int& argc, char** argv, const QString& expiration )
     : Application_ABC( argc, argv )
     , mainWindow_ ( 0 )
     , expiration_ ( expiration )
@@ -81,19 +79,10 @@ Application::~Application()
 // Name: Application::Initialize
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-void Application::Initialize()
-{
-    Initialize( argc(), argv() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::Initialize
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Application::Initialize( int argc, char** argv )
+void Application::Initialize( int /*argc*/, char** /*argv*/ )
 {
     observer_.reset( new tools::NullFileLoaderObserver() );
-    config_.reset( new Config( argc, argv, *observer_ ) );
+    config_.reset( new Config( argc(), argv(), *observer_ ) );
     controllers_.reset( new Controllers() );
     logger_.reset( new LoggerProxy() );
     services_.reset( new Services( controllers_->controller_, *logger_ ) );
@@ -131,5 +120,41 @@ void Application::UpdateData()
     {
         network_->Disconnect();
         QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::notify
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+bool Application::notify( QObject* pReceiver, QEvent* pEvent )
+{
+    try
+    {
+        return QApplication::notify( pReceiver, pEvent );
+    }
+    catch( std::exception& e )
+    {
+        DisplayError( e.what() );
+    }
+    catch( ... )
+    {
+        DisplayError( tr( "Unknown exception caught" ) );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::DisplayError
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void Application::DisplayError( const QString& text ) const
+{
+    static bool active = false;
+    if( ! active )
+    {
+        active = true;
+        QMessageBox::critical( activeWindow(),  tools::translate( "Application", "SWORD" ), text, "Ok" );
+        active = false;
     }
 }

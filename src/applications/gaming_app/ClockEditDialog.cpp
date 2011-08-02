@@ -14,7 +14,6 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
-#include <qdatetimeedit.h>
 
 // -----------------------------------------------------------------------------
 // Name: ClockEditDialog constructor
@@ -26,20 +25,20 @@ ClockEditDialog::ClockEditDialog( QWidget* parent, kernel::Controllers& controll
     , scheduler_( scheduler )
 {
     setCaption( tr( "Edit current time" ) );
-    QGridLayout* pLayout = new QGridLayout( this, 2, 1 );
+    Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 1 );
     pLayout->setMargin( 10 );
     pLayout->setSpacing( 10 );
 
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tools::translate( "ClockEditDialog", "Set current date and time: " ), this );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "ClockEditDialog", "Set current date and time: " ), this );
     {
         new QLabel( tools::translate( "ClockEditDialog", "New date and time: " ), box );
-        editor_ = new QDateTimeEdit( box );
+        editor_ = new Q3DateTimeEdit( box );
     }
     pLayout->addWidget( box, 0, 0 );
-    QHBox* buttons = new QHBox( this );
+    Q3HBox* buttons = new Q3HBox( this );
     {
-        QButton* ok = new QPushButton( tools::translate( "ClockEditDialog", "Ok" ), buttons );
-        QButton* cancel = new QPushButton( tools::translate( "ClockEditDialog", "Cancel" ), buttons );
+        QPushButton* ok = new QPushButton( tools::translate( "ClockEditDialog", "Ok" ), buttons );
+        QPushButton* cancel = new QPushButton( tools::translate( "ClockEditDialog", "Cancel" ), buttons );
         connect( ok, SIGNAL( clicked() ), SLOT( OnCommit() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( OnCancel() ) );
     }

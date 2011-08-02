@@ -42,8 +42,9 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     : InfoPanel_ABC( parent, panel, tr( "Units" ), "UnitsPanel" )
     , controllers_( controllers )
 {
+    Q3VBox* vbox = new Q3VBox( this );
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( vbox );
         QPushButton* openAll  = new QPushButton( "+", box );
         openAll->setMaximumSize( 20, 20 );;
         QPushButton* closeAll = new QPushButton( "-", box );
@@ -54,14 +55,15 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
         QLabel* label = new QLabel( tr( "Display type: " ), box );
         label->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
         combo_ = BuildNatureFieldsCombo( box );
-        list_ = new UnitListView( this, controllers_, types, factory );
+        list_ = new UnitListView( vbox, controllers_, types, factory );
         connect( combo_, SIGNAL( activated( int ) ), SLOT( Sort() ) );
-        connect( list_ , SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( SelectionChanged( QListViewItem* ) ) );
+        connect( list_ , SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( SelectionChanged( Q3ListViewItem* ) ) );
     }
     {
-        icon_ = new UnitPreviewIcon( this, controllers_, icons, colorStrategy );
+        icon_ = new UnitPreviewIcon( vbox, controllers_, icons, colorStrategy );
         connect( icon_, SIGNAL( StartDrag() ), SLOT( IconDragged() ) );
     }
+    setWidget( vbox );
     controllers_.Register( *this );
 }
 
@@ -114,7 +116,7 @@ void UnitsPanel::NotifyUpdated( const ModelLoaded& )
 // Name: UnitsPanel::SelectionChanged
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
-void UnitsPanel::SelectionChanged( QListViewItem* item )
+void UnitsPanel::SelectionChanged( Q3ListViewItem* item )
 {
     if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( item ) )
     {
@@ -131,6 +133,6 @@ void UnitsPanel::SelectionChanged( QListViewItem* item )
 // -----------------------------------------------------------------------------
 void UnitsPanel::IconDragged()
 {
-    if( QDragObject* drag = list_->dragObject() )
+    if( Q3DragObject* drag = list_->dragObject() )
         drag->drag();
 }

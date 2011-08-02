@@ -10,8 +10,6 @@
 #ifndef __ButtonGroup_h_
 #define __ButtonGroup_h_
 
-#include <qbuttongroup.h>
-
 namespace gui
 {
 
@@ -21,14 +19,14 @@ namespace gui
 */
 // Created: RPD 2008-08-21
 // =============================================================================
-class ButtonGroup : public QButtonGroup
+class ButtonGroup : public Q3ButtonGroup
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ButtonGroup( int columns, Orientation o, const QString& title, QWidget* parent = 0, const char* name = 0 );
+             ButtonGroup( int columns, Qt::Orientation o, const QString& title, QWidget* parent = 0, const char* name = 0 );
     virtual ~ButtonGroup();
     //@}
 

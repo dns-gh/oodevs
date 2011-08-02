@@ -11,7 +11,7 @@
 #include "Tendency.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "tools/GeneralConfig.h"
-#include <qpixmap.h>
+#include <QtGui/qpixmap.h>
 
 using namespace indicators;
 
@@ -19,7 +19,7 @@ using namespace indicators;
 // Name: Tendency constructor
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-Tendency::Tendency( unsigned int interval /*= 10*/ )
+Tendency::Tendency( unsigned int interval /* = 10*/ )
     : interval_( interval )
 {
     values_.push_back( 0 );

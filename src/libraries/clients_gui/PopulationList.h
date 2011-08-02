@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: AGE 2006-08-10
 // =============================================================================
-class PopulationList : public QVBox
+class PopulationList : public Q3VBox
 {
 public:
     //! @name Constructors/Destructor

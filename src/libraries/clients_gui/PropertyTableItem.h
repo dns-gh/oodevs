@@ -10,8 +10,6 @@
 #ifndef __PropertyTableItem_h_
 #define __PropertyTableItem_h_
 
-#include <qtable.h>
-
 namespace kernel
 {
     class Property_ABC;
@@ -28,12 +26,12 @@ namespace gui
 */
 // Created: SBO 2006-10-18
 // =============================================================================
-class PropertyTableItem : public QTableItem
+class PropertyTableItem : public Q3TableItem
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertyTableItem( QTable* table, kernel::Property_ABC& property, TableItemDisplayer& displayer, kernel::EditorFactory_ABC& factory );
+             PropertyTableItem( Q3Table* table, kernel::Property_ABC& property, TableItemDisplayer& displayer, kernel::EditorFactory_ABC& factory );
     virtual ~PropertyTableItem();
     //@}
 

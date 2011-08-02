@@ -13,8 +13,8 @@
 #include "tools/Resolver.h"
 #include "protocol/Simulation.h"
 #pragma warning( push, 0 )
-#include <qstring.h>
-#include <qdatetime.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qdatetime.h>
 #pragma warning( pop )
 
 namespace tools

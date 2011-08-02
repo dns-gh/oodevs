@@ -13,7 +13,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Styles.h"
 #include "Tools.h"
-#include <qdatetime.h>
+#include <QtCore/qdatetime.h>
 
 using namespace kernel;
 

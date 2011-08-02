@@ -68,7 +68,7 @@ const Entity_ABC& Hierarchies::GetTop() const
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
 inline
-const Entity_ABC& Hierarchies::GetUp( unsigned int nLevel /*= 1*/ ) const
+const Entity_ABC& Hierarchies::GetUp( unsigned int nLevel /* = 1*/ ) const
 {
     if( nLevel == 0 )
         return GetEntity();

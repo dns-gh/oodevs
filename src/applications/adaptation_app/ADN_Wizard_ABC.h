@@ -10,7 +10,7 @@
 #ifndef __ADN_Wizard_ABC_h_
 #define __ADN_Wizard_ABC_h_
 
-#include <qwizard.h>
+#include <Qt3Support/q3wizard.h>
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_Wizard_FirstPage_ABC.h"
 #include <boost/noncopyable.hpp>
@@ -22,7 +22,7 @@
 // Created: AGN 2003-11-18
 // =============================================================================
 template< typename T >
-class ADN_Wizard_ABC : public QWizard
+class ADN_Wizard_ABC : public Q3Wizard
                      , public ADN_ObjectCreator_ABC
                      , private boost::noncopyable
 {

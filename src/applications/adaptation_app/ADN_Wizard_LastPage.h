@@ -28,7 +28,7 @@ class ADN_Wizard_LastPage : public ADN_WizardPage_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Wizard_LastPage( QWizard* pParent, const QString& strTitle, const QString& strText, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
+             ADN_Wizard_LastPage( Q3Wizard* pParent, const QString& strTitle, const QString& strText, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
     virtual ~ADN_Wizard_LastPage();
     //@}
 };

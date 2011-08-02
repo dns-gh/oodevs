@@ -10,7 +10,7 @@
 #ifndef __Settings_ABC_h_
 #define __Settings_ABC_h_
 
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 
 namespace kernel
 {

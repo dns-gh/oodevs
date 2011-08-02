@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "tools/Resolver.h"
-#include <qdatetime.h>
+#include <QtCore/qdatetime.h>
 
 namespace kernel
 {

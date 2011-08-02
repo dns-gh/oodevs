@@ -97,7 +97,7 @@ float AggregatedPositions::GetHeight( bool aggregated ) const
 // Name: AggregatedPositions::IsAt
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-bool AggregatedPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ /*= 1.f*/ ) const
+bool AggregatedPositions::IsAt( const Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor*/ /* = 1.f*/ ) const
 {
     if( !aggregated_ && HasSubordinate( entity_, boost::bind( &AggregatedPositions::IsAggregated, this, _1 ) ) )
     {

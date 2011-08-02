@@ -14,8 +14,8 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
-class QGroupBox;
-class QScrollView;
+class Q3GroupBox;
+class Q3ScrollView;
 
 namespace xml
 {
@@ -68,8 +68,8 @@ private:
     const std::string library_;
     const std::string version_;
     QString label_;
-    QGroupBox* box_;
-    QScrollView* view_;
+    Q3GroupBox* box_;
+    Q3ScrollView* view_;
     std::vector< boost::shared_ptr< PluginSetting > > settings_;
     //@}
 };

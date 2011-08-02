@@ -28,7 +28,7 @@ class QCheckListItem;
 */
 // Created: SBO 2011-05-16
 // =============================================================================
-class ScoreProfilesPage : public QVBox
+class ScoreProfilesPage : public Q3VBox
                         , private boost::noncopyable
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< UserProfile >
@@ -57,7 +57,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const UserProfile*, QCheckListItem* > T_Profiles;
+    typedef std::map< const UserProfile*, Q3CheckListItem* > T_Profiles;
     //@}
 
 private:
@@ -65,7 +65,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_Profiles profiles_;
-    QListView* list_;
+    Q3ListView* list_;
     //@}
 };
 

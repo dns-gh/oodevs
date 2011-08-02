@@ -10,16 +10,14 @@
 //*****************************************************************************
 
 #include <stdlib.h>
-
-#include <qlineedit.h>
-
+#include <QtGui/qlineedit.h>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 template <class Connector,class Validator>
-ADN_TableItem_Edit<Connector,Validator>::ADN_TableItem_Edit(ADN_Table*parent,void*data, QTableItem::EditType nEditType)
+ADN_TableItem_Edit<Connector,Validator>::ADN_TableItem_Edit(ADN_Table*parent,void*data, Q3TableItem::EditType nEditType)
 : ADN_TableItem_ABC(parent,data,nEditType)
 , bUseColor_       ( false )
 , rMax_            ( 100.f )
@@ -73,7 +71,7 @@ void ADN_TableItem_Edit<Connector,Validator>::SetValidator( Validator* pValidato
 template <class Connector,class Validator>
 QWidget *ADN_TableItem_Edit<Connector,Validator>::createEditor() const
 {
-    QWidget* pEditor = QTableItem::createEditor();
+    QWidget* pEditor = Q3TableItem::createEditor();
     if ( pEditor && pEditor->inherits( "QLineEdit" ) )
     {
         QLineEdit* pLineEdit = static_cast<QLineEdit*>( pEditor );
@@ -119,8 +117,8 @@ void ADN_TableItem_Edit<Connector,Validator>::paint( QPainter *p, const QColorGr
     }
 
     double rRatio = (rValue - rMin_) / ( rMax_ - rMin_ );
-    rRatio = std::max( 0.0, rRatio );
-    rRatio = std::min( 1.0, rRatio );
+    rRatio = std::max< double >( 0.0, rRatio );
+    rRatio = std::min< double >( 1.0, rRatio );
 
     QColor backgroundColor;
     backgroundColor.setHsv( int( 120 * rRatio ), 30, 255 );
@@ -175,6 +173,6 @@ template <class Connector,class Validator>
 int ADN_TableItem_Edit<Connector,Validator>::alignment() const
 {
     if( nAlignment_ == -1 )
-        return QTableItem::alignment();
+        return Q3TableItem::alignment();
     return nAlignment_;
 }

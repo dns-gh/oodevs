@@ -67,7 +67,7 @@ namespace
     // Name: SortMenu
     // Created: ABR 2011-03-01
     // -----------------------------------------------------------------------------
-    void SortMenu( QPopupMenu& menu )
+    void SortMenu( Q3PopupMenu& menu )
     {
         T_MenuItemVector vItems;
         while( menu.count() > 0 )
@@ -90,9 +90,9 @@ namespace
 // -----------------------------------------------------------------------------
 void InitialStateTableResources::OnRequestContextMenu( int row, int col, const QPoint& pos )
 {
-    QPopupMenu menu( this );
-    QPopupMenu targetMenu( &menu );
-    std::map< std::string, QPopupMenu* > categoryMap;
+    Q3PopupMenu menu( this );
+    Q3PopupMenu targetMenu( &menu );
+    std::map< std::string, Q3PopupMenu* > categoryMap;
     tools::Iterator< const kernel::DotationType& > dotationIterator = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::CreateIterator();
 
     while( dotationIterator.HasMoreElements() )
@@ -101,10 +101,10 @@ void InitialStateTableResources::OnRequestContextMenu( int row, int col, const Q
         if( IsDotationAlreadyPresent( dotation.GetName().c_str() ) )
             continue;
         if( categoryMap.find( dotation.GetCategory() ) == categoryMap.end() )
-            categoryMap[ dotation.GetCategory() ] = new QPopupMenu( &targetMenu );
+            categoryMap[ dotation.GetCategory() ] = new Q3PopupMenu( &targetMenu );
         categoryMap[ dotation.GetCategory() ]->insertItem( dotation.GetName().c_str(), dotation.GetId() );
     }
-    for( std::map< std::string, QPopupMenu* >::iterator it = categoryMap.begin(); it != categoryMap.end(); ++it )
+    for( std::map< std::string, Q3PopupMenu* >::iterator it = categoryMap.begin(); it != categoryMap.end(); ++it )
     {
         SortMenu( *it->second );
         targetMenu.insertItem( it->first.c_str(), it->second );

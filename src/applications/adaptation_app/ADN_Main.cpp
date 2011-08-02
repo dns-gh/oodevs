@@ -14,8 +14,6 @@
 #include <tools/win32/FlexLm.h>
 #include <windows.h>
 #include <commctrl.h>
-#include <qtranslator.h>
-#include <qtextcodec.h>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -105,7 +103,7 @@ int main( uint nArgc, char** ppArgv )
 
     try
     {
-        if( app.Initialize( inputFile, outputFile ) )
+        if( app.Initialize( inputFile, outputFile, nArgc, ppArgv ) )
             app.exec();
     }
     catch( ADN_Exception_ABC& e )

@@ -15,7 +15,7 @@
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_ActiveProtections_Wizard.h"
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 
@@ -23,12 +23,12 @@ typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfo
 // Name: ADN_Equipement_AmmoListView constructor
 // Created: FDS 2010-02-25
 // -----------------------------------------------------------------------------
-ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "active Protection" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<ActiveProtectionsInfos>( *this );
@@ -69,7 +69,7 @@ void ADN_ActiveProtectionsListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_ActiveProtections_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

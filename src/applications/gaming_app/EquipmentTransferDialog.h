@@ -14,7 +14,10 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <qtable.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3table.h>
+#pragma warning( pop )
 
 namespace kernel
 {
@@ -81,12 +84,12 @@ private slots:
 private:
     //! @name Type
     //@{
-    class EquipmentTable : public QTable
+    class EquipmentTable : public Q3Table
     {
     public:
-                 EquipmentTable( int numRows, int numCols, QWidget * parent = 0, const char * name = 0 ) : QTable( numRows, numCols, parent, name ) {}
+                 EquipmentTable( int numRows, int numCols, QWidget * parent = 0, const char * name = 0 ) : Q3Table( numRows, numCols, parent, name ) {}
         virtual ~EquipmentTable() {}
-        virtual void setCellContentFromEditor ( int row, int col ) { QTable::setCellContentFromEditor( row, col ); } // $$$$ ABR 2011-06-16: Needed if clicking on Ok when editing cell
+        virtual void setCellContentFromEditor ( int row, int col ) { Q3Table::setCellContentFromEditor( row, col ); } // $$$$ ABR 2011-06-16: Needed if clicking on Ok when editing cell
     };
     //@}
 

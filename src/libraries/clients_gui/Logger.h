@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: APE 2004-06-02
 // =============================================================================
-class Logger : public QListView, public kernel::Logger_ABC
+class Logger : public Q3ListView, public kernel::Logger_ABC
 {
     Q_OBJECT;
 
@@ -54,13 +54,13 @@ protected:
 private slots:
     //! @name Slots
     //@{
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
+    void OnRequestPopup( Q3ListViewItem* pItem, const QPoint& pos );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< QListViewItem*, bool >      T_Item;
+    typedef std::pair< Q3ListViewItem*, bool >      T_Item;
     typedef std::map< std::stringstream*, T_Item > T_Items;
     //@}
 
@@ -74,7 +74,7 @@ private:
     //@{
     ItemFactory_ABC& factory_;
     const Simulation& simulation_;
-    QPopupMenu popupMenu_;
+    Q3PopupMenu popupMenu_;
     T_Items items_;
     std::ofstream log_;
     //@}

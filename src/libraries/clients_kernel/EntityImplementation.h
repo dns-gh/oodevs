@@ -11,9 +11,7 @@
 #define __EntityImplementation_h_
 
 #pragma warning( push, 0 )
-#pragma warning( push, 0 )
-#include <qstring.h>
-#pragma warning( pop )
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 namespace kernel

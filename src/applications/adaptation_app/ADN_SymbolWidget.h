@@ -14,7 +14,7 @@
 #include "svgl/Point.h"
 #include "svgl/BoundingBox.h"
 #include "geometry/types.h"
-#include <qgl.h>
+#include <QtOpenGL/qgl.h>
 
 #undef max
 

@@ -1,15 +1,6 @@
-<!DOCTYPE TS><TS>
-<context>
-    <name>@default</name>
-    <message>
-        <source>Add </source>
-        <translation>Agregar </translation>
-    </message>
-    <message>
-        <source>new </source>
-        <translation>nuevo </translation>
-    </message>
-</context>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>ADNDatabaseWarnings</name>
     <message>
@@ -1181,11 +1172,11 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Direct fire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fuego directo</translation>
     </message>
     <message>
         <source>Indirect fire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fuego indirecto</translation>
     </message>
     <message>
         <source>Close combat</source>
@@ -1695,7 +1686,7 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
         <source>Fire</source>
@@ -1739,7 +1730,7 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Wounded seriousness level 3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Herido gravedad nivel 3</translation>
     </message>
     <message>
         <source>Wounded extreme seriousness</source>
@@ -2773,7 +2764,7 @@ tirador</translation>
         <translation>Angulo de preparación</translation>
     </message>
     <message>
-        <source>&#xb0;</source>
+        <source>°</source>
         <translation>°</translation>
     </message>
 </context>
@@ -3386,7 +3377,7 @@ Asegúrese que el archivo existe.</translation>
         <translation>ROE</translation>
     </message>
     <message>
-        <source>Attrition Surface (m&#xb2;)</source>
+        <source>Attrition Surface (m²)</source>
         <translation>Superficie de atrición (m2)</translation>
     </message>
     <message>
@@ -3419,7 +3410,7 @@ Asegúrese que el archivo existe.</translation>
         <translation>Densidad</translation>
     </message>
     <message>
-        <source>people/m&#xb2;</source>
+        <source>people/m²</source>
         <translation>personas/m2</translation>
     </message>
     <message>
@@ -3687,10 +3678,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source> from </source>
         <translation> de </translation>
     </message>
-    <message>
-        <source>new </source>
-        <translation>nuevo </translation>
-    </message>
 </context>
 <context>
     <name>ADN_ResourceNetworks_GUI</name>
@@ -3938,7 +3925,7 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Angulo</translation>
     </message>
     <message>
-        <source>&#xb0;</source>
+        <source>°</source>
         <translation>°</translation>
     </message>
     <message>
@@ -3994,7 +3981,7 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Densidad</translation>
     </message>
     <message>
-        <source>people/m&#xb2;</source>
+        <source>people/m²</source>
         <translation>personas/m2</translation>
     </message>
     <message>
@@ -5281,17 +5268,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
-    <name>ADN_UrbanModifiersTable</name>
-    <message>
-        <source>Material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>Modifiers</source>
-        <translation>Modificadores</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Urban_AttritionTable</name>
     <message>
         <source>% destroyed</source>
@@ -5448,24 +5424,21 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ADN_Weapons_Data</name>
     <message>
         <source>Create new</source>
-        <translation></translation>
+        <translation type="unfinished">Crear nuevo</translation>
     </message>
     <message>
         <source>Create a copy of:</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New weapon creation</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5649,48 +5622,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Heat decrease rate</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Wizard</name>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Create new</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Create a copy of:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Creation impossible</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>The provided name is either empty or already in use, please pick another one.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Wizard_ABC</name>
-    <message>
-        <source>Next</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -5919,32 +5850,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
-    </message>
-</context>
-<context>
-    <name>ArmorInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AttritionEffectOnHuman</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6370,6 +6275,43 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>helpers::ADN_UrbanModifiersTable</name>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished">Material</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation type="unfinished">Modificadores</translation>
+    </message>
+</context>
+<context>
+    <name>helpers::ArmorInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>helpers::AttritionEffectOnHuman</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -23,11 +23,11 @@
 #   pragma interface
 #endif
 
-#include <qhbox.h>
+#include <Qt3Support/q3hbox.h>
 
 class GQ_Plot;
 
-class QListBox;
+class Q3ListBox;
 
 // =============================================================================
 /** @class  GQ_PlotCaption
@@ -39,7 +39,7 @@ class QListBox;
 */
 // Created: CBX 2003-11-25
 // =============================================================================
-class GQ_PlotCaption : public QHBox
+class GQ_PlotCaption : public Q3HBox
 {
     Q_OBJECT
 
@@ -76,7 +76,7 @@ private:
     //! @name Member data
     //@{
     GQ_Plot*  pPlot_;
-    QListBox* pEntryList_;
+    Q3ListBox* pEntryList_;
     //@}
 
     //! @name Runtime members

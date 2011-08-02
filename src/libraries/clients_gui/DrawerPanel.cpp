@@ -26,7 +26,6 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include <xeumeuleu/xml.hpp>
-#include <qtoolbox.h>
 
 using namespace gui;
 
@@ -44,50 +43,55 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     , selectedDrawing_( controllers )
     , selectedEntity_ ( controllers )
 {
-    QHBox* box = new QHBox( this );
-    box->layout()->setAlignment( Qt::AlignCenter );
-    box->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
-    box->setBackgroundMode( Qt::PaletteButton );
-    box->setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
+    Q3VBox* vbox = new Q3VBox( this );
+    {
+        Q3HBox* box = new Q3HBox( vbox );
+        box->layout()->setAlignment( Qt::AlignCenter );
+        box->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+        box->setBackgroundMode( Qt::PaletteButton );
+        box->setFrameStyle( QFrame::StyledPanel | Q3Frame::Raised );
 
-    QToolButton* btn = new QToolButton( box );
-    btn->setAutoRaise( true );
-    btn->setIconSet( MAKE_PIXMAP( open ) );
-    QToolTip::add( btn, tr( "Load drawings file" ) );
-    connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
+        QToolButton* btn = new QToolButton( box );
+        btn->setAutoRaise( true );
+        btn->setIconSet( MAKE_PIXMAP( open ) );
+        QToolTip::add( btn, tr( "Load drawings file" ) );
+        connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
 
-    btn = new QToolButton( box );
-    btn->setAutoRaise( true );
-    btn->setIconSet( MAKE_PIXMAP( save ) );
-    QToolTip::add( btn, tr( "Save drawings to file" ) );
-    connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
+        btn = new QToolButton( box );
+        btn->setAutoRaise( true );
+        btn->setIconSet( MAKE_PIXMAP( save ) );
+        QToolTip::add( btn, tr( "Save drawings to file" ) );
+        connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
 
-    btn = new QToolButton( box );
-    btn->setAutoRaise( true );
-    btn->setIconSet( MAKE_PIXMAP( cross ) );
-    btn->setFixedSize( 25, 25 );
-    QToolTip::add( btn, tr( "Clear drawings" ) );
-    connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
+        btn = new QToolButton( box );
+        btn->setAutoRaise( true );
+        btn->setIconSet( MAKE_PIXMAP( cross ) );
+        btn->setFixedSize( 25, 25 );
+        QToolTip::add( btn, tr( "Clear drawings" ) );
+        connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
 
-    color_ = new ColorButton( box, "" );
-    connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
+        color_ = new ColorButton( box, "" );
+        toolBox_ = new QToolBox( vbox );
+        toolBox_->setMargin( 0 );
+        toolBox_->setBackgroundColor( Qt::white );
+        connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
 
-    btn = new QToolButton( box );
-    btn->setAutoRaise( true );
-    btn->setIconSet( MAKE_PIXMAP( pencil ) );
-    btn->setFixedSize( 25, 25 );
-    QToolTip::add( btn, tr( "Start drawing" ) );
-    connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
-
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, this );
+        btn = new QToolButton( box );
+        btn->setAutoRaise( true );
+        btn->setIconSet( MAKE_PIXMAP( pencil ) );
+        btn->setFixedSize( 25, 25 );
+        QToolTip::add( btn, tr( "Start drawing" ) );
+        connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
+    }
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, vbox );
     {
         new QLabel( tr( "Parent:" ), group );
         parentLabel_ = new QLabel( "---", group );
     }
-
-    toolBox_ = new QToolBox( this );
+    toolBox_ = new QToolBox( vbox );
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
+    setWidget( vbox );
 
     controllers_.Register( *this );
 }
@@ -246,7 +250,7 @@ void DrawerPanel::StartDrawing()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Open()
 {
-    QString filename = QFileDialog::getOpenFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Load drawings file" ) );
+    QString filename = Q3FileDialog::getOpenFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Load drawings file" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
@@ -267,7 +271,7 @@ void DrawerPanel::Open()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Save()
 {
-    QString filename = QFileDialog::getSaveFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
+    QString filename = Q3FileDialog::getSaveFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )

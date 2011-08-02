@@ -31,8 +31,8 @@
 // Name: ADN_GroupBox constructor
 // Created: APE 2005-01-03
 // -----------------------------------------------------------------------------
-ADN_GroupBox::ADN_GroupBox( QWidget * parent /*= 0*/, const char * name /*= 0*/ )
-: QGroupBox( parent, name )
+ADN_GroupBox::ADN_GroupBox( QWidget * parent /* = 0*/, const char * name /* = 0*/ )
+: Q3GroupBox( parent, name )
 , ADN_Gfx_ABC()
 {
     this->setCheckable( true );
@@ -47,8 +47,8 @@ ADN_GroupBox::ADN_GroupBox( QWidget * parent /*= 0*/, const char * name /*= 0*/ 
 // Name: ADN_GroupBox constructor
 // Created: APE 2005-01-03
 // -----------------------------------------------------------------------------
-ADN_GroupBox::ADN_GroupBox( const QString & title, QWidget * parent /*= 0*/, const char * name /*= 0*/ )
-: QGroupBox( title, parent, name )
+ADN_GroupBox::ADN_GroupBox( const QString & title, QWidget * parent /* = 0*/, const char * name /* = 0*/ )
+: Q3GroupBox( title, parent, name )
 , ADN_Gfx_ABC()
 {
     this->setCheckable( true );
@@ -63,8 +63,8 @@ ADN_GroupBox::ADN_GroupBox( const QString & title, QWidget * parent /*= 0*/, con
 // Name: ADN_GroupBox constructor
 // Created: APE 2005-01-03
 // -----------------------------------------------------------------------------
-ADN_GroupBox::ADN_GroupBox( int strips, Orientation orientation, QWidget * parent /*= 0*/, const char * name /*= 0*/ )
-: QGroupBox( strips, orientation, parent, name )
+ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, QWidget * parent /* = 0*/, const char * name /* = 0*/ )
+: Q3GroupBox( strips, orientation, parent, name )
 , ADN_Gfx_ABC()
 {
     this->setCheckable( true );
@@ -79,8 +79,8 @@ ADN_GroupBox::ADN_GroupBox( int strips, Orientation orientation, QWidget * paren
 // Name: ADN_GroupBox constructor
 // Created: APE 2005-01-03
 // -----------------------------------------------------------------------------
-ADN_GroupBox::ADN_GroupBox( int strips, Orientation orientation, const QString & title, QWidget * parent /*= 0*/, const char * name /*= 0*/ )
-: QGroupBox( strips, orientation, title, parent, name )
+ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, const QString & title, QWidget * parent /* = 0*/, const char * name /* = 0*/ )
+: Q3GroupBox( strips, orientation, title, parent, name )
 , ADN_Gfx_ABC()
 {
     this->setCheckable( true );
@@ -117,9 +117,9 @@ void ADN_GroupBox::BoolChanged(bool b)
 void ADN_GroupBox::setEnabled( bool b )
 {
     if( bEnabledOnlyInAdminMode_ && b )
-        QGroupBox::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
+        Q3GroupBox::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
     else
-        QGroupBox::setEnabled( b );
+        Q3GroupBox::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------

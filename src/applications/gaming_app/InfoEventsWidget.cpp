@@ -18,8 +18,8 @@
 #include "clients_kernel/NBCAgent.h"
 #include "tools/GeneralConfig.h"
 #include "icons.h"
-#include <qimage.h>
-#include <qpainter.h>
+#include <QtGui/qimage.h>
+#include <QtGui/qpainter.h>
 
 namespace
 {
@@ -32,7 +32,7 @@ namespace
         {
             QImage img; // $$$$ SBO 2007-02-09: TODO: make new icons instead of resizing
             img = pixmap;
-            img = img.smoothScale( 26, 26, QImage::ScaleMax );
+            img = img.smoothScale( 26, 26, Qt::KeepAspectRatioByExpanding );
             QPixmap pix( img );
             setPixmap( pix );
             QFont font;
@@ -77,7 +77,7 @@ namespace
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
 InfoEventsWidget::InfoEventsWidget( QWidget* parent, kernel::Controllers& controllers )
-    : QVBox( parent, "InfoEventsWidget" )
+    : Q3VBox( parent, "InfoEventsWidget" )
     , controllers_( controllers )
     , selected_( controllers )
 {

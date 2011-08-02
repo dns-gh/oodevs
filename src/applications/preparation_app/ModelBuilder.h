@@ -10,7 +10,6 @@
 #ifndef __ModelBuilder_h_
 #define __ModelBuilder_h_
 
-#include <qobject.h>
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -71,7 +70,7 @@ public slots:
     void OnCreate();
     void OnCreateFormation( int level );
     void OnCreateCommunication();
-    void OnRename( QListViewItem*, int, const QString& text );
+    void OnRename( Q3ListViewItem*, int, const QString& text );
     //@}
 
 private:

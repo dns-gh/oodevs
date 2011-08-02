@@ -73,7 +73,7 @@ const std::string FilterOrbatReIndexer::GetDescription() const
 // -----------------------------------------------------------------------------
 bool FilterOrbatReIndexer::IsValid() const
 {
-    return filename_ && filename_->text() && !filename_->text().isEmpty() && boost::filesystem::exists( filename_->text().ascii() );
+    return filename_ && filename_->text().ascii() && !filename_->text().isEmpty() && boost::filesystem::exists( filename_->text().ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ bool FilterOrbatReIndexer::IsValid() const
 void FilterOrbatReIndexer::OnBrowse()
 {
     assert( !orbatFile_.empty() );
-    QString filename = QFileDialog::getOpenFileName( orbatFile_.c_str(), "Orbat (*.xml)", QApplication::activeModalWidget(), 0, tools::translate( "FilterOrbatReIndexer", "Load orbat file" ) );
+    QString filename = Q3FileDialog::getOpenFileName( orbatFile_.c_str(), "Orbat (*.xml)", QApplication::activeModalWidget(), 0, tools::translate( "FilterOrbatReIndexer", "Load orbat file" ) );
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     filename_->setText( filename );
@@ -121,7 +121,7 @@ void FilterOrbatReIndexer::LoadPreview()
 void FilterOrbatReIndexer::ReadTeam( xml::xistream& xis )
 {
     const std::string name = xis.attribute< std::string >( "name" );
-    QListViewItem* item = new QListViewItem( preview_ );
+    Q3ListViewItem* item = new Q3ListViewItem( preview_ );
     item->setText( 0, name.c_str() );
 }
 
@@ -162,9 +162,9 @@ void FilterOrbatReIndexer::ReadAttribute( const std::string& name, xml::xistream
 // -----------------------------------------------------------------------------
 QWidget* FilterOrbatReIndexer::CreateParametersWidget( QWidget* parent )
 {
-    QGroupBox* parametersWidget = new QGroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Import parameters" ), parent, "FilterOrbatReIndexer_ParameterGroupBox" );
+    Q3GroupBox* parametersWidget = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Import parameters" ), parent, "FilterOrbatReIndexer_ParameterGroupBox" );
     {
-        QHBox* hbox = new QHBox( parametersWidget, "FilterOrbatReIndexer_OrbatHBox" );
+        Q3HBox* hbox = new Q3HBox( parametersWidget, "FilterOrbatReIndexer_OrbatHBox" );
         hbox->setSpacing( 5 );
         new QLabel( tools::translate( "FilterOrbatReIndexer", "Select order of battle:" ), hbox, "FilterOrbatReIndexer_OrbatLabel" );
         filename_ = new QLineEdit( tools::translate( "FilterOrbatReIndexer", "Enter path to the new orbat here" ), hbox, "FilterOrbatReIndexer_OrbatLineEdit" );
@@ -173,17 +173,17 @@ QWidget* FilterOrbatReIndexer::CreateParametersWidget( QWidget* parent )
         connect( browseBtn, SIGNAL( clicked() ), SLOT( OnBrowse() ) );
     }
     {
-        QHBox* hbox = new QHBox( parametersWidget, "FilterOrbatReIndexer_ParameterHBox" );
-        QGroupBox* optionBox = new QGroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Import options:" ), hbox, "FilterOrbatReIndexer_PartiesGroupBox" );
+        Q3HBox* hbox = new Q3HBox( parametersWidget, "FilterOrbatReIndexer_ParameterHBox" );
+        Q3GroupBox* optionBox = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Import options:" ), hbox, "FilterOrbatReIndexer_PartiesGroupBox" );
         objectsCheckBox_ = new QCheckBox( tools::translate( "FilterOrbatReIndexer", "Objects" ), optionBox, "FilterOrbatReIndexer_ObjectsCheckBox" );
         objectsCheckBox_->setChecked( true );
         populationsCheckBox_ = new QCheckBox( tools::translate( "FilterOrbatReIndexer", "Crowd" ), optionBox, "FilterOrbatReIndexer_PopulationsCheckBox" );
         populationsCheckBox_->setChecked( true );
-        QGroupBox* sideBox = new QGroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Parties overview:" ), hbox, "FilterOrbatReIndexer_PartiesGroupBox" );
-        preview_ = new QListView( sideBox, "FilterOrbatReIndexer_PartiesListView" );
+        Q3GroupBox* sideBox = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Parties overview:" ), hbox, "FilterOrbatReIndexer_PartiesGroupBox" );
+        preview_ = new Q3ListView( sideBox, "FilterOrbatReIndexer_PartiesListView" );
         preview_->setMaximumHeight( 50 );
         preview_->addColumn( "" );
-        preview_->setResizeMode( QListView::LastColumn );
+        preview_->setResizeMode( Q3ListView::LastColumn );
         preview_->header()->hide();
     }
     return parametersWidget;

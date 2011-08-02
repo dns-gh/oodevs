@@ -23,7 +23,7 @@ class SuccessFactorConditions;
 */
 // Created: SBO 2009-06-16
 // =============================================================================
-class SuccessFactorConditionItem : public QHBox
+class SuccessFactorConditionItem : public Q3HBox
 {
     Q_OBJECT;
 
@@ -71,7 +71,7 @@ private:
     gui::ValuedComboBox< const Score_ABC* >* score_;
     gui::ValuedComboBox< QString >* operator_;
     QLineEdit* value_;
-    QButton* deleteButton_;
+    QPushButton* deleteButton_;
     //@}
 };
 

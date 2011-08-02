@@ -10,7 +10,6 @@
 #ifndef __DrawerStyle_h_
 #define __DrawerStyle_h_
 
-#include <qpixmap.h>
 #include "clients_kernel/Types.h"
 
 namespace xml

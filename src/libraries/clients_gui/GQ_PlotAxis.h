@@ -26,9 +26,6 @@
 #include "GQ_ValueConvertor.h"
 
 #include <vector>
-#include <qfont.h>
-#include <qwidget.h>
-#include <qvaluelist.h>
 
 class QColorGroup;
 class QPainter;

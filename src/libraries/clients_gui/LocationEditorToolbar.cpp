@@ -27,7 +27,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "resources.h"
-#include <qinputdialog.h>
 #include <boost/bind.hpp>
 
 using namespace gui;
@@ -46,18 +45,18 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     , parameters_( 0 )
     , bookmarksMenu_( 0 )
 {
-
-    setLabel( tr( "Location editor" ) );
+    setObjectName( "locEditToolBar" );
+    setWindowTitle( tr( "Location editor" ) );
     locBox_ = new LocationEditorBox( this, controllers, converter );
     locBox_->AddParser( featureNameParser_, tr( "Feature" ) );
     gotoButton_ = new QToolButton( this );
     gotoButton_->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton_->setPopupDelay( 0 );
-    bookmarksMenu_ = new QPopupMenu( gotoButton_ );
+    gotoButton_->setPopupMode( QToolButton::MenuButtonPopup );
+    bookmarksMenu_ = new Q3PopupMenu( gotoButton_ );
     gotoButton_->setPopup( bookmarksMenu_ );
     ClearBookmarks();
     QToolTip::add( gotoButton_, tr( "Center on location" ) );
-
     okButton_ = new QToolButton( this );
     okButton_->setIconSet( MAKE_PIXMAP( add_point ) );
     QToolTip::add( okButton_, tr( "Add point to current location" ) );
@@ -65,6 +64,11 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     paramsButton_ = new QToolButton( this );
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
+
+    addWidget( locBox_ );
+    addWidget( gotoButton_ );
+    addWidget( okButton_ );
+    addWidget( paramsButton_ );
 
     connect( gotoButton_, SIGNAL( clicked() ), SLOT( Goto() ) );
     connect( okButton_, SIGNAL( clicked() ), SLOT( AddPoint() ) );

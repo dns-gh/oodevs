@@ -18,7 +18,7 @@
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
 ActionCategory::ActionCategory( ActionList* parent )
-    : QVButtonGroup( parent )
+    : Q3VButtonGroup( parent )
     , parent_( parent )
 {
     setExclusive( true );
@@ -40,7 +40,7 @@ ActionCategory::~ActionCategory()
 // Name: ActionCategory::AddAction
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-void ActionCategory::AddAction( QAction& action )
+void ActionCategory::AddAction( Q3Action& action )
 {
     ActionItem* item = new ActionItem( this, action );
     connect( item, SIGNAL( toggled( bool ) ), SLOT( OnItemToggled( bool ) ) );

@@ -20,11 +20,11 @@
 #include "reports/RcEntityResolver_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
-#include <qtable.h>
+
 
 namespace
 {
-    void Initialize( QTable& table, const std::vector< std::string >& cols )
+    void Initialize( Q3Table& table, const std::vector< std::string >& cols )
     {
         table.setSorting( true );
         for( unsigned int i = 0; i < cols.size(); ++i )
@@ -33,16 +33,16 @@ namespace
             table.horizontalHeader()->setLabel( i, cols.at( i ).c_str() );
             table.sortColumn( i, true, true );
         }
-        table.setSelectionMode( QTable::NoSelection );
+        table.setSelectionMode( Q3Table::NoSelection );
         table.setReadOnly( true );
         table.setShowGrid( false );
     }
 
-    class LivingAreaTable : public QTable
+    class LivingAreaTable : public Q3Table
     {
     public:
         explicit LivingAreaTable( QWidget* parent )
-            : QTable( parent )
+            : Q3Table( parent )
             , sortColumn_( -1 )
         {
             // NOTHING
@@ -52,17 +52,17 @@ namespace
             if( col == -1 )
                 col = sortColumn_;
             sortColumn_ = col;
-            QTable::sortColumn( col, ascending, true );
+            Q3Table::sortColumn( col, ascending, true );
         }
     private:
         int sortColumn_;
     };
 
-    class IntegerTableItem : public QTableItem
+    class IntegerTableItem : public Q3TableItem
     {
     public:
-        IntegerTableItem( QTable* table, QTableItem::EditType et, const QString& text )
-            : QTableItem( table, et, text )
+        IntegerTableItem( Q3Table* table, Q3TableItem::EditType et, const QString& text )
+            : Q3TableItem( table, et, text )
         {
             // NOTHING
         }
@@ -72,11 +72,11 @@ namespace
         }
     };
 
-    class FloatTableItem : public QTableItem
+    class FloatTableItem : public Q3TableItem
     {
     public:
-        FloatTableItem( QTable* table, QTableItem::EditType et, const QString& text )
-            : QTableItem( table, et, text )
+        FloatTableItem( Q3Table* table, Q3TableItem::EditType et, const QString& text )
+            : Q3TableItem( table, et, text )
         {
             // NOTHING
         }
@@ -100,7 +100,7 @@ LivingAreaDialog::LivingAreaDialog( QWidget* pParent, kernel::Controllers& contr
     , table_      ( 0 )
 {
     resize( 650, 400 );
-    QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, 5 );
+    Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this, 0, 5 );
     table_ = new LivingAreaTable( this );
     Initialize( *table_, boost::assign::list_of( tools::translate( "LivingAreaDialog", "Name" ).ascii() )( tools::translate( "LivingAreaDialog", "Resident" ).ascii() )
                                                ( tools::translate( "LivingAreaDialog", "Angriness" ).ascii() )( tools::translate( "LivingAreaDialog", "Alerted" ).ascii() )
@@ -191,11 +191,11 @@ void LivingAreaDialog::Visit( unsigned int id, unsigned int resident, bool alert
         table_->insertRows( rows );
         gui::RichLabel* label = factory_.CreateLabel( rcResolver_.CreateLink( gui::TerrainObjectProxy::typeName_, id ), table_ );
         table_->setCellWidget( rows, 0, label );
-        table_->setItem( rows, 1, new IntegerTableItem( table_, QTableItem::Never, boost::lexical_cast< std::string >( resident ).c_str() ) );
-        table_->setItem( rows, 2, new FloatTableItem( table_, QTableItem::Never, boost::lexical_cast< std::string >( angriness ).c_str() ) );
-        table_->setItem( rows, 3, new QTableItem( table_, QTableItem::Never, Convert( alerted ) ) );
-        table_->setItem( rows, 4, new QTableItem( table_, QTableItem::Never, Convert( confined ) ) );
-        table_->setItem( rows, 5, new QTableItem( table_, QTableItem::Never, Convert( evacuated ) ) );
+        table_->setItem( rows, 1, new IntegerTableItem( table_, Q3TableItem::Never, boost::lexical_cast< std::string >( resident ).c_str() ) );
+        table_->setItem( rows, 2, new FloatTableItem( table_, Q3TableItem::Never, boost::lexical_cast< std::string >( angriness ).c_str() ) );
+        table_->setItem( rows, 3, new Q3TableItem( table_, Q3TableItem::Never, Convert( alerted ) ) );
+        table_->setItem( rows, 4, new Q3TableItem( table_, Q3TableItem::Never, Convert( confined ) ) );
+        table_->setItem( rows, 5, new Q3TableItem( table_, Q3TableItem::Never, Convert( evacuated ) ) );
         rows_[ id ] = rows;
     }
     else

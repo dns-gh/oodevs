@@ -26,11 +26,13 @@
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Validator.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qgroupbox.h>
-#include <qlineedit.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qtooltip.h>
+#include <Qt3Support/q3groupbox.h>
+#include <QtGui/qlineedit.h>
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 
 // -----------------------------------------------------------------------------
@@ -62,7 +64,7 @@ ADN_GuiBuilder::~ADN_GuiBuilder()
 QWidget* ADN_GuiBuilder::AddFieldHolder( QWidget* pParent )
 {
     QWidget* pHolder = new QWidget( pParent );
-    new QGridLayout( pHolder, 0, 3, 5, 5 );
+    new Q3GridLayout( pHolder, 0, 3, 5, 5 );
     return pHolder;
 }
 
@@ -71,7 +73,7 @@ QWidget* ADN_GuiBuilder::AddFieldHolder( QWidget* pParent )
 // Name: ADN_GuiBuilder::AddFileField
 // Created: APE 2005-04-06
 // -----------------------------------------------------------------------------
-ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter /*= "(*.*)"*/ )
+ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter /* = "(*.*)"*/ )
 {
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
@@ -168,7 +170,7 @@ void ADN_GuiBuilder::DoFieldLayout( QWidget* pParent, QWidget* pWidget1, QWidget
     assert( pParent->layout() != 0 );
     if( pParent->layout()->inherits( "QGridLayout" ) )
     {
-        QGridLayout* pLayout = (QGridLayout*)pParent->layout();
+        Q3GridLayout* pLayout = (Q3GridLayout*)pParent->layout();
         int nRow = pLayout->numRows();
         pLayout->setColStretch( 0, 0 );
         pLayout->setColStretch( 1, 500 );
@@ -188,7 +190,7 @@ void ADN_GuiBuilder::DoFieldLayout( QWidget* pParent, QWidget* pWidget1, QWidget
     else if( pParent->inherits( "QGroupBox" ) )
     {
         if( pWidget3 == 0 )
-            ((QGroupBox*)pParent)->addSpace( 0 );
+            ((Q3GroupBox*)pParent)->addSpace( 0 );
     }
 }
 
@@ -225,7 +227,7 @@ ADN_Table* ADN_GuiBuilder::CreateTable( QWidget* pParent )
 
     // Selection and sorting.
     pTable->setSorting( true );
-    pTable->setSelectionMode( QTable::NoSelection );
+    pTable->setSelectionMode( Q3Table::NoSelection );
     pTable->setShowGrid( true );
 
     // Hide the vertical header.
@@ -240,9 +242,9 @@ ADN_Table* ADN_GuiBuilder::CreateTable( QWidget* pParent )
 // Name: ADN_GuiBuilder::AddTableCell
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-QTableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol, const char* strText, QTableItem::EditType nEditType )
+Q3TableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol, const char* strText, Q3TableItem::EditType nEditType )
 {
-    QTableItem* pItem = new QTableItem( pTable, nEditType, strText );
+    Q3TableItem* pItem = new Q3TableItem( pTable, nEditType, strText );
     pTable->setItem( nRow, nCol, pItem );
     return pItem;
 }
@@ -252,9 +254,9 @@ QTableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol,
 // Name: ADN_GuiBuilder::AddTableCell
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-QTableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText, QTableItem::EditType nEditType )
+Q3TableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText, Q3TableItem::EditType nEditType )
 {
-    QTableItem* pItem = new QTableItem( pTable, nEditType, strText );
+    Q3TableItem* pItem = new Q3TableItem( pTable, nEditType, strText );
     pTable->setItem( nRow, nCol, pItem );
     pItem->setSpan( nRowSpan, nColSpan );
     return pItem;

@@ -24,7 +24,7 @@ using namespace tools;
 // Name: GeneralConfig constructor
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-GeneralConfig::GeneralConfig( const std::string& defaultRoot /*= "../"*/ )
+GeneralConfig::GeneralConfig( const std::string& defaultRoot /* = "../"*/ )
     : CommandLineConfig_ABC()
     , terrainConfigFile_ ( "terrain.xml"  )
     , exerciseConfigFile_( "exercise.xml" )

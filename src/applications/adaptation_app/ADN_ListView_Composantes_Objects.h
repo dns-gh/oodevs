@@ -28,7 +28,7 @@ class ADN_ListView_Composantes_Objects
     Q_OBJECT
 
 public:
-    explicit ADN_ListView_Composantes_Objects(QWidget * parent = 0, const char * name = 0, WFlags f = 0);
+    explicit ADN_ListView_Composantes_Objects(QWidget * parent = 0, const char * name = 0, Qt::WFlags f = 0);
     virtual ~ADN_ListView_Composantes_Objects();
 
 private:

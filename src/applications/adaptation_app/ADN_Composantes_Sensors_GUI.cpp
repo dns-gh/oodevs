@@ -16,7 +16,7 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Workspace.h"
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Composantes_Data::SensorInfos SensorInfos;
 
@@ -39,7 +39,7 @@ public:
         ADN_TableItem_String* pItemCombo = 0;
         ADN_TableItem_Double* pItemInt = 0;
         // add a new row & set new values
-        tab_.setItem( i, 0, pItemCombo = new ADN_TableItem_String( &tab_, obj, QTableItem::Never ) );
+        tab_.setItem( i, 0, pItemCombo = new ADN_TableItem_String( &tab_, obj, Q3TableItem::Never ) );
         tab_.setItem( i, 1, pItemInt = new ADN_TableItem_Double( &tab_, obj ) );
         // set table item properties
         pItemInt->GetValidator().setBottom( 0 );
@@ -60,7 +60,7 @@ ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI( QWidget * parent )
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::Single );
+    setSelectionMode( Q3Table::Single );
     setShowGrid( false );
     setLeftMargin( 0 );
     setMinimumHeight( 115 );
@@ -91,7 +91,7 @@ ADN_Composantes_Sensors_GUI::~ADN_Composantes_Sensors_GUI()
 //-----------------------------------------------------------------------------
 void ADN_Composantes_Sensors_GUI::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
 {
-    std::auto_ptr< QPopupMenu > pTargetMenu( new QPopupMenu( this ) );
+    std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
     bool bDisplayRem = GetCurrentData() != 0;
@@ -104,7 +104,7 @@ void ADN_Composantes_Sensors_GUI::OnContextMenu( int /*row*/, int /*col*/, const
     ADN_Tools::SortMenu( *pTargetMenu );
     if( ! bDisplayAdd && !bDisplayRem )
         return;
-    QPopupMenu* pMenu = new QPopupMenu( this );
+    Q3PopupMenu* pMenu = new Q3PopupMenu( this );
     if( bDisplayAdd )
         pMenu->insertItem( tr( "Add sensor" ), pTargetMenu.get(), 0 );
     if( bDisplayRem )

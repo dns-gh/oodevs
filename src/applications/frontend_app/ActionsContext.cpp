@@ -9,7 +9,7 @@
 
 #include "frontend_app_pch.h"
 #include "ActionsContext.h"
-#include <qlistbox.h>
+#include <Qt3Support/q3listbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: ActionsContext constructor
@@ -54,7 +54,7 @@ std::string ActionsContext::GetValue( const std::string& name ) const
 // Name: ActionsContext::Load
 // Created: SBO 2008-04-16
 // -----------------------------------------------------------------------------
-void ActionsContext::Load( const std::string& name, QListBox* widget ) const
+void ActionsContext::Load( const std::string& name, Q3ListBox* widget ) const
 {
     if( widget )
         widget->setSelected( widget->findItem( GetValue( name ).c_str() ), true );
@@ -64,7 +64,7 @@ void ActionsContext::Load( const std::string& name, QListBox* widget ) const
 // Name: ActionsContext::Save
 // Created: SBO 2008-04-16
 // -----------------------------------------------------------------------------
-void ActionsContext::Save( const std::string& name, const QListBox* widget )
+void ActionsContext::Save( const std::string& name, const Q3ListBox* widget )
 {
     if( widget && widget->selectedItem() )
          Save( name, widget->selectedItem()->text().ascii() );

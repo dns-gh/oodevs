@@ -30,8 +30,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 
-#include <qheader.h>
-#include <qpopmenu.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Models_Data::MissionInfos MissionInfos;
 
@@ -61,7 +61,7 @@ private:
 // Name: ADN_ListView_Missions constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent /*= 0*/, const char * name , WFlags f )
+ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent /* = 0*/, const char * name , Qt::WFlags f )
     : ADN_ListView  ( parent, name, f )
     , pLVModels_    ( pList )
     , eEntityType_  ( eEntityType )
@@ -69,7 +69,7 @@ ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_Mod
 {
     // add one column
     addColumn( tr( "Missions"));
-    setResizeMode(QListView::AllColumns);
+    setResizeMode(Q3ListView::AllColumns);
 
     // connector creation
     pConnector_=new ADN_CLV_Missions(*this);
@@ -112,7 +112,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
         return;
 
-    QPopupMenu menu;
+    Q3PopupMenu menu;
     menu.insertItem( tr( "Configure missions" ), 1 );
 
     if( menu.exec( pt ) != 1 )
@@ -120,22 +120,22 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 
     ADN_Mission_ConfigurationDlg cfgDlg( this );
 
-    QListView* pMissionList = cfgDlg.GetMissionList();
-    QCheckListItem* pParent = 0;
+    Q3ListView* pMissionList = cfgDlg.GetMissionList();
+    Q3CheckListItem* pParent = 0;
 
     if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
     {
-        pParent = new QCheckListItem( pMissionList, tr( "Unit" ), QCheckListItem::CheckBoxController );
+        pParent = new Q3CheckListItem( pMissionList, tr( "Unit" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() );
     }
     else if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
     {
-        pParent = new QCheckListItem( pMissionList, tr( "Automate" ), QCheckListItem::CheckBoxController );
+        pParent = new Q3CheckListItem( pMissionList, tr( "Automate" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() );
     }
     else
     {
-        pParent = new QCheckListItem( pMissionList, tr( "Crowd" ), QCheckListItem::CheckBoxController );
+        pParent = new Q3CheckListItem( pMissionList, tr( "Crowd" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() );
     }
     if( cfgDlg.exec() != QDialog::Accepted )
@@ -149,7 +149,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Missions::FillList
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
-void ADN_ListView_Missions::FillList( QCheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions )
+void ADN_ListView_Missions::FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions )
 {
     currentMissions_ = &missions;
     pParent->setOpen( true );
@@ -185,14 +185,14 @@ ADN_ListViewItem* ADN_ListView_Missions::FindItem( const std::string& strMission
 // Name: ADN_ListView_Missions::ApplyModifications
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
-void ADN_ListView_Missions::ApplyModifications( QCheckListItem* pStart )
+void ADN_ListView_Missions::ApplyModifications( Q3CheckListItem* pStart )
 {
     if( !currentMissions_ )
         return;
-    QListViewItem* pItem = pStart->firstChild();
+    Q3ListViewItem* pItem = pStart->firstChild();
     while( pItem != 0 )
     {
-        if( pItem->rtti() == 1 && static_cast< QCheckListItem* >( pItem )->type() == QCheckListItem::CheckBox )
+        if( pItem->rtti() == 1 && static_cast< Q3CheckListItem* >( pItem )->type() == Q3CheckListItem::CheckBox )
         {
             ADN_Mission_CheckItem* pMissionItem = static_cast< ADN_Mission_CheckItem* >( pItem );
             if( pMissionItem->isOn() )

@@ -12,7 +12,10 @@
 
 #include "GLToolColors.h"
 #include "Types.h"
-#include <qfont.h>
+
+#pragma warning( push, 0 )
+#include <QtGui/qfont.h>
+#pragma warning( pop )
 
 class QImage;
 class QCursor;

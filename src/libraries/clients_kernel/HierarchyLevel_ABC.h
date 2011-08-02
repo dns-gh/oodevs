@@ -12,6 +12,11 @@
 
 #include <boost/noncopyable.hpp>
 
+#pragma warning( push, 0 )
+#include <QtCore/qstring.h>
+#pragma warning( pop )
+
+
 class QString;
 
 namespace kernel

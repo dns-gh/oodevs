@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 #include <list>
 
 namespace kernel
@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( QListViewItem* item ) const;
+    virtual void Display( Q3ListViewItem* item ) const;
 
     void Update( const sword::MarkerUpdate& message );
     void Delete();

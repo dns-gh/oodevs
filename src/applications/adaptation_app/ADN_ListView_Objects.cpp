@@ -16,7 +16,6 @@
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_Objects_Wizard.h"
 #include "ADN_ComboBox.h"
-#include <qpopupmenu.h>
 
 typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
 
@@ -24,14 +23,14 @@ typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
 // Name: ADN_ListView_Objects constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName, WFlags f, ADN_ComboBox* pComboListUnitType, ADN_ComboBox* pComboListPropagation )
+ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName, Qt::WFlags f, ADN_ComboBox* pComboListUnitType, ADN_ComboBox* pComboListPropagation )
     : ADN_ListView( pParent, szName, f )
     , pComboListUnitType_ ( pComboListUnitType ) 
     , pComboListPropagation_ ( pComboListPropagation ) 
 {
     // Add one column.
     addColumn( tr( "Objects" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ObjectInfos >( *this );
@@ -244,7 +243,7 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
 {
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        QPopupMenu popupMenu( this );
+        Q3PopupMenu popupMenu( this );
         ADN_Objects_Wizard wizard;
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );

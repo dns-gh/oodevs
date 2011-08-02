@@ -18,48 +18,48 @@
 #include "frontend/CommandLineTools.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
-#include <qaction.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
+#include <Qt3Support/q3action.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpushbutton.h>
+#include <QtGui/qspinbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: StartAnalysisPanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartAnalysisPanel::StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+StartAnalysisPanel::StartAnalysisPanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context )
     : Panel_ABC( widget, action, context, "StartAnalysisPanel" )
     , config_( config )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, action.text(), box );
     {
-        QVBox* exercises = new QVBox( group );
+        Q3VBox* exercises = new Q3VBox( group );
         new QLabel( tr( "Choose the exercise to analyse:" ), exercises );
-        exercises_ = new QListBox( exercises );
+        exercises_ = new Q3ListBox( exercises );
         connect( exercises_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
     }
     {
-        QVBox* replays = new QVBox( group );
+        Q3VBox* replays = new Q3VBox( group );
         new QLabel( tr( "Choose the session to analyse:" ), replays );
-        replays_ = new QListBox( replays );
+        replays_ = new Q3ListBox( replays );
         connect( replays_, SIGNAL( selectionChanged() ), SLOT( ReplaySelected() ) );
     }
     bubble_ = new InfoBubble( box );
     {
-        QHBox* btnBox = new QHBox( box );
+        Q3HBox* btnBox = new Q3HBox( box );
         btnBox->layout()->setAlignment( Qt::AlignRight );
         okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Start replay session" ), btnBox );
         QFont font( "Arial", 10, QFont::Bold );
         okay_->setFont( font );
     }
 
-    QHBox* exerciseNumberBox = new QHBox( group );
+    Q3HBox* exerciseNumberBox = new Q3HBox( group );
     new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
     exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
 

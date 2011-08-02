@@ -10,8 +10,6 @@
 #ifndef __DrawingCategoryItem_h_
 #define __DrawingCategoryItem_h_
 
-#include <qvbuttongroup.h>
-
 namespace gui
 {
     class DrawingCategory;
@@ -23,7 +21,7 @@ namespace gui
 */
 // Created: SBO 2008-06-04
 // =============================================================================
-class DrawingCategoryItem : public QVButtonGroup
+class DrawingCategoryItem : public Q3VButtonGroup
 {
     Q_OBJECT;
 

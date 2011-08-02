@@ -43,8 +43,8 @@ GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& contro
     , glPlaceHolder_    ( 0 )
     , b3d_              ( false )
     , bDragMapWithWheel_( false )
-
 {
+    setObjectName( "GlSelector" );
     displayTimer_ = new QTimer( this );
     glPlaceHolder_ = new GlPlaceHolder( parent );
     parent->setCentralWidget( glPlaceHolder_ );

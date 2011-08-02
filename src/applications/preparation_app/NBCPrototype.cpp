@@ -53,7 +53,7 @@ void NBCPrototype::Commit()
         NBCAttribute* attribute = new NBCAttribute( dico );
         {
             attribute->SetState( nbcStates_->GetValue() );
-            for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
+            for( Q3ListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
                 if( item->isSelected() )
                     attribute->AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >() );
             attribute->SetDanger( danger_->value() );

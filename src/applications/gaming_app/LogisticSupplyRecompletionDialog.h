@@ -121,15 +121,15 @@ private:
 
     kernel::SafePointer< kernel::Agent_ABC > selected_;
 
-    QTable*          equipmentsTable_;
+    Q3Table*          equipmentsTable_;
     QStringList      equipmentsList_;
     T_Equipments     equipments_;
     T_Ints           equipmentsMax_;
 
-    QTable*          personalsTable_;
-    QTable*          dotationsTable_;
-    QTable*          munitionsFamilyTable_;
-    QTable*          stockTable_;
+    Q3Table*          personalsTable_;
+    Q3Table*          dotationsTable_;
+    Q3Table*          munitionsFamilyTable_;
+    Q3Table*          stockTable_;
     T_Dotations      stocks_;
     //@}
 };

@@ -20,10 +20,10 @@
 #include "GQ_PlotAxis.h"
 #include "ADN_DataException.h"
 #include "moc_GQ_PlotAxis.cpp"
-#include <qpalette.h>
-#include <qfontmetrics.h>
-#include <qpainter.h>
-#include <qpoint.h>
+#include <QtGui/qpalette.h>
+#include <QtGui/qfontmetrics.h>
+#include <QtGui/qpainter.h>
+#include <QtCore/qpoint.h>
 #include <cassert>
 #include <cmath>
 

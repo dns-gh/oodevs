@@ -12,8 +12,6 @@
 
 #include "NoLinkDisplayer.h"
 
-class QTableItem;
-
 namespace gui
 {
 
@@ -35,7 +33,7 @@ public:
     //! @name Operations
     //@{
     virtual void Hide() ;
-    void SetItem( QTableItem* item );
+    void SetItem( Q3TableItem* item );
     //@}
 
 private:
@@ -57,7 +55,7 @@ private:
     //! @name Member data
     //@{
     QString message_;
-    QTableItem* item_;
+    Q3TableItem* item_;
     //@}
 };
 

@@ -15,8 +15,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
-class QListViewItem;
-
 namespace kernel
 {
     class Displayer_ABC;

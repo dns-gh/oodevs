@@ -12,7 +12,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Armor.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
@@ -27,14 +27,14 @@ typedef helpers::ArmorInfos ArmorInfos;
 // Name: ADN_ListView_Categories_Armor constructor
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, const char * name, WFlags f)
+ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, const char * name, Qt::WFlags f)
     : ADN_ListView(parent,name,f)
 {
 
     // add one column && disable sort
     addColumn( tr( "Armor-Plating" ) );
     setSorting( -1, true );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // connector creation
     pConnector_ = new ADN_Connector_ListView<ArmorInfos>(*this);
@@ -80,7 +80,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
-    QPopupMenu * pMenu=new QPopupMenu( this );
+    Q3PopupMenu * pMenu=new Q3PopupMenu( this );
     pMenu->insertItem( tr( "New Armor-Plating" ), 0  );
     pMenu->insertItem( tr( "Delete Armor-Plating" ), 1 );
     pMenu->setItemEnabled( 1, pCurData_ != 0 );

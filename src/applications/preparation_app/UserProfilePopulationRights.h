@@ -34,7 +34,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnItemClicked( QListViewItem*, const QPoint&, int );
+    void OnItemClicked( Q3ListViewItem*, const QPoint&, int );
     //@}
 
 private:

@@ -13,7 +13,7 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <qiconview.h>
+#include <Qt3Support/q3iconview.h>
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: SBO 2007-02-21
 // =============================================================================
-class InfoSubordinatesWidget : public QIconView
+class InfoSubordinatesWidget : public Q3IconView
                              , public tools::Observer_ABC
                              , public tools::SelectionObserver< kernel::Entity_ABC >
                              , public tools::ElementObserver_ABC< kernel::Entity_ABC >
@@ -50,7 +50,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OpenItem( QIconViewItem* item );
+    void OpenItem( Q3IconViewItem* item );
     //@}
 
 private:

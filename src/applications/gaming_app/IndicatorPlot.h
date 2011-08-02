@@ -41,9 +41,9 @@ class IndicatorPlot : public gui::GQ_Plot
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
+             IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWidget* dock,
                             IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick,
-                            QVBox* plotNames );
+                            Q3VBox* plotNames );
     virtual ~IndicatorPlot();
     //@}
 
@@ -85,7 +85,7 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const bool interactive_;
-    QDockWindow* dock_;
+    QDockWidget* dock_;
     IndicatorExportDialog& exportDialog_;
     T_Datas datas_;
     gui::GQ_PlotData* tickData_;

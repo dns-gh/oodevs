@@ -48,7 +48,7 @@ public:
         addColumn( column );
         itemDisplayer_.AddColumn( column );
         setSorting( columns() - 1, true );
-        setResizeMode( QListView::LastColumn );
+        setResizeMode( Q3ListView::LastColumn );
         return *this;
     }
     template< typename Element >
@@ -58,13 +58,13 @@ public:
         return T_Parent::Display( it, this, (ValuedListItem*)( firstChild() ) );
     }
     template< typename Element >
-    ValuedListItem* DisplayList( tools::Iterator< const Element& > it, QListViewItem* parent ) {
+    ValuedListItem* DisplayList( tools::Iterator< const Element& > it, Q3ListViewItem* parent ) {
         if( it.HasMoreElements() )
             show();
         return T_Parent::Display( it, parent, (ValuedListItem*)( parent->firstChild() ) );
     }
     template< typename Element >
-    ValuedListItem* DisplayList( tools::Iterator< const Element& > it, QListView* parent, ValuedListItem* at ) {
+    ValuedListItem* DisplayList( tools::Iterator< const Element& > it, Q3ListView* parent, ValuedListItem* at ) {
         if( it.HasMoreElements() )
             show();
         return T_Parent::Display( it, parent, at );
@@ -84,14 +84,14 @@ public:
     };
 
     template< typename Iterator >
-    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListViewItem* parent ) {
+    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, Q3ListViewItem* parent ) {
         if( from != to )
             show();
         return T_Parent::Display( from, to, parent, (ValuedListItem*)( parent->firstChild() ) );
     };
 
     template< typename Iterator >
-    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListView* parent, ValuedListItem* at ) {
+    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, Q3ListView* parent, ValuedListItem* at ) {
         if( from != to )
             show();
         return T_Parent::Display( from, to, parent, at );

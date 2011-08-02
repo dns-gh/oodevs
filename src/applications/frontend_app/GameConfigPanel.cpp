@@ -17,12 +17,12 @@
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-#include <qcheckbox.h>
-#include <qdatetimeedit.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
+#include <QtGui/qcheckbox.h>
+#include <Qt3Support/q3datetimeedit.h>
+#include <Qt3Support/q3groupbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qspinbox.h>
 
 #pragma warning( push )
 #pragma warning( disable : 4702 )
@@ -36,19 +36,19 @@
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
 GameConfigPanel::GameConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
-    : QVBox( parent, "GameConfigPanel" )
+    : Q3VBox( parent, "GameConfigPanel" )
     , config_( config )
 {
     setSpacing( 5 );
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     box->setSpacing( 5 );
-    CreateSimulationPanel( new QGroupBox( 1, Horizontal, tools::translate( "GameConfigPanel", "Simulation" ), box ) );
-    QWidget* debugPanel = new QGroupBox( 1, Horizontal, tools::translate( "GameConfigPanel", "Debug" ), box );
+    CreateSimulationPanel( new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "GameConfigPanel", "Simulation" ), box ) );
+    QWidget* debugPanel = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "GameConfigPanel", "Debug" ), box );
     CreateDebugPanel( debugPanel );
-    QWidget* systemPanel = new QGroupBox( 1, Horizontal, tools::translate( "GameConfigPanel", "System" ), box );
+    QWidget* systemPanel = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "GameConfigPanel", "System" ), box );
     CreateSystemPanel( systemPanel );
     {
-        box = new QHBox( this );
+        box = new Q3HBox( this );
         box->layout()->setAlignment( Qt::AlignRight );
         AdvancedButton* button = new AdvancedButton( box );
         button->Link( debugPanel );
@@ -71,36 +71,36 @@ GameConfigPanel::~GameConfigPanel()
 // -----------------------------------------------------------------------------
 QWidget* GameConfigPanel::CreateSimulationPanel( QWidget* parent )
 {
-    QHBox* box = new QVBox( parent );
+    Q3HBox* box = new Q3VBox( parent );
     box->setSpacing( 5 );
     {
-        QGroupBox* time = new QGroupBox( 2, Vertical, tools::translate( "GameConfigPanel", "Time" ), box );
+        Q3GroupBox* time = new Q3GroupBox( 2, Qt::Vertical, tools::translate( "GameConfigPanel", "Time" ), box );
         {
-            QHBox* stepBox = new QHBox( time );
+            Q3HBox* stepBox = new Q3HBox( time );
             new QLabel( tools::translate( "GameConfigPanel", "Time step:" ), stepBox );
             stepSpin_ = new QSpinBox( 1, 100, 1, stepBox );
             stepSpin_->setValue( 10 );
         }
         {
-            QHBox* factorBox = new QHBox( time );
+            Q3HBox* factorBox = new Q3HBox( time );
             new QLabel( tools::translate( "GameConfigPanel", "Time factor:" ), factorBox );
             factorSpin_ = new QSpinBox( 1, 100, 1, factorBox );
             factorSpin_->setValue( 10 );
         }
     }
     {
-        checkpoints_ = new QGroupBox( 2, Vertical, tools::translate( "GameConfigPanel", "Checkpoints" ), box );
+        checkpoints_ = new Q3GroupBox( 2, Qt::Vertical, tools::translate( "GameConfigPanel", "Checkpoints" ), box );
         checkpoints_->setCheckable( true );
         checkpoints_->setChecked( false );
         {
-            QHBox* frequencyBox = new QHBox( checkpoints_ );
+            Q3HBox* frequencyBox = new Q3HBox( checkpoints_ );
             new QLabel( tools::translate( "GameConfigPanel", "Frequency:" ), frequencyBox );
-            checkFrequency_ = new QTimeEdit( frequencyBox );
-            checkFrequency_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds  );
+            checkFrequency_ = new Q3TimeEdit( frequencyBox );
+            checkFrequency_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds  );
             checkFrequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {
-            QHBox* keepBox = new QHBox( checkpoints_ );
+            Q3HBox* keepBox = new Q3HBox( checkpoints_ );
             new QLabel( tools::translate( "GameConfigPanel", "Rotations:" ), keepBox );
             keepSpin_ = new QSpinBox( 1, 100, 1, keepBox );
         }
@@ -114,15 +114,15 @@ QWidget* GameConfigPanel::CreateSimulationPanel( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
 {
-    QHBox* box = new QVBox( parent );
+    Q3HBox* box = new Q3VBox( parent );
     box->setSpacing( 5 );
     {
-        QGroupBox* logs = new QGroupBox( 4, Horizontal, tools::translate( "GameConfigPanel", "Logs" ), box );
+        Q3GroupBox* logs = new Q3GroupBox( 4, Qt::Horizontal, tools::translate( "GameConfigPanel", "Logs" ), box );
         decisionalLogs_ = new QCheckBox( tools::translate( "GameConfigPanel", "Decisional" ), logs );
         pathfindLogs_   = new QCheckBox( tools::translate( "GameConfigPanel", "Pathfind" ), logs );
     }
     {
-        diaDebugBox_ = new QGroupBox( 1, Vertical, tools::translate( "GameConfigPanel", "DIA Debugger" ), box );
+        diaDebugBox_ = new Q3GroupBox( 1, Qt::Vertical, tools::translate( "GameConfigPanel", "DIA Debugger" ), box );
         diaDebugBox_->setCheckable( true );
         diaDebugBox_->setChecked( false );
         diaDebugPort_ = new QSpinBox( 1024, 65535, 1, diaDebugBox_ );
@@ -130,7 +130,7 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
         connect( diaDebugBox_, SIGNAL( toggled( bool ) ), diaDebugPort_, SLOT( setEnabled( bool ) ) );
     }
     {
-        netConBox_ = new QGroupBox( 1, Vertical, tools::translate( "GameConfigPanel", "Network Console" ), box );
+        netConBox_ = new Q3GroupBox( 1, Qt::Vertical, tools::translate( "GameConfigPanel", "Network Console" ), box );
         netConBox_->setCheckable( true );
         netConBox_->setChecked( false );
         netConPort_ = new QSpinBox( 1024, 65535, 1, netConBox_ );
@@ -146,10 +146,10 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* GameConfigPanel::CreateSystemPanel( QWidget* parent )
 {
-    QHBox* box = new QVBox( parent );
+    Q3HBox* box = new Q3VBox( parent );
     box->setSpacing( 5 );
     {
-        QHBox* pathThreads = new QHBox( box );
+        Q3HBox* pathThreads = new Q3HBox( box );
         new QLabel( tools::translate( "GameConfigPanel", "Pathfind threads:" ), pathThreads );
         pathThreads_ = new QSpinBox( 1, 4, 1, pathThreads );
     }

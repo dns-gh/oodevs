@@ -42,10 +42,10 @@ namespace
         typedef boost::function1< void, int > T_Callback;
     public:
         ConfirmationBox( const QString& title, T_Callback callback )
-            : QMessageBox( title, "", QMessageBox::Warning, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, QMessageBox::NoButton )
+            : QMessageBox( title, "", QMessageBox::Warning, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, Qt::NoButton )
             , callback_( callback )
         {
-            setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+            setIcon( QMessageBox::Information );
             hide();
         }
 
@@ -341,7 +341,7 @@ namespace
 // Name: ModelBuilder::OnRename
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
-void ModelBuilder::OnRename( QListViewItem*, int, const QString& text )
+void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
 {
     if( selectedTeam_ )
         Rename< Team >( selectedTeam_, text );

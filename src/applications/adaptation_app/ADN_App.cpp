@@ -16,10 +16,6 @@
 #include "ADN_Exception_ABC.h"
 #include "ADN_Config.h"
 
-#include <qtextcodec.h>
-#include <qtranslator.h>
-#include <qmessagebox.h>
-
 ADN_App* ADN_App::pApplication_ = 0;
 
 //-----------------------------------------------------------------------------
@@ -101,7 +97,7 @@ namespace
 // Name: ADN_App::Initialize
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile )
+bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile, int argc, char** argv )
 {
     const QString locale = ReadLang();
     AddTranslator( locale, "adaptation" );
@@ -116,7 +112,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     ENT_Tr::InitTranslations();
 
     // Create and set the application's main window.
-    pMainWindow_ = new ADN_MainWindow( *config_ );
+    pMainWindow_ = new ADN_MainWindow( *config_, argc , argv );
     pMainWindow_->Build();
     setMainWidget( pMainWindow_ );
     pMainWindow_->showMaximized();

@@ -14,7 +14,7 @@
 // Name: ADN_Model_Wizard_FirstPage constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Model_Wizard_FirstPage::ADN_Model_Wizard_FirstPage( ADN_Missions_Data::T_Mission_Vector& missions, T_ItemVector& existingItemsList, QWizard* pParent, const char* szName /*= 0*/, const char* szImageName /*= "adn_wizard.bmp"*/ )
+ADN_Model_Wizard_FirstPage::ADN_Model_Wizard_FirstPage( ADN_Missions_Data::T_Mission_Vector& missions, T_ItemVector& existingItemsList, Q3Wizard* pParent, const char* szName /* = 0*/, const char* szImageName /* = "adn_wizard.bmp"*/ )
     : ADN_Wizard_FirstPage_Default< ADN_Models_Data::ModelInfos >( existingItemsList, pParent, szName, szImageName )
     , missions_( missions )
 {

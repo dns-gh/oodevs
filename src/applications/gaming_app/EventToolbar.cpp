@@ -26,14 +26,20 @@ using namespace kernel;
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
 EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, const kernel::Profile_ABC& profile )
-    : QToolBar( pParent, "event toolbar" )
+    : QToolBar( "event toolbar", pParent )
     , controllers_( controllers )
     , profile_( profile )
 {
-    setLabel( tr( "Messages" ) );
+    setObjectName( "eventToolBar" ); 
+    setWindowTitle( tr( "Messages" ) );
     gasButton_ = new QToolButton( MAKE_ICON( gas ), tr( "Out of gas" ), "", this, SLOT( GasClicked() ), this );
     conflictButton_ = new QToolButton( MAKE_ICON( ammo ), tr( "Conflicts" ), "", this, SLOT( ConflictClicked() ), this );
     messageButton_ = new QToolButton( MAKE_ICON( msg ), "0", "", this, SLOT( MessageClicked() ), this );
+    
+    addWidget( gasButton_ );
+    addWidget( conflictButton_ );
+    addWidget( messageButton_ );
+    
     messageButton_->setUsesTextLabel( true );
     messageButton_->setTextPosition( QToolButton::BesideIcon );
     controllers_.Register( *this );

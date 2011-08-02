@@ -20,7 +20,7 @@
 #include "tools/SchemaWriter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
-#include <qregexp.h>
+#include <QtCore/qregexp.h>
 
 using namespace kernel;
 

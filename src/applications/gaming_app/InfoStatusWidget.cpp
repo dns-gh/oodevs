@@ -22,64 +22,69 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_gui/EntitySymbols.h"
 #include "icons.h"
-#include <qpainter.h>
-#include <qprogressbar.h>
+#pragma warning( push, 0 )
+#include <QtGui/qevent.h>
+#pragma warning( pop )
+
 
 namespace
 {
-    class LifeBar : public QProgressBar
+    class LifeBar : public Q3ProgressBar
     {
     public:
         explicit LifeBar( QWidget* parent )
-            : QProgressBar( 100, parent )
+            : Q3ProgressBar( 100, parent )
             , reflection_( new QImage( "resources/images/gaming/lifebarmask.png" ) )
         {
             setCenterIndicator( true );
             setPercentageVisible( true );
-            setIndicatorFollowsStyle( false );
             setProgress( 0 );
         }
         virtual ~LifeBar() {}
 
-    protected:
-        void drawContents( QPainter* painter )
+    private:
+        virtual void paintEvent( QPaintEvent* )
         {
-            const QRect bar = contentsRect();
-            painter->fillRect( bar, QColor( 255, 100, 100 ) );
-            QRect progBar = bar;
-            progBar.setRight( bar.left() + int( float( bar.width() ) * float( progress() ) / 100.f ) );
-            QColor color;
-            color.setHsv( progress(), 255, 200 );
-            painter->fillRect( progBar, color );
-            QRect bbox = painter->boundingRect( bar, Qt::AlignCenter, progressString() );
-            painter->drawText( bbox.left(), bbox.bottom() - 2, progressString() );
-            if( reflection_ )
-                painter->drawImage( bar, *reflection_ );
-            painter->drawRect( bar );
+            QPainter* painter = new QPainter();
+            if ( painter->begin( this ) )
+            {
+                const QRect bar = contentsRect();
+                painter->fillRect( bar, QColor( 255, 100, 100 ) );
+                QRect progBar = bar;
+                progBar.setRight( bar.left() + int( float( bar.width() ) * float( progress() ) / 100.f ) );
+                QColor color;
+                color.setHsv( progress(), 255, 200 );
+                painter->fillRect( progBar, color );
+                QRect bbox = painter->boundingRect( bar, Qt::AlignCenter, progressString() );
+                painter->drawText( bbox.left(), bbox.bottom() - 2, progressString() );
+                if( reflection_ )
+                    painter->drawImage( bar, *reflection_ );
+                painter->drawRect( bar );
+                painter->end();
+            }
         }
-
         QImage* reflection_;
     };
 
-    class TransparentButton : public QButton
+        class TransparentButton : public QPushButton
     {
     public:
         explicit TransparentButton( QWidget* parent )
-            : QButton( parent )
+            : QPushButton( parent )
         {
             setBackgroundOrigin( QWidget::AncestorOrigin );
         }
         virtual void setPixmap( const QPixmap& pixmap )
         {
-            iconSet_ = QIconSet( pixmap );
-            QButton::setPixmap( pixmap );
+            iconSet_ = QIcon( pixmap );
+            QPushButton::setPixmap( pixmap );
         }
     protected:
         virtual void drawButton( QPainter* p )
         {
-            p->drawPixmap( 0, 0, iconSet_.pixmap( QIconSet::Automatic, isEnabled() ? QIconSet::Normal : QIconSet::Disabled ) );
+            p->drawPixmap( 0, 0, iconSet_.pixmap( QIcon::Automatic, isEnabled() ? QIcon::Normal : QIcon::Disabled ) );
         }
-        QIconSet iconSet_;
+        QIcon iconSet_;
     };
 
     class IconLabel : public QLabel
@@ -118,7 +123,7 @@ namespace
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
 InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
-    : QVBox       ( parent, "InfoStatusWidget" )
+    : Q3VBox       ( parent, "InfoStatusWidget" )
     , controllers_( controllers )
     , profile_    ( profile )
     , icons_      ( icons )
@@ -132,9 +137,10 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     , veteran_    ( "resources/images/gaming/experience_veteran.png" )
 {
     setFixedWidth( 150 );
-    setPaletteBackgroundPixmap( background_ );
-
-    QHBox* box = new QHBox( this );
+    setAutoFillBackground( true );
+    setPalette( QPalette( backgroundRole(), QBrush( background_ ) ) );
+    
+    Q3HBox* box = new Q3HBox( this );
     box->setBackgroundOrigin( QWidget::AncestorOrigin );
     box->layout()->setAlignment( Qt::AlignRight );
     box->setMaximumHeight( 20 );
@@ -146,10 +152,10 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
         QToolTip::add( gotoParent_, tr( "Goto parent unit" ) );
     }
 
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     box->setBackgroundOrigin( QWidget::AncestorOrigin );
     {
-        QVBox* vBox = new QVBox( box );
+        Q3VBox* vBox = new Q3VBox( box );
         vBox->setFixedWidth( 30 );
         vBox->setBackgroundOrigin( QWidget::AncestorOrigin );
         reinforced_ = new QLabel( vBox );
@@ -177,7 +183,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     name_->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
     name_->setBackgroundOrigin( QWidget::AncestorOrigin );
 
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     box->setFixedHeight( 15 );
     box->setBackgroundOrigin( QWidget::AncestorOrigin );
     font.setBold( false );
@@ -186,7 +192,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
         tiredness_ = new IconLabel( tr( "tiredness" ), box, font );
     }
 
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     box->setFixedHeight( 20 );
     box->setBackgroundOrigin( QWidget::AncestorOrigin );
     lifeBar_ = new LifeBar( box );
@@ -215,9 +221,9 @@ InfoStatusWidget::~InfoStatusWidget()
 void InfoStatusWidget::resizeEvent( QResizeEvent* ev )
 {
     QImage img( background_.smoothScale( ev->size() ) );
-    setPaletteBackgroundPixmap( img );
-    name_->setBackgroundPixmap( img );
-    QVBox::resizeEvent( ev );
+    setPaletteBackgroundPixmap( QPixmap::fromImage( img ) );
+    name_->setBackgroundPixmap( QPixmap::fromImage( img ) );
+    Q3VBox::resizeEvent( ev );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +279,7 @@ void InfoStatusWidget::SetIcon()
     if( selected_ )
         img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
     if( !img.isNull() )
-        icon_->setPixmap( img );
+        icon_->setPixmap( QPixmap::fromImage( img ) );
     else
         QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
 }
@@ -336,9 +342,9 @@ void InfoStatusWidget::SetExperience( const HumanFactors& humans )
 {
     const E_UnitExperience experience = humans.GetExperience();
     if( experience == eUnitExperience_Experimente )
-        experience_->setPixmap( experienced_ );
+        experience_->setPixmap( QPixmap::fromImage( experienced_ ) );
     else if( experience == eUnitExperience_Veteran )
-        experience_->setPixmap( veteran_ );
+        experience_->setPixmap( QPixmap::fromImage( veteran_ ) );
     else
         experience_->setPixmap( QPixmap() );
     QToolTip::add( experience_, tr( "Experience: " ) + tools::ToString( experience ) );
@@ -353,11 +359,11 @@ void InfoStatusWidget::SetMorale( const HumanFactors& humans )
     const E_UnitMorale morale = humans.GetMorale();
     morale_->setShown( morale != eUnitMorale_Bon );
     if( morale == eUnitMorale_Fanatique )
-        morale_->setPixmap( boost_ );
+        morale_->setPixmap( QPixmap::fromImage( boost_ ) );
     else if( morale == eUnitMorale_Moyen )
-        morale_->setPixmap( warning_ );
+        morale_->setPixmap( QPixmap::fromImage( warning_ ) );
     else if( morale == eUnitMorale_Mauvais )
-        morale_->setPixmap( error_ );
+        morale_->setPixmap( QPixmap::fromImage( error_ ) );
     QToolTip::add( morale_, tr( "Morale: " ) + tools::ToString( morale ) );
 }
 
@@ -370,9 +376,9 @@ void InfoStatusWidget::SetTiredness( const HumanFactors& humans )
     const E_UnitTiredness tiredness = humans.GetTiredness();
     tiredness_->setShown( tiredness != eUnitTiredness_Normal );
     if( tiredness == eUnitTiredness_Fatigue )
-        tiredness_->setPixmap( warning_ );
+        tiredness_->setPixmap( QPixmap::fromImage( warning_ ) );
     else if( tiredness == eUnitTiredness_Epuise )
-        tiredness_->setPixmap( error_ );
+        tiredness_->setPixmap( QPixmap::fromImage( error_ ) );
     QToolTip::add( tiredness_, tr( "Tiredness: " ) + tools::ToString( tiredness ) );
 }
 

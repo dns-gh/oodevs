@@ -24,7 +24,7 @@
 // Created: APE 2005-02-14
 // -----------------------------------------------------------------------------
 template< typename T >
-ADN_Wizard_FirstPage_Default<T>::ADN_Wizard_FirstPage_Default( typename ADN_Wizard_FirstPage_Default<T>::T_ItemVector& existingItemsList, QWizard* pParent, const char* szName, const char* szImageName )
+ADN_Wizard_FirstPage_Default<T>::ADN_Wizard_FirstPage_Default( typename ADN_Wizard_FirstPage_Default<T>::T_ItemVector& existingItemsList, Q3Wizard* pParent, const char* szName, const char* szImageName )
 : ADN_Wizard_FirstPage_ABC<T>( pParent, szName, szImageName )
 , existingItemsList_         ( existingItemsList )
 {
@@ -59,7 +59,7 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
     pRightSide_->setFixedHeight( 200 );
 
     // The new item's name
-    QVBox* pNameBox = new QVBox( pRightSide_ );
+    Q3VBox* pNameBox = new Q3VBox( pRightSide_ );
     pNameBox->setSpacing( 5 );
 
     pNameLabel_ = new QLabel( qApp->translate( "ADN_Wizard", "Name" ), pNameBox );
@@ -69,19 +69,19 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
     pNameEdit_->setFocus();
 
     // Copy or New section
-    QVBox* pCopyBox = new QVBox( pRightSide_ );
+    Q3VBox* pCopyBox = new Q3VBox( pRightSide_ );
     pCopyBox->setSpacing( 5 );
 
-    QButtonGroup* pButtonGroup = new QButtonGroup( 2, Qt::Vertical, pCopyBox );
+    Q3ButtonGroup* pButtonGroup = new Q3ButtonGroup( 2, Qt::Vertical, pCopyBox );
     pButtonGroup->setMargin( 0 );
     pButtonGroup->setLineWidth( 0 );
     pNewRadioButton_  = new QRadioButton( qApp->translate( "ADN_Wizard", "Create new" ), pButtonGroup );
     pCopyRadioButton_ = new QRadioButton( qApp->translate( "ADN_Wizard", "Create a copy of:" ), pButtonGroup );
 
-    pExistingItemsListView_ = new QListView( pCopyBox );
+    pExistingItemsListView_ = new Q3ListView( pCopyBox );
     pExistingItemsListView_->addColumn( "" );
     pExistingItemsListView_->setMultiSelection( false );
-    pExistingItemsListView_->setResizeMode( QListView::LastColumn );
+    pExistingItemsListView_->setResizeMode( Q3ListView::LastColumn );
 
     // Fill the list
     for( IT_ItemVector it = existingItemsList_.begin(); it != existingItemsList_.end(); ++it )
@@ -114,7 +114,7 @@ T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
 
     if( strNewName.empty() )
     {
-        QMessageBox::warning( this, strErrorTitle, strErrorMsg, QMessageBox::Ok, QMessageBox::NoButton );
+        QMessageBox::warning( this, strErrorTitle, strErrorMsg, QMessageBox::Ok, Qt::NoButton );
         return 0;
     }
 
@@ -123,7 +123,7 @@ T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
     {
         if( (*it)->strName_.GetData() == strNewName )
         {
-            QMessageBox::warning( this, strErrorTitle, strErrorMsg, QMessageBox::Ok, QMessageBox::NoButton );
+            QMessageBox::warning( this, strErrorTitle, strErrorMsg, QMessageBox::Ok, Qt::NoButton );
             return 0;
         }
     }
@@ -132,7 +132,7 @@ T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
     T* pResult = 0;
     if( pCopyRadioButton_->isOn() )
     {
-        QListViewItem* pSelectedItem = pExistingItemsListView_->selectedItem();
+        Q3ListViewItem* pSelectedItem = pExistingItemsListView_->selectedItem();
         T* pItem = static_cast< ADN_UserData_ListViewItem< T >* >( pSelectedItem )->GetPointer();
         pResult = pItem->CreateCopy();
     }

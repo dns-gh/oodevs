@@ -26,9 +26,9 @@ using namespace kernel;
 // Name: IndicatorPlot constructor
 // Created: AGE 2007-09-26
 // -----------------------------------------------------------------------------
-IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
+IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWidget* dock,
                               IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick,
-                              QVBox* vbox )
+                              Q3VBox* vbox )
     : gui::GQ_Plot( parent, "IndicatorPlot" )
     , controllers_ ( controllers )
     , publisher_   ( publisher )
@@ -40,7 +40,7 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
     , max_         ( -std::numeric_limits< double >::infinity() )
 {
     setAcceptDrops( true );
-    setFocusPolicy( QWidget::ClickFocus );
+    setFocusPolicy( Qt::ClickFocus );
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
     YAxis().SetAxisCaption( tools::translate( "IndicatorPlot", "Value" ).ascii() );
@@ -221,7 +221,7 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::contextMenuEvent( QContextMenuEvent* e )
 {
-    QPopupMenu* menu = new QPopupMenu( this );
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
     menu->insertItem( tools::translate( "Indicators", "Export data..." ), this, SLOT( OnExportData() ) );
     menu->exec( e->globalPos() );
 }
@@ -276,7 +276,7 @@ void IndicatorPlot::SetTickData( double currentTickPosition )
         tickData_ = new gui::GQ_PlotData( 0, *this );
         RegisterPlotData( *tickData_ );
     }
-    tickData_->SetLinePen( red );
+    tickData_->SetLinePen( QPen( QColor( Qt::red ) ) );
     tickData_->ClearData();
     if( min_ == 0 && max_ == 0 )
     {

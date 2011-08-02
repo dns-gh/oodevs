@@ -25,7 +25,7 @@ class ADN_Equipement_Wizard_Page0 : public ADN_Wizard_FirstPage_Default<ADN_Equi
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::ResourceInfos& parentDotation, QWizard* pParent = 0, const char* szName = 0 );
+    explicit ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::ResourceInfos& parentDotation, Q3Wizard* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Equipement_Wizard_Page0();
     //@}
 

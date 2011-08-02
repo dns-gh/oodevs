@@ -15,7 +15,7 @@
 #include <boost/bind.hpp>
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-#include <qcolor.h>
+#include <QtGui/qcolor.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 

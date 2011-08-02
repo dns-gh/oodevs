@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <Qt3Support/q3button.h>
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -26,7 +28,7 @@ namespace gui
 */
 // Created: SBO 2007-02-05
 // =============================================================================
-class InfoButtonsWidget : public QGroupBox
+class InfoButtonsWidget : public Q3GroupBox
 {
 public:
     //! @name Constructors/Destructor
@@ -50,7 +52,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< QButton*, QWidget* > T_ButtonWidgets;
+    typedef std::map< QPushButton*, QWidget* > T_ButtonWidgets;
     typedef T_ButtonWidgets::iterator     IT_ButtonWidgets;
     //@}
 

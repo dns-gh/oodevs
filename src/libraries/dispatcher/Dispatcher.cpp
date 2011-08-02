@@ -22,8 +22,8 @@
 #include "clients_kernel/Tools.h"
 #include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
-#include <qsettings.h>
-#include <qtextcodec.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
 
 #pragma warning( disable: 4355 )
 

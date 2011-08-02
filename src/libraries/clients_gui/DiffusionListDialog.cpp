@@ -21,6 +21,7 @@
 #include "clients_kernel/Tools.h"
 #include "DiffusionListFunctors.h"
 #include "DiffusionListHierarchy.h"
+#include "DiffusionListLegendBar.h"
 #include "tools/Resolver.h"
 #include <boost/lexical_cast.hpp>
 
@@ -47,34 +48,34 @@ DiffusionListDialog::DiffusionListDialog( QWidget* parent, kernel::Controllers& 
     QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, 5, "DiffusionListDialog_VBoxLayout_MainLayout" );
     mainLayout->setMargin( 5 );
     // Header
-    QGroupBox* header = new QGroupBox( 1, Qt::Horizontal, tr( "Transmitter" ), this, "DiffusionListDialog_GroupBox_Header" );
+    Q3GroupBox* header = new Q3GroupBox( 1, Qt::Horizontal, tr( "Transmitter" ), this, "DiffusionListDialog_GroupBox_Header" );
     transmitterName_ = new QLabel( header, "DiffusionListDialog_Label_TransmitterName" );
     // Editor
-    QGroupBox* editor = new QGroupBox( 1, Qt::Horizontal, tr( "Recipients" ), this, "DiffusionListDialog_GroupBox_Editors" );
+    Q3GroupBox* editor = new Q3GroupBox( 1, Qt::Horizontal, tr( "Recipients" ), this, "DiffusionListDialog_GroupBox_Editors" );
     list_ = new DiffusionListHierarchy( editor, controllers, factory, profile, icons );
     // Legend
-    QGroupBox* legend = new QGroupBox( 1, Qt::Vertical, tr( "Legend" ), editor, "DiffusionListDialog_GroupBox_Legend" );
+    Q3GroupBox* legend = new Q3GroupBox( 1, Qt::Vertical, tr( "Legend" ), editor, "DiffusionListDialog_GroupBox_Legend" );
     AddLegend( tr( "Transmitter:" ), legend, DiffusionListHierarchy::selectedColor_ );
     AddLegend( tr( "Recipients:" ), legend, DiffusionListHierarchy::recipientsColor_ );
     AddLegend( tr( "Potential recipients:" ), legend, DiffusionListHierarchy::potentialsColor_ );
     // Filters
-    QGroupBox* filters = new QGroupBox( 1, Qt::Horizontal, tr( "Filters" ), editor, "DiffusionListDialog_GroupBox_Filters" );
+    Q3GroupBox* filters = new Q3GroupBox( 1, Qt::Horizontal, tr( "Filters" ), editor, "DiffusionListDialog_GroupBox_Filters" );
     filterLine_ = new QLineEdit( filters, "DiffusionListDialog_LineEdit_Filter" );
-    QHBox* filtersBox = new QHBox( filters, "DiffusionListDialog_HBox_FiltersBox" );
-    filtersButtons_ = new QButtonGroup( 0, "DiffusionListDialog_ButtonGroup_Filters" );
+    Q3HBox* filtersBox = new Q3HBox( filters, "DiffusionListDialog_HBox_FiltersBox" );
+    filtersButtons_ = new Q3ButtonGroup( 0, "DiffusionListDialog_ButtonGroup_Filters" );
     filtersButtons_->insert( new QRadioButton( tr( "Transmitter, recipients and potentials recipients" ), filtersBox, "DiffusionListDialog_RadioButton_RecipientsPotentials" ), DiffusionListHierarchy::EFilterRecipientsAndPotentials );
     filtersButtons_->insert( new QRadioButton( tr( "Transmitter and recipients" ), filtersBox, "DiffusionListDialog_RadioButton_Recipients" ), DiffusionListHierarchy::EFilterRecipients );
     filtersButtons_->insert( new QRadioButton( tr( "All" ), filtersBox, "DiffusionListDialog_RadioButton_Full" ), DiffusionListHierarchy::EFilterFull );
     filtersButtons_->setRadioButtonExclusive( true );
     // Results
-    QGroupBox* result = new QGroupBox( 1, Qt::Horizontal, tr( "Resulting diffusion list" ), editor, "DiffusionListDialog_GroupBox_Results" );
+    Q3GroupBox* result = new Q3GroupBox( 1, Qt::Horizontal, tr( "Resulting diffusion list" ), editor, "DiffusionListDialog_GroupBox_Results" );
     text_ = new QLineEdit( result, "DiffusionListDialog_LineEdit_Result" );
     text_->setValidator( new QRegExpValidator( DiffusionListHierarchy::diffusionRegexp_, text_ ) );
     text_->setReadOnly( true );
     // Buttons
-    QVBox* buttons = new QVBox( this, "DiffusionListDialog_VBox_Buttons" );
-    QHBox* advancedButtons = new QHBox( buttons, "DiffusionListDialog_HBox_AdvancedButtons" );
-    QHBox* baseButtons = new QHBox( buttons, "DiffusionListDialog_HBox_BaseButtons" );
+    Q3VBox* buttons = new Q3VBox( this, "DiffusionListDialog_VBox_Buttons" );
+    Q3HBox* advancedButtons = new Q3HBox( buttons, "DiffusionListDialog_HBox_AdvancedButtons" );
+    Q3HBox* baseButtons = new Q3HBox( buttons, "DiffusionListDialog_HBox_BaseButtons" );
     QPushButton* generateButton    = new QPushButton( tr( "Generate" )    , advancedButtons, "DiffusionListDialog_PushButton_Generate" );
     QPushButton* generateAllButton = new QPushButton( tr( "Generate all" ), advancedButtons, "DiffusionListDialog_PushButton_GenerateAll" );
     QPushButton* clearButton       = new QPushButton( tr( "Clear" )       , advancedButtons, "DiffusionListDialog_PushButton_Clear" );
@@ -114,12 +115,7 @@ DiffusionListDialog::~DiffusionListDialog()
 void DiffusionListDialog::AddLegend( const QString label, QWidget* parent, const QColor& color )
 {
     new QLabel( label, parent );
-    QPixmap* pixmap = new QPixmap( DiffusionListHierarchy::iconSize_, DiffusionListHierarchy::iconSize_ );
-    pixmap->fill( color );
-    QVBox* box = new QVBox( parent );
-    box->setFrameStyle( QFrame::Box + QFrame::Plain );
-    box->setLineWidth( 1 );
-    box->setBackgroundPixmap( *pixmap );
+    new DiffusionListLegendBar( parent, color, DiffusionListHierarchy::iconSize_ );
 }
 
 // -----------------------------------------------------------------------------

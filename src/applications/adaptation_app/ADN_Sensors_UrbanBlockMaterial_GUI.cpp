@@ -69,7 +69,7 @@ ADN_Sensors_UrbanBlockMaterial_GUI::ADN_Sensors_UrbanBlockMaterial_GUI(QWidget *
 {
     // peut etre selectionne & trie
     setSorting(true);
-    setSelectionMode(QTable::NoSelection);
+    setSelectionMode(Q3Table::NoSelection);
     setShowGrid(false);
     setLeftMargin(0);
 

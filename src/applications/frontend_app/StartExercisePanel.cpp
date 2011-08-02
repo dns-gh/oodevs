@@ -19,17 +19,17 @@
 #include "frontend/PluginConfigBuilder.h"
 #include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
-#include <qaction.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qspinbox.h>
-#include <qtabwidget.h>
-#include <qtextedit.h>
-#include <qtimer.h>
+#include <Qt3Support/q3action.h>
+#include <Qt3Support/q3groupbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlineedit.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpushbutton.h>
+#include <QtGui/qspinbox.h>
+#include <QtGui/qtabwidget.h>
+#include <Qt3Support/q3textedit.h>
+#include <Qtcore/qtimer.h>
 #include <boost/foreach.hpp>
 
 #pragma warning( push )
@@ -45,20 +45,20 @@ using namespace frontend;
 // Name: StartExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context, const char* name )
+StartExercisePanel::StartExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context, const char* name )
     : Panel_ABC( widget, action, context, name ? name : "StartExercisePanel" )
     , config_( config )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, action.text(), box );
+    Q3GroupBox* group = new Q3GroupBox( 1, Qt::Horizontal, action.text(), box );
     QTabWidget* tabs = new QTabWidget( group );
     tabs->setMargin( 5 );
 
-    listBox_ = new QGroupBox( 2, Qt::Vertical, box );
-    list_ = new QListBox( listBox_ );
+    listBox_ = new Q3GroupBox( 2, Qt::Vertical, box );
+    list_ = new Q3ListBox( listBox_ );
     tabs->addTab( listBox_, action.text() );
 
     configPanel_ = new GameConfigPanel( tabs, config );
@@ -71,31 +71,31 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
                                    .Finalize() );
     }
     {
-        QHBox* sessionBox = new QHBox( group );
+        Q3HBox* sessionBox = new Q3HBox( group );
         sessionBox->setStretchFactor( new QLabel( tr( "Session name:" ), sessionBox ), 1 );
         sessionBox->setStretchFactor( sessionName_ = new QLineEdit( sessionBox ), 2 );
     }
     {
-        QHBox* commentBox = new QHBox( group );
+        Q3HBox* commentBox = new Q3HBox( group );
         commentBox->setStretchFactor( new QLabel( tr( "Session comments:" ), commentBox ), 1 );
-        commentBox->setStretchFactor( sessionComment_ = new QTextEdit( commentBox ), 2 );
+        commentBox->setStretchFactor( sessionComment_ = new Q3TextEdit( commentBox ), 2 );
         sessionComment_->setMaximumHeight( 40 );
     }
 
     {
-        QHBox* exerciseNumberBox = new QHBox( group );
+        Q3HBox* exerciseNumberBox = new Q3HBox( group );
         exerciseNumberBox->setStretchFactor( new QLabel( tr( "Exercise number:" ), exerciseNumberBox ), 1 );
         exerciseNumberBox->setStretchFactor( exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox ), 2 );
     }
 
     bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
-    QHBox* btnBox = new QHBox( box );
+    Q3HBox* btnBox = new Q3HBox( box );
     btnBox->layout()->setAlignment( Qt::AlignRight );
     okay_ = new QPushButton( MAKE_PIXMAP( next ), action.text(), btnBox );
     QFont font( "Arial", 10, QFont::Bold );
     okay_->setFont( font );
     connect( okay_, SIGNAL( pressed() ), SLOT( StartExercise() ) );
-    connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
+    connect( list_, SIGNAL( doubleClicked( Q3ListBoxItem* ) ), SLOT( StartExercise() ) );
     connect( list_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
 
     {

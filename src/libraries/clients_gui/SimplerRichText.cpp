@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "SimplerRichText.h"
-#include <qpainter.h>
-#include <qregexp.h>
+#include <QtGui/qpainter.h>
+#include <QtCore/qregexp.h>
 
 using namespace gui;
 
@@ -33,7 +33,7 @@ SimplerRichText::RichElement::RichElement( SimplerRichText* parent, const QStrin
 // -----------------------------------------------------------------------------
 void SimplerRichText::RichElement::draw( QPainter* p, int x, int y, const QColorGroup& cg ) const
 {
-    if( anchor_ ) {
+    if( anchor_.size() ) {
         p->setPen( cg.color( QColorGroup::Link ) );
         p->setFont( parent_->linkFont_ );
     }
@@ -120,10 +120,10 @@ SimplerRichText::~SimplerRichText()
 // Name: SimplerRichText::draw
 // Created: AGE 2007-04-20
 // -----------------------------------------------------------------------------
-void SimplerRichText::draw( QPainter* p, int x, int y, const QRect& clipRect, const QColorGroup& cg, const QBrush* paper /*= 0*/ ) const
+void SimplerRichText::draw( QPainter* p, int x, int y, const QRect& clipRect, const QColorGroup& cg, const QBrush* paper /* = 0*/ ) const
 {
     if( ! clipRect.isNull() )
-        p->setClipRect( clipRect, QPainter::CoordPainter );
+        p->setClipRect( clipRect, Qt::ReplaceClip );
     if( paper )
         p->fillRect( clipRect, *paper );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )

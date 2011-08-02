@@ -60,7 +60,7 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Display( QWidget* parent ) const
 {
-    QGroupBox* colorBox = new QGroupBox( static_cast< int >( displays_.size() ), Qt::Vertical, tools::translate( "gui::GraphicPreferences", "Colors" ), parent );
+    Q3GroupBox* colorBox = new Q3GroupBox( static_cast< int >( displays_.size() ), Qt::Vertical, tools::translate( "gui::GraphicPreferences", "Colors" ), parent );
     std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Display, _1, colorBox ) );
 }
 
@@ -115,6 +115,14 @@ void GraphicPreferences::SetupLineGraphics( const Data_ABC* pData )
         preference->SetLineWidth();
         preference->SetColor( alpha_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: GraphicPreferences::SetupLineGraphics
+// Created: FPT 2011-03-24
+// -----------------------------------------------------------------------------
+void GraphicPreferences::SetupLineGraphics( unsigned int /*offset*/ )
+{
 }
 
 // -----------------------------------------------------------------------------

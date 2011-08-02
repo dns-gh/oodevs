@@ -11,6 +11,17 @@
 #define __RcEntityResolver_h_
 
 #include "reports/RcEntityResolver_ABC.h"
+#include <xeumeuleu/xml.hpp>
+
+inline std::ostream& operator<<( std::ostream& os, const QString& s )
+{
+    return os << s.toStdString();
+}
+
+inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
+{
+    return xos << s.toStdString();
+}
 
 namespace dispatcher
 {

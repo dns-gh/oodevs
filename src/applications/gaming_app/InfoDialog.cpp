@@ -20,10 +20,10 @@ InfoDialog_Base::InfoDialog_Base( QWidget* parent, const QString& title )
     , disconnected_( false )
 {
     setCaption( title );
-    QLayout* layout = new QVBoxLayout( this );
+    QLayout* layout = new Q3VBoxLayout( this );
     layout->setMargin( 5 );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    box_ = new QVBox( this );
+    box_ = new Q3VBox( this );
     layout->add( box_ );
 }
 

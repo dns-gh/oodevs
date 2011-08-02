@@ -34,7 +34,7 @@ ActionList::~ActionList()
 // Name: ActionList::AddAction
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-void ActionList::AddAction( const QString& category, QAction& action )
+void ActionList::AddAction( const QString& category, Q3Action& action )
 {
     ActionCategory*& widget = categories_[ category ];
     if( !widget )

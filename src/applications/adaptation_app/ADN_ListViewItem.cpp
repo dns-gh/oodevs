@@ -107,7 +107,7 @@ private:
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
 ADN_ListViewItem::ADN_ListViewItem(ADN_ListView *parent,void* item,int ncol)
-:   QListViewItem(parent, parent?parent->lastItem ():0 )
+:   Q3ListViewItem(parent, parent?parent->lastItem ():0 )
 ,   pData_(item)
 ,   vConnectors_(ncol,(ADN_Connector_ABC*)0 )
 {
@@ -121,7 +121,7 @@ ADN_ListViewItem::ADN_ListViewItem(ADN_ListView *parent,void* item,int ncol)
 
     if (parent)
     for (int j=0;j<parent->columns();++j)
-        parent->setColumnWidthMode(j,QListView::Maximum);
+        parent->setColumnWidthMode(j,Q3ListView::Maximum);
 }
 
 
@@ -161,6 +161,6 @@ void ADN_ListViewItem::Connect(int ndx,ADN_Connector_ABC *data,E_TypeCvt cvt)
 void ADN_ListViewItem::okRename ( int col )
 {
     assert(vConnectors_[col]);
-    QListViewItem::okRename(col);
+    Q3ListViewItem::okRename(col);
     static_cast<ADN_ListViewItem_Connector*>(vConnectors_[col])->SetDataChanged(text(col));
 }

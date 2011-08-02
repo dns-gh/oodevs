@@ -31,11 +31,11 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
     , parent_( parent )
 {
     setMargin( 2 );
-    setFrameStyle( QFrame::Plain );
+    setFrameStyle( Q3Frame::Plain );
     AddColumn( tools::findTranslation( "Action", "Parameter" ) );
     AddColumn( tools::findTranslation( "Action", "Value" ) );
     AddColumn( tools::findTranslation( "ActionTiming", "Time" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
     setColumnAlignment( 2, Qt::AlignRight );
     setSorting( 2, false );
     header()->hide();

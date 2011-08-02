@@ -38,9 +38,9 @@ struct MedicalTreatmentCapacity;
 class Publisher_ABC;
 
 class QLineEdit;
-class QVBox;
+class Q3VBox;
 class QSpinBox;
-class QListBox;
+class Q3ListBox;
 
 // =============================================================================
 /** @class  MedicalCapacityUpdateDialog
@@ -122,7 +122,7 @@ private:
     //! @name
     //@{
     QLineEdit* referenceID_;
-    QVBox* vbox_;
+    Q3VBox* vbox_;
     QSpinBox* doctors_;
     gui::ValuedComboBox< std::string >* status_;
     boost::ptr_vector< Capacity > capacities_;

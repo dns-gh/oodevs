@@ -80,7 +80,7 @@ private:
     kernel::Options& options_;
     LightingProxy& lighting_;
 
-    QGroupBox* fixedLightBox_;
+    Q3GroupBox* fixedLightBox_;
     ButtonGroup* lightingType_;
     DirectionWidget* direction_;
     ColorButton* ambient_;

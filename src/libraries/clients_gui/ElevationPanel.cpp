@@ -41,21 +41,23 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
     , strengthHs_         ( 1 )
     , previousStrengthHs_ ( 1 )
 {
+    Q3VBox* container = new Q3VBox( this );
+    container->setAutoFillBackground( true );
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Elevation colors" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Elevation colors" ), container );
 
-        QHBox* hBox = new QHBox( box );
+        Q3HBox* hBox = new Q3HBox( box );
         fitColorGradienttoViewPort_ = new CheckBox( tr( "Fit color gradient to viewport" ), hBox );
         fitColorGradienttoViewPort_->setChecked( true );
 
-        gradient_ = new GradientWidget( new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers, painter );
+        gradient_ = new GradientWidget( new Q3GroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers, painter );
 
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariableGradient( bool ) ) );
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), gradient_, SLOT( OnEnableVariableGradient( bool ) ) );
         connect( gradient_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientChanged( Gradient& ) ) );
     }
     {
-        hsBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Hillshade" ), this );
+        hsBox_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Hillshade" ), container );
         hsBox_->setCheckable( true );
         hsBox_->setChecked( enableHs_ );
         new QLabel( tr( "Direction" ), hsBox_ );
@@ -69,6 +71,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         connect( hsDial_, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );
         connect( hillShadeStrength_, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
     }
+    setWidget( container );
     controllers_.Register( *this );
 }
 

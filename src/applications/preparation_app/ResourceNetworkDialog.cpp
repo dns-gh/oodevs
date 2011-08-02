@@ -23,6 +23,7 @@
 ResourceNetworkDialog::ResourceNetworkDialog( QMainWindow* parent, kernel::Controllers& controllers, const tools::StringResolver< kernel::ResourceNetworkType >& resources )
     : gui::ResourceLinksDialog_ABC( parent, controllers, resources )
 {
+    setObjectName( "ressources" );
     stockBox_->show();
 }
 

@@ -67,6 +67,7 @@ private:
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     actions::ActionsModel& actionsModel_;
+
     //@}
 };
 

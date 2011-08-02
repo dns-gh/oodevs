@@ -10,11 +10,14 @@
 #ifndef __ExportWidget_h_
 #define __ExportWidget_h_
 
-#include <qgroupbox.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3listview.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3progressbar.h>
 
-class QListView;
-class QListViewItem;
-class QProgressBar;
+class Q3ListView;
+class Q3ListViewItem;
+class Q3ProgressBar;
 class ScenarioEditPage;
 
 namespace tools
@@ -34,7 +37,7 @@ namespace zip
 */
 // Created: JSR 2010-07-15
 // =============================================================================
-class ExportWidget : public QGroupBox
+class ExportWidget : public Q3GroupBox
 {
     Q_OBJECT
 
@@ -55,13 +58,14 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( QListBoxItem* item );
+    void OnSelectionChanged( Q3ListBoxItem* item );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void UpdateExercises();
+
     bool BrowseClicked();
     void WriteContent( zip::ozipfile& archive ) const;
     //@}
@@ -83,12 +87,12 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC&    fileLoader_;
-    ScenarioEditPage&           page_;
-    QListBox*                   list_;
-    T_Package                   package_;
-    QTextEdit*                  description_;
-    QListView*                  content_;
-    QProgressBar*               progress_;
+    ScenarioEditPage& page_;
+    Q3ListBox*  list_;
+    T_Package package_;
+    Q3TextEdit* description_;
+    Q3ListView* content_;
+    Q3ProgressBar* progress_;
     //@}
 };
 

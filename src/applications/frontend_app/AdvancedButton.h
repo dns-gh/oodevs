@@ -10,7 +10,7 @@
 #ifndef __AdvancedButton_h_
 #define __AdvancedButton_h_
 
-#include <qpushbutton.h>
+#include <QtGui/qpushbutton.h>
 
 // =============================================================================
 /** @class  AdvancedButton

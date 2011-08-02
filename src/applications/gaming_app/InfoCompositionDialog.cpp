@@ -20,8 +20,8 @@
 InfoCompositionDialog::InfoCompositionDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : InfoDialog< Equipments >( parent, controllers, tools::translate( "InfoCompositionDialog", "Composition" ) )
 {
-    new EquipmentsListView( new QHGroupBox( tools::translate( "InfoCompositionDialog", "Equipments" ), RootWidget() ), controllers, factory );
-    new HumansListView    ( new QHGroupBox( tools::translate( "InfoCompositionDialog", "Humans" ), RootWidget() ), controllers, factory );
+    new EquipmentsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Equipments" ), RootWidget() ), controllers, factory );
+    new HumansListView    ( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Humans" ), RootWidget() ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

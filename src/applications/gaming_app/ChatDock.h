@@ -24,7 +24,7 @@ class CommandHandler;
 */
 // Created: SBO 2008-06-11
 // =============================================================================
-class ChatDock : public QDockWindow
+class ChatDock : public QDockWidget
 {
 public:
     //! @name Constructors/Destructor

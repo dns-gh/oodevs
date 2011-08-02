@@ -10,7 +10,6 @@
 #ifndef __ObjectAttributePrototype_ABC_h_
 #define __ObjectAttributePrototype_ABC_h_
 
-#include <qgroupbox.h>
 #include <boost/noncopyable.hpp>
 
 namespace gui
@@ -23,7 +22,7 @@ namespace gui
 */
 // Created: JCR 2008-06-11
 // =============================================================================
-class ObjectAttributePrototype_ABC : public QGroupBox
+class ObjectAttributePrototype_ABC : public Q3GroupBox
                                    , private boost::noncopyable
 {
 public:

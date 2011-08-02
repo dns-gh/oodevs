@@ -10,7 +10,7 @@
 #ifndef __AtlasNature_h_
 #define __AtlasNature_h_
 
-#include <qstringlist.h>
+#include <QtCore/qstringlist.h>
 #include <boost/function.hpp>
 
 namespace kernel

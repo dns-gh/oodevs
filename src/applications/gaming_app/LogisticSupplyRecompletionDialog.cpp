@@ -53,15 +53,15 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
 {
     setCaption( tr( "Recompletion" ) );
     resize( 280, 430 );
-    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
     mainLayout->setSpacing( 5 );
     mainLayout->setMargin( 5 );
 
     // Equipment and personal
-    QGroupBox* equiPersoGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Equipment - Crew" ), this );
+    Q3GroupBox* equiPersoGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Equipment - Crew" ), this );
     equiPersoGroupBox->setFlat( true );
 
-    equipmentsTable_ = new QTable( 0, 3, equiPersoGroupBox );
+    equipmentsTable_ = new Q3Table( 0, 3, equiPersoGroupBox );
     equipmentsTable_->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
     equipmentsTable_->horizontalHeader()->setLabel( 1, tr( "Count" ) );
     equipmentsTable_->horizontalHeader()->setLabel( 2, tr( "Max" ) );
@@ -72,7 +72,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     equipmentsTable_->setLeftMargin( 0 );
     equipmentsTable_->setShowGrid( false );
 
-    personalsTable_ = new QTable( 0, 4, equiPersoGroupBox );
+    personalsTable_ = new Q3Table( 0, 4, equiPersoGroupBox );
     personalsTable_->horizontalHeader()->setLabel( 0, "" );
     personalsTable_->horizontalHeader()->setLabel( 1, tr( "Crew" ) );
     personalsTable_->horizontalHeader()->setLabel( 2, tr( "Count" ) );
@@ -88,10 +88,10 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     mainLayout->addWidget( equiPersoGroupBox );
 
     // Dotations && !munition
-    QGroupBox* dotationsGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Resources" ), this );
+    Q3GroupBox* dotationsGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Resources" ), this );
     dotationsGroupBox->setFlat( true );
 
-    dotationsTable_ = new QTable( 0, 3, dotationsGroupBox );
+    dotationsTable_ = new Q3Table( 0, 3, dotationsGroupBox );
     dotationsTable_->horizontalHeader()->setLabel( 0, "" );
     dotationsTable_->horizontalHeader()->setLabel( 1, tr( "Resource" ) );
     dotationsTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
@@ -102,7 +102,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     dotationsTable_->setShowGrid( false );
 
     // Munitions Families
-    munitionsFamilyTable_ = new QTable( 0, 3, dotationsGroupBox );
+    munitionsFamilyTable_ = new Q3Table( 0, 3, dotationsGroupBox );
     munitionsFamilyTable_->horizontalHeader()->setLabel( 0, "" );
     munitionsFamilyTable_->horizontalHeader()->setLabel( 1, tr( "Ammo" ) );
     munitionsFamilyTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
@@ -115,10 +115,10 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     mainLayout->addWidget( dotationsGroupBox );
 
     // Stocks
-    QGroupBox* stockGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Stocks" ), this );
+    Q3GroupBox* stockGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Stocks" ), this );
     stockGroupBox->setFlat( true );
 
-    stockTable_ = new QTable( 0, 3, stockGroupBox );
+    stockTable_ = new Q3Table( 0, 3, stockGroupBox );
     stockTable_->horizontalHeader()->setLabel( 0, "" );
     stockTable_->horizontalHeader()->setLabel( 1, tr( "Resource" ) );
     stockTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
@@ -131,7 +131,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     mainLayout->addWidget( stockGroupBox );
 
     // ok / cancel butons
-    QHBoxLayout* buttonLayout = new QHBoxLayout( mainLayout );
+    Q3HBoxLayout* buttonLayout = new Q3HBoxLayout( mainLayout );
     QPushButton* okButton     = new QPushButton( tr("Ok")    , this );
     QPushButton* cancelButton = new QPushButton( tr("Cancel"), this );
     buttonLayout->addWidget( okButton     );
@@ -220,7 +220,7 @@ void LogisticSupplyRecompletionDialog::InitializePersonal()
 void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString& label, unsigned nMax )
 {
     personalsTable_->insertRows( nPos, 1 );
-    personalsTable_->setItem( nPos, 0, new QCheckTableItem( personalsTable_, 0 ) );
+    personalsTable_->setItem( nPos, 0, new Q3CheckTableItem( personalsTable_, 0 ) );
     personalsTable_->setText( nPos, 1, label );
     personalsTable_->setItem( nPos, 2, new SpinTableItem< int >( personalsTable_, 0, nMax, 1 ) );
     personalsTable_->setText( nPos, 3, QString::number( nMax ) );
@@ -243,7 +243,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
             continue;
         const unsigned nPos = dotationsTable_->numRows();
         dotationsTable_->insertRows( nPos, 1 );
-        dotationsTable_->setItem( nPos, 0, new QCheckTableItem( dotationsTable_, 0 ) );
+        dotationsTable_->setItem( nPos, 0, new Q3CheckTableItem( dotationsTable_, 0 ) );
         dotationsTable_->setText( nPos, 1, type.GetCategory().c_str() );
         dotationsTable_->setItem( nPos, 2, new SpinTableItem< int >( dotationsTable_, 0, 100, 1 ) );
     }
@@ -271,7 +271,7 @@ void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 void LogisticSupplyRecompletionDialog::AddAmmunition( unsigned nPos, const QString& label )
 {
     munitionsFamilyTable_->insertRows( nPos, 1 );
-    munitionsFamilyTable_->setItem( nPos, 0, new QCheckTableItem( munitionsFamilyTable_, 0 ) );
+    munitionsFamilyTable_->setItem( nPos, 0, new Q3CheckTableItem( munitionsFamilyTable_, 0 ) );
     munitionsFamilyTable_->setText( nPos, 1, label );
     munitionsFamilyTable_->setItem( nPos, 2, new SpinTableItem< int >( munitionsFamilyTable_, 0, 100, 1 ) );
 }
@@ -297,7 +297,7 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
             const Dotation& stock = it.NextElement();
             const unsigned nPos = stockTable_->numRows();
             stockTable_->insertRows( nPos, 1 );
-            stockTable_->setItem( nPos, 0, new QCheckTableItem( stockTable_, 0 ) );
+            stockTable_->setItem( nPos, 0, new Q3CheckTableItem( stockTable_, 0 ) );
             stockTable_->setText( nPos, 1, stock.type_->GetName().c_str() );
             stockTable_->setText( nPos, 2, QString::number( stock.quantity_ ) );
             stocks_[ stock.type_->GetName().c_str() ] = &stock;
@@ -339,7 +339,7 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
     uint nNbrPersonals = 0;
     for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
     {
-        QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( personalsTable_->item( nRow, 0 ) );
+        Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( personalsTable_->item( nRow, 0 ) );
         if( pCheckTableItem->isChecked() )
             ++ nNbrPersonals;
     }
@@ -349,8 +349,8 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
         int index = 1;
         for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
         {
-            QCheckTableItem* pPersonnelItemCheckBox = static_cast< QCheckTableItem* >( personalsTable_->item( nRow, 0 ) );
-            QTableItem*      pNbrItem               = personalsTable_->item( nRow, 2 );
+            Q3CheckTableItem* pPersonnelItemCheckBox = static_cast< Q3CheckTableItem* >( personalsTable_->item( nRow, 0 ) );
+            Q3TableItem*      pNbrItem               = personalsTable_->item( nRow, 2 );
             if( !pPersonnelItemCheckBox->isChecked() )
                 continue;
 
@@ -371,8 +371,8 @@ void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::Para
         int index = 1;
         for( int nRow = 0; nRow < equipmentsTable_->numRows() - 1; ++nRow )
         {
-            QComboTableItem* pEquipementItem  = static_cast< QComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
-            QTableItem*      pNbrItem         = equipmentsTable_->item( nRow, 1 );
+            Q3ComboTableItem* pEquipementItem  = static_cast< Q3ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
+            Q3TableItem*      pNbrItem         = equipmentsTable_->item( nRow, 1 );
 
             ParameterList& personalList = list.AddList( CreateName( "Equipment", index ) );
             personalList.AddIdentifier( "Equipment", equipments_[ pEquipementItem->currentText() ]->type_.GetId() );
@@ -389,7 +389,7 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
     unsigned int nNbrDotations = 0;
     for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
     {
-        QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
+        Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
         if( pCheckTableItem->isChecked() )
             ++ nNbrDotations;
     }
@@ -398,9 +398,9 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
         int index = 1;
         for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
         {
-            QCheckTableItem* pDotationItemCheckBox = static_cast< QCheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
-            QTableItem*      pDotationItem         = dotationsTable_->item( nRow, 1 );
-            QTableItem*      pPercentageItem       = dotationsTable_->item( nRow, 2 );
+            Q3CheckTableItem* pDotationItemCheckBox = static_cast< Q3CheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
+            Q3TableItem*      pDotationItem         = dotationsTable_->item( nRow, 1 );
+            Q3TableItem*      pPercentageItem       = dotationsTable_->item( nRow, 2 );
 
             assert( pDotationItemCheckBox );
             if( !pDotationItemCheckBox->isChecked() )
@@ -421,7 +421,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::Par
     uint nNbrMunitions = 0;
     for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
     {
-        QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
+        Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
         assert( pCheckTableItem );
         if( pCheckTableItem->isChecked() )
             ++ nNbrMunitions;
@@ -431,8 +431,8 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::Par
         int index = 1;
         for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
         {
-            QCheckTableItem* pMunitionItemCheckBox = static_cast< QCheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
-            QTableItem*      pPercentageItem       = munitionsFamilyTable_->item( nRow, 2 );
+            Q3CheckTableItem* pMunitionItemCheckBox = static_cast< Q3CheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
+            Q3TableItem*      pPercentageItem       = munitionsFamilyTable_->item( nRow, 2 );
 
             assert( pMunitionItemCheckBox );
             if( !pMunitionItemCheckBox->isChecked() )
@@ -453,7 +453,7 @@ void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::Parame
     unsigned int nNbrResources = 0;
     for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
     {
-        QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( stockTable_->item( nRow, 0 ) );
+        Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( stockTable_->item( nRow, 0 ) );
         assert( pCheckTableItem );
         if( pCheckTableItem->isChecked() )
             ++ nNbrResources;
@@ -463,9 +463,9 @@ void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::Parame
         int index = 1;
         for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
         {
-            QCheckTableItem* pItemCheckBox = static_cast< QCheckTableItem* >( stockTable_->item( nRow, 0 ) );
-            QTableItem*      pItem         = stockTable_->item( nRow, 1 );
-            QTableItem*      pQttyItem     = stockTable_->item( nRow, 2 );
+            Q3CheckTableItem* pItemCheckBox = static_cast< Q3CheckTableItem* >( stockTable_->item( nRow, 0 ) );
+            Q3TableItem*      pItem         = stockTable_->item( nRow, 1 );
+            Q3TableItem*      pQttyItem     = stockTable_->item( nRow, 2 );
 
             assert( pItemCheckBox );
             if( !pItemCheckBox->isChecked() )
@@ -542,7 +542,7 @@ void LogisticSupplyRecompletionDialog::OnDotationChanged( int nRow, int nCol )
     if( nCol != 2 )
         return;
     // check the checkbox on the same row, first cell
-    QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
+    Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
     assert( pCheckTableItem );
     pCheckTableItem->setChecked( true );
 }
@@ -557,7 +557,7 @@ void LogisticSupplyRecompletionDialog::OnMunitionFamilyChanged( int nRow, int nC
     if( nCol != 2 )
         return;
     // check the checkbox on the same row, first cell
-    QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
+    Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
     assert( pCheckTableItem );
     pCheckTableItem->setChecked( true );
 }
@@ -572,7 +572,7 @@ void LogisticSupplyRecompletionDialog::OnPersonalChanged( int nRow, int nCol )
     if( nCol != 2 )
         return;
     // check the checkbox on the same row, first cell
-    QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( personalsTable_->item( nRow, 0 ) );
+    Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( personalsTable_->item( nRow, 0 ) );
     assert( pCheckTableItem );
     pCheckTableItem->setChecked( true );
 }
@@ -599,11 +599,11 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
     if( nCol != 0 && nCol != 1 )
         return;
 
-    QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
+    Q3ComboTableItem* pComboTableItem = static_cast< Q3ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
     assert( pComboTableItem );
 
     // update quantity colum to bound it to max value
-    QTableItem* pTableItem = static_cast< QTableItem* >( equipmentsTable_->item( nRow, 1 ) );
+    Q3TableItem* pTableItem = static_cast< Q3TableItem* >( equipmentsTable_->item( nRow, 1 ) );
     assert( pTableItem );
     int nMax = 0;
     if( pComboTableItem->currentItem() > 0 )
@@ -658,7 +658,7 @@ void LogisticSupplyRecompletionDialog::OnStockChanged( int nRow, int nCol )
     if( nCol != 2 )
         return;
     // check the checkbox on the same row, first cell
-    QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( stockTable_->item( nRow, 0 ) );
+    Q3CheckTableItem* pCheckTableItem = static_cast< Q3CheckTableItem* >( stockTable_->item( nRow, 0 ) );
     assert( pCheckTableItem );
     pCheckTableItem->setChecked( true );
 }
@@ -672,7 +672,7 @@ void LogisticSupplyRecompletionDialog::NotifyContextMenu( const Agent_ABC& agent
     if( profile_.CanDoMagic( agent ) )
     {
         selected_ = &agent;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Partial recompletion" ), this, SLOT( Show() ) );
     }
 }

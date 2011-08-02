@@ -99,9 +99,9 @@ private:
     QLineEdit* name_;
     gui::ValuedComboBox< QString >* lang_;
     QString selectedLang_;
-    QTextEdit* briefing_;
+    Q3TextEdit* briefing_;
     T_Briefings briefings_;
-    QListView* resources_;
+    Q3ListView* resources_;
     QCheckBox* infiniteDotationsCB_;
     //@}
 };

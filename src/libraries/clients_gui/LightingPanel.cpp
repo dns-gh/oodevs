@@ -31,12 +31,14 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     , options_( controllers.options_ )
     , lighting_( lighting )
 {
+    Q3VBox* container = new Q3VBox( this );
     lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
     lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
-
+    
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
-    lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
+    lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), container );
+    lightingType_->resize( this->size() );
     lightingType_->insert( new QRadioButton( tr( "Fixed" ), lightingType_ ) );
     lightingType_->insert( new QRadioButton( tr( "Camera fixed" ), lightingType_ ) );
     lightingType_->insert( new QRadioButton( tr( "Simulation time" ), lightingType_ ) );
@@ -44,7 +46,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
 
     connect( lightingType_, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
 
-    fixedLightBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), this );
+    fixedLightBox_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Parameters" ), container );
     new QLabel( tr( "Source position" ), fixedLightBox_ );
     direction_ = new DirectionWidget( fixedLightBox_ );
     new QLabel( tr( "Ambient color" ), fixedLightBox_ );
@@ -56,6 +58,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
     connect( diffuse_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
 
+    setWidget( container );
     controllers_.Register( *this );
 }
 

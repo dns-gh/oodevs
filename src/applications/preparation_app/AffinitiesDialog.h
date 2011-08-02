@@ -93,9 +93,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     QVBoxLayout* pMainLayout_;
-    QHBox* pButtonLayout_;
+    Q3HBox* pButtonLayout_;
     QCheckBox* pCheckBox_;
-    QGrid* pGrid_;
+    Q3Grid* pGrid_;
     T_Teams teams_;
     T_Affinities affinities_;
     T_QAffinities spinboxs_;

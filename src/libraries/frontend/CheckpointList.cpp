@@ -14,7 +14,7 @@
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <boost/filesystem/operations.hpp>
-#include <qlabel.h>
+#include <QtGui/qlabel.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -26,7 +26,7 @@ using namespace frontend;
 // Created: SBO 2010-04-21
 // -----------------------------------------------------------------------------
 CheckpointList::CheckpointList( QWidget* parent, const tools::GeneralConfig& config )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , config_( config )
     , enabled_( false )
 {
@@ -35,7 +35,7 @@ CheckpointList::CheckpointList( QWidget* parent, const tools::GeneralConfig& con
     {
         QLabel* label = new QLabel( tools::translate( "CheckpointList", "Checkpoint:" ), this );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        list_ = new QListBox( this );
+        list_ = new Q3ListBox( this );
         connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectCheckpoint( int ) ) );
     }
 }

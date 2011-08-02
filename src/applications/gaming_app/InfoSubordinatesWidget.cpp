@@ -22,7 +22,7 @@
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
 InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
-    : QIconView( parent, "InfoSubordinatesWidget" )
+    : Q3IconView( parent, "InfoSubordinatesWidget" )
     , controllers_( controllers )
     , profile_( profile )
     , icons_( icons )
@@ -34,8 +34,8 @@ InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Control
     setWordWrapIconText( false );
     setSorting( true );
     setItemsMovable( false );
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    connect( this, SIGNAL( doubleClicked( QIconViewItem* ) ), SLOT( OpenItem( QIconViewItem* ) ) );
+    setHScrollBarMode( Q3ScrollView::AlwaysOff );
+    connect( this, SIGNAL( doubleClicked( Q3IconViewItem* ) ), SLOT( OpenItem( Q3IconViewItem* ) ) );
     hide();
     controllers_.Register( *this );
 }
@@ -90,7 +90,7 @@ void InfoSubordinatesWidget::AddSubordinate( const kernel::Entity_ABC& entity )
 // Name: InfoSubordinatesWidget::OpenItem
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-void InfoSubordinatesWidget::OpenItem( QIconViewItem* item )
+void InfoSubordinatesWidget::OpenItem( Q3IconViewItem* item )
 {
     if( InfoSubordinateItem* value = static_cast< InfoSubordinateItem* >( item ) )
         controllers_.actions_.Select( value->GetEntity() );
@@ -102,7 +102,7 @@ void InfoSubordinatesWidget::OpenItem( QIconViewItem* item )
 // -----------------------------------------------------------------------------
 void InfoSubordinatesWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    for( QIconViewItem* item = firstItem(); item; item = item->nextItem() )
+    for( Q3IconViewItem* item = firstItem(); item; item = item->nextItem() )
         if( &static_cast< InfoSubordinateItem* >( item )->GetEntity() == &entity )
         {
             delete item;

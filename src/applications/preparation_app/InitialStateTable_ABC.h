@@ -20,7 +20,7 @@ class InitialState;
 */
 // Created: ABR 2011-02-24
 // =============================================================================
-class InitialStateTable_ABC : public QTable
+class InitialStateTable_ABC : public Q3Table
                             , private boost::noncopyable
 {
 public:

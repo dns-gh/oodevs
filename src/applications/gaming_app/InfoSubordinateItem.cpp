@@ -13,14 +13,14 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/EntitySymbols.h"
 #include "gaming/Attributes.h"
-#include <qpainter.h>
+#include <QtGui/qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: InfoSubordinateItem constructor
 // Created: SBO 2007-02-22
 // -----------------------------------------------------------------------------
-InfoSubordinateItem::InfoSubordinateItem( QIconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity )
-    : QIconViewItem( parent, entity.GetName(), icons.GetSymbol( entity ) )
+InfoSubordinateItem::InfoSubordinateItem( Q3IconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity )
+    : Q3IconViewItem( parent, entity.GetName(), icons.GetSymbol( entity ) )
     , controllers_( controllers )
     , icons_( icons )
     , entity_( entity )
@@ -43,7 +43,7 @@ InfoSubordinateItem::~InfoSubordinateItem()
 // -----------------------------------------------------------------------------
 void InfoSubordinateItem::paintItem( QPainter* p, const QColorGroup& cg )
 {
-    QIconViewItem::paintItem( p, cg );
+    Q3IconViewItem::paintItem( p, cg );
     if( const Attributes* attributes = static_cast< const Attributes* >( entity_.Retrieve< kernel::Attributes_ABC >() ) )
         DrawLife( p, attributes->nRawOpState_ );
 }

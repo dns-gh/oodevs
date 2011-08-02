@@ -24,6 +24,8 @@
 #include "ADN_Tr.h"
 #include "ADN_UrbanModifiersTable.h"
 #include "ENT/ENT_Tr.h"
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 class ADN_Equipement_UrbanModifiersTable : public helpers::ADN_UrbanModifiersTable
 {
@@ -85,7 +87,7 @@ void ADN_Equipement_GUI::Build()
     this->BuildGeneric( eDotationFamily_AgentExtincteur, pTabWidget );
     this->BuildGeneric( eDotationFamily_Piece, pTabWidget );
     this->BuildGeneric( eDotationFamily_Energy, pTabWidget );
-    QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
+    Q3GridLayout* pMainLayout = new Q3GridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
 }
 
@@ -101,7 +103,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
     ADN_Equipement_GenericListView* pListView = new ADN_Equipement_GenericListView( nType, pPage );
     pListView->GetConnector().Connect( &data_.GetDotation( nType ).categories_ );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
-    QGroupBox* pGroupBox = new QGroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str(), pPage );
+    Q3GroupBox* pGroupBox = new Q3GroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str(), pPage );
     QWidget* pHolder = builder.AddFieldHolder( pGroupBox );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vConnectors[ eName ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeEMAT6" ), vConnectors[ eGenEMAT6Code ] );
@@ -109,13 +111,13 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eGenNNOCode ] );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eGenNature] );
-    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
+    Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ ePackageNbr ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package weight" ), vConnectors[ ePackageWeight ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package volume" ), vConnectors[ ePackageVolume ], tr( "m3" ), eGreaterZero );
     pListView->SetItemConnectors( vConnectors );
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pPage, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pPage, 10, 10 );
     pMainLayout->addWidget( pListView, 1 );
     pMainLayout->addWidget( pGroupBox, 4 );
 }
@@ -132,7 +134,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     pAmmoListView_ = new ADN_Equipement_AmmoListView( pPage );
     pAmmoListView_->GetConnector().Connect( &data_.GetDotation( eDotationFamily_Munition ).categories_ );
     T_ConnectorVector vConnectors( eNbrAmmoGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
-    QGroupBox* pGroupBox = new QGroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str(), pPage );
+    Q3GroupBox* pGroupBox = new Q3GroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str(), pPage );
     QWidget* pHolder = builder.AddFieldHolder( pGroupBox );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vConnectors[ eAmmoName ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeEMAT6" ), vConnectors[ eEMAT6Code ] );
@@ -141,7 +143,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eNNOCode ] );
     builder.AddEnumField< E_MunitionType >( pHolder, tr( "Type" ), vConnectors[ eType ], ADN_Tr::ConvertFromMunitionType );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eNature ] );
-    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
+    Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ eAmmoPackageNbr ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package weight" ), vConnectors[ eAmmoPackageWeight ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package volume" ), vConnectors[ eAmmoPackageVolume ], tr( "m3" ), eGreaterZero );
@@ -149,12 +151,12 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     // Direct fire properties
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Attritions" ), pGroupBox );
     vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
-    QGroupBox* pTablesGroup = new QGroupBox( 2, Qt::Vertical, pDirectGroup );
-    pTablesGroup->setFrameShape( QFrame::NoFrame );
+    Q3GroupBox* pTablesGroup = new Q3GroupBox( 2, Qt::Vertical, pDirectGroup );
+    pTablesGroup->setFrameShape( Q3GroupBox::NoFrame );
     pAttritionTable_ = new ADN_Equipement_AttritionTable( pTablesGroup );
     vConnectors[ eAttritions ] = &pAttritionTable_->GetConnector();
     new ADN_Equipement_UrbanModifiersTable( pTablesGroup, vConnectors[ eUrbanAttritions ] );
-    QGroupBox* pAttritionVisualisation = new QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), pDirectGroup );
+    Q3GroupBox* pAttritionVisualisation = new Q3GroupBox( 2, Qt::Vertical, tr( "Simulation" ), pDirectGroup );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
     pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector< helpers::ArmorInfos > >( pComboGroup, tr( "Armor-Plating" ), vConnectors[ eArmor ] );
     connect( pArmorCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
@@ -172,7 +174,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "X Dispersion" ), vConnectors[ eDispersionX ], tr( "m" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Y Dispersion" ), vConnectors[ eDispersionY ], tr( "m" ), eGreaterZero );
     // Explosive parameters
-    pExplosiveParametersGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pIndirectGroup );
+    pExplosiveParametersGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pIndirectGroup );
     pExplosiveParametersGroup_->hide();
     ADN_Equipement_Postures_GUI* pStance = new ADN_Equipement_Postures_GUI( tr( "Stance" ), pExplosiveParametersGroup_ );
     vConnectors[ eModifStances ] = &pStance->GetConnector();
@@ -180,17 +182,17 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
     builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
     // Flare parameters
-    pFlareParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
+    pFlareParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
     pFlareParametersGroup_->hide();
     builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Activation duration" ), vConnectors[ eDeployTime ] );
     builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Span" ), vConnectors[ eLifetime ] );
     // Effect (object) parameters
-    pEffectParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pIndirectGroup );
+    pEffectParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pIndirectGroup );
     pEffectParametersGroup_->hide();
     builder.AddField< ADN_EditLine_String >( pEffectParametersGroup_, tr( "Created object" ), vConnectors[ eEffectType ] );
     builder.AddField< ADN_TimeField >( pEffectParametersGroup_, tr( "Span" ), vConnectors[ eLifetime ] );
     // Mine parameters
-    pMineParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
+    pMineParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
     pMineParametersGroup_->hide();
     builder.AddField< ADN_EditLine_Int >( pMineParametersGroup_, tr( "Mines quantity" ), vConnectors[ eMineNumber ], 0, eGreaterEqualZero );
     // Illumination
@@ -206,7 +208,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     //Connect
     pAmmoListView_->SetItemConnectors( vConnectors );
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pPage, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pPage, 10, 10 );
     pMainLayout->addWidget( pAmmoListView_, 1 );
     pMainLayout->addWidget( pGroupBox, 4 );
 }
@@ -330,11 +332,11 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
             continue;
         pTable->setNumRows( nRow + nRowSize );
         pTable->AddBoldGridRow( nRow );
-        builder.AddTableCell< ADN_TableItem_String >( pTable, *it, nRow, 0, nRowSize, 1, ammoCategory.strName_, eNone, QTableItem::Never );
+        builder.AddTableCell< ADN_TableItem_String >( pTable, *it, nRow, 0, nRowSize, 1, ammoCategory.strName_, eNone, Q3TableItem::Never );
         int nSubRow = 0;
         for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )
         {
-            builder.AddTableCell< ADN_TableItem_String >( pTable, *it, nRow + nSubRow, 1, ( *it2 )->ptrArmor_.GetData()->strName_, eNone, QTableItem::Never );
+            builder.AddTableCell< ADN_TableItem_String >( pTable, *it, nRow + nSubRow, 1, ( *it2 )->ptrArmor_.GetData()->strName_, eNone, Q3TableItem::Never );
             builder.AddTableCell< ADN_TableItem_Double >( pTable, *it, nRow + nSubRow, 2, ( *it2 )->rRepairNoEvac_, ePercentage )->UseColor( true );
             builder.AddTableCell< ADN_TableItem_Double >( pTable, *it, nRow + nSubRow, 3, ( *it2 )->rRepairWithEvac_, ePercentage )->UseColor( true );
             builder.AddTableCell< ADN_TableItem_Double >( pTable, *it, nRow + nSubRow, 4, ( *it2 )->rDestroy_, ePercentage )->UseColor( true );

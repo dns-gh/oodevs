@@ -16,7 +16,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "resources.h"
-#include <qpainter.h>
 
 using namespace gui;
 
@@ -87,6 +86,7 @@ void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
 {
     static const QColor background( 115, 110, 100 );
     static const QColor foreground( 255, 255, 255 );
+
     if( root )
     {
         layout_ = new QGridLayout( this, 1, 1 );
@@ -99,7 +99,7 @@ void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
     layout_->setColStretch( 0, 0 );
     layout_->setColStretch( 1, 1 );
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         button_ = new MyButton( box, MAKE_PIXMAP( minus ), MAKE_PIXMAP( plus ) );
         button_->setToggleButton( true );
         button_->setFixedSize( 13, 15 );

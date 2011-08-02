@@ -19,8 +19,8 @@
 #include <graphics/ShapeCollector.h>
 #include <graphics/extensions.h>
 #include <graphics/DataFactory.h>
-
 #include <boost/filesystem/operations.hpp>
+
 namespace bfs = boost::filesystem;
 
 using namespace kernel;

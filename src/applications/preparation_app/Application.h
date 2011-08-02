@@ -34,7 +34,7 @@ class Application : public Application_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv, const QString& license );
+             Application( int& argc, char** argv, const QString& license );
     virtual ~Application();
     //@}
 

@@ -27,7 +27,7 @@ class ProfilesModel;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileList : public QVBox
+class UserProfileList : public Q3VBox
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< UserProfile >
 {
@@ -84,7 +84,7 @@ private:
     T_Profiles           profiles_;
     T_ProfileEditors     editors_;
     UserProfileWidget&   pages_;
-    QListBox*            list_;
+    Q3ListBox*            list_;
     //@}
 };
 

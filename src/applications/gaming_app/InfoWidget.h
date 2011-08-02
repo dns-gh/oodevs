@@ -28,7 +28,7 @@ namespace gui
 */
 // Created: SBO 2007-02-02
 // =============================================================================
-class InfoWidget : public QHBox
+class InfoWidget : public Q3HBox
 {
     Q_OBJECT;
 

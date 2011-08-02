@@ -10,7 +10,7 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include <qmainwindow.h>
+#include <Qt3Support/q3mainwindow.h>
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ namespace tools
 }
 
 class Config;
-class QWidgetStack;
+class Q3WidgetStack;
 
 // =============================================================================
 /** @class  MainWindow
@@ -41,7 +41,7 @@ class QWidgetStack;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class MainWindow : public QMainWindow
+class MainWindow : public Q3MainWindow
 {
 
     Q_OBJECT;
@@ -82,7 +82,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< gui::LinkInterpreter_ABC > interpreter_;
-    QWidgetStack* pages_;
+    Q3WidgetStack* pages_;
     //@}
 };
 

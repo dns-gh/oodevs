@@ -25,7 +25,7 @@ InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& cont
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new MedicalConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoMedicalDialog", "Consigns" ) );
-    QVBox* box = new QVBox( tabs );
+    Q3VBox* box = new Q3VBox( tabs );
     new MedicalReliefAmbulancesListView( box, controllers, factory );
     new MedicalCollectAmbulancesListView( box, controllers, factory );
     new MedicalDoctorsListView( box, controllers, factory );

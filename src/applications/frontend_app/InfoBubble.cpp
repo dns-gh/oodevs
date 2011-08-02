@@ -10,22 +10,22 @@
 #include "frontend_app_pch.h"
 #include "InfoBubble.h"
 #include "resources.h"
-#include <qlabel.h>
-#include <qpixmap.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qpixmap.h>
 
 // -----------------------------------------------------------------------------
 // Name: InfoBubble constructor
 // Created: SBO 2007-10-05
 // -----------------------------------------------------------------------------
 InfoBubble::InfoBubble( QWidget* parent )
-    : QHGroupBox( parent )
+    : Q3HGroupBox( parent )
 {
     setMargin( 5 );
     icon_ = new QLabel( this );
     icon_->setFixedSize( 60, 48 );
 
     message_ = new QLabel( this );
-    message_->setAlignment( Qt::WordBreak );
+    message_->setAlignment( Qt::TextWordWrap );
 //    hide();
 }
 

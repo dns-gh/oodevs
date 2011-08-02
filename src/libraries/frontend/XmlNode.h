@@ -11,13 +11,18 @@
 #define __XmlNode_h_
 
 #include <map>
-#include <sstream>
 #include <boost/lexical_cast.hpp>
+#include <QtCore/qstring.h>
 
 namespace xml
 {
     class xistream;
     class xostream;
+}
+
+inline std::ostream& operator<<( std::ostream& os, const QString& value )
+{
+	return os << value.toStdString();
 }
 
 namespace frontend
@@ -93,9 +98,7 @@ private:
 template< typename T >
 void XmlNode::SetValue( const std::string& path, const T& value )
 {
-    std::stringstream ss;
-    ss << std::boolalpha << value;
-    SetStringValue( path, ss.str() );
+	SetStringValue( path, boost::lexical_cast< std::string >( value ) );
 }
 
 // -----------------------------------------------------------------------------

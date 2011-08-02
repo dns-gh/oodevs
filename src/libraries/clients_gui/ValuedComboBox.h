@@ -10,7 +10,9 @@
 #ifndef __ValuedComboBox_h_
 #define __ValuedComboBox_h_
 
-#include <qcombobox.h>
+#pragma warning( push, 0 )
+#include <QtGui/qcombobox.h>
+#pragma warning( pop )
 
 namespace gui
 {

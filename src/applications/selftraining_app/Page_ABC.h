@@ -10,9 +10,12 @@
 #ifndef __Page_ABC_h_
 #define __Page_ABC_h_
 
-#include <qvbox.h>
+#include <Qt3Support/q3vbox.h>
+//Added by qt3to4:
+#include <Qt3Support/q3button.h>
+#include <Qt3Support/q3gridlayout.h>
 
-class QWidgetStack;
+class Q3WidgetStack;
 class QuitPage;
 
 // =============================================================================
@@ -21,7 +24,7 @@ class QuitPage;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class Page_ABC : public QVBox
+class Page_ABC : public Q3VBox
 {
     Q_OBJECT
 
@@ -39,7 +42,7 @@ protected:
 public:
     //! @name Constructors/Destructor
     //@{
-             Page_ABC( QWidgetStack* pages, Page_ABC& previous, unsigned short flags );
+             Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short flags );
     virtual ~Page_ABC();
     //@}
 
@@ -78,13 +81,13 @@ private slots:
 private:
     //! @name Member data
     //@{
-    QGridLayout* grid_;
-    QWidgetStack* pages_;
+    Q3GridLayout* grid_;
+    Q3WidgetStack* pages_;
     Page_ABC& previous_;
     static QuitPage* quitPage_;
-    QButton* startButton_;
-    QButton* joinButton_;
-    QButton* editButton_;
+    QPushButton* startButton_;
+    QPushButton* joinButton_;
+    QPushButton* editButton_;
     //@}
 };
 

@@ -10,7 +10,7 @@
 #ifndef __GameConfigPanel_h_
 #define __GameConfigPanel_h_
 
-#include <qvbox.h>
+#include <Qt3Support/q3vbox.h>
 
 namespace tools
 {
@@ -18,9 +18,9 @@ namespace tools
 }
 
 class QCheckBox;
-class QGroupBox;
+class Q3GroupBox;
 class QSpinBox;
-class QTimeEdit;
+class Q3TimeEdit;
 
 // =============================================================================
 /** @class  GameConfigPanel
@@ -28,7 +28,7 @@ class QTimeEdit;
 */
 // Created: AGE 2007-10-09
 // =============================================================================
-class GameConfigPanel : public QVBox
+class GameConfigPanel : public Q3VBox
 {
 public:
     //! @name Constructors/Destructor
@@ -63,14 +63,14 @@ private:
     const tools::GeneralConfig& config_;
     QSpinBox* stepSpin_;
     QSpinBox* factorSpin_;
-    QGroupBox* checkpoints_;
-    QTimeEdit* checkFrequency_;
+    Q3GroupBox* checkpoints_;
+    Q3TimeEdit* checkFrequency_;
     QSpinBox* keepSpin_;
     QCheckBox* decisionalLogs_;
     QCheckBox* pathfindLogs_;
-    QGroupBox* diaDebugBox_;
+    Q3GroupBox* diaDebugBox_;
     QSpinBox* diaDebugPort_;
-    QGroupBox* netConBox_;
+    Q3GroupBox* netConBox_;
     QSpinBox* netConPort_;
     QSpinBox* pathThreads_;
     QCheckBox* profile_;

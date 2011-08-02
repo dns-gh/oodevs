@@ -13,6 +13,8 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+//Added by qt3to4:
+#include <Qt3Support/q3button.h>
 
 namespace kernel
 {
@@ -28,7 +30,7 @@ namespace gui
     class EntitySymbols;
 }
 
-class QProgressBar;
+class Q3ProgressBar;
 class Attributes;
 class HumanFactors;
 class Reinforcements;
@@ -39,7 +41,7 @@ class Reinforcements;
 */
 // Created: SBO 2007-02-02
 // =============================================================================
-class InfoStatusWidget : public QVBox
+class InfoStatusWidget : public Q3VBox
                        , public tools::Observer_ABC
                        , public tools::SelectionObserver< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
@@ -96,10 +98,10 @@ private:
     gui::EntitySymbols& icons_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
-    QButton* gotoParent_;
+    QPushButton* gotoParent_;
     QLabel* icon_;
     QLabel* name_;
-    QProgressBar* lifeBar_;
+    Q3ProgressBar* lifeBar_;
 
     QLabel* reinforced_;
     QLabel* reinforcing_;

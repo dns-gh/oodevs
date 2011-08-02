@@ -19,7 +19,7 @@
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
     , factory_( factory )
     , factors_( new gui::ListDisplayer< SuccessFactorList >( this, *this, factory ) )
@@ -28,13 +28,13 @@ SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& cont
     layout()->setAlignment( Qt::AlignRight );
     factors_->AddColumn( tr( "Name" ) );
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         editButton_ = new QPushButton( tr( "Edit..." ), box );
         deleteButton_ = new QPushButton( tr( "Delete" ), box );
         connect( editButton_, SIGNAL( clicked() ), SLOT( OnEdit() ) );
         connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }
-    connect( factors_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );
+    connect( factors_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );
     controllers_.Register( *this );
 }
 

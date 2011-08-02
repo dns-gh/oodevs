@@ -10,11 +10,6 @@
 #ifndef __SizeButton_h_
 #define __SizeButton_h_
 
-#pragma warning( push, 0 )
-#include <qslider.h>
-#include <qlabel.h>
-#pragma warning( pop )
-
 namespace gui
 {
 

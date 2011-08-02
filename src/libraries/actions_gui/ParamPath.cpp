@@ -55,13 +55,13 @@ ParamPath::~ParamPath()
 // -----------------------------------------------------------------------------
 QWidget* ParamPath::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
+    Q3HBox* box = new Q3HBox( parent );
     box->setSpacing( 5 );
     pLabel_ = new ::gui::RichLabel( GetName(), false, box );
     pPosLabel_ = new QLabel( "---", box );
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
-    pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    pPosLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     box->setStretchFactor( pPosLabel_, 1 );
     return box;
 }

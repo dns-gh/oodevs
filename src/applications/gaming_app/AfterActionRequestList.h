@@ -29,7 +29,7 @@ class Simulation;
 */
 // Created: AGE 2007-09-25
 // =============================================================================
-class AfterActionRequestList : public QVBox
+class AfterActionRequestList : public Q3VBox
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< IndicatorRequest >
                              , public tools::ElementObserver_ABC< Simulation >
@@ -47,8 +47,8 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnDoubleClicked( QListViewItem* );
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
+    void OnDoubleClicked( Q3ListViewItem* );
+    void OnRequestPopup( Q3ListViewItem* pItem, const QPoint& pos );
     void OnRemoveItem();
     //@}
 
@@ -71,7 +71,7 @@ private:
     QPixmap pendingPixmap_;
     QPixmap donePixmap_;
     QPixmap failedPixmap_;
-    QPopupMenu popupMenu_;
+    Q3PopupMenu popupMenu_;
     //@}
 };
 

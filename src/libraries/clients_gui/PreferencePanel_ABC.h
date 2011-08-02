@@ -19,7 +19,7 @@ namespace gui
 */
 // Created: SBO 2007-01-03
 // =============================================================================
-class PreferencePanel_ABC : public QScrollView
+class PreferencePanel_ABC : public QScrollArea
 {
 public:
     //! @name Constructors/Destructor
@@ -39,19 +39,6 @@ private:
     //@{
     PreferencePanel_ABC( const PreferencePanel_ABC& );            //!< Copy constructor
     PreferencePanel_ABC& operator=( const PreferencePanel_ABC& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void insertChild ( QObject* pObj );
-    virtual QLayout* layout();
-    virtual QSize sizeHint() const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    QVBox* pBox_;
     //@}
 };
 

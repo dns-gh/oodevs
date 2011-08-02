@@ -11,8 +11,8 @@
 #define __ADN_EditLine_ABC_h_
 
 #include "ADN_Gfx_ABC.h"
-#include <qlineedit.h>
-#include <qvalidator.h>
+#include <QtGui/qlineedit.h>
+#include <QtGui/qvalidator.h>
 
 //*****************************************************************************
 // Created: JDY 03-07-08

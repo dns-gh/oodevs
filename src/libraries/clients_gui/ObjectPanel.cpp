@@ -30,7 +30,7 @@ using namespace gui;
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
 ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-: InfoPanel_ABC( parent, panel, tools::translate( "gui::ObjectPanel", "Object state" ) )
+    : InfoPanel_ABC( parent, panel, tools::translate( "gui::ObjectPanel", "Object state" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {

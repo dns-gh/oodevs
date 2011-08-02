@@ -10,7 +10,7 @@
 #ifndef __ActionList_h_
 #define __ActionList_h_
 
-#include <qtoolbox.h>
+#include <QtGui/qtoolbox.h>
 
 class QAction;
 class ActionCategory;
@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddAction( const QString& category, QAction& action );
+    void AddAction( const QString& category, Q3Action& action );
     void SelectCategory( const ActionCategory& category );
     //@}
 

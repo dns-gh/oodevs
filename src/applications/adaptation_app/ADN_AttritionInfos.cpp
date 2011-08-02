@@ -64,7 +64,7 @@ void AttritionInfos::ReadArchive( xml::xistream& input )
 // Name: AttritionInfos::WriteArchive
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
-void AttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /*= "attrition"*/ )
+void AttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "attrition"*/ )
 {
     output << xml::start( tag )
         << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )

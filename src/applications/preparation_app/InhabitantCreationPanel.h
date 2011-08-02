@@ -70,7 +70,7 @@ public:
 public slots:
     //! @name Slots
     //@{
-    virtual void Commit();
+    void Commit2();
     //@}
 
 private slots:

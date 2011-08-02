@@ -48,7 +48,7 @@ void WeatherListView::Update( const MeteoModel& model )
         boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( *static_cast< weather::MeteoLocal* >( ( *it ).get() ) ) );
         weathers_.push_back( weather );
         maxId = ( maxId > weather->GetId() ) ? maxId : weather->GetId();
-        QListViewItem* item = new QListViewItem( this );
+        Q3ListViewItem* item = new Q3ListViewItem( this );
         item->setText( 0, weather->GetName() );
     }
     weather::MeteoLocal::localCounter_ = maxId + 1;
@@ -63,7 +63,7 @@ void WeatherListView::CreateItem()
     boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).ascii() ) );
     weather->SetCreated( true );
     weather->SetPeriod( simulation_.GetDateTime(), simulation_.GetDateTime() );
-    QListViewItem* item = new QListViewItem( this );
+    Q3ListViewItem* item = new Q3ListViewItem( this );
     item->setText( 0, weather->GetName() );
     weathers_.push_back( weather );
 }
@@ -72,9 +72,9 @@ void WeatherListView::CreateItem()
 // Name: WeatherListView::ContextMenuRequested
 // Created: ABR 2011-06-08
 // -----------------------------------------------------------------------------
-void WeatherListView::ContextMenuRequested( QListViewItem* /*item*/, const QPoint& point, int /*column*/ )
+void WeatherListView::ContextMenuRequested( Q3ListViewItem* /*item*/, const QPoint& point, int /*column*/ )
 {
-    QPopupMenu* menu = new QPopupMenu( this );
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
     menu->insertItem( tr( "Add" ), this, SLOT( CreateItem() ) );
     menu->exec( point );
 }

@@ -18,10 +18,10 @@
 #include "ADN_MainWindow.h"
 #include "ADN_Validator.h"
 
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qvalidator.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlineedit.h>
+#include <QtGui/qcombobox.h>
+#include <QtGui/qvalidator.h>
 
 class ADN_TimeField_EditLine : public QLineEdit
 {
@@ -74,7 +74,7 @@ private:
 // Name: ADN_TimeField constructor
 // Created: SBO 2005-09-09
 // -----------------------------------------------------------------------------
-ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /*= 0*/ )
+ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
     : QWidget              ( pParent, szName )
     , ADN_Gfx_ABC          ()
     , nSecondsValue_       ( 0 )
@@ -86,7 +86,7 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /*= 0*/ )
     pConnector_ = new ADN_Connector_String<ADN_TimeField>(this);
 
     // objects
-    QHBoxLayout *pLayout = new QHBoxLayout( this );
+    Q3HBoxLayout *pLayout = new Q3HBoxLayout( this );
     pLayout->setMargin( 0 );
 
     pLineEdit_ = new ADN_TimeField_EditLine( this );

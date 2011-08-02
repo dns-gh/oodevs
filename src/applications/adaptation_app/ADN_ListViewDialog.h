@@ -10,7 +10,6 @@
 #ifndef __ADN_ListViewDialog_h_
 #define __ADN_ListViewDialog_h_
 
-#include <qdialog.h>
 #include <boost/noncopyable.hpp>
 
 class ADN_ListView;

@@ -44,7 +44,7 @@ class TimelineWidget;
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelinePanel : public QDockWindow
+class TimelinePanel : public QDockWidget
 {
     Q_OBJECT;
 

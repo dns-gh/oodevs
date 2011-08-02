@@ -34,10 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual ValuedListItem* CreateItem( QListView * parent );
-    virtual ValuedListItem* CreateItem( QListViewItem * parent );
-    virtual ValuedListItem* CreateItem( QListView * parent, QListViewItem * after );
-    virtual ValuedListItem* CreateItem( QListViewItem * parent, QListViewItem * after );
+    virtual ValuedListItem* CreateItem( Q3ListView * parent );
+    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent );
+    virtual ValuedListItem* CreateItem( Q3ListView * parent, Q3ListViewItem * after );
+    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after );
 
     virtual RichLabel*      CreateLabel( QWidget* parent = 0, const char* name = 0 );
     virtual RichLabel*      CreateLabel( const QString& text, QWidget* parent = 0, const char* name = 0 );
@@ -53,7 +53,7 @@ signals:
 protected slots:
     //! @name Slots
     //@{
-    void OnClicked( QListViewItem*, const QPoint&, int );
+    void OnClicked( Q3ListViewItem*, const QPoint&, int );
     virtual void DealWithLink( const QString& anchor );
     //@}
 

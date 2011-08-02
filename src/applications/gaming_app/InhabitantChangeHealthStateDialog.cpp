@@ -12,6 +12,8 @@
 #include "actions/ActionsModel.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/tools.h"
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantChangeHealthStateDialog constructor
@@ -23,6 +25,7 @@ InhabitantChangeHealthStateDialog::InhabitantChangeHealthStateDialog( QWidget* p
     AddLine( 0, tools::translate( "InhabitantChangeHealthStateDialog", "Healthy:" ) );
     AddLine( 1, tools::translate( "InhabitantChangeHealthStateDialog", "Wounded:" ) );
     AddLine( 2, tools::translate( "InhabitantChangeHealthStateDialog", "Dead:" ) );
+
 }
 
 // -----------------------------------------------------------------------------

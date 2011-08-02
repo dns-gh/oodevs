@@ -54,7 +54,7 @@ public:
     void Display( const kernel::AgentComposition& type, ValuedListItem* );
     void Display( const kernel::AutomatComposition& type, ValuedListItem* );
     void Display( const kernel::AutomatType& type, ValuedListItem* );
-    virtual QDragObject* dragObject();
+    virtual Q3DragObject* dragObject();
     //@}
 
 private:
@@ -65,8 +65,8 @@ private:
     void DisplayList();
     void DisplayBy( const std::string& (kernel::AgentNature::*function)() const );
     void DisplayByNature();
-    QListViewItem* CreateNaturePath( const std::string& path );
-    void Sort( QListViewItem* item );
+    Q3ListViewItem* CreateNaturePath( const std::string& path );
+    void Sort( Q3ListViewItem* item );
 
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );

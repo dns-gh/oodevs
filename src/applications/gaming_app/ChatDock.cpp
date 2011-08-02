@@ -16,11 +16,10 @@
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
 ChatDock::ChatDock( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler )
-    : QDockWindow( parent, "chat" )
+    : QDockWidget( "chat", parent )
 {
+    setObjectName( "chatDock" );
     setWidget( new ChatWidget( this, controllers, publisher, handler ) );
-    setResizeEnabled( true );
-    setCloseMode( QDockWindow::Always );
     setCaption( tr( "Chat" ) );
     hide();
 }

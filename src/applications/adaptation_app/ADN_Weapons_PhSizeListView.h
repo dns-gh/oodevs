@@ -28,7 +28,7 @@ class ADN_Weapons_PhSizeListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_Weapons_PhSizeListView();
     //@}
 

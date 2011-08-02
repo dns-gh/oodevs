@@ -15,7 +15,7 @@
 #include "clients_kernel/AtlasNatures.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/Tools.h"
-#include <qbuttongroup.h>
+#include <Qt3Support/q3buttongroup.h>
 
 using namespace actions::gui;
 
@@ -47,7 +47,7 @@ ParamAtlasNature::~ParamAtlasNature()
 // -----------------------------------------------------------------------------
 QWidget* ParamAtlasNature::BuildInterface( QWidget* parent )
 {
-    QButtonGroup* group = new QButtonGroup( 2, Qt::Horizontal, GetName(), parent );
+    Q3ButtonGroup* group = new Q3ButtonGroup( 2, Qt::Horizontal, GetName(), parent );
     tools::Iterator< const kernel::AtlasNature& > it( natures_.CreateIterator() );
     while( it.HasMoreElements() )
     {

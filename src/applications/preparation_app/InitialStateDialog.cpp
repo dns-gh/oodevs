@@ -44,7 +44,7 @@ InitialStateDialog::InitialStateDialog( QWidget* parent, kernel::Controllers& co
     tabWidget->addTab( tabs_[ eEquipment ].get(), tools::translate( "InitialStateDialog", "Equipments" ) );
     tabWidget->addTab( tabs_[ eResources ].get(), tools::translate( "InitialStateDialog", "Resources" ) );
     // Buttons
-    QHBox* buttons = new QHBox( this, "InitialStateDialog_HBox_Buttons" );
+    Q3HBox* buttons = new Q3HBox( this, "InitialStateDialog_HBox_Buttons" );
     buttons->setSpacing( 5 );
     QPushButton* resetButton  = new QPushButton( tr( "Reset" ) , buttons, "InitialStateDialog_PushButton_Reset" );
     QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttons, "InitialStateDialog_PushButton_Ok" );

@@ -25,12 +25,12 @@
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorActionItem::SuccessFactorActionItem( QWidget* parent, const SuccessFactorActionTypes& actions )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , parameters_( 0 )
 {
     setSpacing( 2 );
-    setFrameStyle( QFrame::Panel | QFrame::Raised );
-    QHBox* box = new QHBox( this );
+    setFrameStyle( Q3Frame::Panel | Q3Frame::Raised );
+    Q3HBox* box = new Q3HBox( this  );
     box->setSpacing( 5 );
     {
         type_ = new gui::ValuedComboBox< const SuccessFactorActionType* >( box );
@@ -43,7 +43,7 @@ SuccessFactorActionItem::SuccessFactorActionItem( QWidget* parent, const Success
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     }
     {
-        QButton* addButton = new QPushButton( "+", box );
+        QPushButton* addButton = new QPushButton( "+", box );
         addButton->setMaximumWidth( 30 );
         deleteButton_ = new QPushButton( MAKE_PIXMAP( trash ), "", box );
         deleteButton_->setMaximumWidth( 30 );
@@ -110,7 +110,7 @@ void SuccessFactorActionItem::OnTypeChanged()
 {
     editors_.clear();
     delete parameters_;
-    parameters_ = new QGroupBox( 2, Qt::Horizontal, this );
+    parameters_ = new Q3GroupBox( 2, Qt::Horizontal, this );
     parameters_->setFlat( true );
     if( const SuccessFactorActionType* type = type_->GetValue() )
     {

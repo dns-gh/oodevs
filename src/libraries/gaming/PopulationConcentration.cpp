@@ -195,7 +195,7 @@ geometry::Point2f PopulationConcentration::GetPosition( bool ) const
 // Name: PopulationConcentration::IsAt
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool PopulationConcentration::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
+bool PopulationConcentration::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor*/ ) const
 {
     const float maxSquareRadius = ( radius_ + precision ) * ( radius_ + precision );
     return pos.SquareDistance( position_ ) < maxSquareRadius;

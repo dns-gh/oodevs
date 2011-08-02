@@ -10,8 +10,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_HtmlBuilder.h"
 
-#include <qtable.h>
-#include <qlistview.h>
+#pragma warning ( push, 0 )
+#include <Qt3Support/q3table.h>
+#include <Qt3Support/q3listview.h>
+#pragma warning ( pop )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder constructor
@@ -89,7 +91,7 @@ void ADN_HtmlBuilder::ListItem( const char* szText )
 // Name: ADN_HtmlBuilder::ListItem
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::ListItem( const char* szField, const char* szText, const char* szUnit /*= 0*/ )
+void ADN_HtmlBuilder::ListItem( const char* szField, const char* szText, const char* szUnit /* = 0*/ )
 {
     if( szUnit != 0 )
         strOutput_ << "<li><b>" << szField << ":</b> " << szText << " " << szUnit << "</li>" << std::endl;
@@ -101,7 +103,7 @@ void ADN_HtmlBuilder::ListItem( const char* szField, const char* szText, const c
 // Name: ADN_HtmlBuilder::ListItem
 // Created: APE 2005-04-20
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::ListItem( const char* szField, int nValue, const char* szUnit /*= 0*/ )
+void ADN_HtmlBuilder::ListItem( const char* szField, int nValue, const char* szUnit /* = 0*/ )
 {
     if( szUnit != 0 )
         strOutput_ << "<li><b>" << szField << ":</b> " << nValue << " " << szUnit << "</li>" << std::endl;
@@ -113,7 +115,7 @@ void ADN_HtmlBuilder::ListItem( const char* szField, int nValue, const char* szU
 // Name: ADN_HtmlBuilder::ListItem
 // Created: APE 2005-04-20
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::ListItem( const char* szField, double rValue, const char* szUnit /*= 0*/ )
+void ADN_HtmlBuilder::ListItem( const char* szField, double rValue, const char* szUnit /* = 0*/ )
 {
     if( szUnit != 0 )
         strOutput_ << "<li><b>" << szField << ":</b> " << rValue << " " << szUnit << "</li>" << std::endl;
@@ -216,7 +218,7 @@ void ADN_HtmlBuilder::WriteToFile( const char* strFileName )
 // Name: ADN_HtmlBuilder::CreateTableFrom
 // Created: APE 2005-04-20
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::CreateTableFrom( QListView& listView )
+void ADN_HtmlBuilder::CreateTableFrom( Q3ListView& listView )
 {
     strOutput_ << "<table border = 1>\n";
 
@@ -225,7 +227,7 @@ void ADN_HtmlBuilder::CreateTableFrom( QListView& listView )
         strOutput_ << "<th>" << listView.columnText( n ).ascii() << "</th>";
     strOutput_ << "</tr>\n";
 
-    QListViewItem* pItem = listView.firstChild();
+    Q3ListViewItem* pItem = listView.firstChild();
     while( pItem != 0 )
     {
         strOutput_ << "<tr>";
@@ -245,7 +247,7 @@ void ADN_HtmlBuilder::CreateTableFrom( QListView& listView )
 // Name: ADN_HtmlBuilder::CreateTableFrom
 // Created: APE 2005-04-20
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::CreateTableFrom( QTable& table )
+void ADN_HtmlBuilder::CreateTableFrom( Q3Table& table )
 {
     strOutput_ << "<table border = 1>\n";
 

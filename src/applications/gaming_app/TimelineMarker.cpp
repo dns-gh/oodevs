@@ -14,13 +14,12 @@
 #include "gaming/Services.h"
 #include "clients_kernel/Controllers.h"
 #include "protocol/ReplaySenders.h"
-#include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineMarker constructor
 // Created: SBO 2007-07-16
 // -----------------------------------------------------------------------------
-TimelineMarker::TimelineMarker( QCanvas* canvas, ActionsScheduler& scheduler, kernel::Controllers& controllers, const TimelineRuler& ruler )
+TimelineMarker::TimelineMarker( Q3Canvas* canvas, ActionsScheduler& scheduler, kernel::Controllers& controllers, const TimelineRuler& ruler )
     : TimelineItem_ABC( canvas )
     , controllers_    ( controllers )
     , ruler_          ( ruler )
@@ -93,7 +92,7 @@ void TimelineMarker::draw( QPainter& painter )
 {
     Update();
     const QPen oldPen( painter.pen() );
-    QPen p( QColor( 255, 0, 0 ), 2, QPen::SolidLine );
+    QPen p( QColor( 255, 0, 0 ), 2, Qt::SolidLine );
     painter.setPen( p );
     painter.drawLine( rect().topLeft(), rect().bottomLeft() );
     painter.setPen( oldPen );
@@ -106,7 +105,7 @@ void TimelineMarker::draw( QPainter& painter )
 void TimelineMarker::DisplayToolTip( QWidget* parent ) const
 {
     const QString tip = scheduler_.GetDateTime().toString();
-    if( QToolTip::textFor( parent ) != tip )
+    if( parent->toolTip() != tip )
     {
         QToolTip::remove( parent );
         QToolTip::add( parent, tip );

@@ -12,7 +12,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "moc_ADN_Composantes_Dotations_GUI.cpp"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
@@ -20,6 +20,7 @@
 #include "ADN_Composantes_Data.h"
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
+#include <Qt/qevent.h>
 
 typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
 
@@ -32,6 +33,7 @@ class ADN_CT_Composantes_Dotations : public ADN_Connector_Table_ABC
 public:
     explicit ADN_CT_Composantes_Dotations( ADN_Composantes_Dotations_GUI& tab)
         : ADN_Connector_Table_ABC( tab, false )
+        , bIncludeNormalizedConsumption_( tab.bIncludeNormalizedConsumption_ )
     {}
 
     void AddSubItems( int n, void* pObj )
@@ -40,7 +42,7 @@ public:
         CategoryInfos* pCategory = static_cast<CategoryInfos*>(pObj);
 
         // Add a new row.
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_String*    pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Double*    pItemQty  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemNormalizedConsumption  = new ADN_TableItem_Double( &tab_, pObj );
@@ -52,7 +54,8 @@ public:
         tab_.setItem( n, 0, pItemName );
         tab_.setItem( n, 1, pItemQty );
         tab_.setItem( n, 2, pItemLogThreshold );
-        tab_.setItem( n, 3, pItemNormalizedConsumption );
+        if( bIncludeNormalizedConsumption_ )
+            tab_.setItem( n, 3, pItemNormalizedConsumption );
 
         // Connect the items
         pItemName->GetConnector().Connect( &pCategory->ptrCategory_.GetData()->strName_ );
@@ -60,6 +63,9 @@ public:
         pItemLogThreshold->GetConnector().Connect( &pCategory->rLogThreshold_ );
         pItemNormalizedConsumption->GetConnector().Connect( &pCategory->rNormalizedConsumption_ );
     }
+
+private:
+    bool bIncludeNormalizedConsumption_;
 };
 
 //-----------------------------------------------------------------------------
@@ -68,10 +74,11 @@ public:
 //-----------------------------------------------------------------------------
 ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
     : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
+    , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
 
     setMaximumHeight( 270 );
@@ -81,7 +88,7 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     setLeftMargin( 0 );
 
     // Setup the columns.
-    const int cols = 4 - ( ( bIncludeNormalizedConsumption ) ? 0 : 1 ) - ( ( bIncludeThreshold ) ? 0 : 1 );
+    const int cols = 4 - ( ( bIncludeNormalizedConsumption_ ) ? 0 : 1 ) - ( ( bIncludeThreshold ) ? 0 : 1 );
     setNumCols( cols );
     setNumRows( 0 );
 //    setColumnStretchable( 0, true );
@@ -116,8 +123,8 @@ ADN_Composantes_Dotations_GUI::~ADN_Composantes_Dotations_GUI()
 //-----------------------------------------------------------------------------
 void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
 {
-    QPopupMenu menu( this );
-    QPopupMenu targetMenu( &menu );
+    Q3PopupMenu menu( this );
+    Q3PopupMenu targetMenu( &menu );
 
     // Get the dotation list.
     ADN_Equipement_Data::T_ResourceInfos_Vector& dotations
@@ -126,7 +133,7 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
     // Fill the popup menu with submenus, one for each dotation.
     for( ADN_Equipement_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
     {
-        QPopupMenu* pSubMenu = new QPopupMenu( &targetMenu );
+        Q3PopupMenu* pSubMenu = new Q3PopupMenu( &targetMenu );
 
         // Fill the submenu with an entry for each equipement category.
         ADN_Equipement_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();

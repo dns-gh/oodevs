@@ -46,7 +46,7 @@ ParamDotationTypeList::~ParamDotationTypeList()
 // -----------------------------------------------------------------------------
 QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 {
-    list_ = new QListView( parent );
+    list_ = new Q3ListView( parent );
     list_->setRootIsDecorated( true );
     list_->addColumn( "name" );
     list_->addColumn( "id", 0 );
@@ -55,7 +55,7 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
     list_->header()->setResizeEnabled( false, 1 );
     list_->hideColumn( 1 );
 
-    list_->setSelectionMode( QListView::Multi );
+    list_->setSelectionMode( Q3ListView::Multi );
 
     tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
@@ -64,7 +64,7 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
         AddItem( type.GetName().c_str(), type.GetName().c_str(), type.GetId() );
     }
 
-    connect( list_, SIGNAL( clicked( QListViewItem* ) ), SLOT( Clicked( QListViewItem* ) ) );
+    connect( list_, SIGNAL( clicked( Q3ListViewItem* ) ), SLOT( Clicked( Q3ListViewItem* ) ) );
     return list_;
 }
 
@@ -72,9 +72,9 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 // Name: ParamDotationTypeList::Clicked
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
-void ParamDotationTypeList::Clicked( QListViewItem* item )
+void ParamDotationTypeList::Clicked( Q3ListViewItem* item )
 {
-    QListViewItem* child = item ? item->firstChild() : 0;
+    Q3ListViewItem* child = item ? item->firstChild() : 0;
     bool selected = child ? !child->isSelected() : false;
     list_->ensureItemVisible( child );
     while( child )
@@ -90,13 +90,13 @@ void ParamDotationTypeList::Clicked( QListViewItem* item )
 // -----------------------------------------------------------------------------
 void ParamDotationTypeList::AddItem( const QString& parent, const QString& child, unsigned id )
 {
-    QListViewItem* parentItem = list_->findItem( parent, 0 );
+    Q3ListViewItem* parentItem = list_->findItem( parent, 0 );
     if( ! parentItem )
     {
-        parentItem = new QListViewItem( list_, parent );
+        parentItem = new Q3ListViewItem( list_, parent );
         parentItem->setSelectable( false );
     }
-    new QListViewItem( parentItem, child, QString::number( id ) );
+    new Q3ListViewItem( parentItem, child, QString::number( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void ParamDotationTypeList::CommitTo( actions::ParameterContainer_ABC& action ) 
         return;
 
     std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::DotationTypeList( parameter_ ) );
-    QListViewItemIterator it( list_ );
+    Q3ListViewItemIterator it( list_ );
     while( it.current() )
     {
         if( it.current()->isSelected() )

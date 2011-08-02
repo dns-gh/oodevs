@@ -56,7 +56,7 @@ bool IntelligencesLayer::HandleKeyPress( QKeyEvent* k )
     if( !selectedIntelligence_ )
         return false;
     const int key = k->key();
-    if( key == Qt::Key_BackSpace || key == Qt::Key_Delete )
+    if( key == Qt::Key_Backspace || key == Qt::Key_Delete )
     {
         Delete( *selectedIntelligence_ );
         selectedIntelligence_ = 0;
@@ -107,7 +107,7 @@ bool IntelligencesLayer::HandleMousePress( QMouseEvent* event, const geometry::P
     bool result = EntityLayer< kernel::Intelligence_ABC >::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
-        QDragObject* drag = new ValuedDragObject( selectedIntelligence_->Retrieve< Positions >() );
+        Q3DragObject* drag = new ValuedDragObject( selectedIntelligence_->Retrieve< Positions >() );
         drag->drag();
     }
     return result;

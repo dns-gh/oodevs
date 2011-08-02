@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_AmmoListView.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Weapons_Data.h"
 #include "ADN_Connector_ListView.h"
@@ -36,12 +36,12 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 // Name: ADN_Equipement_AmmoListView constructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Ammunition" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<AmmoCategoryInfo>( *this );
@@ -140,7 +140,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
     ADN_Equipement_Wizard wizard( dotation, this );
     FillContextMenuWithDefault( popupMenu, wizard );
@@ -152,7 +152,7 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Equipement_AmmoListView::GetToolTipFor
 // Created: SBO 2005-09-06
 // -----------------------------------------------------------------------------
-std::string ADN_Equipement_AmmoListView::GetToolTipFor( QListViewItem& item )
+std::string ADN_Equipement_AmmoListView::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     AmmoCategoryInfo* pCastData = (AmmoCategoryInfo*)pData;

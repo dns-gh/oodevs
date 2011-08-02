@@ -9,13 +9,12 @@
 
 #include "frontend_app_pch.h"
 #include "ActionItem.h"
-#include <qaction.h>
 
 // -----------------------------------------------------------------------------
 // Name: ActionItem constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ActionItem::ActionItem( QWidget* parent, QAction& action )
+ActionItem::ActionItem( QWidget* parent, Q3Action& action )
     : QToolButton( parent )
     , action_( action )
 {

@@ -13,7 +13,7 @@
 #include <boost/shared_ptr.hpp>
 #pragma warning( push, 0 )
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 #pragma warning( pop )
 

@@ -11,8 +11,8 @@
 #define __timeline_plugin_pch_h_
 
 #pragma warning( push, 0 )
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
 #pragma warning( pop )
 #include <vector>
 #include <string>

@@ -23,7 +23,7 @@
 // Name: CreateTerrainPage constructor
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
-CreateTerrainPage::CreateTerrainPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config )
+CreateTerrainPage::CreateTerrainPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config )
     : ContentPage( pages, tools::translate( "CreateTerrainPage", "Create Terrain" ), previous, eButtonBack | eButtonStart )
     , config_( config )
     , controllers_( controllers )
@@ -31,11 +31,11 @@ CreateTerrainPage::CreateTerrainPage( QWidgetStack* pages, Page_ABC& previous, k
 {
     const bool available = frontend::CreateTerrain::IsAvailable();
 
-    QVBox* mainBox = new QVBox( this );
+    Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setBackgroundOrigin( QWidget::WindowOrigin );
     mainBox->setMargin( 5 );
     {
-        QGroupBox* hbox = new QGroupBox( 1, Qt::Vertical, mainBox );
+        Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, mainBox );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         QLabel* label = new QLabel( tools::translate( "CreateTerrainPage", "Create new terrain:" ), hbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );

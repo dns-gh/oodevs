@@ -13,24 +13,24 @@
 #include "frontend/Process_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
-#include <qprogressbar.h>
-#include <qtimer.h>
+#include <Qt3Support/q3progressbar.h>
+#include <Qtcore/qtimer.h>
 
 // -----------------------------------------------------------------------------
 // Name: ProgressPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ProgressPage::ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QString& title )
+ProgressPage::ProgressPage( Q3WidgetStack* pages, Page_ABC& previous, const QString& title )
     : ContentPage( pages, title, previous, 0 )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
-    box->layout()->setAlignment( QWidget::AlignCenter );
+    box->layout()->setAlignment( Qt::AlignCenter );
     box->layout()->setSpacing( 10 );
     label_ = new QLabel( box );
-    label_->setAlignment( QWidget::AlignCenter );
+    label_->setAlignment( Qt::AlignCenter );
     label_->setBackgroundOrigin( QWidget::WindowOrigin );
-    progressBar_ = new QProgressBar( 100, box );
+    progressBar_ = new Q3ProgressBar( 100, box );
     progressBar_->setCenterIndicator( true );
     AddContent( box );
     timer_ = new QTimer( this );

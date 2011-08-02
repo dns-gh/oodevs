@@ -21,7 +21,6 @@
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ColorModifier_ABC.h"
 #include "clients_gui/ColorEditor_ABC.h"
-#include <qcolordialog.h>
 
 // -----------------------------------------------------------------------------
 // Name: ColorEditor constructor

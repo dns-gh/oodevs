@@ -19,9 +19,9 @@
 #ifndef __ADN_Mission_ConfigurationDlg_h_
 #define __ADN_Mission_ConfigurationDlg_h_
 
-#include <qdialog.h>
+#include <QtGui/qdialog.h>
 
-class QListView;
+class Q3ListView;
 
 // =============================================================================
 /** @class  ADN_Mission_ConfigurationDlg
@@ -45,7 +45,7 @@ public:
 
     //! @name Accessors
     //@{
-    QListView* GetMissionList();
+    Q3ListView* GetMissionList();
     //@}
 
 private:
@@ -58,7 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QListView* pListView_;
+    Q3ListView* pListView_;
     //@}
 };
 
@@ -68,7 +68,7 @@ private:
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
 inline
-QListView* ADN_Mission_ConfigurationDlg::GetMissionList()
+Q3ListView* ADN_Mission_ConfigurationDlg::GetMissionList()
 {
     return pListView_;
 }

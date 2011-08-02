@@ -41,10 +41,12 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , selectionCandidate_( controllers )
     , display_     ( 0 )
 {
-    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
+    Q3VBox* box = new Q3VBox( this );
+    box->setMinimumWidth( 200 );
+    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( box, *this, factory );
     pKnowledgeListView_->AddColumn( tools::translate( "AgentKnowledge", "Known units" ) );
 
-    display_ = new DisplayBuilder( this, factory );
+    display_ = new DisplayBuilder( box, factory );
     display_->AddGroup( tools::translate( "AgentKnowledge", "Details" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Associated agent:" ) )
@@ -64,18 +66,20 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Relevance:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Critical intelligence:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
+    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( box, *this, factory );
     pPerceptionListView_->AddColumn( tools::translate( "AgentKnowledge", "Unit" ) ).
                           AddColumn( tools::translate( "AgentKnowledge", "Perception level" ) );
 
-    connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
-    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( QListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter( QListViewItem* ) ) );
+    setWidget( box );
 
-    connect( pPerceptionListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
-    connect( pPerceptionListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( QListViewItem* ) ) );
-    connect( pPerceptionListView_, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter( QListViewItem* ) ) );
+    connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
+    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
+    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
+    connect( pKnowledgeListView_, SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
+
+    connect( pPerceptionListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
+    connect( pPerceptionListView_, SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
+    connect( pPerceptionListView_, SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
     controllers_.Register( *this );
 }
 
@@ -197,7 +201,7 @@ void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 // Name: AgentKnowledgePanel::OnSelectionChanged
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
+void AgentKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
     if( ! item || ! item->IsA< const AgentKnowledge_ABC >() )
@@ -220,7 +224,7 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 // Name: AgentKnowledgePanel::OnContextMenuRequested
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
+void AgentKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
 {
     if( i )
     {
@@ -233,7 +237,7 @@ void AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint
 // Name: AgentKnowledgePanel::OnRequestCenter
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnRequestCenter( QListViewItem* i )
+void AgentKnowledgePanel::OnRequestCenter( Q3ListViewItem* i )
 {
     if( i )
     {

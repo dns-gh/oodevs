@@ -14,11 +14,11 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 
 class ADN_ListViewItem;
 class ADN_Connector_ListView_ABC;
-class QPopupMenu;
+class Q3PopupMenu;
 class ADN_ObjectCreator_ABC;
 
 // =============================================================================
@@ -27,13 +27,13 @@ class ADN_ObjectCreator_ABC;
 */
 // Created: AGN 2003-11-18
 // =============================================================================
-class ADN_ListView : public QListView, public ADN_Gfx_ABC
+class ADN_ListView : public Q3ListView, public ADN_Gfx_ABC
 {
     Q_OBJECT
     friend ADN_Connector_ListView_ABC;
 
 public:
-    explicit ADN_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_ListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView();
 
     ADN_ListViewItem*     ItemAt( int i );
@@ -58,19 +58,19 @@ protected:
     void keyReleaseEvent( QKeyEvent* pEvent );
 
     virtual void OnContextMenu( const QPoint& pt );
-    void FillContextMenuWithDefault( QPopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator );
+    void FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator );
 
-    virtual std::string GetToolTipFor( QListViewItem& item );
+    virtual std::string GetToolTipFor( Q3ListViewItem& item );
 
 private slots:
     virtual void ContextMenuNew();
     virtual void ContextMenuDelete();
 
-    void SetCurrentItem( QListViewItem* pItem );
-    void OnContextMenuRequested( QListViewItem* pItem, const QPoint& pt, int nCol );
+    void SetCurrentItem( Q3ListViewItem* pItem );
+    void OnContextMenuRequested( Q3ListViewItem* pItem, const QPoint& pt, int nCol );
     void UpdateEnableState();
 
-    void OnOnItem( QListViewItem* pItem );
+    void OnOnItem( Q3ListViewItem* pItem );
 
 signals:
     void ItemSelected( void* pData );
@@ -128,7 +128,7 @@ void ADN_ListView::SetDeletionEnabled( bool enabled, bool warning )
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
 inline
-std::string ADN_ListView::GetToolTipFor( QListViewItem& /*item*/ )
+std::string ADN_ListView::GetToolTipFor( Q3ListViewItem& /*item*/ )
 {
     return std::string( "" );
 }

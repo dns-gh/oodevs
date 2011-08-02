@@ -19,7 +19,7 @@ namespace frontend
     class Process_ABC;
 }
 
-class QProgressBar;
+class Q3ProgressBar;
 class QTimer;
 
 // =============================================================================
@@ -36,7 +36,7 @@ class ProgressPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QString& title );
+             ProgressPage( Q3WidgetStack* pages, Page_ABC& previous, const QString& title );
     virtual ~ProgressPage();
     //@}
 
@@ -65,7 +65,7 @@ private:
     //@{
     boost::weak_ptr< frontend::Process_ABC > process_;
     QLabel* label_;
-    QProgressBar* progressBar_;
+    Q3ProgressBar* progressBar_;
     QTimer* timer_;
     //@}
 };

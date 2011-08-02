@@ -37,7 +37,7 @@ class Services;
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionsToolbar : public QHBox
+class ActionsToolbar : public Q3HBox
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< Simulation >
                      , public tools::ElementObserver_ABC< Services >

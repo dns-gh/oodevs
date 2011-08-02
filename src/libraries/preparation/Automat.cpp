@@ -24,7 +24,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
 #include <xeumeuleu/xml.hpp>
-#include <qmessagebox.h>
+#include <QtGui/qmessagebox.h>
 
 using namespace kernel;
 

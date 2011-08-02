@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include <qcanvas.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -42,7 +41,7 @@ class TimelineMarker;
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelineView : public QCanvasView
+class TimelineView : public Q3CanvasView
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< actions::Action_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
@@ -52,7 +51,7 @@ class TimelineView : public QCanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineView( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
+             TimelineView( QWidget* parent, Q3Canvas* canvas, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
     virtual ~TimelineView();
     //@}
 

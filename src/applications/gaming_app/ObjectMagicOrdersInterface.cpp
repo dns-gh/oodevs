@@ -94,7 +94,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     if( entity.GetType().IsUrban() )
     {
         AddValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ) );
@@ -144,7 +144,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
 // Name: ObjectMagicOrdersInterface::AddMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-int ObjectMagicOrdersInterface::AddMagic( const QString& label, const char* slot, QPopupMenu* menu )
+int ObjectMagicOrdersInterface::AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu )
 {
     return menu->insertItem( label, this, slot );
 }
@@ -153,11 +153,11 @@ int ObjectMagicOrdersInterface::AddMagic( const QString& label, const char* slot
 // Name: ObjectMagicOrdersInterface::AddValuedMagic
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot )
+void ObjectMagicOrdersInterface::AddValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot )
 {
-    QPopupMenu* valueMenu = new QPopupMenu( parent );
+    Q3PopupMenu* valueMenu = new Q3PopupMenu( parent );
     QLineEdit* valueEditor = new InitializedLineEdit( valueMenu, tr( "Enter value" ) );
-    valueMenu->insertItem( valueEditor );
+    valueMenu->insertItem( valueEditor->text() );
     parent->insertItem( label, valueMenu );
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );

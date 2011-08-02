@@ -24,16 +24,16 @@ using namespace kernel;
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
 WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
-    : QGroupBox( 2, Qt::Horizontal, title, parent, "WeatherWidget" )
+    : Q3GroupBox( 2, Qt::Horizontal, title, parent, "WeatherWidget" )
 {
     new QLabel( tools::translate( "gui::WeatherWidget", "Wind speed/direction:" ), this );
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     windSpeed_     = new QSpinBox( 0, 300, 5, box );
     windSpeed_->setSuffix( Units::kilometersPerHour.AsString() );
     windDirection_ = new QSpinBox( 0, 359, 1, box );
     windDirection_->setSuffix( Units::degrees.AsString() );
     new QLabel( tools::translate( "gui::WeatherWidget", "Clouds floor/ceiling/density:" ), this );
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     cloudFloor_   = new QSpinBox( 0, 100000, 100, box );
     cloudFloor_->setSuffix( Units::meters.AsString() );
     cloudCeiling_ = new QSpinBox( 0, 100000, 100, box );

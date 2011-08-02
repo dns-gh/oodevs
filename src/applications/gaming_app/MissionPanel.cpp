@@ -53,7 +53,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
                           , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::Time_ABC& simulation )
-    : QDockWindow              ( QDockWindow::OutsideDock, pParent, "mission" )
+    : QDockWidget              ( "mission", pParent )
     , controllers_             ( controllers )
     , static_                  ( model )
     , actionsModel_            ( actionsModel )
@@ -68,9 +68,9 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , isPlanifMode_            ( false )
     , simulation_              (simulation)
 {
-    setResizeEnabled( true );
-    setCaption( tr( "Mission" ) );
-    setCloseMode( QDockWindow::Always );
+    setObjectName( "missionPanel" );
+    setFloating( true );
+    setWindowTitle( tr( "Mission" ) );
 
     controllers_.Register( *this );
 }
@@ -145,32 +145,6 @@ void MissionPanel::NotifyDeleted( const kernel::Entity_ABC& entity )
 
 namespace
 {
-    struct MissionHeaderItem : public QCustomMenuItem
-    {
-        explicit MissionHeaderItem( const QString& text ) : text_( text ), font_( "Arial", 8, QFont::Bold, false ) {}
-        virtual bool fullSpan   () const { return true; }
-        virtual bool isSeparator() const { return true; }
-
-        virtual void paint( QPainter* p, const QColorGroup& /*cg*/, bool /*act*/, bool /*enabled*/, int x, int y, int w, int h )
-        {
-            const QFont old = p->font();
-            p->fillRect( x, y, w, h, QColor( 128, 128, 128 ) );
-            p->setPen( Qt::white );
-            p->setFont( font_ );
-            p->drawText( x + 5, y, w, h, AlignLeft | AlignVCenter | DontClip, text_ );
-            p->setFont( old );
-        }
-
-        virtual QSize sizeHint()
-        {
-            if( text_.isEmpty() )
-                return QSize( 50, 4 );
-            return QFontMetrics( font_ ).size( AlignLeft | AlignVCenter | DontClip, text_ );
-        }
-        QString text_;
-        QFont font_;
-    };
-
     QString GetPrefix( const QString& name )
     {
         {
@@ -221,17 +195,14 @@ namespace
 // Created: SBO 2008-10-20
 // -----------------------------------------------------------------------------
 template< typename E, typename T >
-void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current )
+void MissionPanel::AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current )
 {
     if( list.empty() )
         return;
-    if( prefix.isEmpty() )
-    {
-        if( menu.idAt( 0 ) != -1 )
-            menu.insertItem( new MissionHeaderItem( tools::translate( "MissionPanel", "" ) ) );
-    }
+     if( prefix.isEmpty() )
+       menu.addSeparator()->setText( tools::translate( "MissionPanel", "" ) );
     else
-        menu.insertItem( new MissionHeaderItem( prefix ) );
+       menu.addSeparator()->setText( prefix );
     for( T::const_iterator it = list.begin(); it != list.end(); ++it )
     {
         const E& order = **it;
@@ -247,7 +218,7 @@ void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, con
 // -----------------------------------------------------------------------------
 int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot, int current )
 {
-    QPopupMenu& missions = *new QPopupMenu( menu );
+    Q3PopupMenu& missions = *new Q3PopupMenu( menu );
     QString lastPrefix;
     typedef std::map< QString, std::set< const Mission*, MissionComparator >, MissionComparator > T_Missions;
     T_Missions list;
@@ -268,7 +239,7 @@ int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu
 // -----------------------------------------------------------------------------
 int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
-    QPopupMenu& orders = *new QPopupMenu( menu );
+    Q3PopupMenu& orders = *new Q3PopupMenu( menu );
     typedef std::map< QString, std::set< const FragOrder*, MissionComparator >, MissionComparator > T_FragOrders;
     T_FragOrders list;
     if( const Mission* mission = decisions.GetCurrentMission() )
@@ -305,7 +276,7 @@ int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& me
 // Name: MissionPanel::AddMissions
 // Created: AGE 2007-04-04
 // -----------------------------------------------------------------------------
-void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap /*= QPixmap()*/ )
+void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap /* = QPixmap()*/ )
 {
     if( !decisions.CanBeOrdered() )
         return;
@@ -371,19 +342,6 @@ void MissionPanel::ActivateFragOrder( int id )
                 entity = superior;
     }
     SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::hideEvent
-// Created: APE 2004-04-27
-// -----------------------------------------------------------------------------
-void MissionPanel::hideEvent( QHideEvent* pEvent )
-{
-    if( ! pEvent->spontaneous() )
-    {
-        layer_.Reset();
-        SetInterface( 0 );
-    }
 }
 
 // -----------------------------------------------------------------------------

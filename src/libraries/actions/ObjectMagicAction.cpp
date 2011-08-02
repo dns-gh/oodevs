@@ -20,7 +20,7 @@ using namespace actions;
 // Name: ObjectMagicAction::ObjectMagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC* object, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
+ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC* object, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
     : Action_ABC ( controller, magic )
     , objectId_  ( object ? object->GetId() : 0 )
     , controller_( controller )

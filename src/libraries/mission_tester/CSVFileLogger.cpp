@@ -15,7 +15,7 @@
 #include "protocol/protocol.h"
 #include <iostream>
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 

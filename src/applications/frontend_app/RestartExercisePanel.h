@@ -11,6 +11,7 @@
 #define __RestartExercisePanel_h_
 
 #include "StartExercisePanel.h"
+#include <Qt3Support/q3action.h>
 
 // =============================================================================
 /** @class  RestartExercisePanel
@@ -25,7 +26,7 @@ class RestartExercisePanel : public StartExercisePanel
 public:
     //! @name Constructors/Destructor
     //@{
-             RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
+             RestartExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~RestartExercisePanel();
     //@}
 
@@ -54,8 +55,8 @@ private:
 private:
     //! @name Member data
     //@{
-    QListBox* sessionList_;
-    QListBox* checkpointList_;
+    Q3ListBox* sessionList_;
+    Q3ListBox* checkpointList_;
     //@}
 };
 

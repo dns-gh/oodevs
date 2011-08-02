@@ -25,14 +25,15 @@
 // Created: LDC 2011-03-23
 // -----------------------------------------------------------------------------
 PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::Controllers& controllers, StaticModel& staticModel )
-    : QDockWindow( parent, "population-display-option" )
+    : QDockWidget( "population-display-option", parent )
     , controllers_( controllers )
     , accomodations_( staticModel.accommodationTypes_ )
 {
+    setObjectName( "popDisplayOption" );
     setCaption( tools::translate( "PopulationOptionChooser", "Population Display Options" ) );
     {
-        QHBox* box = new QVBox( this );
-        QButtonGroup* group = new QButtonGroup( 1, QGroupBox::Horizontal, box );
+        Q3HBox* box = new Q3VBox( this );
+        Q3ButtonGroup* group = new Q3ButtonGroup( 1, Qt::Horizontal, box );
         group->setExclusive( true );
         QRadioButton* off = new QRadioButton( group );
         off->setText( tools::translate( "PopulationOptionChooser", "Off" ) );
@@ -43,18 +44,15 @@ PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::C
         occupation_->setText( tools::translate( "PopulationOptionChooser", "Occupation" ) );
         connect( density_, SIGNAL( toggled( bool ) ), this, SLOT( OnDensityToggled( bool ) ) );
         connect( occupation_, SIGNAL( toggled( bool ) ), this, SLOT( OnOccupationToggled( bool ) ) );
-        activities_ = new QButtonGroup( 1, QGroupBox::Horizontal, box );
+        activities_ = new Q3ButtonGroup( 1, Qt::Horizontal, box );
         activities_->setExclusive( true );
         activities_->setEnabled( false );
-        populations_ = new QButtonGroup( 1, QGroupBox::Horizontal, box );
+        populations_ = new Q3ButtonGroup( 1, Qt::Horizontal, box );
         populations_->setEnabled( false );
         setWidget( box );
     }
-    setResizeEnabled( true );
-    setCloseMode( QDockWindow::Always );
-    undock();
+    setFeatures( QDockWidget::AllDockWidgetFeatures );
     hide();
-    parent->setAppropriate( this, false );
     controllers_.Register( *this );
 }
 
@@ -100,9 +98,9 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
         next->setText( it.NextElement().GetRole().c_str() );
         connect( next, SIGNAL( toggled( bool ) ), this, SLOT( OnAccomodationToggled( bool ) ) );
     }
-    const QObjectList* buttons = activities_->children();
-    for( QObjectList::const_iterator it = buttons->begin(); it != buttons->end(); ++it )
-        if( QButton* button = dynamic_cast< QButton* >( *it ) )
+    const QObjectList buttons = activities_->children();
+    for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
+        if( Q3Button* button = dynamic_cast< Q3Button* >( *it ) )
         {
             button->toggle();
             break;
@@ -117,10 +115,10 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
 void PopulationOptionChooser::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     hide();
-    const QObjectList* buttons = activities_->children();
-    for( QObjectList::const_iterator it = buttons->begin(); it != buttons->end(); ++it )
+    const QObjectList buttons = activities_->children();
+    for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
     {
-        QButton* button = dynamic_cast< QButton* >( *it );
+        Q3Button* button = dynamic_cast< Q3Button* >( *it );
         if( button )
             button->deleteLater();
     }
@@ -147,10 +145,10 @@ void PopulationOptionChooser::NotifyCreated( const kernel::Inhabitant_ABC& inhab
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::NotifyDeleted( const kernel::Inhabitant_ABC& inhabitant )
 {
-    const QObjectList * buttons = populations_->children();
-    for( QObjectList::const_iterator it = buttons->begin(); it != buttons->end(); ++it )
+    const QObjectList buttons = populations_->children();
+    for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
     {
-        QButton* button = dynamic_cast< QButton* >( *it );
+        Q3Button* button = dynamic_cast< Q3Button* >( *it );
         if( button && button->text() == inhabitant.GetName() )
             button->deleteLater();
     }
@@ -164,7 +162,7 @@ void PopulationOptionChooser::OnAccomodationToggled( bool toggled )
 {
     if( toggled )
     {
-        const QButton* senderObject = dynamic_cast< const QButton* >( sender() );
+        const Q3Button* senderObject = dynamic_cast< const Q3Button* >( sender() );
         if( senderObject )
             controllers_.options_.Change( "UrbanAccommodationDisplayed", senderObject->text() );
     }
@@ -176,7 +174,7 @@ void PopulationOptionChooser::OnAccomodationToggled( bool toggled )
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::OnPopulationToggled( bool toggled )
 {
-    const QButton* senderObject = dynamic_cast< const QButton* >( sender() );
+    const Q3Button* senderObject = dynamic_cast< const Q3Button* >( sender() );
     if( senderObject )
     {
         gui::ChangePopulationDisplay display( senderObject->text().ascii(), toggled );

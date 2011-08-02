@@ -11,7 +11,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Size.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Categories_Data.h"
@@ -56,13 +56,13 @@ private:
 // Name: ADN_ListView_Categories_Size constructor
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-ADN_ListView_Categories_Size::ADN_ListView_Categories_Size(QWidget * parent, const char * name, WFlags f)
+ADN_ListView_Categories_Size::ADN_ListView_Categories_Size(QWidget * parent, const char * name, Qt::WFlags f)
 :   ADN_ListView(parent,name,f)
 {
     // Add a column && disable sorting
     addColumn( tr( "Sizes" ) );
     setSorting( -1, true );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_CLV_Categories_Size( *this );
@@ -103,7 +103,7 @@ void ADN_ListView_Categories_Size::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
 {
-    QPopupMenu popuMenu( this );
+    Q3PopupMenu popuMenu( this );
 
     popuMenu.insertItem( tr( "New size"), 0 );
     popuMenu.insertItem( tr( "Delete size"), 1 );

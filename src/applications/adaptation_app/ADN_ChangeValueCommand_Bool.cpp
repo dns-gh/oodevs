@@ -22,7 +22,7 @@
 
 #include "ADN_Types.h"
 
-#include <qapp.h>
+#include <QtGui/qapplication.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Bool constructor

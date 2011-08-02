@@ -35,24 +35,24 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
 {
     setMargin( 5 );
     {
-        QVBox* vBox = new QVBox( this );
-        QHBox* box = new QHBox( vBox );
+        Q3VBox* vBox = new Q3VBox( this );
+        Q3HBox* box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Incoming bytes: " ), box );
         networkTotalBytesReceived_ = new QLabel( box );
         networkBytesReceived_ = new StatisticsWidget( vBox );
 
-        box = new QHBox( vBox );
+        box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Incoming messages: " ), box );
         networkTotalMsgsReceived_ = new QLabel( box );
         networkMsgsReceived_ = new StatisticsWidget( vBox );
         networkMsgsReceived_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Nb messages" ) );
 
-        box = new QHBox( vBox );
+        box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Outgoing bytes: " ), box );
         networkTotalBytesSent_ = new QLabel( box );
         networkBytesSent_ = new StatisticsWidget( vBox );
 
-        box = new QHBox( vBox );
+        box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Outgoing messages: " ), box );
         networkTotalMsgsSent_ = new QLabel( box );
         networkMsgsSent_ = new StatisticsWidget( vBox );
@@ -62,14 +62,14 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
     }
 
     {
-        QVBox* vBox = new QVBox( this );
-        QHBox* box = new QHBox( vBox );
+        Q3VBox* vBox = new Q3VBox( this );
+        Q3HBox* box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Memory: " ), box );
         memoryUsage_ = new QLabel( box );
         memory_ = new StatisticsWidget( vBox );
         memory_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Usage (MiB)" ) );
 
-        box = new QHBox( vBox );
+        box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Virtual memory: " ), box );
         virtualMemoryUsage_ = new QLabel( box );
         virtualMemory_ = new StatisticsWidget( vBox );
@@ -78,14 +78,14 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
     }
 
     {
-        QVBox* vBox = new QVBox( this );
-        QHBox* box = new QHBox( vBox );
+        Q3VBox* vBox = new Q3VBox( this );
+        Q3HBox* box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Shorts: " ), box );
         shortPathfindsCount_ = new QLabel( box );
         shortPathfinds_ = new StatisticsWidget( vBox );
         shortPathfinds_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Count" ) );
 
-        box = new QHBox( vBox );
+        box = new Q3HBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Longs: " ), box );
         longPathfindsCount_ = new QLabel( box );
         longPathfinds_ = new StatisticsWidget( vBox );

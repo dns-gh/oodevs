@@ -29,11 +29,11 @@ using namespace kernel;
 
 namespace
 {
-    class FormulaLineEdit : public QTextEdit
+    class FormulaLineEdit : public Q3TextEdit
     {
     public:
         explicit FormulaLineEdit( QWidget* parent )
-            : QTextEdit( parent )
+            : Q3TextEdit( parent )
         {
             setMaximumHeight( 50 );
         }
@@ -43,13 +43,13 @@ namespace
         {
             int paraFrom = 0, indexFrom = 0, paraTo = 0, indexTo = 0;
             getSelection( &paraFrom, &indexFrom, &paraTo, &indexTo );
-            QTextEdit::focusOutEvent( e );
+            Q3TextEdit::focusOutEvent( e );
             setSelection( paraFrom, indexFrom, paraTo, indexTo );
         }
 
         virtual void contentsMousePressEvent( QMouseEvent* e )
         {
-            QTextEdit::contentsMousePressEvent( e );
+            Q3TextEdit::contentsMousePressEvent( e );
             contentsMouseDoubleClickEvent( e );
         }
 
@@ -70,7 +70,7 @@ namespace
             unsigned int bindex = findex;
             const QString str = text( para );
             while( bindex > 0 && ! isBoundary( str.at( bindex - 1 ) ) ) --bindex;
-            while( findex < str.length() && ! isBoundary( str.at( findex ) ) ) ++findex;
+            while( static_cast<int>(findex) < str.length() && ! isBoundary( str.at( findex ) ) ) ++findex;
             setSelection( para, bindex, para, findex );
             e->accept();
         }
@@ -91,7 +91,7 @@ namespace
         {
             const QValidator::State state = input.isEmpty() || model_->Find( input ) && ( !score_ || score_ && score_->GetName() != input ) ? QValidator::Intermediate : QValidator::Acceptable;
             if( state != QValidator::Acceptable )
-                parent_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
+                parent_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
             else
                 parent_->unsetPalette();
             return state;
@@ -116,11 +116,11 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
     , tools_( tools )
 {
     setCaption( tr( "Score editor" ) );
-    QGridLayout* grid = new QGridLayout( this, 3, 1, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 3, 1, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 1, 4 );
     {
-        QGroupBox* box = new QHGroupBox( tr( "Information" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
         name_ = new QLineEdit( box );
         name_->setValidator( new NameValidator( name_, model, current_ ) );
@@ -131,12 +131,12 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         QTabWidget* tabs = new QTabWidget( this );
         {
             QWidget* page = new QWidget( tabs );
-            QGridLayout* pageLayout = new QGridLayout( page, 6, 2, 0, 5 );
+            Q3GridLayout* pageLayout = new Q3GridLayout( page, 6, 2, 0, 5 );
             pageLayout->setRowStretch( 1, 3 );
             pageLayout->setColStretch( 0, 2 );
             pageLayout->setColStretch( 1, 3 );
             {
-                QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Formula" ), page );
+                Q3GroupBox* box = new Q3GroupBox( 2, Qt::Vertical, tr( "Formula" ), page );
                 formula_ = new FormulaLineEdit( box );
                 new ScoreSyntaxHighlighter( formula_, controllers, staticModel.indicators_ );
                 checkResult_ = new QLabel( box );
@@ -151,7 +151,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
                 connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
             }
             {
-                QGroupBox* box = new QHGroupBox( tr( "Variables" ), page );
+                Q3GroupBox* box = new Q3HGroupBox( tr( "Variables" ), page );
                 variables_ = new ScoreVariablesList( box, factory, controllers, layer, staticModel, tools );
                 pageLayout->addWidget( box, 1, 1 );
                 connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
@@ -160,7 +160,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
                 connect( variables_, SIGNAL( EndEdit() ), SLOT( show() ) );
             }
             {
-                QGroupBox* box = new QHGroupBox( page );
+                Q3GroupBox* box = new Q3HGroupBox( page );
                 box->setMinimumHeight( 80 );
                 help_ = new QLabel( box );
                 pageLayout->addMultiCellWidget( box, 2, 2, 0, 1 );
@@ -178,9 +178,9 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         grid->addWidget( tabs, 1, 0 );
     }
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         ok_ = new QPushButton( tr( "Ok" ), box );
-        QButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 2, 0, Qt::AlignRight );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
@@ -332,7 +332,7 @@ void ScoreEditor::CheckFormula()
 // Name: ScoreEditor::AllowCommit
 // Created: SBO 2009-07-24
 // -----------------------------------------------------------------------------
-void ScoreEditor::AllowCommit( bool base /*= true*/ )
+void ScoreEditor::AllowCommit( bool base /* = true*/ )
 {
     ok_->setEnabled( base && name_->hasAcceptableInput() );
 }

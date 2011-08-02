@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>AffinitiesDialog</name>
     <message>
@@ -45,12 +47,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The following files do not match their xsd : </source>
-        <translation type="unfinished"></translation>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
     </message>
 </context>
 <context>
@@ -464,7 +462,7 @@
 </context>
 <context>
     <name>InitialStateTableCrew</name>
-    <message>
+    <message id="0">
         <source>Rank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -536,10 +534,6 @@
 <context>
     <name>InitialStateTableEquipments</name>
     <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>State</source>
         <translation type="unfinished"></translation>
     </message>
@@ -562,10 +556,6 @@
 </context>
 <context>
     <name>InitialStateTableResources</name>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Category</source>
         <translation type="unfinished"></translation>
@@ -590,14 +580,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Tactical</source>
-        <translation>Táctico</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Comunicación</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
@@ -608,10 +590,6 @@
     <message>
         <source>Populations</source>
         <translation>Poblaciones</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation>Creación</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -634,16 +612,8 @@
         <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
     </message>
     <message>
-        <source>Intelligences</source>
-        <translation>Inteligencias</translation>
-    </message>
-    <message>
         <source>Intelligence</source>
         <translation>Inteligencia</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propiedades</translation>
     </message>
     <message>
         <source>
@@ -656,11 +626,23 @@ Do you want to save anyway?</source>
         <translation>Crecida de agua</translation>
     </message>
     <message>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Crowds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crowd</source>
+        <source>Intelligences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -696,11 +678,19 @@ Do you want to save anyway?</source>
         <translation type="unfinished">Preparación - [%1]</translation>
     </message>
     <message>
-        <source>Loading...</source>
+        <source>Contour Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contour Lines</source>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1651,10 +1641,6 @@ Do you want to save anyway?</source>
 <context>
     <name>TacticalListView</name>
     <message>
-        <source>Create side</source>
-        <translation>Crear bando</translation>
-    </message>
-    <message>
         <source>Create formation</source>
         <translation>Crear una formación</translation>
     </message>
@@ -1667,8 +1653,12 @@ Do you want to save anyway?</source>
         <translation>Liberar</translation>
     </message>
     <message>
+        <source>Create side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rename</source>
-        <translation>Renombrar</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1780,7 +1770,7 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     </message>
 </context>
 <context>
-    <name>gui</name>
+    <name>WeatherPanel</name>
     <message>
         <source>Exercise date:</source>
         <translation type="unfinished">Fecha de ejercicio:</translation>

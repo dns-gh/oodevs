@@ -45,7 +45,7 @@ CriticalIntelligenceDialog::CriticalIntelligenceDialog( QWidget* pParent, kernel
     pLayout->setRowStretch( 2, 0 );
     value_ = new QLineEdit( this );
     pLayout->addWidget( value_, 1, 1 );
-    QHBox* buttonLayout = new QHBox( this );
+    Q3HBox* buttonLayout = new Q3HBox( this );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), buttonLayout );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout );
     okButton->setDefault( TRUE );
@@ -103,7 +103,7 @@ void CriticalIntelligenceDialog::NotifyContextMenu( const kernel::Agent_ABC& ent
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "CriticalIntelligenceDialog", "Change critical intelligence" ), this, SLOT( show() ) );
     }
 }
@@ -117,7 +117,7 @@ void CriticalIntelligenceDialog::NotifyContextMenu( const kernel::Population_ABC
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "CriticalIntelligenceDialog", "Change critical intelligence" ), this, SLOT( show() ) );
     }
 }

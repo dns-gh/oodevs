@@ -35,17 +35,21 @@
 #include "ADN_Workspace.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "ENT/ENT_Tr.h"
-#include <qcombo.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qgrid.h>
-#include <qwhatsthis.h>
-#include <qtooltip.h>
+#pragma warning( push, 0 )
+#include <QtGui/qcombobox.h>
+#include <Qt3Support/q3frame.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3vbox.h>
+#include <Qt3Support/q3grid.h>
+#include <Qt3Support/q3whatsthis.h>
+#include <QtGui/qtooltip.h>
+#include <Qt3Support/q3gridlayout.h>
+#pragma warning( pop )
+
 #include <numeric>
 #include <boost/bind.hpp>
 
@@ -89,7 +93,7 @@ void ADN_Units_GUI::Build()
     pListUnits_->GetConnector().Connect( &data_.GetUnitsInfos() );
 
     // Unit data
-    QGroupBox* pGroup = new QGroupBox( 0, Qt::Vertical, tr( "Unit" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 0, Qt::Vertical, tr( "Unit" ), pMainWidget_ );
 
     // Unit parameters
     QWidget* pParamGroup = builder.AddFieldHolder( pGroup );
@@ -127,14 +131,14 @@ void ADN_Units_GUI::Build()
     builder.AddField<ADN_EditLine_Int>( pRangeGroup, tr( "Equipments" ), vInfosConnectors[eEquipmentRange], tr( "m" ) );
 
     // Nature
-    QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Nature" ), pGroup );
+    Q3GroupBox* pNatureGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Nature" ), pGroup );
 
-    QGroupBox* pNatureInternalGroup = new QGroupBox( 2, Qt::Vertical, pNatureGroup );
-    //pNatureInternalGroup->setFrameStyle( QFrame::NoFrame );
-    QGroupBox* subLayout = new QGroupBox( 3, Qt::Horizontal, pNatureInternalGroup );
+    Q3GroupBox* pNatureInternalGroup = new Q3GroupBox( 2, Qt::Vertical, pNatureGroup );
+    //pNatureInternalGroup->setFrameStyle( Q3Frame::NoFrame );
+    Q3GroupBox* subLayout = new Q3GroupBox( 3, Qt::Horizontal, pNatureInternalGroup );
     subLayout->setInsideMargin( 0 );
     subLayout->setInsideSpacing( 0 );
-    subLayout->setFrameStyle( QFrame::Plain );
+    subLayout->setFrameStyle( Q3Frame::Plain );
 
     builder.AddEnumField<E_NatureLevel>( subLayout, tr( "Level" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
 
@@ -145,7 +149,7 @@ void ADN_Units_GUI::Build()
     vInfosConnectors[eNatureNature] = &pNatureGui_->GetConnector();
 
     // Symbol
-    QVBox* pSymbolLayout = new QVBox( pNatureGroup );
+    Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
     QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
     pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
     pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
@@ -162,7 +166,7 @@ void ADN_Units_GUI::Build()
     connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
 
     // Commandement
-    QGroupBox* pCommandGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );
+    Q3GroupBox* pCommandGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );
     pCommandGroup->setInsideMargin(20);
     pCommandGroup->setInsideSpacing(10);
 
@@ -176,10 +180,10 @@ void ADN_Units_GUI::Build()
     pNCOfficersEditLine_->GetValidator().setRange( 0, 0 );
     connect( pNCOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfNCOfficersChanged() ) );
 
-    QVBox* postureInstallationBox = new QVBox( pGroup );
+    Q3VBox* postureInstallationBox = new Q3VBox( pGroup );
 
     // Postures
-    QVGroupBox* pPosturesGroup = new QVGroupBox( tr( "Stances" ), postureInstallationBox );
+    Q3VGroupBox* pPosturesGroup = new Q3VGroupBox( tr( "Stances" ), postureInstallationBox );
     ADN_Units_Postures_GUI* pPostures = new ADN_Units_Postures_GUI( pPosturesGroup );
     vInfosConnectors[ePostures] = &pPostures->GetConnector();
 
@@ -190,12 +194,12 @@ void ADN_Units_GUI::Build()
     builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Un-deployment duration" ), vInfosConnectors[eUninstallationDelay] );
 
     // Distances before point on path
-    QGroupBox* pDistancesGroup = new QHGroupBox( tr( "Key terrain features range" ), pGroup );
+    Q3GroupBox* pDistancesGroup = new Q3HGroupBox( tr( "Key terrain features range" ), pGroup );
     ADN_Point_GUI* pSensors = new ADN_Point_GUI( pDistancesGroup );
     vInfosConnectors[ePointInfos] = &pSensors->GetConnector();
 
     // Composantes
-    QVGroupBox* pComposantesGroup = new QVGroupBox( tr( "Equipments" ), pGroup );
+    Q3VGroupBox* pComposantesGroup = new Q3VGroupBox( tr( "Equipments" ), pGroup );
     ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( pComposantesGroup );
     vInfosConnectors[eComposantes] = &pComposantes->GetConnector();
     connect( pComposantes, SIGNAL( valueChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
@@ -215,7 +219,7 @@ void ADN_Units_GUI::Build()
     vInfosConnectors[eStock] = &pStockLogThreshold_->GetConnector();
 
     // Aptitudes
-    QGroupBox* pSkillsGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Skills" ), pGroup );
+    Q3GroupBox* pSkillsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Skills" ), pGroup );
     pSkillsGroup->setInsideMargin( 20 );
     pSkillsGroup->setInsideSpacing( 10 );
 
@@ -228,7 +232,7 @@ void ADN_Units_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
 
     // Efficiencies
-    QGroupBox* pEfficienciesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Efficiencies" ), pGroup );
+    Q3GroupBox* pEfficienciesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Efficiencies" ), pGroup );
     pEfficienciesGroup->setInsideMargin( 20 );
     pEfficienciesGroup->setInsideSpacing( 10 );
     builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
@@ -247,11 +251,11 @@ void ADN_Units_GUI::Build()
     pListUnits_->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10 );
     pMainLayout->addWidget( pListUnits_, 1 );
     pMainLayout->addWidget( pGroup, 6 );
 
-    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 6, 6, 5 );
+    Q3GridLayout* pGroupLayout = new Q3GridLayout( pGroup->layout(), 6, 6, 5 );
     pGroupLayout->setAlignment( Qt::AlignTop );
     pGroupLayout->addMultiCellWidget( pParamGroup, 0, 0, 0, 2 );
     pGroupLayout->addMultiCellWidget( pNatureGroup, 0, 0, 3, 5 );
@@ -374,8 +378,8 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString
 
     ADN_Units_Data::T_UnitInfos_Vector& units = data_.GetUnitsInfos();
     indexBuilder.BeginTable( static_cast< int >( units.size()+1 ), 2 );
-    indexBuilder.TableItem( 0, 0, tr( "Name" ), true );
-    indexBuilder.TableItem( 0, 1, tr( "Type" ), true );
+    indexBuilder.TableItem( 0, 0, tr( "Name" ).ascii(), true );
+    indexBuilder.TableItem( 0, 1, tr( "Type" ).ascii(), true );
     int n = 1;
     for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it, ++n )
     {

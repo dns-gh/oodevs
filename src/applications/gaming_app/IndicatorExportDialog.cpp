@@ -23,14 +23,14 @@ IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
     : QDialog( parent, "IndicatorExportDialog" )
 {
     setCaption( tools::translate( "Scores", "Export data" ) );
-    QGridLayout* grid = new QGridLayout( this, 2, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 2, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 4 );
     {
-        QGroupBox* box = new QGroupBox( 3, Qt::Horizontal, tools::translate( "Scores", "Output" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "Scores", "Output" ), this );
         new QLabel( tools::translate( "Scores", "File: " ), box );
         file_ = new QLineEdit( box );
-        QButton* browse = new QPushButton( tools::translate( "Scores", "Browse..." ), box );
+        QPushButton* browse = new QPushButton( tools::translate( "Scores", "Browse..." ), box );
         new QLabel( tools::translate( "Scores", "Separator: " ), box );
         separator_ = new QLineEdit( ";", box );
         header_ = new QCheckBox( tools::translate( "Scores", "Headers" ), box );
@@ -40,10 +40,10 @@ IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
         grid->addMultiCellWidget( box, 0, 0, 0, 1 );
     }
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         ok_ = new QPushButton( tools::translate( "Scores", "Ok" ), box );
         ok_->setEnabled( false );
-        QButton* cancel = new QPushButton( tools::translate( "Scores", "Cancel" ), box );
+        QPushButton* cancel = new QPushButton( tools::translate( "Scores", "Cancel" ), box );
         grid->addWidget( box, 1, 1 );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
@@ -84,7 +84,7 @@ void IndicatorExportDialog::Export()
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::OnBrowse()
 {
-    QString filename = QFileDialog::getSaveFileName( 0, tools::translate( "Scores", "CSV (*.csv)" ), topLevelWidget(), 0, tools::translate( "Scores", "Export data" ) );
+    QString filename = Q3FileDialog::getSaveFileName( 0, tools::translate( "Scores", "CSV (*.csv)" ), topLevelWidget(), 0, tools::translate( "Scores", "Export data" ) );
     if( filename == QString::null )
         return;
     if( !filename.endsWith( ".csv" ) )

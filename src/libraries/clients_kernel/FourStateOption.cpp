@@ -57,7 +57,7 @@ QString FourStateOption::SuperiorSelectedName() {
 // Name: FourStateOption constructor
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-FourStateOption::FourStateOption( const QString& state /*= OffName()*/ )
+FourStateOption::FourStateOption( const QString& state /* = OffName()*/ )
     : state_( '0' )
 {
     if( state == OnName() || state == "1" )

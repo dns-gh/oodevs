@@ -61,7 +61,7 @@ UnitListView::~UnitListView()
 // -----------------------------------------------------------------------------
 void UnitListView::viewportResizeEvent( QResizeEvent* e )
 {
-    QScrollView::viewportResizeEvent( e );
+    Q3ScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
@@ -71,7 +71,7 @@ void UnitListView::viewportResizeEvent( QResizeEvent* e )
 // -----------------------------------------------------------------------------
 void UnitListView::setColumnWidth( int column, int w )
 {
-    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
+    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void UnitListView::setColumnWidth( int column, int w )
 // -----------------------------------------------------------------------------
 void UnitListView::SetOpen( bool open )
 {
-    for( QListViewItem* item = firstChild(); item; item = item->nextSibling() )
+    for( Q3ListViewItem* item = firstChild(); item; item = item->nextSibling() )
         item->setOpen( open );
 }
 
@@ -144,10 +144,10 @@ void UnitListView::DisplayBy( const std::string& (kernel::AgentNature::*function
         const AgentType& type = it.NextElement();
         const std::string& strText = (type.GetNature().*function)();
         const QString text = strText.c_str();
-        QListViewItem* parentItem = findItem( text, 0 );
+        Q3ListViewItem* parentItem = findItem( text, 0 );
         if( !parentItem )
         {
-            parentItem = new QListViewItem( this );
+            parentItem = new Q3ListViewItem( this );
             parentItem->setText( 0, text );
         }
         ValuedListItem* item = new ValuedListItem( parentItem );
@@ -160,14 +160,14 @@ void UnitListView::DisplayBy( const std::string& (kernel::AgentNature::*function
 
 namespace
 {
-    QListViewItem* _FindSibling( const QString& text, QListViewItem* bro )
+    Q3ListViewItem* _FindSibling( const QString& text, Q3ListViewItem* bro )
     {
         while( bro && bro->text( 0 ) != text )
             bro = bro->nextSibling();
         return bro;
     }
     template< typename P >
-    QListViewItem* _FindItem( const QString& text, P* parent )
+    Q3ListViewItem* _FindItem( const QString& text, P* parent )
     {
         return parent ? _FindSibling( text, parent->firstChild() ) : 0;
     }
@@ -177,10 +177,10 @@ namespace
 // Name: UnitListView::CreateNaturePath
 // Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-QListViewItem* UnitListView::CreateNaturePath( const std::string& path )
+Q3ListViewItem* UnitListView::CreateNaturePath( const std::string& path )
 {
     const std::string::size_type pos = path.find_last_of( '/' );
-    QListViewItem* parent = 0;
+    Q3ListViewItem* parent = 0;
     QString text( path.c_str() );
     if( pos != std::string::npos )
     {
@@ -189,17 +189,17 @@ QListViewItem* UnitListView::CreateNaturePath( const std::string& path )
         parent = CreateNaturePath( head );
         text = tail.c_str();
     }
-    QListViewItem* result = 0;
+    Q3ListViewItem* result = 0;
     if( parent )
     {
         result = _FindItem( text, parent );
         if( ! result )
-            result = new QListViewItem( parent );
+            result = new Q3ListViewItem( parent );
     } else
     {
         result = _FindItem( text, this );
         if( ! result )
-            result = new QListViewItem( this );
+            result = new Q3ListViewItem( this );
     }
     result->setText( 0, text );
     return result;
@@ -216,7 +216,7 @@ void UnitListView::DisplayByNature()
     {
         const AgentType& type = it.NextElement();
         const std::string& nature = type.GetNature().GetNature();
-        QListViewItem* parentItem = CreateNaturePath( nature );
+        Q3ListViewItem* parentItem = CreateNaturePath( nature );
         ValuedListItem* item = new ValuedListItem( parentItem );
         item->SetNamed( type );
         item->setDragEnabled( true );
@@ -230,9 +230,9 @@ void UnitListView::DisplayByNature()
 // Name: UnitListView::Sort
 // Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-void UnitListView::Sort( QListViewItem* item )
+void UnitListView::Sort( Q3ListViewItem* item )
 {
-    QListViewItem* after = 0;
+    Q3ListViewItem* after = 0;
     while( item )
     {
         Sort( item->firstChild() );
@@ -240,7 +240,7 @@ void UnitListView::Sort( QListViewItem* item )
         {
             if( ! after )
             {
-                QListViewItem* parent = item->parent();
+                Q3ListViewItem* parent = item->parent();
                 if( parent )
                 {
                     parent->removeItem( item );
@@ -303,7 +303,7 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
 // Name: UnitListView::dragObject
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-QDragObject* UnitListView::dragObject()
+Q3DragObject* UnitListView::dragObject()
 {
     ValuedListItem* pItem = dynamic_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )

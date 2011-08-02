@@ -34,10 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual ValuedListItem* CreateItem( QListView * parent ) = 0;
-    virtual ValuedListItem* CreateItem( QListViewItem * parent ) = 0;
-    virtual ValuedListItem* CreateItem( QListView * parent, QListViewItem * after ) = 0;
-    virtual ValuedListItem* CreateItem( QListViewItem * parent, QListViewItem * after ) = 0;
+    virtual ValuedListItem* CreateItem( Q3ListView * parent ) = 0;
+    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent ) = 0;
+    virtual ValuedListItem* CreateItem( Q3ListView * parent, Q3ListViewItem * after ) = 0;
+    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after ) = 0;
 
     virtual RichLabel*      CreateLabel( QWidget* parent = 0, const char* name = 0 ) = 0;
     virtual RichLabel*      CreateLabel( const QString& text, QWidget* parent = 0, const char* name = 0 ) = 0;

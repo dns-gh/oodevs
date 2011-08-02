@@ -75,18 +75,18 @@ bool LimaParameter::CheckValidity()
 // -----------------------------------------------------------------------------
 QWidget* LimaParameter::BuildInterface( QWidget* parent )
 {
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, GetName(), parent );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, GetName(), parent );
     new QLabel( tools::translate( "LimaParameter", "Line" ), group );
     entityLabel_ = new QLabel( "---", group );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
-    entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     new QLabel( tools::translate( "LimaParameter", "Functions" ), group );
-    functions_ = new QListBox( group );
-    functions_->setSelectionMode( QListBox::Multi );
+    functions_ = new Q3ListBox( group );
+    functions_->setSelectionMode( Q3ListBox::Multi );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
         functions_->insertItem( tools::ToShortString( (kernel::E_FuncLimaType)i ), i );
-    functions_->setRowMode( QListBox::FitToHeight );
+    functions_->setRowMode( Q3ListBox::FitToHeight );
     functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
     schedule_ = new ParamDateTime( this, tools::translate( "LimaParameter", "Schedule" ), currentDate_, true ); // $$$$ SBO 2007-05-14: optional
     schedule_->BuildInterface( group );
@@ -143,7 +143,7 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
     if( line_ != &entity )
         return;
 
-    QPopupMenu* limaMenu = new QPopupMenu( menu );
+    Q3PopupMenu* limaMenu = new Q3PopupMenu( menu );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
     {
         int id = limaMenu->insertItem( tools::ToString( (kernel::E_FuncLimaType)i ), this, SLOT( MenuItemValidated( int ) ) );

@@ -20,11 +20,14 @@
 #include "ADN_Weapons_GUI.h"
 #include "moc_ADN_Weapons_GUI.cpp"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qdialog.h>
+#pragma warning( push, 0 )
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <QtGui/qdialog.h>
+#include <Qt3Support/q3gridlayout.h>
+#pragma warning( pop )
 
 #include "ADN_GuiBuilder.h"
 #include "ADN_Weapons_Data.h"
@@ -208,7 +211,7 @@ void ADN_Weapons_GUI::Build()
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Parameters group
-    QGroupBox* pGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Weapon system" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Weapon system" ), pMainWidget_ );
 
     QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
 
@@ -292,28 +295,28 @@ void ADN_Weapons_GUI::Build()
 
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pWeaponList_ );
     pMainLayout->addWidget( pGroup );
 
-    QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 5 );
+    Q3VBoxLayout* pGroupLayout = new Q3VBoxLayout( pGroup->layout(), 5 );
     pGroupLayout->setAlignment( Qt::AlignTop );
     pGroupLayout->addWidget( pParamHolder );
     pGroupLayout->addWidget( pDirectGroup );
     pGroupLayout->addWidget( pIndirectGroup);
 
     { // $$$$ LDC Ciode review: Should be extracted in its own method
-        QVBoxLayout* pModifiersLayout = new QVBoxLayout( pModifiersHolder->layout(), 2 );
+        Q3VBoxLayout* pModifiersLayout = new Q3VBoxLayout( pModifiersHolder->layout(), 2 );
         pModifiersLayout->setAlignment( Qt::AlignTop );
         pModifiersLayout->addWidget( pFirePostureCombo );
         pModifiersLayout->addWidget( pTargetPostureCombo );
         pModifiersLayout->addWidget( pExperienceCombo );
         pModifiersLayout->addWidget( pTirednessCombo );
 
-        QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation->layout(), 2 );
+        Q3HBoxLayout* pSimulationLayout = new Q3HBoxLayout( pSimulation->layout(), 2 );
         pSimulationLayout->addWidget( pModifiersHolder );
 
-        QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup->layout(), 2, 5, 5 );
+        Q3GridLayout* pDirectLayout = new Q3GridLayout( pDirectGroup->layout(), 2, 5, 5 );
         pDirectLayout->addWidget( pPhSizeListView, 0, 0 );
         pDirectLayout->addWidget( pPhTable, 0, 1 );
         pDirectLayout->addMultiCellWidget( pSimulation, 0, 0, 2, 4 );
@@ -359,7 +362,7 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
     {
         ADN_Weapons_Data::WeaponInfos& weapon = **it;
 
-        builder.AddTableCell<ADN_TableItem_String>( pTable, &weapon, nRow, 0, weapon.strName_, eNone, QTableItem::Never );
+        builder.AddTableCell<ADN_TableItem_String>( pTable, &weapon, nRow, 0, weapon.strName_, eNone, Q3TableItem::Never );
         builder.AddTableCell<ADN_TableItem_Int>(    pTable, &weapon, nRow, 1, weapon.nRoundsPerBurst_, eGreaterEqualZero );
         builder.AddTableCell<ADN_TableItem_TimeField>( pTable, &weapon, nRow, 2, weapon.burstDuration_ );
         builder.AddTableCell<ADN_TableItem_Int>(    pTable, &weapon, nRow, 3, weapon.nRoundsPerReload_, eGreaterZero );
@@ -425,18 +428,18 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
         pTable->setNumRows( pTable->numRows() + static_cast< int >( phsSizeInfos.size() ) );
         pTable->AddBoldGridRow( nRow );
 
-        builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow, 0, static_cast< int >( phsSizeInfos.size() ), 1, (*it)->strName_, eNone, QTableItem::Never );
+        builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow, 0, static_cast< int >( phsSizeInfos.size() ), 1, (*it)->strName_, eNone, Q3TableItem::Never );
 
         int nSubRow = 0;
         for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nSubRow )
         {
-            builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow + nSubRow, 1, * (*it2)->ptrSize_.GetData(), eNone, QTableItem::Never );
+            builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow + nSubRow, 1, * (*it2)->ptrSize_.GetData(), eNone, Q3TableItem::Never );
 
             // Make sure empty cells are non-editable.
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
             for( int nn = 2; nn < 2 + (int)distancesSet.size(); ++nn )
             {
-                QTableItem* pNonEditableDummy = new QTableItem( pTable, QTableItem::Never );
+                Q3TableItem* pNonEditableDummy = new Q3TableItem( pTable, Q3TableItem::Never );
                 pTable->setItem( nRow + nSubRow, nn, pNonEditableDummy );
             }
 
@@ -529,7 +532,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
                     std::set<int>::iterator itFound = distancesSet.find( (*it3)->nDistance_.GetData() );
                     int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
                     builder.TableItem( nRow, nIndex + 1, (*it3)->rPerc_.GetData() );
-                    builder.TableItem( 0, nIndex + 1, QString( "%1m").arg( (*it3)->nDistance_.GetData() ) );
+                    builder.TableItem( 0, nIndex + 1, QString( "%1m").arg( (*it3)->nDistance_.GetData() ).toStdString().c_str() );
                 }
             }
             builder.EndTable();

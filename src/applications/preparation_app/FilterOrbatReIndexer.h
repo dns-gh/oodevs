@@ -14,7 +14,7 @@
 
 class QCheckBox;
 class QLineEdit;
-class QListView;
+class Q3ListView;
 
 namespace xml
 {
@@ -73,7 +73,7 @@ private:
     QLineEdit*         filename_;
     QCheckBox*         objectsCheckBox_;
     QCheckBox*         populationsCheckBox_;
-    QListView*         preview_;
+    Q3ListView*         preview_;
     unsigned int       shift_;
     //@}
 };

@@ -13,7 +13,6 @@
 #include "gaming/CommandHandler.h"
 #include "tools/ExerciseConfig.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
-#include <qprocess.h>
 
 // -----------------------------------------------------------------------------
 // Name: LauncherCommand constructor
@@ -42,7 +41,6 @@ LauncherCommand::~LauncherCommand()
 // -----------------------------------------------------------------------------
 void LauncherCommand::Receive( const Command& command )
 {
-    QProcess process(0);
-    process.addArgument( config_.BuildExerciseChildFile( command.Argument( 1 ) ).c_str() ) ;
-    process.start();
+    QProcess process;
+    process.start( config_.BuildExerciseChildFile( command.Argument( 1 ) ).c_str() ) ;
 }

@@ -12,7 +12,6 @@
 
 #include "ADN_Callback.h"
 #include <boost/noncopyable.hpp>
-#include <qmainwindow.h>
 #include <map>
 
 namespace tools
@@ -29,7 +28,7 @@ class ADN_FileLoaderObserver;
 
 class QWidget;
 class QTabWidget;
-class QPopupMenu;
+class Q3PopupMenu;
 class QAction;
 class QToolButton;
 
@@ -45,7 +44,7 @@ class ADN_MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ADN_MainWindow( ADN_Config& config );
+    explicit ADN_MainWindow( ADN_Config& config, int argc, char **argv );
     virtual ~ADN_MainWindow();
 
     void Build();
@@ -105,10 +104,10 @@ private:
     ADN_Config& config_;
     QTabWidget* pTab_;
     QAction* pProjectLoadAction_;
-    QPopupMenu* pProjectMenu_;
-    QPopupMenu* pCoheranceTablesMenu_;
-    QPopupMenu* pConfigurationMenu_;
-    QPopupMenu* pHelpMenu_;
+    Q3PopupMenu* pProjectMenu_;
+    Q3PopupMenu* pCoheranceTablesMenu_;
+    Q3PopupMenu* pConfigurationMenu_;
+    Q3PopupMenu* pHelpMenu_;
     QAction* pActionSave_;
     int rIdSaveAs_;
     int nIdSaveTable_;

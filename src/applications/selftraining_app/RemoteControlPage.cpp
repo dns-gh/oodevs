@@ -16,8 +16,8 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ExerciseFilter_ABC.h"
 #include "clients_gui/Tools.h"
-#include <qspinbox.h>
-#include <qtabwidget.h>
+#include <QtGui/qspinbox.h>
+#include <QtGui/qtabwidget.h>
 
 namespace
 {
@@ -41,7 +41,8 @@ namespace
 // Name: RemoteControlPage constructor
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
-RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
+RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers,
+                                      const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "RemoteControlPage", "Remote control" ), previous, eButtonBack, launcher )
     , controllers_      ( controllers )
     , config_           ( config )
@@ -49,12 +50,12 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
     , exercise_         ( 0 )
     , runningExercise_  ( 0 )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     {
-        QGroupBox* gbox = new QGroupBox( 1, Qt::Vertical, box );
+        Q3GroupBox* gbox = new Q3GroupBox( 1, Qt::Vertical, box );
         gbox->setBackgroundOrigin( QWidget::WindowOrigin );
         QLabel* label = new QLabel( tools::translate( "RemoteControlPage", "Host:" ), gbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -69,7 +70,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
     }
     QTabWidget* tabWidget = new QTabWidget( box );
     {
-        QHBox* hbox = new QHBox( tabWidget );
+        Q3HBox* hbox = new Q3HBox( tabWidget );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             filter_.reset( new ExerciseFilter( *host_, *port_ ) );
@@ -79,7 +80,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         }
         {
-            QVBox* vbox = new QVBox( hbox );
+            Q3VBox* vbox = new Q3VBox( hbox );
             vbox->setBackgroundOrigin( QWidget::WindowOrigin );
             {
                 QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Start game" ), vbox );
@@ -93,7 +94,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
         tabWidget->addTab( hbox, tools::translate( "RemoteControlPage", "Start" ) );
     }
     {
-        QHBox* hbox = new QHBox( tabWidget );
+        Q3HBox* hbox = new Q3HBox( tabWidget );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             runningFilter_.reset( new ExerciseFilter( *host_, *port_, true ) );
@@ -103,7 +104,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
             connect( runningExercises_, SIGNAL( ClearSelection() ), SLOT( ClearRunningSelection() ) );
         }
         {
-            QVBox* vbox = new QVBox( hbox );
+            Q3VBox* vbox = new Q3VBox( hbox );
             vbox->setBackgroundOrigin( QWidget::WindowOrigin );
             QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Stop running session" ), vbox );
             connect( button, SIGNAL( clicked() ), SLOT( OnStop() ) );

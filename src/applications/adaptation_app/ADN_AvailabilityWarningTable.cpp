@@ -14,7 +14,7 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Validator.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 class ADN_Connector_WarningTable
     : public ADN_Connector_Table_ABC
@@ -54,7 +54,7 @@ ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( QWidget* pParent )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
     verticalHeader()->hide();
@@ -83,7 +83,7 @@ ADN_AvailabilityWarningTable::~ADN_AvailabilityWarningTable()
 // -----------------------------------------------------------------------------
 void ADN_AvailabilityWarningTable::OnContextMenu( int, int, const QPoint& pt )
 {
-    QPopupMenu menu( this );
+    Q3PopupMenu menu( this );
     menu.insertItem( tr( "New warning"), 0 );
     menu.insertItem( tr( "Delete warning"), 1 );
     menu.setItemEnabled( 1, GetCurrentData() != 0 );

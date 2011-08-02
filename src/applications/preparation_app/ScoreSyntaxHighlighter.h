@@ -10,7 +10,6 @@
 #ifndef __ScoreSyntaxHighlighter_h_
 #define __ScoreSyntaxHighlighter_h_
 
-#include <qsyntaxhighlighter.h>
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -31,7 +30,7 @@ namespace indicators
 */
 // Created: SBO 2009-05-07
 // =============================================================================
-class ScoreSyntaxHighlighter : public QSyntaxHighlighter
+class ScoreSyntaxHighlighter : public Q3SyntaxHighlighter
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                              , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
@@ -39,7 +38,7 @@ class ScoreSyntaxHighlighter : public QSyntaxHighlighter
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreSyntaxHighlighter( QTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
+             ScoreSyntaxHighlighter( Q3TextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
     virtual ~ScoreSyntaxHighlighter();
     //@}
 

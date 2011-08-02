@@ -13,24 +13,18 @@
 
 #include "ADN_Config.h"
 
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qlayout.h>
-#include <qfiledialog.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ConfigDialog::ADN_ConfigDialog
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
 ADN_ConfigDialog::ADN_ConfigDialog( ADN_Config& config )
-: QDialog  ( 0, tr( "Configuration" ), true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title | WStyle_SysMenu )
+: QDialog  ( 0, tr( "Configuration" ), true, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu )
 , pConfig_ ( &config )
 {
     setMaximumHeight( 200 );
     setMaximumWidth ( 400 );
 
-    QGridLayout* pGrid  = new QGridLayout( this, 4, 2, 5, 5 );
+    Q3GridLayout* pGrid  = new Q3GridLayout( this, 4, 2, 5, 5 );
 
     pGrid->addWidget( new QLabel( tr( "SIM path" ), this ), 0, 0 );
     pSimPath_ = new QLineEdit( config.GetSimPath().c_str(), this );
@@ -88,7 +82,7 @@ void ADN_ConfigDialog::OnCancel()
 // -----------------------------------------------------------------------------
 void ADN_ConfigDialog::OnBrowsePath()
 {
-    QString strSimPath = QFileDialog::getOpenFileName( pSimPath_->text(), tr( "Sword executable (*.exe)" ) , this, "", tr( "Select SIM to use for data test" ) );
+    QString strSimPath = Q3FileDialog::getOpenFileName( pSimPath_->text(), tr( "Sword executable (*.exe)" ) , this, "", tr( "Select SIM to use for data test" ) );
     if( strSimPath == QString::null )
         return;
     pSimPath_->setText( strSimPath );

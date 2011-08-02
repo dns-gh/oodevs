@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_DotationNature.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Categories_Data.h"
@@ -47,12 +47,12 @@ private:
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
-ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget * parent, const char * name, WFlags f )
+ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget * parent, const char * name, Qt::WFlags f )
     : ADN_ListView( parent, name, f )
 {
     addColumn( tr( "Resource Natures" ) );
     setSorting( -1, true );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_CLV_Categories_DotationNature( *this );
     SetDeletionEnabled( true );
 }
@@ -88,7 +88,7 @@ void ADN_ListView_Categories_DotationNature::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popuMenu( this );
+    Q3PopupMenu popuMenu( this );
 
     popuMenu.insertItem( tr( "New nature"), 0 );
     popuMenu.insertItem( tr( "Delete nature"), 1 );

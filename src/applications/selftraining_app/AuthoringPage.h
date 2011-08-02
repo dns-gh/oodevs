@@ -34,7 +34,7 @@ class AuthoringPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             AuthoringPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers );
+             AuthoringPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers );
     virtual ~AuthoringPage();
     //@}
 

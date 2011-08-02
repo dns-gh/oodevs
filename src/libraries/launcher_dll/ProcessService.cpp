@@ -17,6 +17,7 @@
 #include "frontend/StartExercise.h"
 #include "frontend/StartDispatcher.h"
 #include "frontend/StartReplay.h"
+#include <QtCore/qstringlist.h>
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
 #include "Config.h"

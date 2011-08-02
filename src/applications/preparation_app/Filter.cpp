@@ -12,7 +12,6 @@
 #include "moc_Filter_ABC.cpp"
 
 #include "clients_kernel/Tools.h"
-#include <qtextcodec.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace

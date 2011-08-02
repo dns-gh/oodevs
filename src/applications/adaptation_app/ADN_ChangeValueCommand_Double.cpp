@@ -22,7 +22,7 @@
 #include "moc_ADN_ChangeValueCommand_Double.cpp"
 
 #include "ADN_Types.h"
-#include <qapp.h>
+#include <QtGui/qapplication.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Double constructor

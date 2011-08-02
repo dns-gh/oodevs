@@ -87,7 +87,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    void Update( const kernel::Entity_ABC& entity, QPopupMenu* menu );
+    void Update( const kernel::Entity_ABC& entity, Q3PopupMenu* menu );
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     bool IsValid( const T_Symbols& symbols ) const;
     void UpdateHierarchies();
@@ -101,7 +101,7 @@ private:
     const tools::ExerciseConfig& config_;
     std::auto_ptr< kernel::SymbolFactory > pFactory_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    QPopupMenu* menu_;
+    Q3PopupMenu* menu_;
     T_Identifier identifiers_;
     //@}
 };

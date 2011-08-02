@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "SuccessFactorConditionItem.h"
+#include "SuccessFactorConditionsEditor.h"
 #include "moc_SuccessFactorConditionItem.cpp"
 #include "clients_gui/resources.h"
 #include "preparation/Score_ABC.h"
@@ -21,10 +22,12 @@
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
 SuccessFactorConditionItem::SuccessFactorConditionItem( QWidget* parent, const ScoresModel& scores )
-    : QHBox( parent )
+    : Q3HBox( parent )
 {
+    setFixedHeight( 45 );
     setSpacing( 2 );
-    setFrameStyle( QFrame::Panel | QFrame::Raised );
+    setFrameStyle( Q3Frame::Panel | Q3Frame::Raised );
+
     {
         score_ = new gui::ValuedComboBox< const Score_ABC* >( this );
         tools::Iterator< const Score_ABC& > it( scores.CreateIterator() );

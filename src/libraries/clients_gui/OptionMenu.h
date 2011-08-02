@@ -23,7 +23,7 @@ namespace gui
 */
 // Created: SBO 2006-04-28
 // =============================================================================
-class OptionMenuBase : public QPopupMenu
+class OptionMenuBase : public Q3PopupMenu
 {
     Q_OBJECT;
 public:

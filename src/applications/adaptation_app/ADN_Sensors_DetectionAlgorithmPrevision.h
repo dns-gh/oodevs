@@ -13,7 +13,7 @@
 #include "ENT/ENT_Enums_Gen.h"
 #include "ADN_Connector_ABC.h"
 #include "ADN_Sensors_Data.h"
-#include <qgroupbox.h>
+#include <Qt3Support/q3groupbox.h>
 
 class ModificatorEnvironmentInfos;
 class ADN_GuiBuilder;
@@ -25,7 +25,7 @@ class GQ_PlotData;
 */
 // Created: HBD 2010-04-26
 // =============================================================================
-class ADN_Sensors_DetectionAlgorithmPrevision : public QGroupBox
+class ADN_Sensors_DetectionAlgorithmPrevision : public Q3GroupBox
 {
     Q_OBJECT;
 

@@ -24,9 +24,9 @@
 #endif
 
 #include "GQ_ValueConvertor.h"
-#include <qfont.h>
-#include <qwidget.h>
-#include <qvaluelist.h>
+#include <QtGui/qfont.h>
+#include <QtGui/qwidget.h>
+#include <Qt3Support/q3valuelist.h>
 #include <vector>
 
 class QColorGroup;

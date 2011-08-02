@@ -77,10 +77,10 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< FilterManager >  filterManager_;
-    QListBox*                       list_;
+    Q3ListBox*                       list_;
     QLabel*                         description_;
     QPushButton*                    okButton_;
-    QWidgetStack*                   stack_;
+    Q3WidgetStack*                   stack_;
     //@}
 
 public:

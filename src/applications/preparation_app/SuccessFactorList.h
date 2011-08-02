@@ -29,7 +29,7 @@ class SuccessFactorEditor;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorList : public QVBox
+class SuccessFactorList : public Q3VBox
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< SuccessFactor >
 {
@@ -78,8 +78,8 @@ private:
     gui::ItemFactory_ABC& factory_;
     gui::ListDisplayer< SuccessFactorList >* factors_;
     SuccessFactorEditor* editor_;
-    QButton* editButton_;
-    QButton* deleteButton_;
+    QPushButton* editButton_;
+    QPushButton* deleteButton_;
     //@}
 };
 

@@ -81,7 +81,7 @@ private:
     QLabel* pElevation_;
     QLabel* pTerrainType_;
     QLabel* pObjectInfos_;
-    QPopupMenu* pMenu_;
+    QMenu* pMenu_;
     //@}
 };
 

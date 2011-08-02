@@ -17,12 +17,10 @@
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
 ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler )
-    : QDockWindow( parent, "clock" )
+    : QDockWidget( "clock", parent )
 {
-    setOrientation( Qt::Horizontal );
+    setObjectName( "clock" );
     setWidget( new ClockWidget( this, controllers, simulation, scheduler ) );
-    setResizeEnabled( true );
-    setCloseMode( QDockWindow::Always );
     setCaption( tools::translate( "ClockDock","Clock" ) );
 }
 

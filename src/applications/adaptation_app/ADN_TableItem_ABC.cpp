@@ -14,8 +14,8 @@
 // Name: ADN_TableItem_ABC constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_TableItem_ABC::ADN_TableItem_ABC( QTable* parent, void* data, QTableItem::EditType nEditType /* = WhenCurrent*/ )
-: QTableItem( parent, nEditType, "" )
+ADN_TableItem_ABC::ADN_TableItem_ABC( Q3Table* parent, void* data, Q3TableItem::EditType nEditType /* = WhenCurrent*/ )
+: Q3TableItem( parent, nEditType, "" )
 , QObject( parent )
 , pData_( data )
 {

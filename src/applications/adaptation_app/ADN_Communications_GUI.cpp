@@ -23,10 +23,10 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
 
 
 // -----------------------------------------------------------------------------
@@ -63,12 +63,12 @@ void ADN_Communications_GUI::Build()
     // Create the top widget.
     pMainWidget_ = new QWidget( 0 );
 
-    QGroupBox* pGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Jamming" ), pMainWidget_ );
+    Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Jamming" ), pMainWidget_ );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
 
     // Layout
-    QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
     pLayout->setAlignment( Qt::AlignTop );
     pLayout->addWidget( pGroupBox );
     builder.AddStretcher( pLayout, Qt::Vertical );

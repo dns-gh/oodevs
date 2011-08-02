@@ -16,7 +16,7 @@
 #include "ADN_MissionParameterType.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Tr.h"
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 namespace
 {
@@ -67,7 +67,7 @@ namespace
 // Name: ADN_MissionParameters_Table constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /*= 0*/ )
+ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /* = 0*/ )
     : ADN_Table2( parent, "ADN_MissionParameters_Table" )
     , current_  ( 0 )
 {
@@ -106,7 +106,7 @@ ADN_MissionParameters_Table::~ADN_MissionParameters_Table()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
 {
-    QPopupMenu popup( this );
+    Q3PopupMenu popup( this );
 
     popup.insertItem( tr( "Add parameter"), 0 );
     if( GetCurrentData() != 0 )

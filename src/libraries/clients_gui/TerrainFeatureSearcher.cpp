@@ -73,6 +73,7 @@ namespace
         virtual bool ShouldDisplayBorder( const TerrainData& , const geometry::Rectangle2f& ) { return false; }
         virtual bool ShouldDisplayNames ( const TerrainData& , const geometry::Rectangle2f& ) { return true; }
         virtual void SetupLineGraphics  ( const Data_ABC* ) {}
+        virtual void SetupLineGraphics  ( unsigned int ) {}
         virtual void SetupBorderGraphics( const Data_ABC* ) {}
         virtual void SetupAreaGraphics  ( const Data_ABC* ) {}
         std::map< std::string, T_PointVector > names_;

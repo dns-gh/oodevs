@@ -20,8 +20,11 @@
 #include "ADN_BoolEditor.h"
 #include "moc_ADN_BoolEditor.cpp"
 
-#include <qpainter.h>
-#include <qpixmap.h>
+#pragma warning( push, 0 )
+#include <QtGui/qpainter.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qevent.h>
+#pragma warning( pop )
 
 #include "res/checked_box.xpm"
 #include "res/empty_box.xpm"
@@ -34,7 +37,7 @@
 // Created: AGN 2004-03-11
 // -----------------------------------------------------------------------------
 ADN_BoolEditor::ADN_BoolEditor( QWidget* pParent, bool bState )
-: QFrame      ( pParent )
+: Q3Frame      ( pParent )
 , bState_     ( bState )
 {
     setFrameStyle    ( Panel + Plain  );
@@ -90,7 +93,7 @@ const QPixmap& ADN_BoolEditor::EmptyBoxPixmap()
 // -----------------------------------------------------------------------------
 void ADN_BoolEditor::paintEvent( QPaintEvent * pEvent )
 {
-    QFrame::paintEvent( pEvent );
+    Q3Frame::paintEvent( pEvent );
     QPainter painter( this );
 
     const QRect& rect = pEvent->rect();

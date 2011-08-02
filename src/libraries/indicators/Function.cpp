@@ -60,14 +60,14 @@ void Function::AddParameter( boost::shared_ptr< Element_ABC > element )
     try
     {
         if( parameterSet_ >= parameters_.size() )
-            throw std::exception( tools::translate( "Indicators", "too many parameters." ) );
+            throw std::exception( tools::translate( "Indicators", "too many parameters." ).ascii() );
         boost::shared_ptr< Element_ABC > definition = parameters_[ parameterSet_ ].second;
         type_->AddParameter( definition->GetType(), element->GetType() );
         parameters_[ parameterSet_++ ].second = element;
     }
     catch( std::exception& e )
     {
-        throw std::exception( tools::translate( "Indicators", "Parameter type mismatch in function '%1': %2" ).arg( name_ ).arg( e.what() ) );
+        throw std::exception( tools::translate( "Indicators", "Parameter type mismatch in function '%1': %2" ).arg( name_ ).arg( e.what() ).ascii() );
     }
 }
 
@@ -96,7 +96,7 @@ std::string Function::GetValue() const
 void Function::Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const
 {
     if( parameters_.size() > parameterSet_ )
-        throw std::exception( tools::translate( "Indicators", "Parameter type mismatch in function '%1': too few parameters." ).arg( name_ ) );
+        throw std::exception( tools::translate( "Indicators", "Parameter type mismatch in function '%1': too few parameters." ).arg( name_ ).ascii() );
     SerializeDeclarations( declarator );
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
         parameter.second->Serialize( xos, declarator );

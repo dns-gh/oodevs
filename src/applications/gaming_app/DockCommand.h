@@ -13,7 +13,7 @@
 #include "gaming/CommandHandler_ABC.h"
 
 class CommandHandler;
-class QDockWindow;
+class QDockWidget;
 class QMainWindow;
 
 // =============================================================================

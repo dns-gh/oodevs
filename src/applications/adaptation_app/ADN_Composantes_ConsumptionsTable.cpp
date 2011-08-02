@@ -20,7 +20,7 @@
 #include "ADN_Composantes_ConsumptionsTable.h"
 #include "moc_ADN_Composantes_ConsumptionsTable.cpp"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Composantes_Data.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -90,7 +90,7 @@ ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable(  ADN_ListV
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
 
@@ -141,14 +141,14 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
     ADN_Composantes_Data::ResourceInfos& dotation = pComp->resources_;
     ADN_Composantes_Data::T_CategoryInfos_Vector& categories = dotation.categories_;
 
-    QPopupMenu menu( this );
-    QPopupMenu addMenu( &menu );
+    Q3PopupMenu menu( this );
+    Q3PopupMenu addMenu( &menu );
 
     int nItemId = 0;
     // Iterate over the consumption types, and create an 'add' submenu for each of them
     for( int nConsumption = 0; nConsumption < eNbrConsumptionType; ++nConsumption )
     {
-        QPopupMenu* pConsumptionMenu = new QPopupMenu( &addMenu );
+        Q3PopupMenu* pConsumptionMenu = new Q3PopupMenu( &addMenu );
         addMenu.insertItem( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nConsumption ).c_str(), pConsumptionMenu );
 
         // Fill the popup menu with submenus, one for each dotation.

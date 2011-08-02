@@ -36,6 +36,9 @@ private:
     void AddNewDotation( ADN_Equipement_Data::CategoryInfo& category );
     void RemoveCurrentDotation();
     bool Contains( ADN_Equipement_Data::CategoryInfo& category );
+
+public:
+    bool bIncludeNormalizedConsumption_;
 };
 
 

@@ -26,18 +26,12 @@
 
 #include <map>
 #include <vector>
-#include <qrect.h>
-#include <qpalette.h>
-#include <qpixmap.h>
-#include <qwidget.h>
 
 class QLabel;
 class QStringList;
 
 namespace gui
 {
-    class GQ_PlotToolTip;
-
 // =============================================================================
 /** @class  GQ_Plot
     @brief  2D Plot widget
@@ -96,7 +90,6 @@ public:
     void SetPlotMargin( unsigned int nMargin );
 
     void ShowPlotFrame( bool );
-    void ShowToolTips ( bool );
 
     void SetBackgroundColor( const QColor& );
     void SetAxisColor      ( const QColor& );
@@ -205,7 +198,6 @@ private:
     GQ_PlotAxis y_;
 
     const T_CoordToString* pCoordToString_;
-    GQ_PlotToolTip* pToolTip_;
 
     T_LayerMap layerMap_;
 

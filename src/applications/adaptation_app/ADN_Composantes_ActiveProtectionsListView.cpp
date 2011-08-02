@@ -12,7 +12,7 @@
 #include "ADN_Composantes_Data.h"
 #include "ADN_Workspace.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Composantes_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 
@@ -20,7 +20,7 @@ typedef ADN_Composantes_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 // Name: ADN_Composantes_ActiveProtectionsListView constructor
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
-ADN_Composantes_ActiveProtectionsListView::ADN_Composantes_ActiveProtectionsListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Composantes_ActiveProtectionsListView::ADN_Composantes_ActiveProtectionsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
@@ -59,8 +59,8 @@ void ADN_Composantes_ActiveProtectionsListView::ConnectItem( bool )
 //-----------------------------------------------------------------------------
 void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu addMenu( this );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu addMenu( this );
 
     // Add the available ActiveProtections to the 'add ActiveProtections' submenu.
     ADN_ActiveProtections_Data::T_ActiveProtectionsInfosVector& vActiveProtections = ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos();
@@ -105,7 +105,7 @@ void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt 
 //-----------------------------------------------------------------------------
 bool ADN_Composantes_ActiveProtectionsListView::Contains( const ADN_ActiveProtections_Data::ActiveProtectionsInfos* pInfo )
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();

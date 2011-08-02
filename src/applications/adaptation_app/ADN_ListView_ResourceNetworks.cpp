@@ -20,12 +20,12 @@ typedef ADN_ResourceNetworks_Data::ResourceNetworkInfos ResourceNetworkInfos;
 // Name: ADN_ListView_ResourceNetworks constructor
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
-ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent, const char* szName, Qt::WFlags f )
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Resource networks" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ResourceNetworkInfos >(*this);
     this->SetDeletionEnabled( true );
@@ -62,7 +62,7 @@ void ADN_ListView_ResourceNetworks::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_ResourceNetworks::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_ResourceNetworks_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

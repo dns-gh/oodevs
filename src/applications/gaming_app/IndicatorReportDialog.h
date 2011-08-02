@@ -68,7 +68,7 @@ private:
     QLineEdit* templateFile_;
     QLineEdit* outputFile_;
     QCheckBox* displayReport_;
-    QButton* ok_;
+    QPushButton* ok_;
     //@}
 };
 

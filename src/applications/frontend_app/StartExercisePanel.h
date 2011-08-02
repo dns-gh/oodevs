@@ -11,6 +11,7 @@
 #define __StartExercisePanel_h_
 
 #include "Panel_ABC.h"
+#include <Qt3Support/q3action.h>
 
 namespace frontend
 {
@@ -24,12 +25,12 @@ namespace tools
 
 class InfoBubble;
 class GameConfigPanel;
-class QGroupBox;
+class Q3GroupBox;
 class QLineEdit;
-class QListBox;
+class Q3ListBox;
 class QPushButton;
 class QSpinBox;
-class QTextEdit;
+class Q3TextEdit;
 
 // =============================================================================
 /** @class  StartExercisePanel
@@ -44,7 +45,7 @@ class StartExercisePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context, const char* name = 0 );
+             StartExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context, const char* name = 0 );
     virtual ~StartExercisePanel();
     //@}
 
@@ -80,11 +81,11 @@ protected:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QGroupBox* listBox_;
-    QListBox* list_;
+    Q3GroupBox* listBox_;
+    Q3ListBox* list_;
     GameConfigPanel* configPanel_;
     QLineEdit* sessionName_;
-    QTextEdit* sessionComment_;
+    Q3TextEdit* sessionComment_;
     QSpinBox* exerciseNumber_;
     InfoBubble* bubble_;
     QPushButton* okay_;

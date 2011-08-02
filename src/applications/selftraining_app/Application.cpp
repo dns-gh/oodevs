@@ -22,9 +22,13 @@
 #include "tools/NullFileLoaderObserver.h"
 #include "tools/DefaultLoader.h"
 #include <xeumeuleu/xml.hpp>
-#include <qsettings.h>
-#include <qtextcodec.h>
-#include <qtimer.h>
+
+#pragma warning( push, 0 )
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
+#include <Qtcore/qtimer.h>
+#include <QtCore/qtranslator.h>
+#pragma warning( pop )
 
 namespace
 {

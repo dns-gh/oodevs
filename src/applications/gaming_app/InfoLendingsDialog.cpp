@@ -20,8 +20,8 @@
 InfoLendingsDialog::InfoLendingsDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : InfoDialog< Lendings >( parent, controllers, tools::translate( "InfoLendingsDialog", "Lendings" ) )
 {
-    new LendingsListView( new QHGroupBox( tools::translate( "InfoLendingsDialog", "Lent equipment(s)" ), RootWidget() ), controllers, factory );
-    new BorrowingsListView( new QHGroupBox( tools::translate( "InfoLendingsDialog", "Borrowed equipment(s)" ), RootWidget() ), controllers, factory );
+    new LendingsListView( new Q3HGroupBox( tools::translate( "InfoLendingsDialog", "Lent equipment(s)" ), RootWidget() ), controllers, factory );
+    new BorrowingsListView( new Q3HGroupBox( tools::translate( "InfoLendingsDialog", "Borrowed equipment(s)" ), RootWidget() ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

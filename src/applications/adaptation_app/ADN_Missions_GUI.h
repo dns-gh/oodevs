@@ -54,7 +54,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( QGroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat );
+    QWidget* BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat );
     QWidget* BuildUnitMissions( QWidget* parent );
     QWidget* BuildAutomatMissions( QWidget* parent );
     QWidget* BuildPopulationMissions( QWidget* parent );
@@ -65,10 +65,10 @@ private:
     //! @name Member data
     //@{
     ADN_Missions_Data& data_;
-    QGroupBox* pUnitMissionsGroup_;
-    QGroupBox* pAutomatMissionsGroup_;
-    QGroupBox* pPopulationMissionsGroup_;
-    QGroupBox* pFragOrderGroup_;
+    Q3GroupBox* pUnitMissionsGroup_;
+    Q3GroupBox* pAutomatMissionsGroup_;
+    Q3GroupBox* pPopulationMissionsGroup_;
+    Q3GroupBox* pFragOrderGroup_;
     //@}
 };
 

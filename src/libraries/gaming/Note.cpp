@@ -72,7 +72,7 @@ void Note::Delete()
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
-void Note::Display( QListViewItem* item ) const
+void Note::Display( Q3ListViewItem* item ) const
 {
     item->setText( 0, name_.c_str() );
     item->setText( 1, noteNumber_.c_str() );

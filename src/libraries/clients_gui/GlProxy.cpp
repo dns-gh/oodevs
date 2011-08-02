@@ -157,7 +157,7 @@ bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 // Name: GlProxy::Pixels
 // Created: AGE 2007-04-05
 // -----------------------------------------------------------------------------
-float GlProxy::Pixels( const geometry::Point2f& at /*= geometry::Point2f()*/ ) const
+float GlProxy::Pixels( const geometry::Point2f& at /* = geometry::Point2f()*/ ) const
 {
     return tools_->Pixels( at );
 }
@@ -184,7 +184,7 @@ float GlProxy::GetAdaptiveZoomFactor() const
 // Name: GlProxy::StipplePattern
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
+unsigned short GlProxy::StipplePattern( int factor /* = 1*/ ) const
 {
     return tools_->StipplePattern( factor );
 }
@@ -193,7 +193,7 @@ unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 // Name: GlProxy::SetCurrentColor
 // Created: AGE 2007-05-25
 // -----------------------------------------------------------------------------
-void GlProxy::SetCurrentColor( float r, float g, float b, float a /*= 1*/ )
+void GlProxy::SetCurrentColor( float r, float g, float b, float a /* = 1*/ )
 {
     tools_->SetCurrentColor( r, g, b, a );
 }
@@ -212,7 +212,7 @@ void GlProxy::SetCurrentCursor( const QCursor& cursor )
 // Name: GlProxy::DrawCross
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawCross( const geometry::Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlProxy::DrawCross( const geometry::Point2f& at, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     tools_->DrawCross( at, size, unit );
 }
@@ -266,7 +266,7 @@ void GlProxy::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const ke
 // Name: GlProxy::DrawArrow
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     tools_->DrawArrow( from, to, size,unit );
 }
@@ -275,7 +275,7 @@ void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f&
 // Name: GlProxy::DrawCurvedArrow
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio /* = 0.2f*/, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     tools_->DrawCurvedArrow( from, to, curveRatio, size, unit );
 }
@@ -293,7 +293,7 @@ void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f&
 // Name: GlProxy::DrawCircle
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     tools_->DrawCircle( center, radius, unit );
 }
@@ -302,7 +302,7 @@ void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f
 // Name: GlProxy::DrawDisc
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     tools_->DrawDisc( center, radius, unit );
 }
@@ -311,7 +311,7 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/
 // Name: GlProxy::DrawLife
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawLife( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
+void GlProxy::DrawLife( const geometry::Point2f& center, float height, float factor /* = 1.f*/ ) const
 {
     tools_->DrawLife( center, height, factor );
 }
@@ -338,7 +338,7 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where,
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
 {
     tools_->DrawApp6Symbol( symbol, where, factor, thickness );
 }
@@ -347,7 +347,7 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
 {
     tools_->DrawApp6Symbol( symbol, style, where, factor, thickness );
 }
@@ -356,7 +356,7 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& styl
 // Name: GlProxy::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     tools_->DrawIcon( xpm, where, size, unit );
 }
@@ -383,7 +383,7 @@ void GlProxy::DrawCell( const geometry::Point2f& center ) const
 // Name: GlProxy::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /*= 1.f*/ ) const
+void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/ ) const
 {
     tools_->DrawSvg( svg, center, ratio );
 }

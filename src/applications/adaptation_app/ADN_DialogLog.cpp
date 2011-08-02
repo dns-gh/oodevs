@@ -11,19 +11,21 @@
 #include "adaptation_app_pch.h"
 #include "ADN_DialogLog.h"
 #include "MT_Tools/MT_FormatString.h"
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtextview.h>
-#include <qmessagebox.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3textview.h>
+#include <QtGui/qmessagebox.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qpushbutton.h>
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 
-class QMessageTextView : public QTextView
+class QMessageTextView : public Q3TextView
 {
 public:
     QMessageTextView( QWidget *parent, const char *name )
-    : QTextView( parent, name ) { }
+    : Q3TextView( parent, name ) { }
 
 };
 
@@ -33,23 +35,23 @@ public:
 // Created: JDY 03-09-08
 //-----------------------------------------------------------------------------
 ADN_DialogLog::ADN_DialogLog( QWidget * parent, const char * name)
-: QDialog(parent,name,true,WStyle_Customize | WStyle_NormalBorder | WStyle_Title | WStyle_SysMenu)
+: QDialog(parent,name,true,Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu)
 , pMsg_(0)
 , pText_(0)
 , lMsg_()
 {
-    QGridLayout * grid  = new QGridLayout( this, 3, 2 ,10 ,10);
+    Q3GridLayout * grid  = new Q3GridLayout( this, 3, 2 ,10 ,10);
     QLabel* pIcon = new QLabel(this);
     pIcon->setPixmap( QMessageBox::standardIcon(QMessageBox::Warning) );
     grid->addWidget(pIcon,0,0);
     pMsg_ = new QLabel(this);
-    grid->addWidget(pMsg_,0,1,AlignLeft);
+    grid->addWidget(pMsg_,0,1,Qt::AlignLeft);
     pText_= new QMessageTextView( this, "errors" );
     grid->addMultiCellWidget( pText_, 1, 1 , 0 , 1 );
     pOk_ = new QPushButton( tr( "&OK" ), this, "ok" );
     connect( pOk_, SIGNAL(clicked()), this, SLOT(accept()) );
     pOk_->setFocus();
-    grid->addMultiCellWidget( pOk_, 2, 2, 0, 1, AlignCenter );
+    grid->addMultiCellWidget( pOk_, 2, 2, 0, 1, Qt::AlignCenter );
 }
 
 

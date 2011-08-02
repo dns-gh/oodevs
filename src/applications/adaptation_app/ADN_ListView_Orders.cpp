@@ -26,8 +26,8 @@
 #include "ADN_Tools.h"
 #include "ENT/ENT_Tr.h"
 
-#include <qheader.h>
-#include <qpopmenu.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Models_Data::OrderInfos OrderInfos;
 
@@ -65,13 +65,13 @@ private:
 // Name: ADN_ListView_Orders constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget * parent, const char * name , WFlags f)
+ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget * parent, const char * name , Qt::WFlags f)
 :   ADN_ListView(parent,name,f)
 , usedWithMission_ ( usedWithMission )
 {
     // add one column
     addColumn( tr( "Frag orders"));
-    setResizeMode(QListView::AllColumns);
+    setResizeMode(Q3ListView::AllColumns);
 
     // connector creation
     pConnector_=new ADN_CLV_Orders(*this);
@@ -97,7 +97,7 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
         return;
 
-    std::auto_ptr< QPopupMenu > pTargetMenu( new QPopupMenu(this) );
+    std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu(this) );
 
     bool bDisplayAdd = false;
     bool bDisplayRem = GetCurrentData() != 0;
@@ -120,7 +120,7 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     if( ! bDisplayAdd && !bDisplayRem )
         return;
 
-    QPopupMenu * pMenu=new QPopupMenu(this);
+    Q3PopupMenu * pMenu=new Q3PopupMenu(this);
     if( bDisplayAdd )
         pMenu->insertItem( tr( "Add frag order"), pTargetMenu.get() ,0 );
     if( bDisplayRem )

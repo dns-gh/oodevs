@@ -19,17 +19,18 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 
-#include <qapplication.h>
-#include <qwidgetstack.h>
-#include <qpixmap.h>
-#include <qpalette.h>
+#include <QtGui/qapplication.h>
+#include <Qt3Support/q3widgetstack.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qpalette.h>
+#include <QtGui/qdesktopwidget.h>
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
-    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    : Q3MainWindow( 0, 0, Qt::WDestructiveClose )
     , interpreter_( new LinkInterpreter( this, controllers ) )
 {
     setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
@@ -37,7 +38,7 @@ MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, ker
     setFixedWidth( 800 );
     setMinimumHeight( 600 );
     SetStyle();
-    pages_ = new QWidgetStack( this );
+    pages_ = new Q3WidgetStack( this );
     HomePage* home = new HomePage( pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
@@ -62,13 +63,15 @@ void MainWindow::SetStyle()
 {
     QFont font( "Calibri", 12, QFont::Bold );
     setFont( font );
-    QImage background( "resources/images/selftraining/background.jpg" );
+    QImage background( "resources/images/selftraining/background.png" );
+    QPixmap px;
+    px.convertFromImage( background );
 
     QPalette p( palette() );
     p.setColor( QPalette::Active, QColorGroup::Background     , QColor( 48, 48, 64 ) );
     p.setColor( QPalette::Active, QColorGroup::Foreground     , QColor( 240, 240, 240 ) );
     p.setColor( QPalette::Active, QColorGroup::BrightText     , Qt::white );
-    p.setBrush( QPalette::Active, QColorGroup::Base           , QBrush( QColor( 32, 32, 48 ), background ) );
+    p.setBrush( QPalette::Active, QColorGroup::Base           , QBrush( QColor( 32, 32, 48 ), px ) );
     p.setColor( QPalette::Active, QColorGroup::Text           , QColor( 240, 240, 240 ) );
     p.setColor( QPalette::Active, QColorGroup::Button         , QColor(   40, 40,  50 ) );
     p.setColor( QPalette::Active, QColorGroup::ButtonText     , QColor( 140, 140, 150 ) );
@@ -83,8 +86,9 @@ void MainWindow::SetStyle()
 
     p.setInactive( p.active() );
     p.setDisabled( p.active() );
+
+    p.setBrush( backgroundRole(), QBrush( px ) );
     setPalette( p );
-    setPaletteBackgroundPixmap( background );
     setBackgroundOrigin( QWidget::WindowOrigin );
 }
 
@@ -114,9 +118,11 @@ void MainWindow::Maximize()
 // -----------------------------------------------------------------------------
 void MainWindow::resizeEvent( QResizeEvent * )
 {
-    QImage background = QImage( "resources/images/selftraining/background.jpg" ).scale( width(), height() );
+    QImage background = QImage( "resources/images/selftraining/background.png" ).scaleHeight( height() );
+    background = background.scaledToWidth( width() );
     QPalette p( palette() );
-    p.setBrush( QPalette::Active, QColorGroup::Base, QBrush( QColor( 32, 32, 48 ), background ) );
+    QPixmap px;
+    px.convertFromImage( background );
+    p.setBrush( backgroundRole(), QBrush( px ) );
     setPalette( p );
-    setPaletteBackgroundPixmap( background );
 }

@@ -38,7 +38,7 @@ RichItemFactory::~RichItemFactory()
 // Name: RichItemFactory::CreateItem
 // Created: AGE 2006-05-10
 // -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( QListView * parent )
+ValuedListItem* RichItemFactory::CreateItem( Q3ListView * parent )
 {
     return Connect( new ValuedListItem( parent ) );
 }
@@ -47,7 +47,7 @@ ValuedListItem* RichItemFactory::CreateItem( QListView * parent )
 // Name: RichItemFactory::CreateItem
 // Created: AGE 2006-05-10
 // -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( QListViewItem * parent )
+ValuedListItem* RichItemFactory::CreateItem( Q3ListViewItem * parent )
 {
     return Connect( new ValuedListItem( parent ) );
 }
@@ -56,7 +56,7 @@ ValuedListItem* RichItemFactory::CreateItem( QListViewItem * parent )
 // Name: RichItemFactory::CreateItem
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( QListViewItem * parent, QListViewItem * after )
+ValuedListItem* RichItemFactory::CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after )
 {
     return Connect( new ValuedListItem( parent, after ) );
 }
@@ -65,7 +65,7 @@ ValuedListItem* RichItemFactory::CreateItem( QListViewItem * parent, QListViewIt
 // Name: RichItemFactory::CreateItem
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( QListView* parent, QListViewItem * after )
+ValuedListItem* RichItemFactory::CreateItem( Q3ListView* parent, Q3ListViewItem * after )
 {
     return Connect( new ValuedListItem( parent, after ) );
 }
@@ -77,7 +77,7 @@ ValuedListItem* RichItemFactory::CreateItem( QListView* parent, QListViewItem * 
 ValuedListItem* RichItemFactory::Connect( ValuedListItem* item )
 {
     if( connections_.insert( item->listView() ).second )
-        connect( item->listView(), SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnClicked( QListViewItem*, const QPoint&, int ) ) );
+        connect( item->listView(), SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnClicked( Q3ListViewItem*, const QPoint&, int ) ) );
     return item;
 }
 
@@ -95,7 +95,7 @@ RichLabel* RichItemFactory::Connect( RichLabel* item )
 // Name: RichItemFactory::OnClicked
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-void RichItemFactory::OnClicked( QListViewItem* i, const QPoint& point, int column )
+void RichItemFactory::OnClicked( Q3ListViewItem* i, const QPoint& point, int column )
 {
     ValuedListItem* item = ( i && i->rtti() >= 999 ) ? (ValuedListItem*)( i ) : 0;
     if( item )
@@ -119,7 +119,7 @@ void RichItemFactory::DealWithLink( const QString& anchor )
 // Name: RichItemFactory::CreateLabel
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel* RichItemFactory::CreateLabel( QWidget* parent /*= 0*/, const char* name /*= 0*/ )
+RichLabel* RichItemFactory::CreateLabel( QWidget* parent /* = 0*/, const char* name /* = 0*/ )
 {
     return Connect( new RichLabel( parent, name ) );
 }
@@ -128,7 +128,7 @@ RichLabel* RichItemFactory::CreateLabel( QWidget* parent /*= 0*/, const char* na
 // Name: RichItemFactory::CreateLabel
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel* RichItemFactory::CreateLabel( const QString& text, QWidget* parent /*= 0*/, const char* name /*= 0*/ )
+RichLabel* RichItemFactory::CreateLabel( const QString& text, QWidget* parent /* = 0*/, const char* name /* = 0*/ )
 {
     return Connect( new RichLabel( text, parent, name ) );
 }
@@ -137,7 +137,7 @@ RichLabel* RichItemFactory::CreateLabel( const QString& text, QWidget* parent /*
 // Name: RichItemFactory::CreateLabel
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel* RichItemFactory::CreateLabel( const QString& text, bool required, QWidget* parent /*= 0*/, const char* name /*= 0*/ )
+RichLabel* RichItemFactory::CreateLabel( const QString& text, bool required, QWidget* parent /* = 0*/, const char* name /* = 0*/ )
 {
     return Connect( new RichLabel( text, required, parent, name ) );
 }

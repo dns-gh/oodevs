@@ -10,7 +10,6 @@
 #ifndef __TimelineItem_ABC_h_
 #define __TimelineItem_ABC_h_
 
-#include <qcanvas.h>
 
 // =============================================================================
 /** @class  TimelineItem_ABC
@@ -18,12 +17,12 @@
 */
 // Created: SBO 2007-07-06
 // =============================================================================
-class TimelineItem_ABC : public QCanvasRectangle
+class TimelineItem_ABC : public Q3CanvasRectangle
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TimelineItem_ABC( QCanvas* canvas );
+    explicit TimelineItem_ABC( Q3Canvas* canvas );
     virtual ~TimelineItem_ABC();
     //@}
 
@@ -33,7 +32,7 @@ public:
     virtual void Move( long offset );
     virtual void Delete();
     virtual void DisplayToolTip( QWidget* parent ) const; // $$$$ SBO 2007-07-19: make a displayer maybe...
-    virtual void DisplayContextMenu( QPopupMenu* menu ) const;
+    virtual void DisplayContextMenu( Q3PopupMenu* menu ) const;
     //@}
 
 private:

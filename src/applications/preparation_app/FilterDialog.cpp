@@ -31,32 +31,32 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
     QVBoxLayout* mainLayout = new QVBoxLayout( this, 5, 5, "FilterDialog_MainLayout" );
     // Filters list box
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tools::translate( "FilterDialog", "Select filter:" ), this, "FilterDialog_FiltersGroupBox" );
-        list_ = new QListBox( box, "FilterDialog_FiltersListBox" );
+        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterDialog", "Select filter:" ), this, "FilterDialog_FiltersGroupBox" );
+        list_ = new Q3ListBox( box, "FilterDialog_FiltersListBox" );
         connect( list_, SIGNAL( highlighted( int ) ), SLOT( OnSelectFilter( int ) ) );
         mainLayout->addWidget( box );
     }
     // Descriptions
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tools::translate( "FilterDialog", "Description:" ), this, "FilterDialog_DescriptionGroupBox" );
+        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterDialog", "Description:" ), this, "FilterDialog_DescriptionGroupBox" );
         box->setMinimumHeight( 80 );
         description_ = new QLabel( box, "FilterDialog_DescriptionLabel" );
         mainLayout->addWidget( box );
     }
     // Parameters
     {
-        stack_ = new QWidgetStack( this, "FilterDialog_ParametersStack" );
+        stack_ = new Q3WidgetStack( this, "FilterDialog_ParametersStack" );
         connect( list_, SIGNAL( highlighted( int ) ), stack_, SLOT( raiseWidget( int ) ) );
         mainLayout->addWidget( stack_ );
     }
     // Buttons
     {
-        QHBox* box = new QHBox( this, "FilterDialog_ButtonsHBox" );
+        Q3HBox* box = new Q3HBox( this, "FilterDialog_ButtonsHBox" );
         box->setMargin( 5 );
         box->setMaximumHeight( 40 );
         okButton_ = new QPushButton( tools::translate( "FilterDialog", "Ok" ), box, "FilterDialog_OkButton" );
         okButton_->setDefault( true );
-        QButton* cancelBtn = new QPushButton( tools::translate( "FilterDialog", "Cancel" ), box, "FilterDialog_CancelButton" );
+        QPushButton* cancelBtn = new QPushButton( tools::translate( "FilterDialog", "Cancel" ), box, "FilterDialog_CancelButton" );
         connect( okButton_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
         mainLayout->addWidget( box );
@@ -169,8 +169,8 @@ void FilterDialog::InsertMenuEntry( Menu& menu )
     const std::string& name = filterManager_->GetId();
     QKeySequence keys = 0;
     if( name == "import" )
-        keys = CTRL + Key_I;
+        keys = Qt::CTRL + Qt::Key_I;
     else if( name == "export" )
-        keys = CTRL + Key_E;
+        keys = Qt::CTRL + Qt::Key_E;
     menu.InsertFileMenuEntry( filterManager_->GetName().c_str(), this, SLOT( exec() ), keys, menuIndex_ );
 }

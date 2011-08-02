@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>LimaParameter</name>
     <message>
@@ -91,17 +93,6 @@
     </message>
 </context>
 <context>
-    <name>ParamHumanWoundList</name>
-    <message>
-        <source>Add...</source>
-        <translation>Ajouter...</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
-</context>
-<context>
     <name>ParamLimaList</name>
     <message>
         <source>%1: add item as</source>
@@ -120,33 +111,6 @@
     </message>
 </context>
 <context>
-    <name>ParamObstacle</name>
-    <message>
-        <source>Type:</source>
-        <translation>Type:</translation>
-    </message>
-    <message>
-        <source>Demolition target type:</source>
-        <translation>Type de cible de démolition:</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation>Densité</translation>
-    </message>
-    <message>
-        <source>TC2</source>
-        <translation>TC2</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Position</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation>Type d&apos;obstacle</translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetwork</name>
     <message>
         <source>Resource network</source>
@@ -159,6 +123,44 @@
     <message>
         <source>Resource</source>
         <translation>Ressource</translation>
+    </message>
+</context>
+<context>
+    <name>actions::gui::ParamHumanWoundList</name>
+    <message>
+        <source>Add...</source>
+        <translation type="unfinished">Ajouter...</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>actions::gui::ParamObstacle</name>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Type:</translation>
+    </message>
+    <message>
+        <source>Demolition target type:</source>
+        <translation type="unfinished">Type de cible de démolition:</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished">Densité</translation>
+    </message>
+    <message>
+        <source>TC2</source>
+        <translation type="unfinished">TC2</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished">Position</translation>
+    </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation type="unfinished">Type d&apos;obstacle</translation>
     </message>
 </context>
 </TS>

@@ -21,13 +21,13 @@ using namespace gui;
 // Name: CoordinateSystemsPanel constructor
 // Created: AME 2010-03-15
 // -----------------------------------------------------------------------------
-CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Controllers& controllers, kernel::CoordinateSystems& coordSystems ) :
-    PreferencePanel_ABC( parent, "CoordinateSystemsPanel" )
+CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Controllers& controllers, kernel::CoordinateSystems& coordSystems )
+    : PreferencePanel_ABC( parent, "CoordinateSystemsPanel" )
     , controllers_ ( controllers )
     , options_  ( controllers.options_ )
     , coordinateSystems_( coordSystems )
 {
-    QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Coordinate System" ), this );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Vertical, tr( "Coordinate System" ), this );
     new QLabel( tr( "Select current coordinate system:" ), box );
     listCoordSys_ = new QComboBox( box );
     listCoordSys_->setEditable( false );
@@ -35,6 +35,7 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     for ( kernel::CoordinateSystems::CIT_spatialReference it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
         listCoordSys_->insertItem( it->second->c_str(), it->first );
 
+    setWidget( box );
     controllers_.Register( *this );
 }
 

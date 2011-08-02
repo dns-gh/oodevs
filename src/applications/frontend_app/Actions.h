@@ -10,7 +10,7 @@
 #ifndef __Actions_h_
 #define __Actions_h_
 
-#include <qaction.h>
+#include <Qt3Support/q3action.h>
 
 // =============================================================================
 /** @class  Actions
@@ -29,40 +29,40 @@ public:
 
     //! @name Preparation
     //@{
-    QAction& CreateTerrain();
-    QAction& CreateExercise();
-    QAction& EditExercise();
+    Q3Action& CreateTerrain();
+    Q3Action& CreateExercise();
+    Q3Action& EditExercise();
     //@}
 
     //! @name Gaming
     //@{
-    QAction& StartExercise();
-    QAction& RestartExercise();
-    QAction& JoinExercise();
+    Q3Action& StartExercise();
+    Q3Action& RestartExercise();
+    Q3Action& JoinExercise();
     //@}
 
     //! @name Analysis
     //@{
-    QAction& StartAnalysis();
-    QAction& JoinAnalysis();
+    Q3Action& StartAnalysis();
+    Q3Action& JoinAnalysis();
     //@}
 
     //! @name Administration
     //@{
-    QAction& InstallPackage();
-    QAction& CreatePackage();
+    Q3Action& InstallPackage();
+    Q3Action& CreatePackage();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    QAction& CreateAction( const QString& name, const char* cname );
+    Q3Action& CreateAction( const QString& name, const char* cname );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QActionGroup* group_;
+    Q3ActionGroup* group_;
     //@}
 };
 

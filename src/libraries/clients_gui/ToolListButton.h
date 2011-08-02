@@ -10,12 +10,14 @@
 #ifndef __ToolListButton_h_
 #define __ToolListButton_h_
 
-#include <qtoolbutton.h>
 #include "clients_kernel/Options.h"
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "OptionMenu.h"
 
+#pragma warning( push, 0 )
+#include <QtGui/qtoolbutton.h>
+#pragma warning( pop )
 namespace gui
 {
 
@@ -30,14 +32,14 @@ class ToolListButtonBase : public QToolButton
 public:
     //! @name Constructors/Destructor
     //@{
-    ToolListButtonBase( QToolBar* parent )
+    ToolListButtonBase( Q3ToolBar* parent )
         : QToolButton( parent )
     {
         setUsesTextLabel( true );
         setTextPosition( QToolButton::BesideIcon );
     }
 
-    ToolListButtonBase( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent )
+    ToolListButtonBase( const QIcon& iconSet, const QString& toolTip, Q3ToolBar* parent )
         : QToolButton( iconSet, "", "", 0, "", parent, "" )
         , toolTip_   ( toolTip )
     {
@@ -88,7 +90,7 @@ class ToolListButton : public ToolListButtonBase, public tools::Observer_ABC, pu
 public:
     //! @name Constructors/Destructor
     //@{
-    ToolListButton( QToolBar* parent, kernel::Options& options, const std::string& option )
+    ToolListButton( Q3ToolBar* parent, kernel::Options& options, const std::string& option )
         : ToolListButtonBase( parent )
         , options_( options )
         , option_( option )
@@ -99,7 +101,7 @@ public:
         options_.Register( *this );
     }
 
-    ToolListButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, kernel::Options& options, const std::string& option )
+    ToolListButton( const QIcon& iconSet, const QString& toolTip, Q3ToolBar* parent, kernel::Options& options, const std::string& option )
         : ToolListButtonBase( iconSet, toolTip, parent )
         , options_( options )
         , option_( option )

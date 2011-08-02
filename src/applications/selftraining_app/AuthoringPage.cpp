@@ -25,7 +25,7 @@
 // Name: AuthoringPage constructor
 // Created: JSR 2010-06-04
 // -----------------------------------------------------------------------------
-AuthoringPage::AuthoringPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers )
+AuthoringPage::AuthoringPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
     , controllers_( controllers )

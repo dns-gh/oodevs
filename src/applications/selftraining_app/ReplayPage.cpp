@@ -27,16 +27,16 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+ReplayPage::ReplayPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "ReplayPage", "Replay" ), previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ) ) )
 {
-    QVBox* mainBox = new QVBox( this );
+    Q3VBox* mainBox = new Q3VBox( this );
     {
-        QHBox* hbox = new QHBox( mainBox );
+        Q3HBox* hbox = new Q3HBox( mainBox );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setMargin( 10 );
         hbox->setSpacing( 10 );

@@ -12,7 +12,7 @@
 #include "ADN_Composantes_RadarsListView.h"
 #include "moc_ADN_Composantes_RadarsListView.cpp"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_Data.h"
@@ -26,7 +26,7 @@ typedef ADN_Composantes_Data::RadarInfos RadarInfos;
 // Name: ADN_Composantes_RadarsListView constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
@@ -69,8 +69,8 @@ void ADN_Composantes_RadarsListView::ConnectItem( bool /*bConnect*/ )
 //-----------------------------------------------------------------------------
 void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu addMenu( this );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu addMenu( this );
 
     // Add the available radars to the 'add radar' submenu.
     ADN_Radars_Data::T_RadarInfos_Vector& vRadars = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.vRadars_;
@@ -115,7 +115,7 @@ void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_Composantes_RadarsListView::Contains( const ADN_Radars_Data::RadarInfos* pInfo )
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();

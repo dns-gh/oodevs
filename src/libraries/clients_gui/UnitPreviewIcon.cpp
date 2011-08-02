@@ -36,13 +36,13 @@ using namespace gui;
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
 UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
-    : QHBox          ( parent )
+    : Q3HBox          ( parent )
     , controllers_   ( controllers )
     , icons_         ( icons )
     , colorStrategy_ ( colorStrategy )
     , selectedParent_( controllers_ )
 {
-    setFrameStyle( QFrame::Plain | QFrame::Box );
+    setFrameStyle( Q3Frame::Plain | Q3Frame::Box );
     setPaletteBackgroundColor( Qt::white );
     layout()->setAlignment( Qt::AlignCenter | Qt::AlignHCenter );
     icon_ = new QLabel( this );
@@ -155,7 +155,6 @@ void UnitPreviewIcon::UpdateSymbol()
     }
     else
     {
-        QImage img;
         if( selectedParent_ )
         {
             const TacticalHierarchies* pHierarchy = selectedParent_->Retrieve< TacticalHierarchies >();
@@ -165,9 +164,8 @@ void UnitPreviewIcon::UpdateSymbol()
         SymbolIcon icon( symbol_, level_ );
         if( selectedParent_ )
             icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
-
         icon.SetSize( 128 );
-        img = icons_.GetSymbol( icon );
+        QPixmap img = icons_.GetSymbol( icon );
         if( !img.isNull() )
             icon_->setPixmap( img );
         else

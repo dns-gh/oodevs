@@ -43,14 +43,14 @@ namespace
         menu.AddItem( FourStateOption::OffName(), FourStateOption::Off() );
     }
 
-    void AddSubMenu3( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    void AddSubMenu3( Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, Options& options, const std::string& option )
     {
         OptionMenu< TristateOption >* optionMenu = new OptionMenu< TristateOption >( parent, options, option );
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
 
-    void AddSubMenu4( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    void AddSubMenu4( Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, Options& options, const std::string& option )
     {
         OptionMenu< FourStateOption >* optionMenu = new OptionMenu< FourStateOption >( parent, options, option );
         Populate( *optionMenu );
@@ -59,7 +59,7 @@ namespace
 
     QPixmap MakePixmap( const std::string& name )
     {
-        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
     }
 }
 
@@ -71,28 +71,31 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     : QMenuBar    ( pParent )
     , controllers_( controllers )
 {
-    fileMenu_ = new QPopupMenu( this );
-    fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
-    fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    Wrap( fileMenu_->insertItem( /*MAKE_ICON( refresh ),*/ tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), CTRL + Key_R ) ); // $$$$ ABR 2011-06-24: Add a refresh icon
-    Wrap( fileMenu_->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W ) );
+    fileMenu_ = new Q3PopupMenu( this );
+    addMenu( fileMenu_ );
+    fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , Qt::CTRL + Qt::Key_N );
+    fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), Qt::CTRL + Qt::Key_O );
+    Wrap( fileMenu_->insertItem( /*MAKE_ICON( refresh ),*/ tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), Qt::CTRL + Qt::Key_R ) ); // $$$$ ABR 2011-06-24: Add a refresh icon
+    Wrap( fileMenu_->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), Qt::CTRL + Qt::Key_W ) );
     fileMenu_->insertSeparator();
     // $$$$ ABR 2011-06-24: Filters dialogs insert themselves here
     fileMenu_->insertSeparator();
-    saveItem_ = fileMenu_->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   CTRL + Key_S );
-    Wrap( fileMenu_->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), CTRL + SHIFT + Key_S ) );
+    saveItem_ = fileMenu_->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   Qt::CTRL + Qt::Key_S );
+    Wrap( fileMenu_->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), Qt::CTRL + Qt::SHIFT + Qt::Key_S ) );
     fileMenu_->insertSeparator();
-    fileMenu_->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
+    fileMenu_->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), fileMenu_ );
 
-    QPopupMenu* menu = new QPopupMenu( this );
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    addMenu( menu );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
     Wrap( insertItem( tools::translate( "Menu", "&Profiles" ), menu ) );
 
-    menu = new QPopupMenu( this );
-    QPopupMenu* subMenu = new QPopupMenu( menu );
+    menu = new Q3PopupMenu( this );
+    addMenu( menu );
+    Q3PopupMenu* subMenu = new Q3PopupMenu( menu );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
     {
@@ -105,7 +108,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     }
     Wrap( menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu ) );
 
-    subMenu = new QPopupMenu( menu );
+    subMenu = new Q3PopupMenu( menu );
     AddSubMenu3( subMenu, tools::translate( "Menu", "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
     AddSubMenu3( subMenu, tools::translate( "Menu", "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
@@ -130,26 +133,31 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
     boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
     menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
-    menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Key_F12 );
-    menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Key_F11 );
+    menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
+    menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
 
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
+    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
     Wrap( insertItem( tools::translate( "Menu", "&Display" ), menu ) );
 
-    menu = new QPopupMenu( this );
+    menu = new Q3PopupMenu( this );
+    addMenu( menu );
     menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
     Wrap( insertItem( tools::translate( "Menu", "&Exercise" ), menu ) );
 
-    menu = pParent->createDockWindowMenu();
-    insertItem( tools::translate( "Menu", "&Windows" ), menu );
+    QMenu* pMenu = pParent->createPopupMenu();
+    pMenu->removeItemAt( 5 );
+    addMenu( pMenu );
+    insertItem( tools::translate( "Menu", "&Windows" ), pMenu );
 
-    menu = new QPopupMenu( this );
-    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
+    menu = new Q3PopupMenu( this );
+    addMenu( menu );
+    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Qt::Key_F1 );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
+    AboutDialog* about = new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppVersion() ), license );
+    menu->insertItem( tools::translate( "Menu", "About" ), about, SLOT( open() ) );
     insertItem( tools::translate( "Menu", "&?" ), menu );
     controllers_.Register( *this );
 }

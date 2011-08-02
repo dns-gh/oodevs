@@ -25,7 +25,10 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include <qgrid.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3grid.h>
+#pragma warning( pop )
 
 using namespace actions;
 using namespace kernel;
@@ -46,15 +49,16 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     , selectedLevel_( &kernel::LogisticLevel::none_ )
 {
     setCaption( tr( "Logistic links edition" ) );
-    QVBoxLayout* layout = new QVBoxLayout( this );
-    QGrid* grid = new QGrid( 3, Qt::Horizontal, this );
+    Q3VBoxLayout* layout = new Q3VBoxLayout( this );
+    Q3Grid* grid = new Q3Grid( 3, Qt::Horizontal, this );
     layout->addWidget( grid );
     grid->setSpacing( 5 );
     grid->setMargin( 5 );
 
     QLabel* color = new QLabel( grid );
-    color->setPixmap( QPixmap( 10, 10 ) );
-    color->pixmap()->fill( QColor( "yellow" ).light( 150 ) );
+    QPixmap tmp( 10 , 10 );
+    tmp.fill( QColor( "yellow" ).lighter( 150 ) );
+    color->setPixmap( tmp );
     color->setMaximumWidth( 10 );
     QLabel* label = new QLabel( tr( "Nominal superior" ), grid );
     label->setMaximumWidth( 150 );
@@ -62,12 +66,12 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     nominalSuperiorCombo_->setMinimumWidth( 200 );
 
     color = new QLabel( grid );
-    color->setPixmap( QPixmap( 10, 10 ) );
-    color->pixmap()->fill( QColor( "yellow" ) );
+    tmp.fill( QColor( "yellow" ) );
+    color->setPixmap( tmp );
     label = new QLabel( tr( "Current superior" ), grid );
     currentSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( grid );
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     layout->addWidget( box );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), box );

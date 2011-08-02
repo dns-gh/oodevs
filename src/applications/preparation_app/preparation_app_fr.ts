@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>AffinitiesDialog</name>
     <message>
@@ -45,12 +47,8 @@
         <translation>Exception inconnue</translation>
     </message>
     <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation>La signature des fichiers suivants n&apos;existe pas: </translation>
-    </message>
-    <message>
-        <source>The following files do not match their xsd : </source>
-        <translation>Les fichiers suivants ne correspondent pas avec leur xsd: </translation>
+        <source>Warning</source>
+        <translation type="unfinished">Avertissement</translation>
     </message>
 </context>
 <context>
@@ -464,7 +462,7 @@
 </context>
 <context>
     <name>InitialStateTableCrew</name>
-    <message>
+    <message id="0">
         <source>Rank</source>
         <translation>Grade</translation>
     </message>
@@ -536,10 +534,6 @@
 <context>
     <name>InitialStateTableEquipments</name>
     <message>
-        <source>Equipments</source>
-        <translation>Equipements</translation>
-    </message>
-    <message>
         <source>State</source>
         <translation>Etat</translation>
     </message>
@@ -562,10 +556,6 @@
 </context>
 <context>
     <name>InitialStateTableResources</name>
-    <message>
-        <source>Resources</source>
-        <translation>Dotations</translation>
-    </message>
     <message>
         <source>Category</source>
         <translation>Catégorie</translation>
@@ -590,24 +580,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Tactical</source>
-        <translation>Tactique</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Communication</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
     <message>
         <source>Objects</source>
         <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation>Création</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -630,16 +608,8 @@
         <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
     </message>
     <message>
-        <source>Intelligences</source>
-        <translation>Renseignements</translation>
-    </message>
-    <message>
         <source>Intelligence</source>
         <translation>Renseignement</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propriétés</translation>
     </message>
     <message>
         <source>
@@ -656,12 +626,24 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Foule</translation>
     </message>
     <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
         <source>Populations</source>
         <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Tactical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished">Foules</translation>
+    </message>
+    <message>
+        <source>Intelligences</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Formations</source>
@@ -696,12 +678,20 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Préparation - [%1]</translation>
     </message>
     <message>
-        <source>Loading...</source>
-        <translation>Chargement...</translation>
+        <source>Contour Lines</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contour Lines</source>
+        <source>Properties</source>
         <translation>Lignes de contour</translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1651,10 +1641,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
 <context>
     <name>TacticalListView</name>
     <message>
-        <source>Create side</source>
-        <translation>Créer un camp</translation>
-    </message>
-    <message>
         <source>Create formation</source>
         <translation>Créer une formation</translation>
     </message>
@@ -1667,8 +1653,12 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Débrayer</translation>
     </message>
     <message>
+        <source>Create side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rename</source>
-        <translation>Renommer</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1780,34 +1770,34 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
-    <name>gui</name>
+    <name>WeatherPanel</name>
     <message>
         <source>Exercise date:</source>
-        <translation>Date de l&apos;exercice:</translation>
+        <translation type="unfinished">Date de l&apos;exercice:</translation>
     </message>
     <message>
         <source>Ephemerides</source>
-        <translation>Ephéméride</translation>
+        <translation type="unfinished">Ephéméride</translation>
     </message>
     <message>
         <source>Sunrise:</source>
-        <translation>Lever du soleil:</translation>
+        <translation type="unfinished">Lever du soleil:</translation>
     </message>
     <message>
         <source>Sunset:</source>
-        <translation>Coucher du soleil:</translation>
+        <translation type="unfinished">Coucher du soleil:</translation>
     </message>
     <message>
         <source>Day lighting:</source>
-        <translation>Eclairage de jour:</translation>
+        <translation type="unfinished">Eclairage de jour:</translation>
     </message>
     <message>
         <source>Night lighting:</source>
-        <translation>Eclairage de nuit:</translation>
+        <translation type="unfinished">Eclairage de nuit:</translation>
     </message>
     <message>
         <source>Weather parameters</source>
-        <translation>Paramètres météo</translation>
+        <translation type="unfinished">Paramètres météo</translation>
     </message>
 </context>
 <context>

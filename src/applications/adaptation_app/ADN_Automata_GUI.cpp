@@ -19,10 +19,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_GUI.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qdialog.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3groupbox.h>
+#include <QtGui/qdialog.h>
 
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
@@ -80,7 +80,7 @@ void ADN_Automata_GUI::Build()
     pAutomataList->GetConnector().Connect( &data_.GetAutomata() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Automata" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Automata" ), pMainWidget_ );
 
     QWidget* pPropertiesGroup = builder.AddFieldHolder( pGroup );
 
@@ -99,18 +99,18 @@ void ADN_Automata_GUI::Build()
     // Feedback time
     builder.AddOptionnalField<ADN_TimeField>( pPropertiesGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
-    QGroupBox* pSubUnitsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Sub-units" ), pGroup );
+    Q3GroupBox* pSubUnitsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Sub-units" ), pGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( pSubUnitsGroup );
     vInfosConnectors[eSubUnit] = &pSubUnitsTable->GetConnector();
 
     pAutomataList->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pAutomataList, 1 );
     pMainLayout->addWidget( pGroup, 3 );
 
-    QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 5 );
+    Q3VBoxLayout* pGroupLayout = new Q3VBoxLayout( pGroup->layout(), 5 );
     pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
     pGroupLayout->addWidget( pSubUnitsGroup, 1, 0 );
     builder.AddStretcher( pGroupLayout, Qt::Vertical );

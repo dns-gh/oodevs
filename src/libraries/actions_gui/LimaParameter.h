@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include <qlistbox.h>
+#include <Qt3Support/q3listbox.h>
 
 namespace kernel
 {
@@ -73,7 +73,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const QDateTime currentDate_;
     const kernel::TacticalLine_ABC* line_;
-    QListBox* functions_;
+    Q3ListBox* functions_;
     QLabel* entityLabel_;
     ParamDateTime* schedule_;
     //@}

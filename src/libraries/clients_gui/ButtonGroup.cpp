@@ -17,8 +17,8 @@ using namespace gui;
 // Name: ButtonGroup constructor
 // Created: RPD 2008-08-21
 // -----------------------------------------------------------------------------
-ButtonGroup::ButtonGroup ( int columns, Orientation o, const QString &title, QWidget* parent /*= 0*/, const char* name /*= 0*/ )
-    : QButtonGroup( columns, o, title, parent, name )
+ButtonGroup::ButtonGroup ( int columns, Qt::Orientation o, const QString &title, QWidget* parent /* = 0*/, const char* name /* = 0*/ )
+    : Q3ButtonGroup( columns, o, title, parent, name )
     , previousId_( 0 )
     , currentId_( 0 )
 {
@@ -40,7 +40,7 @@ ButtonGroup::~ButtonGroup()
 // -----------------------------------------------------------------------------
 void ButtonGroup::setButton( int id )
 {
-    QButtonGroup::setButton( id );
+    Q3ButtonGroup::setButton( id );
     currentId_ = id;
 }
 

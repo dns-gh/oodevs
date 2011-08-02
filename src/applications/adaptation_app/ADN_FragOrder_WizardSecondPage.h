@@ -24,7 +24,7 @@ class ADN_FragOrder_WizardSecondPage : public ADN_WizardPage_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-                 ADN_FragOrder_WizardSecondPage( QWizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
+                 ADN_FragOrder_WizardSecondPage( Q3Wizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
         virtual ~ADN_FragOrder_WizardSecondPage();
     //@}
 

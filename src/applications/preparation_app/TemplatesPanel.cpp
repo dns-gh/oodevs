@@ -27,6 +27,7 @@ TemplatesPanel::TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, ker
     , menuEntity_  ( controllers )
 {
     list_ = new TemplateListView( this, agents, formations, types );
+    setWidget( list_ );
     controllers_.Register( *this );
 }
 

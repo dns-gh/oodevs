@@ -44,8 +44,8 @@ private slots:
     //@{
     void OnCreate();
     void OnDelete();
-    void OnSelectionChange( QListViewItem* );
-    void ShowEditor( QListViewItem* item );
+    void OnSelectionChange( Q3ListViewItem* );
+    void ShowEditor( Q3ListViewItem* item );
     //@}
 
 private:
@@ -58,8 +58,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    bool IsAfter( QListViewItem* item, const QDateTime& date );
-    QListViewItem* Trigger( QListViewItem* item );
+    bool IsAfter( Q3ListViewItem* item, const QDateTime& date );
+    Q3ListViewItem* Trigger( Q3ListViewItem* item );
     //@}
 
 private:
@@ -67,7 +67,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Simulation& simulation_;
-    QListView* list_;
+    Q3ListView* list_;
     QPushButton* remove_;
     QMessageBox* messageBox_;
     //@}

@@ -16,7 +16,7 @@
 */
 // Created: LGY 2011-01-17
 // =============================================================================
-class ADN_Schedule_Table : public QTable
+class ADN_Schedule_Table : public Q3Table
 {
     Q_OBJECT
 

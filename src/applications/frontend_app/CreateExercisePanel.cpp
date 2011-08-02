@@ -16,12 +16,12 @@
 #include "tools/GeneralConfig.h"
 #include "frontend/CreateExercise.h"
 #include "frontend/commands.h"
-#include <qaction.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
+#include <Qt3Support/q3action.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlineedit.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpushbutton.h>
 
 using namespace frontend;
 
@@ -29,36 +29,36 @@ using namespace frontend;
 // Name: CreateExercisePanel constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-CreateExercisePanel::CreateExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+CreateExercisePanel::CreateExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context )
     : Panel_ABC         ( widget, action, context, "CreateExercisePanel" )
     , config_           ( config )
     , existingExercises_( commands::ListExercises( config ) )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, action.text(), box );
 
     new QLabel( tr( "New exercise name:" ), group );
     name_ = new QLineEdit( tr( "Enter exercise name" ), group );
     connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged( const QString& ) ) );
     {
         new QLabel( tr( "Choose the model data set:" ), group );
-        modelList_ = new QListBox( group );
+        modelList_ = new Q3ListBox( group );
         connect( modelList_, SIGNAL( selectionChanged() ), SLOT( ModelSelected() ) );
     }
     {
         physicalLabel_ = new QLabel( tr( "Choose the physical data set:" ), group );
-        physicalList_ = new QListBox( group );
+        physicalList_ = new Q3ListBox( group );
     }
     {
         new QLabel( tr( "Choose the terrain:" ), group );
-        terrainList_ = new QListBox( group );
+        terrainList_ = new Q3ListBox( group );
     }
 
     bubble_ = new InfoBubble( box );
     {
-        QHBox* btnBox = new QHBox( box );
+        Q3HBox* btnBox = new Q3HBox( box );
         btnBox->layout()->setAlignment( Qt::AlignRight );
         okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Create" ), btnBox );
         QFont font( "Arial", 10, QFont::Bold );

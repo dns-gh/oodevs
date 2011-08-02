@@ -37,7 +37,7 @@ public:
         ADN_Units_Data::StockLogThresholdInfos* pInfo = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( pObj );
 
         // Add a new row.
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Double* pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
 
         pItemLogThreshold->GetValidator().setRange( 0, 100, 2 );
@@ -65,7 +65,7 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( QWidget* pParent )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
 
     // Hide the vertical header.

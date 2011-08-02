@@ -13,7 +13,7 @@
 #define __ADN_RadioButton_h_
 
 #include "ADN_Gfx_ABC.h"
-#include <qradiobutton.h>
+#include <QtGui/qradiobutton.h>
 
 
 //*****************************************************************************

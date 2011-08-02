@@ -28,7 +28,7 @@ namespace
 {
     QPixmap MakePixmap( const std::string& name )
     {
-        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
     }
 }
 
@@ -37,20 +37,22 @@ namespace
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
-    : QToolBar( parent, "gis tools" )
+    : QToolBar( "gis tools", parent )
     , controllers_      ( controllers )
     , detection_        ( detection )
     , terrainProfiler_  ( new TerrainProfiler( parent, controllers, detection, layer ) )
 {
-    setLabel( tools::translate( "gui::GisToolBar", "GIS tools" ) );
+    setObjectName( "gisToolBar" );
+    parent->addDockWidget( Qt::RightDockWidgetArea, terrainProfiler_ );
+    setWindowTitle( tools::translate( "gui::GisToolBar", "GIS tools" ) );
     {
-        QHBox* waterShedBox = new QHBox( this );
+        Q3HBox* waterShedBox = new Q3HBox( this );
         watershedEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );
         QToolTip::add( watershedEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable watershed display" ) );
         mode_ = new QComboBox( waterShedBox );
         mode_->insertItem( tools::translate( "gui::GisToolBar", "<" ) );
         mode_->insertItem( tools::translate( "gui::GisToolBar", ">" ) );
-        mode_->setMaximumWidth( 30 );
+        mode_->setMaximumWidth( 60 );
         QToolTip::add( mode_, tools::translate( "gui::GisToolBar", "Display water below or above specified height" ) );
         height_ = new QSpinBox( 0, 10000, 1, waterShedBox );
         height_->setSuffix( kernel::Units::meters.AsString() );
@@ -72,9 +74,9 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         button->setToggleButton( true );
         connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
         connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
-
+        
         addSeparator();
-        QHBox* contourBox = new QHBox( this );
+        Q3HBox* contourBox = new Q3HBox( this );
         contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
         QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );
         colorContourLines_ = new ColorButton( this );
@@ -83,6 +85,13 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( contourBoxEnabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleContourLinesEnabled( bool ) ) );
         connect( colorContourLines_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorContourChanged( const QColor& ) ) );
 
+        addWidget( watershedEnabled_ );
+        addWidget( mode_ );
+        addWidget( height_ );
+        addWidget( color_ );
+        addWidget( button );
+        addWidget(contourBoxEnabled_ );
+        addWidget( colorContourLines_ );
     }
     OnToggleWatershedEnabled( false );
     OnToggleContourLinesEnabled( false );

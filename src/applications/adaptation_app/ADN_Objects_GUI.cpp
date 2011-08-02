@@ -24,7 +24,16 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "ENT/ENT_Tr.h"
-
+#pragma warning( push, 0 )
+#include <Qt3Support/q3frame.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3buttongroup.h>
+#include <Qt3Support/q3grid.h>
+#pragma warning( pop )
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_GUI constructor
 // Created: JDY 03-06-26
@@ -101,7 +110,7 @@ void ADN_Objects_GUI::Build()
     T_ConnectorVector vInfosConnectors ( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Create the object panel.
-    pGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Object" ), pMainWidget_ );
+    pGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Object" ), pMainWidget_ );
     QWidget* pHolder = builder.AddFieldHolder( pGroup_ );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name"), vInfosConnectors[ eName ] );
@@ -113,7 +122,7 @@ void ADN_Objects_GUI::Build()
     QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
-    QGroupBox* hBox = new QGroupBox( 2, Qt::Horizontal, tr( "Capacities" ), pGroup_ );
+    Q3GroupBox* hBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Capacities" ), pGroup_ );
 
     ADN_ComboBox_List *pComboListUnitType = 0, *pComboListPropagation = 0;
 
@@ -210,7 +219,7 @@ void ADN_Objects_GUI::Build()
     }
 
     // NBC
-    QGroupBox* gNBC = new QGroupBox( 2, Qt::Horizontal, tr( "NBC" ), hBox );
+    Q3GroupBox* gNBC = new Q3GroupBox( 2, Qt::Horizontal, tr( "NBC" ), hBox );
     // Contamination
     ADN_GroupBox* contamination = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Contamination" ), gNBC );
     {
@@ -412,10 +421,10 @@ void ADN_Objects_GUI::Build()
     pList->SetItemConnectors( vInfosConnectors );
 
     // Main vertical layout
-    QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
 
     // Main horizontal layout
-    QBoxLayout* pListAndDataLayout = new QHBoxLayout( 0, 10, 10 );
+    Q3BoxLayout* pListAndDataLayout = new Q3HBoxLayout( 0, 10, 10 );
     pListAndDataLayout->addWidget( pList, 1 );
     pListAndDataLayout->addWidget( pGroup_, 2 );
     pMainLayout->addLayout( pListAndDataLayout, 2 );
@@ -461,10 +470,10 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
 
     ADN_Objects_Data::T_ObjectsInfos_Vector& objects = data_.GetObjectInfos();
     indexBuilder.BeginTable( static_cast< int >( objects.size() + 1 ), 4 );
-    indexBuilder.TableItem( 0, 0, tr( "Name" ), true );
-    indexBuilder.TableItem( 0, 1, tr( "Type" ), true );
-    indexBuilder.TableItem( 0, 2, tr( "Geometry" ), true );
-    indexBuilder.TableItem( 0, 3, tr( "Capacities" ), true );
+    indexBuilder.TableItem( 0, 0, tr( "Name" ).ascii(), true );
+    indexBuilder.TableItem( 0, 1, tr( "Type" ).ascii(), true );
+    indexBuilder.TableItem( 0, 2, tr( "Geometry" ).ascii(), true );
+    indexBuilder.TableItem( 0, 3, tr( "Capacities" ).ascii(), true );
     int n = 1;
     for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = objects.begin(); it != objects.end(); ++it, ++n )
     {

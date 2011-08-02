@@ -21,7 +21,7 @@
 
 #include <xeumeuleu/xml.hpp>
 
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 int main( int argc, char* argv[] )
 {   

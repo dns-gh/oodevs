@@ -33,7 +33,7 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
 //    setModal( true );
     setMinimumWidth(150);
     setCaption( tr( "Exercise Creation" ) );
-    QGridLayout* grid = new QGridLayout( this, 4, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 4, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 10 );
@@ -41,14 +41,14 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
     grid->setRowStretch( 3, 1 );
     grid->setRowStretch( 4, 1 );
     {
-        QGroupBox* box = new QHGroupBox( tr( "Name" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Name" ), this );
         //new QLabel( tr( "Name:" ), box );
         exerciseName_ = new QLineEdit( "", box );
         connect( exerciseName_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFileChanged() ) );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Terrain" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Terrain" ), this );
         //new QLabel( tr( "Name:" ), box );
         editTerrainList_ = new QComboBox( box );
         grid->addMultiCellWidget( box, 1, 1, 0, 2 );
@@ -56,7 +56,7 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
         editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Model" ), this );
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Model" ), this );
         //new QLabel( tr( "Name:" ), box );
         editModelList_ = new QComboBox( box );
         grid->addMultiCellWidget( box, 2, 2, 0, 2 );
@@ -71,10 +71,10 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
         }
     }
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         ok_ = new QPushButton( tr( "Ok" ), box );
         ok_->setEnabled( false );
-        QButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 4, 2 );
         connect( ok_, SIGNAL( clicked() ), this, SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );

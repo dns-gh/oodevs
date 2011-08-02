@@ -38,7 +38,7 @@ namespace gui
 */
 // Created: SBO 2010-05-04
 // =============================================================================
-class ActionProperties : public QVBox
+class ActionProperties : public Q3VBox
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< actions::ActionTiming >
                        , public tools::SelectionObserver< actions::Action_ABC >

@@ -81,7 +81,7 @@ EquipmentTransferDialog::EquipmentTransferDialog( QWidget* pParent, kernel::Cont
     }
     // ok / cancel butons
     {
-        QHBox* buttonLayout = new QHBox( this, "EquipmentTransferDialog_ButtonLayout" );
+        Q3HBox* buttonLayout = new Q3HBox( this, "EquipmentTransferDialog_ButtonLayout" );
         okButton_ = new QPushButton( tr( "Ok" ), buttonLayout, "EquipmentTransferDialog_ButtonOK" );
         QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout, "EquipmentTransferDialog_ButtonCancel" );
         okButton_->setDefault( TRUE );
@@ -178,7 +178,7 @@ void EquipmentTransferDialog::NotifyContextMenu( const kernel::Agent_ABC& agent,
     if( profile_.CanDoMagic( agent ) )
     {
         selectedFrom_ = &agent;
-        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Equipment transfer" ), this, SLOT( Show() ) );
     }
 }

@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: SBO 2006-04-20
 // =============================================================================
-class EntitySearchBox_ABC : public QHBox
+class EntitySearchBox_ABC : public Q3HBox
 {
     Q_OBJECT;
 

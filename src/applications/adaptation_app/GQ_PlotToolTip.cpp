@@ -25,8 +25,8 @@
 
 #include "GQ_Plot.h"
 
-#include <qrect.h>
-#include <qstringlist.h>
+#include <QtCore/qrect.h>
+#include <QtCore/qstringlist.h>
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotToolTip constructor
@@ -35,10 +35,9 @@
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
 GQ_PlotToolTip::GQ_PlotToolTip( GQ_Plot& plot )
-: QToolTip( &plot, new QToolTipGroup( &plot ) )
-, plot_   ( plot  )
+: plot_( plot )
 {
-    group()->setEnabled( true );
+//    group()->setEnabled( true ); $$$$ FPT Old Qt3 tooltip api
 }
 
 // -----------------------------------------------------------------------------
@@ -66,9 +65,7 @@ void GQ_PlotToolTip::maybeTip( const QPoint& point )
         return;
 
     // $$$$ CBX 2003-11-18: TODO: truncate list if it is too long or pan on several columns
-    QString tipStr( tipList.join( "\n" ) );
+    // GQ_LOG( "[ToolTip]: " << tipStr.ascii() );
 
-//    GQ_LOG( "[ToolTip]: " << tipStr.ascii() );
-
-    tip( tipRect, tipStr );
+    QToolTip::showText( point, tipList.join( "\n" ) );
 }

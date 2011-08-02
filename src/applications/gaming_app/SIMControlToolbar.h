@@ -22,7 +22,7 @@ namespace kernel
 
 class ConnectDialog;
 class DisconnectDialog;
-class QMainWindow;
+class Q3MainWindow;
 class Simulation;
 class Services;
 class Network;
@@ -53,6 +53,7 @@ public slots:
     //! @name
     //@{
     void SlotSpeedChange();
+    void SlotNamedCheckPoint();
     //@}
 
 private slots:
@@ -63,7 +64,6 @@ private slots:
     void SlotStep();
     void SlotOnSpinBoxChange( int );
     void SlotCheckpoint();
-    void SlotNamedCheckPoint();
     //@}
 
 private:
@@ -98,8 +98,8 @@ private:
     bool connected_, paused_;
     bool hasReplay_, hasSimulation_;
 
-    QIconSet connectPix_, disconnectPix_;
-    QIconSet playPix_, stopPix_;
+    QIcon connectPix_, disconnectPix_;
+    QIcon playPix_, stopPix_;
     //@}
 };
 

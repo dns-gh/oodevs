@@ -59,7 +59,7 @@ ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption
     : ADN_Table2( pParent, "ADN_Sensors_Postures_GUI" )
 {
     // Setup the table properties.
-    setSelectionMode( QTable::SingleRow );
+    setSelectionMode( Q3Table::SingleRow );
     setSorting( true );
     setShowGrid( false );
     setLeftMargin( 0 );

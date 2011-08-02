@@ -31,28 +31,10 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 #include "qtundo.h"
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <qpopupmenu.h>
-#include <qmenubar.h>
-#include <qaction.h>
-#include <qfiledialog.h>
-#include <qtabwidget.h>
-#include <qvbox.h>
-#include <qstatusbar.h>
-#include <qmessagebox.h>
-#include <qsettings.h>
-#include <qwhatsthis.h>
-#include <qtimer.h>
-#include <qlayout.h>
 #include <shlobj.h>
-#include <qsettings.h>
-#include <qapplication.h>
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
+
+//#pragma warning( disable: 4127 4511 4512 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -99,8 +81,8 @@ namespace
 // Name: ADN_MainWindow constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
-    : QMainWindow        ()
+ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
+    : QMainWindow       ()
     , generalConfig_     ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).ascii() ) ) )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
@@ -114,7 +96,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
     , bNeedSave_         ( false )
     , strAdminPassword_  ( ReadPassword() )
 {
-    generalConfig_->Parse( qApp->argc(), qApp->argv() );
+    generalConfig_->Parse( argc, argv );
     setMinimumSize( 640, 480 );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     setCaption( tr( "Sword Adaptation Tool - No Project" ) );
@@ -141,19 +123,19 @@ void ADN_MainWindow::Build()
     workspace_.SetProgressIndicator( &splashScreen );
 
     // Main widget
-    QVBox* pBox = new QVBox( this );
+    Q3VBox* pBox = new Q3VBox( this );
     setCentralWidget( pBox );
     pTab_ = new QTabWidget( pBox );
     pTab_->hide();
 
     // Actions
-    QAction* pProjectNewAction = new QAction( MAKE_PIXMAP(filenew), tr("&New"), CTRL+Key_N, this, "new" );
+    QAction* pProjectNewAction = new QAction( MAKE_PIXMAP(filenew), tr("&New"), Qt::CTRL + Qt::Key_N, this, "new" );
     connect( pProjectNewAction, SIGNAL( activated() ) , this, SLOT( NewProject() ) );
 
-    pProjectLoadAction_ = new QAction( MAKE_PIXMAP(fileopen), tr("&Open"), CTRL+Key_O, this, "open" );
+    pProjectLoadAction_ = new QAction( MAKE_PIXMAP(fileopen), tr("&Open"), Qt::CTRL + Qt::Key_O, this, "open" );
     connect( pProjectLoadAction_, SIGNAL( activated() ) , this, SLOT( OpenProject() ) );
 
-    QAction* pProjectSaveAction = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), CTRL+Key_S, this, "save" );
+    QAction* pProjectSaveAction = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), Qt::CTRL + Qt::Key_S, this, "save" );
     connect( pProjectSaveAction, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
     pActionSave_ = pProjectSaveAction;
 
@@ -171,6 +153,8 @@ void ADN_MainWindow::Build()
     pProjectNewAction  ->addTo( pToolBar );
     pProjectLoadAction_->addTo( pToolBar );
     pProjectSaveAction ->addTo( pToolBar );
+
+    addToolBar( pToolBar );
 //    pProjectTestDataAction->addTo( pToolBar );
 
 // $$$ UNDO DISABLED
@@ -178,7 +162,7 @@ void ADN_MainWindow::Build()
 //    pUndoAction->addTo( pToolBar );
 
     // Project menu
-    pProjectMenu_ = new QPopupMenu( this );
+    pProjectMenu_ = new Q3PopupMenu( this );
     menuBar()->insertItem( tr("&Project"), pProjectMenu_ );
     pProjectNewAction->addTo( pProjectMenu_ );
     pProjectLoadAction_->addTo( pProjectMenu_ );
@@ -191,7 +175,7 @@ void ADN_MainWindow::Build()
     pProjectMenu_->insertItem( tr("E&xit"),  this, SLOT(close()) );
 
     // Coherance tables menu
-    pCoheranceTablesMenu_ = new QPopupMenu( this );
+    pCoheranceTablesMenu_ = new Q3PopupMenu( this );
     menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
 
     // Configuration menu
@@ -200,9 +184,9 @@ void ADN_MainWindow::Build()
     pConfigurationMenu_->insertItem( tr( "Data test..." ), this, SLOT( ConfigureDataTest() ) );
 */
     // Help menu
-    pHelpMenu_ = new QPopupMenu( this );
+    pHelpMenu_ = new Q3PopupMenu( this );
     menuBar()->insertItem( tr( "&Help" ), pHelpMenu_ );
-    pHelpMenu_->insertItem( tr( "&About" ), this, SLOT(About()), CTRL+Key_F1 );
+    pHelpMenu_->insertItem( tr( "&About" ), this, SLOT(About()), Qt::CTRL+Qt::Key_F1 );
 
     // Disable the menus.
     SetMenuEnabled( false );
@@ -226,9 +210,9 @@ void ADN_MainWindow::Build()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::AddPage( const QString& strPageName, QWidget& page )
 {
-    QScrollView* sv = new QScrollView( pTab_ );
+    Q3ScrollView* sv = new Q3ScrollView( pTab_ );
     sv->addChild( &page );
-    sv->setResizePolicy( QScrollView::AutoOneFit );
+    sv->setResizePolicy( Q3ScrollView::AutoOneFit );
     page.reparent( sv->viewport(), QPoint( 0, 0 ) );
     pTab_->addTab( sv, strPageName );
 }
@@ -312,11 +296,11 @@ void ADN_MainWindow::SaveProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::SaveAsProject()
 {
-    QString strFileName = QFileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
+    QString strFileName = Q3FileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
     if( strFileName.isEmpty() )
         return;
 
-    QApplication::setOverrideCursor( waitCursor ); // this might take time
+    QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
 
     try
     {
@@ -343,7 +327,7 @@ void ADN_MainWindow::SaveAsProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::NewProject()
 {
-    QString qfilename = QFileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ), this, "", tr( "Create new project" ) );
+    QString qfilename = Q3FileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ), this, "", tr( "Create new project" ) );
     if ( qfilename == QString::null )
         return;
 
@@ -372,7 +356,7 @@ void ADN_MainWindow::NewProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::OpenProject()
 {
-    QString qfilename = QFileDialog::getOpenFileName( generalConfig_->GetModelsDir().c_str(), tr("Physical model file (physical.xml)"), this, "", tr("Open physical model project"));
+    QString qfilename = Q3FileDialog::getOpenFileName( generalConfig_->GetModelsDir().c_str(), tr("Physical model file (physical.xml)"), this, "", tr("Open physical model project"));
     if( qfilename == QString::null )
         return;
     try
@@ -410,7 +394,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     SetMenuEnabled( false );
     pTab_->hide();
 
-    QApplication::setOverrideCursor( waitCursor ); // this might take time
+    QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
     if( QString( szFilename.c_str() ).startsWith( "//" ) )
     {
         std::string res( szFilename );
@@ -440,7 +424,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ExportHtml()
 {
-    QString strPath = QFileDialog::getExistingDirectory( ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData().c_str(), this );
+    QString strPath = Q3FileDialog::getExistingDirectory( ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData().c_str(), this );
     if( strPath == QString::null )
         return;
 
@@ -582,7 +566,7 @@ bool ADN_MainWindow::SelectOpenMode()
                                tr( "Invalid password"),
                                tr( "The password you entered is not valid. Please try again."),
                                QMessageBox::Ok,
-                               QMessageBox::NoButton );
+                               Qt::NoButton );
     }
 
     workspace_.SetOpenMode( nMode );

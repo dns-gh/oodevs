@@ -35,7 +35,7 @@ namespace actions
 */
 // Created: APE 2004-04-20
 // =============================================================================
-class MissionInterface_ABC : public QVBox
+class MissionInterface_ABC : public Q3VBox
 {
     Q_OBJECT;
 
@@ -73,6 +73,7 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
+    virtual void paintEvent( QPaintEvent*, QString title );
     MissionInterface_ABC( const MissionInterface_ABC& );
     MissionInterface_ABC& operator=( const MissionInterface_ABC& );
     //@}
@@ -98,9 +99,9 @@ private:
     kernel::Entity_ABC& entity_;
     T_Parameters parameters_;
     QTabWidget* tabs_;
-    QVBox* mainTab_;
-    QVBox* optionalTab_;
-    QScrollView* sc1_;
+    Q3VBox* mainTab_;
+    Q3VBox* optionalTab_;
+    Q3ScrollView* sc1_;
     QPushButton* ok_;
     //@}
 };

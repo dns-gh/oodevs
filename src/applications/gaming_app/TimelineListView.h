@@ -11,7 +11,6 @@
 #define __TimelineListView_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <qlistview.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -38,7 +37,7 @@ namespace gui
 */
 // Created: SBO 2008-04-22
 // =============================================================================
-class TimelineListView : public QListView
+class TimelineListView : public Q3ListView
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< actions::Action_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
@@ -61,7 +60,7 @@ public:
 private slots:
     //! @name Operations
     //@{
-    void OnSelectionChange( QListViewItem* item );
+    void OnSelectionChange( Q3ListViewItem* item );
     //@}
 
 private:

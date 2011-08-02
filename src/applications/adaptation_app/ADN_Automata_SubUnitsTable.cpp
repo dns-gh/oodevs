@@ -24,9 +24,10 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Validator.h"
 #include "MT_ValuedListViewItem.h"
-#include <qpopupmenu.h>
-#include <qapplication.h>
-#include <qeventloop.h>
+#include <Qt3Support/q3popupmenu.h>
+#include <QtCore/qeventloop.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/QWidgetAction.h>
 
 typedef ADN_Automata_Data::UnitInfos UnitInfos;
 
@@ -45,7 +46,7 @@ public:
     void AddSubItems( int i, void* pObj )
     {
         assert( pObj );
-        ADN_TableItem_String* pItemName  = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_String* pItemName  = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Int* pItemMinCount = new ADN_TableItem_Int( &tab_, pObj );
         ADN_TableItem_Int* pItemMaxCount = new ADN_TableItem_Int( &tab_, pObj );
         // Add a new row.
@@ -70,7 +71,7 @@ ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( QWidget* pParent )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
 
@@ -104,6 +105,45 @@ ADN_Automata_SubUnitsTable::~ADN_Automata_SubUnitsTable()
     delete pConnector_;
 }
 
+namespace
+{
+    class MenuListView : public QWidgetAction
+    {
+    public:
+        explicit MenuListView( ADN_Automata_SubUnitsTable* receiver, QObject* parent )
+            : QWidgetAction( parent )
+            , receiver_( receiver )
+            , listView_( 0 )
+        {}
+        virtual ~MenuListView() {}
+        virtual QWidget* createWidget( QWidget* parent )
+        {
+            ADN_Units_Data::T_UnitInfos_Vector& units = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
+            listView_ = new Q3ListView( parent );
+            listView_->addColumn( "" );
+            listView_->header()->hide();
+            listView_->setAllColumnsShowFocus( true );
+            listView_->setResizeMode( Q3ListView::AllColumns );
+            listView_->setMinimumSize( 200, std::min( 500, (int)units.size() * 17 ) );
+            for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it )
+                new MT_ValuedListViewItem<int>( (int)(*it), listView_, (*it)->strName_.GetData().c_str() );
+            connect( listView_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), receiver_, SLOT( MenuListItemSelected() ) );
+            connect( listView_, SIGNAL( returnPressed( Q3ListViewItem* ) ), receiver_, SLOT( MenuListItemSelected() ) );
+            return listView_;
+        }
+        int SelectedValue() const
+        {
+            if( listView_ )
+            {
+                MT_ValuedListViewItem< int >* pItem = (MT_ValuedListViewItem< int >*)listView_->selectedItem();
+                return pItem->GetValue();
+            }
+            return -1;
+        }
+        ADN_Automata_SubUnitsTable* receiver_;
+        Q3ListView* listView_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable::OnContextMenu
@@ -111,44 +151,23 @@ ADN_Automata_SubUnitsTable::~ADN_Automata_SubUnitsTable()
 // -----------------------------------------------------------------------------
 void ADN_Automata_SubUnitsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu& addMenu = *new QPopupMenu( &popupMenu );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu& addMenu = *new Q3PopupMenu( &popupMenu );
 
     // Get the list of the possible units
-    ADN_Units_Data::T_UnitInfos_Vector& units = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
-
-    QListView& listView = *new QListView( &addMenu );
-    listView.addColumn( "" );
-    listView.header()->hide();
-    listView.setAllColumnsShowFocus( true );
-    listView.setResizeMode( QListView::AllColumns );
-    listView.setMinimumSize( 200, std::min( 500, (int)units.size() * 17 ) );
-
-    for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it )
-    {
-        new MT_ValuedListViewItem<int>( (int)(*it), &listView, (*it)->strName_.GetData().c_str() );
-    }
-
-    addMenu.insertItem( &listView );
+    MenuListView* list = new MenuListView( this, &addMenu );
+    addMenu.addAction( list );
 
     popupMenu.insertItem( tr( "Add subordinate"), &addMenu );
     popupMenu.insertItem( tr( "Remove subordinate"), 0 );
     popupMenu.setItemEnabled( 0, GetCurrentData() != 0 );
 
     bMenuListItemSelected_ = false;
-    connect( &listView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( MenuListItemSelected() ) );
-    connect( &listView, SIGNAL( returnPressed( QListViewItem* ) ), this, SLOT( MenuListItemSelected() ) );
     int nMenuResult = popupMenu.exec(pt);
     if( nMenuResult == 0 )
-    {
         RemoveCurrentElement();
-    }
     else if( bMenuListItemSelected_ )
-    {
-        assert( listView.selectedItem() != 0 );
-        MT_ValuedListViewItem<int>* pItem = (MT_ValuedListViewItem<int>*)listView.selectedItem();
-        AddNewElement( pItem->GetValue() );
-    }
+        AddNewElement( list ->SelectedValue() );
 }
 
 
@@ -187,5 +206,5 @@ void ADN_Automata_SubUnitsTable::RemoveCurrentElement()
 void ADN_Automata_SubUnitsTable::MenuListItemSelected()
 {
     bMenuListItemSelected_ = true;
-    qApp->eventLoop()->exitLoop();
+    qApp->exit_loop();
 }

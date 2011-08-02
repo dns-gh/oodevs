@@ -19,7 +19,7 @@ using namespace gui;
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 LoadableField::LoadableField( QWidget* parent, const QString& probableName)
-    : QHBox( parent )
+    : Q3HBox( parent )
     , probableName_      ( probableName )
     , defaultValueWidget_( 0 )
     , currentLoader_     ( 0 )

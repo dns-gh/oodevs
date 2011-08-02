@@ -27,7 +27,7 @@ class UserProfileFactory_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileList : public QVBox
+class UserProfileList : public Q3VBox
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< UserProfile >
 {
@@ -74,7 +74,7 @@ private:
     UserProfileWidget&      pages_;
     UserProfileFactory_ABC& factory_;
     T_UserProfiles          userProfiles_;
-    QListBox*               list_;
+    Q3ListBox*               list_;
     //@}
 };
 

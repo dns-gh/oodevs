@@ -36,7 +36,8 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelSta
     , agentsModel_( agentsModel )
     , location_   ( 0 )
 {
-    QGroupBox* groupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
+    Q3VBox* gBox = new Q3VBox( this );
+    Q3GroupBox* groupBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), gBox );
 
     new QLabel( tr( "Name:" ), groupBox );
     name_ = new QLineEdit( groupBox );
@@ -62,8 +63,9 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelSta
 
     connect( inhabitantTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
-    QButton* ok = new QPushButton( tr( "Create" ), this );
-    connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    QPushButton* ok = new QPushButton( tr( "Create" ), gBox );
+    connect( ok, SIGNAL( clicked() ), this, SLOT( Commit2() ) );
+    setWidget( gBox );
     controllers_.Register( *this );
 }
 
@@ -104,7 +106,7 @@ void InhabitantCreationPanel::Handle( Location_ABC& location )
 // Name: InhabitantCreationPanel::Commit
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-void InhabitantCreationPanel::Commit()
+void InhabitantCreationPanel::Commit2()
 {
     if( CheckValidity() )
     {

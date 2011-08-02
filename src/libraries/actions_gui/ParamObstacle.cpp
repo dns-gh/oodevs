@@ -62,8 +62,8 @@ ParamObstacle::~ParamObstacle()
 // -----------------------------------------------------------------------------
 QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 {
-    QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, GetName(), parent );
-    QHBox* box = new QHBox( group );
+    Q3GroupBox* group = new Q3GroupBox( 1, Qt::Horizontal, GetName(), parent );
+    Q3HBox* box = new Q3HBox( group );
     box->setSpacing( 5 );
     new QLabel( tr( "Type:" ), box );
     typeCombo_ = new ::gui::ValuedComboBox< const kernel::ObjectType* >( box );
@@ -75,7 +75,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
         typeCombo_->AddItem( type.GetName(), &type );
     }
 
-    box = new QHBox( group );
+    box = new Q3HBox( group );
     box->setSpacing( 5 );
 
     {

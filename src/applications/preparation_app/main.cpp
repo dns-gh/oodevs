@@ -28,8 +28,18 @@ int main( int argc, char** argv )
     expiration = license->GetExpirationDate().c_str();
 #endif
 
-    QApplication::setStyle( "windowsxp" );
+    QApplication::setStyle( new QCleanlooksStyle );
     Application app( argc, argv, expiration );
+
+    QFile file( "style.qss" );
+    if( !file.open( QIODevice::Text | QFile::ReadOnly ) )
+        QMessageBox::warning( 0, tools::translate( "Application", "Warning" ), "Style file missing. Loading default parameters." );
+    else
+    {
+        app.setStyleSheet( file.readAll() );
+        file.close();
+    }
+
     BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
             .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );

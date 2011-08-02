@@ -32,15 +32,15 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     , filter_( filter )
     , factory_( factory )
     , selected_( controllers )
-    , menu_( new QPopupMenu( this ) )
+    , menu_( new Q3PopupMenu( this ) )
     , readTimer_( new QTimer( this ) )
 {
-    setFrameStyle( QFrame::Plain );
+    setFrameStyle( Q3Frame::Plain );
     setMargin( 2 );
     AddColumn( tr( "ISO Date" ) );
     AddColumn( tr( "Received" ) );
     AddColumn( tr( "Report" ) );
-    setColumnWidthMode( 0, QListView::Manual );
+    setColumnWidthMode( 0, Q3ListView::Manual );
     setColumnWidth( 0, -1 );
     setColumnWidth( 1, 130 );
     setColumnAlignment( 1, Qt::AlignTop );
@@ -49,9 +49,9 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
 
-    connect( this,       SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
-    connect( this,       SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),        this, SLOT( OnRequestCenter() ) );
-    connect( this,       SIGNAL( spacePressed( QListViewItem* ) ),                             this, SLOT( OnRequestCenter() ) );
+    connect( this,       SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint&, int ) ) );
+    connect( this,       SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ),        this, SLOT( OnRequestCenter() ) );
+    connect( this,       SIGNAL( spacePressed( Q3ListViewItem* ) ),                             this, SLOT( OnRequestCenter() ) );
     connect( this,       SIGNAL( selectionChanged() ),                                         this, SLOT( OnSelectionChanged() ) );
     connect( readTimer_, SIGNAL( timeout() ),                                                  this, SLOT( OnReadTimerOut() ) );
 
@@ -131,7 +131,7 @@ void ReportListView::NotifyUpdated( const Reports& reports )
                     item = DisplayList( reports.traces_.rbegin(), reports.traces_.rend(), this, item );
     DeleteTail( item );
     sort();
-    for( QListViewItem* item = firstChild(); item != 0; item = item->nextSibling() )
+    for( Q3ListViewItem* item = firstChild(); item != 0; item = item->nextSibling() )
         static_cast< gui::ValuedListItem* >( item )->SetBackgroundColor( Qt::white, QColor( 240, 240, 240 ) );
 }
 
@@ -205,7 +205,7 @@ void ReportListView::OnReadTimerOut()
 // Name: ReportListView::OnRequestPopup
 // Created: AGE 2006-09-18
 // -----------------------------------------------------------------------------
-void ReportListView::OnRequestPopup( QListViewItem* /*item*/, const QPoint& pos, int /*column*/ )
+void ReportListView::OnRequestPopup( Q3ListViewItem* /*item*/, const QPoint& pos, int /*column*/ )
 {
     if( !selected_ )
         return;

@@ -11,7 +11,9 @@
 #define __PluginConfig_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include <qhbox.h>
+#pragma warning( push, 0 )
+#include <Qt3Support/q3hbox.h>
+#pragma warning( pop )
 
 namespace frontend
 {
@@ -23,12 +25,12 @@ namespace frontend
 // Created: SBO 2009-12-09
 // =============================================================================
 class PluginConfig_ABC : private boost::noncopyable
-                       , public QHBox
+                       , public Q3HBox
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PluginConfig_ABC( QWidget* parent ) : QHBox( parent ) {}
+    explicit PluginConfig_ABC( QWidget* parent ) : Q3HBox( parent ) {}
     virtual ~PluginConfig_ABC() {}
     //@}
 

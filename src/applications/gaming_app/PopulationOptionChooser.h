@@ -31,7 +31,7 @@ class StaticModel;
 */
 // Created: LDC 2011-03-23
 // =============================================================================
-class PopulationOptionChooser : public QDockWindow
+class PopulationOptionChooser : public QDockWidget
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
@@ -76,8 +76,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    QButtonGroup* activities_;
-    QButtonGroup* populations_;
+    Q3ButtonGroup* activities_;
+    Q3ButtonGroup* populations_;
     QRadioButton* density_;
     QRadioButton* occupation_;
     tools::StringResolver< kernel::AccommodationType >& accomodations_;

@@ -25,8 +25,8 @@
 // Created: AGN 2003-11-03
 // -----------------------------------------------------------------------------
 template< class PointerType >
-ADN_UserData_ListViewItem< PointerType >::ADN_UserData_ListViewItem( QListView* pParent, const std::string& strName, PointerType* pPointer )
-: QListViewItem( pParent, strName.c_str() )
+ADN_UserData_ListViewItem< PointerType >::ADN_UserData_ListViewItem( Q3ListView* pParent, const std::string& strName, PointerType* pPointer )
+: Q3ListViewItem( pParent, strName.c_str() )
 , pPointer_( pPointer )
 {
     

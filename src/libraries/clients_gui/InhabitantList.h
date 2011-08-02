@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: SLG 2010-11-30
 // =============================================================================
-class InhabitantList : public QVBox
+class InhabitantList : public Q3VBox
 {
 public:
     //! @name Constructors/Destructor

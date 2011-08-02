@@ -19,11 +19,11 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Mission_ConfigurationDlg.h"
 
-#include <qlistview.h>
-#include <qlayout.h>
-#include <qheader.h>
-#include <qhbox.h>
-#include <qpushbutton.h>
+#include <Qt3Support/q3listview.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3hbox.h>
+#include <QtGui/qpushbutton.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Mission_ConfigurationDlg constructor
@@ -33,19 +33,19 @@
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
 ADN_Mission_ConfigurationDlg::ADN_Mission_ConfigurationDlg( QWidget* pParent )
-: QDialog( pParent, 0, true, WType_Dialog | WStyle_Customize | WStyle_NoBorder | WStyle_Title | WStyle_SysMenu | WStyle_Dialog )
+: QDialog( pParent, 0, true, Qt::WType_Dialog | Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu | Qt::WType_Dialog )
 , pListView_( 0 )
 {
     setCaption( tr( "Mission configuration" ) );
-    QVBoxLayout* pLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
     pLayout->setMargin( 5 );
 
-    pListView_ = new QListView( this );
+    pListView_ = new Q3ListView( this );
     pListView_->addColumn( "missions" );
     pListView_->header()->hide();
     pLayout->addWidget( pListView_ );
 
-    QHBox* pButtonBox = new QHBox( this );
+    Q3HBox* pButtonBox = new Q3HBox( this );
     pButtonBox->setSpacing( 20 );
     pButtonBox->setMargin( 20 );
 

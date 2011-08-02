@@ -35,10 +35,12 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
-    pKnowledgeListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
+    Q3VBox* box = new Q3VBox( this );
+    box->setMinimumWidth( 200 );
+    pKnowledgeListView_ = new ListDisplayer< UrbanKnowledgePanel >( box, *this, factory );
     pKnowledgeListView_->AddColumn( tools::translate( "Urban", "Known blocks" ) );
 
-    display_ = new DisplayBuilder( this, factory );
+    display_ = new DisplayBuilder( box, factory );
     display_->AddGroup( tr( "Details" ) )
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Associated block:" ) )
@@ -46,11 +48,13 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tr( "Progress:" ) )
                 .AddLabel( tr( "Maximum Progress:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
+    pPerceptionListView_ = new ListDisplayer< UrbanKnowledgePanel >( box, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Agent" ) );
 
-    connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+    setWidget( box );
+
+    connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
+    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
 
     controllers_.Register( *this );
 }
@@ -184,7 +188,7 @@ void UrbanKnowledgePanel::Select( const kernel::KnowledgeGroup_ABC* group )
 // Name: UrbanKnowledgePanel::OnSelectionChanged
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-void UrbanKnowledgePanel::OnSelectionChanged( QListViewItem* i )
+void UrbanKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
     if( !item || !item->IsA< const UrbanKnowledge_ABC >() )
@@ -207,7 +211,7 @@ void UrbanKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 // Name: UrbanKnowledgePanel::OnContextMenuRequested
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-void UrbanKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
+void UrbanKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
 {
     if( i )
     {

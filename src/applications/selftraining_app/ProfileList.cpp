@@ -23,7 +23,7 @@
 // Created: RDS 2008-09-05
 // -----------------------------------------------------------------------------
 ProfileList::ProfileList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : QListBox( parent )
+    : Q3ListBox( parent )
     , config_( config )
     , fileLoader_( fileLoader )
 {
@@ -90,7 +90,11 @@ void ProfileList::ReadProfile( xml::xistream& xis )
     const frontend::Profile profile( xis );
     const QString name = profile.GetLogin() != "" ?  profile.GetLogin() : tools::translate( "ReadProfile", "anonymous" );
     if( profile.IsSupervision() )
-        insertItem( QImage( "resources/images/selftraining/commandpost.xpm" ), name );
+    {
+        QPixmap px;
+        px.convertFromImage( QImage( "resources/images/selftraining/commandpost.xpm" ) );
+        insertItem( px , name );
+    }
     else
         insertItem( name );
     profiles_.push_back( profile );

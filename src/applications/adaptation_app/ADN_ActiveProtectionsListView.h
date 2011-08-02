@@ -25,7 +25,7 @@ class ADN_ActiveProtectionsListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ActiveProtectionsListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_ActiveProtectionsListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ActiveProtectionsListView();
     //@}
 

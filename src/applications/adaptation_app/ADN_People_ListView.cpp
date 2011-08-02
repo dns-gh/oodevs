@@ -13,7 +13,7 @@
 #include "ADN_People_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_People_Wizard.h"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_People_Data::PeopleInfos PeopleInfos;
 
@@ -21,12 +21,12 @@ typedef ADN_People_Data::PeopleInfos PeopleInfos;
 // Name: ADN_People_ListView constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-ADN_People_ListView::ADN_People_ListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_People_ListView::ADN_People_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Population" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< PeopleInfos >( *this );
     this->SetDeletionEnabled( true );
@@ -70,7 +70,7 @@ void ADN_People_ListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_People_ListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_People_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

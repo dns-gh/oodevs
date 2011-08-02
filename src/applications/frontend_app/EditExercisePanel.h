@@ -11,12 +11,13 @@
 #define __EditExercisePanel_h_
 
 #include "Panel_ABC.h"
+#include <Qt3Support/q3action.h>
 
 namespace tools
 {
     class GeneralConfig;
 }
-class QListBox;
+class Q3ListBox;
 class InfoBubble;
 
 // =============================================================================
@@ -32,7 +33,7 @@ class EditExercisePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EditExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
+             EditExercisePanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~EditExercisePanel();
     //@}
 
@@ -58,7 +59,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QListBox* list_;
+    Q3ListBox* list_;
     InfoBubble* bubble_;
     //@}
 };

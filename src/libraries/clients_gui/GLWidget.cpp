@@ -16,7 +16,6 @@
 #include <graphics/MapLayer_ABC.h>
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
-#include <qbitmap.h>
 #include <xeumeuleu/xml.hpp>
 #include <iterator>
 #include <ctime>
@@ -342,7 +341,7 @@ float GlWidget::Zoom() const
 // Name: GlWidget::StipplePattern
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-unsigned short GlWidget::StipplePattern( int factor /*= 1*/ ) const
+unsigned short GlWidget::StipplePattern( int factor /* = 1*/ ) const
 {
     static unsigned short pattern[] = {
         0x00FF, 0x01FE, 0x03FC, 0x07F8,
@@ -357,7 +356,7 @@ unsigned short GlWidget::StipplePattern( int factor /*= 1*/ ) const
 // Name: GlWidget::DrawCross
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     size *= GetAdaptiveZoomFactor();
     if( size < 0 )
@@ -539,7 +538,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
 // Name: GlWidget::DrawArrow
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( size < 0 )
         size = 15.f * Pixels();
@@ -601,7 +600,7 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
 // Name: GlWidget::DrawCurvedArrow
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /* = 0.2f*/, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( curveRatio == 0 )
     {
@@ -623,7 +622,7 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
 // Name: GlWidget::DrawCircle
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( radius < 0 )
         radius = 10.f * Pixels();
@@ -645,7 +644,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_Uni
 // Name: GlWidget::DrawDisc
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( radius < 0 )
         radius = 10.f * Pixels();
@@ -668,7 +667,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit 
 // Name: GlWidget::DrawLife
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ ) const
+void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/ ) const
 {
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
     factor *= GetAdaptiveZoomFactor();
@@ -729,7 +728,7 @@ void GlWidget::Print( const std::string& message, const geometry::Point2f& where
 // Name: GlWidget::DrawApp6Symbolc
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
 {
     DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness );
 }
@@ -738,7 +737,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
 // Name: GlWidget::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
 {
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
@@ -783,7 +782,7 @@ void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Lo
 // Name: GlWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
     if( size < 0 )
         size = 32 * Pixels();
@@ -833,7 +832,7 @@ void GlWidget::DrawCell( const geometry::Point2f& center ) const
 // Name: GlWidget::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /*= 1.f*/ ) const
+void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/ ) const
 {
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), 0 );

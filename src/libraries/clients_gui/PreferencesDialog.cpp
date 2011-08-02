@@ -47,7 +47,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     grid->setRowStretch( 1, 6 );
     grid->setRowStretch( 2, 1 );
 
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     QLabel* title = new QLabel( caption(), box );
     QFont font;
     font.setBold( true );
@@ -61,30 +61,30 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     icon->setBackgroundColor( Qt::white );
     grid->addMultiCellWidget( box, 0, 0, 0, 1 );
 
-    QWidgetStack* pages = new QWidgetStack( this );
-    pages->setMargin( 5 );
-    grid->addWidget( pages, 1, 1 );
+    QStackedWidget* pages = new QStackedWidget( this );
 
-    box = new QHBox( this );
+    grid->addWidget( pages, 1, 1 );
+    box = new Q3HBox( this );
     box->setMargin( 5 );
     list_ = new PreferencesList( box, *pages );
     grid->addWidget( box, 1, 0 );
 
-    pGraphicPrefPanel_ = new GraphicsPanel( this, controllers );
-    layersPanel_       = new LayersPanel( this, controllers );
-    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
-    AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
-    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers ) );
-    AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
-    AddPage( tr( "2D" )        , *layersPanel_ );
-    AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-    AddPage( tr( "2D/Population" ), *new InhabitantPanel( this, controllers ) );
+    pGraphicPrefPanel_       = new GraphicsPanel( pages, controllers );
+    layersPanel_             = new LayersPanel( pages, controllers );
+    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( pages, controllers, coordSystems );
 
-    box = new QHBox( this );
+    AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
+    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( pages, controllers ) );
+    AddPage( tr( "3D" ), *new LightingPanel( pages, lighting, controllers ) );
+    AddPage( tr( "2D" ), *layersPanel_ );
+    AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
+    AddPage( tr( "2D/Population" ), *new InhabitantPanel( pages, controllers ) );
+
+    box = new Q3HBox( this );
     box->setMargin( 5 );
     box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
-    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
@@ -110,6 +110,7 @@ PreferencesDialog::~PreferencesDialog()
 void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page )
 {
     list_->AddPage( name, &page );
+    page.setFrameStyle( QFrame::NoFrame );
     pages_.push_back( &page );
 }
 

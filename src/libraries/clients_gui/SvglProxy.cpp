@@ -40,7 +40,7 @@ SvglProxy::~SvglProxy()
 // Name: SvglProxy::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/ )
+void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/ )
 {
     svg::Node_ABC*& node = symbols_[ name ];
     if( ! node )

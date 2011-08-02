@@ -27,7 +27,7 @@ namespace gui
 */
 // Created: SBO 2007-10-19
 // =============================================================================
-class IntelligenceList : public QVBox
+class IntelligenceList : public Q3VBox
 {
 public:
     //! @name Constructors/Destructor

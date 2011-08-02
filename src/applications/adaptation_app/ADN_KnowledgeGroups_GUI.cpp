@@ -14,11 +14,11 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_TimeField.h"
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qgrid.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3grid.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_KnowledgeGroups_GUI constructor
@@ -60,26 +60,26 @@ void ADN_KnowledgeGroups_GUI::Build()
     pGroupsList->GetConnector().Connect( &data_.vGroups_ );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 4, Qt::Vertical, tr( "Knowledge group" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 4, Qt::Vertical, tr( "Knowledge group" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
 
-    QGroupBox* pDelayGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ), pGroup );
+    Q3GroupBox* pDelayGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ), pGroup );
     builder.AddField<ADN_TimeField>( pDelayGroup, tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );
 
-    QGroupBox* pAgentGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ), pGroup );
+    Q3GroupBox* pAgentGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ), pGroup );
     builder.AddField<ADN_TimeField>( pAgentGroup, tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] )->SetMinimumValueInSecond( 1 );
     builder.AddField<ADN_EditLine_Double>( pAgentGroup, tr( "Maximum distance between known unit and real unit positions" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
     builder.AddOptionnalField<ADN_TimeField>( pAgentGroup, tr( "Extrapolation duration" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
 
-    QGroupBox* pPopulationGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Parameters on known crowds" ), pGroup );
+    Q3GroupBox* pPopulationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known crowds" ), pGroup );
     builder.AddField<ADN_TimeField>( pPopulationGroup, tr( "Maximum life span" ), vInfosConnectors[ePopulationMaxLifetime] )->SetMinimumValueInSecond( 1 );
 
     pGroupsList->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pGroupsList, 1 );
     pMainLayout->addWidget( pGroup, 4 );
 }

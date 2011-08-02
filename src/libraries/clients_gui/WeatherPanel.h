@@ -77,10 +77,10 @@ protected:
     WeatherLayer&           layer_;
     E_WeatherType           currentType_;
 
-    QVBox*                  headerLayout_;
-    QVBox*                  localLayout_;
-    QVBox*                  globalLayout_;
-    QGroupBox*              parametersGroup_;
+    Q3VBox*                 headerLayout_;
+    Q3VBox*                 localLayout_;
+    Q3VBox*                 globalLayout_;
+    Q3GroupBox*             parametersGroup_;
     WeatherListView*        localWeathers_;
     WeatherWidget*          localWidget_;
     WeatherWidget*          globalWidget_;
@@ -88,7 +88,7 @@ protected:
     weather::MeteoLocal*    selectedLocal_;
     QDateTimeEdit*          startTime_;
     QDateTimeEdit*          endTime_;
-    QButton*                positionBtn_;
+    Q3Button*               positionBtn_;
     //@}
 
 };

@@ -66,7 +66,7 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
     client::ObjectCreation asn;
     asn().mutable_object()->set_id( GetId() );
     asn().mutable_type()->set_id( type_.GetType().c_str() );
-    asn().set_name( GetName() );
+    asn().set_name( GetName().ascii() );
     asn().mutable_party()->set_id( side_.GetId() );
     localisation_.Send( *asn().mutable_location() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs

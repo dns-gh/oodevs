@@ -13,18 +13,15 @@
 #include "TimelineListView.h"
 #include "TimelineView.h"
 #include "TimelineRuler.h"
-#include <qcanvas.h>
-#include <qpainter.h>
-#include <qsplitter.h>
 
 namespace
 {
-    class TimelineCanvas : public QCanvas
+    class TimelineCanvas : public Q3Canvas
     {
     public:
         TimelineCanvas( QObject* parent, unsigned int lineHeight )
-            : QCanvas( parent )
-            , linePen_( QColor( 225, 225, 225 ), 1, QPen::SolidLine )
+            : Q3Canvas( parent )
+            , linePen_( QColor( 225, 225, 225 ), 1, Qt::SolidLine )
             , lineHeight_( lineHeight )
         {
             setUpdatePeriod( 50 );
@@ -37,7 +34,7 @@ namespace
     private:
         virtual void drawBackground( QPainter& painter, const QRect& area )
         {
-            QCanvas::drawBackground( painter, area );
+            Q3Canvas::drawBackground( painter, area );
             const QPen oldPen = painter.pen();
             painter.setPen( linePen_ );
             for( int i = lineHeight_ - 1; i < height(); i += lineHeight_ ) // $$$$ SBO 2007-07-06: optimize to draw only "area"
@@ -57,11 +54,11 @@ using namespace actions;
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, gui::ItemFactory_ABC& factory )
-    : QHBox( parent, "TimelineWidget" )
+    : Q3HBox( parent, "TimelineWidget" )
 {
     QSplitter* splitter = new QSplitter( this );
     list_ = new TimelineListView( splitter, controllers );
-    QVBox* box = new QVBox( splitter );
+    Q3VBox* box = new Q3VBox( splitter );
     TimelineRuler* ruler = new TimelineRuler( box, controllers, list_->header()->height() );
     view_ = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
     new ActionProperties( this, controllers, factory );

@@ -12,8 +12,9 @@
 
 #include "ParameterContainer_ABC.h"
 #include <geometry/types.h>
+
 #pragma warning( push, 0 )
-#include <qstring.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 namespace sword

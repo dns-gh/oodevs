@@ -26,7 +26,7 @@ namespace gui
 // Name: DecimalSpinBox constructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-DecimalSpinBox::DecimalSpinBox( QWidget* parent, double value /*= 0.f*/, unsigned short precision /*= 2*/, double min /*= 0*/, double max /*= 10*/, double gap /*= 0.1*/ )
+DecimalSpinBox::DecimalSpinBox( QWidget* parent, double value /* = 0.f*/, unsigned short precision /* = 2*/, double min /* = 0*/, double max /* = 10*/, double gap /* = 0.1*/ )
     : QSpinBox( parent )
     , precision_( std::pow( 10.f, precision ) )
 {
@@ -36,7 +36,7 @@ DecimalSpinBox::DecimalSpinBox( QWidget* parent, double value /*= 0.f*/, unsigne
     setMaxValue( Round( max * precision_ ) );
     setLineStep( Round( gap * precision_ ) );
     QSpinBox::setValue( Round( value * precision_ ) );
-    setValidator( new QDoubleValidator( min, max, 2, parent ) );
+    this->lineEdit()->setValidator( new QDoubleValidator( min, max, 2, parent ));
 }
 
 // -----------------------------------------------------------------------------

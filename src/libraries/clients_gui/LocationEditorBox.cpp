@@ -24,48 +24,49 @@ using namespace gui;
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
 LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter ) :
-    QHBox( parent )
+    Q3HBox( parent )
     , controllers_( controllers )
     , converter_( converter )
     , coordinateSystems_ ( converter.GetCoordSystem() )
 {
+    setFrameStyle( QFrame::NoFrame );
+    setFixedWidth( 250 );
     parsers_ = new LocationParsers( controllers, converter );
 
     choiceParserButton_ = new QToolButton( this );
     choiceParserButton_->setFixedWidth( 60 );
-    parserMenu_ = new  QPopupMenu( choiceParserButton_ );
+    parserMenu_ = new  Q3PopupMenu( choiceParserButton_ );
     choiceParserButton_->setPopup( parserMenu_ );
     choiceParserButton_->setPopupDelay( 0 );
     choiceParserButton_->setText( tr("Location: " ));
 
-    coordBox_ = new QHBox( this );
-    valueBox_ = new QHBox( this );
+    coordBox_ = new Q3HBox( this );
+    valueBox_ = new Q3HBox( this );
 
     latitudeLabel_ = new QLabel( tr( "lat: " ), coordBox_ );
     latitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
     latitudeLabel_->setFixedWidth( 30 );
     latitude_ = new QLineEdit( coordBox_ );
-    latitude_->setFixedWidth( 80 );
+    latitude_->setFixedWidth( 60 );
     longitudeLabel_ = new QLabel( tr( "long: " ), coordBox_ );
     longitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
     longitudeLabel_->setFixedWidth( 30 );
     longitude_ = new QLineEdit( coordBox_ );
-    longitude_->setFixedWidth( 80 );
+    longitude_->setFixedWidth( 60 );
 
     singleField_ = new QLineEdit( valueBox_ );
-    singleField_->setFixedWidth( 220 );
+    
     FillDefaultMenu();
     SelectParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
 
-    subMenu_ = new QPopupMenu();
-    list_ = new QListBox( subMenu_ );
-    list_->setColumnMode( QListBox::Variable );
-    list_->setRowMode( QListBox::Variable );
-    list_->setFrameStyle( QFrame::NoFrame );
-    subMenu_->insertItem( list_ );
+    subMenu_ = new Q3PopupMenu();
+    list_ = new Q3ListBox( subMenu_ );
+    list_->setColumnMode( Q3ListBox::Variable );
+    list_->setRowMode( Q3ListBox::Variable );
+    list_->setFrameStyle( Q3Frame::NoFrame );
     subMenu_->hide();
 
-       connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
+    connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
     connect( list_, SIGNAL( selected( int ) ), SLOT( GetSelectedItemInSubList( int ) ) );
 }
 // -----------------------------------------------------------------------------
@@ -168,11 +169,11 @@ void LocationEditorBox::SetAspect( bool oneValue, bool red )
     if( red )
     {
         if( oneValue )
-            singleField_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
+            singleField_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
         else
         {
-            latitude_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
-            longitude_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
+            latitude_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
+            longitude_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
         }
     }
     else

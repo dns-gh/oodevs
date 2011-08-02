@@ -18,10 +18,10 @@
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorProfileList::SuccessFactorProfileList( QWidget* parent, kernel::Controllers& controllers )
-    : QListBox( parent )
+    : Q3ListBox( parent )
     , controllers_( controllers )
 {
-    setSelectionMode( QListBox::Multi );
+    setSelectionMode( Q3ListBox::Multi );
     controllers_.Register( *this );
 }
 

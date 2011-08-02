@@ -53,7 +53,7 @@ void ZoomViewCommand::Receive( const Command& command )
         view_.Zoom( boost::lexical_cast< float >( command.Argument( 1 ) ) );
     else if( command.Name() == "center" )
     {
-        const QUrl url( command.Argument( 1 ).c_str() );
+        const Q3Url url( command.Argument( 1 ).c_str() );
         if( url.protocol() == "loc" )
             Center( url.toString( false, false ).mid( 6 ).ascii() ); // $$$$ SBO 2008-10-21: strlen( "loc://" )
     }

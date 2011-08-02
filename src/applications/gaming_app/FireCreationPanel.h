@@ -122,9 +122,9 @@ private:
     const kernel::GlTools_ABC& tools_;
 
     gui::ValuedComboBox< E_StrikeType >* strikeCombo_;
-    QHBox* locationBox_;
-    QHBox* targetBox_;
-    QHBox* reporterBox_;
+    Q3HBox* locationBox_;
+    Q3HBox* targetBox_;
+    Q3HBox* reporterBox_;
 
     gui::LocationCreator* locationCreator_;
     kernel::Location_ABC* location_;

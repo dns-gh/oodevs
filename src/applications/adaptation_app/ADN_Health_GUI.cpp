@@ -21,12 +21,12 @@
 #include "ADN_TableItem_TimeField.h"
 #include "ADN_AvailabilityWarningTable.h"
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qgroupbox.h>
-#include <qhgroupbox.h>
-#include <qhbox.h>
-#include <qvbox.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlabel.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3vbox.h>
 
 namespace
 {
@@ -80,9 +80,9 @@ void ADN_Health_GUI::Build()
 
     // Create the top widget.
     pMainWidget_ = new QWidget( 0 );
-    QGroupBox* pGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Medical system data" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 4, Qt::Horizontal, tr( "Medical system data" ), pMainWidget_ );
 
-    QVBox* pVBox = new QVBox( pGroup );
+    Q3VBox* pVBox = new Q3VBox( pGroup );
 
     QWidget* pHolder = builder.AddFieldHolder( pVBox );
 
@@ -90,12 +90,12 @@ void ADN_Health_GUI::Build()
     builder.AddField< ADN_TimeField >( pHolder, tr( "Triage duration" ), data_.sortingTime_ );
 
     // wounds
-    QHBox* pWoundsGroup = new QHBox( pVBox );
+    Q3HBox* pWoundsGroup = new Q3HBox( pVBox );
     pWoundsGroup->setSpacing( 5 );
 
     ADN_WoundTable* pWoundTable = new ADN_WoundTable( pWoundsGroup );
     pWoundTable->setSorting( true );
-    pWoundTable->setSelectionMode( QTable::NoSelection );
+    pWoundTable->setSelectionMode( Q3Table::NoSelection );
     pWoundTable->setShowGrid( true );
     pWoundTable->verticalHeader()->hide();
     pWoundTable->setLeftMargin( 0 );
@@ -132,29 +132,29 @@ void ADN_Health_GUI::Build()
     builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n, data_.shockTreatTime_ );
     builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n, data_.shockRestingTime_ );
     builder.AddTableCell< ADN_TableItem_Double    >( pWoundTable, &data_, 2, n, data_.rShockPercentage_, ePercentage );
-    pWoundTable->setItem( 3, n, new QTableItem( pWoundTable, QTableItem::Never ) );
+    pWoundTable->setItem( 3, n, new Q3TableItem( pWoundTable, Q3TableItem::Never ) );
 
     builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n + 1, data_.contaminationTreatTime_ );
     builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n + 1, data_.contaminationRestingTime_ );
-    pWoundTable->setItem( 2, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
-    pWoundTable->setItem( 3, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
+    pWoundTable->setItem( 2, n + 1, new Q3TableItem( pWoundTable, Q3TableItem::Never ) );
+    pWoundTable->setItem( 3, n + 1, new Q3TableItem( pWoundTable, Q3TableItem::Never ) );
 
     // Warning tables
-    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Equipments availability warnings" ), pGroup );
-    QHGroupBox* pAvailabilityGroup = new QHGroupBox( tr( "Ambulances - evacuation" ), pWarningGroup );
+    Q3HGroupBox* pWarningGroup = new Q3HGroupBox( tr( "Equipments availability warnings" ), pGroup );
+    Q3HGroupBox* pAvailabilityGroup = new Q3HGroupBox( tr( "Ambulances - evacuation" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pChangeOverWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
     pChangeOverWarningTable->GetConnector().Connect( & data_.vChangeOverWarnings_ );
 
-    pAvailabilityGroup = new QHGroupBox( tr( "Ambulances - collection" ), pWarningGroup );
+    pAvailabilityGroup = new Q3HGroupBox( tr( "Ambulances - collection" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pCollectWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
     pCollectWarningTable->GetConnector().Connect( & data_.vCollectingWarnings_ );
 
-    pAvailabilityGroup = new QHGroupBox( tr( "Doctors" ), pWarningGroup );
+    pAvailabilityGroup = new Q3HGroupBox( tr( "Doctors" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pDoctorsWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
     pDoctorsWarningTable->GetConnector().Connect( & data_.vDoctorsWarnings_ );
 
     // Layout
-    QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 5 );
+    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pMainWidget_, 10, 5 );
     pLayout->addWidget( pGroup );
     builder.AddStretcher( pLayout, Qt::Vertical );
 }

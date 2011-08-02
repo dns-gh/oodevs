@@ -22,7 +22,7 @@ using namespace gui;
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
 GroupDisplayer::GroupDisplayer( QWidget* parent, const QString& name, ItemFactory_ABC& factory )
-    : QGroupBox( 2, Qt::Horizontal, name, parent )
+    : Q3GroupBox( 2, Qt::Horizontal, name, parent )
     , factory_( factory )
 {
     // NOTHING

@@ -22,9 +22,9 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ImportExercise.h"
 #include "frontend/ProcessWrapper.h"
-#include <qtabbar.h>
-#include <qtabwidget.h>
-#include <qtimer.h>
+#include <QtGui/qtabbar.h>
+#include <QtGui/qtabwidget.h>
+#include <QtCore/qtimer.h>
 
 namespace
 {
@@ -44,14 +44,14 @@ namespace
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous, eButtonBack | eButtonEdit, launcher )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ) ) )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {

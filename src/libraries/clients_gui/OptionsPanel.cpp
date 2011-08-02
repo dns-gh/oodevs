@@ -15,7 +15,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-#include "Settings.h"
 
 using namespace kernel;
 using namespace gui;
@@ -31,7 +30,7 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
 {
     // Display panel
     QWidget* pDisplayPanel = new QWidget( this );
-    QGridLayout* pSubLayout = new QGridLayout( pDisplayPanel, 9, 2, 5 );
+    Q3GridLayout* pSubLayout = new Q3GridLayout( pDisplayPanel, 9, 2, 5 );
     pSubLayout->setMargin( 5 );
 
     pCompute3dDistance_ = new QCheckBox( tr( "3D metric computation"), pDisplayPanel );

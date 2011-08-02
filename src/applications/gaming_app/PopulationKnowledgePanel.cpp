@@ -39,10 +39,12 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
-    knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
+    Q3VBox* box = new Q3VBox( this );
+    box->setMinimumWidth( 200 );
+    knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( box, *this, factory );
     knowledgeList_->AddColumn( tools::translate( "PopulationKnowledgePanel", "Known crowds" ) );
 
-    display_ = new DisplayBuilder( this, factory );
+    display_ = new DisplayBuilder( box, factory );
     display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Details" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Associated crowd:" ) )
@@ -64,8 +66,10 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
                 .AddLabel( tools::findTranslation( "Crowd", "Mood:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Perceived:" ) );
 
-    connect( knowledgeList_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    connect( knowledgeList_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+setWidget( box );
+
+    connect( knowledgeList_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
+    connect( knowledgeList_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
 
     controllers_.Register( *this );
 }
@@ -107,7 +111,7 @@ void PopulationKnowledgePanel::showEvent( QShowEvent* )
 // Name: PopulationKnowledgePanel::OnContextMenuRequested
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
+void PopulationKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
 {
     if( i )
     {
@@ -120,7 +124,7 @@ void PopulationKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const Q
 // Name: PopulationKnowledgePanel::OnSelectionChanged
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* i )
+void PopulationKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
     display_->Group( tools::translate( "PopulationKnowledgePanel", "Flow" ) ).Hide();

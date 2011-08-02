@@ -18,7 +18,7 @@
 // Name: ADN_MultiPercentage constructor
 // Created: ABR 2011-03-18
 // -----------------------------------------------------------------------------
-ADN_MultiPercentage::ADN_MultiPercentage( QGroupBox* pParent, ADN_GuiBuilder& builder )
+ADN_MultiPercentage::ADN_MultiPercentage( Q3GroupBox* pParent, ADN_GuiBuilder& builder )
     : parent_ ( pParent )
     , builder_( builder )
     , warning_( 0 )

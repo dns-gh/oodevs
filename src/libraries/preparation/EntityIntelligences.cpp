@@ -104,7 +104,7 @@ std::string EntityIntelligences::GetLevel() const
 // Name: EntityIntelligences::UpdateSymbol
 // Created: SBO 2007-11-02
 // -----------------------------------------------------------------------------
-void EntityIntelligences::UpdateSymbol( bool up /*= true*/ )
+void EntityIntelligences::UpdateSymbol( bool up /* = true*/ )
 {
     controller_.Update( *this );
     controller_.Update( *(Symbol_ABC*)this );

@@ -18,41 +18,40 @@
 #include "tools/Loader_ABC.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include <qfiledialog.h>
-#include <qheader.h>
-#include <qlistview.h>
-#include <qprogressbar.h>
+#include <Qt3Support/q3filedialog.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3listview.h>
+#include <Qt3Support/q3progressbar.h>
 #include <xeumeuleu/xml.h>
 #include <zipstream/zipstream.h>
 
 namespace bfs = boost::filesystem;
-
 // -----------------------------------------------------------------------------
 // Name: ExportWidget constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : QGroupBox( 2, Qt::Vertical, parent )
+    : Q3GroupBox( 2, Qt::Vertical, parent )
     , config_( config )
     , fileLoader_( fileLoader )
     , page_( page )
 {
-    setFrameShape( QFrame::NoFrame );
+    setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tools::translate( "ExportWidget", "Create a package" ), this );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "ExportWidget", "Create a package" ), this );
     group->setBackgroundOrigin( QWidget::WindowOrigin );
     {
         QLabel* label = new QLabel( tools::translate( "ExportWidget", "Exercise to package:" ), group );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        list_ = new QListBox( group );
+        list_ = new Q3ListBox( group );
         list_->setBackgroundOrigin( QWidget::WindowOrigin );
-        connect( list_, SIGNAL( clicked( QListBoxItem* ) ), SLOT( OnSelectionChanged( QListBoxItem* ) ) );
+        connect( list_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
     }
     {
         QLabel* label = new QLabel(  tools::translate( "ExportWidget", "Package description:" ), group );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        description_ = new QTextEdit( group );
+        description_ = new Q3TextEdit( group );
         description_->setBackgroundOrigin( QWidget::WindowOrigin );
         description_->setMaximumHeight( 30 );
         description_->setReadOnly( false );
@@ -60,14 +59,14 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     {
         QLabel* label = new QLabel(  tools::translate( "ExportWidget", "Package content:" ), group );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        content_ = new QListView( group );
+        content_ = new Q3ListView( group );
         content_->setBackgroundOrigin( QWidget::WindowOrigin );
         content_->addColumn( "exercise features" );
-        content_->setResizeMode( QListView::AllColumns );
+        content_->setResizeMode( Q3ListView::AllColumns );
         content_->header()->hide();
         content_->adjustSize();
     }
-    progress_ = new QProgressBar( this );
+    progress_ = new Q3ProgressBar( this );
     progress_->hide();
     package_.first = config_.GetRootDir();
     UpdateExercises();
@@ -88,7 +87,7 @@ ExportWidget::~ExportWidget()
 // -----------------------------------------------------------------------------
 void ExportWidget::Update()
 {
-    QListBoxItem* item = list_->selectedItem();
+    Q3ListBoxItem* item = list_->selectedItem();
     if( item )
     {
         std::string exercise( item->text().ascii() );
@@ -104,13 +103,13 @@ namespace
 {
     struct Progress
     {
-        Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
+        Progress( Q3ProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
         void operator()()
         {
             progress_->setProgress( ++count_ );
             qApp->processEvents();
         }
-        QProgressBar* progress_;
+        Q3ProgressBar* progress_;
         unsigned count_;
     };
 
@@ -172,7 +171,7 @@ namespace
             BrowseDirectory( root, name, zos, recursive );
     }
 
-    void BrowseChildren( const std::string& base, QListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback, bool recursive )
+    void BrowseChildren( const std::string& base, Q3ListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback, bool recursive )
     {
         while ( item != 0 && ! dynamic_cast< frontend::CheckListItem* >( item ) )
         {
@@ -183,7 +182,7 @@ namespace
         }
     }
 
-    void BrowseFiles( const std::string& base, QListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
+    void BrowseFiles( const std::string& base, Q3ListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
     {
         while ( iterator.current() )
         {
@@ -200,7 +199,7 @@ namespace
         }
     }
 
-    int ListViewSize( QListViewItemIterator iterator )
+    int ListViewSize( Q3ListViewItemIterator iterator )
     {
         int i = 0;
         for ( ; iterator.current(); ++iterator, ++i )
@@ -222,13 +221,13 @@ void ExportWidget::ExportPackage()
         if( archive.isOk() )
         {
             progress_->show();
-            progress_->setProgress( 0, ListViewSize( QListViewItemIterator( content_ ) ) );
-            setCursor( QCursor::waitCursor );
+            progress_->setProgress( 0, ListViewSize( Q3ListViewItemIterator( content_ ) ) );
+            setCursor( Qt::waitCursor );
             {
                 WriteContent( archive );
-                BrowseFiles( config_.GetRootDir(), QListViewItemIterator( content_ ), archive, Progress( progress_ ) );
+                BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( content_ ), archive, Progress( progress_ ) );
             }
-            setCursor( QCursor::arrowCursor );
+            setCursor( Qt::arrowCursor );
             progress_->hide();
         }
     }
@@ -247,7 +246,7 @@ bool ExportWidget::EnableEditButton()
 // Name: ExportWidget::OnSelectionChanged
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-void ExportWidget::OnSelectionChanged( QListBoxItem* item )
+void ExportWidget::OnSelectionChanged( Q3ListBoxItem* item )
 {
     if( item )
     {
@@ -268,12 +267,13 @@ void ExportWidget::UpdateExercises()
 }
 
 // -----------------------------------------------------------------------------
+
 // Name: ExportWidget::BrowseClicked
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 bool ExportWidget::BrowseClicked()
 {
-    const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
+    const QString filename = Q3FileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
     if( filename.isEmpty() )
         return false;
     const bfs::path file = bfs::path( std::string( filename.ascii() ), bfs::native );

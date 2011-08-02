@@ -20,7 +20,7 @@ using namespace actions;
 // Name: EngageMagicAction::EngageMagicAction
 // Created: FDS 2010-11-22
 // -----------------------------------------------------------------------------
-EngageMagicAction::EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, const bool engaged, bool registered /*= true*/ )
+EngageMagicAction::EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, const bool engaged, bool registered /* = true*/ )
     : ActionWithTarget_ABC ( controller, magic, entity )
     , entity_( entity )
     , controller_( controller )

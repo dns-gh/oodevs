@@ -31,7 +31,7 @@ namespace gui
 // Created: SBO 2007-02-19
 // =============================================================================
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
-class LogisticConsignsWidget_ABC : public QVBox
+class LogisticConsignsWidget_ABC : public Q3VBox
                                  , public tools::Observer_ABC
                                  , public tools::ElementObserver_ABC< Extension >
                                  , public tools::ElementObserver_ABC< Consign >
@@ -90,19 +90,19 @@ private:
 // -----------------------------------------------------------------------------
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::LogisticConsignsWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
     , selected_( controllers )
 {
     pConsignListView_ = new gui::ListDisplayer< ConcreteDisplayer >( this, (ConcreteDisplayer&)*this, factory );
     pConsignListView_->AddColumn( tools::translate( "LogisticConsignsWidget_ABC", "Logistic requests" ) );
     pConsignListView_->AddColumn( "" );
-    pConsignListView_->setResizeMode( QListView::AllColumns );
+    pConsignListView_->setResizeMode( Q3ListView::AllColumns );
 
     pConsignHandledListView_ = new gui::ListDisplayer< ConcreteDisplayer >( this, (ConcreteDisplayer&)*this, factory );
     pConsignHandledListView_->AddColumn( tools::translate( "LogisticConsignsWidget_ABC", "Processing consigns" ) );
     pConsignHandledListView_->AddColumn( "" );
-    pConsignHandledListView_->setResizeMode( QListView::AllColumns );
+    pConsignHandledListView_->setResizeMode( Q3ListView::AllColumns );
 
     logDisplay_ = new gui::SubItemDisplayer( tools::translate( "LogisticConsignsWidget_ABC", "Consign:" ), factory );
     logDisplay_->AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Instruction:" ) )
@@ -156,7 +156,7 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::showEv
     const kernel::Entity_ABC* entity = selected_;
     selected_ = 0;
     NotifySelected( entity );
-    QVBox::showEvent( event );
+    Q3VBox::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------

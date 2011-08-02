@@ -11,7 +11,6 @@
 #define __PropertiesTable_h_
 
 #include "clients_kernel/Displayer_ABC.h"
-#include <qtable.h>
 
 namespace kernel
 {
@@ -29,7 +28,7 @@ namespace gui
 */
 // Created: SBO 2006-10-17
 // =============================================================================
-class PropertiesTable : public QTable
+class PropertiesTable : public Q3Table
                       , public kernel::Displayer_ABC
                       , public tools::Caller< kernel::Property_ABC* >
 {

@@ -64,7 +64,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
     }
-    StartDefaultBehavior();
+    StartDefaultBehavior(); 
 }
 
 // -----------------------------------------------------------------------------

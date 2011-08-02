@@ -48,7 +48,7 @@ std::string MergingTacticalHierarchies::GetSymbol() const
 // Name: MergingTacticalHierarchies::UpdateSymbol
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void MergingTacticalHierarchies::UpdateSymbol( bool up /*= true*/ )
+void MergingTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
 {
     if( ! up )
     {

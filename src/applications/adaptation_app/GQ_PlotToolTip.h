@@ -23,7 +23,7 @@
 #   pragma interface
 #endif
 
-#include <qtooltip.h>
+#include <QtGui/qtooltip.h>
 
 class GQ_Plot;
 
@@ -40,7 +40,7 @@ class QStringList;
 */
 // Created: CBX 2003-08-18
 // =============================================================================
-class GQ_PlotToolTip : public QToolTip
+class GQ_PlotToolTip
 {
 public:
     //! @name Constructors/Destructor

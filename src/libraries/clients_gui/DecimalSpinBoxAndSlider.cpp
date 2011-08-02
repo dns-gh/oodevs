@@ -18,16 +18,16 @@ using namespace gui;
 // Name: DecimalSpinBoxAndSlider constructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-DecimalSpinBoxAndSlider::DecimalSpinBoxAndSlider( QWidget* parent, float& value, unsigned short precision /*= 2*/, float min /*= 0*/, float max /*= 10*/, float gap /*= 0.1*/,
-                                                  Qt::Orientation orientation /*= Qt::Horizontal*/, Qt::Orientation sliderOrientation /*= Qt::Horizontal*/, bool spinboxFirst /*= true*/ )
+DecimalSpinBoxAndSlider::DecimalSpinBoxAndSlider( QWidget* parent, float& value, unsigned short precision /* = 2*/, float min /* = 0*/, float max /* = 10*/, float gap /* = 0.1*/,
+                                                  Qt::Orientation orientation /* = Qt::Horizontal*/, Qt::Orientation sliderOrientation /* = Qt::Horizontal*/, bool spinboxFirst /* = true*/ )
     : QWidget( parent )
     , precision_( std::pow( 10.f, precision ) )
     , value_    ( value )
 {
     if( orientation == Qt::Horizontal )
-        layout_ = new QHBoxLayout( this );
+        layout_ = new Q3HBoxLayout( this );
     else
-        layout_ = new QVBoxLayout( this );
+        layout_ = new Q3VBoxLayout( this );
     spinbox_ = new gui::DecimalSpinBox( this, value_, precision, min, max, gap );
     slider_ = new QSlider( static_cast< int >( precision_ * min ), static_cast< int >( precision_ * max ), static_cast< int >( precision_ * gap ), static_cast< int >( precision_ * value_ ), sliderOrientation, this );
     if( spinboxFirst )

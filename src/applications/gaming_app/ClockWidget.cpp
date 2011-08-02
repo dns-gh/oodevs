@@ -21,22 +21,22 @@
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
 ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler )
-    : QHBox( parent, "ClockWidget" )
+    : Q3HBox( parent, "ClockWidget" )
     , controllers_( controllers )
 {
     static const QColor foregroundColor( 173, 230, 255 );
     static const QColor backgroundColor( 13, 122, 168 );
 
     setMinimumSize( 200, 80 );
-    setPaletteBackgroundColor( backgroundColor );
+    setStyleSheet("Q3HBox { background-color: #0d7aa8; }");
     {
-        QVBox* vBox = new QVBox( this );
+        Q3VBox* vBox = new Q3VBox( this );
         vBox->setMargin( 5 );
         vBox->setMaximumWidth( 25 );
         vBox->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
     }
     {
-        QVBox* vBox = new QVBox( this );
+        Q3VBox* vBox = new Q3VBox( this );
         QFont font;
         font.setPixelSize( 40 );
         font.setBold( true );
@@ -46,7 +46,7 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
         time_->setPaletteForegroundColor( foregroundColor );
         time_->setText( "00:00:00" );
         time_->setAlignment( Qt::AlignCenter );
-        QHBox* box = new QHBox( vBox );
+        Q3HBox* box = new Q3HBox( vBox );
         box->setFixedHeight( 1 );
         box->layout()->setAlignment( Qt::AlignCenter );
         QLabel* spacer = new QLabel( box );
@@ -61,7 +61,7 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
     {
         ClockEditDialog* editor = new ClockEditDialog( this, controllers, scheduler );
         AlarmsWidget* alarms = new AlarmsWidget( this, controllers, simulation );
-        QVBox* vBox = new QVBox( this );
+        Q3VBox* vBox = new Q3VBox( this );
         vBox->setMargin( 5 );
         vBox->setMaximumWidth( 25 );
         vBox->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
@@ -95,6 +95,19 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
 ClockWidget::~ClockWidget()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClockWidget paintEvent
+// Created: SBO 2011-06-22
+// -----------------------------------------------------------------------------
+void ClockWidget::paintEvent( QPaintEvent* = 0)
+{
+    QPainter p;
+    if ( p.begin( this ) )
+    {
+        p.end();
+    }
 }
 
 // -----------------------------------------------------------------------------

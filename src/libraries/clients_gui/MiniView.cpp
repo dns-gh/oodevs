@@ -13,7 +13,6 @@
 #include "clients_kernel/Positions.h"
 #include "GlWidget.h"
 #include "clients_kernel/Controllers.h"
-#include <qpainter.h>
 
 using namespace kernel;
 using namespace gui;
@@ -23,11 +22,11 @@ using namespace gui;
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
 MiniView::MiniView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent )
-    : QFrame( parent, "MiniView", WRepaintNoErase )
+    : Q3Frame( parent, "MiniView", Qt::WNoAutoErase )
     , actions_ ( controllers.actions_ )
     , agent_   ( agent )
     , position_( agent.Get< Positions >() )
-    , pixmap_  ( 128, 128, 32 )
+    , pixmap_  ( 128, 128 )
 {
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     setFrameStyle( Box | Plain );
@@ -87,7 +86,7 @@ void MiniView::contextMenuEvent( QContextMenuEvent * e )
 // -----------------------------------------------------------------------------
 void MiniView::mouseReleaseEvent( QMouseEvent * e )
 {
-    if( e->button() == QMouseEvent::LeftButton )
+    if( e->button() == Qt::LeftButton )
         agent_.Select( actions_ );
 }
 
@@ -110,7 +109,7 @@ void MiniView::drawContents( QPainter * p )
     QFont base = p->font();
     base.setPointSize( 9 );
     p->setFont( base );
-    p->drawText( contentsRect(), AlignHCenter | Qt::AlignBottom, agent_.GetName() );
+    p->drawText( contentsRect(), Qt::AlignHCenter | Qt::AlignBottom, agent_.GetName() );
 }
 
 // -----------------------------------------------------------------------------

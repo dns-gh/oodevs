@@ -30,7 +30,7 @@ namespace
             : ListDisplayer< ScorePanel >( parent, *parent, factory )
             , model_( model )
         {}
-        virtual QDragObject* dragObject()
+        virtual Q3DragObject* dragObject()
         {
             if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( selectedItem() ) )
                 if( Score* score = item->GetValue< Score >() )
@@ -52,7 +52,7 @@ namespace
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
 ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config )
-    : QDockWindow( mainWindow, "score" )
+    : QDockWidget( "score", mainWindow )
     , controllers_( controllers )
     , factory_( factory )
     , plotFactory_( plotFactory )
@@ -60,8 +60,7 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
     , exportDialog_( exportDialog )
     , reportDialog_( new IndicatorReportDialog( this, model_, config, interpreter ) )
 {
-    setResizeEnabled( true );
-    setCloseMode( QDockWindow::Always );
+    setObjectName( "scorePanel" );
     setCaption( tools::translate( "ScorePanel", "Scores" ) );
 
     {
@@ -70,12 +69,12 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
         scores_->AddColumn( tools::translate( "Score", "Value" ) );
         scores_->AddColumn( tools::translate( "Score", "Tendency" ) );
         scores_->AddColumn( tools::translate( "Score", "Gauge" ) );
-        scores_->setColumnWidthMode( 2, QListView::Manual );
-        scores_->setColumnWidthMode( 3, QListView::Manual );
+        scores_->setColumnWidthMode( 2, Q3ListView::Manual );
+        scores_->setColumnWidthMode( 3, Q3ListView::Manual );
         scores_->setColumnAlignment( 2, Qt::AlignCenter );
         scores_->setColumnAlignment( 3, Qt::AlignCenter );
-        connect( scores_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( QListViewItem*, const QPoint&, int ) ) );
-        connect( scores_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnShowGraph() ) );
+        connect( scores_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( Q3ListViewItem*, const QPoint&, int ) ) );
+        connect( scores_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnShowGraph() ) );
     }
     setWidget( scores_ );
     controllers_.Register( *this );
@@ -174,9 +173,9 @@ void ScorePanel::Display( const Score& score, gui::ValuedListItem* item )
 // Name: ScorePanel::OnContextMenu
 // Created: SBO 2009-04-28
 // -----------------------------------------------------------------------------
-void ScorePanel::OnContextMenu( QListViewItem* item, const QPoint& point, int /*column*/ )
+void ScorePanel::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
 {
-    QPopupMenu* menu = new QPopupMenu( scores_ );
+    Q3PopupMenu* menu = new Q3PopupMenu( scores_ );
     if( item )
     {
         menu->insertItem( tools::translate( "ScorePanel", "View graph" ), this, SLOT( OnShowGraph() ) );

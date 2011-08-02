@@ -145,7 +145,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool readonly /*= false*/ ) const
+actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool readonly /* = false*/ ) const
 {
     const std::string type = xis.attribute< std::string >( "type" );
     if( type == "mission" )

@@ -58,12 +58,12 @@ void ADN_FireClass_GUI::Build()
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     //Global fire parameters
-    QGroupBox* pGlobalFireParametersDataGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Global fire parameters" ), pMainWidget_ );
+    Q3GroupBox* pGlobalFireParametersDataGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Global fire parameters" ), pMainWidget_ );
     builder.AddField< ADN_EditLine_Int >( pGlobalFireParametersDataGroup, tr( "Cell size" ), vInfosConnectors[ eCellSize ], tr( "m" ), eGreaterZero );
     vInfosConnectors[ eCellSize ]->Connect( &data_.GetCellSize() );
 
     // Local fire class data
-    QGroupBox* pFireClassDataGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Fire" ), pMainWidget_ );
+    Q3GroupBox* pFireClassDataGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Fire" ), pMainWidget_ );
     //new QWidget( pFireClassDataGroup );
     QWidget* pHolder = builder.AddFieldHolder( pFireClassDataGroup );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vInfosConnectors[ eName ] );
@@ -72,7 +72,7 @@ void ADN_FireClass_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Increase rate" ), vInfosConnectors[ eIncreaseRate ] );
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Decrease rate" ), vInfosConnectors[ eDecreaseRate ] );
 
-    QGroupBox* pInjuriesGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Injuries" ), pFireClassDataGroup );
+    Q3GroupBox* pInjuriesGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Injuries" ), pFireClassDataGroup );
     QWidget* pInjuriesHolder = builder.AddFieldHolder( pInjuriesGroup );
     builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eNbrHurtU1 ], tr( "%" ), ePercentage  );
     builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eNbrHurtU2 ], tr( "%" ), ePercentage  );
@@ -80,14 +80,14 @@ void ADN_FireClass_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eNbrHurtUE ], tr( "%" ), ePercentage  );
     builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eNbrDead ], tr( "%" ), ePercentage  );
 
-    QGroupBox* pUrbanModifiersGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ), pFireClassDataGroup );
+    Q3GroupBox* pUrbanModifiersGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ), pFireClassDataGroup );
     new helpers::ADN_UrbanModifiersTable( pUrbanModifiersGroup, vInfosConnectors[ eUrbanAttrition ] );
 
-    QGroupBox* pExtinguisherAgentsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ), pFireClassDataGroup );
+    Q3GroupBox* pExtinguisherAgentsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ), pFireClassDataGroup );
     ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( pExtinguisherAgentsGroup );
     vInfosConnectors[ eExtinguisherAgents ] = &pExtinguisherAgentInfosTable->GetConnector();
 
-    QGroupBox* pWeatherFireEffectsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ), pFireClassDataGroup );
+    Q3GroupBox* pWeatherFireEffectsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ), pFireClassDataGroup );
     ADN_WeatherFireEffects_Table* pWeatherFireEffectsTable = new ADN_WeatherFireEffects_Table( pWeatherFireEffectsGroup );
     vInfosConnectors[ eWeatherFireEffects ] = &pWeatherFireEffectsTable->GetConnector();
 
@@ -99,9 +99,9 @@ void ADN_FireClass_GUI::Build()
     pFireClassListView->SetItemConnectors( vInfosConnectors );
 
     // Main vertical layout
-    QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
 
-    QHBoxLayout* pGlobalLayout = new QHBoxLayout();
+    Q3HBoxLayout* pGlobalLayout = new Q3HBoxLayout();
     pGlobalLayout->addWidget( pGlobalFireParametersDataGroup );
 
     QBoxLayout* pListAndDataLayout = new QHBoxLayout( 0, 10, 10 );

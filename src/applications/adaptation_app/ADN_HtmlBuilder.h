@@ -12,8 +12,8 @@
 
 #include <boost/noncopyable.hpp>
 
-class QTable;
-class QListView;
+class Q3Table;
+class Q3ListView;
 
 // =============================================================================
 /** @class  ADN_HtmlBuilder
@@ -54,8 +54,8 @@ public:
 
     std::stringstream& Stream();
 
-    void CreateTableFrom( QListView& listView );
-    void CreateTableFrom( QTable& table );
+    void CreateTableFrom( Q3ListView& listView );
+    void CreateTableFrom( Q3Table& table );
 
     void WriteToFile( const char* strFileName );
     //@}

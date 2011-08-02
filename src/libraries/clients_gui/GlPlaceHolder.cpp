@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "GlPlaceHolder.h"
-//#include "splashscreen.cpp"
 
 using namespace gui;
 
@@ -18,15 +17,11 @@ using namespace gui;
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
 GlPlaceHolder::GlPlaceHolder( QWidget* parent )
-    : QVBox( parent )
+    : Q3VBox( parent )
 {
-    setBackgroundColor( Qt::black );
-//    QHBox* box = new QHBox( this );
-//    box->setBackgroundColor( QColor::Black );
-//    QLabel* label = new QLabel( box );
-//    box->setStretchFactor( label, 4212 );
-//    box->setSpacing( 4212 );
-//    label->setPixmap( QPixmap( qembed_findData( "csword.jpg" ) ) );
+    setStyleSheet("Q3VBox { background-color: #000000; }");
+    setBackgroundRole( QPalette::Window );
+    setFrameStyle( QFrame::StyledPanel + QFrame::Raised );
 }
 
 // -----------------------------------------------------------------------------

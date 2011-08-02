@@ -47,7 +47,7 @@ namespace gui
 */
 // Created: SBO 2006-04-18
 // =============================================================================
-class ObjectPrototype_ABC : public QGroupBox
+class ObjectPrototype_ABC : public Q3GroupBox
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::Team_ABC >
                           , public tools::ElementObserver_ABC< kernel::ModelLoaded >

@@ -10,8 +10,15 @@
 #ifndef __CreateExerciceWidget_h_
 #define __CreateExerciceWidget_h_
 
-#include <qgroupbox.h>
 #include <boost/noncopyable.hpp>
+#pragma warning( push, 0 )
+#include <QtGui/qcombobox.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3listbox.h>
+#include <Qt3Support/q3listview.h>
+#include <QtGui/qlineedit.h>
+#pragma warning( pop )
+
 
 class ScenarioEditPage;
 
@@ -31,7 +38,7 @@ class QComboBox;
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class CreateExerciceWidget : public QGroupBox
+class CreateExerciceWidget : public Q3GroupBox
                            , private boost::noncopyable
 {
     Q_OBJECT
@@ -59,7 +66,7 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( QListBoxItem* item );
+    void OnSelectionChanged( Q3ListBoxItem* item );
     //@}
 
 private:
@@ -71,9 +78,9 @@ private:
     QLineEdit*                  editName_;
     QComboBox*                  editTerrainList_;
     QComboBox*                  editModelList_;
-    QGroupBox*                  saveAsGroupBox_;
-    QListBox*                   exerciseList_;
-    QListView*                  contentList_;
+    Q3GroupBox*                  saveAsGroupBox_;
+    Q3ListBox*                   exerciseList_;
+    Q3ListView*                  contentList_;
     //@}
 };
 

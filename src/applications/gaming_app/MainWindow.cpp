@@ -146,7 +146,7 @@ using namespace kernel;
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation,
                         Network& network, const Profile_ABC& p, tools::SessionConfig& config, LoggerProxy& logger,
                         const RcEntityResolver_ABC& rcResolver, const QString& license )
-    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+                        : QMainWindow()
     , controllers_     ( controllers )
     , staticModel_     ( staticModel )
     , model_           ( model )
@@ -163,6 +163,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , onPlanif_        ( false )
 
 {
+    setAttribute( Qt::WA_DeleteOnClose, true ); 
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
@@ -199,42 +200,52 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // Logger
-    QDockWindow* pLogDockWnd_ = new QDockWindow( this, "log" );
-    moveDockWindow( pLogDockWnd_, Qt::DockBottom );
+    QDockWidget* pLogDockWnd_ = new QDockWidget( "log", this );
+    pLogDockWnd_->setObjectName( "log" );
+    addDockWidget( Qt::BottomDockWidgetArea, pLogDockWnd_ );
     gui::Logger* pLogPanel_ = new gui::Logger( pLogDockWnd_, *factory, simulation, "./Debug/Gaming.log" );
     pLogDockWnd_->setWidget( pLogPanel_ );
-    pLogDockWnd_->setResizeEnabled( true );
-    pLogDockWnd_->setCloseMode( QDockWindow::Always );
-    pLogDockWnd_->setCaption( tr( "Log" ) );
-    setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
+    pLogDockWnd_->setWindowTitle( tr( "Log" ) );
     pLogDockWnd_->hide();
     logger.SetLogger( *pLogPanel_ );
 
     // Standard toolbars
-    new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
-    new gui::DisplayToolbar( this, controllers );
-    new EventToolbar( this, controllers, profile );
+    
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
-    new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
+    gui::GisToolbar* gToolBar = new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
+    EventToolbar* eToolBar = new EventToolbar( this, controllers, profile );
+    gui::DisplayToolbar* dToolBar = new gui::DisplayToolbar( this, controllers );
+    SIMControlToolbar* sToolBar = new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
+
+    addToolBar( sToolBar );
+    addToolBar( dToolBar );
+    addToolBar( eToolBar );
+    addToolBar( gToolBar );
 
     // A few layers
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
-    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
+    gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer );
+    addToolBar( LocEditToolBar );
+    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *LocEditToolBar );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_, *simpleFilter_ );
     ::FormationLayer* formationLayer = new ::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_, *simpleFilter_ );
 
-    // Agent list panel
-    QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );
-    moveDockWindow( pListDockWnd_, Qt::DockLeft );
-    QVBox* box = new QVBox( pListDockWnd_ );
-    new OrbatToolbar( box, controllers, profile, *automatsLayer, *formationLayer );
-    QTabWidget* pListsTabWidget = new QTabWidget( box );
+    addToolBarBreak();
 
+    // Profile
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
+
+    // Agent list panel
+    QDockWidget* pListDockWnd_ = new QDockWidget( this );
+    pListDockWnd_->setObjectName( "agentList" );
+    addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
+    Q3VBox* box = new Q3VBox( pListDockWnd_ );
+    new OrbatToolbar( box, controllers, profile, *automatsLayer, *formationLayer );
+    QTabWidget* pListsTabWidget = new QTabWidget( box );
 
     pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
     pListsTabWidget->addTab( new AgentList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
@@ -243,74 +254,61 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, profile ), tr( "Populations" ) );
     pListsTabWidget->addTab( new gui::IntelligenceList( controllers, *factory, *icons, profile ), tr( "Intelligences" ) );
     pListDockWnd_->setWidget( box );
-    pListDockWnd_->setResizeEnabled( true );
-    pListDockWnd_->setCloseMode( QDockWindow::Always );
-    pListDockWnd_->setCaption( tr( "Orbat" ) );
-    setDockEnabled( pListDockWnd_, Qt::DockTop, false );
+    pListDockWnd_->setWindowTitle( tr( "Orbat" ) );
 
     // Mini views
     gui::MiniViews* miniviews = new gui::MiniViews( this, controllers_ );
+    addDockWidget( Qt::RightDockWidgetArea, miniviews );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), miniviews, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     miniviews->hide();
 
     // Properties
-    QDockWindow* pPropertiesWnd = new QDockWindow( this, "properties" );
-    moveDockWindow( pPropertiesWnd, Qt::DockLeft );
+    QDockWidget* pPropertiesWnd = new QDockWidget( "properties", this );
+    pPropertiesWnd->setObjectName( "properties" );
     Properties* properties = new Properties( pPropertiesWnd, controllers );
     pPropertiesWnd->setWidget( properties );
-    pPropertiesWnd->setResizeEnabled( true );
-    pPropertiesWnd->setCloseMode( QDockWindow::Always );
-    pPropertiesWnd->setCaption( tr( "Properties" ) );
-    setDockEnabled( pPropertiesWnd, Qt::DockTop, false );
+    pPropertiesWnd->setWindowTitle( tr( "Properties" ) );
+    addDockWidget( Qt::LeftDockWidgetArea, pPropertiesWnd );
     pPropertiesWnd->hide();
 
     // Info panel
-    QDockWindow* pInfoDockWnd_ = new QDockWindow( this, "oldinfo" );
-    moveDockWindow( pInfoDockWnd_, Qt::DockRight );
+    QDockWidget* pInfoDockWnd_ = new QDockWidget( "oldinfo", this );
+    pInfoDockWnd_->setObjectName( "oldInfo" );
+    addDockWidget( Qt::RightDockWidgetArea, pInfoDockWnd_ );
     InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory, model_.actions_, staticModel_, simulation );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
-    pInfoDockWnd_->setResizeEnabled( true );
-    pInfoDockWnd_->setCloseMode( QDockWindow::Always );
-    pInfoDockWnd_->setCaption( tr( "Knowledge" ) );
-    setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
+    pInfoDockWnd_->setWindowTitle( tr( "Knowledge" ) );
     pInfoDockWnd_->hide();
 
      // Mission panel
     pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
-    moveDockWindow( pMissionPanel_, Qt::DockLeft );
-    setDockEnabled( pMissionPanel_, Qt::DockTop, false );
-    setAppropriate( pMissionPanel_, false );
+    addDockWidget( Qt::LeftDockWidgetArea, pMissionPanel_ );
     pMissionPanel_->hide();
 
     // Chat
-    QDockWindow* chatDock = new ChatDock( this, controllers_, publisher, network.GetCommands() );
-    moveDockWindow( chatDock, Qt::DockBottom );
+    QDockWidget* chatDock = new ChatDock( this, controllers_, publisher, network.GetCommands() );
+    addDockWidget( Qt::BottomDockWidgetArea, chatDock );
     chatDock->hide();
 
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, profile );
     new ClientCommandFacade( this, controllers_, publisher );
 
     // Info
-    QDockWindow* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
-    moveDockWindow( infoWnd, Qt::DockBottom );
-    setDockEnabled( infoWnd, Qt::DockTop, false );
+    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
+    addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
 
     // Clock
     ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
-    QDockWindow* clockWnd = new ClockDock( this, controllers_, simulation, *scheduler );
-    moveDockWindow( clockWnd, Qt::DockRight );
-    setDockEnabled( clockWnd, Qt::DockTop, false );
+    QDockWidget* clockWnd = new ClockDock( this, controllers_, simulation, *scheduler );
+    addDockWidget( Qt::RightDockWidgetArea, clockWnd );
 
     // Profiler
-    QDockWindow* pProfilerDockWnd_ = new QDockWindow( this, "profiler" );
-    moveDockWindow( pProfilerDockWnd_, Qt::DockRight );
+    QDockWidget* pProfilerDockWnd_ = new QDockWidget( "profiler", this );
+    pProfilerDockWnd_->setObjectName( "profiler" );
+    addDockWidget( Qt::RightDockWidgetArea, pProfilerDockWnd_ );
     ProfilingPanel* profilingPanel_ = new ProfilingPanel( pProfilerDockWnd_, controllers_, network_, simulation );
     pProfilerDockWnd_->setWidget( profilingPanel_ );
-    pProfilerDockWnd_->setResizeEnabled( true );
-    pProfilerDockWnd_->setCloseMode( QDockWindow::Always );
-    pProfilerDockWnd_->setCaption( tr( "Profiling" ) );
-    setDockEnabled( pProfilerDockWnd_, Qt::DockTop, false );
-    setAppropriate( pProfilerDockWnd_, false );
+    pProfilerDockWnd_->setWindowTitle( tr( "Profiling" ) );
     pProfilerDockWnd_->hide();
 
     // Layers
@@ -319,18 +317,17 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     WeatherLayer* meteoLayer = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker );
 
     // object/unit creation window
-    QDockWindow* pCreationWnd = new QDockWindow( this, "creation" );
-    moveDockWindow( pCreationWnd, Qt::DockRight );
+    QDockWidget* pCreationWnd = new QDockWidget( "creation", this );
+    pCreationWnd->setObjectName( "creation" );
+    addDockWidget( Qt::RightDockWidgetArea, pCreationWnd );
     pCreationWnd->hide();
     CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *meteoLayer, *glProxy_, *symbols, *strategy_, model_.drawings_, config_ );
     pCreationWnd->setWidget( creationPanels );
-    pCreationWnd->setResizeEnabled( true );
-    pCreationWnd->setCloseMode( QDockWindow::Always );
-    pCreationWnd->setCaption( tr( "Creation" ) );
-    setDockEnabled( pCreationWnd, Qt::DockTop, false );
+    pCreationWnd->setWindowTitle( tr( "Creation" ) );
 
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
+    addToolBar( replayerToolbar );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
     IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog, simulation );
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *paramLayer, staticModel_, *plotFactory );
@@ -338,7 +335,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Actions panel
     {
         TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, profile );
-        moveDockWindow( timelinePanel, Qt::DockTop );
+        addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnPlanifStateChange() ) );
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnNameChanged() ) );
         timelinePanel->hide();
@@ -346,43 +343,34 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Score panel
     {
         ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory, *interpreter, *plotFactory, *indicatorExportDialog, model_.scores_, config );
-        moveDockWindow( scorePanel, Qt::DockRight );
-        setDockEnabled( scorePanel, Qt::DockTop, false );
+        addDockWidget( Qt::RightDockWidgetArea, scorePanel );
         scorePanel->hide();
     }
     // Notes panel
     {
         NotesPanel* notePanel = new NotesPanel( this, controllers_.controller_, *factory, model_.notes_, publisher );
-        moveDockWindow( notePanel, Qt::DockRight );
-        setDockEnabled( notePanel, Qt::DockTop, false );
+        addDockWidget( Qt::RightDockWidgetArea, notePanel );
     }
     // Message panel
     {
-        QDockWindow* messageDock = new MessagePanel( this, controllers_, publisher, network.GetCommands() );
-        setAppropriate( messageDock, false );
-        setDockEnabled( messageDock, Qt::DockBottom, false );
-        setDockEnabled( messageDock, Qt::DockLeft, false );
-        setDockEnabled( messageDock, Qt::DockRight, false );
-        moveDockWindow( messageDock, Qt::DockTop, true, -1 );
+        QDockWidget* messageDock = new MessagePanel( this, controllers_, publisher, network.GetCommands() );
+        addDockWidget( Qt::TopDockWidgetArea, messageDock );
     }
     // ResourceNetwork panel
     {
-        QDockWindow* pResourceWnd = new ResourceLinksDialog( this, controllers, model_.actions_, staticModel, simulation );
-        moveDockWindow( pResourceWnd, Qt::DockLeft );
-        setDockEnabled( pResourceWnd, Qt::DockTop, false );
+        QDockWidget* pResourceWnd = new ResourceLinksDialog( this, controllers, model_.actions_, staticModel, simulation );
+        addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
         pResourceWnd->hide();
     }
     // Extensions panel
     {
         pExtensionsPanel_ = new ExtensionsPanel( this, controllers, model, staticModel_, simulation, *factory, *icons, profile, "ExtensionsPanel" );
-        moveDockWindow( pExtensionsPanel_, Qt::DockLeft );
-        setDockEnabled( pExtensionsPanel_, Qt::DockTop, false );
-        setAppropriate( pExtensionsPanel_, false );
+        addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
     }
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
-    new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );
+    setMenuBar( new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger ) );
 
     CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, profile, simulation, *picker );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
@@ -500,6 +488,7 @@ void MainWindow::OnPlanifStateChange()
 }
 
 // -----------------------------------------------------------------------------
+
 // Name: MainWindow::Load
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
@@ -512,13 +501,7 @@ void MainWindow::Load()
         selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
-        if( staticModel_.extensionTypes_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
-            setAppropriate( pExtensionsPanel_, true );
-        else
-        {
-            setAppropriate( pExtensionsPanel_, false );
-            pExtensionsPanel_->hide();
-        }
+        pExtensionsPanel_->hide();
         ReadOptions();
     }
     catch( xml::exception& e )
@@ -575,7 +558,7 @@ void MainWindow::WriteSettings()
     if( savedState_.isNull() || savedState_.isEmpty() )
     {
         QTextStream stream( &savedState_, IO_WriteOnly );
-        stream << *this;
+        stream << this;
     }
     settings.writeEntry( "/Panels", savedState_ );
     settings.WriteMainWindowEntries( "/MainWindow", *this );
@@ -595,8 +578,8 @@ void MainWindow::ReadSettings()
     // Pannel configuration
     QString strDockConfig;
     strDockConfig = settings.readEntry( "/Panels" );
-    QTextStream strDockConfigStream( &strDockConfig, IO_ReadOnly );
-    strDockConfigStream >> *this;
+    QTextStream strDockConfigStream( &strDockConfig, QIODevice::ReadOnly );
+//  strDockConfigStream >> *this; $$$$ FPT 2011-08-03: operator doesnt exists anymore.
 
     // Main window configuration
     settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
@@ -762,18 +745,16 @@ void MainWindow::ToggleFullScreen()
 // -----------------------------------------------------------------------------
 void MainWindow::ToggleDocks()
 {
-    if( savedState_.isNull() || savedState_.isEmpty() )
+    if( docks_.isNull() || docks_.isEmpty() )
     {
-        QTextStream stream( &savedState_, IO_WriteOnly );
-        stream << *this;
-        QPtrList< QDockWindow > docks = dockWindows();
-        for( QPtrList< QDockWindow >::iterator it = docks.begin(); it != docks.end(); ++it )
+        docks_ = saveState();
+        QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
+        for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
             (*it)->hide();
     }
     else
     {
-        QTextStream stream( &savedState_, IO_ReadOnly );
-        stream >> *this;
-        savedState_ = QString::null;
+        if ( restoreState( docks_ ) )
+            docks_ = 0;
     }
 }

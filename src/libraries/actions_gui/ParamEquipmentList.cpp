@@ -43,12 +43,12 @@ ParamEquipmentList::~ParamEquipmentList()
 
 namespace
 {
-    QListView* CreateList( QWidget* parent )
+    Q3ListView* CreateList( QWidget* parent )
     {
-        QListView* list = new QListView( parent );
+        Q3ListView* list = new Q3ListView( parent );
         list->addColumn( "" );
         list->header()->hide();
-        list->setResizeMode( QListView::LastColumn );
+        list->setResizeMode( Q3ListView::LastColumn );
         list->setAllColumnsShowFocus( true );
         return list;
     }
@@ -60,7 +60,7 @@ namespace
 // -----------------------------------------------------------------------------
 QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
 {
-    QHBox* hBox = new QHBox( parent );
+    Q3HBox* hBox = new Q3HBox( parent );
     {
         baseList_ = CreateList( hBox );
         baseList_->setSorting( 0, true );
@@ -71,7 +71,7 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
             ::gui::ValuedListItem* item = new ::gui::ValuedListItem( baseList_ );
             item->SetNamed( type );
         }
-        QVBox* buttonBox = new QVBox( hBox );
+        Q3VBox* buttonBox = new Q3VBox( hBox );
         buttonBox->layout()->setAlignment( Qt::AlignVCenter );
         QPushButton* addBtn = new QPushButton( MAKE_ICON( right_arrow ), QString::null, buttonBox );
         addBtn->setFixedSize( 32, 32 );
@@ -79,19 +79,19 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
         removeBtn->setFixedSize( 32, 32 );
 
         connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
-        connect( baseList_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnAdd() ) );
+        connect( baseList_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnAdd() ) );
         connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
     }
     {
         list_ = CreateList( hBox );
         list_->setSorting( -1, true );
-        QVBox* buttonBox = new QVBox( hBox );
+        Q3VBox* buttonBox = new Q3VBox( hBox );
         buttonBox->layout()->setAlignment( Qt::AlignVCenter );
         QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, buttonBox );
         upBtn->setFixedSize( 32, 32 );
         QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, buttonBox );
         downBtn->setFixedSize( 32, 32 );
-        connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnRemove() ) );
+        connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRemove() ) );
         connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
         connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     }
@@ -105,7 +105,7 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
 void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     std::auto_ptr< actions::parameters::MaintenancePriorities > param( new actions::parameters::MaintenancePriorities( parameter_ ) );
-    for( QListViewItemIterator it( list_ ); it.current(); ++it )
+    for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
         param->AddPriority( *static_cast< const ::gui::ValuedListItem* >( it.current() )->GetValue< kernel::EquipmentType >() );
     action.AddParameter( *param.release() );
 }
@@ -116,7 +116,7 @@ void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) con
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::OnUp()
 {
-    QListViewItem* item = list_->currentItem();
+    Q3ListViewItem* item = list_->currentItem();
     if( item && item->itemAbove() )
         item->itemAbove()->moveItem( item );
 }
@@ -127,7 +127,7 @@ void ParamEquipmentList::OnUp()
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::OnDown()
 {
-    QListViewItem* item = list_->currentItem();
+    Q3ListViewItem* item = list_->currentItem();
     if( item && item->itemBelow() )
         item->moveItem( item->itemBelow() );
 }
@@ -154,7 +154,7 @@ void ParamEquipmentList::OnRemove()
 // Name: ParamEquipmentList::Move
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::Move( QListView* from, QListView* to )
+void ParamEquipmentList::Move( Q3ListView* from, Q3ListView* to )
 {
     ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( from->selectedItem() );
     if( item )

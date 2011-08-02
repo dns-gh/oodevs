@@ -22,7 +22,7 @@ namespace gui
 */
 // Created: SBO 2006-08-08
 // =============================================================================
-class Panels : public QVBox
+class Panels : public Q3VBox
              , public gui::PanelStack_ABC
 {
     Q_OBJECT;
@@ -87,7 +87,7 @@ private:
     QPushButton*        previous_;
     QPushButton*        next_;
     QComboBox*          combo_;
-    QWidgetStack*       stack_;
+    Q3WidgetStack*       stack_;
     QWidget*            dummy_;
 
     T_SelectedWidgets   widgets_;

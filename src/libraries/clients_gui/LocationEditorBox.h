@@ -27,7 +27,7 @@ namespace gui
 */
 // Created: AME 2010-03-12
 // =============================================================================
-class LocationEditorBox : public QHBox
+class LocationEditorBox : public Q3HBox
 {
     Q_OBJECT;
 public:
@@ -78,12 +78,12 @@ private:
     QLabel* latitudeLabel_;
     QLabel* longitudeLabel_;
     QToolButton* choiceParserButton_;
-    QPopupMenu* parserMenu_;
+    Q3PopupMenu* parserMenu_;
     QLineEdit* singleField_;
-    QPopupMenu* subMenu_;
-    QListBox* list_;
-    QHBox* coordBox_;
-    QHBox* valueBox_;
+    QMenu* subMenu_;
+    Q3ListBox* list_;
+    Q3HBox* coordBox_;
+    Q3HBox* valueBox_;
     int parserSelected_;
     //@}
 };

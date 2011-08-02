@@ -16,7 +16,7 @@
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
 ReportFilterOptions::ReportFilterOptions( QWidget* pParent )
-    : QVBox( pParent )
+    : Q3VBox( pParent )
 {
     QCheckBox* pDisplayRCs = new QCheckBox( tr( "Display reports" ), this );
     QCheckBox* pDisplayTraces = new QCheckBox( tr( "Display traces" ), this );
@@ -113,7 +113,7 @@ void ReportFilterOptions::OnToggleWarnings()
 // Name: ReportFilterOptions::AddMenuItem
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::AddMenuItem( QPopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const
+void ReportFilterOptions::AddMenuItem( Q3PopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const
 {
     int id = menu->insertItem( name );
     menu->setItemChecked( id, toDisplay_.find( type ) != toDisplay_.end() );
@@ -124,7 +124,7 @@ void ReportFilterOptions::AddMenuItem( QPopupMenu* menu, const QString& name, Re
 // Name: ReportFilterOptions::AddContextMenu
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::AddContextMenu( QPopupMenu* menu ) const
+void ReportFilterOptions::AddContextMenu( Q3PopupMenu* menu ) const
 {
     menu->insertSeparator();
     AddMenuItem( menu, tr( "Show reports" ) , Report::eRC      , SLOT( OnToggleRCs     () ) );

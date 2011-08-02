@@ -25,7 +25,7 @@ using namespace actions;
 // Name: AgentMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-AgentMission::AgentMission( const Entity_ABC& entity, const kernel::MissionType& mission, Controller& controller, bool registered /*= true*/ )
+AgentMission::AgentMission( const Entity_ABC& entity, const kernel::MissionType& mission, Controller& controller, bool registered /* = true*/ )
     : Mission( entity, mission, controller, registered )
 {
     // NOTHING

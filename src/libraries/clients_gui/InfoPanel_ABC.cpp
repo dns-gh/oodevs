@@ -18,19 +18,13 @@ using namespace gui;
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
 InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name, const char* qtName )
-    : QScrollView( parent, qtName )
-    , stack_( panel )
-    , name_ ( name )
-    , pBox_ ( new QVBox( viewport() ) )
+    : QScrollArea( parent )
+    , stack_     ( panel )
+    , name_      ( name )
 {
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    setResizePolicy( AutoOneFit );
+    setName( qtName );
     setFrameStyle( QFrame::Box | QFrame::Sunken );
-
-    addChild( pBox_ );
-    pBox_->setMargin( 5 );
-    pBox_->setSpacing( 5 );
+    setWidgetResizable( true );	
 }
 
 // -----------------------------------------------------------------------------
@@ -58,35 +52,6 @@ void InfoPanel_ABC::Show()
 void InfoPanel_ABC::Hide()
 {
     stack_.Remove( this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoPanel_ABC::insertChild
-// Created: AGE 2005-09-21
-// -----------------------------------------------------------------------------
-void InfoPanel_ABC::insertChild( QObject* pObj )
-{
-    pBox_->insertChild( pObj );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoPanel_ABC::layout
-// Created: SBO 2005-09-23
-// -----------------------------------------------------------------------------
-QLayout* InfoPanel_ABC::layout()
-{
-    if( !pBox_ )
-        return 0;
-    return pBox_->layout();
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoPanel_ABC::sizeHint
-// Created: AGE 2006-02-17
-// -----------------------------------------------------------------------------
-QSize InfoPanel_ABC::sizeHint() const
-{
-    return QSize( 640, 1280 );
 }
 
 // -----------------------------------------------------------------------------

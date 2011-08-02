@@ -31,7 +31,7 @@ namespace kernel
 */
 // Created: SBO 2007-02-28
 // =============================================================================
-class InfoSummariesWidget : public QVBox
+class InfoSummariesWidget : public Q3VBox
                           , public tools::Observer_ABC
                           , public tools::SelectionObserver< kernel::Entity_ABC >
                           , public tools::ElementObserver_ABC< kernel::Entity_ABC >

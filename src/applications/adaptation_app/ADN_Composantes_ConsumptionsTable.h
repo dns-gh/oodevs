@@ -12,7 +12,7 @@
 
 #include "ADN_Table.h"
 #include "ADN_Equipement_Data.h"
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 #include <boost/noncopyable.hpp>
 
 class ADN_ListView_Composantes;

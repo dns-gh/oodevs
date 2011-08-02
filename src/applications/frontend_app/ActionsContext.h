@@ -13,7 +13,7 @@
 #include <string>
 #include <map>
 
-class QListBox;
+class Q3ListBox;
 class QString;
 
 // =============================================================================
@@ -33,8 +33,8 @@ public:
 
     //! @name Widget operations
     //@{
-    void Load( const std::string& name, QListBox* widget ) const;
-    void Save( const std::string& name, const QListBox* widget );
+    void Load( const std::string& name, Q3ListBox* widget ) const;
+    void Save( const std::string& name, const Q3ListBox* widget );
     void Save( const std::string& name, const QString& value );
     //@}
 

@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "RichListItem.h"
-#include <qpainter.h>
+#include <QtGui/qpainter.h>
 
 using namespace gui;
 
@@ -22,8 +22,8 @@ namespace
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListView * parent )
-    : QListViewItem( parent )
+RichListItem::RichListItem( Q3ListView * parent )
+    : Q3ListViewItem( parent )
     , font_( parent->font() )
     , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
@@ -35,8 +35,8 @@ RichListItem::RichListItem( QListView * parent )
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListView * parent, QListViewItem * after )
-    : QListViewItem( parent, after )
+RichListItem::RichListItem( Q3ListView * parent, Q3ListViewItem * after )
+    : Q3ListViewItem( parent, after )
     , font_( parent->font() )
     , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
@@ -48,21 +48,8 @@ RichListItem::RichListItem( QListView * parent, QListViewItem * after )
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : QListViewItem( parent )
-    , font_( parent->font() )
-    , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
-    , even_( InitializeColor() )
-{
-    AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichListItem constructor
-// Created: APE 2004-09-08
-// -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : QListViewItem( parent, after )
+RichListItem::RichListItem( Q3ListView * parent, QString label1, QString label2 /* = QString::null*/, QString label3 /* = QString::null*/, QString label4 /* = QString::null*/, QString label5 /* = QString::null*/, QString label6 /* = QString::null*/, QString label7 /* = QString::null*/, QString label8 /* = QString::null*/ )
+    : Q3ListViewItem( parent )
     , font_( parent->font() )
     , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
@@ -74,8 +61,21 @@ RichListItem::RichListItem( QListView * parent, QListViewItem * after, QString l
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListViewItem * parent )
-    : QListViewItem( parent )
+RichListItem::RichListItem( Q3ListView * parent, Q3ListViewItem * after, QString label1, QString label2 /* = QString::null*/, QString label3 /* = QString::null*/, QString label4 /* = QString::null*/, QString label5 /* = QString::null*/, QString label6 /* = QString::null*/, QString label7 /* = QString::null*/, QString label8 /* = QString::null*/ )
+    : Q3ListViewItem( parent, after )
+    , font_( parent->font() )
+    , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
+    , even_( InitializeColor() )
+{
+    AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem constructor
+// Created: APE 2004-09-08
+// -----------------------------------------------------------------------------
+RichListItem::RichListItem( Q3ListViewItem * parent )
+    : Q3ListViewItem( parent )
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
@@ -87,8 +87,8 @@ RichListItem::RichListItem( QListViewItem * parent )
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after )
-    : QListViewItem( parent, after )
+RichListItem::RichListItem( Q3ListViewItem * parent, Q3ListViewItem * after )
+    : Q3ListViewItem( parent, after )
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
@@ -100,8 +100,8 @@ RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after )
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : QListViewItem( parent )
+RichListItem::RichListItem( Q3ListViewItem * parent, QString label1, QString label2 /* = QString::null*/, QString label3 /* = QString::null*/, QString label4 /* = QString::null*/, QString label5 /* = QString::null*/, QString label6 /* = QString::null*/, QString label7 /* = QString::null*/, QString label8 /* = QString::null*/ )
+    : Q3ListViewItem( parent )
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
@@ -113,8 +113,8 @@ RichListItem::RichListItem( QListViewItem * parent, QString label1, QString labe
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
 // -----------------------------------------------------------------------------
-RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : QListViewItem( parent, after )
+RichListItem::RichListItem( Q3ListViewItem * parent, Q3ListViewItem * after, QString label1, QString label2 /* = QString::null*/, QString label3 /* = QString::null*/, QString label4 /* = QString::null*/, QString label5 /* = QString::null*/, QString label6 /* = QString::null*/, QString label7 /* = QString::null*/, QString label8 /* = QString::null*/ )
+    : Q3ListViewItem( parent, after )
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
@@ -269,7 +269,7 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
             brush.setColor( GetBackgroundColor() );
     }
 
-    QSimpleRichText* pRichText = columns_[ nColumn ].rich;
+    Q3SimpleRichText* pRichText = columns_[ nColumn ].rich;
     pRichText->setWidth( nWidth );
     setHeight( Height() + 2 * ::margin );
 
@@ -292,7 +292,7 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
 // Name: RichListItem::width
 // Created: APE 2004-09-07
 // -----------------------------------------------------------------------------
-int RichListItem::width( const QFontMetrics& /*fm*/, const QListView* /*lv*/, int nColumn ) const
+int RichListItem::width( const QFontMetrics& /*fm*/, const Q3ListView* /*lv*/, int nColumn ) const
 {
     return Width( nColumn );
 }
@@ -368,9 +368,9 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
 // Name: RichListItem::CreateRichText
 // Created: AGE 2006-03-06
 // -----------------------------------------------------------------------------
-QSimpleRichText* RichListItem::CreateRichText( const QString& label )
+Q3SimpleRichText* RichListItem::CreateRichText( const QString& label )
 {
-    QSimpleRichText* text = new QSimpleRichText( label, font_ );
+    Q3SimpleRichText* text = new Q3SimpleRichText( label, font_ );
     if( text->height() > height() )
         setHeight( text->height() );
     return text;
@@ -416,7 +416,7 @@ QString RichListItem::GetAnchorAt( const QPoint globalPos, int nColumn ) const
     if( nColumn < 0 || nColumn >= ( int ) columns_.size() || ! columns_[ nColumn ].rich )
         return QString::null;
 
-    QListView* pListView = listView();
+    Q3ListView* pListView = listView();
     QRect itemRect = pListView->itemRect( this );
     QPoint topLeft = itemRect.topLeft();
     QPoint topLeftWorld = pListView->viewport()->mapToGlobal( topLeft );

@@ -45,7 +45,7 @@ class StaticModel;
 */
 // Created: SBO 2009-04-16
 // =============================================================================
-class ScoreList : public QVBox
+class ScoreList : public Q3VBox
                 , public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< Score_ABC >
 {
@@ -107,7 +107,7 @@ private:
     gui::ListDisplayer< ScoreList >* scores_;
     ScoreEditor* editor_;
     const tools::ExerciseConfig& config_;
-    QHBox* generatorBox_;
+    Q3HBox* generatorBox_;
     //@}
 };
 

@@ -31,7 +31,7 @@ class LauncherClientPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             LauncherClientPage( QWidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags, frontend::LauncherClient& launcher );
+             LauncherClientPage( Q3WidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags, frontend::LauncherClient& launcher );
     virtual ~LauncherClientPage();
     //@}
 

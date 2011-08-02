@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_NbcAgentListView.h"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Connector_ListView.h"
@@ -25,12 +25,12 @@ typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
 // Name: ADN_NBC_NbcAgentListView constructor
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
-ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // add one column
     addColumn( tr( "NBC Agents") );
-    setResizeMode(QListView::AllColumns);
+    setResizeMode(Q3ListView::AllColumns);
 
     // connector creation
     pConnector_ = new ADN_Connector_ListView<NbcAgentInfos>(*this);
@@ -78,7 +78,7 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_NBC_NbcAgentListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_NBC_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

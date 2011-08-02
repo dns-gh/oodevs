@@ -10,7 +10,7 @@
 #ifndef __InfoBubble_h_
 #define __InfoBubble_h_
 
-#include <qhgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
 
 class QLabel;
 
@@ -20,7 +20,7 @@ class QLabel;
 */
 // Created: SBO 2007-10-05
 // =============================================================================
-class InfoBubble : public QHGroupBox
+class InfoBubble : public Q3HGroupBox
 {
 public:
     //! @name Constructors/Destructor

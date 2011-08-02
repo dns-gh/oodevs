@@ -19,19 +19,19 @@ namespace gui
 */
 // Created: SBO 2007-01-03
 // =============================================================================
-class PreferencesList : public QListView
+class PreferencesList : public Q3ListView
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PreferencesList( QWidget* parent, QWidgetStack& pages );
+             PreferencesList( QWidget* parent, QStackedWidget& pages );
     virtual ~PreferencesList();
     //@}
 
     //! @name Operations
     //@{
     void AddPage( const QString& name, QWidget* widget );
-    virtual void setCurrentItem( QListViewItem* item );
+    virtual void setCurrentItem( Q3ListViewItem* item );
     //@}
 
 private:
@@ -49,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QWidgetStack& pages_;
+    QStackedWidget& pages_;
     T_Widgets widgets_;
     //@}
 };

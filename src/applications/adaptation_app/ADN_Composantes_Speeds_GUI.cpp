@@ -60,7 +60,7 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI(QWidget * parent )
 {
     // peut etre selectionne & trie
     setSorting(true);
-    setSelectionMode(QTable::Single);
+    setSelectionMode(Q3Table::Single);
     setShowGrid(false);
     setLeftMargin(0);
 

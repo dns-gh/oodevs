@@ -13,7 +13,7 @@
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <qpushbutton.h>
+#include <QtGui/qpushbutton.h>
 
 // =============================================================================
 /** @class  ADN_EquipementSelector

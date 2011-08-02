@@ -16,7 +16,7 @@
 #include <boost/noncopyable.hpp>
 
 class ADN_Automata_Data;
-class QListViewItem;
+class Q3ListViewItem;
 
 // =============================================================================
 // Created: APE 2005-04-04
@@ -37,7 +37,7 @@ private:
     //@{
     void BuildHeaders();
     void BuildBody   ();
-    void InsertCategory( QListViewItem&                         parent,
+    void InsertCategory( Q3ListViewItem&                         parent,
                          ADN_Composantes_Data::CategoryInfos&   category,
                          ADN_Composantes_Data::ConsumptionItem& conso );
     //@}
@@ -99,7 +99,7 @@ private:
     double GetMinEngineStartedAutonomy( const T_CategoryEntry& entry ) const;
     void   AddEntryToTotal            ( const T_CategoryEntry& entry, T_CategoryEntry& total, uint nArity );
     void   ClearEntry                 (       T_CategoryEntry& entry );
-    void   FillTotalItem              (         QListViewItem& item, const T_CategoryEntry& entry ) const;
+    void   FillTotalItem              (         Q3ListViewItem& item, const T_CategoryEntry& entry ) const;
     //@}
 
 private:

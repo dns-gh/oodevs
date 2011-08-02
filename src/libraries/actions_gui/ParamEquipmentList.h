@@ -62,7 +62,7 @@ private:
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;
-    void Move( QListView* from, QListView* to );
+    void Move( Q3ListView* from, Q3ListView* to );
     //@}
 
 private:
@@ -70,8 +70,8 @@ private:
     //@{
     kernel::OrderParameter parameter_;
     const tools::Resolver< kernel::EquipmentType >& resolver_;
-    QListView* baseList_;
-    QListView* list_;
+    Q3ListView* baseList_;
+    Q3ListView* list_;
     //@}
 };
 }

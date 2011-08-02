@@ -12,17 +12,19 @@
 #include "ADN_Composantes_GUI.h"
 #include "moc_ADN_Composantes_GUI.cpp"
 
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qgrid.h>
-#include <qwhatsthis.h>
-#include <qtabwidget.h>
-#include <qdialog.h>
+#include <Qt3Support/q3frame.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3vgroupbox.h>
+#include <Qt3Support/q3hgroupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3vbox.h>
+#include <Qt3Support/q3grid.h>
+#include <Qt3Support/q3whatsthis.h>
+#include <QtGui/qtabwidget.h>
+#include <QtGui/qdialog.h>
+//Added by qt3to4:
+#include <Qt3Support/q3gridlayout.h>
 
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
@@ -89,7 +91,7 @@ void ADN_Composantes_GUI::Build()
     pComposanteList_->GetConnector().Connect( &data_.GetComposantes() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Equipment" ), pMainWidget_ );
+    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Equipment" ), pMainWidget_ );
     QTabWidget* pTabWidget = new QTabWidget( pGroup );
 
     // Main page
@@ -118,7 +120,7 @@ void ADN_Composantes_GUI::Build()
     builder.AddOptionnalField<ADN_EditLine_Double>( pParamHolder, tr( "Max slope" ), vInfosConnectors[eHasMaxSlope], vInfosConnectors[eMaxSlope], tr( "%" ), eGreaterZero );
 
     // Troop/Crew groupbox
-    QGroupBox* pTroopGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Troop/Crew" ), pDataPage );
+    Q3GroupBox* pTroopGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Troop/Crew" ), pDataPage );
 
     ADN_GroupBox* pEmbarkTimesGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Troop transport" ), pTroopGroupBox );
     vInfosConnectors[eHasEmbarkTimes] = &pEmbarkTimesGroupBox->GetConnector();
@@ -127,7 +129,7 @@ void ADN_Composantes_GUI::Build()
     builder.AddField<ADN_TimeField>( pEmbarkTimesGroupBox, tr( "Disembark time per person" ), vInfosConnectors[eDisembarkingTimePerPerson] );
 
     // ID groupbox
-    QGroupBox* pIdGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Military codes" ), pDataPage );
+    Q3GroupBox* pIdGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Military codes" ), pDataPage );
 
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code NNO:" ),   vInfosConnectors[eNNOCode] );
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT6:" ), vInfosConnectors[eEMAT6Code] );
@@ -143,7 +145,7 @@ void ADN_Composantes_GUI::Build()
     builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Unloading time per ton" ), vInfosConnectors[eDisembarkingTimePerTon] );
 
     // Breakdowns
-    pBreakdownsGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ), pDataPage );
+    pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ), pDataPage );
 
     ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Attrition breakdowns" ).ascii(), pBreakdownsGroup_ );
     vInfosConnectors[eAttritionBreakdowns] = &pAttritionBreakdowns->GetConnector();
@@ -153,7 +155,7 @@ void ADN_Composantes_GUI::Build()
 
 
     // Speeds
-    QVGroupBox* pSpeedGroup = new QVGroupBox( tr( "Speeds" ), pDataPage );
+    Q3VGroupBox* pSpeedGroup = new Q3VGroupBox( tr( "Speeds" ), pDataPage );
     QWidget* pMaxSpeedHolder = builder.AddFieldHolder( pSpeedGroup );
     // Max speed
     builder.AddField<ADN_EditLine_Double>( pMaxSpeedHolder, tr( "Max speed" ), vInfosConnectors[eMaxSpeed], tr( "km/h" ), eGreaterZero );
@@ -162,37 +164,37 @@ void ADN_Composantes_GUI::Build()
     vInfosConnectors[eSpeeds] = &pSpeeds_->GetConnector();
 
     // Sensors
-    QHGroupBox* pSensorsGroup = new QHGroupBox( tr( "Sensors" ), pDataPage );
+    Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ), pDataPage );
     pSensors_ = new ADN_Composantes_Sensors_GUI( pSensorsGroup );
     vInfosConnectors[eSensors] = &pSensors_->GetConnector();
 
     // Special sensors
-    QHGroupBox* pRadarsGroup = new QHGroupBox( tr( "Special sensors" ), pDataPage );
+    Q3HGroupBox* pRadarsGroup = new Q3HGroupBox( tr( "Special sensors" ), pDataPage );
     pRadars_ = new ADN_Composantes_RadarsListView( pRadarsGroup );
     vInfosConnectors[eRadars] = &pRadars_->GetConnector();
 
     // Weapons
-    QHGroupBox* pWeaponsGroup = new QHGroupBox( tr( "Weapon systems" ), pDataPage );
+    Q3HGroupBox* pWeaponsGroup = new Q3HGroupBox( tr( "Weapon systems" ), pDataPage );
     pWeapons_ = new ADN_Composantes_WeaponsListView( pWeaponsGroup );
     vInfosConnectors[eWeapons] = &pWeapons_->GetConnector();
 
     // Active Protections
-    QHGroupBox* pActiveProtectionsGroup = new QHGroupBox( tr( "Active Protections" ), pDataPage );
+    Q3HGroupBox* pActiveProtectionsGroup = new Q3HGroupBox( tr( "Active Protections" ), pDataPage );
     pActiveProtections_ = new ADN_Composantes_ActiveProtectionsListView( pActiveProtectionsGroup );
     vInfosConnectors[eActiveProtections] = &pActiveProtections_->GetConnector();
 
     // Dotations
-    QHGroupBox* pDotationGroup = new QHGroupBox( tr( "Resources" ), pDataPage );
+    Q3HGroupBox* pDotationGroup = new Q3HGroupBox( tr( "Resources" ), pDataPage );
     pDotations_ = new ADN_Composantes_Dotations_GUI( true, pDotationGroup );
     vInfosConnectors[eDotations] = &pDotations_->GetConnector();
 
     // Consumptions
-    QHGroupBox* pConsumptionsGroup = new QHGroupBox( tr( "Consumptions" ), pDataPage );
+    Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ), pDataPage );
     pConsumptions_ = new ADN_Composantes_ConsumptionsTable( *pComposanteList_, pConsumptionsGroup );
     vInfosConnectors[eConsumptions] = &pConsumptions_->GetConnector();
 
     // Objects
-    QHGroupBox* pObjectsGroup = new QHGroupBox( tr( "Objects" ), pDataPage );
+    Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tr( "Objects" ), pDataPage );
     ADN_ListView_Composantes_Objects* pListObjects = new ADN_ListView_Composantes_Objects( pObjectsGroup );
     vInfosConnectors[eObjects] = &pListObjects->GetConnector();
 
@@ -234,12 +236,12 @@ void ADN_Composantes_GUI::Build()
 
 
     // Log page.
-    {
-        QVBox* pLogPage = new QVBox( pTabWidget );
-        pLogPage->layout()->setAlignment( Qt::AlignTop );
-        pLogPage->setMargin( 5 );
-        pLogPage->setSpacing( 5 );
-        pTabWidget->addTab( pLogPage, tr( "Log" ) );
+   {
+	 Q3VBox* pLogPage = new Q3VBox( pTabWidget );
+    pLogPage->layout()->setAlignment( Qt::AlignTop );
+    pLogPage->setMargin( 5 );
+    pLogPage->setSpacing( 5 );
+    pTabWidget->addTab( pLogPage, tr( "Log" ) );
 
         BuildHealth         ( pLogPage, vInfosConnectors );
         BuildSupply         ( pLogPage, vInfosConnectors );
@@ -248,7 +250,7 @@ void ADN_Composantes_GUI::Build()
 
     // Power indicators page
     {
-        QVBox* pPowerIndicatorsPage = new QVBox( pTabWidget );
+        Q3VBox* pPowerIndicatorsPage = new Q3VBox( pTabWidget );
         pPowerIndicatorsPage->setMargin( 5 );
         pPowerIndicatorsPage->setSpacing( 5 );
         pTabWidget->addTab( pPowerIndicatorsPage, tr( "Power indicators" ) );
@@ -260,11 +262,11 @@ void ADN_Composantes_GUI::Build()
     pComposanteList_->SetItemConnectors( vInfosConnectors );
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10 );
+    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10 );
     pMainLayout->addWidget( pComposanteList_, 1 );
     pMainLayout->addWidget( pGroup, 6 );
 
-    QGridLayout* pDataPageLayout = new QGridLayout( pDataPage, 6, 4, 5 );
+    Q3GridLayout* pDataPageLayout = new Q3GridLayout( pDataPage, 6, 4, 5 );
     pDataPageLayout->setAlignment( Qt::AlignTop );
 
     pDataPageLayout->addMultiCellWidget( pParamHolder      , 0, 0, 0, 0 );
@@ -296,7 +298,7 @@ QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& 
     ADN_GroupBox* pHealthGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Medical system" ), pParent );
     vInfosConnectors[eHasHealthLog] = & pHealthGroup->GetConnector();
 
-    QHBox* pAmbulanceHolder = new QHBox( pHealthGroup );
+    Q3HBox* pAmbulanceHolder = new Q3HBox( pHealthGroup );
     this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance, collection" ), vInfosConnectors, eHasAmbulance );
     this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance, evacuation" ), vInfosConnectors, eHasRAmbulance );
 
@@ -333,7 +335,7 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
     ADN_GroupBox* pAmbulanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, szName, pParent );
     vInfosConnectors[nIndex] = & pAmbulanceGroup->GetConnector();
 
-    QVBox* box = new QVBox( pAmbulanceGroup );
+    Q3VBox* box = new Q3VBox( pAmbulanceGroup );
     QWidget* pHolder = builder.AddFieldHolder( box );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Capacity" ), vInfosConnectors[nIndex+1], 0, eGreaterZero );
     pHolder = builder.AddFieldHolder( box );
@@ -341,7 +343,7 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
     pHolder = builder.AddFieldHolder( box );
     builder.AddField<ADN_TimeField>( pHolder, tr( "Unloading duration per person" ), vInfosConnectors[nIndex+3] );
 
-    QGroupBox* pSkillsBox = new QGroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tr( "Capabilities" ), pAmbulanceGroup );
+    Q3GroupBox* pSkillsBox = new Q3GroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tr( "Capabilities" ), pAmbulanceGroup );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
         pHolder = builder.AddFieldHolder( pSkillsBox );
@@ -365,7 +367,7 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
     vInfosConnectors[eIsLogSupply] = & pSupplyGroup->GetConnector();
 
     QWidget* pHolder = new QWidget( pSupplyGroup );
-    new QGridLayout( pHolder, 0, 3, 5, 5 );
+    new Q3GridLayout( pHolder, 0, 3, 5, 5 );
 
     ADN_GroupBox* pCarrierGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Carrier" ), pSupplyGroup );
     vInfosConnectors[eIsLogCarrier] = & pCarrierGroup->GetConnector();
@@ -394,7 +396,7 @@ QWidget* ADN_Composantes_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVec
     builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Loading duration" ), vInfosConnectors[eMaintenanceLoadTime] );
     builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unloading duration" ), vInfosConnectors[eMaintenanceUnloadTime] );
 
-    QHBox* pNTIHolder = new QHBox( pMaintenanceGroup );
+    Q3HBox* pNTIHolder = new Q3HBox( pMaintenanceGroup );
 
     this->BuildNTI( pNTIHolder, tr( "Seriousness level 1" ), vInfosConnectors, eNTI1 );
     this->BuildNTI( pNTIHolder, tr( "Seriousness level 2" ), vInfosConnectors, eNTI2 );
@@ -428,7 +430,7 @@ QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_
 QWidget* ADN_Composantes_GUI::BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder;
-    QGroupBox* pPowerIndicatorsGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pParent );
+    Q3GroupBox* pPowerIndicatorsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pParent );
 
     pPowerIndicatorsGroup->setMinimumWidth(400);
     pPowerIndicatorsGroup->setMinimumHeight(130);
@@ -471,7 +473,7 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
     for( ADN_Composantes_Data::IT_ComposanteInfos_Vector it = data_.vComposantes_.begin(); it != data_.vComposantes_.end(); ++it, ++nRow )
     {
         ADN_Composantes_Data::ComposanteInfos& composante = **it;
-        builder.AddTableCell<ADN_TableItem_String>( pTable, &composante, nRow, 0, composante.strName_, eNone, QTableItem::Never );
+        builder.AddTableCell<ADN_TableItem_String>( pTable, &composante, nRow, 0, composante.strName_, eNone, Q3TableItem::Never );
 
         for( uint n = 0; n < eNbrLocation; ++n )
             builder.AddTableCell<ADN_TableItem_Double>( pTable, &composante, nRow, n + 1, composante.vSpeeds_[n]->rSpeed_, eGreaterEqualZero );

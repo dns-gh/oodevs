@@ -12,7 +12,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Composantes_Objects.h"
 #include "moc_ADN_ListView_Composantes_Objects.cpp"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Composantes_GUI.h"
@@ -50,7 +50,7 @@ public:
 // Name: ADN_ListView_Composantes_Objects constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pParent, const char* szName, Qt::WFlags f )
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
@@ -117,8 +117,8 @@ void ADN_ListView_Composantes_Objects::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    QPopupMenu addMenu( this );
+    Q3PopupMenu popupMenu( this );
+    Q3PopupMenu addMenu( this );
 
     // Add the available objects to the 'add objects' submenu.
     ADN_Objects_Data::T_ObjectsInfos_Vector& vObjects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
@@ -163,7 +163,7 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data::ObjectInfos* pInfo )
 {
-    QListViewItemIterator it( this );
+    Q3ListViewItemIterator it( this );
     while ( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();

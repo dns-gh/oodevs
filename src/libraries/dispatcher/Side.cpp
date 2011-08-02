@@ -84,7 +84,7 @@ void Side::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PartyCreation asn;
     asn().mutable_party()->set_id( GetId() );
-    asn().set_name( GetName() );
+    asn().set_name( GetName().ascii() );
     asn().set_type( nType_ );
     if( color_.IsInitialized() )
         *asn().mutable_color() = color_;

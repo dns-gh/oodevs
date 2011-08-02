@@ -26,25 +26,25 @@ namespace
         {
         }
         virtual ~AlternatingItemFactory() {}
-        virtual gui::ValuedListItem* CreateItem( QListView* parent )
+        virtual gui::ValuedListItem* CreateItem( Q3ListView* parent )
         {
             gui::ValuedListItem* item = factory_.CreateItem( parent );
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }
-        virtual gui::ValuedListItem* CreateItem( QListViewItem* parent )
+        virtual gui::ValuedListItem* CreateItem( Q3ListViewItem* parent )
         {
             gui::ValuedListItem* item = factory_.CreateItem( parent );
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }
-        virtual gui::ValuedListItem* CreateItem( QListView* parent, QListViewItem* after )
+        virtual gui::ValuedListItem* CreateItem( Q3ListView* parent, Q3ListViewItem* after )
         {
             gui::ValuedListItem* item = factory_.CreateItem( parent, after );
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }
-        virtual gui::ValuedListItem* CreateItem( QListViewItem* parent, QListViewItem* after )
+        virtual gui::ValuedListItem* CreateItem( Q3ListViewItem* parent, Q3ListViewItem* after )
         {
             gui::ValuedListItem* item = factory_.CreateItem( parent, after );
             item->SetBackgroundColor( color1_, color2_ );
@@ -65,7 +65,7 @@ namespace
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
 InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : QVBox( parent, "InfoReportsTab" )
+    : Q3VBox( parent, "InfoReportsTab" )
     , controllers_( controllers )
     , parent_( parent )
     , factory_( new AlternatingItemFactory( factory ) )

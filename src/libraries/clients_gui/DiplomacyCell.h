@@ -10,8 +10,6 @@
 #ifndef __DiplomacyCell_h_
 #define __DiplomacyCell_h_
 
-#include <qtable.h>
-
 namespace kernel
 {
     class Karma;
@@ -27,14 +25,14 @@ namespace gui
 // Created: SBO 2006-09-25
 // =============================================================================
 class DiplomacyCell : public QObject
-                    , public QComboTableItem
+                    , public Q3ComboTableItem
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DiplomacyCell( QTable* table );
+    explicit DiplomacyCell( Q3Table* table );
     virtual ~DiplomacyCell();
     //@}
 

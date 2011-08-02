@@ -69,7 +69,7 @@ namespace
 // Created: HBD 2010-04-29
 // -----------------------------------------------------------------------------
 ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision( QWidget* parent )
-    : QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), parent )
+    : Q3GroupBox( 2, Qt::Vertical, tr( "Simulation" ), parent )
     , perceiverPostureFactor_ ( 1. )
     , targetPostureFactor_    ( 1. )
     , sizeFactor_             ( 1. )
@@ -84,7 +84,7 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
     , urbanSelected_          ( false )
 {
     {
-        QGrid* group = new QGrid ( 2,this );
+        Q3Grid* group = new Q3Grid ( 2,this );
         group->setSpacing( 5 );
         new QLabel( tr( "Stance" ), group );
         stance_ = new QLineEdit( group, tr( "Stance" ) );

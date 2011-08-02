@@ -42,7 +42,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnRename( QListViewItem* item, int col, const QString& name );
+    void OnRename( Q3ListViewItem* item, int col, const QString& name );
     //@}
 
 private:

@@ -13,7 +13,14 @@
 #include "MenuButton.h"
 #include "QuitPage.h"
 #include "clients_gui/Tools.h"
-#include <qwidgetstack.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3widgetstack.h>
+#include <Qt3Support/q3gridlayout.h>
+#include <Qt3Support/q3button.h>
+#include <Qt3Support/q3boxlayout.h>
+#include <QtGui/qevent.h>
+#pragma warning ( pop )
 
 QuitPage* Page_ABC::quitPage_ = 0;
 
@@ -21,8 +28,8 @@ QuitPage* Page_ABC::quitPage_ = 0;
 // Name: Page_ABC constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-Page_ABC::Page_ABC( QWidgetStack* pages, Page_ABC& previous, unsigned short flags )
-    : QVBox ( pages )
+Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short flags )
+    : Q3VBox ( pages )
     , pages_( pages )
     , previous_( previous )
     , startButton_( 0 )
@@ -32,25 +39,25 @@ Page_ABC::Page_ABC( QWidgetStack* pages, Page_ABC& previous, unsigned short flag
     setBackgroundOrigin( QWidget::WindowOrigin );
 
     //layout()->setAlignment( Qt::AlignTop );
-    grid_ = new QGridLayout( layout(), 3, 2 );
+    grid_ = new Q3GridLayout( layout(), 3, 2 );
     grid_->setRowStretch( 0, 1 );
     grid_->setRowStretch( 1, 10 );
     grid_->setRowStretch( 2, 2 );
 
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    Q3HBoxLayout* buttonLayout = new Q3HBoxLayout();
     buttonLayout->setMargin( 20 );
     grid_->addMultiCellLayout( buttonLayout, 2, 2, 0, 2 );
 
     if( flags & eButtonBack )
     {
-        QButton* button = new MenuButton( tools::translate( "Page_ABC", "Back" ), this );
+        QPushButton* button = new MenuButton( tools::translate( "Page_ABC", "Back" ), this );
         button->setFixedWidth( 150 );
         buttonLayout->addWidget( button, 0, Qt::AlignBottom | Qt::AlignLeft );
         connect( button, SIGNAL( clicked() ), this, SLOT( OnBack() ) );
     }
     else if( flags & eButtonOptions )
     {
-        QButton* button = new MenuButton( tools::translate( "Page_ABC", "Options" ), this );
+        QPushButton* button = new MenuButton( tools::translate( "Page_ABC", "Options" ), this );
         button->setFixedWidth( 150 );
         buttonLayout->addWidget( button, 0, Qt::AlignBottom | Qt::AlignLeft );
         connect( button, SIGNAL( clicked() ), this, SLOT( OnOptions() ) );
@@ -61,7 +68,7 @@ Page_ABC::Page_ABC( QWidgetStack* pages, Page_ABC& previous, unsigned short flag
         if( !quitPage_ )
             quitPage_ = new QuitPage( pages, *this );
 
-        QButton* button = new MenuButton( tools::translate( "Page_ABC", "Quit" ), this );
+        QPushButton* button = new MenuButton( tools::translate( "Page_ABC", "Quit" ), this );
         button->setFixedWidth( 150 );
         buttonLayout->addWidget( button, 0, Qt::AlignBottom | Qt::AlignRight );
         connect( button, SIGNAL( clicked() ), this, SLOT( OnQuit() ) );
@@ -110,7 +117,7 @@ void Page_ABC::showEvent( QShowEvent* event )
 {
     pages_->raiseWidget( this );
     Update();
-    QVBox::showEvent( event );
+    Q3VBox::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------

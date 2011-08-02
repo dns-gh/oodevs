@@ -11,7 +11,10 @@
 #define __ADN_TableItem_ABC_h_
 
 #include "ADN_Gfx_ABC.h"
-#include <qtable.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3table.h>
+#pragma warning( pop )
 
 // =============================================================================
 /** @class  ADN_TableItem_ABC
@@ -19,7 +22,7 @@
 */
 // Created: JDY 2003-07-09
 // =============================================================================
-class ADN_TableItem_ABC : public QTableItem
+class ADN_TableItem_ABC : public Q3TableItem
                         , public QObject
                         , public ADN_Gfx_ABC
 {
@@ -27,7 +30,7 @@ class ADN_TableItem_ABC : public QTableItem
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_TableItem_ABC( QTable* parent, void* data, QTableItem::EditType nEditType = WhenCurrent );
+             ADN_TableItem_ABC( Q3Table* parent, void* data, Q3TableItem::EditType nEditType = WhenCurrent );
     virtual ~ADN_TableItem_ABC();
     //@}
 

@@ -23,7 +23,7 @@
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
 ChatWidget::ChatWidget( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler )
-    : QHBox( parent )
+    : Q3HBox( parent )
     , controllers_( controllers )
     , handler_( handler )
     , publisher_( new CommandPublisher( controllers, publisher ) )

@@ -63,7 +63,7 @@ AgentListView::~AgentListView()
 // -----------------------------------------------------------------------------
 void AgentListView::viewportResizeEvent( QResizeEvent* e )
 {
-    QScrollView::viewportResizeEvent( e );
+    Q3ScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
@@ -73,7 +73,7 @@ void AgentListView::viewportResizeEvent( QResizeEvent* e )
 // -----------------------------------------------------------------------------
 void AgentListView::setColumnWidth( int column, int w )
 {
-    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
+    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
 }
 
 // -----------------------------------------------------------------------------

@@ -52,7 +52,7 @@ InitialStateTableEquipments::~InitialStateTableEquipments()
 void InitialStateTableEquipments::OnValueChanged( int row, int col )
 {
     if( col == eState )
-        item( row, eBreakdown )->setEnabled( static_cast< QComboTableItem* >( item( row, eState ) )->currentItem() == InitialStateEquipment::eBroken );
+        item( row, eBreakdown )->setEnabled( static_cast< Q3ComboTableItem* >( item( row, eState ) )->currentItem() == InitialStateEquipment::eBroken );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,9 +67,9 @@ void InitialStateTableEquipments::ReadExtension( const InitialState& extension )
     {
         unsigned int nRow = numRows();
         insertRows( nRow );
-        QComboTableItem* state = new QComboTableItem( this, states_ );
+        Q3ComboTableItem* state = new Q3ComboTableItem( this, states_ );
         state->setCurrentItem( it->state_ );
-        QComboTableItem* breakdown = new QComboTableItem( this, it->breakdowns_ );
+        Q3ComboTableItem* breakdown = new Q3ComboTableItem( this, it->breakdowns_ );
         breakdown->setCurrentItem( it->currentBreakdown_ );
         breakdown->setEnabled( it->state_ == InitialStateEquipment::eBroken );
         setText( nRow, eName, it->name_ );
@@ -88,7 +88,7 @@ void InitialStateTableEquipments::WriteExtension( InitialState& extension ) cons
     assert( extension.equipments_.size() == static_cast< unsigned int >( numRows() ) );
     for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it, ++nRow )
     {
-        it->state_ = static_cast< InitialStateEquipment::E_EquipmentState >( static_cast< QComboTableItem* >( item( nRow, eState ) )->currentItem() );
-        it->currentBreakdown_ = static_cast< QComboTableItem* >( item( nRow, eBreakdown ) )->currentItem();
+        it->state_ = static_cast< InitialStateEquipment::E_EquipmentState >( static_cast< Q3ComboTableItem* >( item( nRow, eState ) )->currentItem() );
+        it->currentBreakdown_ = static_cast< Q3ComboTableItem* >( item( nRow, eBreakdown ) )->currentItem();
     }
 }

@@ -10,8 +10,6 @@
 #ifndef __GradientButton_h_
 #define __GradientButton_h_
 
-#include <qcanvas.h>
-
 namespace gui
 {
     class Gradient;
@@ -24,7 +22,7 @@ namespace gui
 */
 // Created: SBO 2007-07-02
 // =============================================================================
-class GradientButton : public QCanvasView
+class GradientButton : public Q3CanvasView
 {
     Q_OBJECT;
 

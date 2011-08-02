@@ -30,7 +30,7 @@ class Contaminations;
 */
 // Created: SBO 2007-02-05
 // =============================================================================
-class InfoEventsWidget : public QVBox
+class InfoEventsWidget : public Q3VBox
                        , public tools::Observer_ABC
                        , public tools::SelectionObserver< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< kernel::Attributes_ABC >

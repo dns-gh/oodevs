@@ -11,7 +11,6 @@
 #define __BriefingDialog_h_
 
 #include "gaming/CommandHandler_ABC.h"
-#include <qdialog.h>
 
 namespace kernel
 {
@@ -26,7 +25,7 @@ namespace tools
 class CommandPublisher;
 class CommandHandler;
 class Publisher_ABC;
-class QTextBrowser;
+class Q3TextBrowser;
 
 // =============================================================================
 /** @class  BriefingDialog
@@ -69,7 +68,7 @@ private:
     const tools::ExerciseConfig& config_;
     std::auto_ptr< CommandPublisher > publisher_;
     CommandHandler& handler_;
-    QTextBrowser* browser_;
+    Q3TextBrowser* browser_;
     std::string dialogId_;
     //@}
 };

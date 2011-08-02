@@ -11,20 +11,20 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ProgressBar.h"
 
-#include <qlayout.h>
-#include <qprogressbar.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3progressbar.h>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ProgressBar constructor
 // Created: JDY 03-07-17
 //-----------------------------------------------------------------------------
-ADN_ProgressBar::ADN_ProgressBar( QWidget* pParent, const char* szName, WFlags f )
-    : QHBox( pParent, szName, f )
+ADN_ProgressBar::ADN_ProgressBar( QWidget* pParent, const char* szName, Qt::WFlags f )
+    : Q3HBox( pParent, szName, f )
     , ADN_ProgressIndicator_ABC()
 {
     label_ = new QLabel( this );
     label_->setAlignment( Qt::AlignLeft );
-    bar_ = new QProgressBar( this );
+    bar_ = new Q3ProgressBar( this );
     setStretchFactor( label_, 2 );
     setStretchFactor( bar_, 1 );
 }

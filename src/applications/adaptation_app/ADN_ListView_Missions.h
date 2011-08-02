@@ -16,7 +16,7 @@
 #include "ADN_Missions_Data.h"
 
 class ADN_ListView_Models;
-class QPopupMenu;
+class Q3PopupMenu;
 
 // =============================================================================
 /** @class  ADN_ListView_Missions
@@ -27,16 +27,16 @@ class QPopupMenu;
 class ADN_ListView_Missions : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent = 0, const char * name = 0, WFlags f = 0 );
+    explicit ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent = 0, const char * name = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView_Missions();
 
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
 
-    void FillList( QCheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions );
+    void FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions );
     ADN_ListViewItem* FindItem( const std::string& strMissionName );
-    void ApplyModifications( QCheckListItem* pStart );
+    void ApplyModifications( Q3CheckListItem* pStart );
 
 private:
     ADN_ListView_Models* pLVModels_;

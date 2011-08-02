@@ -14,7 +14,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_AttritionInfos.h"
-#include <qwidget.h>
+#include <QtGui/qwidget.h>
 
 // =============================================================================
 /** @class  ADN_Equipement_AttritionGraph
@@ -49,22 +49,10 @@ public:
         T_Rectangles rectangles_;
     };
 
-    class ADN_GraphTooltip : public QToolTip
-    {
-    public:
-        ADN_GraphTooltip( ADN_Equipement_AttritionGraph* parent );
-
-    protected:
-        virtual void maybeTip( const QPoint& point);
-
-    private:
-        ADN_Equipement_AttritionGraph* graph;
-    };
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Equipement_AttritionGraph( QWidget* pParent = 0 );
+    explicit ADN_Equipement_AttritionGraph( QWidget* pParent = 0 );
     virtual ~ADN_Equipement_AttritionGraph();
     //@}
 
@@ -81,6 +69,7 @@ protected:
     //! @name Qt overloaded methods
     //@{
     virtual void paintEvent( QPaintEvent* );
+    virtual bool event( QEvent* e );
     //@}
 
 private:
@@ -97,8 +86,6 @@ private:
 
     std::vector < QColor > effectColors_;
     std::vector < QString > effectStrings_;
-
-    ADN_GraphTooltip* tooltip_;
     //@}
 };
 

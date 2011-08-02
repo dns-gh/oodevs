@@ -10,11 +10,8 @@
 #ifndef __OptionsPanel_h_
 #define __OptionsPanel_h_
 
-#include <qvbox.h>
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "PreferencePanel_ABC.h"
-
-class QCheckBox;
 
 namespace kernel
 {
@@ -24,8 +21,6 @@ namespace kernel
 
 namespace gui
 {
-    class Settings;
-
 // =============================================================================
 // Created: APE 2004-07-09
 // =============================================================================

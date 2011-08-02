@@ -10,7 +10,7 @@
 #ifndef __SideList_h_
 #define __SideList_h_
 
-#include <qlistbox.h>
+#include <Qt3Support/q3listbox.h>
 
 namespace tools
 {
@@ -29,7 +29,7 @@ namespace xml
 */
 // Created: SBO 2008-02-22
 // =============================================================================
-class SideList : public QListBox
+class SideList : public Q3ListBox
 {
     Q_OBJECT;
 

@@ -19,7 +19,7 @@ namespace gui
 */
 // Created: AGE 2006-05-03
 // =============================================================================
-class GlPlaceHolder : public QVBox
+class GlPlaceHolder : public Q3VBox
 {
 public:
     //! @name Constructors/Destructor

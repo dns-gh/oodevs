@@ -55,7 +55,7 @@ void ParamUrbanBlockList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Object_ABC >* ParamUrbanBlockList::CreateElement( const kernel::Object_ABC& potential )
 {
-    return new ParamUrbanBlock( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "urban block", false ), potential, controller_ );
+    return new ParamUrbanBlock( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "urban block", false ), potential, controller_ );
 }
 
 // -----------------------------------------------------------------------------

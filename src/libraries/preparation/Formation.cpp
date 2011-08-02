@@ -27,7 +27,7 @@
 #include "clients_kernel/App6Symbol.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include <qmessagebox.h>
+#include <QtGui/qmessagebox.h>
 
 using namespace kernel;
 

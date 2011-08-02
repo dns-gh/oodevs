@@ -26,7 +26,7 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
     , data_     ( new GQ_PlotData( 0, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
     , vision_   ( new GQ_PlotData( 1, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
 {
-    setFocusPolicy( QWidget::ClickFocus );
+    setFocusPolicy( Qt::ClickFocus );
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
     YAxis().SetAxisCaption( tools::translate( "gui::TerrainProfile", "Altitude (m)" ).ascii() );

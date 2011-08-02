@@ -11,7 +11,6 @@
 #define __Filter_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include <qobject.h>
 
 // =============================================================================
 /** @class  Filter_ABC

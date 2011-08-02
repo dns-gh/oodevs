@@ -19,12 +19,12 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Weapon_Wizard_Page0.h"
 
-#include <qcombobox.h>
-#include <qlistview.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qmessagebox.h>
-#include <qwizard.h>
+#include <QtGui/qcombobox.h>
+#include <Qt3Support/q3listview.h>
+#include <Qt3Support/q3buttongroup.h>
+#include <QtGui/qradiobutton.h>
+#include <QtGui/qmessagebox.h>
+#include <Qt3Support/q3wizard.h>
 
 #include "ADN_Workspace.h"
 #include "ADN_UserData_ListViewItem.h"
@@ -33,13 +33,13 @@
 // Name: ADN_Weapon_Wizard_Page0 constructor
 // Created: APE 2005-01-11
 // -----------------------------------------------------------------------------
-ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( QWizard* pParent, const char* szName )
+ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( Q3Wizard* pParent, const char* szName )
 : ADN_Wizard_FirstPage_ABC<ADN_Weapons_Data::WeaponInfos>( pParent, szName )
 {
     pRightSide_->setSpacing( 10 );
     pRightSide_->setFixedHeight( 200 );
 
-    QHBox* pParamBox = new QHBox( pRightSide_ );
+    Q3HBox* pParamBox = new Q3HBox( pRightSide_ );
     pComboLauncher_ = new QComboBox( pParamBox );
     pComboAmmo_ = new QComboBox( pParamBox );
 
@@ -52,16 +52,16 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( QWizard* pParent, const char* 
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
         pComboAmmo_->insertItem( (*itAmmo)->strName_.GetData().c_str() );
 
-    QVBox* pBox = new QVBox( pRightSide_ );
+    Q3VBox* pBox = new Q3VBox( pRightSide_ );
     pBox->setSpacing( 5 );
 
-    QButtonGroup* pButtonGroup = new QButtonGroup( 2, Qt::Vertical, pBox );
+    Q3ButtonGroup* pButtonGroup = new Q3ButtonGroup( 2, Qt::Vertical, pBox );
     pButtonGroup->setMargin( 0 );
     pButtonGroup->setLineWidth( 0 );
                         new QRadioButton( tr( "Create new" ), pButtonGroup );
     pCopyRadioButton_ = new QRadioButton( tr( "Create a copy of:" ),    pButtonGroup );
 
-    pWeaponList_ = new QListView( pBox );
+    pWeaponList_ = new Q3ListView( pBox );
     pWeaponList_->addColumn( tr( "Weapon systems" ) );
     pWeaponList_->setColumnWidth( 0, 350 );
     pWeaponList_->setMultiSelection( false );
@@ -113,7 +113,7 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
         QMessageBox::warning( this,
             tr( "Warning" ),
             tr( "A weapon using the same launcher and ammunition already exists. Please modify your choices." ),
-            QMessageBox::Ok, QMessageBox::NoButton );
+            QMessageBox::Ok, Qt::NoButton );
         return 0;
     }
 
@@ -139,7 +139,7 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
 
     if( pCopyRadioButton_->isOn() )
     {
-        QListViewItem* pSelectedItem = pWeaponList_->selectedItem();
+        Q3ListViewItem* pSelectedItem = pWeaponList_->selectedItem();
         ADN_Weapons_Data::WeaponInfos* pWeapon = static_cast< ADN_UserData_ListViewItem< ADN_Weapons_Data::WeaponInfos >* >( pSelectedItem )->GetPointer();
         pResult = pWeapon->CreateCopy();
     }

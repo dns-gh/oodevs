@@ -32,25 +32,25 @@ IndicatorReportDialog::IndicatorReportDialog( QWidget* parent, const ScoreModel&
 {
     setCaption( tools::translate( "IndicatorReports", "Create report" ) );
     setFixedSize( 400, 150 );
-    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 4 );
     grid->setRowStretch( 1, 4 );
     {
-        QGroupBox* box = new QGroupBox( 3, Qt::Horizontal, tools::translate( "IndicatorReports", "Template" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "IndicatorReports", "Template" ), this );
         new QLabel( tools::translate( "IndicatorReports", "File: " ), box );
         templateFile_ = new QLineEdit( box );
         templateFile_->setReadOnly( true );
-        QButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ), box );
+        QPushButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ), box );
         connect( browse, SIGNAL( clicked() ), SLOT( OnBrowseTemplate() ) );
         connect( templateFile_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFileChanged() ) );
         grid->addMultiCellWidget( box, 0, 0, 0, 1 );
     }
     {
-        QGroupBox* box = new QGroupBox( 3, Qt::Horizontal, tools::translate( "IndicatorReports", "Output" ), this );
+        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "IndicatorReports", "Output" ), this );
         new QLabel( tools::translate( "IndicatorReports", "File: " ), box );
         outputFile_ = new QLineEdit( box );
-        QButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ), box );
+        QPushButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ), box );
         new QWidget( box );
         displayReport_ = new QCheckBox( tools::translate( "IndicatorReports", "Show generated report" ), box );
         displayReport_->setChecked( true );
@@ -59,10 +59,10 @@ IndicatorReportDialog::IndicatorReportDialog( QWidget* parent, const ScoreModel&
         grid->addMultiCellWidget( box, 1, 1, 0, 1 );
     }
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         ok_ = new QPushButton( tools::translate( "IndicatorReports", "Ok" ), box );
         ok_->setEnabled( false );
-        QButton* cancel = new QPushButton( tools::translate( "IndicatorReports", "Cancel" ), box );
+        QPushButton* cancel = new QPushButton( tools::translate( "IndicatorReports", "Cancel" ), box );
         grid->addWidget( box, 2, 1 );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
@@ -85,7 +85,7 @@ IndicatorReportDialog::~IndicatorReportDialog()
 void IndicatorReportDialog::OnBrowseTemplate()
 {
     const QString startPath( config_.BuildExerciseChildFile( "reports/" ).c_str() );
-    QString filename = QFileDialog::getOpenFileName( startPath, tools::translate( "IndicatorReports", "Report template (*.html)" ), topLevelWidget()
+    QString filename = Q3FileDialog::getOpenFileName( startPath, tools::translate( "IndicatorReports", "Report template (*.html)" ), topLevelWidget()
                                                     , 0, tools::translate( "IndicatorReports", "Load report template file" ) );
     if( filename.isEmpty() )
         return;
@@ -101,7 +101,7 @@ void IndicatorReportDialog::OnBrowseTemplate()
 void IndicatorReportDialog::OnBrowseOutput()
 {
     const QString startPath = templateFile_->text().isEmpty() ? config_.BuildExerciseChildFile( "reports/" ).c_str() : QDir( templateFile_->text() ).absPath();
-    QString filename = QFileDialog::getSaveFileName( startPath, tools::translate( "IndicatorReports", "Report (*.html)" ), topLevelWidget()
+    QString filename = Q3FileDialog::getSaveFileName( startPath, tools::translate( "IndicatorReports", "Report (*.html)" ), topLevelWidget()
                                                    , 0, tools::translate( "IndicatorReports", "Save report to" ) );
     if( filename == QString::null )
         return;

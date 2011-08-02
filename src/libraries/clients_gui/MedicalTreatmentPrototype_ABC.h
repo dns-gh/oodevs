@@ -67,7 +67,7 @@ protected:
         explicit Capacity( QWidget* parent, const std::string& name )
             : name_ ( name )
         {
-            QHBox* hbox = new QHBox( parent );
+            Q3HBox* hbox = new Q3HBox( parent );
             new QLabel( QString( name.c_str() ), hbox );
             baseline_ = new LoadableSpinBox( 0, 500, 1, hbox );
         }

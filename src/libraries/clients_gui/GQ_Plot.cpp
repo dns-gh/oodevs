@@ -20,16 +20,10 @@
 #include "GQ_Plot.h"
 #include "moc_GQ_Plot.cpp"
 
-#include "GQ_PlotToolTip.h"
-
 #include <vector>
 #include <stdexcept>
 #include <cmath>
 #include <algorithm>
-#include <qpainter.h>
-#include <qpalette.h>
-#include <qstringlist.h>
-
 #include <cassert>
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
@@ -48,7 +42,6 @@ GQ_Plot::GQ_Plot( QWidget* pParent, const char* name )
 , x_                ( this, Qt::Horizontal )
 , y_                ( this, Qt::Vertical   )
 , pCoordToString_   ( 0 )
-, pToolTip_         ( 0 )
 , layerMap_         ()
 , pBackground_      ( new QPixmap()  )
 , pPlot_            ( new QPixmap()  )
@@ -58,8 +51,6 @@ GQ_Plot::GQ_Plot( QWidget* pParent, const char* name )
 {
     connect( &x_, SIGNAL( Touched() ), this, SLOT( TouchFrame() ) );
     connect( &y_, SIGNAL( Touched() ), this, SLOT( TouchFrame() ) );
-
-    pToolTip_ = new GQ_PlotToolTip( *this );
 
     setEraseColor( palette().color( QPalette::Active, QColorGroup::Base ) );
 
@@ -75,7 +66,6 @@ GQ_Plot::~GQ_Plot()
 {
     delete pBackground_;
     delete pPlot_;
-    delete pToolTip_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,17 +96,6 @@ void GQ_Plot::ShowPlotFrame( bool bShow )
 
     bShowPlotFrame_ = bShow;
     TouchFrame();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GQ_Plot::ShowToolTips
-/** @param
-*/
-// Created: CBX 2003-08-18
-// -----------------------------------------------------------------------------
-void GQ_Plot::ShowToolTips( bool bShow )
-{
-    pToolTip_->group()->setEnabled( bShow );
 }
 
 // -----------------------------------------------------------------------------
@@ -768,6 +747,8 @@ GQ_PlotData* GQ_Plot::GetPlotData( unsigned int nPlotIndex, int nDepth ) const
 }
 
 // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
 // Name: GQ_Plot::FindPlotData
 /** @param  nUserID
     @return

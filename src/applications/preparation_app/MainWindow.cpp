@@ -115,7 +115,6 @@
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
-#include <qinputdialog.h>
 
 namespace bfs = boost::filesystem;
 
@@ -168,79 +167,76 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
     RichItemFactory* factory = new RichItemFactory( this );
-
-    // Agent list panel
-    QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );
-    moveDockWindow( pListDockWnd_, Qt::DockLeft );
-    QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
-
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
 
-    QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
-    QVBox* listsTabBox = new QVBox( pListsTabWidget );
-    new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-    new ::TacticalListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_, model_.formations_.levels_ );
-    pAgentsTabWidget->addTab( listsTabBox, tr( "Tactical" ) );
+    // Agent list panel
+    QDockWidget* pListDockWnd_ = new QDockWidget( "orbat", this );
+    pListDockWnd_->setObjectName( "Orbat" );
+    addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
+    QTabWidget* pListsTabWidget = new QTabWidget( this );
+    {
+        QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
+        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
+        new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
+        new ::TacticalListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_, model_.formations_.levels_ );
+        pAgentsTabWidget->addTab( listsTabBox, tr( "Tactical" ) );
 
-    listsTabBox = new QVBox( pListsTabWidget );
-    new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-    new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
-    pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
-
-    pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
-    listsTabBox = new QVBox( pListsTabWidget );
-    new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
-    new ::ObjectListView( listsTabBox, controllers, *factory, *modelBuilder_ );
-    pListsTabWidget->addTab( listsTabBox, tr( "Objects" ) );
-    listsTabBox = new QVBox( pListsTabWidget );
-    new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
-    new ::PopulationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
-    pListsTabWidget->addTab( listsTabBox, tr( "Crowds" ) );
-
-    listsTabBox = new QVBox( pListsTabWidget );
-    new EntitySearchBox< Inhabitant_ABC >( listsTabBox, controllers );
-    new ::InhabitantListView( listsTabBox, controllers, *factory, *modelBuilder_ );
-    pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
-
-    pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, PreparationProfile::GetProfile() ), tr( "Intelligences" ) );
+        listsTabBox = new Q3VBox( pListsTabWidget );
+        new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
+        new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
+        pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
+        pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
+    }
+    {
+        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
+        new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
+        new ::ObjectListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+        pListsTabWidget->addTab( listsTabBox, tr( "Objects" ) );
+    }
+    {
+        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
+        new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
+        new ::PopulationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+        pListsTabWidget->addTab( listsTabBox, tr( "Crowds" ) );
+    }
+    {
+        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
+        new EntitySearchBox< Inhabitant_ABC >( listsTabBox, controllers );
+        new ::InhabitantListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+        pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
+        pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, PreparationProfile::GetProfile() ), tr( "Intelligences" ) );
+    }
+    pListDockWnd_->setWindowTitle( "Units" );
     pListDockWnd_->setWidget( pListsTabWidget );
-    pListDockWnd_->setResizeEnabled( true );
-    pListDockWnd_->setCloseMode( QDockWindow::Always );
-    pListDockWnd_->setCaption( tr( "Units" ) );
-    setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
     // Properties panel
     {
-        QDockWindow* pPropertiesDockWnd = new QDockWindow( this, "properties" );
-        moveDockWindow( pPropertiesDockWnd, Qt::DockRight );
+        QDockWidget* pPropertiesDockWnd = new QDockWidget( "properties", this );
+        pPropertiesDockWnd->setObjectName( "properties" );
+        addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
         ::PropertiesPanel* propertiesPanel = new ::PropertiesPanel( pPropertiesDockWnd, controllers, model_, staticModel_ );
         pPropertiesDockWnd->setWidget( propertiesPanel );
-        pPropertiesDockWnd->setResizeEnabled( true );
-        pPropertiesDockWnd->setCloseMode( QDockWindow::Always );
-        pPropertiesDockWnd->setCaption( tr( "Properties" ) );
-        setDockEnabled( pPropertiesDockWnd, Qt::DockTop, false );
+        pPropertiesDockWnd->setWindowTitle( tr( "Properties" ) );
     }
     // ResourceNetwork panel
     {
-        QDockWindow* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_.objectTypes_ );
-        moveDockWindow( pResourceWnd, Qt::DockLeft );
-        setDockEnabled( pResourceWnd, Qt::DockTop, false );
+        QDockWidget* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_.objectTypes_ );
+        addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
         pResourceWnd->hide();
     }
     // Extensions panel
     {
         pExtensionsPanel_ = new gui::ExtensionsPanel( this, controllers, staticModel_.extensions_, model.agents_, *factory, *icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
-        moveDockWindow( pExtensionsPanel_, Qt::DockLeft );
-        setDockEnabled( pExtensionsPanel_, Qt::DockTop, false );
-        setAppropriate( pExtensionsPanel_, false );
+        addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
     }
 
     // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
+    gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer );
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *LocEditToolBar );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_ );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
@@ -248,34 +244,38 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
 
     // Creation panel
-    QDockWindow* pCreationDockWnd = new QDockWindow( this, "creation" );
-    moveDockWindow( pCreationDockWnd, Qt::DockRight );
+    QDockWidget* pCreationDockWnd = new QDockWidget( "creation", this );
+    pCreationDockWnd->setObjectName( "creation" );
+    addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
     pCreationDockWnd->hide();
     pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel_, model_, config_, *factory, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_ );
     pCreationDockWnd->setWidget( pCreationPanel_ );
-    pCreationDockWnd->setResizeEnabled( true );
-    pCreationDockWnd->setCloseMode( QDockWindow::Always );
-    pCreationDockWnd->setCaption( tr( "Creation" ) );
-    setDockEnabled( pCreationDockWnd, Qt::DockTop, false );
+    pCreationDockWnd->setWindowTitle( tr( "Creation" ) );
 
     // Dialogs
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
     pScoreDialog_ = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_, *glProxy_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
-    new DisplayToolbar( this, controllers );
-    new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
-    loadingDialog_ = new QDialog( this, 0, FALSE, Qt::WStyle_Customize | WStyle_DialogBorder );
+    addToolBar( fileToolBar_ );
+    addToolBar( new DisplayToolbar( this, controllers ) );
+    addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
+    addToolBar( LocEditToolBar );
+    
+    loadingDialog_ = new QDialog( 0, Qt::SplashScreen | Qt::Dialog );
     QLabel* label = new QLabel( loadingDialog_ );
     label->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     label->setText( tr( "Loading..." ) );
-    label->setAlignment( AlignVCenter | AlignHCenter );
+    label->setStyleSheet( "font-size: 20pt;" );
+    label->setAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
+    loadingDialog_->resize( label->sizeHint() );
     loadingDialog_->show();
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
+    setMenuBar( menu_ );
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_ );
 
     // Layers
@@ -313,7 +313,9 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker )
+void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations, 
+                               gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
+                               PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker )
 {
     TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
     AutomatsLayer& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
@@ -437,7 +439,7 @@ void MainWindow::Open()
     if( model_.IsLoaded() && !CheckSaving())
         return;
     // Open exercise file dialog
-    QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
+    QString filename = Q3FileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
     // Load exercise
     DoLoad( filename );
 }
@@ -457,13 +459,7 @@ bool MainWindow::Load()
         staticModel_.Load( config_ );
         filterDialogs_->Purge();
         filterDialogs_->Load();
-        if( staticModel_.extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
-            setAppropriate( pExtensionsPanel_, true );
-        else
-        {
-            setAppropriate( pExtensionsPanel_, false );
-            pExtensionsPanel_->hide();
-        }
+        pExtensionsPanel_->hide();
         SetWindowTitle( false );
     }
     catch( xml::exception& e )
@@ -500,9 +496,9 @@ void MainWindow::Close()
 // -----------------------------------------------------------------------------
 void MainWindow::EnableWorkspace( bool enabled )
 {
-    QPtrList< QDockWindow > docks = dockWindows();
-    for( QPtrList< QDockWindow >::iterator it = docks.begin(); it != docks.end(); ++it )
-        if( *it != fileToolBar_ )
+    QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
+    for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
+        if( *it != dynamic_cast< QWidget* >( fileToolBar_ ) )
             (*it)->setEnabled( enabled );
 }
 
@@ -630,11 +626,8 @@ void MainWindow::WriteSettings()
     Settings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation" );
-    if( savedState_.isNull() || savedState_.isEmpty() )
-    {
-        QTextStream stream( &savedState_, IO_WriteOnly );
-        stream << *this;
-    }
+    if( docks_.isNull() || docks_.isEmpty() )
+        docks_ = saveState();
     settings.writeEntry( "/Panels", savedState_ );
     settings.WriteMainWindowEntries( "/MainWindow", *this );
     settings.endGroup();
@@ -653,8 +646,8 @@ void MainWindow::ReadSettings()
     // Pannel configuration
     QString strDockConfig;
     strDockConfig = settings.readEntry( "/Panels" );
-    QTextStream strDockConfigStream( &strDockConfig, IO_ReadOnly );
-    strDockConfigStream >> *this;
+    Q3TextStream strDockConfigStream( &strDockConfig, QIODevice::ReadOnly );
+//    strDockConfigStream >> *this;
 
     // Main window configuration
     settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
@@ -783,18 +776,16 @@ void MainWindow::ToggleFullScreen()
 // -----------------------------------------------------------------------------
 void MainWindow::ToggleDocks()
 {
-    if( savedState_.isNull() || savedState_.isEmpty() )
+    if( docks_.isNull() || docks_.isEmpty() )
     {
-        QTextStream stream( &savedState_, IO_WriteOnly );
-        stream << *this;
-        QPtrList< QDockWindow > docks = dockWindows();
-        for( QPtrList< QDockWindow >::iterator it = docks.begin(); it != docks.end(); ++it )
+        docks_ = saveState();
+        QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
+        for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
             (*it)->hide();
     }
     else
     {
-        QTextStream stream( &savedState_, IO_ReadOnly );
-        stream >> *this;
-        savedState_ = QString::null;
+        if ( restoreState( docks_ ) )
+            docks_ = 0;
     }
 }

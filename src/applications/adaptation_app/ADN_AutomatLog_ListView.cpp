@@ -179,7 +179,7 @@ void ADN_AutomatLog_ListView::BuildBody()
 // Name: ADN_AutomatLog_ListView::InsertCategory
 // Created: SBO 2006-01-05
 // -----------------------------------------------------------------------------
-void ADN_AutomatLog_ListView::InsertCategory( QListViewItem&                         parent,
+void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                         parent,
                                               ADN_Composantes_Data::CategoryInfos&   category,
                                               ADN_Composantes_Data::ConsumptionItem& conso )
 {
@@ -190,7 +190,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QListViewItem&                    
 
     ADN_Rich_ListViewItem* pItem = 0;
     // try to find existing item
-    for( QListViewItem* pTmpItem = parent.firstChild(); pTmpItem != 0; )
+    for( Q3ListViewItem* pTmpItem = parent.firstChild(); pTmpItem != 0; )
     {
         if( std::string( pTmpItem->text( eColumnTarget ) ) == conso.ptrCategory_.GetData()->strName_.GetData() )
         {
@@ -319,7 +319,7 @@ void ADN_AutomatLog_ListView::ClearEntry( T_CategoryEntry& entry )
 // Name: ADN_AutomatLog_ListView::FillTotalItem
 // Created: SBO 2006-01-11
 // -----------------------------------------------------------------------------
-void ADN_AutomatLog_ListView::FillTotalItem( QListViewItem& item, const T_CategoryEntry& entry ) const
+void ADN_AutomatLog_ListView::FillTotalItem( Q3ListViewItem& item, const T_CategoryEntry& entry ) const
 {
     for( CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
     {

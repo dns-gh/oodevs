@@ -18,7 +18,7 @@
 */
 // Created: AGE 2005-09-21
 // =============================================================================
-class ReportFilterOptions : public QVBox
+class ReportFilterOptions : public Q3VBox
 {
     Q_OBJECT
 public:
@@ -31,7 +31,7 @@ public:
     //! @name Operations
     //@{
     bool ShouldDisplay( const Report& report ) const;
-    void AddContextMenu( QPopupMenu* menu ) const;
+    void AddContextMenu( Q3PopupMenu* menu ) const;
     //@}
 
 signals:
@@ -60,7 +60,7 @@ private:
     //! @name Helpers
     //@{
     void Toggle( Report::E_Type type );
-    void AddMenuItem( QPopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const;
+    void AddMenuItem( Q3PopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const;
     //@}
 
 private:

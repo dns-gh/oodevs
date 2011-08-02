@@ -27,12 +27,12 @@
 #include "ADN_TimeField.h"
 #include "ADN_Tr.h"
 
-#include <qwidget.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qvbox.h>
-#include <qlabel.h>
-#include <qtabwidget.h>
+#include <QtGui/qwidget.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3vbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qtabwidget.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_GUI constructor
@@ -72,7 +72,7 @@ void ADN_Breakdowns_GUI::Build()
     pBreakdownsListView->GetConnector().Connect( &data_.vBreakdowns_ );
 
     // Breakdown parameters
-    QGroupBox* pBreakdownGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Breakdown" ), pMainWidget_ );
+    Q3GroupBox* pBreakdownGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdown" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pBreakdownGroup );
 
@@ -82,7 +82,7 @@ void ADN_Breakdowns_GUI::Build()
     builder.AddField<ADN_TimeField>( pHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
     builder.AddField<ADN_TimeField>( pHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
 
-    QGroupBox* pPartsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Required parts" ), pBreakdownGroup );
+    Q3GroupBox* pPartsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Required parts" ), pBreakdownGroup );
     ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( pPartsGroup );
     vInfosConnectors[eParts] = & pPartsTable->GetConnector();
 
@@ -90,12 +90,12 @@ void ADN_Breakdowns_GUI::Build()
 
     pBreakdownsListView->SetItemConnectors( vInfosConnectors );
 
-    QGroupBox* pGeneralGroup = new QGroupBox( 1, Qt::Horizontal, tr( "General parameter" ), pMainWidget_ );
+    Q3GroupBox* pGeneralGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "General parameter" ), pMainWidget_ );
     QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
     builder.AddField<ADN_TimeField>( pHolder2, tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
 
     // Layout
-    QHBoxLayout* pLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    Q3HBoxLayout* pLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
     pLayout->addWidget( pBreakdownsListView, 1 );
     pLayout->addWidget( pBreakdownGroup, 3 );
     pLayout->addWidget( pGeneralGroup, 1 );

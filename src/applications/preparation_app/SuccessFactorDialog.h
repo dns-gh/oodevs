@@ -69,7 +69,7 @@ private:
     SuccessFactorsModel& model_;
     const ScoresModel& scores_;
     QLineEdit* editor_;
-    QButton* createButton_;
+    QPushButton* createButton_;
     //@}
 };
 

@@ -13,7 +13,6 @@
 #include "gaming/CommandHandler.h"
 #include "gaming/Command.h"
 #include "tools/ExerciseConfig.h"
-#include <qtextbrowser.h>
 #include <string>
 #include <boost/filesystem.hpp>
 
@@ -28,14 +27,14 @@ BriefingDialog::BriefingDialog( QWidget* parent, kernel::Controllers& controller
     , handler_( handler )
 {
     setCaption( tr( "Briefing" ) );
-    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
     mainLayout->setMargin( 0 );
 
-    browser_ = new QTextBrowser( this );
-    browser_->setFrameStyle( QFrame::Plain );
+    browser_ = new Q3TextBrowser( this );
+    browser_->setFrameStyle( Q3Frame::Plain );
     mainLayout->addWidget( browser_ );
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         box->layout()->setAlignment( Qt::AlignRight );
         QPushButton* ok = new QPushButton( tr( "Ok" ), box );
         ok->setFocus();

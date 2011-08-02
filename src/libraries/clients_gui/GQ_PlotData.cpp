@@ -9,14 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "GQ_PlotData.h"
-
-#include "moc_GQ_PlotData.cpp"
-
 #include "GQ_Plot.h"
 
-#include <qpainter.h>
-#include <qrect.h>
-#include <qstringlist.h>
+#include "moc_GQ_PlotData.cpp"
 
 #include <cassert>
 
@@ -217,7 +212,7 @@ void GQ_PlotData::SetPointShape( E_PointShapeType nShapeType, unsigned int nShap
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
-void GQ_PlotData::SetPointShape( E_PointShapeType nShapeType, const QPointArray& shape )
+void GQ_PlotData::SetPointShape( E_PointShapeType nShapeType, const Q3PointArray& shape )
 {
     if( nShapeType == nPointShapeType_ && shape == pointShape_ )
         return;
@@ -467,7 +462,7 @@ void GQ_PlotData::Draw( QPainter& painter )
     if( !bVisible_ )
         return;
 
-    QPointArray points;
+    Q3PointArray points;
 
     PreparePoints( points );
 
@@ -531,12 +526,12 @@ void GQ_PlotData::DrawCaption( QPixmap& caption, int nSize )
         painter.drawRect( rect );
     }
 
-    QPointArray line( 2 );
+    Q3PointArray line( 2 );
     line.setPoint( 0, 0,      y0 );
     line.setPoint( 1, dx - 1, y0 );
     DrawPolyline( painter, line );
 
-    if( pointPen_.style() != NoPen )
+    if( pointPen_.style() != Qt::NoPen )
     {
         painter.setPen( pointPen_ );
         DrawPoint( painter, QPoint( x0, y0 ) );
@@ -549,7 +544,7 @@ void GQ_PlotData::DrawCaption( QPixmap& caption, int nSize )
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
-void GQ_PlotData::PreparePoints( QPointArray& points )
+void GQ_PlotData::PreparePoints( Q3PointArray& points )
 {
     unsigned int nLastPoint = static_cast< unsigned >( pData_->size() );
 
@@ -586,9 +581,9 @@ void GQ_PlotData::PreparePoints( QPointArray& points )
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
-void GQ_PlotData::DrawPoints( QPainter& painter, const QPointArray& points )
+void GQ_PlotData::DrawPoints( QPainter& painter, const Q3PointArray& points )
 {
-    if( pointPen_.style() == NoPen )
+    if( pointPen_.style() == Qt::NoPen )
         return;
 
     painter.setPen( pointPen_ );
@@ -618,7 +613,7 @@ void GQ_PlotData::DrawPoint( QPainter& painter, const QPoint& point )
 
     painter.translate( point.x(), point.y() );
 
-    QPointArray shape( pointShape_ );
+    Q3PointArray shape( pointShape_ );
     shape.detach();
 
     if( bPolylineShape_ )
@@ -636,14 +631,14 @@ void GQ_PlotData::DrawPoint( QPainter& painter, const QPoint& point )
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
-void GQ_PlotData::DrawPolyline( QPainter& painter, const QPointArray& polyline )
+void GQ_PlotData::DrawPolyline( QPainter& painter, const Q3PointArray& polyline )
 {
-    if( linePen_ == NoPen )
+    if( linePen_ == Qt::NoPen )
         return;
 
     painter.setPen( linePen_ );
-    QPointArray::ConstIterator first = polyline.begin();
-    for( QPointArray::ConstIterator it = polyline.begin() + 1; it != polyline.end(); ++first, ++it )
+    Q3PointArray::ConstIterator first = polyline.begin();
+    for( Q3PointArray::ConstIterator it = polyline.begin() + 1; it != polyline.end(); ++first, ++it )
         if( !first->isNull() && !it->isNull() )
             painter.drawLine( *first, *it );
         else if( first->isNull() )
@@ -657,7 +652,7 @@ void GQ_PlotData::DrawPolyline( QPainter& painter, const QPointArray& polyline )
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
-void GQ_PlotData::DrawBars( QPainter& painter, const QPointArray& points )
+void GQ_PlotData::DrawBars( QPainter& painter, const Q3PointArray& points )
 {
     barLimits_.clear();
 

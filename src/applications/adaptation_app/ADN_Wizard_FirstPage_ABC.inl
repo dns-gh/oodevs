@@ -22,7 +22,7 @@
 // Created: APE 2005-01-28
 // -----------------------------------------------------------------------------
 template< typename T >
-ADN_Wizard_FirstPage_ABC<T>::ADN_Wizard_FirstPage_ABC( QWizard* pParent, const char* szName, const char* szImageName )
+ADN_Wizard_FirstPage_ABC<T>::ADN_Wizard_FirstPage_ABC( Q3Wizard* pParent, const char* szName, const char* szImageName )
 : ADN_WizardPage_ABC( pParent, szName, szImageName )
 {
 }

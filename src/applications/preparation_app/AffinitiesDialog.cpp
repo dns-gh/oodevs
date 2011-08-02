@@ -36,7 +36,7 @@ AffinitiesDialog::AffinitiesDialog( QWidget* parent, kernel::Controllers& contro
     pCheckBox_->setChecked( false );
     pCheckBox_->setShown( optional );
     pMainLayout_->addWidget( pCheckBox_ );
-    pButtonLayout_ = new QHBox( this );
+    pButtonLayout_ = new Q3HBox( this );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), pButtonLayout_ );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), pButtonLayout_ );
     okButton->setDefault( TRUE );
@@ -170,6 +170,6 @@ void AffinitiesDialog::Clear()
     spinboxs_.clear();
     BOOST_FOREACH( T_Affinities::value_type& content, affinities_ )
         content.second = 0.f;
-    pGrid_ = new QGrid( 2, this );
+    pGrid_ = new Q3Grid( 2, this );
     pMainLayout_->add( pGrid_ );
 }

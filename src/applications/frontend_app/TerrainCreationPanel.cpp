@@ -16,12 +16,12 @@
 #include "frontend/CreateTerrain.h"
 #include "frontend/commands.h"
 #include "tools/GeneralConfig.h"
-#include <qaction.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <QtGui/qaction.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3action.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlineedit.h>
+#include <QtGui/qpushbutton.h>
 
 using namespace frontend;
 
@@ -29,22 +29,22 @@ using namespace frontend;
 // Name: TerrainCreationPanel constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+TerrainCreationPanel::TerrainCreationPanel( Q3WidgetStack* widget, Q3Action& action, const tools::GeneralConfig& config, ActionsContext& context )
     : Panel_ABC( widget, action, context, "TerrainCreationPanel" )
     , config_  ( config )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, action.text(), box );
     new QLabel( tr( "New terrain name:" ), group );
     name_ = new QLineEdit( tr( "Enter terrain name" ), group );
     connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged( const QString& ) ) );
 
     bubble_ = new InfoBubble( box );
     {
-        QHBox* btnBox = new QHBox( box );
+        Q3HBox* btnBox = new Q3HBox( box );
         btnBox->layout()->setAlignment( Qt::AlignRight );
         okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Create" ), btnBox );
         QFont font( "Arial", 10, QFont::Bold );

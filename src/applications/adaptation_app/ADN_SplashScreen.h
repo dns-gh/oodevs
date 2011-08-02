@@ -10,7 +10,7 @@
 #ifndef __ADN_SplashScreen_h_
 #define __ADN_SplashScreen_h_
 
-#include <qsplashscreen.h>
+#include <QtGui/qsplashscreen.h>
 #include "ADN_ProgressIndicator_ABC.h"
 
 // =============================================================================
@@ -26,7 +26,7 @@ class ADN_SplashScreen : public QSplashScreen
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_SplashScreen( const QPixmap& pixmap, WFlags f = 0 );
+    explicit ADN_SplashScreen( const QPixmap& pixmap, Qt::WFlags f = 0 );
              ADN_SplashScreen();
     virtual ~ADN_SplashScreen();
     //@}

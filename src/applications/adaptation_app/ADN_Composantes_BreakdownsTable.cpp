@@ -20,7 +20,7 @@
 #include "ADN_Composantes_BreakdownsTable.h"
 #include "moc_ADN_Composantes_BreakdownsTable.cpp"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Composantes_Data.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -47,7 +47,7 @@ public:
         assert( pObj != 0 );
         BreakdownInfos* pBreakdown = static_cast<BreakdownInfos*>( pObj );
 
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
+        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Double* pItemOdds = new ADN_TableItem_Double( &tab_, pObj );
 
         // add a new row & set new values
@@ -82,7 +82,7 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const std::str
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::Single );
+    setSelectionMode( Q3Table::Single );
     setShowGrid( false );
 
     setMinimumHeight( 150 );
@@ -124,8 +124,8 @@ ADN_Composantes_BreakdownsTable::~ADN_Composantes_BreakdownsTable()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt )
 {
-    QPopupMenu menu( this );
-    QPopupMenu addMenu( &menu );
+    Q3PopupMenu menu( this );
+    Q3PopupMenu addMenu( &menu );
 
     ADN_Breakdowns_Data& breakdownsData = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData();
     for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.vBreakdowns_.begin(); it != breakdownsData.vBreakdowns_.end(); ++it )

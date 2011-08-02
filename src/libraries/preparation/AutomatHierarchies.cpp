@@ -78,7 +78,7 @@ void AutomatHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 // Name: AutomatHierarchies::UpdateSymbol
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::UpdateSymbol( bool up /*= true*/ )
+void AutomatHierarchies::UpdateSymbol( bool up /* = true*/ )
 {
     if( up )
         level_.clear();

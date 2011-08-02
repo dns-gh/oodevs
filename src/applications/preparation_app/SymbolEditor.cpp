@@ -158,7 +158,7 @@ void SymbolEditor::OnChangeSymbol( int id )
 // Name: SymbolEditor::Update
 // Created: LGY 2011-07-27
 // -----------------------------------------------------------------------------
-void SymbolEditor::Update( const kernel::Entity_ABC& entity, QPopupMenu* menu )
+void SymbolEditor::Update( const kernel::Entity_ABC& entity, Q3PopupMenu* menu )
 {
     identifiers_.clear();
     const kernel::TacticalHierarchies& pHierarchy = entity.Get< kernel::TacticalHierarchies >();

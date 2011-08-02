@@ -13,26 +13,30 @@
 #pragma warning( disable : 4996 ) // Function call with parameters that may be unsafe
 
 #pragma warning( push, 0 )
-#include <qapplication.h>
-#include <qdatetime.h>
-#include <qfont.h>
-#include <qgl.h>
-#include <qpopupmenu.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qwidget.h>
+#include <QtCore/qdatetime.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qfont.h>
+#include <QtGui/qwidget.h>
+#include <QtOpenGL/qgl.h>
 #pragma warning( pop )
 
 #include <string>
 #include <vector>
 #include <map>
 #include <set>
-
+#include <iostream>
 #undef GetObject
 
 #undef max
 #undef min
 
 #include "Types.h"
+
+inline std::ostream& operator<<( std::ostream& xos, const QString& s )
+{
+    return xos << s.toStdString();
+}
 
 #endif // __clients_kernel_pch_h_

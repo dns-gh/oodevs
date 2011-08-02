@@ -28,19 +28,19 @@ MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, c
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
     , resolver_( resolver )
 {
-    QVBox* vbox = new QVBox( this, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
+    Q3VBox* vbox = new Q3VBox( this, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
     {
-        QHBox* canvas = new QHBox( vbox );
+        Q3HBox* canvas = new Q3HBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Hospital ID:" ), canvas );
         referenceID_ = new LoadableLineEdit( canvas, "AHA_NUM" );
     }
     {
-        QHBox* canvas = new QHBox( vbox );
+        Q3HBox* canvas = new Q3HBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Doctors:" ), canvas );
         doctors_ = new LoadableSpinBox( 0, 1000, 1, canvas );
     }
     {
-        QVBox* bedCapacities = new QVBox( vbox );
+        Q3VBox* bedCapacities = new Q3VBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Bed Capacities:" ), bedCapacities );
         FillCapacityTypes( bedCapacities );
     }
@@ -76,7 +76,7 @@ void MedicalTreatmentPrototype_ABC::FillCapacityTypes( QWidget* parent )
 // -----------------------------------------------------------------------------
 void MedicalTreatmentPrototype_ABC::showEvent( QShowEvent* e )
 {
-    QGroupBox::showEvent( e );
+    Q3GroupBox::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

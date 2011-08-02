@@ -15,7 +15,7 @@
 #include "ADN_Missions_GUI.h"
 #include "ADN_Mission_Wizard.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Missions_Data::Mission Mission;
 
@@ -23,12 +23,12 @@ typedef ADN_Missions_Data::Mission Mission;
 // Name: ADN_ListView_MissionTypes constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /*= 0*/, const char* szName /*= 0*/ )
+ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_ListView( parent, szName )
     , missions_( missions )
 {
     addColumn( tr( "Missions" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     pConnector_ = new ADN_Connector_ListView< Mission >( *this );
     SetDeletionEnabled( true );
@@ -75,7 +75,7 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        QPopupMenu popupMenu( this );
+        Q3PopupMenu popupMenu( this );
         ADN_Mission_Wizard wizard( missions_, this );
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );

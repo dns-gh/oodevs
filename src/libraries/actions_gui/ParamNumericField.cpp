@@ -12,7 +12,7 @@
 #include "actions/Action_ABC.h"
 #include "actions/Numeric.h"
 #include "clients_gui/RichLabel.h"
-#include <qvalidator.h>
+#include <QtGui/qvalidator.h>
 
 using namespace actions::gui;
 
@@ -45,7 +45,7 @@ ParamNumericField::~ParamNumericField()
 // -----------------------------------------------------------------------------
 QWidget* ParamNumericField::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
+    Q3HBox* box = new Q3HBox( parent );
     box->setSpacing( 5 );
     pLabel_ = new ::gui::RichLabel( GetName(), box );
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );

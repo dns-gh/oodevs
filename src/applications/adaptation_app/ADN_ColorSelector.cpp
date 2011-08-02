@@ -14,7 +14,7 @@
 #include "ADN_Connector_String.h"
 #include "ADN_Enums.h"
 #include "ADN_MainWindow.h"
-#include <qcolordialog.h>
+#include <QtGui/qcolordialog.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ColorSelector constructor
@@ -79,7 +79,7 @@ void ADN_ColorSelector::UpdateEnableState()
 // -----------------------------------------------------------------------------
 void ADN_ColorSelector::drawButton( QPainter* painter )
 {
-    QPushButton::drawButton( painter );
+    this->drawButton(painter);
     painter->fillRect( 4, 4, width() - 8, height() - 8, QBrush( QColor( color_ ) ) );
     painter->drawRect( 4, 4, width() - 8, height() - 8 );
 }

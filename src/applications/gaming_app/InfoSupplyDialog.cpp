@@ -25,13 +25,13 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new SupplyConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
-    QVBox* sqbox = new QVBox( tabs );
+    Q3VBox* sqbox = new Q3VBox( tabs );
     new SupplyStocksListView( sqbox, controllers, factory );
     //new SupplyQuotasListView( sqbox, controllers, factory );
 
     new SupplyQuotasWidget( sqbox, controllers, factory );
     tabs->addTab( sqbox, tools::translate( "InfoSupplyDialog", "Stocks && Quotas" ) );
-    QVBox* tbox = new QVBox( tabs );
+    Q3VBox* tbox = new Q3VBox( tabs );
     new SupplyTransportersListView( tbox, controllers, factory );
     tabs->addTab( tbox, tools::translate( "InfoSupplyDialog", "Transporters" ) );
     new SupplyStatusWidget( RootWidget(), controllers, factory );

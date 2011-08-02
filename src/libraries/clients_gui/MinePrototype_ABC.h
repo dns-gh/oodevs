@@ -43,7 +43,7 @@ protected:
     //@{
     LoadableLineEdit* density_;
     QLabel* densityLabel_;
-    QHBox* densityBox_;
+    Q3HBox* densityBox_;
     //@}
 };
 

@@ -26,7 +26,7 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
 {
     AddColumn( tools::translate( "Parameter", "Parameter" ) );
     AddColumn( tools::translate( "Parameter", "Value" ) );
-    setResizeMode( QListView::LastColumn );
+    setResizeMode( Q3ListView::LastColumn );
     controllers_.Register( *this );
 }
 

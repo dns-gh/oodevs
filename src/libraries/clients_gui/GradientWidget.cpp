@@ -32,13 +32,13 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preferences, kernel::Controllers& controllers,
                                 const Painter_ABC& painter )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
     , options_    ( controllers_.options_ )
     , preferences_( preferences )
 {
     setMaximumHeight( 150 );
-    QHBox* box = new QHBox( this );
+    Q3HBox* box = new Q3HBox( this );
     presetCombo_ = new QComboBox( box );
 
     QToolButton* copyPreset = new QToolButton( box );
@@ -56,7 +56,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     removePreset->setTextLabel( tr( "Delete preset" ) );
     removePreset->setFixedSize( 22, 22 );
 
-    box = new QHBox( this );
+    box = new Q3HBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
     box->setMaximumHeight( 100 );
     gradientEditor_ = new GradientButton( box, painter, true );

@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "TableItemDisplayer.h"
-#include <qtable.h>
 
 using namespace gui;
 
@@ -85,7 +84,7 @@ void TableItemDisplayer::EndDisplay()
 // Name: TableItemDisplayer::SetItem
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void TableItemDisplayer::SetItem( QTableItem* item )
+void TableItemDisplayer::SetItem( Q3TableItem* item )
 {
     item_ = item;
 }

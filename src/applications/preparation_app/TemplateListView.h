@@ -23,7 +23,7 @@ class FormationModel;
 */
 // Created: AGE 2007-05-30
 // =============================================================================
-class TemplateListView : public QListView
+class TemplateListView : public Q3ListView
 {
     Q_OBJECT;
 
@@ -44,7 +44,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnRename( QListViewItem*, int, const QString& );
+    void OnRename( Q3ListViewItem*, int, const QString& );
     //@}
 
 private:
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual QDragObject* dragObject();
+    virtual Q3DragObject* dragObject();
     void Clear();
     void ReadTemplate( xml::xistream& input );
     void CreateItem( HierarchyTemplate& t );

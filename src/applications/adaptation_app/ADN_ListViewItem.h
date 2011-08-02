@@ -15,13 +15,13 @@
 class ADN_ListView;
 
 #include "ADN_Connector_ABC.h"
-#include <qlistview.h>
+#include <Qt3Support/q3listview.h>
 
 //*****************************************************************************
 // Created: JDY 03-07-02
 //*****************************************************************************
 class ADN_ListViewItem
-:   public QListViewItem
+:   public Q3ListViewItem
 {
 public:
 

@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_TrucksDoubleTable.h"
 
-#include <qpopupmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Supply_Data.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -68,7 +68,7 @@ ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( QWidget* pParent )
 {
     // Selection and sorting.
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
 
@@ -107,7 +107,7 @@ ADN_Supply_TrucksDoubleTable::~ADN_Supply_TrucksDoubleTable()
 // -----------------------------------------------------------------------------
 void ADN_Supply_TrucksDoubleTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt )
 {
-    QPopupMenu menu( this );
+    Q3PopupMenu menu( this );
 
     menu.insertItem( tr( "New" ), 0 );
     menu.insertItem( tr( "Delete" ), 1 );

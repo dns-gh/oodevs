@@ -1,31 +1,6 @@
-<!DOCTYPE TS><TS>
-<context>
-    <name>@default</name>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Time Table</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tick</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sim time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Real time</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>ActionProperties</name>
     <message>
@@ -190,6 +165,17 @@
     </message>
 </context>
 <context>
+    <name>AlarmEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AlarmsWidget</name>
     <message>
         <source>Alarms</source>
@@ -245,6 +231,14 @@
     <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown exception caught</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
     </message>
 </context>
 <context>
@@ -695,6 +689,14 @@ Motivo: %3
     <name>ExtensionsPanel</name>
     <message>
         <source>Change extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1295,6 +1297,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>LineEdit</name>
+    <message>
+        <source>Checkpoint name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LivingAreaDialog</name>
     <message>
         <source>Living area</source>
@@ -1617,18 +1626,6 @@ Motivo: %3
 <context>
     <name>MainWindow</name>
     <message>
-        <source> - Not connected</source>
-        <translation> - No conectado</translation>
-    </message>
-    <message>
-        <source>Tactical</source>
-        <translation>Táctico</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Comunicación</translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation>Objetos</translation>
     </message>
@@ -1637,71 +1634,71 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Orbat</source>
-        <translation>Orbat</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propiedades</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Registro</translation>
-    </message>
-    <message>
-        <source>Profiling</source>
-        <translation>Performances</translation>
-    </message>
-    <message>
-        <source>Logo</source>
-        <translation>Logo</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation>Autómatas</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Elevación</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Imágenes raster</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terreno</translation>
-    </message>
-    <message>
-        <source>Intelligences</source>
-        <translation>Inteligencias</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation>Creación</translation>
-    </message>
-    <message>
-        <source>Intelligence</source>
-        <translation>Inteligencia</translation>
-    </message>
-    <message>
-        <source>Knowledge</source>
-        <translation>Conocimiento</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation>Error cargando ejercicio: </translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation>Crecidas de agua</translation>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crowds</source>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Propiedades</translation>
+    </message>
+    <message>
+        <source>Knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profiling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contour Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1709,8 +1706,20 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contour Lines</source>
+        <source>Units</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
+    <message>
+        <source>Automats</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Not connected</source>
+        <translation type="unfinished"> - No conectado</translation>
     </message>
 </context>
 <context>
@@ -2078,10 +2087,6 @@ Motivo: %3
         <translation>Perfi&amp;les</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Ventanas</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
@@ -2143,6 +2148,10 @@ Motivo: %3
     </message>
     <message>
         <source>Toggle dock windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Windows</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2506,11 +2515,11 @@ Motivo: %3
     </message>
     <message>
         <source>Enter value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ingresar valor</translation>
     </message>
     <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ingrese un valor y luego presione &apos;enter&apos;</translation>
     </message>
 </context>
 <context>
@@ -2709,10 +2718,6 @@ Motivo: %3
         <translation>Grabar Punto de control</translation>
     </message>
     <message>
-        <source>Checkpoint name: </source>
-        <translation>Nombre de Punto de control: </translation>
-    </message>
-    <message>
         <source>Connecting</source>
         <translation>Conectando</translation>
     </message>
@@ -2819,6 +2824,10 @@ Motivo: %3
         <source>Saving checkpoint...</source>
         <translation>Grabando punto de control...</translation>
     </message>
+    <message>
+        <source>Last tick speed factor/Mean speed factor</source>
+        <translation type="unfinished">Último factor de velocidad de ticks/ factor de velocidad</translation>
+    </message>
 </context>
 <context>
     <name>SupplyConsignsWidget</name>
@@ -2893,6 +2902,29 @@ Motivo: %3
     <message>
         <source>Change Formation Superior</source>
         <translation>Cambiar Superior de formación</translation>
+    </message>
+</context>
+<context>
+    <name>TimeTableDialog</name>
+    <message>
+        <source>Time Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sim time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
     </message>
 </context>
 <context>
@@ -3199,6 +3231,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
         <source>Invalid local weather %1, please correct time or position settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Weather parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gamig_app::Action</name>
@@ -3223,29 +3259,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     </message>
 </context>
 <context>
-    <name>gui</name>
-    <message>
-        <source>Weather parameters</source>
-        <translation>Parámetros de clima</translation>
-    </message>
-    <message>
-        <source>Last tick speed factor/Mean speed factor</source>
-        <translation>Último factor de velocidad de ticks/ factor de velocidad</translation>
-    </message>
-    <message>
-        <source>Validate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>tools</name>
     <message>
         <source> - Not connected</source>
-        <translation> - No conectado</translation>
+        <translation type="unfinished"> - No conectado</translation>
     </message>
 </context>
 </TS>

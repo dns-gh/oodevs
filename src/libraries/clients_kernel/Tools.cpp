@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Tools.h"
 #include "ENT/ENT_Tr.h"
-#include <qapplication.h>
+#include <QtGui/qapplication.h>
 
 using namespace kernel;
 

@@ -11,7 +11,6 @@
 #define __CursorStrategy_h_
 
 #include "clients_gui/CursorStrategy_ABC.h"
-#include <qcursor.h>
 
 namespace kernel
 {

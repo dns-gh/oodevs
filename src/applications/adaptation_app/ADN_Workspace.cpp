@@ -85,11 +85,12 @@
 #include <boost/foreach.hpp>
 #include <errno.h>
 #include <io.h>
-#include <qlayout.h>
-#include <qmessagebox.h>
-#include <qtimer.h>
 #include <windows.h>
-
+#pragma warning( push, 0 )
+#include <Qtcore/qtimer.h>
+#include <QtGui/qmessagebox.h>
+#include <QtGui/qlayout.h>
+#pragma warning( pop )
 
 ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 
@@ -187,7 +188,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     {
         elements_[n]->GetGuiABC().Build();
         elements_[n]->GetGuiABC().RegisterTable( mainWindow );
-        pProgressIndicator_->Increment( elements_[n]->GetName() );
+        pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
     }
 
     // Force an order for the tabs. Combine some other tabs. Exclude others... All in all, has to be done by hand.
@@ -211,7 +212,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eFireClasses]->GetName(), * elements_[eFireClasses]->GetGuiABC().GetMainWidget() );
 
     QWidget* pLogPage = new QWidget();
-    QVBoxLayout* pLayout = new QVBoxLayout( pLogPage );
+    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pLogPage );
 
     elements_[eMaintenance]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eSupply]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
@@ -249,7 +250,7 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
     for( int n = eNbrWorkspaceElements - 1; n >= 0; --n )
     {
         if( bVisible )
-            pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ) );
+            pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
         qApp->processEvents();
         elements_[n]->GetDataABC().Reset();
     }
@@ -280,7 +281,7 @@ void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& 
 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
-        pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ) );
+        pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
         qApp->processEvents();
         elements_[n]->GetDataABC().Load( fileLoader );
     }
@@ -371,7 +372,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
-            pProgressIndicator_->Increment( elements_[n]->GetName() );
+            pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
         }
         dirInfos.UseTempDirectory( false );
     }

@@ -12,8 +12,8 @@
 #include "AfterActionParameter.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include <qsettings.h>
-#include <qtextcodec.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
 
 using namespace kernel;
 

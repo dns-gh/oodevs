@@ -70,14 +70,14 @@ InitialStateTableCrew::~InitialStateTableCrew()
 void InitialStateTableCrew::paintCell( QPainter * p, int row, int col, const QRect & cr, bool selected, const QColorGroup & cg )
 {
     if( row > 2 )
-        QTable::paintCell( p, row, col, cr, selected, cg );
+        Q3Table::paintCell( p, row, col, cr, selected, cg );
     else
     {
         QColor backgroundColor;
         backgroundColor.setRgb( 200, 200, 200 );
         QColorGroup newCg( cg );
         newCg.setColor( QColorGroup::Base, backgroundColor );
-        QTable::paintCell( p, row, col, cr, selected, newCg );
+        Q3Table::paintCell( p, row, col, cr, selected, newCg );
     }
 }
 
@@ -117,7 +117,7 @@ void InitialStateTableCrew::OnRemoveItem()
 // -----------------------------------------------------------------------------
 void InitialStateTableCrew::OnRequestContextMenu( int row, int /*col*/, const QPoint& pos )
 {
-    QPopupMenu popupMenu;
+    Q3PopupMenu popupMenu;
     popupMenu.insertItem( tools::translate( "InitialStateTableCrew", "Add" ), this, SLOT( OnAddItem() ) );
     if( numRows() - 1 > InitialStateCrew::ePrivate )
     {
@@ -151,7 +151,7 @@ void InitialStateTableCrew::OnValueChanged( int row, int col )
         ComputeAllValues();
     }
     else if( col == eNumber )
-        ComputeValues( static_cast< InitialStateCrew::E_CrewRanks > ( static_cast< QComboTableItem* >( item( row, eRank ) )->currentItem() ) );
+        ComputeValues( static_cast< InitialStateCrew::E_CrewRanks > ( static_cast< Q3ComboTableItem* >( item( row, eRank ) )->currentItem() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,13 +174,13 @@ void InitialStateTableCrew::ComputeValues( InitialStateCrew::E_CrewRanks rank )
     // Count for each rank the number of officer
     unsigned int others = 0;
     for( int i = InitialStateCrew::ePrivate + 1; i < numRows(); ++i )
-        if( rank == static_cast< InitialStateCrew::E_CrewRanks > ( static_cast< QComboTableItem* >( item( i, eRank ) )->currentItem() ) )
+        if( rank == static_cast< InitialStateCrew::E_CrewRanks > ( static_cast< Q3ComboTableItem* >( item( i, eRank ) )->currentItem() ) )
             others += item( i, eNumber )->text().toUInt();
     // Update left officers count
     nbrOfficersLeft_[ rank ] = nbrOfficers_[ rank ] - others;
     // Update max value for each spinbox
     for( int i = InitialStateCrew::ePrivate + 1; i < numRows(); ++i )
-        if( rank == static_cast< InitialStateCrew::E_CrewRanks > ( static_cast< QComboTableItem* >( item( i, eRank ) )->currentItem() ) )
+        if( rank == static_cast< InitialStateCrew::E_CrewRanks > ( static_cast< Q3ComboTableItem* >( item( i, eRank ) )->currentItem() ) )
             static_cast< gui::SpinTableItem< int >* >( item( i, eNumber ) )->SetMinMaxValue( 0, nbrOfficersLeft_[ rank ] + item( i, eNumber )->text().toUInt() );
     // Update first line left value
     item( rank, eNumber )->setText( QString::number( nbrOfficersLeft_[ rank ] ) );
@@ -197,8 +197,8 @@ void InitialStateTableCrew::AddHeader( InitialStateCrew::E_CrewRanks rank, int n
     insertRows( nRow );
     setText( nRow, eRank, ranks_[ rank ] );
     setText( nRow, eState, *states_.begin() );
-    setItem( nRow, ePsy, new QCheckTableItem( this, "" ) );
-    setItem( nRow, eContaminated, new QCheckTableItem( this, "" ) );
+    setItem( nRow, ePsy, new Q3CheckTableItem( this, "" ) );
+    setItem( nRow, eContaminated, new Q3CheckTableItem( this, "" ) );
     setText( nRow, eNumber, QString::number( number ) );
 }
 
@@ -211,14 +211,14 @@ void InitialStateTableCrew::AddLine( InitialStateCrew::E_CrewRanks rank /*= Init
 {
     unsigned int nRow = numRows();
     insertRows( nRow );
-    setItem( nRow, eRank, new QComboTableItem( this, ranks_ ) );
-    static_cast< QComboTableItem* >( item( nRow, eRank ) )->setCurrentItem( static_cast< int >( rank ) );
-    setItem( nRow, eState, new QComboTableItem( this, states_ ) );
-    static_cast< QComboTableItem* >( item( nRow, eState ) )->setCurrentItem( static_cast< int >( state ) );
-    setItem( nRow, ePsy, new QCheckTableItem( this, "" ) );
-    static_cast< QCheckTableItem* >( item( nRow, ePsy ) )->setChecked( psy );
-    setItem( nRow, eContaminated, new QCheckTableItem( this, "" ) );
-    static_cast< QCheckTableItem* >( item( nRow, eContaminated ) )->setChecked( contaminated );
+    setItem( nRow, eRank, new Q3ComboTableItem( this, ranks_ ) );
+    static_cast< Q3ComboTableItem* >( item( nRow, eRank ) )->setCurrentItem( static_cast< int >( rank ) );
+    setItem( nRow, eState, new Q3ComboTableItem( this, states_ ) );
+    static_cast< Q3ComboTableItem* >( item( nRow, eState ) )->setCurrentItem( static_cast< int >( state ) );
+    setItem( nRow, ePsy, new Q3CheckTableItem( this, "" ) );
+    static_cast< Q3CheckTableItem* >( item( nRow, ePsy ) )->setChecked( psy );
+    setItem( nRow, eContaminated, new Q3CheckTableItem( this, "" ) );
+    static_cast< Q3CheckTableItem* >( item( nRow, eContaminated ) )->setChecked( contaminated );
     setItem( nRow, eNumber, new gui::SpinTableItem< int >( this, 0, nbrOfficers_[ rank ] ) );
     item( nRow, eNumber )->setText( QString::number( number ) );
 }
@@ -262,10 +262,10 @@ void InitialStateTableCrew::WriteExtension( InitialState& extension ) const
     for( int nRow = InitialStateCrew::ePrivate + 1; nRow < numRows(); ++nRow )
     {
         unsigned int number = item( nRow, eNumber )->text().toUInt();
-        InitialStateCrew::E_CrewRanks rank = static_cast< InitialStateCrew::E_CrewRanks >( static_cast< QComboTableItem* >( item( nRow, eRank ) )->currentItem() );
-        InitialStateCrew::E_CrewStates state = static_cast< InitialStateCrew::E_CrewStates >( static_cast< QComboTableItem* >( item( nRow, eState ) )->currentItem() );
-        bool psy = static_cast< QCheckTableItem* >( item( nRow, ePsy ) )->isChecked();
-        bool contaminated = static_cast< QCheckTableItem* >( item( nRow, eContaminated ) )->isChecked();
+        InitialStateCrew::E_CrewRanks rank = static_cast< InitialStateCrew::E_CrewRanks >( static_cast< Q3ComboTableItem* >( item( nRow, eRank ) )->currentItem() );
+        InitialStateCrew::E_CrewStates state = static_cast< InitialStateCrew::E_CrewStates >( static_cast< Q3ComboTableItem* >( item( nRow, eState ) )->currentItem() );
+        bool psy = static_cast< Q3CheckTableItem* >( item( nRow, ePsy ) )->isChecked();
+        bool contaminated = static_cast< Q3CheckTableItem* >( item( nRow, eContaminated ) )->isChecked();
         if( !number )
             continue;
         if( state == InitialStateCrew::eHealthy && !psy && !contaminated )

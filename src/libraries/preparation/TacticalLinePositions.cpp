@@ -82,7 +82,7 @@ float TacticalLinePositions::GetHeight( bool ) const
 // Name: TacticalLinePositions::IsAt
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-bool TacticalLinePositions::IsAt( const geometry::Point2f& point, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
+bool TacticalLinePositions::IsAt( const geometry::Point2f& point, float precision /* = 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
     precision*=precision;
     if( pointList_.empty() )

@@ -11,7 +11,11 @@
 #define __commands_h_
 
 #include <boost/function.hpp>
-#include <qstringlist.h>
+
+#pragma warning( push, 0 )
+#include <QtCore/qstringlist.h>
+#pragma( pop )
+
 #include <vector>
 
 namespace tools

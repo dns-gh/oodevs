@@ -62,7 +62,7 @@ void WeatherListView::Update( const WeatherModel& model )
         boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( it.NextElement() ) );
         weather->SetCreated( true );
         weathers_.push_back( weather );
-        QListViewItem* item = new QListViewItem( this );
+        Q3ListViewItem* item = new Q3ListViewItem( this );
         item->setText( 0, weather->GetName() );
     }
 }
@@ -75,7 +75,7 @@ void WeatherListView::CreateItem()
 {
     boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).ascii() ) );
     weather->SetCreated( true );
-    QListViewItem* item = new QListViewItem( this );
+    Q3ListViewItem* item = new Q3ListViewItem( this );
     item->setText( 0, weather->GetName() );
     weathers_.push_back( weather );
 }

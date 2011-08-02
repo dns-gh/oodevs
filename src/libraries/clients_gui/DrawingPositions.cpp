@@ -84,7 +84,7 @@ float DrawingPositions::GetHeight( bool ) const
 // Name: DrawingPositions::IsAt
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-bool DrawingPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
+bool DrawingPositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor*/ ) const
 {
     if( IsValid() )
     {

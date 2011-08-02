@@ -18,9 +18,9 @@ using namespace gui;
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 LoadableTimeEdit::LoadableTimeEdit( QWidget* parent, const QString& probableName )
-    : LoadableFieldTemplate< QTimeEdit >( parent, probableName )
+    : LoadableFieldTemplate< Q3TimeEdit >( parent, probableName )
 {
-    SetDefaultValueWidget( new QTimeEdit( this ) );
+    SetDefaultValueWidget( new Q3TimeEdit( this ) );
 }
 
 // -----------------------------------------------------------------------------

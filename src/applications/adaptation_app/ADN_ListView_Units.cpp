@@ -14,7 +14,7 @@
 #include "ADN_Unit_Wizard.h"
 #include "ADN_Units_GUI.h"
 #include "ADN_Automata_Data.h"
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Units_Data::UnitInfos UnitInfos;
 
@@ -22,7 +22,7 @@ typedef ADN_Units_Data::UnitInfos UnitInfos;
 // Name: ADN_ListView_Units constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent, const char* szName, Qt::WFlags f )
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
@@ -102,7 +102,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Units::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_Unit_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
@@ -112,7 +112,7 @@ void ADN_ListView_Units::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Units::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Units::GetToolTipFor( QListViewItem& item )
+std::string ADN_ListView_Units::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
     UnitInfos* pCastData = static_cast< UnitInfos* >( pData );

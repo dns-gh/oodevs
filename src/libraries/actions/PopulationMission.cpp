@@ -22,7 +22,7 @@ using namespace actions;
 // Name: PopulationMission constructor
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-PopulationMission::PopulationMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /*= true*/ )
+PopulationMission::PopulationMission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true*/ )
     : Mission( entity, mission, controller, registered )
 {
     // NOTHING

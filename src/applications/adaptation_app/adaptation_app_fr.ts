@@ -1,15 +1,6 @@
-<!DOCTYPE TS><TS>
-<context>
-    <name>@default</name>
-    <message>
-        <source>Add </source>
-        <translation>Ajouter </translation>
-    </message>
-    <message>
-        <source>new </source>
-        <translation>nouveau </translation>
-    </message>
-</context>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>ADNDatabaseWarnings</name>
     <message>
@@ -2735,7 +2726,7 @@ du tireur</translation>
         <translation>Angle de dispersion</translation>
     </message>
     <message>
-        <source>&#xb0;</source>
+        <source>°</source>
         <translation>°</translation>
     </message>
     <message>
@@ -3388,7 +3379,7 @@ Assurez vous que le fichier existe.</translation>
         <translation>ROE</translation>
     </message>
     <message>
-        <source>Attrition Surface (m&#xb2;)</source>
+        <source>Attrition Surface (m²)</source>
         <translation>Surface d&apos;attrition (m²)</translation>
     </message>
     <message>
@@ -3417,7 +3408,7 @@ Assurez vous que le fichier existe.</translation>
         <translation>Nom</translation>
     </message>
     <message>
-        <source>people/m&#xb2;</source>
+        <source>people/m²</source>
         <translation>hommes/m²</translation>
     </message>
     <message>
@@ -3686,10 +3677,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <translation>Enlever </translation>
     </message>
     <message>
-        <source>new </source>
-        <translation>nouveau </translation>
-    </message>
-    <message>
         <source> from </source>
         <translation> de </translation>
     </message>
@@ -3928,7 +3915,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Angle</translation>
     </message>
     <message>
-        <source>&#xb0;</source>
+        <source>°</source>
         <translation>°</translation>
     </message>
     <message>
@@ -4012,7 +3999,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Densité</translation>
     </message>
     <message>
-        <source>people/m&#xb2;</source>
+        <source>people/m²</source>
         <translation>hommes/m²</translation>
     </message>
     <message>
@@ -5067,7 +5054,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Units_Data::UnitInfos</name>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5292,17 +5279,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
-    <name>ADN_UrbanModifiersTable</name>
-    <message>
-        <source>Material</source>
-        <translation>Matériau</translation>
-    </message>
-    <message>
-        <source>Modifiers</source>
-        <translation>Modificateurs</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Urban_AttritionTable</name>
     <message>
         <source>% destroyed</source>
@@ -5459,24 +5435,21 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
         <translation>L&apos;arme et la munition ne sont pas compatibles (direct/indirect). Veuillez modifier vos choix.</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Weapons_Data</name>
     <message>
         <source>Create new</source>
-        <translation>Créer</translation>
+        <translation type="unfinished">Créer</translation>
     </message>
     <message>
         <source>Create a copy of:</source>
-        <translation>Créer une copie de:</translation>
+        <translation type="unfinished">Créer une copie de:</translation>
     </message>
     <message>
         <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
+        <translation type="unfinished">Systèmes d&apos;armes</translation>
     </message>
     <message>
         <source>New weapon creation</source>
-        <translation>Création d&apos;une nouvelle arme</translation>
+        <translation type="unfinished">Création d&apos;une nouvelle arme</translation>
     </message>
 </context>
 <context>
@@ -5660,48 +5633,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Heat decrease rate</source>
         <translation>Coefficient de diminution</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Wizard</name>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Create new</source>
-        <translation>Créer</translation>
-    </message>
-    <message>
-        <source>Create a copy of:</source>
-        <translation>Créer une copie de:</translation>
-    </message>
-    <message>
-        <source>Creation impossible</source>
-        <translation>Création impossible</translation>
-    </message>
-    <message>
-        <source>The provided name is either empty or already in use, please pick another one.</source>
-        <translation>Le nom fourni est soit vide, soit déjà utilisé. Veuillez en choisir un autre.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Wizard_ABC</name>
-    <message>
-        <source>Next</source>
-        <translation>Suivant</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation>Précédent</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation>Terminer</translation>
     </message>
 </context>
 <context>
@@ -5930,32 +5861,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
-    </message>
-</context>
-<context>
-    <name>ArmorInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation>Catégories - Type de blindage &apos;%1&apos; non valide</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
-        <translation>Catégories - Le nom de blindage existe déjà</translation>
-    </message>
-</context>
-<context>
-    <name>AttritionEffectOnHuman</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation>Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
     </message>
 </context>
 <context>
@@ -6382,6 +6287,43 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation>Arme %1 - Tir indirect - Portée max &lt; portée min</translation>
+    </message>
+</context>
+<context>
+    <name>helpers::ADN_UrbanModifiersTable</name>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished">Matériau</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation type="unfinished">Modificateurs</translation>
+    </message>
+</context>
+<context>
+    <name>helpers::ArmorInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">Catégories - Type de blindage &apos;%1&apos; non valide</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished">Catégories - Le nom de blindage existe déjà</translation>
+    </message>
+</context>
+<context>
+    <name>helpers::AttritionEffectOnHuman</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation type="unfinished">Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
     </message>
 </context>
 </TS>

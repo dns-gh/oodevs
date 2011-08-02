@@ -10,8 +10,6 @@
 #ifndef __GradientItem_h_
 #define __GradientItem_h_
 
-#include <qcanvas.h>
-
 namespace gui
 {
     class Painter_ABC;
@@ -21,12 +19,12 @@ namespace gui
 */
 // Created: SBO 2007-07-02
 // =============================================================================
-class GradientItem : public QCanvasLine
+class GradientItem : public Q3CanvasLine
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             GradientItem( QCanvas* canvas, const Painter_ABC& painter,
+             GradientItem( Q3Canvas* canvas, const Painter_ABC& painter,
                            unsigned short percentage, const QColor& color, bool disableState );
     virtual ~GradientItem();
     //@}
@@ -39,7 +37,7 @@ public:
     unsigned short GetPercentage() const;
     void SetPercentage( unsigned short percentage );
     virtual void draw( QPainter& painter );
-    virtual QPointArray areaPoints() const;
+    virtual Q3PointArray areaPoints() const;
     //@}
 
 private:

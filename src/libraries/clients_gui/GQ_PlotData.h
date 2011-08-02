@@ -25,12 +25,6 @@
 
 #include "GQ_PlotDataBBox.h"
 
-#include <qbrush.h>
-#include <qcolor.h>
-#include <qobject.h>
-#include <qpen.h>
-#include <qpointarray.h>
-
 class QPainter;
 class QPixmap;
 class QStringList;
@@ -102,7 +96,7 @@ public:
 
     void SetPointPen  ( const QPen& );
     void SetPointShape( E_PointShapeType nPredefinedType, unsigned int nShapeSize = 3 );
-    void SetPointShape( E_PointShapeType nUserType, const QPointArray& shape );
+    void SetPointShape( E_PointShapeType nUserType, const Q3PointArray& shape );
 
     void SetLinePen   ( const QPen& );
 
@@ -172,11 +166,11 @@ private:
     //! @name Helpers
     //@{
     virtual void InitPointShape( unsigned int nShapeSize );
-    virtual void PreparePoints  ( QPointArray& );
-    virtual void DrawPoints     ( QPainter&, const QPointArray& );
+    virtual void PreparePoints  ( Q3PointArray& );
+    virtual void DrawPoints     ( QPainter&, const Q3PointArray& );
     virtual void DrawPoint      ( QPainter&, const QPoint&      );
-    virtual void DrawPolyline   ( QPainter&, const QPointArray& );
-    virtual void DrawBars       ( QPainter&, const QPointArray& );
+    virtual void DrawPolyline   ( QPainter&, const Q3PointArray& );
+    virtual void DrawBars       ( QPainter&, const Q3PointArray& );
     //@}
 
 protected:
@@ -200,7 +194,7 @@ protected:
     QFont captionFont_;
 
     E_PointShapeType nPointShapeType_;
-    QPointArray      pointShape_;
+    Q3PointArray      pointShape_;
     bool             bPolylineShape_;
 
     bool        bDrawBars_;

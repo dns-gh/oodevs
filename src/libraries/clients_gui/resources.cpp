@@ -111,15 +111,15 @@
 #include "cursors/circle_cursor.xpm"
 #include "cursors/path_cursor.xpm"
 
-QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
+QIcon MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {
     QPixmap enabledPixmap ( pEnabledXpm );
     QPixmap disabledPixmap( pDisabledXpm );
 
-    QIconSet iconset  ( enabledPixmap );
-    QIconSet iconset_x( disabledPixmap );
+    QIcon iconset  ( enabledPixmap );
+    QIcon iconset_x( disabledPixmap );
 
-    iconset.setPixmap( iconset_x.pixmap(), QIconSet::Automatic, QIconSet::Disabled );
+    iconset.setPixmap( iconset_x.pixmap(), QIcon::Automatic, QIcon::Disabled );
 
     return iconset;
 }

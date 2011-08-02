@@ -32,7 +32,7 @@ namespace gui
 */
 // Created: LGY 2011-06-01
 // =============================================================================
-class DensityWidget : public QVBox
+class DensityWidget : public Q3VBox
                     , public tools::Observer_ABC
                     , public kernel::OptionsObserver_ABC
 {

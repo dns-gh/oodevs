@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_ListView.h"
 
-#include <qpopmenu.h>
+#include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Breakdowns_GUI.h"
@@ -34,12 +34,12 @@ typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 // Name: ADN_Breakdowns_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* szName, WFlags f )
+ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Breakdowns" ) );
-    setResizeMode( QListView::AllColumns );
+    setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<BreakdownInfo>(*this);
@@ -83,7 +83,7 @@ void ADN_Breakdowns_ListView::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_ListView::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
+    Q3PopupMenu popupMenu( this );
     ADN_Breakdown_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

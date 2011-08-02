@@ -61,16 +61,16 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
+    QWidget* BuildPage( Q3VGroupBox*& pGroup, QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Models_Data& data_;
-    QVGroupBox* pGroupPawn_;
-    QVGroupBox* pGroupAutomat_;
-    QVGroupBox* pGroupPopulation_;
+    Q3VGroupBox* pGroupPawn_;
+    Q3VGroupBox* pGroupAutomat_;
+    Q3VGroupBox* pGroupPopulation_;
     //@}
 };
 

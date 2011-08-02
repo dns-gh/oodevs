@@ -19,10 +19,10 @@
 #ifndef __ADN_WizardPage_ABC_h_
 #define __ADN_WizardPage_ABC_h_
 
-#include <qvbox.h>
+#include <Qt3Support/q3vbox.h>
 #include <boost/noncopyable.hpp>
 
-class QWizard;
+class Q3Wizard;
 class ADN_ImageViewer;
 
 // =============================================================================
@@ -35,23 +35,23 @@ class ADN_ImageViewer;
 */
 // Created: AGN 2003-11-18
 // =============================================================================
-class ADN_WizardPage_ABC : public QHBox
+class ADN_WizardPage_ABC : public Q3HBox
                          , private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_WizardPage_ABC( QWizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
+    explicit ADN_WizardPage_ABC( Q3Wizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
     virtual ~ADN_WizardPage_ABC();
     //@}
 
 protected:
     //! @name Member data
     //@{
-    QWizard* pWizard_;
+    Q3Wizard* pWizard_;
     ADN_ImageViewer* pImage_;
-    QVBox* pRightSide_;
+    Q3VBox* pRightSide_;
     //@}
 };
 

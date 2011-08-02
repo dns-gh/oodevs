@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableTimeEdit : public LoadableFieldTemplate< QTimeEdit >
+class LoadableTimeEdit : public LoadableFieldTemplate< Q3TimeEdit >
 {
 public:
 

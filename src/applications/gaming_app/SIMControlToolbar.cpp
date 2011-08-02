@@ -58,16 +58,36 @@ namespace
         SIMControlToolbar& toolBar_;
     };
 
-    class AutoFitPopupMenu : public QPopupMenu
+    class AutoFitPopupMenu : public Q3PopupMenu
     {
     public:
-        explicit AutoFitPopupMenu( QWidget* parent ) : QPopupMenu( parent ) {}
+        explicit AutoFitPopupMenu( QWidget* parent ) : Q3PopupMenu( parent ) {}
         virtual ~AutoFitPopupMenu() {}
         virtual void showEvent( QShowEvent* event )
         {
-            QPopupMenu::showEvent( event );
+            Q3PopupMenu::showEvent( event );
             adjustSize();
         }
+    };
+
+    class LineEdit : public QWidgetAction
+    {
+    public:
+        LineEdit( QWidget* toolbar, QObject* parent )
+            : QWidgetAction( parent )
+            , toolbar_( toolbar )
+        {}
+        virtual ~LineEdit() {}
+        virtual QWidget* createWidget( QWidget* parent )
+        {
+            Q3HBox* box = new Q3HBox( parent );
+            box->setMargin( 5 );
+            new QLabel( tr( "Checkpoint name: " ), box );
+            QLineEdit* lineEdit = new QLineEdit( box );
+            connect( lineEdit, SIGNAL( returnPressed() ), toolbar_, SLOT( SlotNamedCheckPoint() ) );
+            return box;
+        }
+        QWidget* toolbar_;
     };
 }
 
@@ -76,7 +96,7 @@ namespace
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
 SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger )
-    : QToolBar( pParent, "sim control toolbar" )
+    : QToolBar( "sim control toolbar", pParent )
     , controllers_( controllers )
     , publisher_( publisher )
     , speed_( 4212 )
@@ -89,27 +109,26 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , playPix_      ( MAKE_ICON( play ) )
     , stopPix_      ( MAKE_ICON( stop ) )
 {
-    setLabel( tr( "Simulation control" ) );
-
+    setObjectName( "simControl" );
+    setWindowTitle( tr( "Simulation control" ) );
     pConnectButton_ = new QToolButton( this );
-    pConnectButton_->setAccel( Key_C );
     pConnectButton_->setIconSet( disconnectPix_ );
     pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
+    pConnectButton_->setShortcut( QKeySequence( Qt::Key_C ) );
+
+
 
     pPlayButton_ = new QToolButton( this );
-    pPlayButton_->setAccel( Key_P );
     pPlayButton_->setIconSet( MAKE_ICON( stop ) );
     pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
+    pPlayButton_->setShortcut( QKeySequence( Qt::Key_P ) );
     pPlayButton_->setEnabled( false );
 
     pStepButton_ = new QToolButton( this );
-    pStepButton_->setAccel( Key_S );
+    pStepButton_->setAccel( Qt::Key_S );
     pStepButton_->setIconSet( MAKE_ICON( step ) );
     pStepButton_->setTextLabel( tr( "Step (S)" ) );
     pStepButton_->setEnabled( false );
-
-    new QLabel( " ", this );
-    new QLabel( tr( "Speed factor: " ), this );
 
     pSpeedSpinBox_ = new SpinBox( 1, 100000, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
@@ -128,28 +147,37 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pCheckpointButton_->setShown( false );
 
     {
-        QPopupMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
+        Q3PopupMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
         pCheckpointButton_->setPopup( popup );
+        pCheckpointButton_->setPopupMode( QToolButton::InstantPopup );
         pCheckpointButton_->setPopupDelay( 0 );
-        QHBox* box = new QHBox( popup );
-        box->setMargin( 5 );
-        new QLabel( tr( "Checkpoint name: " ), box );
-        QLineEdit* lineEdit = new QLineEdit( box );
-        popup->insertItem( box );
-        connect( lineEdit, SIGNAL( returnPressed() ), SLOT( SlotNamedCheckPoint() ) );
+        popup->addAction( new LineEdit( this, popup ) );
     }
 
     pConnectDlg_ = new ConnectDialog( this, network, logger );
     {
-        QPopupMenu* popup = new QPopupMenu( pConnectButton_ );
+        Q3PopupMenu* popup = new Q3PopupMenu( pConnectButton_ );
         pConnectDlg_->FillPopupMenu( popup );
         pConnectButton_->setPopup( popup );
+        pConnectButton_->setPopupMode( QToolButton::MenuButtonPopup );
         pConnectButton_->setPopupDelay( 0 );
     }
     pConnectDlg_->hide();
 
     pDisconnectDlg_ = new DisconnectDialog( this, network );
     pDisconnectDlg_->hide();
+
+
+    addWidget( pConnectButton_ );
+    addWidget( pPlayButton_ );
+    addWidget( pStepButton_ );
+    addWidget( new QLabel( " ", this ) );
+    addWidget( new QLabel( tr( "Speed factor: " ), this ) );
+    addWidget( pSpeedSpinBox_ );
+    addWidget( pSpeedButton_ );
+    addWidget( pCheckpointButton_ );
+    addWidget( pConnectDlg_ );
+    addWidget( pDisconnectDlg_ );
 
     connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );
     connect( pPlayButton_,    SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
@@ -298,6 +326,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         connected_ = simulation.IsConnected();
         if( connected_ )
         {
+            pConnectButton_->setPopupMode( QToolButton::InstantPopup );
             pConnectButton_->setIconSet( connectPix_ );
             pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
             pConnectButton_->setPopup( 0 );
@@ -310,11 +339,12 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         }
         else
         {
+            pConnectButton_->setPopupMode( QToolButton::MenuButtonPopup );
             pConnectButton_->setIconSet( disconnectPix_ );
             pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
             pConnectButton_->setFocus();
             {
-                QPopupMenu* popup = new QPopupMenu( pConnectButton_ );
+                Q3PopupMenu* popup = new Q3PopupMenu( pConnectButton_ );
                 pConnectDlg_->FillPopupMenu( popup );
                 pConnectButton_->setPopup( popup );
                 pConnectButton_->setPopupDelay( 0 );

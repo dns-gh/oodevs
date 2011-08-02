@@ -1435,10 +1435,9 @@
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry"/>
         <update name="geocoord"/>
-        <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,vmap,geodata,gdal_ogr" version="2.1"/>
-        <update name="terrain" modules="urban"/>
+        <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,vmap,geodata,gdal_ogr,urban"/>
         <update name="terrain" package="terraintools_${platform}.zip"/>
-        <update name="qt" version="3.3.8"/>
+        <update name="qt" version="4.6.2"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
         <update name="masalife/brain" version="${masalife.version}"/>
@@ -1449,6 +1448,7 @@
         <update name="hla" package="dll" todir="${run.dir}/plugins/hla"/>
         <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="tools"/>
+		<update name="log4cxx"/>
         <update name="flexlm"/>
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>

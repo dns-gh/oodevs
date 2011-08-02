@@ -44,8 +44,13 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
 {
     if( config )
         symbolFactory_->Load( *config );
-    layout()->setAlignment( Qt::AlignTop );
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Intelligence description" ), this );
+    Q3VBox* gBox = new Q3VBox( this );
+    gBox->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Vertical, tr( "Intelligence description" ), gBox );
+    group->layout()->setAlignment( Qt::AlignCenter );
+    group->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+    group->setBackgroundMode( Qt::PaletteButton );
+    group->setFrameStyle( QFrame::StyledPanel | Q3Frame::Raised );
     {
         new QLabel( tr( "Superior:" ), group );
         superiorLabel_ = new QLabel( "---", group );
@@ -76,12 +81,12 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
     }
     if( config )
     {
-        NatureSelectionWidget* nature = new NatureSelectionWidget( this, config->GetLoader() );
+        NatureSelectionWidget* nature = new NatureSelectionWidget( gBox, config->GetLoader() );
         connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
         connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
     }
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( gBox );
         box->setFrameStyle( QFrame::Plain | QFrame::Box );
         box->setPaletteBackgroundColor( Qt::white );
         box->layout()->setAlignment( Qt::AlignCenter | Qt::AlignHCenter );
@@ -90,6 +95,7 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         QToolTip::add( icon_, tr( "Drag and drop symbol to map to create a new intelligence unit." ) );
         UpdateSymbol();
     }
+    setWidget( gBox );
     controllers_.Register( *this );
 }
 
@@ -218,7 +224,7 @@ void IntelligencesPanel::DoDrag()
     if( !selectedEntity_ )
         return;
     intelligence_.reset( new IntelligencePrototype( *selectedEntity_.ConstCast(), symbol_, *levelCombo_->GetValue(), mounted_->isChecked(), Karma::ResolveName( karmaCombo_->currentText() ) ) );
-    QDragObject* drag = new ValuedDragObject( intelligence_.get(), this );
+    Q3DragObject* drag = new ValuedDragObject( intelligence_.get(), this );
     drag->drag();
 }
 

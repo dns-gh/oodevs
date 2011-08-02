@@ -22,10 +22,10 @@
 
 #include "GQ_Plot.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlistbox.h>
-#include <qpixmap.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <Qt3Support/q3listbox.h>
+#include <QtGui/qpixmap.h>
 
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
 GQ_PlotCaption::GQ_PlotCaption( QWidget* pParent, GQ_Plot& plot )
-: QHBox       ( pParent )
+: Q3HBox       ( pParent )
 , pPlot_        ( &plot   )
 , pEntryList_   ( 0 )
 , bUpdateNeeded_( true )
@@ -43,7 +43,7 @@ GQ_PlotCaption::GQ_PlotCaption( QWidget* pParent, GQ_Plot& plot )
     connect( pPlot_, SIGNAL( DataTouched   () )
            , this,   SLOT  ( UpdateCaption () ) );
 
-    pEntryList_ = new QListBox( this );
+    pEntryList_ = new Q3ListBox( this );
     pEntryList_->setVariableWidth( true );
 }
 

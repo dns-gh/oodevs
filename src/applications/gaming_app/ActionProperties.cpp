@@ -21,11 +21,11 @@
 // Created: SBO 2010-05-04
 // -----------------------------------------------------------------------------
 ActionProperties::ActionProperties( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : QVBox( parent )
+    : Q3VBox( parent )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Properties" ), this );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Properties" ), this );
     group->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
     group->setFixedWidth( 200 );
     display_.reset( new SummariesDisplayer( group ) );

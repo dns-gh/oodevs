@@ -52,7 +52,7 @@ ADN_SurfaceFireInfos_Table::ADN_SurfaceFireInfos_Table( QWidget* pParent )
 {
     // peut etre selectionne & trie
     setSorting( true );
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
     setLeftMargin( 0 );
     // hide vertical header

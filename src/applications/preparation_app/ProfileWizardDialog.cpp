@@ -14,9 +14,6 @@
 #include "preparation/ProfilesModel.h"
 #include "icons.h"
 
-#include <qvbuttongroup.h>
-#include <qhbuttongroup.h>
-
 // -----------------------------------------------------------------------------
 // Name: ProfileWizardDialog constructor
 // Created: SBO 2007-11-07
@@ -28,13 +25,13 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, P
 {
     setCaption( tr( "User profiles creation wizard" ) );
 
-    QGridLayout* grid = new QGridLayout( this, 3, 1 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 3, 1 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 5 );
     grid->setRowStretch( 2, 1 );
 
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         QLabel* title = new QLabel( caption(), box );
         QFont font( "Arial", 16, QFont::Bold );
         title->setFont( font );
@@ -48,22 +45,22 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, P
     }
 
     {
-        QVBox* box = new QVBox( this );
+        Q3VBox* box = new Q3VBox( this );
         box->setMargin( 5 );
-        profileTypes_ = new QVButtonGroup( tr( "Select profiles to generate: " ), box );
+        profileTypes_ = new Q3VButtonGroup( tr( "Select profiles to generate: " ), box );
         profileTypes_->setRadioButtonExclusive( true );
         profileTypes_->insert( new QRadioButton( tr( "one profile per side" ), profileTypes_ )               , 0 );
         profileTypes_->insert( new QRadioButton( tr( "one profile per top-level formation" ), profileTypes_ ), 1 );
         profileTypes_->insert( new QRadioButton( tr( "one profile per formation" ), profileTypes_ )          , 2 );
         profileTypes_->setButton( 0 );
 
-        creationMode_ = new QHButtonGroup( tr( "Select creation mode: " ), box );
+        creationMode_ = new Q3HButtonGroup( tr( "Select creation mode: " ), box );
         creationMode_->setRadioButtonExclusive( true );
         creationMode_->insert( new QRadioButton( tr( "clear existing profiles" ), creationMode_ )     , 0 );
         creationMode_->insert( new QRadioButton( tr( "add new profiles to existing" ), creationMode_ ), 1 );
         creationMode_->setButton( 0 );
 
-        creationRight_ = new QHButtonGroup( tr( "Select creation permissions: " ), box );
+        creationRight_ = new Q3HButtonGroup( tr( "Select creation permissions: " ), box );
         creationRight_->setRadioButtonExclusive( true );
         creationRight_->insert( new QRadioButton( tr( "writeable" ), creationRight_ ), 0 );
         creationRight_->insert( new QRadioButton( tr( "readonly" ) , creationRight_ ), 1 );
@@ -73,12 +70,12 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, P
     }
 
     {
-        QHBox* box = new QHBox( this );
+        Q3HBox* box = new Q3HBox( this );
         box->setMargin( 5 );
         box->setMaximumHeight( 40 );
         QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
         okBtn->setDefault( true );
-        QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+        QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 2, 0, Qt::AlignRight );
 
         connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );

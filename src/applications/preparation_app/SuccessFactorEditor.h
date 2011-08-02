@@ -71,7 +71,7 @@ private:
     SuccessFactorProfileList* profiles_;
     SuccessFactorConditionsEditor* conditions_;
     SuccessFactorActionsEditor* actions_;
-    QButton* ok_;
+    QPushButton* ok_;
     //@}
 };
 

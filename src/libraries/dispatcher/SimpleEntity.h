@@ -12,8 +12,8 @@
 
 #include "clients_kernel/Entity_ABC.h"
 #pragma warning( push, 0 )
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
 #pragma warning( pop )
 
 namespace dispatcher

@@ -12,8 +12,8 @@
 #include "MainWindow.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_gui/Tools.h"
-#include <qsettings.h>
-#include <qtextcodec.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
 
 namespace
 {
@@ -41,7 +41,7 @@ Application::Application( int argc, char** argv )
     AddTranslator( locale, "clients_gui" );
     AddTranslator( locale, "clients_gui_sword" );
     ENT_Tr::InitTranslations();
-    QMainWindow* mainWindow = new MainWindow();
+    Q3MainWindow* mainWindow = new MainWindow();
     mainWindow->show();
     connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
 }

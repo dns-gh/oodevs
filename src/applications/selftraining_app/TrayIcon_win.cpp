@@ -1,15 +1,17 @@
 #include "selftraining_app_pch.h"
 #include "trayicon.h"
 
-#include <qwidget.h>
-#include <qapplication.h>
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qbitmap.h>
-#include <qcursor.h>
-#include <qlibrary.h>
-
-#include <qt_windows.h>
+#pragma warning( push, 0 )
+#include <QtGui/qwidget.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qimage.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qbitmap.h>
+#include <QtGui/qcursor.h>
+#include <QtCore/qlibrary.h>
+#include <QtCore/qt_windows.h>
+#include <QtGui/qevent.h>
+#pragma warning ( pop )
 
 static uint MYWM_TASKBARCREATED = 0;
 #define MYWM_NOTIFYICON    (WM_APP+101)
@@ -38,7 +40,7 @@ public:
     {
     if( !MYWM_TASKBARCREATED ) {
 #if defined(UNICODE)
-        if( qWinVersion() & Qt::WV_NT_based )
+        if( qWinVersion() & QSysInfo::WV_NT_based )
         MYWM_TASKBARCREATED = RegisterWindowMessageW( (TCHAR*)"TaskbarCreated" );
         else
 #endif
@@ -85,7 +87,7 @@ public:
     {
     bool res;
     resolveLibs();
-    if( ! (ptrShell_NotifyIcon && qWinVersion() & Qt::WV_NT_based) )
+    if( ! (ptrShell_NotifyIcon && qWinVersion() & QSysInfo::WV_NT_based) )
         return trayMessageA( msg );
     NOTIFYICONDATAW tnd;
     memset( &tnd, 0, sizeof(NOTIFYICONDATAW) );
@@ -129,37 +131,37 @@ public:
         switch (m->lParam)
         {
         case WM_MOUSEMOVE:
-            e = new QMouseEvent( QEvent::MouseMove, mapFromGlobal( gpos ), gpos, 0, 0 );
+            e = new QMouseEvent( QEvent::MouseMove, QWidget::mapFromGlobal( gpos ), gpos, 0, 0 );
             break;
         case WM_LBUTTONDOWN:
-            e = new QMouseEvent( QEvent::MouseButtonPress, mapFromGlobal( gpos ), gpos, LeftButton, LeftButton );
+            e = new QMouseEvent( QEvent::MouseButtonPress, QWidget::mapFromGlobal( gpos ), gpos, Qt::LeftButton, Qt::LeftButton );
             break;
         case WM_LBUTTONUP:
-            e = new QMouseEvent( QEvent::MouseButtonRelease, mapFromGlobal( gpos ), gpos, LeftButton, LeftButton );
+            e = new QMouseEvent( QEvent::MouseButtonRelease, QWidget::mapFromGlobal( gpos ), gpos, Qt::LeftButton, Qt::LeftButton );
             break;
         case WM_LBUTTONDBLCLK:
-            e = new QMouseEvent( QEvent::MouseButtonDblClick, mapFromGlobal( gpos ), gpos, LeftButton, LeftButton );
+            e = new QMouseEvent( QEvent::MouseButtonDblClick, QWidget::mapFromGlobal( gpos ), gpos, Qt::LeftButton, Qt::LeftButton );
             break;
         case WM_RBUTTONDOWN:
-            e = new QMouseEvent( QEvent::MouseButtonPress, mapFromGlobal( gpos ), gpos, RightButton, RightButton );
+            e = new QMouseEvent( QEvent::MouseButtonPress, QWidget::mapFromGlobal( gpos ), gpos, Qt::RightButton, Qt::RightButton );
             break;
         case WM_RBUTTONUP:
-            e = new QMouseEvent( QEvent::MouseButtonRelease, mapFromGlobal( gpos ), gpos, RightButton, RightButton );
+            e = new QMouseEvent( QEvent::MouseButtonRelease, QWidget::mapFromGlobal( gpos ), gpos, Qt::RightButton, Qt::RightButton );
             break;
         case WM_RBUTTONDBLCLK:
-            e = new QMouseEvent( QEvent::MouseButtonDblClick, mapFromGlobal( gpos ), gpos, RightButton, RightButton );
+            e = new QMouseEvent( QEvent::MouseButtonDblClick, QWidget::mapFromGlobal( gpos ), gpos, Qt::RightButton, Qt::RightButton );
             break;
         case WM_MBUTTONDOWN:
-            e = new QMouseEvent( QEvent::MouseButtonPress, mapFromGlobal( gpos ), gpos, MidButton, MidButton );
+            e = new QMouseEvent( QEvent::MouseButtonPress, QWidget::mapFromGlobal( gpos ), gpos, Qt::MidButton, Qt::MidButton );
             break;
         case WM_MBUTTONUP:
-            e = new QMouseEvent( QEvent::MouseButtonRelease, mapFromGlobal( gpos ), gpos, MidButton, MidButton );
+            e = new QMouseEvent( QEvent::MouseButtonRelease, QWidget::mapFromGlobal( gpos ), gpos, Qt::MidButton, Qt::MidButton );
             break;
         case WM_MBUTTONDBLCLK:
-            e = new QMouseEvent( QEvent::MouseButtonDblClick, mapFromGlobal( gpos ), gpos, MidButton, MidButton );
+            e = new QMouseEvent( QEvent::MouseButtonDblClick, QWidget::mapFromGlobal( gpos ), gpos, Qt::MidButton, Qt::MidButton );
             break;
         case WM_CONTEXTMENU:
-            e = new QMouseEvent( QEvent::MouseButtonRelease, mapFromGlobal( gpos ), gpos, RightButton, RightButton );
+            e = new QMouseEvent( QEvent::MouseButtonRelease, QWidget::mapFromGlobal( gpos ), gpos, Qt::RightButton, Qt::RightButton );
             break;
         default:
             break;
@@ -174,7 +176,7 @@ public:
     default:
         if( m->message == MYWM_TASKBARCREATED ) {
         #if defined(UNICODE)
-            if( qWinVersion() & Qt::WV_NT_based )
+            if( qWinVersion() & QSysInfo::WV_NT_based )
             trayMessageW( NIM_ADD );
             else
         #endif
@@ -182,8 +184,7 @@ public:
         }
         break;
     }
-
-    return QWidget::winEvent( m );
+    return QWidget::winEvent( m, NULL);
     }
 
     HICON        hIcon;
@@ -208,11 +209,11 @@ static HBITMAP createIconMask( const QPixmap &qp )
 
 static HICON createIcon( const QPixmap &pm, HBITMAP &hbm )
 {
-    QPixmap maskpm( pm.size(), pm.depth(), QPixmap::NormalOptim );
-    QBitmap mask( pm.size(), FALSE, QPixmap::NormalOptim );
-    if( pm.mask() ) {
+    QPixmap maskpm( pm.size() ); //pm.depth() 
+    QBitmap mask( pm.size() ); // , FALSE 
+    if( &pm.mask() ) {
         maskpm.fill( Qt::black );            // make masked area black
-        bitBlt( &mask, 0, 0, pm.mask() );
+        bitBlt( &mask.convertToImage() , 0, 0, &pm.mask().convertToImage() );
     } else {
         maskpm.fill( Qt::color1 );
     }
@@ -221,8 +222,10 @@ static HICON createIcon( const QPixmap &pm, HBITMAP &hbm )
     ICONINFO iconInfo;
     iconInfo.fIcon    = TRUE;
     iconInfo.hbmMask  = createIconMask(mask);
+
     hbm = iconInfo.hbmMask;
-    iconInfo.hbmColor = maskpm.hbm();
+    iconInfo.hbmColor = maskpm.toWinHBITMAP( QPixmap::PremultipliedAlpha );
+    //iconInfo.hbmColor = maskpm.hbm();
 
     return CreateIconIndirect( &iconInfo );
 }
@@ -236,7 +239,7 @@ void TrayIcon::sysInstall()
     d->hIcon = createIcon( pm, d->hMask );
 
 #if defined(UNICODE)
-    if( qWinVersion() & Qt::WV_NT_based )
+    if( qWinVersion() & QSysInfo::WV_NT_based )
     d->trayMessageW( NIM_ADD );
     else
 #endif
@@ -249,7 +252,7 @@ void TrayIcon::sysRemove()
     return;
 
 #if defined(UNICODE)
-    if( qWinVersion() & Qt::WV_NT_based )
+    if( qWinVersion() & QSysInfo::WV_NT_based )
     d->trayMessageW( NIM_DELETE );
     else
 #endif
@@ -272,7 +275,7 @@ void TrayIcon::sysUpdateIcon()
     d->hIcon = createIcon( pm, d->hMask );
 
 #if defined(UNICODE)
-    if( qWinVersion() & Qt::WV_NT_based )
+    if( qWinVersion() & QSysInfo::WV_NT_based )
     d->trayMessageW( NIM_MODIFY );
     else
 #endif
@@ -285,7 +288,7 @@ void TrayIcon::sysUpdateToolTip()
     return;
 
 #if defined(UNICODE)
-    if( qWinVersion() & Qt::WV_NT_based )
+    if( qWinVersion() & QSysInfo::WV_NT_based )
     d->trayMessageW( NIM_MODIFY );
     else
 #endif

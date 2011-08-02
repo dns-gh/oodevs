@@ -34,15 +34,17 @@ namespace
     template< typename T >
     struct CompositeMenu
     {
-        CompositeMenu( QPopupMenu* menu, QToolBar* toolBar, const QString& label, const QIconSet& icons, kernel::Options& options, const std::string& option )
+        CompositeMenu( Q3PopupMenu* menu, QToolBar* toolBar, const QString& label, const QIcon& icons, kernel::Options& options, const std::string& option )
             : menu_( new OptionMenu< T >( menu, options, option ) )
         {
             {
                 QToolButton* button = new QToolButton( toolBar );
+                toolBar->addWidget( button );
                 toolBarMenu_ = new OptionMenu< T >( button, options, option );
                 button->setIconSet( icons );
                 button->setTextLabel( label );
                 button->setPopup( toolBarMenu_ );
+                button->setPopupMode( QToolButton::InstantPopup );
                 button->setPopupDelay( 1 );
             }
             {
@@ -74,15 +76,17 @@ namespace
         menu.AddItem( kernel::FourStateOption::OffName(), kernel::FourStateOption::Off() );
     }
 
-    void AddSubMenu3( QToolBar* toolBar, QPopupMenu* parent, const QString& label, const QIconSet& iconSet, kernel::Options& options, const std::string& option )
+    void AddSubMenu3( QToolBar* toolBar, Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
+            toolBar->addWidget( button );
             OptionMenu< kernel::TristateOption >* optionMenu = new OptionMenu< kernel::TristateOption >( button, options, option );
             Populate( *optionMenu );
             button->setIconSet( iconSet );
             button->setTextLabel( label );
             button->setPopup( optionMenu );
+            button->setPopupMode( QToolButton::InstantPopup );
             button->setPopupDelay( 1 );
         }
         {
@@ -92,15 +96,17 @@ namespace
         }
     }
 
-    void AddSubMenu4( QToolBar* toolBar, QPopupMenu* parent, const QString& label, const QIconSet& iconSet, kernel::Options& options, const std::string& option )
+    void AddSubMenu4( QToolBar* toolBar, Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
+            toolBar->addWidget( button );
             OptionMenu< kernel::FourStateOption >* optionMenu = new OptionMenu< kernel::FourStateOption >( button, options, option );
             Populate( *optionMenu );
             button->setIconSet( iconSet );
             button->setTextLabel( label );
             button->setPopup( optionMenu );
+            button->setPopupMode( QToolButton::InstantPopup );
             button->setPopupDelay( 1 );
         }
         {
@@ -125,16 +131,19 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     , controllers_( controllers )
     , profileDialog_( profileDialog )
 {
-    QPopupMenu* menu = new QPopupMenu( this );
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    addMenu( menu );
     new ConnectionMenu( menu, controllers, network, logger );
-
+    
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
+    menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), menu );
-
-    menu = new QPopupMenu( this );
-    QPopupMenu* subMenu = new QPopupMenu( menu );
+    
+    menu = new Q3PopupMenu( this );
+    addMenu( menu );
+    Q3PopupMenu* subMenu = new Q3PopupMenu( menu );
     QToolBar* toolBar = new QToolBar( pParent, "units toolbar" );
+    pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Units toolbar" ) );
 
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines" );
@@ -153,8 +162,9 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState" );
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
 
-    subMenu = new QPopupMenu( menu );
+    subMenu = new Q3PopupMenu( menu );
     toolBar = new QToolBar( pParent, "logistics toolbar" );
+    pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Logistics toolbar" ) );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
@@ -168,8 +178,9 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     }
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
-    subMenu = new QPopupMenu( menu );
+    subMenu = new Q3PopupMenu( menu );
     toolBar = new QToolBar( pParent, "terrain toolbar" );
+    pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Terrain toolbar" ) );
     AddSubMenu3( toolBar, subMenu, tools::translate( "Menu", "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
     AddSubMenu3( toolBar, subMenu, tools::translate( "Menu", "Large texts" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
@@ -195,10 +206,14 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     }
 
     {
-        QHBox* populationBox = new QHBox( toolBar );
+        Q3HBox* populationBox = new Q3HBox( toolBar );
         QCheckBox* populationEnabled = new QCheckBox( tools::translate( "Menu", "Population" ), populationBox );
         QToolTip::add( populationEnabled, tools::translate( "Menu", "Show population display tool" ) );
-        QDockWindow* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
+        QDockWidget* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
+        populationOptions->setFloating( true );
+        pParent->addDockWidget( Qt::RightDockWidgetArea, populationOptions );
+        toolBar->addWidget( populationBox );
+        toolBar->addWidget( populationEnabled );
         connect( populationEnabled, SIGNAL( toggled( bool ) ), populationOptions, SLOT( setShown( bool ) ) );
         connect( populationOptions, SIGNAL( visibilityChanged( bool ) ), populationEnabled, SLOT( setChecked( bool ) ) );
     }
@@ -211,27 +226,37 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
         boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
         boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
         menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
-        menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Key_F12 );
-        menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Key_F11 );
+        menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
+        menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
     }
 
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
+    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
     insertItem( tools::translate( "Menu", "&Display" ), menu );
 
-    menu = new QPopupMenu( this );
+    menu = new Q3PopupMenu( this );
+    addMenu( menu );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "Profiles..." ), &profileDialog_, SLOT( exec() ) );
     profileMenu_ = insertItem( tools::translate( "Menu", "Profi&les" ), menu );
     setItemVisible( profileMenu_, false );
 
     menu = new ExerciseMenu( this, controllers, interpreter );
+    addMenu( menu );
     insertItem( tools::translate( "Menu", "&Exercise" ), menu );
 
-    menu = pParent->createDockWindowMenu();
-    insertItem( tools::translate( "Menu", "&Windows" ), menu );
+    QMenu* pMenu = pParent->createPopupMenu(); 
+    pMenu->removeItemAt( 1 ); // $$$$ FPT 2011-08-03 Removing items automatically added in "Windows" menu that dont belong there
+    pMenu->removeItemAt( 5 );
+    pMenu->removeItemAt( 8 );
+    pMenu->removeItemAt( 12 );
+    pMenu->removeItemAt( 14 );
+    pMenu->removeItemAt( 20 );
+    addMenu( pMenu );
+    insertItem( tools::translate( "Menu", "&Windows" ), pMenu );
 
-    menu = new QPopupMenu( this );
-    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
+    menu = new Q3PopupMenu( this );
+    addMenu( menu );
+    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Qt::Key_F1 );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Gaming" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
     insertItem( tools::translate( "Menu", "&?" ), menu );

@@ -36,7 +36,7 @@ class TerrainObjectProxy;
 */
 // Created: JSR 2010-08-24
 // =============================================================================
-class ResourceLinksDialog_ABC : public QDockWindow
+class ResourceLinksDialog_ABC : public QDockWidget
                               , public tools::Observer_ABC
                               , public tools::SelectionObserver_ABC
                               , public tools::SelectionObserver_Base< TerrainObjectProxy >
@@ -87,22 +87,22 @@ protected:
     //@{
     kernel::Controllers& controllers_;
     kernel::ResourceNetwork_ABC* selected_;
-    QListBoxItem* selectedItem_;
+    Q3ListBoxItem* selectedItem_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
     const kernel::Object_ABC* linkToChange_;
     bool urban_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
-    QVBox* pMainLayout_;
-    QListBox* dotationList_;
-    QGroupBox* groupBox_;
+    Q3VBox* pMainLayout_;
+    Q3ListBox* dotationList_;
+    Q3GroupBox* groupBox_;
     QSpinBox* production_;
     QSpinBox* consumption_;
     QCheckBox* critical_;
-    QHBox* stockBox_;
+    Q3HBox* stockBox_;
     QSpinBox* maxStock_;
     QSpinBox* stock_;
-    QTable* table_;
+    Q3Table* table_;
     //@}
 };
 

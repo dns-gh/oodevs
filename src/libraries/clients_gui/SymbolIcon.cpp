@@ -17,7 +17,7 @@ using namespace gui;
 // Name: SymbolIcon constructor
 // Created: AGE 2007-10-31
 // -----------------------------------------------------------------------------
-SymbolIcon::SymbolIcon( const std::string& symbol, const std::string& level /*= std::string()*/ )
+SymbolIcon::SymbolIcon( const std::string& symbol, const std::string& level /* = std::string()*/ )
     : symbol_( symbol )
     , level_ ( level )
     , color_ ( Qt::white )

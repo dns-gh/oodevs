@@ -12,7 +12,6 @@
 
 #include "tools/Resolver_ABC.h"
 
-
 namespace kernel
 {
     class ActionController;
@@ -62,9 +61,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual bool Interprete( const QUrl& url );
-    bool ExecuteCommand( const QUrl& url );
-    bool InterpreteId( const QUrl& url );
+    virtual bool Interprete( const Q3Url& url );
+    bool ExecuteCommand( const Q3Url& url );
+    bool InterpreteId( const Q3Url& url );
     //@}
 
     //! @name Types

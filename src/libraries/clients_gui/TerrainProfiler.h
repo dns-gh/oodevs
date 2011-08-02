@@ -32,7 +32,7 @@ namespace gui
 */
 // Created: SBO 2010-03-31
 // =============================================================================
-class TerrainProfiler : public QDockWindow
+class TerrainProfiler : public QDockWidget
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >

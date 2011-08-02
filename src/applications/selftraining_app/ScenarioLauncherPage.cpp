@@ -37,9 +37,9 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
-#include <qfileinfo.h>
-#include <qtabbar.h>
-#include <qtabwidget.h>
+#include <QtCore/qfileinfo.h>
+#include <QtGui/qtabbar.h>
+#include <QtGui/qtabwidget.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -125,22 +125,26 @@ namespace
     {
         return title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title;
     }
+    QString LocalizedTitle( const QString& title )
+    {
+        return tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( MakeTitle( title ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title /*= ""*/ )
+ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title /* = ""*/ )
     : LauncherClientPage( pages, MakeTitle( title ), previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
     , interpreter_( interpreter )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( MakeTitle( title ) ) ) )
+    , progressPage_( new ProgressPage( pages, *this, LocalizedTitle( title ) ) )
     , exercise_( 0 )
 {
-    QVBox* box = new QVBox( this );
+    Q3VBox* box = new Q3VBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
@@ -153,9 +157,9 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
             tabs->addTab( exercises_, tools::translate( "ScenarioLauncherPage", "General" ) );
         }
         {
-            QGroupBox* configBox = new QGroupBox( 1, Qt::Vertical, tabs );
+            Q3GroupBox* configBox = new Q3GroupBox( 1, Qt::Vertical, tabs );
             configBox->setMargin( 5 );
-            configBox->setFrameShape( QFrame::NoFrame );
+            configBox->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
             configBox->setBackgroundOrigin( QWidget::WindowOrigin );
             TabWidget* config = new TabWidget( configBox );
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );

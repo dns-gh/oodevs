@@ -29,7 +29,7 @@
 // Created: ABR 2011-05-13
 // -----------------------------------------------------------------------------
 ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                                  gui::ItemFactory_ABC& factory, const gui::EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name /*= 0*/ )
+                                  gui::ItemFactory_ABC& factory, const gui::EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name /* = 0*/ )
     : gui::ExtensionsPanel( parent, controllers, staticModel.extensionTypes_, model.agents_, factory, icons, profile, name )
     , actions_        ( model.actions_ )
     , types_          ( staticModel.types_ )
@@ -37,7 +37,7 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , hasChanged_     ( false )
     , activatedBackup_( false )
 {
-    QHBox* buttons_ = new QHBox( pMainLayout_, "ExtensionsPanel_HBox_Buttons" );
+    Q3HBox* buttons_ = new Q3HBox( pMainLayout_, "ExtensionsPanel_HBox_Buttons" );
     validateButton_ = new QPushButton( tr( "Validate" ), buttons_, "ExtensionsPanel_Button_Validate" );
     resetButton_ = new QPushButton( tr( "Reset" ), buttons_, "ExtensionsPanel_Button_Reset" );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( OnValidate() ) );

@@ -36,7 +36,7 @@ class StaticModel;
 */
 // Created: AGE 2006-10-20
 // =============================================================================
-class TacticalList : public QVBox
+class TacticalList : public Q3VBox
 {
 public:
     //! @name Constructors/Destructor

@@ -34,7 +34,7 @@ namespace frontend
 */
 // Created: RDS 2008-09-05
 // =============================================================================
-class ProfileList : public QListBox
+class ProfileList : public Q3ListBox
 {
 
     Q_OBJECT;

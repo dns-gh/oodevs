@@ -12,8 +12,6 @@
 
 #include "BaseDisplayer.h"
 
-class QListViewItem;
-
 namespace gui
 {
     class ItemFactory_ABC;
@@ -38,7 +36,7 @@ public:
     virtual void Hide();
     SubItemDisplayer& AddChild( const QString& child );
 
-    Displayer_ABC& operator()( QListViewItem* item );
+    Displayer_ABC& operator()( Q3ListViewItem* item );
     //@}
 
 private:
@@ -54,7 +52,7 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    QListViewItem* FindChild( const QString& name );
+    Q3ListViewItem* FindChild( const QString& name );
     //@}
 
     //! @name Types
@@ -67,8 +65,8 @@ private:
     //@{
     ItemFactory_ABC& factory_;
     QString name_;
-    QListViewItem* parent_;
-    QListViewItem* current_;
+    Q3ListViewItem* parent_;
+    Q3ListViewItem* current_;
     QString message_;
     T_Children children_;
     //@}

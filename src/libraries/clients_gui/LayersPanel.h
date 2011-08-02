@@ -56,7 +56,7 @@ private slots:
     //! @name Slots
     //@{
     void OnValueChanged();
-    void OnSelectionChanged( QListViewItem* );
+    void OnSelectionChanged( Q3ListViewItem* );
     void OnUp();
     void OnDown();
     void OnFogOfWarChanged( bool value );
@@ -93,7 +93,7 @@ private:
     T_Names  names_;
     CheckBox* fogOfWar_;
     CheckBox* infra_;
-    QListView* layersList_;
+    Q3ListView* layersList_;
     QSlider* transparency_;
     QLabel* transparencyLabel_;
     int currentLayer_;

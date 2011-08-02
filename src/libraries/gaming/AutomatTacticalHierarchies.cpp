@@ -67,7 +67,7 @@ void AutomatTacticalHierarchies::DoUpdate( const InstanciationComplete& message 
 // Name: AutomatTacticalHierarchies::UpdateSymbol
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void AutomatTacticalHierarchies::UpdateSymbol( bool up /*= true*/ )
+void AutomatTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
 {
     if( up )
         level_.clear();

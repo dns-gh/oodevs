@@ -11,19 +11,22 @@
 #include "Panel_ABC.h"
 #include "resources.h"
 #include "frontend/SpawnCommand.h"
-#include <qaction.h>
-#include <qhbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qregion.h>
-#include <qwidgetstack.h>
+
+#pragma warning( push, 0 )
+#include <Qt3Support/q3action.h>
+#include <Qt3Support/q3hbox.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qregion.h>
+#include <Qt3Support/q3widgetstack.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: Panel_ABC constructor
 // Created: SBO 2007-10-05
 // -----------------------------------------------------------------------------
-Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& context, const char* name )
-    : QVBox   ( widget, name )
+Panel_ABC::Panel_ABC( Q3WidgetStack* widget, Q3Action& action, ActionsContext& context, const char* name )
+    : Q3VBox   ( widget, name )
     , context_( context )
     , stack_  ( widget )
     , action_ ( action )
@@ -31,7 +34,7 @@ Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& con
 {
     setPaletteBackgroundColor( Qt::white );
     layout()->setAlignment( Qt::AlignTop );
-    QHBox* banner = new QHBox( this );
+    Q3HBox* banner = new Q3HBox( this );
     banner->setMaximumHeight( 100 );
     {
         QLabel* label = new QLabel( banner );
@@ -41,7 +44,7 @@ Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& con
         label->setPixmap( action.iconSet().pixmap() );
     }
     {
-        QVBox* box = new QVBox( banner );
+        Q3VBox* box = new Q3VBox( banner );
         {
             QLabel* label = new QLabel( box );
             label->setFixedHeight( 60 );
@@ -79,7 +82,7 @@ Panel_ABC::~Panel_ABC()
 // -----------------------------------------------------------------------------
 void Panel_ABC::setShown( bool show )
 {
-    QVBox::setShown( show );
+    Q3VBox::setShown( show );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +93,7 @@ void Panel_ABC::showEvent( QShowEvent* event )
 {
     stack_->raiseWidget( this );
     Update();
-    QVBox::showEvent( event );
+    Q3VBox::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,7 +13,6 @@
 #include "ObjectAttributePrototype_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
-#include <qvgroupbox.h>
 
 namespace kernel
 {
@@ -60,10 +59,10 @@ private:
 
 protected:
 
-    struct DotationWidget : public QVGroupBox
+    struct DotationWidget : public Q3VGroupBox
     {
         DotationWidget( QWidget* parent )
-            : QVGroupBox( parent )
+            : Q3VGroupBox( parent )
         {}
         RichLabel* dotationLabel_;
         ValuedComboBox< const kernel::DotationType* >* dotationType_;

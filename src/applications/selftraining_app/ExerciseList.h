@@ -32,8 +32,8 @@ namespace tools
 
 class ExerciseProperties;
 class ProfileList;
-class QListView;
-class QListViewItem;
+class Q3ListView;
+class Q3ListViewItem;
 
 // =============================================================================
 /** @class  ExerciseList
@@ -41,7 +41,7 @@ class QListViewItem;
 */
 // Created: RDS 2008-08-27
 // =============================================================================
-class ExerciseList : public QVBox
+class ExerciseList : public Q3VBox
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
 {
@@ -77,7 +77,7 @@ public slots:
 private slots:
     //! @name Slots
     //@{
-    void SelectExercise( QListViewItem* item );
+    void SelectExercise( Q3ListViewItem* item );
     void SelectProfile( const frontend::Profile& profile );
     //@}
 
@@ -100,7 +100,7 @@ private:
     void AddExerciseEntry( const frontend::Exercise_ABC& exercise );
     void UpdateExerciseEntry( const frontend::Exercise_ABC& exercise );
     void DeleteExerciseEntry( const frontend::Exercise_ABC& exercise );
-    QListViewItem* FindExerciseItem( const QString& path ) const;
+    Q3ListViewItem* FindExerciseItem( const QString& path ) const;
     //@}
 
 private:
@@ -109,7 +109,7 @@ private:
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
-    QListView* exercises_;
+    Q3ListView* exercises_;
     ProfileList* profiles_;
     const frontend::ExerciseFilter_ABC* filter_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > defaultFilter_;

@@ -20,7 +20,7 @@ namespace gui
 */
 // Created: AGE 2005-04-05
 // =============================================================================
-class InfoPanel_ABC : public QScrollView
+class InfoPanel_ABC : public QScrollArea
 {
 public:
     //! @name Constructors/Destructor
@@ -39,7 +39,6 @@ public:
     //! @name Accessors
     //@{
     const QString& GetName() const { return name_; }
-    virtual QLayout* layout();
     //@}
 
 private:
@@ -49,18 +48,11 @@ private:
     InfoPanel_ABC& operator=( const InfoPanel_ABC& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual void insertChild ( QObject* pObj );
-    virtual QSize sizeHint() const;
-    //@}
-
 protected:
     //! @name Member data
     //@{
     PanelStack_ABC& stack_;
     QString name_;
-    QVBox* pBox_;
     //@}
 };
 

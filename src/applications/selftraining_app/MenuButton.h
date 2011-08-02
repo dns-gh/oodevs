@@ -10,7 +10,7 @@
 #ifndef __MenuButton_h_
 #define __MenuButton_h_
 
-#include <qbutton.h>
+#include <QT3Support/q3button.h>
 
 // =============================================================================
 /** @class  MenuButton
@@ -18,7 +18,7 @@
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class MenuButton : public QButton
+class MenuButton : public QPushButton
 {
 
     Q_OBJECT;

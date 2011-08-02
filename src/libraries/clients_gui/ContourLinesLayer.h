@@ -33,8 +33,8 @@ namespace
     public:
     //! @name Constructors/Destructor
     //@{
-    explicit ContourGraphicSetup(){};
-    virtual ~ContourGraphicSetup(){};
+    explicit ContourGraphicSetup(){}
+    virtual ~ContourGraphicSetup(){}
     //@}
 
     virtual void SetupLineGraphics  ( const Data_ABC* )
@@ -43,6 +43,8 @@ namespace
         const float color[4] = { r_, g_, b_, alpha_ };
         glColor4fv( color );
     }
+    virtual void SetupLineGraphics  ( unsigned int )
+    {}
     virtual void SetupBorderGraphics( const Data_ABC* )
     {}
     virtual void SetupAreaGraphics  ( const Data_ABC* )

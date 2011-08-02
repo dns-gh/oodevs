@@ -95,7 +95,7 @@ ParamComboBox<T>::~ParamComboBox()
 template< typename T >
 QWidget* ParamComboBox<T>::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
+    Q3HBox* box = new Q3HBox( parent );
     box->setSpacing( 5 );
     QLabel* label = new QLabel( GetName(), box );
     label->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );

@@ -50,7 +50,7 @@ private slots:
     //@{
     void OnAccept();
     void OnReject();
-    void OnSelectItem( QIconViewItem* item );
+    void OnSelectItem( Q3IconViewItem* item );
     //@}
 
 private:
@@ -76,8 +76,8 @@ private:
     kernel::Controllers& controllers_;
     const Profile& profile_;
     Network& network_;
-    QIconView* users_;
-    QHBox* passwordBox_;
+    Q3IconView* users_;
+    Q3HBox* passwordBox_;
     QLineEdit* password_;
     T_Profiles profiles_;
     //@}

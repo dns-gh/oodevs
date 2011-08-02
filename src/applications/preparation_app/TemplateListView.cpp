@@ -26,7 +26,7 @@ using namespace gui;
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
 TemplateListView::TemplateListView( QWidget* parent, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types )
-    : QListView  ( parent )
+    : Q3ListView  ( parent )
     , agents_    ( agents )
     , formations_( formations )
     , types_     ( types )
@@ -35,7 +35,7 @@ TemplateListView::TemplateListView( QWidget* parent, AgentsModel& agents, Format
     header()->hide();
     setSorting( -1 );
 
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 // Name: TemplateListView::dragObject
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-QDragObject* TemplateListView::dragObject()
+Q3DragObject* TemplateListView::dragObject()
 {
     ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
@@ -75,7 +75,7 @@ QDragObject* TemplateListView::dragObject()
 // Name: TemplateListView::OnRename
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void TemplateListView::OnRename( QListViewItem* item, int, const QString& newName )
+void TemplateListView::OnRename( Q3ListViewItem* item, int, const QString& newName )
 {
     if( ValuedListItem* pItem = static_cast< ValuedListItem* >( item ) )
     {
@@ -161,9 +161,9 @@ void TemplateListView::Clear()
 // Name: TemplateListView::keyPressEvent
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void TemplateListView::keyPressEvent( QKeyEvent* event )
+void TemplateListView::keyPressEvent( QKeyEvent* evt )
 {
-    if( event && event->key() == Key_Delete && selectedItem() )
+    if( evt && evt->key() == Qt::Key_Delete && selectedItem() )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
         HierarchyTemplate* t = item->GetValue< HierarchyTemplate >();
@@ -177,5 +177,5 @@ void TemplateListView::keyPressEvent( QKeyEvent* event )
         }
     }
     else
-        QListView::keyPressEvent( event );
+        Q3ListView::keyPressEvent( evt );
 }

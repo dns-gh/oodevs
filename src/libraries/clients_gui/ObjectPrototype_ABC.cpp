@@ -40,12 +40,12 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
                                          const kernel::CoordinateConverter_ABC& coordinateConverter,
                                          const tools::Resolver_ABC< ObjectType, std::string >& resolver,
                                          ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory )
-    : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
+    : Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
     , coordinateConverter_( coordinateConverter )
     , controllers_( controllers )
     , resolver_  ( resolver )
     , location_  ( 0 )
-    , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, new QGroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
+    , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, new Q3GroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
 {
     new QLabel( tr( "Name:" ), this );
     name_ = new LoadableLineEdit( this, "NAME" );
@@ -61,7 +61,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
     locationLabel_->setAlignment( Qt::AlignCenter );
-    locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    locationLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
     locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
 
@@ -116,7 +116,7 @@ void ObjectPrototype_ABC::showEvent( QShowEvent* e )
     FillObjectTypes();
     OnTypeChanged();
     controllers_.Register( *locationCreator_ );
-    QGroupBox::showEvent( e );
+    Q3GroupBox::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

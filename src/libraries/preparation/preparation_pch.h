@@ -24,10 +24,10 @@
 #undef GetMessage
 
 #pragma warning( push, 0 )
-#include <qdatetime.h>
-#include <qgl.h>
-#include <qregexp.h>
-#include <qstring.h>
+#include <QtCore/qdatetime.h>
+#include <QtOpenGL/qgl.h>
+#include <QtCore/qregexp.h>
+#include <QtCore/qstring.h>
 #pragma warning( pop )
 
 #include <string>
@@ -39,5 +39,17 @@
 typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
+
+#include <xeumeuleu/xml.hpp>
+
+inline std::ostream& operator<<( std::ostream& os, const QString& s )
+{
+    return os << s.toStdString();
+}
+
+inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
+{
+    return xos << s.toStdString();
+}
 
 #endif // __preparation_pch_h_

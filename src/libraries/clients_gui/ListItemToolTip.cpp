@@ -15,11 +15,10 @@ using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ListItemToolTip constructor
-// Created: SBO 2007-01-08
+// Created: FPT 2011-03-25
 // -----------------------------------------------------------------------------
-ListItemToolTip::ListItemToolTip( QWidget* parent, QListView& list )
-    : QToolTip( parent )
-    , listView_( list )
+ListItemToolTip::ListItemToolTip( Q3ListView& list )
+    : listView_( list )
 {
     // NOTHING
 }
@@ -39,11 +38,7 @@ ListItemToolTip::~ListItemToolTip()
 // -----------------------------------------------------------------------------
 void ListItemToolTip::maybeTip( const QPoint& pos )
 {
-    if( !parentWidget() || !listView_.showToolTips() )
-        return;
-    ValuedListItem* item = static_cast< ValuedListItem* >( listView_.itemAt( pos ) );
-    if( !item )
-        return;
-    QRect rect = listView_.itemRect( item );
-    tip( rect, item->GetToolTip() );
+    if( listView_.showToolTips() )
+        if( ValuedListItem* item = static_cast< ValuedListItem* >( listView_.itemAt( pos ) ) )
+            listView_.setToolTip( item->GetToolTip() );
 }

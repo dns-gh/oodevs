@@ -12,7 +12,7 @@
 #include "moc_ParamDateTime.cpp"
 #include "actions/DateTime.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include <qdatetimeedit.h>
+#include <Qt3Support/q3datetimeedit.h>
 
 using namespace actions::gui;
 
@@ -57,10 +57,10 @@ ParamDateTime::~ParamDateTime()
 // -----------------------------------------------------------------------------
 QWidget* ParamDateTime::BuildInterface( QWidget* parent )
 {
-    QHBox* box = new QHBox( parent );
+    Q3HBox* box = new Q3HBox( parent );
     box->setSpacing( 5 );
     new QLabel( GetName(), box );
-    QDateTimeEdit* edit = new QDateTimeEdit( box );
+    Q3DateTimeEdit* edit = new Q3DateTimeEdit( box );
     edit->setDateTime( date_ );
     box->setStretchFactor( edit, 1 );
     connect( edit, SIGNAL( valueChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );

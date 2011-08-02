@@ -35,13 +35,13 @@ const QColor  DiffusionListHierarchy::selectedColor_      = QColor( 222, 250, 21
 const QColor  DiffusionListHierarchy::recipientsColor_    = QColor( 216, 241, 250 );
 const QColor  DiffusionListHierarchy::potentialsColor_    = QColor( 255, 255, 200 );
 const QString DiffusionListHierarchy::diffusionSeparator_ = ";";
-const QRegExp DiffusionListHierarchy::diffusionRegexp_    = "([0-9]+[;]{1})*[0-9]*";
+const QRegExp DiffusionListHierarchy::diffusionRegexp_ ( "([0-9]+[;]{1})*[0-9]*" );
 
 namespace
 {
     QPixmap MakePixmap( const std::string& name )
     {
-        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() ).scale( DiffusionListHierarchy::iconSize_, DiffusionListHierarchy::iconSize_ );
+        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() ).scaled( DiffusionListHierarchy::iconSize_, DiffusionListHierarchy::iconSize_ );
     }
 }
 
@@ -59,6 +59,7 @@ DiffusionListHierarchy::DiffusionListHierarchy( QWidget* pParent, Controllers& c
 {
     addColumn( "Icon", iconSize_ );
     setColumnAlignment( 1, Qt::AlignCenter );
+ //   setColumnWidth( 1, 25 );
     controllers_.Register( *this );
 }
 
@@ -75,7 +76,7 @@ DiffusionListHierarchy::~DiffusionListHierarchy()
 // Name: DiffusionListHierarchy::OnSelectionChange
 // Created: ABR 2011-04-29
 // -----------------------------------------------------------------------------
-void DiffusionListHierarchy::OnSelectionChange( QListViewItem* /*item*/ )
+void DiffusionListHierarchy::OnSelectionChange( Q3ListViewItem* /*item*/ )
 {
     // NOTHING
 }
@@ -98,7 +99,7 @@ void DiffusionListHierarchy::NotifySelected( const Entity_ABC* element )
 // Name: DiffusionListHierarchy::OnContextMenuRequested
 // Created: ABR 2011-05-04
 // -----------------------------------------------------------------------------
-void DiffusionListHierarchy::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int )
+void DiffusionListHierarchy::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int )
 {
     if( !item )
         return;
@@ -250,7 +251,7 @@ void DiffusionListHierarchy::Initialize( SafePointer< Entity_ABC > selected, con
         return;
     selected_ = selected;
     // Update all potentials
-    for( QListViewItemIterator it = firstChild(); it.current(); ++it )
+    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
         kernel::Entity_ABC const* entity = item->GetValue< kernel::Entity_ABC >();
@@ -268,7 +269,7 @@ void DiffusionListHierarchy::Initialize( SafePointer< Entity_ABC > selected, con
     }
     UpdateDisplay( diffusionList );
     OnFilterChanged( filter_ );
-    for( QListViewItemIterator it = firstChild(); it.current(); ++it )
+    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
         it.current()->setOpen( false );
     ValuedListItem* item = FindItem( selected_, firstChild() );
     if( item )
@@ -293,7 +294,7 @@ void DiffusionListHierarchy::UpdateDisplay( const QString& diffusionList )
     std::set< unsigned long > newPotentials;
     std::set_difference( potentials_.begin(), potentials_.end(), recipients_.begin(), recipients_.end(), std::inserter( newPotentials, newPotentials.begin() ) );
     // Update display
-    for( QListViewItemIterator it = firstChild(); it.current(); ++it )
+    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
         kernel::Entity_ABC const* entity = item->GetValue< kernel::Entity_ABC >();
