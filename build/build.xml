@@ -37,7 +37,7 @@
     </target>
 
     <target name="library.MT_Tools" description="build MT_Tools static library">
-        <build-lib name="MT_Tools" pattern="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="MT_Tools" pattern="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" suffix="-gd">
 			<defineset define="QT3_SUPPORT"/>
 		</build-lib>
     </target>
