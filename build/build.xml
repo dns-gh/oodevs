@@ -76,9 +76,7 @@
 
     <target name="library.clients_kernel" depends="library.protocol,library.tools,library.ENT" description="build clients_kernel static library">
         <build-lib name="clients_kernel" depends="qt4" pattern="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix}" suffix="-gd">
-            <defineset>
-                <define name="QT3_SUPPORT" value="true"/>
-            </defineset>
+            <defineset define="QT3_SUPPORT"/>
 		</build-lib>
     </target>
 
@@ -149,6 +147,7 @@
     <target name="library.crossbow_plugin_dll" depends="library.crossbow_plugin" description="build crossbow_plugin dynamic library">
         <build-lib name="crossbow_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="gdal_i,
+				  Qt3Support4
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
