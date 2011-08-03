@@ -68,6 +68,9 @@
 
 #pragma warning( pop )
 
+#undef min
+#undef max
+
 #include "MT_Tools/MT_Assert.h"
 #include "MT_Tools/MT_Logger.h"
 #include "ADN_Type_ABC.h"
