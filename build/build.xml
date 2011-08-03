@@ -28,6 +28,7 @@
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
+			<defineset define="QT3_SUPPORT"/>
             <defineset>
                 <define name="APP_VERSION" value="${version.minor}"/>
                 <define name="APP_MAJOR_VERSION" value="${version.major}"/>
@@ -37,10 +38,14 @@
 
     <target name="library.MT_Tools" description="build MT_Tools static library">
         <build-lib name="MT_Tools" pattern="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" suffix="-gd"/>
+			<defineset define="QT3_SUPPORT"/>
+		</build-lib>
     </target>
 
     <target name="library.protocol" description="build protocol static library">
-        <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd">
+			<defineset define="QT3_SUPPORT"/>
+		</build-lib>
     </target>
 
     <target name="library.ENT" description="build ENT static library">
@@ -90,11 +95,15 @@
     </target>
 
     <target name="library.actions_gui" depends="library.clients_gui,library.actions" description="build actions_gui library">
-        <build-lib name="actions_gui" depends="boost,qt,xerces" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd"/>
-    </target>
+        <build-lib name="actions_gui" depends="boost,qt,xerces" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd">
+			<defineset define="QT3_SUPPORT"/>
+		</build-lib>
+	</target>
 
     <target name="library.indicators" depends="library.clients_kernel" description="build indicators static library">
-        <build-lib name="indicators" depends="boost,qt,xerces" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="indicators" depends="boost,qt,xerces" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
+			<defineset define="QT3_SUPPORT"/>
+		</build-lib>
     </target>
 
     <target name="library.reports" depends="library.protocol,library.clients_kernel" description="build reports static library">
@@ -295,11 +304,15 @@
     </target>
 
     <target name="library.flood" description="build flood static library">
-        <build-lib name="flood" pattern="lib${ant.project.name}_flood-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="flood" pattern="lib${ant.project.name}_flood-${platform}-mt@{suffix}" suffix="-gd">
+			<defineset define="QT3_SUPPORT"/>
+		</build-lib>
     </target>
 
     <target name="library.shield" depends="library.protocol" description="build shield static library">
-        <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd">
+			<defineset define="QT3_SUPPORT"/>
+		</build-lib>
     </target>
 
     <target name="library.import" description="build import static library">
@@ -311,7 +324,6 @@
 			<defineset define="QT3_SUPPORT"/>
 		</build-lib>
         <copy todir="${run.dir}/resources/scripts">
-
             <fileset dir="${libraries.dir}/script_plugin" includes="**/*.lua"/>
         </copy>
     </target>
@@ -353,7 +365,9 @@
     </target>
 
     <target name="library.client_proxy" depends="library.protocol,library.tools" description="build clients_kernel static library">
-        <build-lib name="client_proxy" pattern="lib${ant.project.name}_client_proxy-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="client_proxy" pattern="lib${ant.project.name}_client_proxy-${platform}-mt@{suffix}" suffix="-gd">
+			<defineset define="QT3_SUPPORT"/>
+		</build-lib>
     </target>
 
     <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
@@ -453,6 +467,7 @@
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
+			<defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
 
@@ -514,6 +529,7 @@
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_tools-${platform}-mt" pch-excludes="qtundo.cpp">
             <syslibset libs="gdi32,advapi32,user32,shell32"/>
+			<defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
 
@@ -549,6 +565,7 @@
                    libs="lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
+			<defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
 
@@ -615,6 +632,7 @@
     <target name="application.package_app" description="build Sword Package deployment executable">
         <build-app name="package_app" depends="boost" subsystem="console">
             <syslibset libs="user32"/>
+			<defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
 
@@ -627,6 +645,7 @@
             <includepath path="${include.dir}/wise"/>
             <defineset define="_USRDLL"/>
             <defineset define="DLLDRIVER_EXPORTS"/>
+			<defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
@@ -670,7 +689,9 @@
     </target>
 
     <target name="application.xml_signature_app" description="build application">
-        <build-app name="xml_signature_app" subsystem="console" depends="boost" libs="tools"/>
+        <build-app name="xml_signature_app" subsystem="console" depends="boost" libs="tools">
+			<defineset define="QT3_SUPPORT"/>
+		</build-app>
     </target>
 
     <!--
