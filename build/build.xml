@@ -110,13 +110,13 @@
     </target>
 
     <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood" description="build preparation static library">	
-        <build-lib name="preparation" depends="qt" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="preparation" depends="qt" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd">
 			<defineset define="QT3_SUPPORT"/>
 		</build-lib>
     </target>
 
     <target name="library.frontend" depends="library.clients_gui" description="build frontend static library">
-        <build-lib name="frontend" depends="qt" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="frontend" depends="qt" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd">
 			<defineset define="QT3_SUPPORT"/>
 		</build-lib>
     </target>
