@@ -14363,6 +14363,7 @@
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
       <missions>
         <mission name="ASYMETRIQUE Prendre en Otage"/>
+        <mission name="ASYMETRIQUE Renseigner"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Decrocher"/>
@@ -14451,4 +14452,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2724708253" -->
+<!-- signature="3590908592" -->
