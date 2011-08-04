@@ -73,7 +73,7 @@ void ADN_Radars_GUI::Build()
     ADN_GroupBox* pDetectableActivitiesGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Detectable activities" ), pGroup );
     vConnectors[eHasDetectableActivities] = &pDetectableActivitiesGroup->GetConnector();
     for( int n = 0; n < eNbrConsumptionType; ++n )
-        builder.AddField<ADN_CheckBox>( pDetectableActivitiesGroup, ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n ).c_str(), vConnectors[eHasDetectableActivities + 1 + n] );
+        builder.AddField<ADN_CheckBox>( pDetectableActivitiesGroup, ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n, ADN_Tr::eToTr ).c_str(), vConnectors[eHasDetectableActivities + 1 + n] );
 
     ADN_GroupBox* pDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Durations" ), pGroup );
     vConnectors[eHasDetectionTimes] = &pDetectTimesGroup->GetConnector();

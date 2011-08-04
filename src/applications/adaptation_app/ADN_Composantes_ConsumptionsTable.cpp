@@ -149,7 +149,7 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
     for( int nConsumption = 0; nConsumption < eNbrConsumptionType; ++nConsumption )
     {
         Q3PopupMenu* pConsumptionMenu = new Q3PopupMenu( &addMenu );
-        addMenu.insertItem( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nConsumption ).c_str(), pConsumptionMenu );
+        addMenu.insertItem( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nConsumption, ADN_Tr::eToTr ).c_str(), pConsumptionMenu );
 
         // Fill the popup menu with submenus, one for each dotation.
         for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
