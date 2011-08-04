@@ -9471,6 +9471,7 @@
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Effectuer un raid"/>
         <mission name="MELEE Escorter"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
@@ -9579,6 +9580,7 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
@@ -9829,6 +9831,7 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Donner Coup Arret"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
@@ -9916,6 +9919,7 @@
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Effectuer un raid"/>
         <mission name="MELEE Escorter"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
@@ -10024,6 +10028,7 @@
         <mission name="MELEE Effectuer un raid"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
@@ -10193,6 +10198,7 @@
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Jalonner"/>
@@ -10236,6 +10242,7 @@
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Escorter"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Jalonner"/>
@@ -10279,6 +10286,7 @@
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Effectuer un raid"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
@@ -10328,6 +10336,7 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Donner Coup Arret"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Intercepter"/>
@@ -14452,4 +14461,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3590908592" -->
+<!-- signature="2559931248" -->

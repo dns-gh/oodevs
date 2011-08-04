@@ -2500,7 +2500,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" name="Cible" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Cible" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Recueillir" dia-type="france.military.platoon.combat.tasks.Recueillir" id="2117" name="MELEE Recueillir" package="support">
@@ -4346,6 +4346,15 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Fixer" dia-type="france.military.company.combat.tasks.Fixer" id="1022" mrt-dia-behavior="france.military.company.combat.tasks.Fixer" name="MELEE Fixer">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a fixer" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Postions pour fixer" optional="false" type="Point"/>
+    </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1028" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronise">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -5088,4 +5097,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3019770588" -->
+<!-- signature="0324812779" -->
