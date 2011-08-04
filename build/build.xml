@@ -1560,7 +1560,7 @@
         <update name="geocoord"/>
         <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,vmap,geodata,gdal_ogr,urban"/>
         <update name="terrain" package="terraintools_${platform}.zip"/>
-        <update name="qt" version="4.6.2"/>
+        <update name="qt"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
         <update name="masalife/brain" version="${masalife.version}"/>
