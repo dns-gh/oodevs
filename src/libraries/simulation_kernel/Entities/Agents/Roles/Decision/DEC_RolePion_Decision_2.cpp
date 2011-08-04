@@ -572,6 +572,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< T_ConstKnowledgeAgentVector( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetFriendsInZone< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_PartageConnaissancesAvec" ] =
         boost::function< void( DEC_Decision_ABC*, float ) >( boost::bind( &DEC_KnowledgeFunctions::ShareKnowledgesWith< MIL_AgentPion >, boost::cref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent" ] = &DEC_KnowledgeAgentFunctions::ShareKnowledgesWith;
     brain[ "DEC_Connaissances_PartageConnaissancesDansZoneAvec" ] =
         boost::function< void( DEC_Decision_ABC*, const MT_Vector2D*, float ) >( boost::bind( &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith< MIL_AgentPion >, boost::cref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_Knowledges_ObjectsInCircle" ] =

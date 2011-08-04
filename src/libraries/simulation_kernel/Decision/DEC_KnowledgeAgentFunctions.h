@@ -70,6 +70,7 @@ public:
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void NeutralizeAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void ForceRadioSilence( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool silence );
+    static void  ShareKnowledgesWith ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float minutes );
     //@}
 };
 

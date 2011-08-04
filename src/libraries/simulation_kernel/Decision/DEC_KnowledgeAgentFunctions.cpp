@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeAgentFunctions.h"
+#include "DEC_KnowledgeFunctions.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -448,4 +449,14 @@ void DEC_KnowledgeAgentFunctions::ForceRadioSilence( boost::shared_ptr< DEC_Know
         role.ActivateBlackout  ();
     else
         role.DeactivateBlackout();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::ShareKnowledgesWith
+// Created: EVH 2011-08-02
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::ShareKnowledgesWith( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float minutes )
+{
+    if( pKnowledge )
+        DEC_KnowledgeFunctions::ShareKnowledgesWith< MIL_AgentPion >( callerAgent.GetPion(), &( pKnowledge->GetAgentKnown().GetDecision() ), minutes );
 }
