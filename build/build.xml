@@ -477,7 +477,7 @@
         <build-app name="simulation_app" depends="terrain,boost,xerces,xalan,flexlm,qt4,protobuf" pattern="simulation_app"
             libs="masalloc,directia-${platform}-mt-4_6,library-${platform}-mt,
 				  Qt3Support4,
-                  gdal_i,gdal_ogr,geodata,spatialcontainer,
+                  gdal_i,gdal_ogr,log4cxx,geodata,spatialcontainer,
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
@@ -540,7 +540,7 @@
 
     <target name="application.gaming_app" depends="library.gaming" description="build Sword Gaming executable">
         <build-app name="gaming_app" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
-                   libs="gdal_i,gdal_ogr,svgl,zipstream,zlib1,bugtrap,spatialcontainer,
+                   libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,spatialcontainer,
 						 Qt3Support4,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
@@ -578,7 +578,7 @@
 
     <target name="application.preparation_app" depends="library.preparation,library.frontend" description="build Sword Gaming executable">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
-                   libs="gdal_i,gdal_ogr,svgl,zipstream,zlib1,bugtrap,spatialcontainer,
+                   libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,spatialcontainer,
 						 Qt3Support4,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
@@ -1082,7 +1082,7 @@
     <target name="application.simulation_kernel_test" depends="library.simulation_kernel" description="build Sword Simulation kernel test executable">
         <build-test name="simulation_kernel"
                    libs="masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
-                         gdal_i,gdal_ogr,geodata,spatialcontainer,
+                         gdal_i,gdal_ogr,log4cxx,geodata,spatialcontainer,
                          dispatcher-${platform}-mt@{suffix},
                          lib${ant.project.name}_tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
