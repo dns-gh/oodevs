@@ -19,7 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ProgressIndicator_ABC.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressIndicator_ABC constructor
 // Created: APE 2005-03-18

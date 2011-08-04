@@ -22,13 +22,6 @@
 #include "ADN_Connector_Bool.h"
 #include "ADN_BoolEditor.h"
 
-#pragma warning ( push, 0 )
-#include <QtGui/qstyle.h>
-#include <QtGui/qpainter.h>
-#include <QtGui/qwidget.h>
-#include <QtGui/qcheckbox.h>
-#pragma warning ( pop )
-
 int ADN_TableItem_CheckItem::RTTI = 222;
 
 // -----------------------------------------------------------------------------

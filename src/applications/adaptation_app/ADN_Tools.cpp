@@ -17,7 +17,6 @@
 #include <direct.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <Qt3Support/q3popupmenu.h>
 #include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------

@@ -11,9 +11,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Point_GUI.h"
-
-#include <Qt3Support/q3popupmenu.h>
-
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"

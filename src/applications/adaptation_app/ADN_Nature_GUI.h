@@ -11,8 +11,6 @@
 #define __ADN_Nature_GUI_h_
 
 #include "ADN_Gfx_ABC.h"
-#include <Qt3Support/q3vbox.h>
-#include <QtCore/qstring.h>
 #include "clients_gui/NatureEditionWidget.h"
 
 // =============================================================================

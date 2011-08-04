@@ -18,12 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_GUI.h"
-
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3groupbox.h>
-#include <QtGui/qdialog.h>
-
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"

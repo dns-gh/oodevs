@@ -12,7 +12,6 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
-#include <Qt3Support/q3vbox.h>
 
 // =============================================================================
 /** @class  ADN_NBC_Intox_GUI

@@ -18,9 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_TargetsListView.h"
-
-#include <Qt3Support/q3popupmenu.h>
-
 #include "ADN_Sensors_Data.h"
 #include "ADN_Sensors_GUI.h"
 #include "ADN_Connector_ListView.h"

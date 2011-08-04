@@ -27,6 +27,8 @@ class WeatherModel;
 // =============================================================================
 class WeatherListView : public gui::WeatherListView
 {
+    Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{

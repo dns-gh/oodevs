@@ -10,11 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_HtmlBuilder.h"
 
-#pragma warning ( push, 0 )
-#include <Qt3Support/q3table.h>
-#include <Qt3Support/q3listview.h>
-#pragma warning ( pop )
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder constructor
 // Created: APE 2005-04-18

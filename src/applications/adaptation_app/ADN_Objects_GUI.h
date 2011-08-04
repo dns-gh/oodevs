@@ -15,7 +15,6 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
 
-class QWidget;
 class ADN_Objects;
 class ADN_Objects_Data;
 

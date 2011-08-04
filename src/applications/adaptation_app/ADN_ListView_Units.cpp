@@ -8,13 +8,13 @@
 // $Workfile: ADN_ListView_Units.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Units.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Unit_Wizard.h"
 #include "ADN_Units_GUI.h"
 #include "ADN_Automata_Data.h"
-#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Units_Data::UnitInfos UnitInfos;
 

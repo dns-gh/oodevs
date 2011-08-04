@@ -10,8 +10,6 @@
 #ifndef __ADN_Mission_CheckItem_h_
 #define __ADN_Mission_CheckItem_h_
 
-#include <Qt3Support/q3listview.h>
-
 #include "ADN_Models_Data.h"
 #include "ADN_Missions_Data.h"
 

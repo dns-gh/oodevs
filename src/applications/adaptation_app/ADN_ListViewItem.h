@@ -15,7 +15,6 @@
 class ADN_ListView;
 
 #include "ADN_Connector_ABC.h"
-#include <Qt3Support/q3listview.h>
 
 //*****************************************************************************
 // Created: JDY 03-07-02

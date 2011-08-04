@@ -11,9 +11,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ProgressBar.h"
 
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3progressbar.h>
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ProgressBar constructor
 // Created: JDY 03-07-17

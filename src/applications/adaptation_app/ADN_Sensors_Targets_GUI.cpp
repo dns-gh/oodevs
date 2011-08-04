@@ -15,8 +15,6 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Sensors_Data.h"
 
-#include <Qt3Support/q3popupmenu.h>
-
 typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 typedef ADN_Sensors_Data::TargetInfos TargetInfos;
 

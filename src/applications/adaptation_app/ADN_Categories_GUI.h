@@ -13,7 +13,6 @@
 #define __ADN_Categories_GUI_h_
 
 #include "ADN_GUI_ABC.h"
-#include <QtCore/qobject.h>
 
 class ADN_Categories_Data;
 class ADN_ListView_Categories_Armor;

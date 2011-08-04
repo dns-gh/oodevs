@@ -19,8 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_DataException.h"
 
-#include <QtGui/qapplication.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException constructor
 // Created: AGN 2003-12-09

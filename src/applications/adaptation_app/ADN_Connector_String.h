@@ -12,7 +12,6 @@
 #ifndef __ADN_Connector_String_h_
 #define __ADN_Connector_String_h_
 
-
 #include "ADN_Connector_ABC.h"
 
 //*****************************************************************************

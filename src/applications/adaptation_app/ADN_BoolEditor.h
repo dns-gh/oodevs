@@ -19,10 +19,6 @@
 #ifndef __ADN_BoolEditor_h_
 #define __ADN_BoolEditor_h_
 
-#include <Qt3Support/q3frame.h>
-
-class QPixmap;
-
 // =============================================================================
 /** @class  ADN_BoolEditor
     @brief  ADN_BoolEditor

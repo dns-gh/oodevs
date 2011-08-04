@@ -11,7 +11,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_Postures_GUI.h"
-#include <Qt3Support/q3popupmenu.h>
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"

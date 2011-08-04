@@ -14,8 +14,6 @@
 
 #include "ADN_Table.h"
 #include "ADN_Enums.h"
-#include <QtGui/qapplication.h>
-
 
 //*****************************************************************************
 // Created: AGN 03-07-30

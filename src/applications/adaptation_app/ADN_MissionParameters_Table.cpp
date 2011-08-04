@@ -16,7 +16,6 @@
 #include "ADN_MissionParameterType.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Tr.h"
-#include <Qt3Support/q3popupmenu.h>
 
 namespace
 {

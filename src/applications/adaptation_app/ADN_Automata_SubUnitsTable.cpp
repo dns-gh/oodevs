@@ -24,10 +24,6 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Validator.h"
 #include "MT_ValuedListViewItem.h"
-#include <Qt3Support/q3popupmenu.h>
-#include <QtCore/qeventloop.h>
-#include <QtGui/qapplication.h>
-#include <QtGui/QWidgetAction.h>
 
 typedef ADN_Automata_Data::UnitInfos UnitInfos;
 

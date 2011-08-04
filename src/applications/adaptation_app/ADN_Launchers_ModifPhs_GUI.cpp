@@ -18,7 +18,6 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Weapons_GUI.h"
-#include <Qt3Support/q3popupmenu.h>
 #include "ENT/ENT_Tr.h"
 
 typedef ADN_Launchers_Data::ModifPhsInfos ModifPhsInfos;

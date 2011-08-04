@@ -19,7 +19,9 @@
 #ifndef __ADN_UserData_ListViewItem_h_
 #define __ADN_UserData_ListViewItem_h_
 
+#pragma warning( push, 0 )
 #include <Qt3Support/q3listview.h>
+#pragma warning( pop )
 
 // =============================================================================
 /** @class  ADN_UserData_ListViewItem

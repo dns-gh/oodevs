@@ -14,7 +14,6 @@
 
 #include "ADN_ListView.h"
 
-
 // =============================================================================
 /** @class  ADN_ListView_Sensors
     @brief  ADN_ListView_Sensors

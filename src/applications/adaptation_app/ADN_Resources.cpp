@@ -10,14 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Resources.h"
 
-#include <QtGui/qicon.h>
-#include <QtGui/qpixmap.h>
-
-#include <QtGui/qimage.h>
-#include <Qt3Support/q3dict.h>
-#include <QtGui/qmime.h>
-#include <Qt3Support/q3dragobject.h>
-
 // images\undo
 static const unsigned char image_4_data[] = {
     0x00,0x00,0x07,0x90,0x78,0x9c,0x3b,0x7a,0xec,0x28,0xc3,0xd1,0x51,0x3c,

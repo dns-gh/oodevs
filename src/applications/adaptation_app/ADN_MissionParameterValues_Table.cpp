@@ -12,7 +12,6 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_CommonGfx.h"
-#include <Qt3Support/q3popupmenu.h>
 
 namespace
 {

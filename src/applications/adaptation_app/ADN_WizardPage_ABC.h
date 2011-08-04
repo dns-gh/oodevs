@@ -19,10 +19,8 @@
 #ifndef __ADN_WizardPage_ABC_h_
 #define __ADN_WizardPage_ABC_h_
 
-#include <Qt3Support/q3vbox.h>
 #include <boost/noncopyable.hpp>
 
-class Q3Wizard;
 class ADN_ImageViewer;
 
 // =============================================================================

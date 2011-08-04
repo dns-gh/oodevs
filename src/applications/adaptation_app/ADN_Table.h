@@ -12,11 +12,6 @@
 
 #include "ADN_Gfx_ABC.h"
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3table.h>
-#include <QtGui/qapplication.h>
-#pragma warning( pop )
-
 //*****************************************************************************
 // Created: JDY 03-07-07
 //*****************************************************************************

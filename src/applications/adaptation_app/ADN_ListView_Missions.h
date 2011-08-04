@@ -16,7 +16,6 @@
 #include "ADN_Missions_Data.h"
 
 class ADN_ListView_Models;
-class Q3PopupMenu;
 
 // =============================================================================
 /** @class  ADN_ListView_Missions

@@ -19,10 +19,6 @@
 #ifndef __ADN_Mission_ConfigurationDlg_h_
 #define __ADN_Mission_ConfigurationDlg_h_
 
-#include <QtGui/qdialog.h>
-
-class Q3ListView;
-
 // =============================================================================
 /** @class  ADN_Mission_ConfigurationDlg
     @brief  ADN_Mission_ConfigurationDlg

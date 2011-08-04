@@ -19,8 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_SplashScreen.h"
 
-#include <QtGui/qapplication.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen constructor
 // Created: APE 2005-03-18

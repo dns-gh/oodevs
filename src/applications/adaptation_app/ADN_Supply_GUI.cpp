@@ -22,14 +22,6 @@
 
 #include "ENT/ENT_Tr.h"
 
-#include <QtGui/qlayout.h>
-#include <QtGui/qlabel.h>
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_GUI constructor
 // Created: APE 2005-03-21

@@ -14,8 +14,6 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Validator.h"
 
-#include <Qt3Support/q3popupmenu.h>
-
 class ADN_Connector_WarningTable
     : public ADN_Connector_Table_ABC
 {

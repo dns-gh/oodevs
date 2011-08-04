@@ -12,9 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 
-class Q3Table;
-class Q3ListView;
-
 // =============================================================================
 /** @class  ADN_HtmlBuilder
     @brief  ADN_HtmlBuilder

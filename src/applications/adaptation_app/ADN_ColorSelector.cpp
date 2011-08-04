@@ -14,7 +14,6 @@
 #include "ADN_Connector_String.h"
 #include "ADN_Enums.h"
 #include "ADN_MainWindow.h"
-#include <QtGui/qcolordialog.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ColorSelector constructor

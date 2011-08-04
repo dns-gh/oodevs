@@ -8,25 +8,16 @@
 // $Workfile: ADN_DialogLog.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_DialogLog.h"
 #include "MT_Tools/MT_FormatString.h"
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3textview.h>
-#include <QtGui/qmessagebox.h>
-#include <QtGui/qpixmap.h>
-#include <QtGui/qpushbutton.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
-
 
 class QMessageTextView : public Q3TextView
 {
 public:
     QMessageTextView( QWidget *parent, const char *name )
     : Q3TextView( parent, name ) { }
-
 };
 
 

@@ -13,7 +13,6 @@
 #define __ADN_Units_Postures_GUI_h_
 
 #include "ADN_Table.h"
-#include <QtGui/qapplication.h>
 
 //*****************************************************************************
 // Created: JDY 03-07-28

@@ -12,10 +12,6 @@
 
 #include "ADN_Gfx_ABC.h"
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3table.h>
-#pragma warning( pop )
-
 // =============================================================================
 /** @class  ADN_TableItem_ABC
     @brief  ADN_TableItem_ABC

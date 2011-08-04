@@ -18,9 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_TrucksDoubleTable.h"
-
-#include <Qt3Support/q3popupmenu.h>
-
 #include "ADN_Supply_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"

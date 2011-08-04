@@ -10,10 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Sensors.h"
-
-#include <Qt3Support/q3popupmenu.h>
-#include <QtGui/qtooltip.h>
-
 #include "ADN_Connector_ListView.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Sensors_GUI.h"
@@ -21,8 +17,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Sensors_DetectionAlgorithmPrevision.h"
-typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 
+typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Sensors constructor

@@ -18,10 +18,6 @@
 #include "ADN_Connector_Enum.h"
 #include "ADN_Connector_Combo_ABC.h"
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3table.h>
-#pragma warning( pop )
-
 class ADN_TableItem_ComboBoxItem;
 
 typedef std::vector<ADN_TableItem_ComboBoxItem*>             T_Ptr_TableItem_ComboBoxItem_Vector;

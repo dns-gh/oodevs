@@ -15,7 +15,6 @@
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_ActiveProtections_Wizard.h"
-#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 

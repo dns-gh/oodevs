@@ -25,17 +25,6 @@
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
 
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <QtGui/qpushbutton.h>
-#include <Qt3Support/q3whatsthis.h>
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_GUI constructor
 // Created: JDY 03-08-27

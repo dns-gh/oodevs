@@ -11,7 +11,6 @@
 #define __ADN_Urban_GUI_h_
 
 #include "ADN_GUI_ABC.h"
-#include <QtCore/qobject.h>
 
 class ADN_Urban_Data;
 class ADN_ListView_Urban_Type;

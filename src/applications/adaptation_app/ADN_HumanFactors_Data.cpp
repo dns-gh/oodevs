@@ -16,7 +16,6 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ModifiersInfo::ModifiersInfo
 // Created: APE 2005-03-14

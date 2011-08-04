@@ -19,7 +19,6 @@
 #ifndef __GQ_ValueConvertor_h_
 #define __GQ_ValueConvertor_h_
 
-
 // =============================================================================
 /** @class  GQ_ValueConvertor
     @brief  GQ_ValueConvertor

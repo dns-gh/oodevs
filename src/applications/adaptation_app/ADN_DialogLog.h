@@ -12,13 +12,6 @@
 #ifndef __ADN_DialogLog_h_
 #define __ADN_DialogLog_h_
 
-
-#include <QtGui/qdialog.h>
-//Added by qt3to4:
-#include <Qt3Support/q3button.h>
-
-class QLabel;
-class QPushButton;
 class QMessageTextView;
 
 //*****************************************************************************

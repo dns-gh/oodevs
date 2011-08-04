@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "WeatherListView.h"
+#include "moc_WeatherListView.cpp"
 #include "clients_kernel/Time_ABC.h"
 #include "gaming/MeteoModel.h"
 #include "meteo/MeteoLocal.h"

@@ -21,13 +21,6 @@
 #include "ADN_TableItem_CheckItem.h"
 #include "MT_ValuedListViewItem.h"
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3popupmenu.h>
-#include <QtCore/qeventloop.h>
-#include <QtGui/qwidgetaction.h>
-#include <Qt3Support/q3table.h>
-#pragma warning( pop )
-
 typedef ADN_Units_Data::ComposanteInfos ComposanteInfos;
 
 //-----------------------------------------------------------------------------

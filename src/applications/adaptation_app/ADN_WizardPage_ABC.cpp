@@ -18,9 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_WizardPage_ABC.h"
-
-#include <Qt3Support/q3wizard.h>
-
 #include "ADN_ImageViewer.h"
 
 

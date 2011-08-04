@@ -14,11 +14,6 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_TimeField.h"
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3grid.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_KnowledgeGroups_GUI constructor

@@ -20,17 +20,6 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_Data.h"
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <QtGui/qpushbutton.h>
-#include <Qt3Support/q3whatsthis.h>
-#pragma warning( pop )
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_GUI constructor
 // Created: SLG 2010-03-08

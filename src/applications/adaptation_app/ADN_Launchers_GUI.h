@@ -19,7 +19,6 @@ class ADN_ListView_Launchers;
 class ADN_Launchers_ModifPhs_GUI;
 class ADN_HtmlBuilder;
 
-
 // =============================================================================
 /** @class  ADN_Launchers_GUI
     @brief  ADN_Launchers_GUI

@@ -19,9 +19,6 @@
 #ifndef __ADN_GuiBuilder_h_
 #define __ADN_GuiBuilder_h_
 
-#include <QtGui/qlabel.h>
-#include <Qt3Support/q3table.h>
-#include <QtGui/qlineedit.h>
 #include <boost/noncopyable.hpp>
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Enum.h"

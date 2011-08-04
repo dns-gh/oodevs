@@ -19,7 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_Wizard_Page0.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Wizard_Page0 constructor
 // Created: APE 2005-01-20

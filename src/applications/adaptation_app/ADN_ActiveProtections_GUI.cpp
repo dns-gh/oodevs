@@ -20,10 +20,6 @@
 #include "ADN_EditLine.h"
 #include "ENT/ENT_Tr.h"
 #include "ADN_Tr.h"
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_GUI constructor

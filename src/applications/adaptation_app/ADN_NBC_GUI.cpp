@@ -21,8 +21,6 @@
 #include "ADN_TimeField.h"
 #include "ADN_GroupBox.h"
 
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_GUI constructor
 // Created: AGN 2004-05-06

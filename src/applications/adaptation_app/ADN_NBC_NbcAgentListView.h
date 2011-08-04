@@ -12,7 +12,6 @@
 
 #include "ADN_ListView.h"
 
-
 // =============================================================================
 /** @class  ADN_NBC_NbcAgentListView
     @brief  ADN_NBC_NbcAgentListView

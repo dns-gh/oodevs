@@ -12,17 +12,12 @@
 #include  "adaptation_app_pch.h"
 #include "ADN_Table.h"
 #include "moc_ADN_Table.cpp"
-#include <QtGui/qpainter.h>
-#include <QtGui/qprinter.h>
-#include <Qt3Support/q3paintdevicemetrics.h>
-#include <QtGui/qlineedit.h>
 #include "ADN_TableItem_ABC.h"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Connector_Table_ABC.h"
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Table constructor

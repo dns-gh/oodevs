@@ -11,9 +11,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Launchers.h"
 #include "moc_ADN_ListView_Launchers.cpp"
-
-#include <Qt3Support/q3popupmenu.h>
-
 #include "ADN_Weapons_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Launcher_Wizard.h"

@@ -21,10 +21,6 @@
 
 #include "ADN_Wizard_Image.h"
 
-#pragma warning( push, 0 )
-#include <QtGui/qevent.h>
-#pragma warning ( pop )
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ImageViewer constructor
 /** @param  fileName

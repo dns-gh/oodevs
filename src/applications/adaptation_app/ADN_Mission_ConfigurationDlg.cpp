@@ -19,12 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Mission_ConfigurationDlg.h"
 
-#include <Qt3Support/q3listview.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3hbox.h>
-#include <QtGui/qpushbutton.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Mission_ConfigurationDlg constructor
 /** @param  pParent

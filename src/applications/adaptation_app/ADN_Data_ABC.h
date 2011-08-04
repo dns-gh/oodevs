@@ -11,7 +11,6 @@
 #define __ADN_Data_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include <QtCore/qobject.h>
 #include <list>
 
 namespace xml

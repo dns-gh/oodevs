@@ -23,12 +23,7 @@
 #   pragma interface
 #endif
 
-#include <QtGui/qtooltip.h>
-
 class GQ_Plot;
-
-class QRect;
-class QStringList;
 
 // =============================================================================
 /** @class  GQ_PlotToolTip

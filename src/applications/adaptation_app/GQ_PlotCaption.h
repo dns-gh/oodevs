@@ -23,11 +23,7 @@
 #   pragma interface
 #endif
 
-#include <Qt3Support/q3hbox.h>
-
 class GQ_Plot;
-
-class Q3ListBox;
 
 // =============================================================================
 /** @class  GQ_PlotCaption

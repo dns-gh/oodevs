@@ -34,7 +34,7 @@
 #include <shlobj.h>
 #include <xeumeuleu/xml.hpp>
 
-//#pragma warning( disable: 4127 4511 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

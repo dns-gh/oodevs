@@ -10,7 +10,6 @@
 #ifndef __ADN_SplashScreen_h_
 #define __ADN_SplashScreen_h_
 
-#include <QtGui/qsplashscreen.h>
 #include "ADN_ProgressIndicator_ABC.h"
 
 // =============================================================================

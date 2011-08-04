@@ -21,7 +21,6 @@
 
 #include "ADN_Exception_ABC.h"
 
-
 // =============================================================================
 /** @class  ADN_DataException
     @brief  ADN_DataException

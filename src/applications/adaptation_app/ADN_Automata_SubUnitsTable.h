@@ -11,7 +11,6 @@
 #define __ADN_Automata_SubUnitsTable_h_
 
 #include "ADN_Table.h"
-#include <QtGui/qapplication.h>
 #include <boost/noncopyable.hpp>
 
 // =============================================================================

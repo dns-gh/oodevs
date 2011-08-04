@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_NbcAgentListView.h"
-#include <Qt3Support/q3popupmenu.h>
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Connector_ListView.h"

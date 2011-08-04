@@ -14,7 +14,6 @@
 #include "ADN_KnowledgeGroups_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_KnowledgeGroups_Wizard.h"
-#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_KnowledgeGroups_Data::GroupInfo GroupInfo;
 

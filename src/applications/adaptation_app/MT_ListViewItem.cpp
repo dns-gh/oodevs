@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "MT_ListViewItem.h"
-#include <QtGui/qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor

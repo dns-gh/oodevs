@@ -19,19 +19,9 @@
 */
 #pragma warning( push, 0 )
 
+#include "adaptation_app_pch.h"
 #include "qtundo.h"
-
 #include "moc_qtundo.cpp"
-
-#include <QtGui/qapplication.h>
-#include <QtGui/qicon.h>
-#include <Qt3Support/q3dragobject.h>
-#include <QtGui/qpixmap.h>
-#include <QtGui/qwidget.h>
-#include <Qt3Support/q3mimefactory.h>
-
-
-
 
 /*!
     \class QtCommand
@@ -1573,6 +1563,3 @@ void QtUndoListBox::undoOrRedo()
 
     updateContents();
 }
-
-
-

@@ -23,12 +23,6 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_GUI constructor
 // Created: APE 2005-03-21

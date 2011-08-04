@@ -10,10 +10,6 @@
 #ifndef __MT_ListViewItem_h_
 #define __MT_ListViewItem_h_
 
-#include <Qt3Support/q3listview.h>
-#include <QtGui/qfont.h>
-#include <QtGui/qcolor.h>
-#include <Qt3Support/q3valuevector.h>
 #include <boost/noncopyable.hpp>
 
 // =============================================================================

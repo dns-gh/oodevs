@@ -16,7 +16,6 @@
 #include <boost/noncopyable.hpp>
 
 class ADN_Automata_Data;
-class Q3ListViewItem;
 
 // =============================================================================
 // Created: APE 2005-04-04

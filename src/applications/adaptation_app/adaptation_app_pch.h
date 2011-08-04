@@ -55,7 +55,6 @@
 #include <Qt3Support/q3textview.h>
 #include <Qt3Support/q3toolbar.h>
 #include <Qt3Support/q3valuelist.h>
-#include <Qt3Support/q3vbox.h>
 #include <Qt3Support/q3vgroupbox.h>
 #include <Qt3Support/q3whatsthis.h>
 #include <Qt3Support/q3wizard.h>
@@ -65,6 +64,8 @@
 #include <Qt3Support/q3grid.h>
 #include <Qt3Support/q3boxlayout.h>
 #include <Qt3Support/q3gridlayout.h>
+#include <Qt3Support/q3datetimeedit.h>
+#include <Qt3Support/q3valuevector.h>
 
 #pragma warning( pop )
 

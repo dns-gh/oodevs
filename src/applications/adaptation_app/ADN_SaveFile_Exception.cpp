@@ -19,9 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_SaveFile_Exception.h"
 
-#include <QtGui/qapplication.h>
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SaveFile_Exception constructor
 // Created: AGN 2003-12-09

@@ -10,7 +10,6 @@
 #ifndef __ADN_SupplyUnitSelector_h_
 #define __ADN_SupplyUnitSelector_h_
 
-#include <QtGui/qpushbutton.h>
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include <boost/noncopyable.hpp>

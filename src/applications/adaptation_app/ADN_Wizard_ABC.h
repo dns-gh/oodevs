@@ -10,7 +10,6 @@
 #ifndef __ADN_Wizard_ABC_h_
 #define __ADN_Wizard_ABC_h_
 
-#include <Qt3Support/q3wizard.h>
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_Wizard_FirstPage_ABC.h"
 #include <boost/noncopyable.hpp>

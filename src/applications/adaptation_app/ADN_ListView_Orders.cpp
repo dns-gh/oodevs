@@ -26,9 +26,6 @@
 #include "ADN_Tools.h"
 #include "ENT/ENT_Tr.h"
 
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3popupmenu.h>
-
 typedef ADN_Models_Data::OrderInfos OrderInfos;
 
 //-----------------------------------------------------------------------------

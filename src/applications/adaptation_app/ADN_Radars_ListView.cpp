@@ -14,7 +14,6 @@
 #include "ADN_Radars_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Radars_Wizard.h"
-#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Radars_Data::RadarInfos RadarInfos;
 

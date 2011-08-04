@@ -22,12 +22,6 @@
 
 #include "GQ_Plot.h"
 
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3listbox.h>
-#include <QtGui/qpixmap.h>
-
-
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotCaption constructor
 /** @param  pParent

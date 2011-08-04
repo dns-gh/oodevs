@@ -11,7 +11,6 @@
 #define __ADN_ColorSelector_h_
 
 #include "ADN_Gfx_ABC.h"
-#include <QtGui/qpushbutton.h>
 
 // =============================================================================
 /** @class  ADN_ColorSelector

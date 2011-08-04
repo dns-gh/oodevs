@@ -24,16 +24,7 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "ENT/ENT_Tr.h"
-#pragma warning( push, 0 )
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3buttongroup.h>
-#include <Qt3Support/q3grid.h>
-#pragma warning( pop )
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_GUI constructor
 // Created: JDY 03-06-26

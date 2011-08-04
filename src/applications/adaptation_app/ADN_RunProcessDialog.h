@@ -12,11 +12,6 @@
 #ifndef __ADN_RunProcessDialog_h_
 #define __ADN_RunProcessDialog_h_
 
-#include <QtGui/qdialog.h>
-
-class Q3TextEdit;
-class Q3Process;
-
 //*****************************************************************************
 // Created: SBO 02-01-2006
 //*****************************************************************************

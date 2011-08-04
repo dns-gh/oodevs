@@ -21,18 +21,6 @@
 #include "ADN_ListView_Orders.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <Qt3Support/q3grid.h>
-#include <Qt3Support/q3whatsthis.h>
-#include <QtGui/qtabwidget.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
 
 #define HAL_FILTER "Script files (*.hal)"
 

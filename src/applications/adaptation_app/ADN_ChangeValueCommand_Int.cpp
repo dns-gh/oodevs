@@ -21,7 +21,6 @@
 #include "moc_ADN_ChangeValueCommand_Int.cpp"
 
 #include "ADN_Types.h"
-#include <QtGui/qapplication.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Int constructor

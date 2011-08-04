@@ -14,11 +14,9 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
-#include <Qt3Support/q3listview.h>
 
 class ADN_ListViewItem;
 class ADN_Connector_ListView_ABC;
-class Q3PopupMenu;
 class ADN_ObjectCreator_ABC;
 
 // =============================================================================

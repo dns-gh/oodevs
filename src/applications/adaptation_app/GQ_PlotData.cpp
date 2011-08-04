@@ -18,13 +18,10 @@
 
 #include "adaptation_app_pch.h"
 #include "GQ_PlotData.h"
+
 #include "moc_GQ_PlotData.cpp"
 
 #include "GQ_Plot.h"
-
-#include <QtGui/qpainter.h>
-#include <QtCore/qrect.h>
-#include <QtCore/qstringlist.h>
 
 #include <cassert>
 

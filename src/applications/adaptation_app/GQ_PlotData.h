@@ -27,16 +27,6 @@
 
 class GQ_Plot;
 
-#include <QtGui/qbrush.h>
-#include <QtGui/qcolor.h>
-#include <QtCore/qobject.h>
-#include <QtGui/qpen.h>
-#include <Qt3Support/q3pointarray.h>
-
-class QPainter;
-class QPixmap;
-class QStringList;
-
 // =============================================================================
 /** @class  GQ_PlotData
     @brief  GQ_PlotData

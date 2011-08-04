@@ -13,7 +13,6 @@
 
 #include "ADN_Connector_String.h"
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBoxItem constructor
 // Created: JDY 03-09-10

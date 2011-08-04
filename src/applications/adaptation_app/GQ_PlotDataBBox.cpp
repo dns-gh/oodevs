@@ -21,7 +21,6 @@
 
 #include <cmath>
 
-
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox constructor
 // Created: CBX 2003-08-08

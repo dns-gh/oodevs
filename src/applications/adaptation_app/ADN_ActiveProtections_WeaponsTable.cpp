@@ -14,7 +14,6 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Workspace.h"
-#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons ActiveProtectionsInfosWeapons;
 

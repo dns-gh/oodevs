@@ -11,7 +11,6 @@
 #define __ADN_GraphValue_h_
 
 #include "ADN_Types.h"
-#include <QtCore/qobject.h>
 #include <boost/noncopyable.hpp>
 
 class ADN_GraphData;

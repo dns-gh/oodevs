@@ -22,13 +22,7 @@
 #include "ADN_Table.h"
 #include "ADN_TableItem_ABC.h"
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3frame.h>
-#include <Qt3Support/q3table.h>
-#pragma warning( pop )
-
 class ADN_BoolEditor;
-class QCheckBox;
 
 // =============================================================================
 /** @class  ADN_TableItem_CheckItem

@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Mission_CheckItem.h"
 #include "ADN_Tr.h"
-
 #include "ADN_Tools.h"
 
 // -----------------------------------------------------------------------------

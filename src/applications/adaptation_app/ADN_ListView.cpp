@@ -11,11 +11,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView.h"
 #include "moc_ADN_ListView.cpp"
-#include <Qt3Support/q3popupmenu.h>
-#include <QtGui/qtooltip.h>
-#include <QtGui/qpainter.h>
-#include <QtGui/qprinter.h>
-#include <Qt3Support/q3paintdevicemetrics.h>
 #include "ADN_ListViewItem.h"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
@@ -25,10 +20,6 @@
 #include "ADN_Tools.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Wizard_ABC.h"
-
-#pragma warning( push, 0 )
-#include <QtGui/qevent.h>
-#pragma warning( pop )
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView constructor

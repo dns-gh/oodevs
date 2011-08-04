@@ -18,14 +18,10 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_ListView.h"
-
-#include <Qt3Support/q3popupmenu.h>
-
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Breakdowns_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Breakdown_Wizard.h"
-
 
 typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 

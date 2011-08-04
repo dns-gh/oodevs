@@ -16,8 +16,6 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_Radars_GUI.h"
 
-class QWidget;
-class QTabWidget;
 class ADN_Table;
 
 // =============================================================================

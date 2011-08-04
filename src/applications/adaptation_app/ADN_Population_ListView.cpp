@@ -13,7 +13,6 @@
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Population_Wizard.h"
-#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Population_Data::PopulationInfos PopulationInfos;
 

@@ -23,13 +23,6 @@
 #include "ADN_DataException.h"
 #include <cassert>
 
-#pragma warning( push, 0 )
-#include <QtGui/qpainter.h>
-#include <QtGui/qpalette.h>
-#include <QtCore/qstringlist.h>
-#include <QtGui/qevent.h>
-#pragma warning( pop )
-
 #pragma warning( disable : 4355 )
 
 #define ignore (void)

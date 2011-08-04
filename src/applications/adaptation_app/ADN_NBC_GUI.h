@@ -12,7 +12,6 @@
 
 #include "ADN_GUI_ABC.h"
 
-class QWidget;
 class ADN_NBC_Datas;
 class ADN_ListView;
 class ADN_Connector_ABC;

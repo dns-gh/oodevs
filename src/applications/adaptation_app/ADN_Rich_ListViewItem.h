@@ -12,13 +12,8 @@
 #ifndef __ADN_Rich_ListViewItem_h_
 #define __ADN_Rich_ListViewItem_h_
 
-#include <Qt3Support/q3listview.h>
-
 class ADN_ListView;
 class ADN_ListViewItem;
-
-class QPainter;
-class QColorGroup;
 
 //*****************************************************************************
 // Created: SBO 2006-01-04

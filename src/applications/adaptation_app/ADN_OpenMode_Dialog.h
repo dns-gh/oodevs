@@ -19,11 +19,6 @@
 #ifndef __ADN_OpenMode_Dialog_h_
 #define __ADN_OpenMode_Dialog_h_
 
-#include <QtGui/qdialog.h>
-
-class QLineEdit;
-class QRadioButton;
-
 enum E_OpenMode;
 
 // =============================================================================

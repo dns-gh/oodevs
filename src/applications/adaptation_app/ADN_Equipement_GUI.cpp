@@ -24,8 +24,6 @@
 #include "ADN_Tr.h"
 #include "ADN_UrbanModifiersTable.h"
 #include "ENT/ENT_Tr.h"
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
 
 class ADN_Equipement_UrbanModifiersTable : public helpers::ADN_UrbanModifiersTable
 {

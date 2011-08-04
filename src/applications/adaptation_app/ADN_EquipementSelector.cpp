@@ -10,8 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_EquipementSelector.h"
 #include "moc_ADN_EquipementSelector.cpp"
-#include <Qt3Support/q3popupmenu.h>
-#include <QtGui/qcursor.h>
 #include "ADN_Workspace.h"
 #include "ADN_Equipement_Data.h"
 

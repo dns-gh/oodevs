@@ -15,7 +15,6 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Tr.h"
 #include "moc_ADN_Equipement_AttritionGraph.cpp"
-#include <QtGui/qevent.h>
 #include <boost/noncopyable.hpp>
 
 //-----------------------------------------------------------------------------

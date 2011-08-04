@@ -27,13 +27,6 @@
 #include "ADN_TimeField.h"
 #include "ADN_Tr.h"
 
-#include <QtGui/qwidget.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qtabwidget.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_GUI constructor
 // Created: APE 2005-03-17

@@ -19,12 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
-#include <QtGui/qmessagebox.h>
-#include <QtGui/qlabel.h>
-#include <Qt3Support/q3groupbox.h>
-#include <QtGui/qlayout.h>
-#include <QtGui/qapplication.h>
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiTools::MultiRefWarning

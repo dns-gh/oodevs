@@ -13,7 +13,6 @@
 #include "ADN_People_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_People_Wizard.h"
-#include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_People_Data::PeopleInfos PeopleInfos;
 

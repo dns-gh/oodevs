@@ -13,8 +13,6 @@
 
 #include "ADN_ListView.h"
 
-#include <QtGui/qpainter.h>
-
 QColor ADN_Rich_ListViewItem::warningColor_( 255, 185, 125 );
 QColor ADN_Rich_ListViewItem::errorColor_  ( 255, 125, 125 );
 

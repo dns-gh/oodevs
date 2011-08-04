@@ -11,18 +11,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_TableItem_ComboBox.h"
 
-#pragma warning( push, 0 )
-#include <QtGui/qstyle.h>
-#include <QtGui/qpainter.h>
-#include <QtGui/qwidget.h>
-#include <QtGui/qcombobox.h>
-#include <QtCore/qrect.h>
-#pragma warning( pop )
-
-
 QComboBox *ADN_TableItem_ComboBox::fakeCombo = 0;
 QWidget *fakeComboWidget = 0;
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBox constructor

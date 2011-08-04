@@ -10,13 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_GUI.h"
-
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3vbox.h>
-
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Workspace.h"

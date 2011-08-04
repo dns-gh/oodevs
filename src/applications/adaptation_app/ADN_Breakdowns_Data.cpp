@@ -19,7 +19,6 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: RepairPartInfo::RepairPartInfo
 // Created: APE 2005-03-16

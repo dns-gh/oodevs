@@ -18,9 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_ListView.h"
-
-#include <Qt3Support/q3popupmenu.h>
-
 #include "ADN_Composantes_Data.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"

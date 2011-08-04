@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "WeatherListView.h"
+#include "moc_WeatherListView.cpp"
 #include "meteo/MeteoLocal.h"
 #include "preparation/WeatherModel.h"
 

@@ -18,8 +18,6 @@
 #include "ADN_Models_Data.h"
 #include "ADN_FragOrder_Wizard.h"
 
-#include <Qt3Support/q3popupmenu.h>
-
 typedef ADN_Missions_Data::FragOrder FragOrder;
 
 // -----------------------------------------------------------------------------

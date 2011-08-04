@@ -20,15 +20,6 @@
 #include "ADN_Weapons_GUI.h"
 #include "moc_ADN_Weapons_GUI.cpp"
 
-#pragma warning( push, 0 )
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <QtGui/qdialog.h>
-#include <Qt3Support/q3gridlayout.h>
-#pragma warning( pop )
-
 #include "ADN_GuiBuilder.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_ListView.h"

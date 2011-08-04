@@ -21,6 +21,8 @@
 class ADN_Categories_AttritionEffect_Table
     : public ADN_Table2
 {
+        Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{

@@ -10,9 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_Table_ABC.h"
-
 #include "ADN_TableItem_ABC.h"
-
 
 class DataComparison : public ADN_BinaryPredicate
 {

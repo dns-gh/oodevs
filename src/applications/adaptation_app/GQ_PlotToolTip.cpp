@@ -25,9 +25,6 @@
 
 #include "GQ_Plot.h"
 
-#include <QtCore/qrect.h>
-#include <QtCore/qstringlist.h>
-
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotToolTip constructor
 /** @param

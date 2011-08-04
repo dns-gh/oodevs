@@ -10,9 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Urban_Type.h"
-
-#include <Qt3Support/q3popupmenu.h>
-
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"

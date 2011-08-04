@@ -13,10 +13,6 @@
 #define __ADN_ProgressBar_h_
 
 #include "ADN_ProgressIndicator_ABC.h"
-#include <Qt3Support/q3hbox.h>
-
-class QLabel;
-class Q3ProgressBar;
 
 // =============================================================================
 /** @class  ADN_ProgressBar

@@ -28,16 +28,6 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_TimeField.h"
 
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <Qt3Support/q3grid.h>
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_GUI constructor
 // Created: AGN 2004-06-15

@@ -35,20 +35,6 @@
 #include "ADN_Workspace.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "ENT/ENT_Tr.h"
-#pragma warning( push, 0 )
-#include <QtGui/qcombobox.h>
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <Qt3Support/q3grid.h>
-#include <Qt3Support/q3whatsthis.h>
-#include <QtGui/qtooltip.h>
-#include <Qt3Support/q3gridlayout.h>
-#pragma warning( pop )
 
 #include <numeric>
 #include <boost/bind.hpp>

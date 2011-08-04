@@ -19,13 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_BoolEditor.h"
 #include "moc_ADN_BoolEditor.cpp"
-
-#pragma warning( push, 0 )
-#include <QtGui/qpainter.h>
-#include <QtGui/qpixmap.h>
-#include <QtGui/qevent.h>
-#pragma warning( pop )
-
 #include "res/checked_box.xpm"
 #include "res/empty_box.xpm"
 

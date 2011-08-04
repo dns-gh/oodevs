@@ -15,8 +15,6 @@
 #include "ADN_Missions_GUI.h"
 #include "ADN_Mission_Wizard.h"
 
-#include <Qt3Support/q3popupmenu.h>
-
 typedef ADN_Missions_Data::Mission Mission;
 
 // -----------------------------------------------------------------------------

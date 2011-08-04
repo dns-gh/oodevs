@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Health_GUI.h"
-
 #include "ADN_Health_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
@@ -20,13 +19,6 @@
 #include "ADN_TimeField.h"
 #include "ADN_TableItem_TimeField.h"
 #include "ADN_AvailabilityWarningTable.h"
-
-#include <QtGui/qlayout.h>
-#include <QtGui/qlabel.h>
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
 
 namespace
 {

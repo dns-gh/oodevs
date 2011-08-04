@@ -18,22 +18,12 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_GuiBuilder.h"
-
 #include "ADN_Type_ABC.h"
 #include "ADN_FileChooser.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Table.h"
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Validator.h"
-
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <QtGui/qtooltip.h>
-#include <Qt3Support/q3groupbox.h>
-#include <QtGui/qlineedit.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder constructor

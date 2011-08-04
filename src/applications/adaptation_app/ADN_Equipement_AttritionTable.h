@@ -11,7 +11,6 @@
 #define __ADN_Equipement_AttritionTable_h_
 
 #include "ADN_Table.h"
-#include <QtGui/qapplication.h>
 
 // =============================================================================
 /** @class  ADN_Equipement_AttritionTable

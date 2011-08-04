@@ -18,12 +18,6 @@
 #include "ADN_MissionParameterValues_Table.h"
 #include "ADN_ComboBox_Vector.h"
 
-#include <QtGui/qtabwidget.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
 // Created: APE 2005-03-21

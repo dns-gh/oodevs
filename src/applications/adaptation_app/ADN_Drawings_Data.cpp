@@ -19,8 +19,6 @@
 #include "svgl/TextRenderer.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
-#include <QtGui/qbitmap.h>
-#include <Qt/qgl.h>
 
 namespace
 {

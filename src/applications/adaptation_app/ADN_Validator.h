@@ -10,7 +10,6 @@
 #ifndef __ADN_Validator_h_
 #define __ADN_Validator_h_
 
-#include <QtGui/qvalidator.h>
 #include "ADN_Types.h"
 
 // =============================================================================

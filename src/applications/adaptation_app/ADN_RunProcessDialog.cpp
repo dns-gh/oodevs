@@ -12,12 +12,6 @@
 #include "ADN_RunProcessDialog.h"
 #include "moc_ADN_RunProcessDialog.cpp"
 
-#include <Qt3Support/q3textedit.h>
-#include <Qt3Support/q3process.h>
-#include <QtGui/qlayout.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_RunProcessDialog::ADN_RunProcessDialog
 // Created: SBO 2006-01-02

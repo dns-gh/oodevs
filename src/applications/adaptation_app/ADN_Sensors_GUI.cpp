@@ -12,22 +12,7 @@
 #include "ADN_Sensors_GUI.h"
 #include "moc_ADN_Sensors_GUI.cpp"
 
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <Qt3Support/q3grid.h>
-#include <Qt3Support/q3whatsthis.h>
-#include <QtGui/qtabwidget.h>
-#include <QtGui/qdialog.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
-
 #include "ADN_MainWindow.h"
-
 #include "ADN_App.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_GroupBox.h"
@@ -49,7 +34,6 @@
 #include "ADN_GuiBuilder.h"
 #include "ENT/ENT_Tr.h"
 #include "ADN_TimeField.h"
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI constructor

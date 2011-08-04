@@ -14,7 +14,6 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_AttritionInfos.h"
-#include <QtGui/qwidget.h>
 
 // =============================================================================
 /** @class  ADN_Equipement_AttritionGraph

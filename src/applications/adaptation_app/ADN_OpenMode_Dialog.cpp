@@ -21,16 +21,6 @@
 
 #include "ADN_Enums.h"
 
-#include <QtGui/qapplication.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3buttongroup.h>
-#include <QtGui/qlineedit.h>
-#include <QtGui/qradiobutton.h>
-#include <Qt3Support/q3grid.h>
-#include <QtGui/qlabel.h>
-#include <Qt3Support/q3hbox.h>
-#include <QtGui/qpushbutton.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenMode_Dialog constructor
 /** @param  pParent

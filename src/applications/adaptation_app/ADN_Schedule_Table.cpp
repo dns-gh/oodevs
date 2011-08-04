@@ -12,7 +12,6 @@
 #include "moc_ADN_Schedule_Table.cpp"
 #include "ADN_Urban_Data.h"
 #include "ADN_People_Data.h"
-#include <Qt3Support/q3datetimeedit.h>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )

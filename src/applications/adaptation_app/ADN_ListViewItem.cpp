@@ -14,7 +14,6 @@
 #include "ADN_Connector_ABC.h"
 #include "ADN_ListView.h"
 
-
 class ADN_ListViewItem_Connector
 : public ADN_Connector_ABC
 {

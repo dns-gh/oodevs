@@ -12,7 +12,6 @@
 #ifndef __ADN_Connector_Bool_h_
 #define __ADN_Connector_Bool_h_
 
-
 #include "ADN_Connector_ABC.h"
 
 //*****************************************************************************

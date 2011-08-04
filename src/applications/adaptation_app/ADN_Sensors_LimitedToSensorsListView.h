@@ -13,7 +13,6 @@
 #include "ADN_ListView.h"
 #include "ADN_Sensors_Data.h"
 
-
 // =============================================================================
 /** @class  ADN_Sensors_LimitedToSensorsListView
     @brief  ADN_Sensors_LimitedToSensorsListView

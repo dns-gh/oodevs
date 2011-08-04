@@ -18,9 +18,6 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Population_Data.h"
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3popupmenu.h>
-#include <QtGui/qmessagebox.h>
 
 typedef ADN_Models_Data::ModelInfos ModelInfos;
 

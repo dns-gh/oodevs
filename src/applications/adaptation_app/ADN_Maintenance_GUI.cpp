@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Maintenance_GUI.h"
-
 #include "ADN_Maintenance_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
@@ -19,14 +18,6 @@
 #include "ADN_AvailabilityWarningTable.h"
 
 #include "ENT/ENT_Tr.h"
-
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3grid.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_GUI constructor

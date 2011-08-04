@@ -26,8 +26,6 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
-#include <Qt3Support/q3popupmenu.h>
-
 typedef ADN_Objects_Data::ScoreLocationInfos ScoreLocationInfos;
 
 //-----------------------------------------------------------------------------

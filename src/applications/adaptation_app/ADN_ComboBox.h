@@ -18,8 +18,6 @@
 #include "ADN_Connector_Enum.h"
 #include "ADN_Connector_Combo_ABC.h"
 
-#include <QtGui/qcombobox.h>
-
 class ADN_ComboBoxItem;
 
 typedef std::vector<ADN_ComboBoxItem*>            T_PtrComboBoxItem_Vector;

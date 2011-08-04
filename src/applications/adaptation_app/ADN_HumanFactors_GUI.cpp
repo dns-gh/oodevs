@@ -18,16 +18,10 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_HumanFactors_GUI.h"
-
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_Weapons_GUI.h"
-
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_PH_EditLine_Double

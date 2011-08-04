@@ -15,9 +15,6 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_Models_Data.h"
 
-class QWidget;
-
-
 // =============================================================================
 /** @class  ADN_Models_GUI
     @brief  ADN_Models_GUI
