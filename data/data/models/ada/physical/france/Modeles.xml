@@ -10583,6 +10583,7 @@
         <mission name="COMMUNES Orienter Refugies Vers Position"/>
         <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="LOGISTIQUE Preparer bascule"/>
         <mission name="LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -14461,4 +14462,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2559931248" -->
+<!-- signature="3181238300" -->
