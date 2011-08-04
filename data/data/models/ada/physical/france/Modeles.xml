@@ -1004,11 +1004,12 @@
         <mission name="ASYMETRIQUE Assassiner Officiers"/>
         <mission name="ASYMETRIQUE Commettre un Attentat"/>
         <mission name="ASYMETRIQUE Commettre un Attentat Suicide"/>
-        <mission name="ASYMETRIQUE Se Dissimuler"/>
         <mission name="ASYMETRIQUE Prendre en Otage"/>
+        <mission name="ASYMETRIQUE Renseigner"/>
+        <mission name="ASYMETRIQUE Se Dissimuler"/>
+        <mission name="ASYMETRIQUE S'Infiltrer"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
-        <mission name="ASYMETRIQUE S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1042,6 +1043,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Interroger"/>
+        <mission name="ASYMETRIQUE Renseigner"/>
         <mission name="ASYMETRIQUE S'Infiltrer"/>
       </missions>
       <fragorders>
@@ -1134,6 +1136,7 @@
         <mission name="Faire mouvement dans reseau souterrain"/>
         <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="ASYMETRIQUE Prendre en Otage"/>
+        <mission name="ASYMETRIQUE Renseigner"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Surveiller"/>
@@ -14359,7 +14362,7 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
       <missions>
-        <mission name="ASY Prendre en Otage"/>
+        <mission name="ASYMETRIQUE Prendre en Otage"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Decrocher"/>
@@ -14448,4 +14451,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0166113358" -->
+<!-- signature="2724708253" -->
