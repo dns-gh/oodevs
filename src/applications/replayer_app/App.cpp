@@ -39,7 +39,7 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPSTR lpCmdLine, in
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
 
     // win32 argument parsing
-    WinArguments winArgs( lpCmdLine );
+    tools::WinArguments winArgs( lpCmdLine );
     config_->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
     MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Replayer.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, true ) );
     MT_LOG_INFO_MSG( "Loading record " << config_->GetSessionFile() );
