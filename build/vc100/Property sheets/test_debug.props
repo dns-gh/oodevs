@@ -13,6 +13,7 @@
     <libZip>zipstream_d.lib;zlib1d.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
     <libGdal>gdal_i.lib;gdal_ogr.lib</libGdal>
+    <libGraphics>graphics_d.lib</libGraphics>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\tests\$(ProjectName)\</OutDir>
@@ -20,6 +21,7 @@
   <PropertyGroup>
     <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\tests\$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)-$(CurrentPlatform)-mt-gt</TargetName>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile />
@@ -79,6 +81,9 @@ $(TargetDir)$(TargetName).exe --result_code=no --report_level=no --log_level=war
     </BuildMacro>
     <BuildMacro Include="libGdal">
       <Value>$(libGdal)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGraphics">
+      <Value>$(libGraphics)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

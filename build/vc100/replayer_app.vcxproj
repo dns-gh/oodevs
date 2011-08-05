@@ -107,30 +107,22 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
-    <ClCompile />
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;iphlpapi.lib;psapi.lib;spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
-    <ClCompile />
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;iphlpapi.lib;psapi.lib;spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
-    <ClCompile>
-      <CompileAs>Default</CompileAs>
-    </ClCompile>
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;psapi.lib;spatialcontainer.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
-    <ClCompile>
-      <CompileAs>Default</CompileAs>
-    </ClCompile>
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;psapi.lib;spatialcontainer.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>

@@ -88,8 +88,8 @@
     <Lib />
     <PostBuildEvent>
       <Message>Deploying LUA scripts.</Message>
-      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
-copy /Y "$(TargetDir)\scripts" ..\..\run\vc100\resources\scripts
+      <Command>if not exist $(RunDir)\resources\scripts mkdir $(RunDir)resources\scripts
+copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -107,8 +107,8 @@ copy /Y "$(TargetDir)\scripts" ..\..\run\vc100\resources\scripts
     <Lib />
     <PostBuildEvent>
       <Message>Deploying LUA scripts.</Message>
-      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
-copy /Y "$(TargetDir)\scripts" ..\..\run\vc100\resources\scripts
+      <Command>if not exist $(RunDir)\resources\scripts mkdir $(RunDir)resources\scripts
+copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -126,8 +126,8 @@ copy /Y "$(TargetDir)\scripts" ..\..\run\vc100\resources\scripts
     <Lib />
     <PostBuildEvent>
       <Message>Deploying LUA scripts.</Message>
-      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
-copy /Y $(TargetDir)\scripts ..\..\run\vc100\resources\scripts
+      <Command>if not exist $(RunDir)\resources\scripts mkdir $(RunDir)resources\scripts
+copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -145,8 +145,8 @@ copy /Y $(TargetDir)\scripts ..\..\run\vc100\resources\scripts
     <Lib />
     <PostBuildEvent>
       <Message>Deploying LUA scripts.</Message>
-      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
-copy /Y $(TargetDir)\scripts ..\..\run\vc100\resources\scripts
+      <Command>if not exist $(RunDir)\resources\scripts mkdir $(RunDir)resources\scripts
+copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

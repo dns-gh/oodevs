@@ -13,6 +13,7 @@
     <libZip>zipstream_d.lib;zlib1d.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
     <libGdal>gdal_i.lib;gdal_ogr.lib</libGdal>
+    <libGraphics>graphics_d.lib</libGraphics>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
@@ -80,6 +81,9 @@
     </BuildMacro>
     <BuildMacro Include="libGdal">
       <Value>$(libGdal)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGraphics">
+      <Value>$(libGraphics)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

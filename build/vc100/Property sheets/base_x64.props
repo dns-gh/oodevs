@@ -13,6 +13,9 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN64</PreprocessorDefinitions>
     </ClCompile>
+    <Lib>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="CurrentPlatform">

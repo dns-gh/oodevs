@@ -50,6 +50,7 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -63,6 +64,7 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -76,6 +78,7 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -89,6 +92,7 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -111,7 +115,6 @@
     <Link>
       <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\timeline\$(TargetFileName)</OutputFile>
-      <ProgramDatabaseFile>../../run/vc100/plugins/timeline/$(TargetName)_d.pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -133,6 +136,7 @@
       <OutputFile>$(RunDir)plugins\timeline\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\timeline\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <ProjectReference />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\timeline_plugin_dll\DllConfig.h" />
@@ -144,6 +148,10 @@
     <ProjectReference Include="timeline_plugin.vcxproj">
       <Project>{2c350ecc-d359-432f-b3ff-63aeb71cde97}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

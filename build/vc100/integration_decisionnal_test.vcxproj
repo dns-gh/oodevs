@@ -75,11 +75,7 @@
     <Link>
       <Profile>true</Profile>
     </Link>
-    <PostBuildEvent>
-      <Command>cd ../../run/vc100
-"$(TargetDir)$(TargetName).exe" --result_code=no --report_level=no --log_level=warning --data_directory=../../data/data/models/ada/decisional/directia5
-</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -89,11 +85,7 @@
     <Link>
       <Profile>true</Profile>
     </Link>
-    <PostBuildEvent>
-      <Command>cd ../../run/vc100
-"$(TargetDir)$(TargetName).exe" --result_code=no --report_level=no --log_level=warning --data_directory=../../data/data/models/ada/decisional/directia5
-</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -105,15 +97,12 @@
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link />
-    <PostBuildEvent>
-      <Command>cd ../../run/vc100
-"$(TargetDir)$(TargetName).exe" --result_code=no --report_level=no --log_level=warning --data_directory=../../data/data/models/ada/decisional/directia5
-</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>

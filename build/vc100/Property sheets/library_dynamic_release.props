@@ -13,6 +13,7 @@
     <libZip>zipstream.lib;zlib1.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-4_6.lib</libDirectIA>
     <libGdal>gdal_i.lib;gdal_ogr.lib</libGdal>
+    <libGraphics>graphics.lib</libGraphics>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\libraries\$(ProjectName)\</OutDir>
@@ -36,12 +37,20 @@
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <StringPooling>true</StringPooling>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <OutputFile>$(RunDir)$(TargetFileName)</OutputFile>
       <AdditionalLibraryDirectories>$(LibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -77,6 +86,9 @@
     </BuildMacro>
     <BuildMacro Include="libGdal">
       <Value>$(libGdal)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGraphics">
+      <Value>$(libGraphics)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
