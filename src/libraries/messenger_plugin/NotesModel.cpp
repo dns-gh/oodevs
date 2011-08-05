@@ -22,10 +22,10 @@
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 
-inline std::ostream& operator<<( std::ostream& os, const QString& s )
+/*inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
     return os << s.toStdString();
-}
+}*/
 
 using namespace plugins::messenger;
 
@@ -215,7 +215,9 @@ void NotesModel::CreateHeader( std::ostream& os )
             >> xml::start( "model" )
                 >> xml::attribute( "dataset", decisionalBase )
                 >> xml::attribute( "physical", physicalBase );
-    os << tools::translate( "NoteModel", "Exercise" ).toStdString() + ":;" + path.parent_path().leaf() << std::endl;
+
+    // $$$$ JSR 2011-08-05: Code commenté et remplacé par le bloc en dessous à cause d'un crash en 64 bits
+    /*os << tools::translate( "NoteModel", "Exercise" ).toStdString() + ":;" + path.parent_path().leaf() << std::endl;
     os << tools::translate( "NoteModel", "Physical base" ).toStdString() + ":;" + physicalBase << std::endl;
     os << tools::translate( "NoteModel", "Decisional base" ).toStdString() + ":;" + decisionalBase << std::endl;
     os << tools::translate( "NoteModel", "Terrain" ).toStdString() + ":;" + terrain << std::endl;
@@ -223,7 +225,17 @@ void NotesModel::CreateHeader( std::ostream& os )
     os << tools::translate( "NoteModel", "Note name" ).toStdString() + ";";
     os << tools::translate( "NoteModel", "Parent" ).toStdString() + ";";
     os << tools::translate( "NoteModel", "Value" ).toStdString() + ";";
-    os << tools::translate( "NoteModel", "Comments" ).toStdString() << std::endl;
+    os << tools::translate( "NoteModel", "Comments" ).toStdString() << std::endl;*/
+
+    os << "Exercise" << ":;" << path.parent_path().leaf() << std::endl;
+    os << "Physical base" << ":;" << physicalBase << std::endl;
+    os << "Decisional base" << ":;" << decisionalBase << std::endl;
+    os << "Terrain" << ":;" << terrain << std::endl;
+
+    os << "Note name" << ";";
+    os << "Parent" << ";";
+    os << "Value" << ";";
+    os << "Comments" << std::endl;
 
 }
 
