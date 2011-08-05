@@ -21,6 +21,7 @@
 namespace tools
 {
     class RealFileLoaderObserver_ABC;
+    class WinArguments;
 }
 
 class MIL_Config;
@@ -28,7 +29,6 @@ class MT_ConsoleLogger;
 class MT_FileLogger;
 class SIM_Dispatcher;
 class SIM_NetworkLogger;
-class WinArguments;
 
 //=============================================================================
 // Created: NLD 2002-08-07
@@ -75,7 +75,7 @@ private:
     //@{
     std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< MIL_Config > startupConfig_;
-    std::auto_ptr< WinArguments > winArguments_;
+    std::auto_ptr< tools::WinArguments > winArguments_;
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
     std::auto_ptr< MT_FileLogger > logger_;
     std::auto_ptr< MT_ConsoleLogger > console_;

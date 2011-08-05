@@ -14,6 +14,8 @@
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 
+using namespace tools;
+
 // -----------------------------------------------------------------------------
 // Name: WinArguments constructor
 // Created: RDS 2008-07-22

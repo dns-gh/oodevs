@@ -7,11 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __WinArguments_h_
-#define __WinArguments_h_
+#ifndef __tools_WinArguments_h_
+#define __tools_WinArguments_h_
 
 #include <vector>
 
+namespace tools
+{
 // =============================================================================
 /** @class  WinArguments
     @brief  WinMain argument parser
@@ -48,4 +50,6 @@ private:
     //@}
 };
 
-#endif // __WinArguments_h_
+}
+
+#endif // __tools_WinArguments_h_

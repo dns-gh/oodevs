@@ -13,7 +13,6 @@
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
 #include "SIM_Dispatcher.h"
-#include "WinArguments.h"
 #include "FileLoaderObserver.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
@@ -26,6 +25,7 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "tools/Version.h"
+#include "tools/WinArguments.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -53,7 +53,7 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
 SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */, int maxConnections )
     : observer_      ( std::auto_ptr< tools::RealFileLoaderObserver_ABC >( new FileLoaderObserver() ) )
     , startupConfig_ ( new MIL_Config( *observer_ ) )
-    , winArguments_  ( new WinArguments( lpCmdLine ) )
+    , winArguments_  ( new tools::WinArguments( lpCmdLine ) )
     , pNetworkLogger_( 0 )
     , logger_        ( 0 )
     , maxConnections_( maxConnections )

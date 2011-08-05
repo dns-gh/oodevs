@@ -38,7 +38,7 @@
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
+//#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 
