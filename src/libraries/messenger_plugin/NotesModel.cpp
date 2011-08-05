@@ -215,15 +215,15 @@ void NotesModel::CreateHeader( std::ostream& os )
             >> xml::start( "model" )
                 >> xml::attribute( "dataset", decisionalBase )
                 >> xml::attribute( "physical", physicalBase );
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Exercise" ) ) + ":;" + path.parent_path().leaf() << std::endl;
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Physical base" ) ) + ":;" + physicalBase << std::endl;
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Decisional base" ) ) + ":;" + decisionalBase << std::endl;
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Terrain" ) ) + ":;" + terrain << std::endl;
+    os << tools::translate( "NoteModel", "Exercise" ).toStdString() + ":;" + path.parent_path().leaf() << std::endl;
+    os << tools::translate( "NoteModel", "Physical base" ).toStdString() + ":;" + physicalBase << std::endl;
+    os << tools::translate( "NoteModel", "Decisional base" ).toStdString() + ":;" + decisionalBase << std::endl;
+    os << tools::translate( "NoteModel", "Terrain" ).toStdString() + ":;" + terrain << std::endl;
 
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Note name" ) ) + ";";
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Parent" ) ) + ";";
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Value" ) ) + ";";
-    os << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Comments" ) ) << std::endl;
+    os << tools::translate( "NoteModel", "Note name" ).toStdString() + ";";
+    os << tools::translate( "NoteModel", "Parent" ).toStdString() + ";";
+    os << tools::translate( "NoteModel", "Value" ).toStdString() + ";";
+    os << tools::translate( "NoteModel", "Comments" ).toStdString() << std::endl;
 
 }
 
