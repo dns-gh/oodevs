@@ -20,10 +20,6 @@ namespace kernel
     class Logger_ABC;
 }
 
-class QComboBox;
-class QSpinBox;
-class QCheckBox;
-class QLabel;
 class Network;
 
 //=============================================================================

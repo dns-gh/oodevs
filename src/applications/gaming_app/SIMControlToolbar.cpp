@@ -154,7 +154,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
         popup->addAction( new LineEdit( this, popup ) );
     }
 
-    pConnectDlg_ = new ConnectDialog( this, network, logger );
+    pConnectDlg_ = new ConnectDialog( pParent, network, logger );
     {
         Q3PopupMenu* popup = new Q3PopupMenu( pConnectButton_ );
         pConnectDlg_->FillPopupMenu( popup );
@@ -176,7 +176,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     addWidget( pSpeedSpinBox_ );
     addWidget( pSpeedButton_ );
     addWidget( pCheckpointButton_ );
-    addWidget( pConnectDlg_ );
     addWidget( pDisconnectDlg_ );
 
     connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );

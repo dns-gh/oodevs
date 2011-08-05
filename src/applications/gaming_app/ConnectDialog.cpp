@@ -19,11 +19,12 @@
 // Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 ConnectDialog::ConnectDialog( QWidget* pParent, Network& network, kernel::Logger_ABC& logger )
-    : QDialog ( pParent, 0, true, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title )
+: QDialog ( pParent )
     , network_( network )
     , logger_ ( logger )
 {
     setCaption( tr("Connection parameters") );
+    setModal( true );
 
     Q3GridLayout* pMainLayout = new Q3GridLayout( this, 3, 2 );
     pMainLayout->setMargin( 10 );
