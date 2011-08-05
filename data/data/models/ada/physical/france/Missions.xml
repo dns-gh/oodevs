@@ -4922,6 +4922,7 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="341" name="Recuperer Transporteurs"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="342" name="Attendre Se Poster"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Attendre" id="398" name="Attendre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerAmbiance" id="345" name="Changer Ambiance">
@@ -5105,4 +5106,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0347111464" -->
+<!-- signature="2294521175" -->

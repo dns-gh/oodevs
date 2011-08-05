@@ -14458,8 +14458,11 @@
       </missions>
       <fragorders>
         <fragorder name="Population Changer Attitude"/>
+        <fragorder name="Attendre"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Poursuivre"/>
       </fragorders>
     </crowd>
   </crowd>
 </models>
-<!-- signature="3181238300" -->
+<!-- signature="0025207846" -->
