@@ -30,6 +30,9 @@ end
         { "BEH_Pion_RenseignerSurPops", { "done_BEH_Pion_RenseignerSurPops" } },
         { "BEH_Dep_Virtuel_PreparationAction", { "done_BEH_Dep_Virtuel_PreparationAction" } },
         { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+        { "BEH_Manoeuvre_Pion_AllerStationner", { "done_BEH_Manoeuvre_Pion_AllerStationner" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
     },
 
     create = function( self )
@@ -41,10 +44,12 @@ end
         local Activate = Activate
         self.ePhase = self.ePhase or ePreparerMission
         self.objectif = self.objectif or self._namedParams.mission.crowd_
+        self.pointRegroupement = self.pointRegroupement or self._namedParams.mission.pointRegroupement_
         self.eEtat = self.eEtat or eActionEnCours
         self.eActionPreparation = self.eActionPreparation or eActionEnCours
         if( ModuleBegins() ) then
             do
+                DEC_Trace(" Create node MIS_Pion_RenseignerSurFoule ")
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_SetMission( myself, self._namedParams.mission )
             end
@@ -63,6 +68,28 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
+        --    if DEC_ConnaissancePopulation_EstReconnu( self.objectif ) then 
+        --        self.ePhase = eSExfiltrer
+        --        DEC_Trace("est reconnue")
+        --    end
+           --[[ self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+            Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+            self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+            if( self.eEtatOrdreFinMission == eActionHalt ) then
+                do
+                DEC_Trace("DDA eActionHalt")
+                    if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
+                        do
+                         DEC_Trace("DDA eSExfiltrer")
+                            self.ePhase = eSExfiltrer
+                            self.eEtat = eActionEnCours
+                        end
+                    end
+
+                    self.eEtatOrdreFinMission = eActionEnCours
+                end
+            end--]]
+            
 --[[// 1) Preparation de la mission
 ]]--[[// 2) Déplacement et renseignement
 ]]--[[// Fin mission
@@ -86,6 +113,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                             if( self.eActionPreparation == eActionEffectuee ) then
                                 Activate( self.activations.BEH_Pion_RenseignerSurPops, 1, emptyTable )
+                                self.ePhase = eSExfiltrer
+                                DEC_Trace("DDA eSExfiltrer")
                             end
 
                             Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, emptyTable )
@@ -94,7 +123,50 @@ self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.eActio
                     end
 
                     _continue = false
-                elseif switch_1 == eFinMission then
+                    
+                elseif switch_1 == eSExfiltrer then
+                    DEC_Trace("switch eSExfiltrer")
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
+                    end
+
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                myself:ClearplotsRavitaillement_()
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self:SendFeedback( eActionImpossible )
+                                Halt( self )
+                                do return end
+
+                            end
+
+                                                        self:SendFeedback( eActionImpossible )
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+                    -- AAAAAAAAAAAAAAAAAAAAAAA
+                    DEC_Trace("Aller Point Regroupement")
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self.pointRegroupement, } )
+                    -- BBBBBBBBBBBBBBBBBBBBBBB
+                elseif switch_1 == eFinMission then                    
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                                         Halt( self )
@@ -114,5 +186,8 @@ connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Ordr
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Dep_Virtuel_ProgressionVers", nodes.BEH_Dep_Virtuel_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Pion_RenseignerSurPops", nodes.BEH_Pion_RenseignerSurPops }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Manoeuvre_Pion_AllerStationner", nodes.BEH_Manoeuvre_Pion_AllerStationner }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Dep_Virtuel_PreparationAction", nodes.BEH_Dep_Virtuel_PreparationAction }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RenseignerSurFoule, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
