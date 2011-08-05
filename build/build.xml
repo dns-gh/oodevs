@@ -1473,6 +1473,7 @@
             <include name="exercises/exercisesVA/Poseidon VA pions/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Acteurs Civils/**"/>
+            <include name="exercises/exercisesVA/Poseidon VA Soutien/**"/>
             <include name="data/terrains/Performance/500_1000/**"/>
             <include name="data/terrains/Performance/500_500/**"/>
             <include name="data/terrains/Performance/500_500_light/**"/>
