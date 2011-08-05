@@ -89,6 +89,8 @@ public:
     void AddConsumption( unsigned long resourceId, double consumption );
     float GetConsumptionState( unsigned long resourceId ) const;
     float GetFunctionalState() const;
+    void AddProduction( unsigned long resourceId, unsigned int production );
+    void DecreaseProduction( unsigned long resourceId, unsigned int production );
 
     double AddToStock( const PHY_DotationCategory& dotation, double quantity );
 

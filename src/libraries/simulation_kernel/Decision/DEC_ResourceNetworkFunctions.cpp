@@ -113,9 +113,49 @@ unsigned int DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn( DEC_
 // Name: DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink
 // Created: GGE 2011-06-27
 // -----------------------------------------------------------------------------
-void DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink (unsigned int ObjetcResourceID)
+void DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink( unsigned int objectResourceID )
 {
-    MIL_Object_ABC* objectToDestroy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( ObjetcResourceID );
+    MIL_Object_ABC* objectToDestroy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectResourceID );
     if( objectToDestroy && ( *objectToDestroy )().CanBeDestroyed() )
             ( *objectToDestroy )().Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::IncreaseResourceProduction
+// Created: GGE 2011-08-02
+// -----------------------------------------------------------------------------
+void DEC_ResourceNetworkFunctions::IncreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production )
+{
+    if( !resourceNetwork )
+        return;
+    const PHY_ResourceNetworkType* type = PHY_ResourceNetworkType::Find( resourceNetwork->GetResource() );
+    if( !type )
+        return;
+    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( resourceNetwork->GetObjectId() );
+    if( !object )
+		return;
+    ResourceNetworkCapacity* capacity = object->Retrieve< ResourceNetworkCapacity >();
+	if ( !capacity )
+		return;
+    capacity->AddProduction( type->GetId(), production );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::DecreaseResourceProduction
+// Created: GGE 2011-08-02
+// -----------------------------------------------------------------------------
+void DEC_ResourceNetworkFunctions::DecreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production )
+{
+     if( !resourceNetwork )
+        return;
+    const PHY_ResourceNetworkType* type = PHY_ResourceNetworkType::Find( resourceNetwork->GetResource() );
+    if( !type )
+        return;
+    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( resourceNetwork->GetObjectId() );
+    if( !object )
+		return;
+    ResourceNetworkCapacity* capacity = object->Retrieve< ResourceNetworkCapacity >();
+	if ( !capacity )
+		return;
+    capacity->DecreaseProduction( type->GetId(), production );
 }

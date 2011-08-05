@@ -193,6 +193,30 @@ void NodeProperties::CreateLink( unsigned long targetId, unsigned long resourceI
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::AddProduction
+// Created: GGE 2011-08-04
+// -----------------------------------------------------------------------------
+void NodeProperties::AddProduction( unsigned long resourceId, unsigned int production )
+{
+    NodeElement* element = Find( resourceId );
+    if( !element )
+        return;
+    element->AddProduction( production );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::DecreaseProduction
+// Created: GGE 2011-08-04
+// -----------------------------------------------------------------------------
+void NodeProperties::DecreaseProduction( unsigned long resourceId, unsigned int production )
+{
+    NodeElement* element = Find( resourceId );
+    if( !element )
+        return;
+    element->DecreaseProduction( production );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------

@@ -227,6 +227,24 @@ void ResourceNetworkCapacity::CreateLink( unsigned long targetId, unsigned long 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::AddProduction
+// Created: GGE 2011-08-04
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::AddProduction( unsigned long resourceId, unsigned int production )
+{
+    nodeProperties_->AddProduction( resourceId, production );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::DecreaseProduction
+// Created: GGE 2011-08-04
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::DecreaseProduction( unsigned long resourceId, unsigned int production )
+{
+    nodeProperties_->DecreaseProduction( resourceId, production );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::AddConsumption
 // Created: JSR 2011-02-01
 // -----------------------------------------------------------------------------

@@ -8637,6 +8637,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Armer PIA"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Organiser Accueil Colonne Refugies"/>
@@ -8681,6 +8682,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Armer PIA"/>
         <mission name="MELEE Controler">
           <fragorder name="Abandonner travaux"/>
         </mission>
@@ -8732,6 +8734,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Appuyer Sur Position"/>
+        <mission name="MELEE Armer PIA"/>
         <mission name="MELEE Controler">
           <fragorder name="Abandonner travaux"/>
         </mission>
@@ -8986,6 +8989,10 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="LOGISTIQUE Preparer bascule"/>
+        <mission name="LOGISTIQUE Se Deployer">
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9245,6 +9252,10 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="LOGISTIQUE Trier Blesses"/>
+        <mission name="LOGISTIQUE Traiter Blesses">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9314,6 +9325,10 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Traiter Blesses">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -14467,4 +14482,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1036682977" -->
+<!-- signature="1488663943" -->

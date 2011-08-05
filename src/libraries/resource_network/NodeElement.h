@@ -63,6 +63,8 @@ public:
     void Push( int quantity );
     void SetActivation( bool activated );
     void SetProduction( unsigned int production );
+    void AddProduction( unsigned int production );
+    void DecreaseProduction( unsigned int production );
     void CreateLink( unsigned long targetId );
     void SetModifier( float modifier );
     void RemoveLink( unsigned int nodeId );

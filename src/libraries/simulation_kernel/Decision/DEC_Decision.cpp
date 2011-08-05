@@ -285,6 +285,8 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateResourceNetworkElement;
     brain[ "DEC_CreerLienObjetVersReseau" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn;
     brain[ "DEC_DetruireObjetResourceSansDelais" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
+    brain[ "DEC_ReseauRessourceAugmenteProduction" ] = &DEC_ResourceNetworkFunctions::IncreaseResourceProduction;
+    brain[ "DEC_ReseauRessourceBaisseProduction" ] = &DEC_ResourceNetworkFunctions::DecreaseResourceProduction;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 
@@ -1018,11 +1020,31 @@ bool GenObjectListFunctionBM( directia::brain::Brain& brain, directia::tools::bi
     }
     return false;
 }
+bool MaintenancePrioritiesFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< const PHY_ComposanteTypePion* > value;
+    if( element.ToMaintenancePriorities( value ) )
+    {
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.equipmentType" ], name, value, true );
+        return true;
+    }
+    return false;
+}
 void MaintenancePrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< const PHY_ComposanteTypePion* > value;
     if( element.ToMaintenancePriorities( value ) )
         refMission[ name ] = value ;
+}
+bool MedicalPrioritiesFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< const PHY_HumanWound* > value;
+    if( element.ToMedicalPriorities( value ) )
+    {
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.humanWound" ], name, value, true );
+        return true;
+    }
+    return false;
 }
 void MedicalPrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -1190,6 +1212,8 @@ void InitFunctions()
         functorsBM[ "PopulationKnowledge" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "CrowdKnowledge" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "PlannedWork" ] = GenObjectFunctionBM;
+		functorsBM[ "MaintenancePriorities" ] = MaintenancePrioritiesFunctionBM;
+        functorsBM[ "MedicalPriorities" ] = MedicalPrioritiesFunctionBM;
         functorsBM[ "PlannedWorkList" ] = GenObjectListFunctionBM;
         functorsBM[ "UrbanKnowledge" ] = UrbanBlockFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;

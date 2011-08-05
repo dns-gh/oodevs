@@ -381,6 +381,29 @@ void NodeElement::SetProduction( unsigned int production )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::AddProduction
+// Created: GGE 2011-08-04
+// -----------------------------------------------------------------------------
+void NodeElement::AddProduction( unsigned int production )
+{
+   productionCapacity_ = productionCapacity_ + production;
+   needUpdate_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::DecreaseProduction
+// Created: GGE 2011-08-04
+// -----------------------------------------------------------------------------
+void NodeElement::DecreaseProduction( unsigned int production )
+{
+    if( productionCapacity_ < production )
+		productionCapacity_ = 0;
+	else
+		productionCapacity_ = productionCapacity_ - production;
+    needUpdate_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::SetActivation
 // Created: GGE 2011-06-10
 // -----------------------------------------------------------------------------
