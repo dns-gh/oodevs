@@ -59,7 +59,6 @@
         <mission name="STABILISATION Animer Poste De Controle"/>
         <mission name="STABILISATION Interdire foule"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
         <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
@@ -14463,4 +14462,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0861371559" -->
+<!-- signature="1786071782" -->
