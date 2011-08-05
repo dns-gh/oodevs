@@ -1,0 +1,1661 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a5c25e07-1d26-4dfa-a59d-f53489242675}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\stuff">
+      <UniqueIdentifier>{d5d02c45-9cd6-4a6f-9c81-e00504bccc3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels">
+      <UniqueIdentifier>{70d24857-b1f2-4383-8795-1c8c98f0261d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lists">
+      <UniqueIdentifier>{243cfece-702f-4252-8bf7-6e16df85136c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{e1326328-fac5-44fd-a02b-5611df32db6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Displayers">
+      <UniqueIdentifier>{7838c95c-c56a-41ca-8531-cf4b11b4774a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Editors">
+      <UniqueIdentifier>{903e1370-5ebc-4907-8d05-24de573376cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Graphs">
+      <UniqueIdentifier>{8a3a3008-7db5-44ce-8a5c-52dbf81c1a70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl">
+      <UniqueIdentifier>{11022f5f-0b6a-450d-bd4c-cb4540848a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\Layers">
+      <UniqueIdentifier>{81cec789-8987-4ef0-b47c-15242da3dce7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\Layers\Filters">
+      <UniqueIdentifier>{16f3ee8c-a8f4-4e0b-9910-670deb8a6d67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\Miniview">
+      <UniqueIdentifier>{b37743d6-3686-4bda-86cd-481f10d487b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\lighting">
+      <UniqueIdentifier>{75d05253-8d37-4d0d-90c1-127df0de87d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\Strategies">
+      <UniqueIdentifier>{acf1ed42-2e15-4b67-9e2a-c0c11e43143c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\Widgets">
+      <UniqueIdentifier>{c9fce564-76a8-464b-a427-f8306c066c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\svg">
+      <UniqueIdentifier>{bd7dfb40-e22d-4ae7-a180-0e2feeb6e158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\passes">
+      <UniqueIdentifier>{0ea3566f-ce71-4aec-9278-f90ff64024b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl\Picking">
+      <UniqueIdentifier>{e70c1ead-91ff-4072-b174-2de1f1a590c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation">
+      <UniqueIdentifier>{9014b375-591b-4be2-ba30-930b2fa59035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Objects">
+      <UniqueIdentifier>{6bd92671-0559-4014-9018-29028d9a3877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Objects\Attributes">
+      <UniqueIdentifier>{3990b676-0489-4a0d-9047-a22168da8133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Units">
+      <UniqueIdentifier>{df6c3494-83a4-4a06-8408-46e67d4a980e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Intelligence">
+      <UniqueIdentifier>{7011e47b-9571-41bf-8148-29d0d171fcdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Drawings">
+      <UniqueIdentifier>{b289161d-de29-42c6-b310-812ed9648468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Drawings\Model">
+      <UniqueIdentifier>{78bd9117-e601-4812-9c11-c3f425976511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Drawings\Model\Types">
+      <UniqueIdentifier>{c71d28e3-5a80-4d5e-80b5-ee59ab4f6cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Drawings\Widgets">
+      <UniqueIdentifier>{ef9bc912-05f1-4a43-b9f9-8df4b6819607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Drawings\Extensions">
+      <UniqueIdentifier>{35dcc7ee-145e-4039-9c32-2c344e369eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Urban">
+      <UniqueIdentifier>{d33f7a9b-71ac-433b-9a58-cd1688e55101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Urban\Extensions">
+      <UniqueIdentifier>{9e08875e-dd6b-49cf-9332-a11109239cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Crowds">
+      <UniqueIdentifier>{6475c875-5f89-410f-8805-f1268df1fd46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Weather">
+      <UniqueIdentifier>{27820970-7a4a-4818-83db-ba3aa4e20be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Locations">
+      <UniqueIdentifier>{bf0b4e61-bb01-4150-9c72-9433672a91a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Locations\Parsers">
+      <UniqueIdentifier>{2c0f9c4c-278c-4ae4-9652-93684dcb7b6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Preferences">
+      <UniqueIdentifier>{ba8ea198-bda5-44bf-8e5c-19efcff7b172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Preferences\Panels">
+      <UniqueIdentifier>{ec5efaea-93e7-44c7-90cd-7fb934feac0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Preferences\Gradient">
+      <UniqueIdentifier>{228777bf-2722-422b-a218-ad69220154a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Preferences\Density">
+      <UniqueIdentifier>{09dca4f8-3d21-4a6b-8771-e031ee825411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs">
+      <UniqueIdentifier>{2e253773-0c6c-4806-9028-639eadc32fab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Diffusion List">
+      <UniqueIdentifier>{6826aded-b839-430f-9f29-259ceb1870cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GIS">
+      <UniqueIdentifier>{2b3c63dd-0329-492e-aa43-81830d8e69f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GIS\Terrain Profiler">
+      <UniqueIdentifier>{ded03fb5-1f11-40d0-afb2-cace045e02a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{42ff555e-934d-4edc-bbdd-80d6371105c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Logger.cpp">
+      <Filter>Source Files\stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp">
+      <Filter>Source Files\stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp">
+      <Filter>Source Files\stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ExtensionsPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InfoPanel_ABC.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Panels.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\EntityListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\EntitySearchBox_ABC.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\EntitySearchItem.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantList.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligenceList.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligenceListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectList.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationList.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DecimalSpinBox.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DisplayBuilder.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ElevationExtrema.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ElevationPainter.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InternalLinks.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ListItemToolTip.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichListItem.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ValuedListItem.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GroupDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LabelDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ListItemDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\NoLinkDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SpinBoxDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SubItemDisplayer.cpp">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\EditorFactory.cpp">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesPanel.cpp">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesTable.cpp">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesWidget.cpp">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyTableItem.cpp">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TableItemDisplayer.cpp">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GQ_Plot.cpp">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GQ_PlotAxis.cpp">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GQ_PlotData.cpp">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GQ_PlotDataBBox.cpp">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\EntitySymbols.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GlTooltip.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\IconLayout.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Layer_ABC.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\MapLayerProxy.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SetGlOptions.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SymbolIcon.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SymbolIcons.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\AgentsLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\AutomatsLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ContourLinesLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DefaultLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawerLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Elevation2dLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Elevation3dLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\EntityLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\FormationLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GridLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligencesLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LogoLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\MetricsLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectsLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ParametersLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationsLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RasterLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TacticalLinesLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TooltipsLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\WatershedLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\WeatherLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SimpleFilter.cpp">
+      <Filter>Source Files\gl\Layers\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanFilter.cpp">
+      <Filter>Source Files\gl\Layers\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\MiniView.cpp">
+      <Filter>Source Files\gl\Miniview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\MiniViews.cpp">
+      <Filter>Source Files\gl\Miniview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SmartGridWidget.cpp">
+      <Filter>Source Files\gl\Miniview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DirectionWidget.cpp">
+      <Filter>Source Files\gl\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\FixedLightWidget.cpp">
+      <Filter>Source Files\gl\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LightingProxy.cpp">
+      <Filter>Source Files\gl\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CircularEventStrategy.cpp">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ColorStrategy.cpp">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CursorStrategy.cpp">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ExclusiveEventStrategy.cpp">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\HighlightColorModifier.cpp">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SelectionColorModifier.cpp">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DisplayToolbar.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GL3DWidget.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GlPlaceHolder.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GlProxy.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GlSelector.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GlToolsBase.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GLWidget.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Viewport2d.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Viewport3d.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GLSymbols.cpp">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SvglProxy.cpp">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SvglRenderer.cpp">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TacticalGraphics.cpp">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CompositionPass.cpp">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\IconsRenderPass.cpp">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LayersRenderPass.cpp">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\MiniViewsRenderPass.cpp">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TextureRenderPass.cpp">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainPicker.cpp">
+      <Filter>Source Files\gl\Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LoadableCheckBox.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LoadableComboBox.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LoadableField.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LoadableLineEdit.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LoadableSpinBox.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LoadableTimeEdit.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectAttributePrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectAttributePrototypeContainer.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectAttributePrototypeFactory.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectPrototypeLoader_ABC.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectPrototypeShapeFileLoader.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ActivityTimePrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\AltitudeModifierPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\BypassPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ConstructionPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CrossingSitePrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DelayPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\FirePropagationModifierPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\FirePrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\FloodPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InputPropagationPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LodgingPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LogisticPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\MedicalTreatmentPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\MinePrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\NBCPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObstaclePrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ResourceNetworkPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\StockPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SupplyRoutePrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UndergroundPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitListView.cpp">
+      <Filter>Source Files\Creation\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitPreviewIcon.cpp">
+      <Filter>Source Files\Creation\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitsPanel.cpp">
+      <Filter>Source Files\Creation\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligencesPanel.cpp">
+      <Filter>Source Files\Creation\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\NatureSelectionWidget.cpp">
+      <Filter>Source Files\Creation\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawerShape.cpp">
+      <Filter>Source Files\Creation\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Drawing_ABC.cpp">
+      <Filter>Source Files\Creation\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SvgLocationDrawer.cpp">
+      <Filter>Source Files\Creation\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawerFactory.cpp">
+      <Filter>Source Files\Creation\Drawings\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawerModel.cpp">
+      <Filter>Source Files\Creation\Drawings\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawingCategory.cpp">
+      <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawingTemplate.cpp">
+      <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawingTypes.cpp">
+      <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawerPanel.cpp">
+      <Filter>Source Files\Creation\Drawings\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawingCategoryItem.cpp">
+      <Filter>Source Files\Creation\Drawings\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DrawingPositions.cpp">
+      <Filter>Source Files\Creation\Drawings\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainObjectProxy.cpp">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Architecture.cpp">
+      <Filter>Source Files\Creation\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Usages.cpp">
+      <Filter>Source Files\Creation\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationsPanel.cpp">
+      <Filter>Source Files\Creation\Crowds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationTypesListView.cpp">
+      <Filter>Source Files\Creation\Crowds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\WeatherListView.cpp">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\WeatherPanel.cpp">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\WeatherWidget.cpp">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LocationCreator.cpp">
+      <Filter>Source Files\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LocationEditorBox.cpp">
+      <Filter>Source Files\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LocationEditorToolbar.cpp">
+      <Filter>Source Files\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LocationParsers.cpp">
+      <Filter>Source Files\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LocationsLayer.cpp">
+      <Filter>Source Files\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ShapeHandler_ABC.cpp">
+      <Filter>Source Files\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\FeatureNameParser.cpp">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainFeatureSearcher.cpp">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UtmParser.cpp">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Wgs84DdParser.cpp">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Wgs84DmsParser.cpp">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\XyParser.cpp">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\BooleanOptionButton.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ButtonGroup.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CheckBox.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ColorButton.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GraphicPreferences.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\OptionMenu.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PreferencesDialog.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PreferencesList.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PresetDialog.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Settings.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SizeButton.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainPreference.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CoordinateSystemsPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ElevationPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GraphicsPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LayersPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LightingPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\OptionsPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PreferencePanel_ABC.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\VisualisationScalesPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GradientButton.cpp">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GradientItem.cpp">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GradientPreferences.cpp">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GradientWidget.cpp">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DensityWidget.cpp">
+      <Filter>Source Files\Preferences\Density</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\AboutDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiplomacyCell.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiplomacyDialog_ABC.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ResourceLinksDialog_ABC.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListDialog.cpp">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListFunctors.cpp">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListHierarchy.cpp">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListLineEdit.cpp">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GisToolbar.cpp">
+      <Filter>Source Files\GIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\VisionLine.cpp">
+      <Filter>Source Files\GIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainProfile.cpp">
+      <Filter>Source Files\GIS\Terrain Profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainProfiler.cpp">
+      <Filter>Source Files\GIS\Terrain Profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainProfilerLayer.cpp">
+      <Filter>Source Files\GIS\Terrain Profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.cpp">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ItemFactory_ABC.h">
+      <Filter>Source Files\stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\resources.h">
+      <Filter>Source Files\stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\InfoPanel_ABC.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PanelStack_ABC.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntitySearchBox.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntitySearchItem.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\InhabitantList.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\IntelligenceList.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectList.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationList.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DisplayBuilder.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ElevationExtrema.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ElevationPainter.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ExclusiveComboTableItem.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\InternalLinks.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ListItemToolTip.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ListView.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\MiscLayer.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Painter_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichListItem.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SpinTableItem.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Types.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ValuedDragObject.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GroupDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LabelDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ListDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ListItemDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\NoLinkDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SpinBoxDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SubItemDisplayer.h">
+      <Filter>Source Files\Tools\Displayers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EditorFactory.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesPanel.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyTableItem.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TableItemDisplayer.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GQ_PlotDataBBox.h">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GQ_ValueConvertor.h">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntitySymbols.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlTooltip.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\IconHandler_ABC.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\IconLayout.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Layer_ABC.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\MapLayerProxy.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SetGlOptions.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SymbolIcon.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\View_ABC.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ContourLinesLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DefaultLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Elevation2dLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Elevation3dLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntityLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GridLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\InhabitantLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\IntelligencesLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LogoLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\MetricsLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectsLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ParametersLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationsLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RasterLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TooltipsLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TooltipsLayer_ABC.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\WatershedLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\WeatherLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LayerFilter_ABC.h">
+      <Filter>Source Files\gl\Layers\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SimpleFilter.h">
+      <Filter>Source Files\gl\Layers\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanFilter.h">
+      <Filter>Source Files\gl\Layers\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\MiniView.h">
+      <Filter>Source Files\gl\Miniview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SmartGridWidget.h">
+      <Filter>Source Files\gl\Miniview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\CircularEventStrategy.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ColorEditor_ABC.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ColorModifier_ABC.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ColorStrategy.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ColorStrategy_ABC.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\CursorStrategy.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\CursorStrategy_ABC.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ExclusiveEventStrategy.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SelectionColorModifier.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DisplayToolbar.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GL3DWidget.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlPlaceHolder.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlProxy.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlToolsBase.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GLWidget.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Viewport2d.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Viewport3d.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GLSymbols.h">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SvglProxy.h">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SvglRenderer.h">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TacticalGraphics.h">
+      <Filter>Source Files\gl\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\CompositionPass.h">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlRenderPass_ABC.h">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\IconsRenderPass.h">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LayersRenderPass.h">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\MapWidget_ABC.h">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\MiniViewsRenderPass.h">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TextureRenderPass.h">
+      <Filter>Source Files\gl\passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LoadableCheckBox.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LoadableComboBox.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LoadableLineEdit.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LoadableSpinBox.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LoadableTimeEdit.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectAttributePrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectAttributePrototypeContainer.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectAttributePrototypeFactory.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectAttributePrototypeFactory_ABC.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectPrototypeLoader_ABC.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectPrototypeShapeFileLoader.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ActivityTimePrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\AltitudeModifierPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DelayPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FirePropagationModifierPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FirePrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FloodPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LodgingPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\MedicalTreatmentPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworkPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UndergroundPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitListView.h">
+      <Filter>Source Files\Creation\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawerShape.h">
+      <Filter>Source Files\Creation\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Drawing_ABC.h">
+      <Filter>Source Files\Creation\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SvgLocationDrawer.h">
+      <Filter>Source Files\Creation\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawerFactory.h">
+      <Filter>Source Files\Creation\Drawings\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawerModel.h">
+      <Filter>Source Files\Creation\Drawings\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawingFactory_ABC.h">
+      <Filter>Source Files\Creation\Drawings\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawingCategory.h">
+      <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawingTemplate.h">
+      <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawingTypes.h">
+      <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawingPositions.h">
+      <Filter>Source Files\Creation\Drawings\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ChangePopulationDisplay.h">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\HumanDefs.h">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainObjectProxy.h">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Architecture.h">
+      <Filter>Source Files\Creation\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Usages.h">
+      <Filter>Source Files\Creation\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\WeatherWidget.h">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LocationEditor_ABC.h">
+      <Filter>Source Files\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LocationParser_ABC.h">
+      <Filter>Source Files\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LocationParsers.h">
+      <Filter>Source Files\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LocationsLayer.h">
+      <Filter>Source Files\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ShapeHandler_ABC.h">
+      <Filter>Source Files\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FeatureNameParser.h">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainFeatureSearcher.h">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UtmParser.h">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Wgs84DdParser.h">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Wgs84DmsParser.h">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\XyParser.h">
+      <Filter>Source Files\Locations\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PreferencesList.h">
+      <Filter>Source Files\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Settings.h">
+      <Filter>Source Files\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainPreference.h">
+      <Filter>Source Files\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ToolListButton.h">
+      <Filter>Source Files\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PreferencePanel_ABC.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GradientItem.h">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GradientPreferences.h">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DiffusionListFunctors.h">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\VisionLine.h">
+      <Filter>Source Files\GIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainProfile.h">
+      <Filter>Source Files\GIS\Terrain Profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainProfilerLayer.h">
+      <Filter>Source Files\GIS\Terrain Profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.h">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
+      <Filter>Source Files\Lists</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">
+      <Filter>Source Files\Tools</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\EntityLayer.inl">
+      <Filter>Source Files\gl\Layers</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\NatureEditionCategory.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\NatureEditionWidget.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\Logger.h">
+      <Filter>Source Files\stuff</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\StatusBar.h">
+      <Filter>Source Files\stuff</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ExtensionsPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\Panels.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\EntityListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\EntitySearchBox_ABC.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\InhabitantListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\IntelligenceListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DecimalSpinBox.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichItemFactory.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichLabel.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ValuedComboBox.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertiesTable.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertiesWidget.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GQ_Plot.h">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GQ_PlotAxis.h">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GQ_PlotData.h">
+      <Filter>Source Files\Tools\Graphs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\SymbolIcons.h">
+      <Filter>Source Files\gl</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\AgentsLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\AutomatsLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DrawerLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\FormationLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\TacticalLinesLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\TerrainLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\MiniViews.h">
+      <Filter>Source Files\gl\Miniview</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DirectionWidget.h">
+      <Filter>Source Files\gl\lighting</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\FixedLightWidget.h">
+      <Filter>Source Files\gl\lighting</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LightingProxy.h">
+      <Filter>Source Files\gl\lighting</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\HighlightColorModifier.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GlSelector.h">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\TerrainPicker.h">
+      <Filter>Source Files\gl\Picking</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LoadableField.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\BypassPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ConstructionPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\CrossingSitePrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\InputPropagationPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LogisticPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\MinePrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\NBCPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ObstaclePrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\StockPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\SupplyRoutePrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\UnitPreviewIcon.h">
+      <Filter>Source Files\Creation\Units</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\UnitsPanel.h">
+      <Filter>Source Files\Creation\Units</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\IntelligencesPanel.h">
+      <Filter>Source Files\Creation\Intelligence</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\NatureSelectionWidget.h">
+      <Filter>Source Files\Creation\Intelligence</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DrawerPanel.h">
+      <Filter>Source Files\Creation\Drawings\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DrawingCategoryItem.h">
+      <Filter>Source Files\Creation\Drawings\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationsPanel.h">
+      <Filter>Source Files\Creation\Crowds</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationTypesListView.h">
+      <Filter>Source Files\Creation\Crowds</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\WeatherListView.h">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\WeatherPanel.h">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LocationCreator.h">
+      <Filter>Source Files\Locations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LocationEditorBox.h">
+      <Filter>Source Files\Locations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LocationEditorToolbar.h">
+      <Filter>Source Files\Locations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\BooleanOptionButton.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ButtonGroup.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\CheckBox.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ColorButton.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GraphicPreferences.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\OptionMenu.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PreferencesDialog.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PresetDialog.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\SizeButton.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\CoordinateSystemsPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ElevationPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GraphicsPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\InhabitantPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LayersPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\LightingPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\OptionsPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\VisualisationScalesPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GradientButton.h">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GradientWidget.h">
+      <Filter>Source Files\Preferences\Gradient</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DensityWidget.h">
+      <Filter>Source Files\Preferences\Density</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\AboutDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DiplomacyCell.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DiplomacyDialog_ABC.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ResourceLinksDialog_ABC.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListDialog.h">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListHierarchy.h">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListLineEdit.h">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\GisToolbar.h">
+      <Filter>Source Files\GIS</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\TerrainProfiler.h">
+      <Filter>Source Files\GIS\Terrain Profiler</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_es.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_fr.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_es.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_fr.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_sword_es.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_sword_fr.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_es.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_fr.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{62b2024a-37b7-4e2e-8e72-412d1a2b9735}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Types">
+      <UniqueIdentifier>{130aca89-29af-4629-9602-f512b577d615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dispatcher">
+      <UniqueIdentifier>{86f67fc3-af61-4812-b923-f6d0ce9d7d65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hla">
+      <UniqueIdentifier>{8a4d60d1-59da-45a0-96d1-cef62a6ce767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hla\Debug">
+      <UniqueIdentifier>{923c6901-da43-4a30-af80-f7c69a92e5da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{107e8290-12d2-4d27-8b26-339c1ca05dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes">
+      <UniqueIdentifier>{c5cfae1e-05cf-4a0e-9649-ec26fce14638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interactions">
+      <UniqueIdentifier>{105e53cd-1abd-4556-9c60-3f29721e4bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\netn">
+      <UniqueIdentifier>{b796bfa7-c3c2-4b03-a92b-37d1cedfae60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\rpr">
+      <UniqueIdentifier>{6220bd71-764b-454f-bb02-6d70e3324cb0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateMarking.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Dimension.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Formation.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AgentController.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AgentProxy.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Stepper.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Federate.cpp">
+      <Filter>Source Files\Hla</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FederateAmbassadorFactory.cpp">
+      <Filter>Source Files\Hla</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FederateFacade.cpp">
+      <Filter>Source Files\Hla</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RtiAmbassadorFactory.cpp">
+      <Filter>Source Files\Hla</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassador.cpp">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassadorFactory.cpp">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassador.cpp">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassadorFactory.cpp">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectResolver.cpp">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesSerializer.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp">
+      <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateFactory.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPlugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateMarking.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Dimension.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Formation.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Agent_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentController.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentListener_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentProxy.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentSubject_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Stepper.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Federate.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Federate_ABC.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateAmbassadorFactory.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateAmbassadorFactory_ABC.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateFacade.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RtiAmbassadorFactory.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RtiAmbassadorFactory_ABC.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassador.h">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassadorFactory.h">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassador.h">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassadorFactory.h">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectResolver.h">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectResolver_ABC.h">
+      <Filter>Source Files\Hla\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesSerializer.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SerializationTools.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionDetonation.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntity.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Aggregate_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <CurrentPlatform>vc$(PlatformToolsetVersion)</CurrentPlatform>
+    <RunDir>$(SolutionDir)..\..\run\$(CurrentPlatform)\</RunDir>
+    <LibDir>..\..\lib\$(CurrentPlatform)</LibDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ExecutablePath>..\..\bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="CurrentPlatform">
+      <Value>$(CurrentPlatform)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="RunDir">
+      <Value>$(RunDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="LibDir">
+      <Value>$(LibDir)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

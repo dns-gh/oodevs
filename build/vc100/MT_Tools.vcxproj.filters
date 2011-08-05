@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f12f44dc-dbab-43fc-8dad-99871874e75a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Function Interpolation">
+      <UniqueIdentifier>{12df9a0a-5fd5-4449-98d2-d38e49aa5933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Random">
+      <UniqueIdentifier>{b7aded0d-7237-4d14-9028-f88c4f169210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Error Manager">
+      <UniqueIdentifier>{0ab8c4a0-b87e-4ea0-a267-44739f8d9c1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{04a90555-981f-4dec-8826-fb7c7f507f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Role">
+      <UniqueIdentifier>{bc6da0b5-8799-472c-8452-244fe3d369d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Time">
+      <UniqueIdentifier>{892a4b53-8974-4f39-8216-92e3300c51e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logger">
+      <UniqueIdentifier>{b4acdb87-13ef-4ee1-90c0-0938c360b8a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Assert.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Converter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FormatString.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Profiler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Scipio_enum.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Shared.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Stl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_String.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Tools_Types.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Version.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ConstantInterpolation.h">
+      <Filter>Source Files\Function Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_InterpolatedFunction.h">
+      <Filter>Source Files\Function Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_LinearInterpolation.h">
+      <Filter>Source Files\Function Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.h">
+      <Filter>Source Files\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Random.h">
+      <Filter>Source Files\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.h">
+      <Filter>Source Files\Error Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ScipioException.h">
+      <Filter>Source Files\Error Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Circle.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Droite.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Ellipse.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Line.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Polyline.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Rect.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_triangle.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Vector2D.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\Mt_Vector2DTypes.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Vector3D.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\AlgorithmModifier_ABC.h">
+      <Filter>Source Files\Role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\Role_ABC.h">
+      <Filter>Source Files\Role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\RoleContainer.h">
+      <Filter>Source Files\Role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Timer_ABC.h">
+      <Filter>Source Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_TimerManager.h">
+      <Filter>Source Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ConsoleLogger.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FileLogger.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Logger.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Logger_ABC.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_LogManager.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Converter.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Profiler.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Random.inl">
+      <Filter>Source Files\Random</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_ScipioException.inl">
+      <Filter>Source Files\Error Manager</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Circle.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Droite.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Ellipse.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Line.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Polyline.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Rect.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Sector.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_triangle.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Vector2D.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Vector3D.inl">
+      <Filter>Source Files\Geometry</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\RoleContainer.inl">
+      <Filter>Source Files\Role</Filter>
+    </None>
+    <None Include="..\..\src\libraries\MT_Tools\MT_LogManager.inl">
+      <Filter>Source Files\Logger</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_FormatString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Profiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.cpp">
+      <Filter>Source Files\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Random.cpp">
+      <Filter>Source Files\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.cpp">
+      <Filter>Source Files\Error Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_ScipioException.cpp">
+      <Filter>Source Files\Error Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Circle.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Droite.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Ellipse.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Line.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Polyline.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Rect.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Sector.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_triangle.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Vector2D.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Timer_ABC.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_TimerManager.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_ConsoleLogger.cpp">
+      <Filter>Source Files\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_FileLogger.cpp">
+      <Filter>Source Files\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Logger_ABC.cpp">
+      <Filter>Source Files\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_LogManager.cpp">
+      <Filter>Source Files\Logger</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

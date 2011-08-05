@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2b64961e-3e96-4f47-8b14-b356ca09de0a}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Scheduling">
+      <UniqueIdentifier>{dfee11da-b06b-41d7-8b57-0278b430f2e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Loggers">
+      <UniqueIdentifier>{cb337ef8-0355-4402-bf16-8692ad5796ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Automat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Exercise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Facade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\FilterFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\mission_tester_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\ParameterFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Timeout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Filter.cpp">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Scheduler.cpp">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\SchedulerFactory.cpp">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\ConsoleLogger.cpp">
+      <Filter>Source Files\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\CSVFileLogger.cpp">
+      <Filter>Source Files\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\FileLogger.cpp">
+      <Filter>Source Files\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Logger.cpp">
+      <Filter>Source Files\Loggers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Agent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Automat.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Client.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Entity.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Exercise.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Facade.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\FilterFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\FilterFactory_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\MainFactory_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\mission_tester_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Model.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\ParameterFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Timeout.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Filter.h">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Filter_ABC.h">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Schedulable_ABC.h">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Scheduler.h">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Scheduler_ABC.h">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\SchedulerFactory.h">
+      <Filter>Source Files\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\ConsoleLogger.h">
+      <Filter>Source Files\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\CSVFileLogger.h">
+      <Filter>Source Files\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\FileLogger.h">
+      <Filter>Source Files\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Listener_ABC.h">
+      <Filter>Source Files\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Logger.h">
+      <Filter>Source Files\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Logger_ABC.h">
+      <Filter>Source Files\Loggers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

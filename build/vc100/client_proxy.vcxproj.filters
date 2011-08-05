@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e0c655fa-71c3-4600-abf9-cd267e464c0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\internal">
+      <UniqueIdentifier>{c8803c4c-f11b-4e3c-af97-6965a3f0f355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\facade">
+      <UniqueIdentifier>{ae04f0fb-de90-43b0-a42a-6a6bb9bd1b2f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\client_proxy\client_proxy_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\client_proxy\ConnectionHandlerProxy.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\client_proxy\MessageSender.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\client_proxy\SwordClient.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\client_proxy\SwordProxy.cpp">
+      <Filter>Source Files\facade</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\client_proxy\client_proxy_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\client_proxy\ConnectionHandlerProxy.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\client_proxy\MessageSender.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\client_proxy\SwordClient.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\client_proxy\SwordConnectionHandler_ABC.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\client_proxy\SwordMessageHandler_ABC.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\client_proxy\SwordMessagePublisher_ABC.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\client_proxy\SwordProxy.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

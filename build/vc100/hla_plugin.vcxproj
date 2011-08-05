@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2DBD11A9-A85B-4CB3-99A1-364B2E93E4B5}</ProjectGuid>
+    <RootNamespace>hla_plugin</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaPlugin.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateMarking.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Dimension.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AgentController.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AgentProxy.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Stepper.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Federate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FederateAmbassadorFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FederateFacade.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RtiAmbassadorFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassador.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassadorFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassador.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassadorFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Aggregate_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPlugin.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateMarking.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Dimension.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Formation.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Agent_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentController.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentProxy.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentSubject_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Stepper.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Federate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Federate_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateAmbassadorFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateFacade.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RtiAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RtiAmbassadorFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassador.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugFederateAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassador.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DebugRtiAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectResolver.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SerializationTools.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntity.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionDetonation.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_kernel.vcxproj">
+      <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="rpr.vcxproj">
+      <Project>{70a0412c-1716-4034-bf76-39f8dd7d817f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,1732 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{725898A0-58C0-4DD2-9215-CB0A66DF1980}</ProjectGuid>
+    <RootNamespace>simulation_kernel</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_AgentServer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_AS_MOSServerMsgMgr.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Network\NET_Publisher_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_ASN_Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\MIL_Entity_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\MIL_EntityManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\MIL_EntityManager_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\MIL_EntityManagerStaticMethods.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MissionController.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\AgentFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\AlgorithmsFactories.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_Agent_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentPion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\PHY_Speeds.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\PHY_UnitType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\radars\PHY_RadarClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\radars\PHY_RadarType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_NatureAtlas.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_NatureLevel.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_Protection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Categories\PHY_RoePopulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_Volume.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultComponentFunctorComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultComponentLendedFunctorComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\OnComponentFunctorComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\OnComponentLendedFunctorComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteState.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteType_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypeObjectData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypePion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_Breakdown.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_BreakdownType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_LogisticLevel.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_MaintenanceLevel.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Logistic\PHY_MaintenanceWorkRate.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_Weapon.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_AttritionData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_LauncherType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_WeaponDataType_DirectFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_WeaponDataType_IndirectFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_WeaponType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\postures\PHY_Posture.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_Sensor.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorTypeAgent.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorTypeObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorTypeObjectData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_Human.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumansComposante.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumanStateHelper.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanRank.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanWound.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Experience.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\HumanFactors\PHY_HumanFactor.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Morale.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\HumanFactors\PHY_Stress.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Contamination.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Fire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_MentalDisease.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_NBC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Poison.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentInjuredHumanPion.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentTypeInjuredHumanPion.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateInjuredHuman.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateTypeInjuredHuman.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_Dotation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationGroupContainer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationLogisticType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationNature.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_AmmoDotationClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectMineFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationCategory_IndirectObjectCreationFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectWeatherFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_IndirectFireDotationClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_ConsumptionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationConsumption.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationConsumptions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationStock.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationStockContainer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Composantes\PHY_ActiveProtection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentType_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentTypePion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultHumanLoadingTimeComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultLoadedStateConsistencyComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultMagicMoveComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultMaxSlopeComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultMoveComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultSpeedComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultTransportCapacityComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultTransportPermissionComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultTransportWeightComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\LoadingComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MoveComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\moving\PHY_ActionMove.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\moving\PHY_RoleAction_Moving.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\SpeedComputerStrategy.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\TransportNotificationHandler_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\flying\PHY_ActionFly.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\flying\PHY_RoleAction_Flying.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\flying\PHY_RoleAction_InterfaceFlying.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\PHY_FireResults_Pion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\ComposantesAbleToBeFiredComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultComposantesAbleToBeFiredComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultWeaponAvailabilityComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultWeaponReloadingComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_ActionControlZone.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_DirectFireData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_RoleAction_DirectFiring.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponReloadingComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePion_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePionOnMajorComposantes.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePionUsingOnlyCarrier.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePionUsingOnlyLoadable.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePopulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_ActionIndirectFire_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_ActionIndirectFire_Knowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_ActionIndirectFire_Position.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_IndirectFireData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\IndirectFiring\PHY_MunitionForIndirectFireData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_RoleAction_IndirectFiring.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_SmokeData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\Illumination\PHY_ActionIllumination.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_ActionTransportLoad.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_ActionTransportUnload.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_RoleAction_Transport.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyLoad.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyUnload.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendCollectionComposantes.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendComposantes.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendHaulerComposantes.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\loading\PHY_ActionLoad.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\loading\PHY_ActionUnload.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\loading\PHY_RoleAction_Loading.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionInfluence.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionInfluenceInArea.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionTriggerActivity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionTriggerActivityInArea.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionUnloadActivity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_RoleAction_FolkInfluence.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionAnimateObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionBypassObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionConstructObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionDestroyObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDistributeObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionExtinguishObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionExtractFromStockObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionMineObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionOccupyObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionPrepareObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionResumeWorkObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionResumeWorkUrbanBlock.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionSupplyObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_RoleAction_Objects.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_RoleAction_Objects_CapabilityComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_RoleAction_Objects_DataComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_RoleAction_Objects_DataComputerPionData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Underground\PHY_ActionMoveUnderground.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Underground\PHY_RoleAction_MovingUnderground.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Population\PHY_RolePion_Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultHealComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\HealComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\humans\PHY_RolePion_Humans.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultDetectionComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultPerceptionDistanceComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DetectionComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\perception\PHY_RolePion_Perceiver.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\refugee\PHY_RolePion_Refugee.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\surrender\PHY_RolePion_Surrender.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RolePion_Reinforcement.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Conveyor.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Convoy_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_DotationConvoy.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Supply.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOG_Supply.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOGConvoy_Supply.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_StockConvoy.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyConsign_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequest.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequestContainer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationState.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyResourcesAlarms.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyState_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequest.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequestContainer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockState.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceComposanteState.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceConsign_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceRepairConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceResourcesAlarms.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceTransportConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOG_Maintenance.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalCollectionAmbulance.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalCollectionConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalConsign_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalEvacuationAmbulance.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalEvacuationConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalHealingConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalHumanState.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalResourcesAlarms.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalSortingConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOG_Medical.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RoleInterface_Composantes.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RolePion_Composantes.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\humanfactors\PHY_RolePion_HumanFactors.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\transported\PHY_RolePion_Transported.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\communications\PHY_RolePion_Communications.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\nbc\PHY_RolePion_NBC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultPostureComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\posture\PHY_RolePion_Posture.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\PostureComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\decision\DEC_RolePion_Decision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Decision\DEC_RolePion_Decision_2.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RoleInterface_Dotations.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RolePion_Dotations.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\ConsumptionComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultConsumptionComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultConsumptionModeChangeRequest.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultDotationComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DotationComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\dotations\PHY_RolePion_Dotations.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultLocationComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\LocationComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\location\PHY_RolePion_Location.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Protection\PHY_RolePion_ActiveProtection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Illumination\PHY_RolePion_Illumination.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\DefaultUrbanLocationComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\InsideUrbanBlockPosition.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\OutsideUrbanBlockPosition.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\PHY_RolePion_UrbanLocation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\UrbanLocationComputerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Terrain\PHY_RolePion_TerrainAnalysis.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_Perception_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionCoupDeSonde.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionLocalisation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoLocalisation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoObjects.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoPoint.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoSurveillance.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionRecoUrbanBlock.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionSurfaceAgent.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionSurfaceObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionView.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_ZOPerceptionComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_ZURBPerceptionComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionLevel.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRadar.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRadarData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionFlyingShell.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionAlat.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttributeFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_Object.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_Object_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFilter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectInteraction.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectLoader.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\Object.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectPrototype.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceTools.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanObjectWrapper.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ActivableCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AltitudeModifierCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttitudeModifierCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttritionCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AvoidanceCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BridgingCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BuildableCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnSurfaceCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BypassableCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CloudPropagationCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ConstructionCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ContaminationCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ControlZoneCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CrowdCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DecontaminationCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DelayCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DetectionCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ExtinguishableCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FirePropagationModifierCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FloodCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ImprovableCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InfrastructureCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfEquippedCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfHeightCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithEnemyCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InterferenceCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\IntoxicationCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_PropagationManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PoisoningCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationFilterCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ProtectionCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceNetworkCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ScatteringCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\StructuralCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SupplyCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TerrainHeuristicCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TimeLimitedCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UndergroundCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UniversalCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\WorkableCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AltitudeModifierAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AnimatorAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnSurfaceAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BypassAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ChildObjectAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ConstructionAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CrossingSiteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DelayAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DetectorAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FloodAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractionHeightAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MaterialAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalTreatmentAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MineAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCTypeAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObstacleAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\OccupantAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceNetworkAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\StockAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SupplyRouteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TimeLimitedAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UndergroundAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputToxicCloudAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurnEffectManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FireClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FloodEffectManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_MedicalTreatmentType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NBCType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ToxicEffectManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\alat\MIL_AgentTypePionALAT.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\rens\MIL_AgentTypePionRENS.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\asa\MIL_AgentTypePionASA.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\asa\MIL_AutomateTypeASA.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\nbc\MIL_AgentTypePionNBC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\LogisticHierarchy.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\LogisticLink.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AgentPionLOG_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AgentTypePionLOG_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AutomateLOG.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">false</PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='debug|win32'">false</PreprocessSuppressLineNumbers>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='debug|x64'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AutomateTypeLOG.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\ObjectLogisticHierarchy.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\ObjectLogisticLink.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\tc2\MIL_AgentPionLOGTC2.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\tc2\MIL_AgentTypePionLOGTC2.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\medical\MIL_AgentPionLOGMedical.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\medical\MIL_AgentTypePionLOGMedical.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\maintenance\MIL_AgentPionLOGMaintenance.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\maintenance\MIL_AgentTypePionLOGMaintenance.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\supply\MIL_AgentPionLOGSupply.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\supply\MIL_AgentTypePionLOGSupply.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\convoy\MIL_AgentPionLOGConvoy.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\convoy\MIL_AgentTypePionLOGConvoy.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\milice\MIL_AgentTypePionMILICE.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\refugie\MIL_AgentTypePionREFUGIE.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\refugie\MIL_AutomateTypeREFUGIE.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\specialisations\circulation\MIL_AgentTypePionCIRCULATION.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Asy\MIL_AgentTypePionASY.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\AutomateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\automates\DEC_AutomateDecision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_Automate.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\automates\MIL_AutomateType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\automates\MIL_DotationSupplyManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\automates\MIL_StockSupplyManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\DEC_PopulationDecision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\DEC_PopulationKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_ContaminationEffect.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_IntoxicationEffect.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationAttitude.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationConcentration.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationElement_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationFlow.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationHumans.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\PopulationFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_FireResults_Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionFireOnPion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionFireOnPions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMove.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionUrbanDestruction.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationPionAttritionData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_Action_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionInterrogate.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_Actor.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_DecisionCallbackAction_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_MovingEntity_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireDamages_Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireDamages_Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_Default.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderContext.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\orders\MIL_Fuseau.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaFunction.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaListParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TacticalLineManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrderType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionType_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderType_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderTypeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PionMissionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationMissionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateOrderManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderManager_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PionOrderManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationOrderManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMission.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMRT.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Mission_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PionMission.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationMission.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AgentKnowledgeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AgentParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AtlasNatureParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomatParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_BaseParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_BoolParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DateTimeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DirectionParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DotationTypeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EnumerationParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EquipmentTypeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ExternalIdentifierWrapper.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntegerParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ListParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LocationParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LogMaintenancePrioritiesParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LogMedicalPrioritiesParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionParameterFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_NullParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ObjectKnowledgeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ParameterType_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PathParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PlannedWorkParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PointParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PolygonParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationKnowledgeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_RealParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StringParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TirIndirectParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_UrbanBlockParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DirectFirePion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DirectFirePopulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_Explosion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_Fire_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_Fly.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_IndirectFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_KillOfficers.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_Move.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_PopulationFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_ScatterPopulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_Suicide.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_Weather.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_EffectManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\FormationFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\MIL_Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\ArmyFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\MIL_Army.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\InhabitantFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_Inhabitant.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_InhabitantSatisfactions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_LivingArea.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_LivingAreaBlock.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_Schedule.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_InhabitantType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KnowledgeSource_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\KnowledgeGroupFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\MIL_KnowledgeGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\MIL_KnowledgeGroupType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerceptionDataDetection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerceptionDataIdentification.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerceptionDataRecognition.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentDataDetection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentDataIdentification.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentDataRecognition.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentComposante.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_Object.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_ObjectCollision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_ObjectPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_ObjectMagicPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_RapFor_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_RapForLocal.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationConcentrationPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationFlowPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationConcentration.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationFlow.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationFlowPart.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationCollision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_Urban.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_UrbanPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_Army.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_ObjectKnowledgeSynthetizer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KS_UrbanKnowledgeSynthetizer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgeUrban.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_AgentPion.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_Fire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_ObjectInteraction.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_Perception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KS_PopulationInteraction.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeAgentPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgePopulationCollision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgePopulationPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeObjectCollision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeObjectPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgeUrbanPerception.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_Automate.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_KnowledgeGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KS_KnowledgeSynthetizer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_Sharing.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeAgent.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgePopulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\meteo\PHY_Ephemeride.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Meteo\PHY_GlobalMeteo.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Meteo\PHY_LocalMeteo.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionDataIterator.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\CheckPoints\MIL_CheckPointInArchive.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\checkpoints\MIL_CheckPointManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\CheckPoints\MIL_CheckPointOutArchive.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Singletons.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_AffinitiesMap.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Color.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\tools\MIL_Config.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_DictionaryExtensions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Geometry.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_IDManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Random.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\tools\MIL_Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Gen_Object.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Objective.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Representations.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ResourceNetwork.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Workspace.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathResult.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathSection_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathWalker.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathPoint.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint_Front.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint_Lima.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint_Special.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path_Channeler.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathfinderRule.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathSection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_Path.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathfinderRule.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathSection.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeAgent.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObjectBurnSurface.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObjectFlood.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgePopulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ActionFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_AgentFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_AutomateFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_CommunicationFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DIAFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DynamicFireFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FireFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FunctionsTools.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_IntelligenceFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeAgentFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeObjectFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgePopulationFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_LogisticFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MedicalTreatmentFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MiscFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ObjectFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_OrdersFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PerceptionFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PopulationFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ResourceNetworkFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TelepathyFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_UrbanObjectFunctions.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FrontAndBackLinesComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Model.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Model_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_AccomodationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_InfrastructureType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_MaterialCompositionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_ResourceNetworkType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tristate.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_AgentServer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NetworkBufferedPercentageValue.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_AS_MOSServerMsgMgr.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_Publisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_Simulation_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_ASN_Tools.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_Entity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\MIL_EntityManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_EntityManager_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_EntityManagerStaticMethods.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_EntityVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_VisitableEntity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MissionController.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MissionController_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\AgentFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\AgentFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\AlgorithmsFactories.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_Agent_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentPion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\PHY_Speeds.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\PHY_UnitType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\radars\PHY_RadarClass.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\radars\PHY_RadarType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_NatureAtlas.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_NatureLevel.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_Protection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Categories\PHY_RoePopulation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\categories\PHY_Volume.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultComponentFunctorComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultComponentLendedFunctorComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentFunctor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentFunctorComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentFunctorComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentFunctorComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentLendedFunctorComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentLendedFunctorComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\OnComponentLendedFunctorComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_Composante_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteState.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteType_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypeObjectData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypePion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_Breakdown.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_BreakdownType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_LogisticLevel.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\logistic\PHY_MaintenanceLevel.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Logistic\PHY_MaintenanceWorkRate.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_Weapon.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_AttritionData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_LauncherType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_WeaponDataType_DirectFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_WeaponDataType_IndirectFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\weapons\PHY_WeaponType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\postures\PHY_Posture.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_Sensor.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorTypeAgent.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorTypeObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorTypeObjectData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\Human_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumansComposante_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_Human.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumansComposante.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumanStateHelper.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanRank.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanWound.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Experience.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\HumanFactors\PHY_HumanFactor.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Morale.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\HumanFactors\PHY_Stress.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Contamination.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Fire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_MentalDisease.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_NBC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Poison.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentInjuredHumanPion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentTypeInjuredHumanPion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateInjuredHuman.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateTypeInjuredHuman.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_Dotation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationGroup.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationGroupContainer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationLogisticType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationNature.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_AmmoDotationClass.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectMineFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationCategory_IndirectObjectCreationFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectWeatherFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_IndirectFireDotationClass.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_ConsumptionType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationConsumption.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationConsumptions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationStock.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationStockContainer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Composantes\PHY_ActiveProtection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentType_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentTypePion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultHumanLoadingTimeComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultLoadedStateConsistencyComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultMagicMoveComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultMaxSlopeComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultMoveComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultSpeedComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultTransportCapacityComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultTransportPermissionComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultTransportWeightComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\HumanLoadingTimeComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LoadedStateConsistencyComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LoadingComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LoadingComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MaxSlopeComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MoveComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MoveComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MoveComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ObjectCollisionNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\moving\PHY_ActionMove.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\moving\PHY_RoleAction_Moving.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\SpeedComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\SpeedComputerStrategy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\SpeedStrategy_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\SurrenderNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportPermissionComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportWeightComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\flying\PHY_ActionFly.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\flying\PHY_RoleAction_Flying.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\flying\PHY_RoleAction_InterfaceFlying.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\FireData_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\PHY_FireResults_Pion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ComposantesAbleToBeFiredComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ComposantesAbleToBeFiredComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ComposantesAbleToBeFiredComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultComposantesAbleToBeFiredComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultWeaponAvailabilityComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultWeaponReloadingComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_ActionControlZone.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_DirectFireData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_RoleAction_DirectFiring.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponReloadingComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponReloadingComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponReloadingComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePion_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePionOnMajorComposantes.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePionUsingOnlyCarrier.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePionUsingOnlyLoadable.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePopulation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_ActionIndirectFire_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_ActionIndirectFire_Knowledge.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_ActionIndirectFire_Position.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_IndirectFireData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\IndirectFiring\PHY_MunitionForIndirectFireData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_RoleAction_IndirectFiring.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\indirectfiring\PHY_SmokeData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\Illumination\PHY_ActionIllumination.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_ActionTransportLoad.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_ActionTransportUnload.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_RoleAction_Transport.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyLoad.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyUnload.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendCollectionComposantes.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendComposantes.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendHaulerComposantes.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LoadingChangeNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\loading\PHY_ActionLoad.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\loading\PHY_ActionUnload.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\loading\PHY_RoleAction_Loading.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionInfluence.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionInfluenceInArea.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionTriggerActivity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionTriggerActivityInArea.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_ActionUnloadActivity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Emergency\PHY_RoleAction_FolkInfluence.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\Operation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionAnimateObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionBypassObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionConstructObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionDestroyObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDistributeObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionExtinguishObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionExtractFromStockObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionMineObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionOccupyObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionPrepareObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_ActionResumeWorkObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionResumeWorkUrbanBlock.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionSupplyObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_RoleAction_Objects.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_RoleAction_Objects_CapabilityComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\objects\PHY_RoleAction_Objects_DataComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_RoleAction_Objects_DataComputerPionData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Underground\PHY_ActionMoveUnderground.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Underground\PHY_RoleAction_MovingUnderground.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Population\PHY_RoleInterface_Population.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Population\PHY_RolePion_Population.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultHealComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\HealComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\HealComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\HealComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\HumansActionsNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\HumansChangedNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\humans\PHY_RoleInterface_Humans.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\humans\PHY_RolePion_Humans.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultDetectionComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultPerceptionDistanceComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DetectionComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DetectionComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DetectionComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PerceptionDistanceComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\perception\PHY_RoleInterface_Perceiver.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\perception\PHY_RolePion_Perceiver.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\refugee\PHY_RoleInterface_Refugee.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\refugee\PHY_RolePion_Refugee.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\RefugeeActionsNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\surrender\PHY_RoleInterface_Surrender.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\surrender\PHY_RolePion_Surrender.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RoleInterface_Reinforcement.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RolePion_Reinforcement.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Conveyor.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Convoy_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_DotationConvoy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Supply.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOG_Supply.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOGConvoy_Supply.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_StockConvoy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyConsign_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequest.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequestContainer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationState.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyRequest_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyResourcesAlarms.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyState_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequest.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequestContainer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockState.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceComposanteState.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceConsign_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceRepairConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceResourcesAlarms.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceTransportConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Maintenance.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOG_Maintenance.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalCollectionAmbulance.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalCollectionConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalConsign_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalEvacuationAmbulance.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalEvacuationConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalHealingConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalHumanState.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalResourcesAlarms.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MedicalSortingConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Medical.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOG_Medical.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ComponentsChangedNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Composantes\PHY_ComposantePredicates.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RoleInterface_Composantes.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RolePion_Composantes.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\humanfactors\PHY_RoleInterface_HumanFactors.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\humanfactors\PHY_RolePion_HumanFactors.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\transported\PHY_RoleInterface_Transported.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\transported\PHY_RolePion_Transported.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportChangeNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\communications\PHY_RoleInterface_Communications.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\communications\PHY_RolePion_Communications.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\nbc\PHY_RoleInterface_NBC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\nbc\PHY_RolePion_NBC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultPostureComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\posture\PHY_RoleInterface_Posture.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\posture\PHY_RolePion_Posture.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PostureComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PostureComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PostureComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\decision\DEC_RolePion_Decision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RoleInterface_Dotations.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RolePion_Dotations.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\NetworkMessageSender_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\NetworkNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\NetworkUnitAttributesMessageSender_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\VisionConeNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ConsumeDotationNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ConsumptionChangeRequestHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ConsumptionComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ConsumptionComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ConsumptionComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ConsumptionModeChangeRequest_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultConsumptionComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultConsumptionModeChangeRequest.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultDotationComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DotationComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DotationComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DotationComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DotationsActionsNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\dotations\PHY_RoleInterface_Dotations.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\dotations\PHY_RolePion_Dotations.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultLocationComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LocationActionNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LocationComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LocationComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\LocationComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MovementHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\location\PHY_RoleInterface_Location.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\location\PHY_RolePion_Location.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Protection\PHY_RoleInterface_ActiveProtection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Protection\PHY_RolePion_ActiveProtection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Illumination\PHY_RoleInterface_Illumination.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Illumination\PHY_RolePion_Illumination.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DefaultUrbanLocationComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\InsideUrbanBlockPosition.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\OutsideUrbanBlockPosition.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\PHY_RoleInterface_UrbanLocation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\PHY_RolePion_UrbanLocation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Urban\UrbanBlockPosition_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\UrbanLocationComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\UrbanLocationComputerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\UrbanLocationComputerFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Terrain\PHY_RoleInterface_TerrainAnalysis.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Terrain\PHY_RolePion_TerrainAnalysis.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_Perception_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionCoupDeSonde.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionLocalisation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoLocalisation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoObjects.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoPoint.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRecoSurveillance.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionRecoUrbanBlock.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionSurfaceAgent.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionSurfaceObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionView.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionWithLocation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_ZOPerceptionComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_ZURBPerceptionComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionLevel.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRadar.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionRadarData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionFlyingShell.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\perceptions\PHY_PerceptionAlat.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttributeFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_InteractiveContainer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_Object.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_Object_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectBuilder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFilter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectInteraction.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectLoader.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectType_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectTypeHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_StructuralStateNotifier_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\Object.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectAttribute_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectCapacity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectComponentRegistry_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectPrototype.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceTools.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanObjectWrapper.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ActivableCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AltitudeModifierCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttitudeModifierCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttritionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AvoidanceCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BridgingCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BuildableCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnSurfaceCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BypassableCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CloudPropagationCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ConstructionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ContaminationCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ControlZoneCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CrowdCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DecontaminationCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DelayCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DetectionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ExtinguishableCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FirePropagationModifierCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FloodCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ImprovableCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InfrastructureCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfEquippedCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfHeightCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithEnemyCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InterferenceCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\IntoxicationCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_PropagationManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PoisoningCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationFilterCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PropagationCapacity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ProtectionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceNetworkCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ScatteringCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\StructuralCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SupplyCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TerrainHeuristicCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TimeLimitedCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UndergroundCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UniversalCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\WorkableCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AltitudeModifierAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AnimatorAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BurnSurfaceAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BypassAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ChildObjectAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ConstructionAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CrossingSiteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DelayAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DetectorAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FloodAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractionHeightAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MaterialAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalTreatmentAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MineAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCTypeAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObstacleAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\OccupantAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceNetworkAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\StockAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SupplyRouteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TimeLimitedAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ToxicAttribute_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UndergroundAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UpdatableAttribute_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputToxicCloudAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurnEffectManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FireClass.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FloodEffectManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_MedicalTreatmentType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NBCType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ToxicEffectManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\alat\MIL_AgentTypePionALAT.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\rens\MIL_AgentTypePionRENS.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\asa\MIL_AgentTypePionASA.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\asa\MIL_AutomateTypeASA.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\nbc\MIL_AgentTypePionNBC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\LogisticHierarchy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\LogisticHierarchy_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\LogisticHierarchyOwner_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\LogisticLink.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\LogisticLink_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AgentPionLOG_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AgentTypePionLOG_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AutomateLOG.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\MIL_AutomateTypeLOG.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\ObjectLogisticHierarchy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\ObjectLogisticLink.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\tc2\MIL_AgentPionLOGTC2.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\tc2\MIL_AgentTypePionLOGTC2.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\medical\MIL_AgentPionLOGMedical.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\medical\MIL_AgentTypePionLOGMedical.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\maintenance\MIL_AgentPionLOGMaintenance.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\maintenance\MIL_AgentTypePionLOGMaintenance.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\supply\MIL_AgentPionLOGSupply.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\supply\MIL_AgentTypePionLOGSupply.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\convoy\MIL_AgentPionLOGConvoy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\log\convoy\MIL_AgentTypePionLOGConvoy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\milice\MIL_AgentTypePionMILICE.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\refugie\MIL_AgentTypePionREFUGIE.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\refugie\MIL_AutomateTypeREFUGIE.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\specialisations\circulation\MIL_AgentTypePionCIRCULATION.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Asy\MIL_AgentTypePionASY.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\AutomateFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\AutomateFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\automates\DEC_AutomateDecision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\automates\MIL_Automate.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\automates\MIL_AutomateType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\automates\MIL_DotationSupplyManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\automates\MIL_StockSupplyManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\DEC_PopulationDecision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\DEC_PopulationKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_ContaminationEffect.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_IntoxicationEffect.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_Population.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationAttitude.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationConcentration.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationElement_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationFlow.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationHumans.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PopulationCollisionNotificationHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PopulationFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PopulationFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_FireResults_Population.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionFireOnPion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionFireOnPions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMove.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionUrbanDestruction.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationPionAttritionData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_PopulationType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_Action_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionInterrogate.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionLogistic.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_Actor.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_DecisionCallbackAction_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_MovingEntity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireDamages_Agent.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireDamages_Population.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_Default.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrder.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrdersVisitor_ABC.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderContext.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\orders\MIL_Fuseau.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaFunction.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaListParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TacticalLineManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrderType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionType_ABC.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderType_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderTypeParameter.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PionMissionType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationMissionType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateOrderManager.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderManager_ABC.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PionOrderManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationOrderManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMission.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMRT.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrder.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Mission_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionParameterVisitor_ABC.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PionMission.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationMission.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AgentKnowledgeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AgentParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AtlasNatureParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomatParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_BaseParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_BoolParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DateTimeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DirectionParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DotationTypeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EnumerationParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EquipmentTypeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ExternalIdentifierWrapper.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntegerParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ListParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LocationParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LogMaintenancePrioritiesParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LogMedicalPrioritiesParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionParameter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionParameterFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_NullParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ObjectKnowledgeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ParameterType_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PathParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PlannedWorkParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PointParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PolygonParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationKnowledgeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_RealParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StringParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TirIndirectParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_UrbanBlockParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DirectFirePion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DirectFirePopulation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_Explosion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_Fire_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_Fly.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_IndirectFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_KillOfficers.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_Move.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_PopulationFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_ScatterPopulation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_Suicide.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_Effect_Weather.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\effects\MIL_EffectManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\FormationFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\FormationFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_Formation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ArmyFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\ArmyFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\MIL_Army.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\MIL_Army_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\InhabitantFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\InhabitantFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_Inhabitant.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_InhabitantSatisfactions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_LivingArea.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_LivingArea_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_LivingAreaBlock.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_Schedule.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_Schedule_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Inhabitants\MIL_InhabitantType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KnowledgeSource_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\KnowledgeGroupFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\KnowledgeGroupFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\KnowledgeVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\MIL_KnowledgeGroup.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\MIL_KnowledgeGroupType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_Def.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\QueryValidity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerceptionDataDetection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerceptionDataIdentification.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentPerceptionDataRecognition.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_Agent.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentDataDetection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentDataIdentification.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentDataRecognition.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_AgentComposante.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_Object.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_ObjectCollision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_ObjectPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_IObjectAttributeProxy.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_ObjectAttributeProxy_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_ObjectAttributeProxyPassThrough.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_ObjectAttributeProxyRecon.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_ObjectMagicPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_RapFor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_Knowledge_RapForLocal.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationConcentrationPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationFlowPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_Population.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationConcentration.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationFlow.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationFlowPart.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationCollision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_Urban.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_UrbanPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_Army.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_ObjectKnowledgeSynthetizer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KS_UrbanKnowledgeSynthetizer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgeUrban.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_AgentPion.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_Fire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_ObjectInteraction.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_Perception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KS_PopulationInteraction.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeAgentPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgePopulationCollision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgePopulationPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeObjectCollision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeObjectPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_Automate.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoard_KnowledgeGroup.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KS_KnowledgeSynthetizer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_KS_Sharing.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\knowledge\DEC_BlackBoard_CanContainKnowledgeAgent.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_BlackBoard_CanContainKnowledgePopulation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\meteo\PHY_Ephemeride.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\PHY_GlobalMeteo.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\PHY_LocalMeteo.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionDataIterator.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\CheckPoints\MIL_CheckPointInArchive.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\checkpoints\MIL_CheckPointManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\CheckPoints\MIL_CheckPointOutArchive.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\CheckPoints\SerializationTools.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Singletons.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Time_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_AffinitiesMap.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Color.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\tools\MIL_Config.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_DictionaryExtensions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Geometry.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_IDManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\tools\MIL_Tools.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Gen_Object.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Objective.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Representations.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ResourceNetwork.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\decision\DEC_Tools.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\decision\DEC_Workspace.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathResult.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathSection_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathWalker.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathPoint.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint_Front.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint_Lima.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint_Special.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path_Channeler.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathfinderRule.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathSection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathClass.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_Path.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathfinderRule.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathSection.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeAgent.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\DEC_Path_KnowledgeObject_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObjectBurnSurface.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObjectFlood.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgePopulation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ActionFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_AgentFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_AutomateFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_CommunicationFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DIAFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DynamicFireFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FireFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FunctionsTools.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_IntelligenceFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeAgentFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeObjectFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgePopulationFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_LogisticFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MedicalTreatmentFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MiscFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ObjectFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_OrdersFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PerceptionFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PopulationFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ResourceNetworkFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TelepathyFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_UrbanObjectFunctions.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FrontAndBackLinesComputer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Model.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\decision\DEC_Model_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_AccomodationType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_InfrastructureType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_MaterialCompositionType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_ResourceNetworkType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypePion.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentTypePion.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyRequest_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RolePion_Composantes.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionWithLocation.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_Object_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionLogistic.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_DecisionCallbackAction_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_Ephemeride.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionData.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionDataIterator.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\tools\MIL_Config.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\MIL_Random.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\tools\MIL_Tools.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Gen_Object.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Objective.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\decision\DEC_Workspace.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathResult.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathSection_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathType.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathWalker.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathPoint.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_Path.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObject.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ActionFunctions.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeFunctions.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgePopulationFunctions.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MiscFunctions.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ObjectFunctions.inl" />
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_OrdersFunctions.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ENT.vcxproj">
+      <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="flood.vcxproj">
+      <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="meteo.vcxproj">
+      <Project>{b03a3fb8-fad3-4d51-96ba-91ff6b63ec1d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="resource_network.vcxproj">
+      <Project>{d347e92a-6823-4b4a-a092-a445e51835fb}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="simulation_terrain.vcxproj">
+      <Project>{6b144816-9773-40f9-ade6-0acbc2eae516}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{51bd29f2-0730-45a1-bb95-66de809ab6cd}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\mock">
+      <UniqueIdentifier>{7fcf3c61-2b69-4723-9e19-7a2a85fc3244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fixtures">
+      <UniqueIdentifier>{a91ed5f0-cc6f-4305-9dd9-c096763b0b05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityClassTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateMarkingTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\DimensionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgent.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgentSubject.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionHandler.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassador.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassadorFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h">
+      <Filter>Source Files\fixtures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\SerializationFixture.h">
+      <Filter>Source Files\fixtures</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

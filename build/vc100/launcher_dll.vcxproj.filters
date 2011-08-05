@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{042affe4-b3cf-401f-8fd6-57c96ebbb21d}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{201e2a91-1d2d-4745-9384-c9f00a9961d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Processes">
+      <UniqueIdentifier>{6cfc86f8-10b5-4617-9a15-8bf4c401f6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Notification">
+      <UniqueIdentifier>{81efbc56-4e91-4a3f-ac71-ecb252bcb72a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\launcher_dll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\launcher_dll_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\LauncherFacade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\Launcher.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\LauncherPublisher.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\LauncherService.cpp">
+      <Filter>Source Files\Processes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\ProcessService.cpp">
+      <Filter>Source Files\Processes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\SwordFacade.cpp">
+      <Filter>Source Files\Processes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\CheckpointMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\ClientMessageHandlerBase.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\ConnectedProfilesMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\ControlInformationMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\NotificationMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\PauseResumeMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\StatusMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\DllConfig.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\launcher_dll_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\LauncherFacade.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\Launcher.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\Launcher_ABC.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\LauncherPublisher.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\LauncherService.h">
+      <Filter>Source Files\Processes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\ProcessService.h">
+      <Filter>Source Files\Processes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\SwordFacade.h">
+      <Filter>Source Files\Processes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\CheckpointMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\ClientMessageHandlerBase.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\ConnectedProfilesMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\ControlInformationMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\MessageHandler_ABC.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\NotificationMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\PauseResumeMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\StatusMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

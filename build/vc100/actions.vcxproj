@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F8EB9126-DA8E-4166-8D1D-4D0F76198A93}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\actions\Action_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ActionFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\actions_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ActionParameterFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Parameter_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ParameterList.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\AgentKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\AgentKnowledgeOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Army.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\AtlasNature.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Automat.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Bool.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Crowd.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\DateTime.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Direction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\DotationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\DotationTypeList.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\EngineerConstruction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Enumeration.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ExtensionList.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Identifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Inhabitant.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Karma.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\KnowledgeGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Level.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Lima.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\LimaList.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Limit.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Location.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\LocationBase.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\MaintenancePriorities.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\MedicalPriorities.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Numeric.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Objective.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ObjectKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ObjectKnowledgeOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ObstacleType.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Path.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\PathPoint.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Point.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Polygon.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\PopulationKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\PopulationKnowledgeOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Quantity.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ResourceNetwork.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\String.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\UrbanBlock.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ActionWithTarget_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\AgentMission.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\AutomatCreationListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\AutomatMission.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\FragOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Mission.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\PopulationMission.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\AutomatCreationMagicAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\EngageMagicAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\KnowledgeGroupMagicAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\MagicAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ObjectMagicAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\UnitMagicAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ActionTasker.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ActionTiming.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\actions\Action_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionFactory.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\actions_pch.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionsFilter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionsModel.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionParameterFactory.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Parameter.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Parameter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ParameterContainer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ParameterFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ParameterList.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ParameterVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Agent.h" />
+    <ClInclude Include="..\..\src\libraries\actions\AgentKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\actions\AgentKnowledgeOrder.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Army.h" />
+    <ClInclude Include="..\..\src\libraries\actions\AtlasNature.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Automat.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Bool.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Crowd.h" />
+    <ClInclude Include="..\..\src\libraries\actions\DateTime.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Direction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\DotationType.h" />
+    <ClInclude Include="..\..\src\libraries\actions\DotationTypeList.h" />
+    <ClInclude Include="..\..\src\libraries\actions\EngineerConstruction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Entity.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Enumeration.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ExtensionList.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Formation.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Identifier.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Inhabitant.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Karma.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Knowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\KnowledgeGroup.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Level.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Lima.h" />
+    <ClInclude Include="..\..\src\libraries\actions\LimaList.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Limit.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Location.h" />
+    <ClInclude Include="..\..\src\libraries\actions\LocationBase.h" />
+    <ClInclude Include="..\..\src\libraries\actions\MaintenancePriorities.h" />
+    <ClInclude Include="..\..\src\libraries\actions\MedicalPriorities.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Numeric.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Objective.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ObjectKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ObjectKnowledgeOrder.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ObstacleType.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Path.h" />
+    <ClInclude Include="..\..\src\libraries\actions\PathPoint.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Point.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Polygon.h" />
+    <ClInclude Include="..\..\src\libraries\actions\PopulationKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\actions\PopulationKnowledgeOrder.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Quantity.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ResourceNetwork.h" />
+    <ClInclude Include="..\..\src\libraries\actions\String.h" />
+    <ClInclude Include="..\..\src\libraries\actions\UrbanBlock.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionWithTarget_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\AgentMission.h" />
+    <ClInclude Include="..\..\src\libraries\actions\AutomatCreationListener.h" />
+    <ClInclude Include="..\..\src\libraries\actions\AutomatMission.h" />
+    <ClInclude Include="..\..\src\libraries\actions\CreationListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\actions\FragOrder.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Mission.h" />
+    <ClInclude Include="..\..\src\libraries\actions\PopulationMission.h" />
+    <ClInclude Include="..\..\src\libraries\actions\AutomatCreationMagicAction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\EngageMagicAction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\KnowledgeGroupMagicAction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\MagicAction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ObjectMagicAction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\UnitMagicAction.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionTasker.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ActionTiming.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\actions\Parameter.inl" />
+    <None Include="..\..\src\libraries\actions\Knowledge_ABC.inl" />
+    <None Include="..\..\src\libraries\actions\actions_es.ts" />
+    <None Include="..\..\src\libraries\actions\actions_fr.ts" />
+    <CustomBuild Include="..\..\src\libraries\actions\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_kernel.vcxproj">
+      <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

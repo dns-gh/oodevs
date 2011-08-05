@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{87EDA2F3-CD3B-4878-951C-F221ACB635AB}</ProjectGuid>
+    <RootNamespace>clients_kernel</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ApproximativeMap.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AtlasNature.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AtlasNatures.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CoordinateConverter.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CoordinateSystems.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMap.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\objecticons.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Styles.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Circle.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Lines.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\LocationProxy.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Path.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Point.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Polygon.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Rectangle.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\LocationProximityComputer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SimpleLocationDrawer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AccommodationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AccommodationTypes.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentComposition.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentNature.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentTypes.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AutomatComposition.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AutomatType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\BreakdownOriginType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\BreakdownType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ComponentType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DotationCapacityType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DotationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EquipmentType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FacadeType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FireClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\InfrastructureType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\InhabitantType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\KnowledgeGroupType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ModelLoaded.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\NBCAgent.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\NBCTypeAgent.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectTypes.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ResourceNetworkType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\RoofShapeType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SensorType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\VolumeType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\WeaponSystemType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolCase.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolRule.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DecisionalModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FragOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Mission.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MissionFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FragOrderType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MagicActionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MissionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OrderParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OrderParameterValue.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OrderType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AttributeType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryEntryType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EntryLabelType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ExtensionDependency.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ExtensionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ExtensionTypes.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ActionController.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Controller.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Controllers.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ContextMenu.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ResourceNetworkSelectionObserver.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TeamSelectionObserver.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FourStateOption.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Options.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OptionVariant.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TristateOption.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Displayer_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Formatter.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Logger_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\NullDisplayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Viewport_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Drawer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\StockAttribute_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Agent_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentKnowledge_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Automat_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Entity_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Formation_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Inhabitant_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\KnowledgeGroup_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Object_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectKnowledge_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLine_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Team_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Population_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationConcentration_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\App6Symbol.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ApproximativeMap.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AtlasNature.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AtlasNatures.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CoordinateConverter.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CoordinateConverter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CoordinateSystems.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMap.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Iterator.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\objecticons.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OptionalValue.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Resolver2.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResolverAdapter.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SafePointer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Settings_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StrongType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Styles.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Circle.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Lines.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Location_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationProxy.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Path.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Point.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Polygon.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Rectangle.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationDrawer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationProximityComputer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleLocationDrawer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AccommodationType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AccommodationTypes.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentComposition.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentNature.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentTypes.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AutomatComposition.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AutomatType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\BreakdownOriginType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\BreakdownType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ComponentType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DotationCapacityType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DotationType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EquipmentType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FacadeType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FireClass.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\InfrastructureType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\InhabitantType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroupType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModelLoaded.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\NBCAgent.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\NBCTypeAgent.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectTypes.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetworkType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\RoofShapeType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SensorType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\VolumeType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\WeaponSystemType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolCase.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolFactory.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolRule.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DecisionalModel.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FragOrder.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Mission.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MissionFactory.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FragOrderType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MagicActionType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MissionType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OrderParameter.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OrderParameterValue.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OrderType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AttributeType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryEntryType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntryLabelType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionDependency.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionTypes.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h" />
+    <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Controller.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Controllers.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ActivationObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ContextMenu.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ContextMenuObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ControllerObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ElementObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Observer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SelectionObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetworkSelectionObserver.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TeamSelectionObserver.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModelVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FourStateOption.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Options.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OptionsObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OptionVariant.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TristateOption.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Displayer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Formatter.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GLToolColors.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GlTools_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GlTooltip_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Logger_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\NullDisplayer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Viewport_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentKnowledgeConverter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Drawer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\InstanciationComplete.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Model_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectKnowledgeConverter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Profile_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Time_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentExtensions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Aggregatable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Color_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Creatable.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Diplomacies_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Displayable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Dotations_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Drawable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Extension_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Hierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Infrastructure_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LivingArea_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LivingAreaVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Moveable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectExtensions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Pickable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Positions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetwork_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Serializable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StockAttribute_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanExtensions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanSelection_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Agent_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentKnowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Automat_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Entity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityImplementation.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Formation_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Inhabitant_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Knowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroup_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Object_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectKnowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLine_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Team_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Population_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationConcentration_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPart_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPrototype.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryUpdated.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ValueEditor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\Displayer_ABC.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\Creatable.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\EntityImplementation.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_es.ts" />
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_fr.ts" />
+    <CustomBuild Include="..\..\src\libraries\clients_kernel\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ENT.vcxproj">
+      <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

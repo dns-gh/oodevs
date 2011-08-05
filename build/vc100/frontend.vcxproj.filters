@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7d17316a-f935-42d4-af93-049ac675646f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{18b5cc52-194b-4052-9950-20f65e018f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\xml tools">
+      <UniqueIdentifier>{4b7db3a1-0dfa-49b2-9ed3-becaa34bf492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Process tools">
+      <UniqueIdentifier>{02e89704-8868-4e72-804c-ee2a8db2b0a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels">
+      <UniqueIdentifier>{02dd3800-31ed-4de3-baf9-689ffe735b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Plugins config">
+      <UniqueIdentifier>{50f9b0c9-268a-465a-ad30-bec5bc769a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Optional plugins">
+      <UniqueIdentifier>{686864fe-16ff-4857-b40b-bc095b432b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Launcher">
+      <UniqueIdentifier>{1e848835-a805-4ad7-b768-03a1cdb6d29b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Launcher\Handlers">
+      <UniqueIdentifier>{d58170b7-f891-4697-a6da-35f25c2405e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{6152bead-60de-4a62-93c0-6ddda0abe39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Exercises">
+      <UniqueIdentifier>{6d9c161d-b9cc-4e12-854a-cc38ce1a3495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Exercises\Filters">
+      <UniqueIdentifier>{59ddd8f7-5985-47f8-9304-1ef223cdc1d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Host">
+      <UniqueIdentifier>{e10458b9-2a6c-4d95-86e7-fc9295c8fc36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Profiles">
+      <UniqueIdentifier>{1fea94c5-d1b2-4194-9748-060b7dbaafdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{b4e40343-5819-4bf7-b513-a75d11a69d8b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\frontend\CommandLineTools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\frontend_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\commands.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\CreateExercise.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\CreateSession.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\CreateTerrain.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\EditExercise.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\ImportExercise.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\JoinAnalysis.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\JoinExercise.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\SpawnCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\StartAuthoring.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\StartDispatcher.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\StartEdxl.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\StartExercise.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\StartReplay.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\StartTerrainWorkshop.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\ConfigurationManipulator.cpp">
+      <Filter>Source Files\xml tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\XmlNode.cpp">
+      <Filter>Source Files\xml tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\ProcessList.cpp">
+      <Filter>Source Files\Process tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\ProcessWrapper.cpp">
+      <Filter>Source Files\Process tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\SimulationMonitor.cpp">
+      <Filter>Source Files\Process tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\CheckpointConfigPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\CheckpointList.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\ListViewHelper.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\AdvancedConfigPanel.cpp">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.cpp">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.cpp">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\SessionConfigPanel.cpp">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\CompositePluginConfig.cpp">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\PluginConfig.cpp">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\PluginConfigBuilder.cpp">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\PluginSetting.cpp">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\LauncherClient.cpp">
+      <Filter>Source Files\Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\LauncherPublisher.cpp">
+      <Filter>Source Files\Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\ResponseHandlerProxy.cpp">
+      <Filter>Source Files\Launcher\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\RemoteExercise.cpp">
+      <Filter>Source Files\Model\Exercises</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\LocalExerciseFilter.cpp">
+      <Filter>Source Files\Model\Exercises\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\RemoteHost.cpp">
+      <Filter>Source Files\Model\Host</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\Profile.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\frontend\CommandLineTools.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\frontend_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\commands.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\CreateExercise.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\CreateSession.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\CreateTerrain.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\EditExercise.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ImportExercise.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\JoinAnalysis.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\JoinExercise.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\Process_ABC.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\StartAuthoring.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\StartDispatcher.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\StartEdxl.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\StartExercise.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\StartTerrainWorkshop.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ConfigurationManipulator.h">
+      <Filter>Source Files\xml tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\XmlNode.h">
+      <Filter>Source Files\xml tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessList.h">
+      <Filter>Source Files\Process tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessObserver_ABC.h">
+      <Filter>Source Files\Process tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessWrapper.h">
+      <Filter>Source Files\Process tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\SimulationMonitor.h">
+      <Filter>Source Files\Process tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ListViewHelper.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\PluginConfig_ABC.h">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\CompositePluginConfig.h">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\PluginConfig.h">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\PluginConfigBuilder.h">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\PluginSettingVisitor_ABC.h">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\LauncherClient.h">
+      <Filter>Source Files\Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\LauncherPublisher.h">
+      <Filter>Source Files\Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ConnectionHandler_ABC.h">
+      <Filter>Source Files\Launcher\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ResponseHandler_ABC.h">
+      <Filter>Source Files\Launcher\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ResponseHandlerProxy.h">
+      <Filter>Source Files\Launcher\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\Exercise_ABC.h">
+      <Filter>Source Files\Model\Exercises</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ExerciseIdentifierFactory_ABC.h">
+      <Filter>Source Files\Model\Exercises</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\RemoteExercise.h">
+      <Filter>Source Files\Model\Exercises</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ExerciseFilter_ABC.h">
+      <Filter>Source Files\Model\Exercises\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\LocalExerciseFilter.h">
+      <Filter>Source Files\Model\Exercises\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\Host_ABC.h">
+      <Filter>Source Files\Model\Host</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\RemoteHost.h">
+      <Filter>Source Files\Model\Host</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\Profile.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\ProfileVisitor_ABC.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\frontend\frontend_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\frontend\frontend_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.h">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\src\libraries\frontend\SessionConfigPanel.h">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\frontend\SpawnCommand.h">
+      <Filter>Source Files\Commands</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\CheckpointConfigPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\CheckpointList.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.h">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\PluginSetting.h">
+      <Filter>Source Files\Panels\Optional plugins</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

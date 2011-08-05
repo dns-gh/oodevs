@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D30C8A0F-DD1B-4F0A-8812-BB46B222D853}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\gaming\gaming_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Borrowings.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Casualties.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Dotation.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DotationRequest.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Equipment.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Loan.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LocationPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Perception.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PerceptionMap.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Sector.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyAvailability.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Surface.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\SurfaceFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\VisionMap.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\WeatherModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AmmoEffect.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MSEllipse.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentServerMsgMgr.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Network.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Services.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AggregatedPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Color.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ConvexHulls.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FolkModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Model.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\StaticModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentFireResult.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentSelectionObserver.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Affinities.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentConvexHulls.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentDetections.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchiesCommunication.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Attributes.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Contaminations.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DebugPoints.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DecisionalStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Decisions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DictionaryExtensions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Dotations.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Equipments.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Explosions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\HierarchicExtension_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\HumanFactors.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Humans.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Lendings.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Lives.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectDetections.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Paths.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PcAttributes.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Reinforcements.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Reports.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Speeds.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Transports.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Troops.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\VisionCones.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Weapons.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Logistics.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MaintenanceStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MedicalStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MagicOrders.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MissionParameters.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledges.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupSelectionObserver.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Diplomacies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledgeConverter.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Team.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TeamFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TeamHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TeamsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TeamTacticalHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Lima.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Limit.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LimitsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLine_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLineFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLineHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLinePositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledgeConverter.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledgeFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledgePositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AvailableProfile.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Profile.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ProfileFilter.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Profiling.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Simulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationConcentration.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationDetections.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFireResult.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFlow.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationPartPositionsProxy.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationDecisions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationConcentrationKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFlowKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationKnowledgePositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationKnowledges.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledgeFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledgePositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledges.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectPerceptions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DirectFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Fire_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FireFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FireResultFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Fires.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FiresModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\IndirectFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Automat.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatDecisions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatLives.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatTacticalHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticLink.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticLinks.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Object.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ActivityTimeAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\BurnAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\BurnSurfaceAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\BypassAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ConstructionAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\CrossingSiteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DelayAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FireAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FloodAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LodgingAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MineAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\NBCAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectAttributesFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ObstacleAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\StockAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyRouteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ToxicCloudAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UndergroundAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticConsignFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogMaintenanceConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogMedicalConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogSupplyConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UserProfile.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UserProfileFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UserProfilesModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ActionPublisher.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ActionsScheduler.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Intelligence.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\IntelligenceFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\IntelligencesModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\EntityIntelligences.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\IntelligencePositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Drawing.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DrawingFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DrawingsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DrawingPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanBlockDetectionMap.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanKnowledgeFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanKnowledges.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanPerceptions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Architecture.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\InfrastructureAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\StructuralStateAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanColor.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Usages.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FormationHierarchy.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\FormationLives.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ResourceNetwork.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ResourceNetworkModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Inhabitant.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\InhabitantHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\InhabitantPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LivingArea.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ColorController.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogTools.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Command.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\CommandHandler.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\CommandPublisher.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\IndicatorRequest.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\IndicatorRequests.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AfterActionModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AfterActionFunction.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\AfterActionParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ReplayScore.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Score.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ScoreModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ScoreDefinition.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\ScoreDefinitions.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Note.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\NotesModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\MeteoModel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\VisionConesToggler.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Availability.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Borrowings.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Casualties.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Dotation.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DotationRequest.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Equipment.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Loan.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LocationPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Perception.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PerceptionMap.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Sector.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyAvailability.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Surface.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\SurfaceFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\VisionMap.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\WeatherModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AmmoEffect.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MSEllipse.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentServerMsgMgr.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Network.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Services.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AggregatedPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Color.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ConvexHulls.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FolkModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Lives_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Model.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\StaticModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Agent.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentFireResult.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentSelectionObserver.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentsModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Affinities.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AffinitiesVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentConvexHulls.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentDetections.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentHierarchiesCommunication.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Attributes.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Contaminations.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DebugPoints.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DecisionalStates.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Decisions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Decisions_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DictionaryExtensions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Dotations.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Equipments.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Explosions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\HierarchicExtension_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\HumanFactors.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Humans.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Lendings.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Lives.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectDetections.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Paths.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PcAttributes.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Reinforcements.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Reports.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Speeds.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Transports.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Troops.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\VisionCones.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Weapons.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Logistics.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MaintenanceStates.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MedicalStates.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyStates.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticConsigns.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MagicOrders.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MissionParameters.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledges.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroup.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupSelectionObserver.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupsModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Diplomacies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledgeConverter.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Team.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TeamFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TeamFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TeamHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TeamsModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TeamTacticalHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Lima.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Limit.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LimitsModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLine_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLineFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLineHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLinePositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgeConverter.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgeFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgeFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgePositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AvailableProfile.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Profile.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Profiling.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Simulation.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Population.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationConcentration.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationDetections.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFire.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFireResult.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFlow.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationPartPositionsProxy.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationDecisions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationConcentrationKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFlowKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledgeFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledgePositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledges.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationPartKnowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledgeFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledgePositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledges.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectPerceptions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DirectFire.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Fire_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FireFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FireResultFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Fires.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FiresModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\IndirectFire.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Automat.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatDecisions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatLives.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatTacticalHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticLink.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticLinks.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Object.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectsModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ActivityTimeAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\BurnAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\BurnSurfaceAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\BypassAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ConstructionAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\CrossingSiteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DelayAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FireAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FloodAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LodgingAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MineAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\NBCAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectAttributesFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ObstacleAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\StockAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyRouteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ToxicCloudAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UndergroundAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticConsignFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticConsignFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticsModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogMaintenanceConsign.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogMedicalConsign.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogSupplyConsign.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfile.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfileFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfileFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfilesModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ActionPublisher.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ActionsScheduler.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Intelligence.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\IntelligenceFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\IntelligencesModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\EntityIntelligences.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\IntelligencePositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Drawing.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DrawingFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DrawingsModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DrawingPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanBlockDetectionMap.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanKnowledgeFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanKnowledges.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanPerceptions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Architecture.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\InfrastructureAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\StructuralStateAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanColor.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Usages.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Formation.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FormationHierarchy.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\FormationLives.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ResourceNetwork.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ResourceNetworkModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Inhabitant.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\InhabitantHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\InhabitantPositions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LivingArea.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ColorController.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogTools.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Tools.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Command.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\CommandHandler.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\CommandHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\CommandPublisher.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\IndicatorDefinition_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\IndicatorRequest.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\IndicatorRequests.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AfterActionModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AfterActionFunction.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\AfterActionParameter.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ReplayScore.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Score.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ScoreModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ScoreDefinition.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ScoreDefinitions.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Note.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\NotesModel.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MeteoModel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\gaming\Sector.inl" />
+    <None Include="..\..\src\libraries\gaming\LogisticConsigns.inl" />
+    <None Include="..\..\src\libraries\gaming\gaming_es.ts" />
+    <None Include="..\..\src\libraries\gaming\gaming_fr.ts" />
+    <CustomBuild Include="..\..\src\libraries\gaming\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_gui.vcxproj">
+      <Project>{414655f4-84bf-4f22-9afb-855102f9cf2a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="flood.vcxproj">
+      <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="indicators.vcxproj">
+      <Project>{a95887c7-751e-43ea-b541-38b573587c7b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="meteo.vcxproj">
+      <Project>{b03a3fb8-fad3-4d51-96ba-91ff6b63ec1d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="reports.vcxproj">
+      <Project>{7a4771dc-54fd-4642-ac32-700b665df543}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

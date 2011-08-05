@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{944BB6C9-0F29-4E72-B8EF-962B25504B8C}</ProjectGuid>
+    <RootNamespace>simulation_app</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\application_debug.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\application_debug.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\application_release.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\application_release.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</IgnoreImportLibrary>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</IgnoreImportLibrary>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Template|x64'">../../out/vc$(PlatformToolsetVersion)_$(PlatformName)/$(Configuration)/applications/$(ProjectName)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Template|x64'">../../out/vc$(PlatformToolsetVersion)_$(PlatformName)/$(Configuration)/applications/$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <Midl>
+      <TypeLibraryName>../../out/vc100/$(Configuration)/applications/$(ProjectName)/$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>log4cxx.lib;graphics.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <StackReserveSize>15000000</StackReserveSize>
+      <LargeAddressAware>true</LargeAddressAware>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <Midl>
+      <TypeLibraryName>../../out/vc100/$(Configuration)/applications/$(ProjectName)/$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>log4cxx.lib;graphics.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <StackReserveSize>15000000</StackReserveSize>
+      <LargeAddressAware>true</LargeAddressAware>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <Midl>
+      <TypeLibraryName>../../out/vc100/$(Configuration)/applications/$(ProjectName)/$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>log4cxxd.lib;graphics_d.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName)_d.pdb</ProgramDatabaseFile>
+      <StackReserveSize>15000000</StackReserveSize>
+      <LargeAddressAware>true</LargeAddressAware>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <Midl>
+      <TypeLibraryName>../../out/vc100/$(Configuration)/applications/$(ProjectName)/$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>log4cxxd.lib;graphics_d.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName)_d.pdb</ProgramDatabaseFile>
+      <StackReserveSize>15000000</StackReserveSize>
+      <LargeAddressAware>true</LargeAddressAware>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\simulation_app\FileLoaderObserver.cpp" />
+    <ClCompile Include="..\..\src\applications\simulation_app\main.cpp" />
+    <ClCompile Include="..\..\src\applications\simulation_app\SIM_App.cpp" />
+    <ClCompile Include="..\..\src\applications\simulation_app\simulation_app_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\simulation_app\SIM_NetworkLogger.cpp" />
+    <ClCompile Include="..\..\src\applications\simulation_app\SIM_Dispatcher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\simulation_app\FileLoaderObserver.h" />
+    <ClInclude Include="..\..\src\applications\simulation_app\SIM_App.h" />
+    <ClInclude Include="..\..\src\applications\simulation_app\simulation_app_pch.h" />
+    <ClInclude Include="..\..\src\applications\simulation_app\resource.h" />
+    <ClInclude Include="..\..\src\applications\simulation_app\SIM_NetworkLogger.h" />
+    <ClInclude Include="..\..\src\applications\simulation_app\SIM_Dispatcher.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\applications\simulation_app\SIM_App.inl" />
+    <None Include="..\..\src\applications\simulation_app\res\sword-ot-blink.ico" />
+    <None Include="..\..\src\applications\simulation_app\res\sword-ot.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\applications\simulation_app\sim.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="dispatcher_dll.vcxproj">
+      <Project>{71063679-b378-45a9-87aa-5e15b358209f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="simulation_kernel.vcxproj">
+      <Project>{725898a0-58c0-4dd2-9215-cb0a66df1980}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="\sword\trunk\src\applications\simulation_app\sim.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

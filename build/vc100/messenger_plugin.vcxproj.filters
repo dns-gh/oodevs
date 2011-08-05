@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6994e737-e8b2-4742-b0dc-1b5cc4fce8bc}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{af84931b-6e1a-4c6e-a627-a963a8ca7f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Drawings">
+      <UniqueIdentifier>{72aab5c8-b725-4652-ba2e-0af5823a9492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Intelligences">
+      <UniqueIdentifier>{19456545-a215-42e5-a0e0-a70e206b22f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Tactical lines">
+      <UniqueIdentifier>{bd6f86a3-9ae9-4e5b-bb10-d90d2ff19885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Notes">
+      <UniqueIdentifier>{1afc7ebe-314f-4dd9-b4b8-75c9c5100c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Client objects">
+      <UniqueIdentifier>{7f226735-6acb-4dde-a89b-9f36ebf03eff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chat">
+      <UniqueIdentifier>{ac7b51f4-cddb-4780-b270-1a584b83c390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{75363aad-903d-4d82-89a1-e7da0804d86d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\messenger_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\MessengerPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\IdManager.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\Model.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\Drawing.cpp">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\DrawingProxy.cpp">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\DrawingsModel.cpp">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\Intelligence.cpp">
+      <Filter>Source Files\Model\Intelligences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\IntelligencesModel.cpp">
+      <Filter>Source Files\Model\Intelligences</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\Lima.cpp">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\Limit.cpp">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\TacticalLine_ABC.cpp">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\TacticalLinesModel.cpp">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\Note.cpp">
+      <Filter>Source Files\Model\Notes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\NotesModel.cpp">
+      <Filter>Source Files\Model\Notes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\ClientObject.cpp">
+      <Filter>Source Files\Model\Client objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\ClientObjectsModel.cpp">
+      <Filter>Source Files\Model\Client objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\Chat.cpp">
+      <Filter>Source Files\Chat</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\messenger_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\MessengerPlugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Entity_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\IdManager.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Model.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Drawing.h">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\DrawingProxy.h">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\DrawingsModel.h">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Intelligence.h">
+      <Filter>Source Files\Model\Intelligences</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\IntelligencesModel.h">
+      <Filter>Source Files\Model\Intelligences</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Lima.h">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Limit.h">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\TacticalLine_ABC.h">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\TacticalLinesModel.h">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Note.h">
+      <Filter>Source Files\Model\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\NotesModel.h">
+      <Filter>Source Files\Model\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\ClientObject.h">
+      <Filter>Source Files\Model\Client objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\ClientObjectProperty.h">
+      <Filter>Source Files\Model\Client objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\ClientObjectsModel.h">
+      <Filter>Source Files\Model\Client objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\Chat.h">
+      <Filter>Source Files\Chat</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\messenger_plugin\messenger_plugin_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\messenger_plugin\messenger_plugin_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\messenger_plugin\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

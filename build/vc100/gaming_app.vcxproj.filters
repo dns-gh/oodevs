@@ -1,0 +1,1391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{5746ab88-1d31-4147-91d5-41f12f8883bb}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Toolbars">
+      <UniqueIdentifier>{13dd2e34-3639-4ab1-b612-f5ecff3922a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs">
+      <UniqueIdentifier>{da356a9d-9558-4d28-8778-7a9f481d2ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Magic actions">
+      <UniqueIdentifier>{c63f9910-d40c-4c5e-b925-e96f237428b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Profile">
+      <UniqueIdentifier>{21915955-c605-4b2f-b4af-2e5d8e3a8dc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels">
+      <UniqueIdentifier>{52b99d59-cdb5-40fd-a060-5ae7e393177a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Reports">
+      <UniqueIdentifier>{d1233d38-7799-495a-9c1b-2dd61cec9db1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Logistic">
+      <UniqueIdentifier>{e5165668-3aa2-45a6-bb2d-af77b2a25719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Logistic\status">
+      <UniqueIdentifier>{9ba114a7-0afe-4861-8d1d-54f208a1d2ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Logistic\consigns">
+      <UniqueIdentifier>{0761dc05-82d6-4065-9dbb-fe5c792c27af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Logistic\lists">
+      <UniqueIdentifier>{3e911c5c-25a8-492f-83d1-d4fe7fbe3401}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Logistic\lists\maintenance">
+      <UniqueIdentifier>{65014fef-be6d-4d91-a18b-f583033f09ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Logistic\lists\medical">
+      <UniqueIdentifier>{1915eb97-6d81-4028-9e29-aec452430e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Logistic\lists\supply">
+      <UniqueIdentifier>{00025b5a-f4b8-4d7e-aafb-bb74224e934d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Properties">
+      <UniqueIdentifier>{1a9786ec-72e8-4017-a098-48b8f0995eca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Info">
+      <UniqueIdentifier>{cbce7884-f46b-430f-a59e-b7ca3bfdd330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Info\tabs">
+      <UniqueIdentifier>{733ffe3b-2c34-439f-a450-131f4401cb42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Info\dialogs">
+      <UniqueIdentifier>{9c439f7d-e015-48e2-8ab6-bdbd956eabe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Info\components">
+      <UniqueIdentifier>{e0e1513b-04cc-4894-af10-54dc503b5734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Resources">
+      <UniqueIdentifier>{feb7d9cc-9647-4673-8ff3-6f16d5705155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Actions">
+      <UniqueIdentifier>{b6e105ae-5ed7-4c27-b6e1-59f1f97e9d65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Actions\Timeline">
+      <UniqueIdentifier>{9453cd09-f3fe-44a3-95cf-a17dc5a55654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Actions\Timeline\Items">
+      <UniqueIdentifier>{57960961-d77a-4d1e-ad2b-7af215b1cc6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Actions\Properties">
+      <UniqueIdentifier>{efaa7eeb-888e-4f38-b847-b16e1cfdcd4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Clock">
+      <UniqueIdentifier>{ff5fba8e-ba6c-4764-ad56-030329c86c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Chat">
+      <UniqueIdentifier>{307d826c-54fa-4b2e-a238-7f31a32fc1e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Chat\components">
+      <UniqueIdentifier>{1b87950f-9151-4871-8c02-d85207aa7b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Indicators">
+      <UniqueIdentifier>{39ec8088-43ae-4eaf-b532-a74f7a6fbfbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Indicators\Scores">
+      <UniqueIdentifier>{086874ff-29d2-4e7c-abea-1d5eee2d16de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Indicators\AAR">
+      <UniqueIdentifier>{6df27158-e2bd-4dc4-bc97-be4ded314e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Indicators\Notation">
+      <UniqueIdentifier>{6ce8d49f-eb57-433c-9a75-a7684f345da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Indicators\Notation\Reporting">
+      <UniqueIdentifier>{28f7c62c-02ef-420d-b9f4-9a0e64beefc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layers">
+      <UniqueIdentifier>{62534954-9cc7-4572-83fd-85e3e6b9b0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layers\components">
+      <UniqueIdentifier>{a2a51a68-b11d-43d0-88b2-bd8e9f6701de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{5ab9bf59-7718-4c20-a594-a3fe3880867a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus\Population">
+      <UniqueIdentifier>{6b3bc3d7-69df-496b-988f-05f7ec43720a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{58163413-91c7-4a10-ac65-2ac20b2e717a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Missions">
+      <UniqueIdentifier>{fc4e162d-277a-4896-b127-8b67e162b048}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Missions\Magic orders">
+      <UniqueIdentifier>{4c13e0e5-ff7c-4cf8-aee5-10db934a1921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation">
+      <UniqueIdentifier>{6a6f7c7f-ea79-44a4-87e9-278af061bb20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Objects">
+      <UniqueIdentifier>{fea36b36-5703-4530-8249-18a6a8475c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation\Weather">
+      <UniqueIdentifier>{7202098b-0233-44cb-abc3-10d54a6ea2ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lists">
+      <UniqueIdentifier>{19f5f471-c275-4003-b137-de065c921c9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{deed1de1-a2b0-4edf-9c1c-80f81415419a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Profiling">
+      <UniqueIdentifier>{0ec2ad47-37ce-419a-9ad8-481cc9c4175f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{961f7f3f-fe30-435a-8b54-e8672579d5b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands\Client">
+      <UniqueIdentifier>{278a5534-0857-4054-a6b4-7cdcc2c66031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands\Sim">
+      <UniqueIdentifier>{a78d6678-2f90-490e-b9ed-43d434f0b03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{75d8fbd9-c2fa-454f-83f3-62042a6a68e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\gaming_app_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LoggerProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventToolbar.cpp">
+      <Filter>Source Files\Toolbars</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\OrbatToolbar.cpp">
+      <Filter>Source Files\Toolbars</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ReplayerToolbar.cpp">
+      <Filter>Source Files\Toolbars</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SIMControlToolbar.cpp">
+      <Filter>Source Files\Toolbars</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\StatusBar.cpp">
+      <Filter>Source Files\Toolbars</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\BriefingDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ConnectDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\CreateFormationDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\Dialogs.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\DisconnectDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EfficientRangeDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LivingAreaDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LoginDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AgentChangeAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChangeAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChangeDiplomacyDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChangeHealthStateDialog_ABC.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChangeHumanFactorsDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChangeLogisticLinksDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\CriticalIntelligenceDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EquipmentTransferDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeAlertedStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeConfinedStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeHealthStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantExtractCrowdDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\KnowledgeAddInGroupDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyChangeQuotasDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPullFlowDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPushFlowDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ResourceLinksDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfileDialog.cpp">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfileList.cpp">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfilePopulationRights.cpp">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfileRights_ABC.cpp">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfileUnitRights.cpp">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfileWidget.cpp">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AgentKnowledgePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ExtensionsPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoPanels.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MessagePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectReportPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationKnowledgePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UrbanKnowledgePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FireResultListView.cpp">
+      <Filter>Source Files\Panels\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ReportFilterOptions.cpp">
+      <Filter>Source Files\Panels\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ReportListView.cpp">
+      <Filter>Source Files\Panels\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.cpp">
+      <Filter>Source Files\Panels\Logistic\status</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.cpp">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.cpp">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.cpp">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\maintenance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceRepairersListView.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\maintenance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MedicalCollectAmbulancesListView.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\medical</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MedicalDoctorsListView.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\medical</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MedicalReliefAmbulancesListView.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\medical</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SupplyQuotasWidget.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SupplyStocksListView.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SupplyTransportersListView.cpp">
+      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\Properties.cpp">
+      <Filter>Source Files\Panels\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoDock.cpp">
+      <Filter>Source Files\Panels\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoWidget.cpp">
+      <Filter>Source Files\Panels\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoConflictsTab.cpp">
+      <Filter>Source Files\Panels\Info\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoMissionsTab.cpp">
+      <Filter>Source Files\Panels\Info\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoReportsTab.cpp">
+      <Filter>Source Files\Panels\Info\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoCompositionDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoDotationsDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoLendingsDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoMedicalDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoSupplyDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoButtonsWidget.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoEventsWidget.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoStancesWidget.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoStatusWidget.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoSubordinateItem.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoSubordinatesWidget.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoSummariesWidget.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SummariesDisplayer.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\BorrowingsListView.cpp">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\DotationsListView.cpp">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EquipmentsListView.cpp">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\HumansListView.cpp">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LendingsListView.cpp">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ActionsToolbar.cpp">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelinePanel.cpp">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineWidget.cpp">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineListView.cpp">
+      <Filter>Source Files\Panels\Actions\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineView.cpp">
+      <Filter>Source Files\Panels\Actions\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineActionItem.cpp">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineItem_ABC.cpp">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineMarker.cpp">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineRuler.cpp">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ActionProperties.cpp">
+      <Filter>Source Files\Panels\Actions\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ActionsListView.cpp">
+      <Filter>Source Files\Panels\Actions\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AlarmsWidget.cpp">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ClockDock.cpp">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ClockEditDialog.cpp">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ClockWidget.cpp">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChatDock.cpp">
+      <Filter>Source Files\Panels\Chat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChatRoom.cpp">
+      <Filter>Source Files\Panels\Chat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChatWidget.cpp">
+      <Filter>Source Files\Panels\Chat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChatProfiles.cpp">
+      <Filter>Source Files\Panels\Chat\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ScorePanel.cpp">
+      <Filter>Source Files\Panels\Indicators\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AfterAction.cpp">
+      <Filter>Source Files\Panels\Indicators\AAR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AfterActionFunctionList.cpp">
+      <Filter>Source Files\Panels\Indicators\AAR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AfterActionRequestList.cpp">
+      <Filter>Source Files\Panels\Indicators\AAR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\NoteDialog.cpp">
+      <Filter>Source Files\Panels\Indicators\Notation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\NotesPanel.cpp">
+      <Filter>Source Files\Panels\Indicators\Notation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\IndicatorExportDialog.cpp">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\IndicatorPlot.cpp">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\IndicatorPlotFactory.cpp">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\IndicatorReportDialog.cpp">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ActionsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AgentKnowledgesLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AgentsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AutomatsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FogLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FormationLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\IntelligencesLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LimitsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectKnowledgesLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationKnowledgesLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SimulationLighting.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TeamLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\GlButton.cpp">
+      <Filter>Source Files\Layers\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ConnectionMenu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ExerciseMenu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\Menu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationOptionChooser.cpp">
+      <Filter>Source Files\Menus\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\icons.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AutomateMissionInterface.cpp">
+      <Filter>Source Files\Missions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.cpp">
+      <Filter>Source Files\Missions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MissionInterfaceBuilder.cpp">
+      <Filter>Source Files\Missions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MissionPanel.cpp">
+      <Filter>Source Files\Missions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationMissionInterface.cpp">
+      <Filter>Source Files\Missions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitMissionInterface.cpp">
+      <Filter>Source Files\Missions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\KnowledgeGroupMagicOrdersInterface.cpp">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MagicOrdersInterface.cpp">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectMagicOrdersInterface.cpp">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationMagicOrdersInterface.cpp">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitMagicOrdersInterface.cpp">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\CreationPanels.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FireCreationPanel.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ActivityTimePrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AltitudeModifierPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\CrossingSitePrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\DelayPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FirePropagationModifierPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FirePrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FloodPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LodgingPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MedicalTreatmentPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\MinePrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\NBCPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectCreationPanel.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObjectPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ObstaclePrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ResourceNetworkPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\StockPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SupplyRoutePrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UndergroundPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\WeatherLayer.cpp">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\WeatherListView.cpp">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\WeatherPanel.cpp">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\WeatherWidget.cpp">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AgentList.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\AgentListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TacticalList.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TacticalListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LinkInterpreter.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LocationSerializer.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\RcEntityResolver.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ProfilingPanel.cpp">
+      <Filter>Source Files\Profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\StatisticsWidget.cpp">
+      <Filter>Source Files\Profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ClientCommandFacade.cpp">
+      <Filter>Source Files\Commands\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\SelectionCommand.cpp">
+      <Filter>Source Files\Commands\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\CenterViewCommand.cpp">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ChangeOptionCommand.cpp">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\CommandFacade.cpp">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\DockCommand.cpp">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FilterViewCommand.cpp">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LauncherCommand.cpp">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ZoomViewCommand.cpp">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimeTableRequestDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\gaming_app_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LoggerProxy.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\BriefingDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\Dialogs.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AgentChangeAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InhabitantChangeAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InhabitantChangeHealthStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ResourceLinksDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\UserProfileRights_ABC.h">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ObjectReportPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidget_ABC.h">
+      <Filter>Source Files\Panels\Logistic\status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.h">
+      <Filter>Source Files\Panels\Logistic\status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.h">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.h">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticAvailabilitiesListView_ABC.h">
+      <Filter>Source Files\Panels\Logistic\lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.h">
+      <Filter>Source Files\Panels\Logistic\lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.h">
+      <Filter>Source Files\Panels\Logistic\lists\maintenance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceRepairersListView.h">
+      <Filter>Source Files\Panels\Logistic\lists\maintenance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MedicalCollectAmbulancesListView.h">
+      <Filter>Source Files\Panels\Logistic\lists\medical</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MedicalDoctorsListView.h">
+      <Filter>Source Files\Panels\Logistic\lists\medical</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MedicalReliefAmbulancesListView.h">
+      <Filter>Source Files\Panels\Logistic\lists\medical</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SupplyQuotasWidget.h">
+      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SupplyStocksListView.h">
+      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SupplyTransportersListView.h">
+      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\Properties.h">
+      <Filter>Source Files\Panels\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoDock.h">
+      <Filter>Source Files\Panels\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoConflictsTab.h">
+      <Filter>Source Files\Panels\Info\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoMissionsTab.h">
+      <Filter>Source Files\Panels\Info\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoReportsTab.h">
+      <Filter>Source Files\Panels\Info\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoCompositionDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoDotationsDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoLendingsDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoMedicalDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoSupplyDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoEventsWidget.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoStancesWidget.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoSubordinateItem.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoSummariesWidget.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SummariesDisplayer.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ResourcesListView_ABC.h">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TimelineWidget.h">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TimelineView.h">
+      <Filter>Source Files\Panels\Actions\Timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TimelineItem_ABC.h">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TimelineMarker.h">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ActionProperties.h">
+      <Filter>Source Files\Panels\Actions\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ClockDock.h">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ClockWidget.h">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ChatDock.h">
+      <Filter>Source Files\Panels\Chat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\IndicatorPlotFactory.h">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ActionsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AgentKnowledgesLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AgentsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AutomatsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FogLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FormationLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\IntelligencesLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\KnowledgeLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ObjectKnowledgesLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ObjectsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationKnowledgesLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SimulationLighting.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TeamLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\GlButton.h">
+      <Filter>Source Files\Layers\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\Menu.h">
+      <Filter>Source Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\icons.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AutomateMissionInterface.h">
+      <Filter>Source Files\Missions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.h">
+      <Filter>Source Files\Missions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MissionInterfaceBuilder.h">
+      <Filter>Source Files\Missions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationMissionInterface.h">
+      <Filter>Source Files\Missions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\UnitMissionInterface.h">
+      <Filter>Source Files\Missions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\CreationPanels.h">
+      <Filter>Source Files\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ActivityTimePrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AltitudeModifierPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\CrossingSitePrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\DelayPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FirePropagationModifierPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FirePrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FloodPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LodgingPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MedicalTreatmentPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\MinePrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\NBCPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ObjectPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ObstaclePrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ResourceNetworkPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\StockPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SupplyRoutePrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\UndergroundPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\WeatherLayer.h">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\WeatherListView.h">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AgentList.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AgentListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TacticalList.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TacticalListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LinkInterpreter.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LocationSerializer.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\RcEntityResolver.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ProfilingPanel.h">
+      <Filter>Source Files\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\StatisticsWidget.h">
+      <Filter>Source Files\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ClientCommandFacade.h">
+      <Filter>Source Files\Commands\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SelectionCommand.h">
+      <Filter>Source Files\Commands\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\CenterViewCommand.h">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ChangeOptionCommand.h">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\CommandFacade.h">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\DockCommand.h">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FilterViewCommand.h">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LauncherCommand.h">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ZoomViewCommand.h">
+      <Filter>Source Files\Commands\Sim</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
+      <Filter>Source Files\Panels</Filter>
+    </None>
+    <None Include="..\..\src\applications\gaming_app\gaming_app_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\gaming_app\gaming_app_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\applications\gaming_app\Application.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\MainWindow.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\EventToolbar.h">
+      <Filter>Source Files\Toolbars</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\OrbatToolbar.h">
+      <Filter>Source Files\Toolbars</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ReplayerToolbar.h">
+      <Filter>Source Files\Toolbars</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\SIMControlToolbar.h">
+      <Filter>Source Files\Toolbars</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\StatusBar.h">
+      <Filter>Source Files\Toolbars</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ConnectDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\CreateFormationDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\DisconnectDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\EfficientRangeDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LivingAreaDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LoginDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChangeAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChangeDiplomacyDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChangeHealthStateDialog_ABC.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChangeHumanFactorsDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChangeLogisticLinksDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\CriticalIntelligenceDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\EquipmentTransferDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantChangeAlertedStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantChangeConfinedStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantExtractCrowdDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\KnowledgeAddInGroupDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyChangeQuotasDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyPullFlowDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyPushFlowDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileDialog.h">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileList.h">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UserProfilePopulationRights.h">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileUnitRights.h">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileWidget.h">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\AgentKnowledgePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ExtensionsPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InfoPanels.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\MessagePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ObjectPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\PopulationKnowledgePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UrbanKnowledgePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\FireResultListView.h">
+      <Filter>Source Files\Panels\Reports</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ReportFilterOptions.h">
+      <Filter>Source Files\Panels\Reports</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ReportListView.h">
+      <Filter>Source Files\Panels\Reports</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InfoWidget.h">
+      <Filter>Source Files\Panels\Info</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InfoDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InfoButtonsWidget.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InfoStatusWidget.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InfoSubordinatesWidget.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\BorrowingsListView.h">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\DotationsListView.h">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\EquipmentsListView.h">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\HumansListView.h">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LendingsListView.h">
+      <Filter>Source Files\Panels\Resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ActionsToolbar.h">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\TimelinePanel.h">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\TimelineListView.h">
+      <Filter>Source Files\Panels\Actions\Timeline</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\TimelineActionItem.h">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\TimelineRuler.h">
+      <Filter>Source Files\Panels\Actions\Timeline\Items</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ActionsListView.h">
+      <Filter>Source Files\Panels\Actions\Properties</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\AlarmsWidget.h">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ClockEditDialog.h">
+      <Filter>Source Files\Panels\Clock</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChatRoom.h">
+      <Filter>Source Files\Panels\Chat</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChatWidget.h">
+      <Filter>Source Files\Panels\Chat</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ChatProfiles.h">
+      <Filter>Source Files\Panels\Chat\components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ScorePanel.h">
+      <Filter>Source Files\Panels\Indicators\Scores</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\AfterAction.h">
+      <Filter>Source Files\Panels\Indicators\AAR</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\AfterActionFunctionList.h">
+      <Filter>Source Files\Panels\Indicators\AAR</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\AfterActionRequestList.h">
+      <Filter>Source Files\Panels\Indicators\AAR</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\NoteDialog.h">
+      <Filter>Source Files\Panels\Indicators\Notation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\NotesPanel.h">
+      <Filter>Source Files\Panels\Indicators\Notation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\IndicatorExportDialog.h">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\IndicatorPlot.h">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\IndicatorReportDialog.h">
+      <Filter>Source Files\Panels\Indicators\Notation\Reporting</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LimitsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ConnectionMenu.h">
+      <Filter>Source Files\Menus</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ExerciseMenu.h">
+      <Filter>Source Files\Menus</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\PopulationOptionChooser.h">
+      <Filter>Source Files\Menus\Population</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\MissionPanel.h">
+      <Filter>Source Files\Missions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\KnowledgeGroupMagicOrdersInterface.h">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\MagicOrdersInterface.h">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ObjectMagicOrdersInterface.h">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\PopulationMagicOrdersInterface.h">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UnitMagicOrdersInterface.h">
+      <Filter>Source Files\Missions\Magic orders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\FireCreationPanel.h">
+      <Filter>Source Files\Creation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ObjectCreationPanel.h">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\WeatherPanel.h">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\WeatherWidget.h">
+      <Filter>Source Files\Creation\Weather</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\TimeTableRequestDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

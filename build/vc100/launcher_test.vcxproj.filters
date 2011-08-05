@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e297c6fb-a4e3-4b32-9ff2-cfcf1bf31817}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\mock">
+      <UniqueIdentifier>{523bf1a2-512d-4677-820b-27f9d3f46ef4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\tests\launcher_test\launcher_test_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\launcher_test\OptionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\launcher_test\ServiceTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\tests\launcher_test\launcher_test_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\launcher_test\Tools.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\launcher_test\MockConnectionHandler.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\launcher_test\MockResponseHandler.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

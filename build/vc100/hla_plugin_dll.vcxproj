@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6FD84D8C-4298-473B-AD29-EE85932D42EB}</ProjectGuid>
+    <RootNamespace>hla_plugin_dll</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_dynamic_release.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_dynamic_release.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_dynamic_debug.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_dynamic_debug.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>hla_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\hla\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\hla\$(TargetName)_d.pdb</ProgramDatabaseFile>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>hla_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\hla\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\hla\$(TargetName)_d.pdb</ProgramDatabaseFile>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>hla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\hla\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\hla\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>hla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\hla\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\hla\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\hla_plugin_dll\DllConfig.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\hla_plugin_dll\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="hla_plugin.vcxproj">
+      <Project>{2dbd11a9-a85b-4cb3-99a1-364b2e93e4b5}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

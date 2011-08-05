@@ -1,0 +1,1523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{03070113-4d98-40e7-bbbd-455ebb8992c0}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\stuff a dispatcher">
+      <UniqueIdentifier>{e65f34a3-b95e-4851-910a-bb28c6a5e293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\stuff a dispatcher\Fires">
+      <UniqueIdentifier>{0c8abf36-b00a-4eb4-a43f-17de6fabb03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{9bfe4a09-dd35-49b5-8686-6156086a21d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{8a501211-3e9b-4c8f-a907-f52366626d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agents">
+      <UniqueIdentifier>{4eb4a1e4-156d-4ea0-80ce-d4d06add4029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agents\Extensions">
+      <UniqueIdentifier>{cff0d6a6-8b51-44a4-9bbb-192b7d5197ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agents\Extensions\Logistics">
+      <UniqueIdentifier>{0bfd7cd9-ef0e-4bbb-ad4f-a193fe2e1d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agents\Extensions\Logistics\Consigns">
+      <UniqueIdentifier>{b5fc3cbd-ace2-425b-bdf7-019d1cc1f45d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agents\Extensions\Orders">
+      <UniqueIdentifier>{b29fe800-9bbc-4b9c-bbae-8b0191a2f5f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge Groups">
+      <UniqueIdentifier>{8eca47a9-f73a-477e-b9f3-56921ba991ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Team">
+      <UniqueIdentifier>{15ac5b08-3d04-4b11-a98c-c02726c54b89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Lines">
+      <UniqueIdentifier>{fe1bc0e6-85f9-4f70-8ec4-b5e3d3f96a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Lines\Extensions">
+      <UniqueIdentifier>{261a1507-08e7-46dd-bc45-d1b9f451c288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent Knowledges">
+      <UniqueIdentifier>{9a197370-19f4-4c4e-be5b-142ffd713f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Simulation">
+      <UniqueIdentifier>{84f164c6-c313-49c2-8fc9-0ef5d3a6fe6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Populations">
+      <UniqueIdentifier>{d4bc655f-5448-4ab1-91ed-a9d399a36190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Populations\Extensions">
+      <UniqueIdentifier>{feccb7a4-0b2a-4b05-8f27-13cee3de3b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Population Knowledges">
+      <UniqueIdentifier>{40dd690c-52a3-43c9-97dd-89608a47755c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object Knowledges">
+      <UniqueIdentifier>{a2717775-16f8-4853-90ae-2c9b2b1ce9d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Fires">
+      <UniqueIdentifier>{20970b61-6f71-4afa-84bc-82623e566ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Automats">
+      <UniqueIdentifier>{720fee6f-fff7-4d61-a0fb-b20d615009d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object">
+      <UniqueIdentifier>{920cb1da-7f8d-4f5c-a359-9c726f86a277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object\Extensions">
+      <UniqueIdentifier>{1eb988aa-5d3f-4779-8a3e-22bf06c75f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Logistique">
+      <UniqueIdentifier>{cb70b402-6445-46ff-9062-cda27902b82d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Profiles">
+      <UniqueIdentifier>{000079a3-f154-4eb4-8261-6f4b8d0e7b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Actions">
+      <UniqueIdentifier>{af898bfe-1a6c-42f1-afcd-2f5abe584dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Intelligence">
+      <UniqueIdentifier>{379c1d80-8852-40d7-a5ec-2ce940d7aa31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Intelligence\Extensions">
+      <UniqueIdentifier>{2f502b11-c29d-4ea0-8664-72b7f651d64f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Drawings">
+      <UniqueIdentifier>{d8c46443-b1c5-40d7-b6ee-b6e5a7635be5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Drawings\Extensions">
+      <UniqueIdentifier>{cc9b4903-2e89-49df-a8d4-fbd3cc1efb9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Urban">
+      <UniqueIdentifier>{a3a07141-8035-4ddc-85c5-33cd2233010d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Urban\Extensions">
+      <UniqueIdentifier>{2aa81f84-394a-4831-a0a2-5d411ad32da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Formations">
+      <UniqueIdentifier>{c9509231-7e0b-4d01-a439-87c94b3ba95c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Resource Network">
+      <UniqueIdentifier>{b5df8d54-8338-4e88-a14f-a1f363bf2304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Inhabitants">
+      <UniqueIdentifier>{52ec88d7-4879-4d92-830a-f7d6a41c4f0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Inhabitants\Extensions">
+      <UniqueIdentifier>{adc66c78-6785-4904-9240-8cb2ee3bd9b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{baaadcc3-766b-4ceb-a056-b1b7ed1dd5e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{a4199e76-c944-4de7-9501-df0adc143166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Indicators">
+      <UniqueIdentifier>{20765dd9-aa8e-4e80-bd12-ca36dd379bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Indicators\AAR">
+      <UniqueIdentifier>{aa3ce635-9bee-4493-9ae6-9100f98b0bcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Indicators\AAR\Definitions">
+      <UniqueIdentifier>{2a2f915c-bbba-4cb3-a990-8a70db563660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Indicators\Scores">
+      <UniqueIdentifier>{19992be7-8fde-41e3-9359-5ccc410f6649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Indicators\Scores\Definitions">
+      <UniqueIdentifier>{4a89be5c-c398-4a51-9a46-5b0fa12a0333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Indicators\Notations">
+      <UniqueIdentifier>{438c93fb-2069-4cb5-9a5e-07ebfd0519b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Meteo">
+      <UniqueIdentifier>{304fa405-7168-48ef-b3b9-4df458feffc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{06983202-6856-402d-8d8d-87b2dd40233f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\gaming\gaming_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Borrowings.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Casualties.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Dotation.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DotationRequest.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Equipment.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Loan.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LocationPositions.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Perception.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PerceptionMap.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Sector.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyAvailability.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Surface.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\SurfaceFactory.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\VisionMap.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\WeatherModel.cpp">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AmmoEffect.cpp">
+      <Filter>Source Files\stuff a dispatcher\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MSEllipse.cpp">
+      <Filter>Source Files\stuff a dispatcher\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentServerMsgMgr.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Network.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Services.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AggregatedPositions.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Color.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ConvexHulls.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FolkModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Model.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\StaticModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Agent.cpp">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentFactory.cpp">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentFireResult.cpp">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentSelectionObserver.cpp">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentsModel.cpp">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Affinities.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentConvexHulls.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentDetections.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchies.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchiesCommunication.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentPositions.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Attributes.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Contaminations.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DebugPoints.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DecisionalStates.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Decisions.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DictionaryExtensions.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Dotations.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Equipments.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Explosions.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\HierarchicExtension_ABC.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\HumanFactors.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Humans.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Lendings.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Lives.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectDetections.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Paths.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PcAttributes.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Reinforcements.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Reports.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Speeds.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Transports.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Troops.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\VisionCones.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Weapons.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Logistics.cpp">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MaintenanceStates.cpp">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MedicalStates.cpp">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyStates.cpp">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MagicOrders.cpp">
+      <Filter>Source Files\Model\Agents\Extensions\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MissionParameters.cpp">
+      <Filter>Source Files\Model\Agents\Extensions\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledges.cpp">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroup.cpp">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupFactory.cpp">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupHierarchies.cpp">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupSelectionObserver.cpp">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\KnowledgeGroupsModel.cpp">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Diplomacies.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledgeConverter.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Team.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TeamFactory.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TeamHierarchies.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TeamsModel.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TeamTacticalHierarchies.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Lima.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Limit.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LimitsModel.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLine_ABC.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLineFactory.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLineHierarchies.cpp">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TacticalLinePositions.cpp">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledge.cpp">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledgeConverter.cpp">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledgeFactory.cpp">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledgePositions.cpp">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AvailableProfile.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Profile.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ProfileFilter.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Profiling.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Simulation.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Population.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationConcentration.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationDetections.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFire.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFireResult.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFlow.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationPartPositionsProxy.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationDecisions.cpp">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationHierarchies.cpp">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationPositions.cpp">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationConcentrationKnowledge.cpp">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationFlowKnowledge.cpp">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationKnowledge.cpp">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationKnowledgePositions.cpp">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationKnowledges.cpp">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledge.cpp">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledgeFactory.cpp">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledgePositions.cpp">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectKnowledges.cpp">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectPerceptions.cpp">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DirectFire.cpp">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Fire_ABC.cpp">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FireFactory.cpp">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FireResultFactory.cpp">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Fires.cpp">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FiresModel.cpp">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\IndirectFire.cpp">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Automat.cpp">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatDecisions.cpp">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatHierarchies.cpp">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatLives.cpp">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AutomatTacticalHierarchies.cpp">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticLink.cpp">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticLinks.cpp">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Object.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectFactory.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectPositions.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectsModel.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ActivityTimeAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\BurnAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\BurnSurfaceAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\BypassAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ConstructionAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\CrossingSiteAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DelayAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FireAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FloodAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LodgingAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MineAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\NBCAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObjectAttributesFactory.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ObstacleAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\StockAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyRouteAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ToxicCloudAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UndergroundAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticConsignFactory.cpp">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticsModel.cpp">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogMaintenanceConsign.cpp">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogMedicalConsign.cpp">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogSupplyConsign.cpp">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UserProfile.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UserProfileFactory.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UserProfilesModel.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ActionPublisher.cpp">
+      <Filter>Source Files\Model\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ActionsScheduler.cpp">
+      <Filter>Source Files\Model\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Intelligence.cpp">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\IntelligenceFactory.cpp">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\IntelligencesModel.cpp">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\EntityIntelligences.cpp">
+      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\IntelligencePositions.cpp">
+      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Drawing.cpp">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DrawingFactory.cpp">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DrawingsModel.cpp">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DrawingPositions.cpp">
+      <Filter>Source Files\Model\Drawings\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanBlockDetectionMap.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanKnowledge.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanKnowledgeFactory.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanKnowledges.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanModel.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanPerceptions.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanPositions.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Architecture.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\InfrastructureAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\StructuralStateAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UrbanColor.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Usages.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Formation.cpp">
+      <Filter>Source Files\Model\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FormationHierarchy.cpp">
+      <Filter>Source Files\Model\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FormationLives.cpp">
+      <Filter>Source Files\Model\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ResourceNetwork.cpp">
+      <Filter>Source Files\Model\Resource Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ResourceNetworkModel.cpp">
+      <Filter>Source Files\Model\Resource Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Inhabitant.cpp">
+      <Filter>Source Files\Model\Inhabitants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\InhabitantHierarchies.cpp">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\InhabitantPositions.cpp">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LivingArea.cpp">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ColorController.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogTools.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Command.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\CommandHandler.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\CommandPublisher.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\IndicatorRequest.cpp">
+      <Filter>Source Files\Indicators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\IndicatorRequests.cpp">
+      <Filter>Source Files\Indicators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AfterActionModel.cpp">
+      <Filter>Source Files\Indicators\AAR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AfterActionFunction.cpp">
+      <Filter>Source Files\Indicators\AAR\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\AfterActionParameter.cpp">
+      <Filter>Source Files\Indicators\AAR\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ReplayScore.cpp">
+      <Filter>Source Files\Indicators\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Score.cpp">
+      <Filter>Source Files\Indicators\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ScoreModel.cpp">
+      <Filter>Source Files\Indicators\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ScoreDefinition.cpp">
+      <Filter>Source Files\Indicators\Scores\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\ScoreDefinitions.cpp">
+      <Filter>Source Files\Indicators\Scores\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Note.cpp">
+      <Filter>Source Files\Indicators\Notations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\NotesModel.cpp">
+      <Filter>Source Files\Indicators\Notations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\MeteoModel.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\statusicons.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\VisionConesToggler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Availability.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Borrowings.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Casualties.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Dotation.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DotationRequest.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Equipment.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Loan.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LocationPositions.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Perception.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PerceptionMap.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Sector.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyAvailability.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Surface.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\SurfaceFactory.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\VisionMap.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\WeatherModel.h">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AmmoEffect.h">
+      <Filter>Source Files\stuff a dispatcher\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MSEllipse.h">
+      <Filter>Source Files\stuff a dispatcher\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentServerMsgMgr.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Network.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Services.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AggregatedPositions.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Color.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ConvexHulls.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FolkModel.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Lives_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Model.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\StaticModel.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Agent.h">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentFactory.h">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentFactory_ABC.h">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentFireResult.h">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentSelectionObserver.h">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentsModel.h">
+      <Filter>Source Files\Model\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Affinities.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AffinitiesVisitor_ABC.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentConvexHulls.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentDetections.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentHierarchies.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentHierarchiesCommunication.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentPositions.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Attributes.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Contaminations.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DebugPoints.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DecisionalStates.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Decisions.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Decisions_ABC.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DictionaryExtensions.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Dotations.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Equipments.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Explosions.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\HierarchicExtension_ABC.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\HumanFactors.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Humans.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Lendings.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Lives.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectDetections.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Paths.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PcAttributes.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Reinforcements.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Reports.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Speeds.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Transports.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Troops.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\VisionCones.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Weapons.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Logistics.h">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MaintenanceStates.h">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MedicalStates.h">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyStates.h">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticConsigns.h">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics\Consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MagicOrders.h">
+      <Filter>Source Files\Model\Agents\Extensions\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MissionParameters.h">
+      <Filter>Source Files\Model\Agents\Extensions\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledges.h">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroup.h">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupFactory.h">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupFactory_ABC.h">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupHierarchies.h">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupSelectionObserver.h">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\KnowledgeGroupsModel.h">
+      <Filter>Source Files\Model\Knowledge Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Diplomacies.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledgeConverter.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Team.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TeamFactory.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TeamFactory_ABC.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TeamHierarchies.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TeamsModel.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TeamTacticalHierarchies.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Lima.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Limit.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LimitsModel.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLine_ABC.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLineFactory.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLineHierarchies.h">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TacticalLinePositions.h">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledge.h">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgeConverter.h">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgeFactory.h">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgeFactory_ABC.h">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgePositions.h">
+      <Filter>Source Files\Model\Agent Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AvailableProfile.h">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Profile.h">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Profiling.h">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Simulation.h">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Population.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationConcentration.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationDetections.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFire.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFireResult.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFlow.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationPartPositionsProxy.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationDecisions.h">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationHierarchies.h">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationPositions.h">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationConcentrationKnowledge.h">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationFlowKnowledge.h">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledge.h">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledgeFactory_ABC.h">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledgePositions.h">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationKnowledges.h">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationPartKnowledge_ABC.h">
+      <Filter>Source Files\Model\Population Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledge.h">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledgeFactory.h">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledgePositions.h">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectKnowledges.h">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectPerceptions.h">
+      <Filter>Source Files\Model\Object Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DirectFire.h">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Fire_ABC.h">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FireFactory.h">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FireResultFactory.h">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Fires.h">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FiresModel.h">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\IndirectFire.h">
+      <Filter>Source Files\Model\Fires</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Automat.h">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatDecisions.h">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatHierarchies.h">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatLives.h">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AutomatTacticalHierarchies.h">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticLink.h">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticLinks.h">
+      <Filter>Source Files\Model\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Object.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectFactory.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectFactory_ABC.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectPositions.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectsModel.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ActivityTimeAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\BurnAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\BurnSurfaceAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\BypassAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ConstructionAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\CrossingSiteAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DelayAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FireAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FloodAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LodgingAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MineAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\NBCAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObjectAttributesFactory.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ObstacleAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\StockAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyRouteAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ToxicCloudAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UndergroundAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticConsignFactory.h">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticConsignFactory_ABC.h">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticsModel.h">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogMaintenanceConsign.h">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogMedicalConsign.h">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogSupplyConsign.h">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfile.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfileFactory.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfileFactory_ABC.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UserProfilesModel.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ActionPublisher.h">
+      <Filter>Source Files\Model\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ActionsScheduler.h">
+      <Filter>Source Files\Model\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Intelligence.h">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\IntelligenceFactory.h">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\IntelligencesModel.h">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\EntityIntelligences.h">
+      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\IntelligencePositions.h">
+      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Drawing.h">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DrawingFactory.h">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DrawingsModel.h">
+      <Filter>Source Files\Model\Drawings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DrawingPositions.h">
+      <Filter>Source Files\Model\Drawings\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanBlockDetectionMap.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanKnowledge.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanKnowledgeFactory.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanKnowledges.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanModel.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanPerceptions.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanPositions.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Architecture.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\InfrastructureAttribute.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\StructuralStateAttribute.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UrbanColor.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Usages.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Formation.h">
+      <Filter>Source Files\Model\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FormationHierarchy.h">
+      <Filter>Source Files\Model\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FormationLives.h">
+      <Filter>Source Files\Model\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ResourceNetwork.h">
+      <Filter>Source Files\Model\Resource Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ResourceNetworkModel.h">
+      <Filter>Source Files\Model\Resource Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Inhabitant.h">
+      <Filter>Source Files\Model\Inhabitants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\InhabitantHierarchies.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\InhabitantPositions.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LivingArea.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ColorController.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogTools.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Tools.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Command.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\CommandHandler.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\CommandHandler_ABC.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\CommandPublisher.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\IndicatorDefinition_ABC.h">
+      <Filter>Source Files\Indicators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\IndicatorRequest.h">
+      <Filter>Source Files\Indicators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\IndicatorRequests.h">
+      <Filter>Source Files\Indicators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AfterActionModel.h">
+      <Filter>Source Files\Indicators\AAR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AfterActionFunction.h">
+      <Filter>Source Files\Indicators\AAR\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\AfterActionParameter.h">
+      <Filter>Source Files\Indicators\AAR\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ReplayScore.h">
+      <Filter>Source Files\Indicators\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Score.h">
+      <Filter>Source Files\Indicators\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ScoreModel.h">
+      <Filter>Source Files\Indicators\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ScoreDefinition.h">
+      <Filter>Source Files\Indicators\Scores\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\ScoreDefinitions.h">
+      <Filter>Source Files\Indicators\Scores\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Note.h">
+      <Filter>Source Files\Indicators\Notations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\NotesModel.h">
+      <Filter>Source Files\Indicators\Notations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MeteoModel.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\gaming\Sector.inl">
+      <Filter>Source Files\stuff a dispatcher</Filter>
+    </None>
+    <None Include="..\..\src\libraries\gaming\LogisticConsigns.inl">
+      <Filter>Source Files\Model\Agents\Extensions\Logistics\Consigns</Filter>
+    </None>
+    <None Include="..\..\src\libraries\gaming\gaming_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\gaming\gaming_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\gaming\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{24e10fa2-972e-42c7-b2e3-c1d3bd7a8c27}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Extensions">
+      <UniqueIdentifier>{a403d442-afe0-4c2a-af8c-7ad312ba9dd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\webservices">
+      <UniqueIdentifier>{0d012515-2130-4170-b02b-41c06f8cd76d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\webservices\stubs">
+      <UniqueIdentifier>{0bafb143-ef5d-4758-89cb-4a42b12327c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\webservices\soap">
+      <UniqueIdentifier>{12452cb6-a8e1-441c-86f6-6dbf662a5346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Orders">
+      <UniqueIdentifier>{c59d4e00-8d7d-4f98-b879-8c4bcdd3919f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Orders\Parameters">
+      <UniqueIdentifier>{dbe59ded-5eec-4908-a731-284e388eca82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{5ca4ad2f-e1fa-4c82-bf56-03c7fc290732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Reports">
+      <UniqueIdentifier>{e4f09a81-74c7-46f9-88ed-744775854463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\5W">
+      <UniqueIdentifier>{7def3b85-c395-4875-bfd5-ed270ace3045}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\bml_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\BmlPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\BmlPluginFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\SerializationTools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Simulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\UpdateListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\AgentExtension.cpp">
+      <Filter>Source Files\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\AutomatExtension.cpp">
+      <Filter>Source Files\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\ExtensionFactory.cpp">
+      <Filter>Source Files\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Publisher.cpp">
+      <Filter>Source Files\webservices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\PublisherActor.cpp">
+      <Filter>Source Files\webservices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\soapC.cpp">
+      <Filter>Source Files\webservices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\soapDCSOperationsSoapBindingProxy.cpp">
+      <Filter>Source Files\webservices\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\stdsoap2.cpp">
+      <Filter>Source Files\webservices\soap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Mission.cpp">
+      <Filter>Source Files\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionMapping.cpp">
+      <Filter>Source Files\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterFactory.cpp">
+      <Filter>Source Files\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\OrderProcessor.cpp">
+      <Filter>Source Files\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameter_ABC.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterAgent.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterAutomat.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterHeading.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterLimit.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPath.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLine.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLines.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPoint.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPolygon.cpp">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Point.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\PointList.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\DetectionReport.cpp">
+      <Filter>Source Files\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\OrderReport.cpp">
+      <Filter>Source Files\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\PositionReport.cpp">
+      <Filter>Source Files\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\ReportFactory.cpp">
+      <Filter>Source Files\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\ReportingData.cpp">
+      <Filter>Source Files\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Where.cpp">
+      <Filter>Source Files\5W</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Who.cpp">
+      <Filter>Source Files\5W</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\bml_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\BmlPlugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\BmlPluginFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ResponseHandler_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\SerializationTools.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Simulation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\UpdateListener.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\AgentExtension.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\AutomatExtension.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\BmlExtension_ABC.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ExtensionFactory.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Publisher.h">
+      <Filter>Source Files\webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Publisher_ABC.h">
+      <Filter>Source Files\webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\PublisherActor.h">
+      <Filter>Source Files\webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\soapDCSOperationsSoapBindingProxy.h">
+      <Filter>Source Files\webservices\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\soapH.h">
+      <Filter>Source Files\webservices\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\soapStub.h">
+      <Filter>Source Files\webservices\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\stdsoap2.h">
+      <Filter>Source Files\webservices\soap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Mission.h">
+      <Filter>Source Files\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionMapping.h">
+      <Filter>Source Files\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterFactory.h">
+      <Filter>Source Files\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\OrderProcessor.h">
+      <Filter>Source Files\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameter_ABC.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterAgent.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterAutomat.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterHeading.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterLimit.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPath.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLine.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLines.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPoint.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPolygon.h">
+      <Filter>Source Files\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Point.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\PointList.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\DetectionReport.h">
+      <Filter>Source Files\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\OrderReport.h">
+      <Filter>Source Files\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\PositionReport.h">
+      <Filter>Source Files\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ReportFactory.h">
+      <Filter>Source Files\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ReportingData.h">
+      <Filter>Source Files\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Where.h">
+      <Filter>Source Files\5W</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Who.h">
+      <Filter>Source Files\5W</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\src\libraries\bml_plugin\DCSOperationsSoapBinding.nsmap">
+      <Filter>Source Files\webservices\stubs</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>

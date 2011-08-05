@@ -1,0 +1,497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E761BA44-A370-4F9D-97B5-A047E068BA5B}</ProjectGuid>
+    <RootNamespace>dispatcher</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Config.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Dispatcher.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\dispatcher_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PluginFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Services.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Simulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimulationNetworker.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Client.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ClientsNetworker.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\DefaultProfile.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Profile.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ProfileManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\DecisionalState.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Model.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Report.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimpleEntity.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimulationModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\StaticModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Dotation.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Equipment.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Humans.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Loan.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Object.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectAttributeContainer.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AltitudeModifierAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\BurnAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\BurnSurfaceAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\BypassAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ConstructionAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\CrossingSiteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\DelayAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\FireAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\FloodAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\InteractionHeightAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LodgingAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogisticAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\MineAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\NBCAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\NBCTypeAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObstacleAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ResourceNetworkAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\StockAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\UndergroundAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\GenObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Localisation.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Objective.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationConcentration.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFlow.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Fire.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\FireEffect.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AutomatOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Order_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Visitors.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\CompositeFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentSymbols.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AutomatSymbols.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\FormationSymbols.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectSymbols.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\SideSymbols.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\UrbanObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ArchitectureAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ColorAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\InfrastructuresAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\StructureAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\UsagesAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationConcentrationKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFlowKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFlowPart.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\UrbanKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Automat.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\FolkModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Side.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\MeteoModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledgeConverter.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ModelAdapter.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\KnowledgeGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Inhabitant.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogMaintenance.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogMedical.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogSupply.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\DotationQuota.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\EquipmentAvailability.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogisticEntity.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogisticHierarchy.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogisticLink.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\MaintenanceEquipmentAvailability.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\MedicalEquipmentAvailability.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMedical.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignSupply.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyDotation.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Frames.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Loader.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\MessageLoader.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Replayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimulationDispatcher.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Synchroniser.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\ReplaySynchronisations.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\CompositeRegistrable.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\DispatcherPlugin.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Shield.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\FileLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\MemoryLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\Position.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\RotatingLog.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Config.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Dispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\dispatcher_pch.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Services.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MessageHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\NullClientPublisher.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationPublisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Simulation.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationNetworker.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Client.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ClientsNetworker.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\DefaultProfile.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Profile.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Profile_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ProfileManager.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\DecisionalState.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Model.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Model_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Report.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Sendable.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimpleEntity.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationModel.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\StaticModel.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Agent.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Agent_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Dotation.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Equipment.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Humans.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Loan.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Object.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Object_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectAttribute_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectAttributeContainer.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AltitudeModifierAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\BurnAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\BurnSurfaceAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\BypassAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ConstructionAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\CrossingSiteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\DelayAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\FireAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\FloodAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\InteractionHeightAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LodgingAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MineAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\NBCAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\NBCTypeAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObstacleAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ResourceNetworkAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\StockAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\UndergroundAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\GenObject.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Localisation.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Objective.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Population.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Population_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationConcentration.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationConcentration_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlow.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlow_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Fire.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\FireEffect.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFire.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentOrder.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AutomatOrder.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Order_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationOrder.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Visitors.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\CompositeFactory.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ExtensionFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Factory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentSymbols.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AutomatSymbols.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\EntitySymbols_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\FormationSymbols.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectSymbols.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\SideSymbols.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObject.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ArchitectureAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ColorAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\InfrastructuresAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\StructureAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObjectAttribute_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\UsagesAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledge_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationConcentrationKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlowKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlowPart.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Automat.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Automat_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\FolkModel.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Side.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Team_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MeteoModel.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledgeConverter.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ModelAdapter.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\KnowledgeGroup.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\KnowledgeGroup_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Formation.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Formation_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Inhabitant.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Inhabitant_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentLogMaintenance.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentLogMedical.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentLogSupply.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\DotationQuota.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\EquipmentAvailability.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticEntity.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticEntity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticEntityOwner_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticHierarchy.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticHierarchyOwner_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticLink.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MaintenanceEquipmentAvailability.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MedicalEquipmentAvailability.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMedical.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignSupply.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyDotation.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Frames.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Loader.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MessageLoader.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MessageLoader_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Replayer.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ReplayModel_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationDispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Synchroniser.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\ReplaySynchronisations.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\CompositePlugin.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\CompositeRegistrable.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\DispatcherPlugin.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LinkResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Plugin_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Registrable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Shield.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\FileLogger.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Log.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Log_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogFactory.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Logger.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Logger_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MemoryLogger.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Observable.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Observer.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\Position.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\RotatingLog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\dispatcher\EquipmentAvailability.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="3a.vcxproj">
+      <Project>{428d1458-2ad1-40af-b98d-72253de09e0a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="aar_plugin.vcxproj">
+      <Project>{119464c2-f86c-4631-9dda-9078e8980d1d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="logger_plugin.vcxproj">
+      <Project>{9bd245fc-3546-44d9-af63-cf9580999f67}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="meteo.vcxproj">
+      <Project>{b03a3fb8-fad3-4d51-96ba-91ff6b63ec1d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="replay_plugin.vcxproj">
+      <Project>{f393b5e9-cad9-4382-9415-3ad19b58f803}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="rights_plugin.vcxproj">
+      <Project>{4c386af5-831d-447a-8d1b-05b8dc95b2f5}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="saver_plugin.vcxproj">
+      <Project>{34b94a85-1528-4861-b702-e57f8909e48f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="shield.vcxproj">
+      <Project>{a8f0871a-a5fc-4709-99a7-e0efa3d0b241}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

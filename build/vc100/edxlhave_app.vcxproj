@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1F2B44DD-27CD-4FA5-BFF9-408BCEB1BA53}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\sample_release.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\sample_release.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\sample_debug.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\sample_debug.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(IntDir)..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(IntDir)..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(IntDir)..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(IntDir)..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\edxlhave_app_pch.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\EDXLHaveApp.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\main.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Simulation.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\SwordClient.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\UpdateListener.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Publisher.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\PublisherActor.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Connection.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\RestClient.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\UrlEncoder.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Hospital.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\MedicalTreatmentType.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Model.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\EDXLReport.cpp" />
+    <ClCompile Include="..\..\src\applications\edxlhave_app\HospitalUpdateReport.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\edxlhave_app_pch.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\EDXLHaveApp.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\ResponseHandler_ABC.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Simulation.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\SwordClient.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\UpdateListener.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Publisher.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Publisher_ABC.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\PublisherActor.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Connection.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\RestClient.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\UrlEncoder.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Hospital.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\MedicalTreatmentType.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Model.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\EDXLReport.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\HospitalUpdateReport.h" />
+    <ClInclude Include="..\..\src\applications\edxlhave_app\ReportBuilder_ABC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

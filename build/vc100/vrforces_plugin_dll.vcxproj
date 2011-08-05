@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B9170DF5-CC68-4062-82D1-7B266B38806F}</ProjectGuid>
+    <RootNamespace>vrforces_plugin_dll</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_dynamic_release.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_dynamic_release.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_dynamic_debug.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_dynamic_debug.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>VRFORCES_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libfedtime1516e_d.lib;matrixRTd.lib;mtlRTd.lib;vlHLA1516RTd.lib;vlRTd.lib;vlutilRTd.lib;vrfcontrolHLA1516d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\vrforces\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\vrforces\$(TargetName)_d.pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>VRFORCES_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libfedtime1516e_d.lib;matrixRTd.lib;mtlRTd.lib;vlHLA1516RTd.lib;vlRTd.lib;vlutilRTd.lib;vrfcontrolHLA1516d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\vrforces\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\vrforces\$(TargetName)_d.pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>VRFORCES_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libfedtime1516e.lib;matrixRT.lib;mtlRT.lib;vlHLA1516RT.lib;vlRT.lib;vlutilRT.lib;vrfcontrolHLA1516.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\vrforces\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\vrforces\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>VRFORCES_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libfedtime1516e.lib;matrixRT.lib;mtlRT.lib;vlHLA1516RT.lib;vlRT.lib;vlutilRT.lib;vrfcontrolHLA1516.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(RunDir)plugins\vrforces\$(TargetFileName)</OutputFile>
+      <ProgramDatabaseFile>$(RunDir)plugins\vrforces\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin_dll\DllConfig.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin_dll\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_kernel.vcxproj">
+      <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="vrforces_plugin.vcxproj">
+      <Project>{6ee261b8-3384-40ec-846a-23d573bc4e51}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

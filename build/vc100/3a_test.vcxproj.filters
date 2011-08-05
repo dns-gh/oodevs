@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1545021e-10ab-4a91-bd70-f01a50921e11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\mock">
+      <UniqueIdentifier>{20593a24-9428-4ec8-b789-0fd145a4b077}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\tests\3a_test\3a_test_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\3a_test\3aTestTools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\3a_test\FacadeTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\3a_test\FunctionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\3a_test\ModelTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\3a_test\ReductionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\tests\3a_test\3a_test_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\3a_test\3aTestTools.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\3a_test\MockClientPublisher.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\3a_test\MockFunctions.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\3a_test\MockStaticModel.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\3a_test\MockValueHandler.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

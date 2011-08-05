@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2a675334-5640-4dfa-bae9-5cacb620ac13}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Webservices">
+      <UniqueIdentifier>{8d1a9a0d-1cd3-4db2-8d61-11cca7e282bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Webservices\REST">
+      <UniqueIdentifier>{02594a38-5d0c-4b80-9aad-67a811ad4ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{81c19bc5-10ff-4799-a941-9a368ac3bd07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Reports">
+      <UniqueIdentifier>{43b3c3ff-2beb-4ef5-ab67-cfd7e3f89c3e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\edxlhave_app_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\EDXLHaveApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Simulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\SwordClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\UpdateListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Publisher.cpp">
+      <Filter>Source Files\Webservices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\PublisherActor.cpp">
+      <Filter>Source Files\Webservices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Connection.cpp">
+      <Filter>Source Files\Webservices\REST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\RestClient.cpp">
+      <Filter>Source Files\Webservices\REST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\UrlEncoder.cpp">
+      <Filter>Source Files\Webservices\REST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Hospital.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\MedicalTreatmentType.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\Model.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\EDXLReport.cpp">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\edxlhave_app\HospitalUpdateReport.cpp">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\edxlhave_app_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\EDXLHaveApp.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\ResponseHandler_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Simulation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\SwordClient.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\UpdateListener.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Publisher.h">
+      <Filter>Source Files\Webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Publisher_ABC.h">
+      <Filter>Source Files\Webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\PublisherActor.h">
+      <Filter>Source Files\Webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Connection.h">
+      <Filter>Source Files\Webservices\REST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\RestClient.h">
+      <Filter>Source Files\Webservices\REST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\UrlEncoder.h">
+      <Filter>Source Files\Webservices\REST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Hospital.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\MedicalTreatmentType.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\Model.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\EDXLReport.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\HospitalUpdateReport.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\edxlhave_app\ReportBuilder_ABC.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

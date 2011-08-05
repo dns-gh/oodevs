@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E907053A-8F48-4029-B778-3B8435282539}</ProjectGuid>
+    <RootNamespace>protocol</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <UseOfMfc>false</UseOfMfc>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='debug|win32'">false</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='debug|x64'">false</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <PreBuildEvent>
+      <Message>Generating protobuf code</Message>
+      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <PreBuildEvent>
+      <Message>Generating protobuf code</Message>
+      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <PreBuildEvent>
+      <Message>Generating protobuf code</Message>
+      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+    </PreBuildEvent>
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <PreBuildEvent>
+      <Message>Generating protobuf code</Message>
+      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+    </PreBuildEvent>
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile />
+    <ClCompile />
+    <ClCompile />
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\protocol\Aar.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\AarSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Authentication.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\AuthenticationSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ClientPublisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ClientSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Dispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\DispatcherSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Launcher.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\LauncherSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Messenger.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\MessengerSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\MsgsSimToClientListener.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Protocol.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Replay.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ReplaySenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Senders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ServerPublisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Simulation.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\SimulationSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\AdminToLauncher.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\AuthenticationToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToAar.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToAuthentication.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToMessenger.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToReplay.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToSimulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\Common.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\DispatcherToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\DispatcherToSimulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\LauncherToAdmin.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\MessengerToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ReplayToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\SimulationToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\Version.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\aar_client.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\admin_launcher.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\authentication_client.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_aar.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_authentication.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_messenger.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_replay.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_simulation.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\common.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_client.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_simulation.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\launcher_admin.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\messenger_client.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\replay_client.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\simulation_client.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\version.proto">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

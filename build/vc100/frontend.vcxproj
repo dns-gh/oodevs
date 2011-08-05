@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B878605D-F426-451F-B852-2FEA60F02918}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\application_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\frontend\CommandLineTools.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\Config.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\frontend_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\commands.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CreateExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CreateSession.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CreateTerrain.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\EditExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ImportExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\JoinAnalysis.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\JoinExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\SpawnCommand.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartAuthoring.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartDispatcher.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartEdxl.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartReplay.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartTerrainWorkshop.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ConfigurationManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\XmlNode.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ProcessList.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ProcessWrapper.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\SimulationMonitor.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CheckpointConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CheckpointList.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ListViewHelper.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\AdvancedConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\SessionConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CompositePluginConfig.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\PluginConfig.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\PluginConfigBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\PluginSetting.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\LauncherClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\LauncherPublisher.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ResponseHandlerProxy.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\RemoteExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\LocalExerciseFilter.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\RemoteHost.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\Profile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\frontend\CommandLineTools.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Config.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\frontend_pch.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\commands.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CreateExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CreateSession.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CreateTerrain.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\EditExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ImportExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\JoinAnalysis.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\JoinExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Process_ABC.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\SpawnCommand.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+      </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+      </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\frontend\StartAuthoring.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartDispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartEdxl.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartTerrainWorkshop.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ConfigurationManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\XmlNode.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessList.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessWrapper.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\SimulationMonitor.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\CheckpointConfigPanel.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\CheckpointList.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\frontend\ListViewHelper.h" />
+    <CustomBuildStep Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h" />
+    <CustomBuildStep Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\PluginConfig_ABC.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuildStep Include="..\..\src\libraries\frontend\SessionConfigPanel.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CompositePluginConfig.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\PluginConfig.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\PluginConfigBuilder.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\PluginSetting.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\frontend\PluginSettingVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\LauncherClient.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\LauncherPublisher.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ConnectionHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ResponseHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ResponseHandlerProxy.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Exercise_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ExerciseIdentifierFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\RemoteExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ExerciseFilter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\LocalExerciseFilter.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Host_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\RemoteHost.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Profile.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ProfileVisitor_ABC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\frontend\frontend_es.ts" />
+    <None Include="..\..\src\libraries\frontend\frontend_fr.ts" />
+    <CustomBuild Include="..\..\src\libraries\frontend\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_gui.vcxproj">
+      <Project>{414655f4-84bf-4f22-9afb-855102f9cf2a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

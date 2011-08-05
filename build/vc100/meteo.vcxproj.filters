@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3c6e8dd0-8e2e-4991-9a1b-1f5d9c779e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Meteo">
+      <UniqueIdentifier>{684d900a-8789-4ba9-9417-2e3ec8d7f591}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\meteo\Meteo.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\meteo\MeteoLocal.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\meteo\MeteoModel_ABC.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\meteo\PHY_Lighting.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\meteo\PHY_Precipitation.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\meteo\ReadDirections.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\meteo\Meteo.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\meteo\MeteoLocal.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\meteo\MeteoManager_ABC.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\meteo\MeteoModel_ABC.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\meteo\PHY_Lighting.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\meteo\PHY_Precipitation.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\meteo\PHY_RawVisionData_ABC.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\meteo\ReadDirections.h">
+      <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\meteo\Meteo.inl">
+      <Filter>Source Files\Meteo</Filter>
+    </None>
+    <None Include="..\..\src\libraries\meteo\PHY_Lighting.inl">
+      <Filter>Source Files\Meteo</Filter>
+    </None>
+    <None Include="..\..\src\libraries\meteo\PHY_Precipitation.inl">
+      <Filter>Source Files\Meteo</Filter>
+    </None>
+  </ItemGroup>
+</Project>

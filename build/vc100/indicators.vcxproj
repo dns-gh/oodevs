@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A95887C7-751E-43EA-B541-38B573587C7B}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>../../include/qt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>../../include/qt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\indicators\indicators_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\ElementFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Function.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\FunctionParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Variable.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Primitive.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\PrimitiveParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Primitives.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\CollectionDataType.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\DataTypeFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\ElementTypeResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\SimpleDataType.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\FormulaParser.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Serializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Variables.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Gauge.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\Tendency.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeNormalizer.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeType.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeTypeFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeTypes.cpp" />
+    <ClCompile Include="..\..\src\libraries\indicators\IconsGaugeType.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\indicators\indicators_pch.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Constant.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Element_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\ElementFactory.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\ElementFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Function.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\FunctionParameter.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Variable.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Primitive.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\PrimitiveParameter.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Primitives.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\CollectionDataType.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\DataType_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\DataTypeFactory.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\ElementTypeResolver.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\SimpleDataType.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\ElementDeclarator_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\FormulaParser.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\GrammarHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Serializer.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Variables.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Gauge.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\Tendency.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeNormalizer.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeType.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeTypeFactory.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeTypes.h" />
+    <ClInclude Include="..\..\src\libraries\indicators\IconsGaugeType.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\indicators\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_kernel.vcxproj">
+      <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="ENT.vcxproj">
+      <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

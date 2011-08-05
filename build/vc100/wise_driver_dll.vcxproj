@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D2C70704-6488-49C8-AE6B-DBEB0D1304B5}</ProjectGuid>
+    <RootNamespace>wise_driver_dll</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_dynamic_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_dynamic_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_dynamic_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_dynamic_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;DLLDRIVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../include/wise;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Common_d.lib;DriverBase_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)/MASAGroup.SWORD-gd.dll</OutputFile>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(OutDir)MASA Group.SWORD.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;DLLDRIVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../include/wise;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Common_d.lib;DriverBase_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)/MASAGroup.SWORD-gd.dll</OutputFile>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(OutDir)MASA Group.SWORD.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile>
+      <EnablePREfast>false</EnablePREfast>
+      <PreprocessorDefinitions>_USRDLL;DLLDRIVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../include/wise;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Common.lib;DriverBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)/MASAGroup.SWORD.dll</OutputFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(OutDir)MASA Group.SWORD.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile>
+      <EnablePREfast>false</EnablePREfast>
+      <PreprocessorDefinitions>_USRDLL;DLLDRIVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../include/wise;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Common.lib;DriverBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)/MASAGroup.SWORD.dll</OutputFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(OutDir)MASA Group.SWORD.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\wise_driver_dll_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Model.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Automat.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\KnowledgeGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Obstacle.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Party.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\WiseEntity.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\BoundaryLimit.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Drawing.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\PhaseLine.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Equipment.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Personnel.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Resource.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Simulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Weather.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\DetectionEvents.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\FireEngagement.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Report.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Task.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\TaskControlMeasures.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\DllEntryPoint.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Driver.cpp" />
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\SwordFacade.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\wise_driver_dll_pch.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Model.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Agent.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Automat.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Formation.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\KnowledgeGroup.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Obstacle.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Party.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Entity_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\WiseEntity.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\BoundaryLimit.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Drawing.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\PhaseLine.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Equipment.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Personnel.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Resource.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Simulation.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Weather.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\DetectionEvents.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\FireEngagement.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Report.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Task.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\TaskControlMeasures.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Driver.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\SwordFacade.h" />
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\WiseHelpers.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\Connections\EmptySWORD.connection">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Connections"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Connections"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\run\vc100\WISE\Storage\Connections\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\run\vc100\WISE\Storage\Connections\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Connections"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Connections"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\run\vc100\WISE\Storage\Connections\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\run\vc100\WISE\Storage\Connections\%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\Drivers\MASA Group.SWORD.driver">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Drivers"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Drivers"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\run\vc100\WISE\Storage\Drivers\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\run\vc100\WISE\Storage\Drivers\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Drivers"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Drivers"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\run\vc100\WISE\Storage\Drivers\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\run\vc100\WISE\Storage\Drivers\%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\Databases\SWORD.templatedb">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Databases"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Databases"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\run\vc100\WISE\Storage\Databases\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\run\vc100\WISE\Storage\Databases\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Databases"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage\Databases"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\run\vc100\WISE\Storage\Databases\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\run\vc100\WISE\Storage\Databases\%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\SWORDDriver.connectivity">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\run\vc100\WISE\Storage\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\run\vc100\WISE\Storage\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Deploying %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Deploying %(Filename)%(Extension)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y "%(FullPath)" "..\..\run\vc100\WISE\Storage"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\run\vc100\WISE\Storage\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\run\vc100\WISE\Storage\%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="client_proxy.vcxproj">
+      <Project>{44289fd6-ed5d-4f3f-ab67-b81237100f0d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

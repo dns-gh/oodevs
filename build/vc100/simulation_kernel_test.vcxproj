@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4067166B-DB88-4C67-8FCC-808221BAA84C}</ProjectGuid>
+    <RootNamespace>simulation_kernel_test</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\test_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\test_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\test_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\test_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>log4cxxd.lib;graphics_d.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
+    </Link>
+    <PostBuildEvent />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>log4cxxd.lib;graphics_d.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
+    </Link>
+    <PostBuildEvent />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>log4cxx.lib;graphics.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>log4cxx.lib;graphics.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\Fixture.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgent.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgentFactory.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockArmy.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAutomateFactory.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockBuilder.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockDEC_KnowledgeResolver_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockFormationFactory.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockHuman.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockHumansComposante.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockInhabitantFactory.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockKnowledgeGroupFactory.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockLogisticHierarchyOwner_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_AutomateLOG.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_EntityManager_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Injury_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_LivingArea.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_MissionType_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Object_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_ObjectType_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Time_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockNET_Publisher_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectManager.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_Composante_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_FireResults_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RawVisionData_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_ActiveProtection.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_Composantes.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_HumanFactors.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_Perceiver.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_UrbanLocation.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPopulationFactory.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleDotations.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleInterface_Posture.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleLocation.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleNBC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRolePerceiver.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleUrbanLocation.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockToxicAttribute.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_Decision.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_KnowledgeResolver_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AgentPion.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AgentTypePion.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Automate.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AutomateType.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Mission_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_MissionParameter_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Object_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Population.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_PopulationType.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Time_ABC.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubPHY_RoleInterface_Dotation.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubTER_World.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestIndirectFireModifier.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPhDirectFire.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPk.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MedicalCapacityTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectInstanceTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectInteractionTest.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessSuppressLineNumbers>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectKnowledgeSerializationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectLoaderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ComputerTests.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\HumanTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MissionParametersTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SimpleBrainTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\FactoriesTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\AutomateFactoryPtrSerializationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\NetworkBufferedPercentageValueTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SerializationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_IntoxicationEffectTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ScheduleInhabitantTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SpeedComputerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ActiveProtectionTest.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessSuppressLineNumbers>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\AmmoWithObjectEffectTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PhComputerTest.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessSuppressLineNumbers>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PkComputerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\KnowledgeGroupTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\Knowledge_UrbanPerceptionTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\Knowledge_UrbanTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\KnowledgeTest.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessSuppressLineNumbers>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\IlluminationTest.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessSuppressLineNumbers>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MeteoTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\GeometryTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\OrderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\LogisticHierarchyTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="simulation_kernel.vcxproj">
+      <Project>{725898a0-58c0-4dd2-9215-cb0a66df1980}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

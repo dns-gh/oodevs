@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6b1d0e1d-e347-4bbe-b55d-840f746e166f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\model">
+      <UniqueIdentifier>{282dbce0-10d9-455c-9230-e512126b84e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\model\values">
+      <UniqueIdentifier>{45ae9133-7ddc-4e82-a14c-8ae489a133d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\transform">
+      <UniqueIdentifier>{841fb915-6fe3-4265-9894-0868d450cda8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\transform\Reduction">
+      <UniqueIdentifier>{516bff83-7f99-48db-82d5-a00a82c0153b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\facade">
+      <UniqueIdentifier>{c286e9d9-0274-4f70-ae49-67e1976ba423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\facade\Factory">
+      <UniqueIdentifier>{832ca180-5986-480a-bfe7-8400a5ee7879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\types">
+      <UniqueIdentifier>{a33791d0-1e5e-4e1e-a108-760d969553bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\3a\FilterHelper.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Indicator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Plotter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Result_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\TypeChecks.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Constant.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\DispatchedFunction.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\DispatchedFunctionHelper.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Dispatcher.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ModelFunction.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ModelFunction_ABC.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ModelFunctionComposite.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\PowerIndicator.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\PowerIndicators.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\PowerModificator.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\StaticModel.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\StaticModel_ABC.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ValueHandler_ABC.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Values.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Attributes.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\CrowdHumanDamages.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\CrowdStates.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Equipments.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Events.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Existences.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Extractors.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\FireComponentDamages.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\FireHumanDamages.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ForceRatioValue.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Humans.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\IdentifierValue.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\IdentifierValue_ABC.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\LogMaintenanceEquipments.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\LogMedicalEquipments.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\LogMedicalWaitingAttention.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\LogSupplyStocks.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\PopulationSatisfaction.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\PopulationStates.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\PopulationUrbanOccupation.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Resources.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ResourcesNetworksFunctionalStates.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\StructuralStates.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\UnitDetection.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Compare.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Composer.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Contains.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Derivate.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Distance.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Domain.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Filter.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Functions.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\HandlerToFunction.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Integrate.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\IsOneOf.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\KeyMarshaller.h">
+      <Filter>Source Files\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Adder.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Count.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Maximum.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Meaner.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Minimum.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Product.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Reductor_ABC.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Selector.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Threshold.h">
+      <Filter>Source Files\transform\Reduction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\AarFacade.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Connectors.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ElementFactory_ABC.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\FunctionFactory.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Slots.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Task.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\TypeDispatcher.h">
+      <Filter>Source Files\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ConstantsFactory.h">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ExtractorsFactory.h">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ReductionsFactory.h">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\ResultsFactory.h">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\TransformationsFactory.h">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Circle.h">
+      <Filter>Source Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Polygon.h">
+      <Filter>Source Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Position.h">
+      <Filter>Source Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Types.h">
+      <Filter>Source Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Zone.h">
+      <Filter>Source Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Zone_ABC.h">
+      <Filter>Source Files\types</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\3a\ModelFunctionComposite.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\PowerIndicator.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\PowerIndicators.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\PowerModificator.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\StaticModel.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\CrowdHumanDamages.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\CrowdStates.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Equipments.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\FireComponentDamages.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\FireHumanDamages.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\ForceRatioValue.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Humans.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\LogMaintenanceEquipments.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\LogMedicalEquipments.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\LogMedicalWaitingAttention.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\LogSupplyStocks.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\PopulationSatisfaction.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\PopulationStates.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\PopulationUrbanOccupation.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Resources.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\ResourcesNetworksFunctionalStates.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\StructuralStates.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\UnitDetection.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\AarFacade.cpp">
+      <Filter>Source Files\facade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\FunctionFactory.cpp">
+      <Filter>Source Files\facade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Task.cpp">
+      <Filter>Source Files\facade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\ConstantsFactory.cpp">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\ExtractorsFactory.cpp">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\ReductionsFactory.cpp">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\ResultsFactory.cpp">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\TransformationsFactory.cpp">
+      <Filter>Source Files\facade\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Circle.cpp">
+      <Filter>Source Files\types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Polygon.cpp">
+      <Filter>Source Files\types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Position.cpp">
+      <Filter>Source Files\types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Types.cpp">
+      <Filter>Source Files\types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Zone.cpp">
+      <Filter>Source Files\types</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

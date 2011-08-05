@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{428D1458-2AD1-40AF-B98D-72253DE09E0A}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\3a\FilterHelper.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Indicator.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Plotter.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Result_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\TypeChecks.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Constant.h" />
+    <ClInclude Include="..\..\src\libraries\3a\DispatchedFunction.h" />
+    <ClInclude Include="..\..\src\libraries\3a\DispatchedFunctionHelper.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Dispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ModelFunction.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ModelFunction_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ModelFunctionComposite.h" />
+    <ClInclude Include="..\..\src\libraries\3a\PowerIndicator.h" />
+    <ClInclude Include="..\..\src\libraries\3a\PowerIndicators.h" />
+    <ClInclude Include="..\..\src\libraries\3a\PowerModificator.h" />
+    <ClInclude Include="..\..\src\libraries\3a\StaticModel.h" />
+    <ClInclude Include="..\..\src\libraries\3a\StaticModel_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ValueHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Values.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Attributes.h" />
+    <ClInclude Include="..\..\src\libraries\3a\CrowdHumanDamages.h" />
+    <ClInclude Include="..\..\src\libraries\3a\CrowdStates.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Equipments.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Events.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Existences.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Extractors.h" />
+    <ClInclude Include="..\..\src\libraries\3a\FireComponentDamages.h" />
+    <ClInclude Include="..\..\src\libraries\3a\FireHumanDamages.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ForceRatioValue.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Humans.h" />
+    <ClInclude Include="..\..\src\libraries\3a\IdentifierValue.h" />
+    <ClInclude Include="..\..\src\libraries\3a\IdentifierValue_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\LogMaintenanceEquipments.h" />
+    <ClInclude Include="..\..\src\libraries\3a\LogMedicalEquipments.h" />
+    <ClInclude Include="..\..\src\libraries\3a\LogMedicalWaitingAttention.h" />
+    <ClInclude Include="..\..\src\libraries\3a\LogSupplyStocks.h" />
+    <ClInclude Include="..\..\src\libraries\3a\PopulationSatisfaction.h" />
+    <ClInclude Include="..\..\src\libraries\3a\PopulationStates.h" />
+    <ClInclude Include="..\..\src\libraries\3a\PopulationUrbanOccupation.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Resources.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ResourcesNetworksFunctionalStates.h" />
+    <ClInclude Include="..\..\src\libraries\3a\StructuralStates.h" />
+    <ClInclude Include="..\..\src\libraries\3a\UnitDetection.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Compare.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Composer.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Contains.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Derivate.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Distance.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Domain.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Filter.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Functions.h" />
+    <ClInclude Include="..\..\src\libraries\3a\HandlerToFunction.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Integrate.h" />
+    <ClInclude Include="..\..\src\libraries\3a\IsOneOf.h" />
+    <ClInclude Include="..\..\src\libraries\3a\KeyMarshaller.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Adder.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Count.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Maximum.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Meaner.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Minimum.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Product.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Reductor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Selector.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Threshold.h" />
+    <ClInclude Include="..\..\src\libraries\3a\AarFacade.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Connectors.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ElementFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\FunctionFactory.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Slots.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Task.h" />
+    <ClInclude Include="..\..\src\libraries\3a\TypeDispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ConstantsFactory.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ExtractorsFactory.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ReductionsFactory.h" />
+    <ClInclude Include="..\..\src\libraries\3a\ResultsFactory.h" />
+    <ClInclude Include="..\..\src\libraries\3a\TransformationsFactory.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Circle.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Polygon.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Position.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Types.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Zone.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Zone_ABC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\3a\ModelFunctionComposite.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\PowerIndicator.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\PowerIndicators.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\PowerModificator.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\StaticModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\CrowdHumanDamages.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\CrowdStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Equipments.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\FireComponentDamages.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\FireHumanDamages.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\ForceRatioValue.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Humans.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\LogMaintenanceEquipments.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\LogMedicalEquipments.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\LogMedicalWaitingAttention.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\LogSupplyStocks.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\PopulationSatisfaction.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\PopulationStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\PopulationUrbanOccupation.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Resources.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\ResourcesNetworksFunctionalStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\StructuralStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\UnitDetection.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\AarFacade.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\FunctionFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Task.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\ConstantsFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\ExtractorsFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\ReductionsFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\ResultsFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\TransformationsFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Circle.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Polygon.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Position.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Types.cpp" />
+    <ClCompile Include="..\..\src\libraries\3a\Zone.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

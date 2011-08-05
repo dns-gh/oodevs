@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8979D7D9-B248-4739-A7BE-04AC0112AC08}</ProjectGuid>
+    <RootNamespace>MT_Tools</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile />
+    <ClCompile />
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+    <ClCompile />
+    <ClCompile />
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Assert.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Converter.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FormatString.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Profiler.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Scipio_enum.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Shared.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Stl.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_String.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Tools_Types.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Version.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ConstantInterpolation.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_InterpolatedFunction.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_LinearInterpolation.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Random.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ScipioException.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Circle.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Droite.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Ellipse.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Line.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Polyline.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Rect.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_triangle.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Vector2D.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\Mt_Vector2DTypes.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Vector3D.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\AlgorithmModifier_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\Role_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\RoleContainer.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Timer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_TimerManager.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ConsoleLogger.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FileLogger.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Logger.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Logger_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_LogManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\MT_Tools\MT_Converter.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Profiler.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Random.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_ScipioException.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Circle.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Droite.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Ellipse.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Line.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Polyline.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Rect.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Sector.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_triangle.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Vector2D.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_Vector3D.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\RoleContainer.inl" />
+    <None Include="..\..\src\libraries\MT_Tools\MT_LogManager.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_FormatString.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Profiler.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Random.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_ScipioException.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Circle.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Droite.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Ellipse.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Line.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Polyline.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Rect.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Sector.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_triangle.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Vector2D.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Timer_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_TimerManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_ConsoleLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_FileLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Logger_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_LogManager.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a85478ca-b5fa-42eb-8f97-41d3d3a9f283}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Parameters">
+      <UniqueIdentifier>{f43573e0-d1b8-4b20-8ea9-6ee489e9057a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parameters\Types">
+      <UniqueIdentifier>{35e1672d-0706-42af-ac81-eaf7f77e9c72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Action types">
+      <UniqueIdentifier>{cf60cd4c-c087-4343-b716-a21e5f9ac7de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Action types\Magic Actions">
+      <UniqueIdentifier>{a5cd0c79-1052-46fa-a7d6-b12debaf9728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Action types\Extensions">
+      <UniqueIdentifier>{f0c7c2cb-ad6b-41eb-b778-1cfeedfe0f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{430c9a07-5e90-4b60-a4a6-03aa5a4af357}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\actions\Action_ABC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\actions_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionsModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionParameterFactory.cpp">
+      <Filter>Source Files\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Parameter_ABC.cpp">
+      <Filter>Source Files\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ParameterList.cpp">
+      <Filter>Source Files\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Agent.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\AgentKnowledge.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\AgentKnowledgeOrder.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Army.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\AtlasNature.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Automat.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Bool.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Crowd.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\DateTime.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Direction.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\DotationType.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\DotationTypeList.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\EngineerConstruction.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Enumeration.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ExtensionList.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Formation.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Identifier.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Inhabitant.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Karma.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\KnowledgeGroup.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Level.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Lima.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\LimaList.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Limit.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Location.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\LocationBase.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\MaintenancePriorities.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\MedicalPriorities.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Numeric.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Objective.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ObjectKnowledge.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ObjectKnowledgeOrder.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ObstacleType.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Path.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\PathPoint.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Point.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Polygon.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\PopulationKnowledge.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\PopulationKnowledgeOrder.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Quantity.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ResourceNetwork.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\String.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\UrbanBlock.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionWithTarget_ABC.cpp">
+      <Filter>Source Files\Action types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\AgentMission.cpp">
+      <Filter>Source Files\Action types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\AutomatCreationListener.cpp">
+      <Filter>Source Files\Action types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\AutomatMission.cpp">
+      <Filter>Source Files\Action types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\FragOrder.cpp">
+      <Filter>Source Files\Action types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Mission.cpp">
+      <Filter>Source Files\Action types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\PopulationMission.cpp">
+      <Filter>Source Files\Action types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\AutomatCreationMagicAction.cpp">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\EngageMagicAction.cpp">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\KnowledgeGroupMagicAction.cpp">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\MagicAction.cpp">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ObjectMagicAction.cpp">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\UnitMagicAction.cpp">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionTasker.cpp">
+      <Filter>Source Files\Action types\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionTiming.cpp">
+      <Filter>Source Files\Action types\Extensions</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\actions\Action_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionFactory_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\actions_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionsFilter_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionsModel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionParameterFactory.h">
+      <Filter>Source Files\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Parameter.h">
+      <Filter>Source Files\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Parameter_ABC.h">
+      <Filter>Source Files\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ParameterContainer_ABC.h">
+      <Filter>Source Files\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ParameterFactory_ABC.h">
+      <Filter>Source Files\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ParameterList.h">
+      <Filter>Source Files\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ParameterVisitor_ABC.h">
+      <Filter>Source Files\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Agent.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\AgentKnowledge.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\AgentKnowledgeOrder.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Army.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\AtlasNature.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Automat.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Bool.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Crowd.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\DateTime.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Direction.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\DotationType.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\DotationTypeList.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\EngineerConstruction.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Entity.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Enumeration.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ExtensionList.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Formation.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Identifier.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Inhabitant.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Karma.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Knowledge_ABC.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\KnowledgeGroup.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Level.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Lima.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\LimaList.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Limit.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Location.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\LocationBase.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\MaintenancePriorities.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\MedicalPriorities.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Numeric.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Objective.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ObjectKnowledge.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ObjectKnowledgeOrder.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ObstacleType.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Path.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\PathPoint.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Point.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Polygon.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\PopulationKnowledge.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\PopulationKnowledgeOrder.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Quantity.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ResourceNetwork.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\String.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\UrbanBlock.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionWithTarget_ABC.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\AgentMission.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\AutomatCreationListener.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\AutomatMission.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\CreationListener_ABC.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\FragOrder.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Mission.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\PopulationMission.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\AutomatCreationMagicAction.h">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\EngageMagicAction.h">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\KnowledgeGroupMagicAction.h">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\MagicAction.h">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ObjectMagicAction.h">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\UnitMagicAction.h">
+      <Filter>Source Files\Action types\Magic Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionTasker.h">
+      <Filter>Source Files\Action types\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionTiming.h">
+      <Filter>Source Files\Action types\Extensions</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\actions\Parameter.inl">
+      <Filter>Source Files\Parameters</Filter>
+    </None>
+    <None Include="..\..\src\libraries\actions\Knowledge_ABC.inl">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </None>
+    <None Include="..\..\src\libraries\actions\actions_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\actions\actions_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\actions\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

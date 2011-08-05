@@ -1,0 +1,752 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{37e6e367-af89-4875-ab95-a2a2ae5bf1d0}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Panels">
+      <UniqueIdentifier>{cd721eab-27a2-4de1-b757-5c813e3f4ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Creation">
+      <UniqueIdentifier>{962297ff-77d0-4f7d-8c46-8908f8486f57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Creation\Components">
+      <UniqueIdentifier>{8969d455-602a-4740-a2b7-c05c41f55a6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Creation\Object prototypes">
+      <UniqueIdentifier>{350202b6-73f3-46bc-838d-6d9250941876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Weather">
+      <UniqueIdentifier>{84146974-76db-43a7-9ffd-955e3005b5fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels\Infos">
+      <UniqueIdentifier>{3ee7fa14-8d7a-48c2-a92c-5ce1aea80ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lists">
+      <UniqueIdentifier>{55126f22-48f7-4e1c-bb08-08e0c7c55c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layers">
+      <UniqueIdentifier>{b32048aa-18de-4671-bc03-738d871c5969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs">
+      <UniqueIdentifier>{cf08a79e-5b2a-4afb-af2d-3870fcc08a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Profiles">
+      <UniqueIdentifier>{b9b92e29-b5a7-43cb-baeb-67c93b047f41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Profiles\Wizard">
+      <UniqueIdentifier>{1270e610-b63c-4e7a-aa37-2169311e8bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Diplomacy">
+      <UniqueIdentifier>{1d192cba-f3f4-4452-8b4b-f6a461295a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Scores">
+      <UniqueIdentifier>{43f49f33-e025-4de1-84b2-ca83c34af46f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Scores\Components">
+      <UniqueIdentifier>{93893239-e765-480b-9076-5f751efc35b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Scores\Components\Parameter Wizards">
+      <UniqueIdentifier>{4d80f081-7e87-4dc9-9169-bd735d710dae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Success factors">
+      <UniqueIdentifier>{0b17aa57-8eb2-4811-a8f5-fa2bb19ba7ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Success factors\Components">
+      <UniqueIdentifier>{a07fe124-d2c0-4111-b9f4-cf2970a8c1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Exercise">
+      <UniqueIdentifier>{9e2d7577-5f5f-46ca-9765-a0c26c587c97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Resource">
+      <UniqueIdentifier>{c2d69302-b8ef-4fc8-99fe-a3da8f7df7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\ExerciseCreation">
+      <UniqueIdentifier>{7a558ed5-afe4-467c-b659-2ac2fa4f5558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Initial State">
+      <UniqueIdentifier>{93087ba4-df48-4e23-8fb1-3cdc8fef2a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Editors">
+      <UniqueIdentifier>{951552ec-9ba5-4b29-8b28-f13a0d165637}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Filter">
+      <UniqueIdentifier>{2f1a1db3-8b3f-4015-9381-e34f85639a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{033d3ef7-b8c5-44b9-b30d-f7dd4ead99ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{9d870f1b-c61c-4358-93f1-a6c5809f597d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\File loader">
+      <UniqueIdentifier>{d5f7cebe-9dab-4834-b4e0-1ce9e464c706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{f3e26d10-9fb2-45b0-bd7a-2ef4a89e1b8d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ModelBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\preparation_app_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PreparationProfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\CreationPanels.cpp">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InhabitantCreationPanel.cpp">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ObjectCreationPanel.cpp">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\TemplatesPanel.cpp">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\TemplateListView.cpp">
+      <Filter>Source Files\Panels\Creation\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ActivityTimePrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\AltitudeModifierPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ConstructionPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\CrossingSitePrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\DelayPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FirePropagationModifierPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FirePrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FloodPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InputPropagationPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LodgingPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\MinePrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\NBCPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ObjectPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ObstaclePrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\StockPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SupplyRoutePrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UndergroundPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\WeatherListView.cpp">
+      <Filter>Source Files\Panels\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\WeatherPanel.cpp">
+      <Filter>Source Files\Panels\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PropertiesPanel.cpp">
+      <Filter>Source Files\Panels\Infos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\CommunicationListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InhabitantListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ObjectListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PopulationListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\TacticalListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\AgentsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\IntelligencesLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LimitsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ObjectsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PopulationsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\Dialogs.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ProfileDialog.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ProfileEditor.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileList.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileWidget.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ProfileWizardDialog.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ChangeDiplomacyDialog.cpp">
+      <Filter>Source Files\Dialogs\Diplomacy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreDialog.cpp">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreEditor.cpp">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreList.cpp">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreSyntaxHighlighter.cpp">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreGaugeConfiguration.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScorePrimitivesLibrary.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScorePrimitivesPage.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreProfilesPage.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreVariableCreationWizard.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ScoreVariablesList.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ParamStringEnumeration.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components\Parameter Wizards</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\StringQVButtonGroup.cpp">
+      <Filter>Source Files\Dialogs\Scores\Components\Parameter Wizards</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorDialog.cpp">
+      <Filter>Source Files\Dialogs\Success factors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorActionItem.cpp">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorActionsEditor.cpp">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorConditionItem.cpp">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorConditionsEditor.cpp">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorEditor.cpp">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorList.cpp">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SuccessFactorProfileList.cpp">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ExerciseDialog.cpp">
+      <Filter>Source Files\Dialogs\Exercise</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.cpp">
+      <Filter>Source Files\Dialogs\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ExerciseCreationDialog.cpp">
+      <Filter>Source Files\Dialogs\ExerciseCreation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTable_ABC.cpp">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTableCrew.cpp">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTableEquipments.cpp">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTableResources.cpp">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\AffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\AgentAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ColorEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\DotationsEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\EditorFactory.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticLevelEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticSuperiorEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PeopleAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PopulationRepartitionEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PositionEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PropertiesTableDisplayer.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\Filter.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterCommand.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterDialog.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterDialogs.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterManager.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterOrbatReIndexer.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterXsl.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FileToolbar.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\Menu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\icons.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FileLoaderObserver.cpp">
+      <Filter>Source Files\File loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SaveModelChecker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SymbolEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\preparation_app_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PreparationProfile.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\CreationPanels.h">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ActivityTimePrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\AltitudeModifierPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ConstructionPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\CrossingSitePrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\DelayPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FirePropagationModifierPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FirePrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FloodPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\InputPropagationPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LodgingPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LogisticPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\MinePrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\NBCPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ObjectPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ObstaclePrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\StockPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\SupplyRoutePrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UndergroundPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\WeatherListView.h">
+      <Filter>Source Files\Panels\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PropertiesPanel.h">
+      <Filter>Source Files\Panels\Infos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\CommunicationListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\AgentsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\IntelligencesLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ObjectsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PopulationsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\Dialogs.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ProfileEditor.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ScoreSyntaxHighlighter.h">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ScoreProfilesPage.h">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.h">
+      <Filter>Source Files\Dialogs\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\AgentAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LogisticLevelEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LogisticSuperiorEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PeopleAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PropertiesTableDisplayer.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\Filter.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FilterDialogs.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FilterManager.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\icons.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FileLoaderObserver.h">
+      <Filter>Source Files\File loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\SaveModelChecker.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\applications\preparation_app\MainWindow.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ModelBuilder.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\InhabitantCreationPanel.h">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ObjectCreationPanel.h">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\TemplatesPanel.h">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\TemplateListView.h">
+      <Filter>Source Files\Panels\Creation\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\WeatherPanel.h">
+      <Filter>Source Files\Panels\Weather</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\InhabitantListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ObjectListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\PopulationListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\TacticalListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LimitsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ProfileDialog.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileList.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileWidget.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ProfileWizardDialog.h">
+      <Filter>Source Files\Dialogs\Profiles\Wizard</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ChangeDiplomacyDialog.h">
+      <Filter>Source Files\Dialogs\Diplomacy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScoreDialog.h">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScoreEditor.h">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScoreList.h">
+      <Filter>Source Files\Dialogs\Scores</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScoreGaugeConfiguration.h">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScorePrimitivesLibrary.h">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScorePrimitivesPage.h">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScoreVariableCreationWizard.h">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ScoreVariablesList.h">
+      <Filter>Source Files\Dialogs\Scores\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ParamStringEnumeration.h">
+      <Filter>Source Files\Dialogs\Scores\Components\Parameter Wizards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\StringQVButtonGroup.h">
+      <Filter>Source Files\Dialogs\Scores\Components\Parameter Wizards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorDialog.h">
+      <Filter>Source Files\Dialogs\Success factors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorActionItem.h">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorActionsEditor.h">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorConditionItem.h">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorConditionsEditor.h">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorEditor.h">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorList.h">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SuccessFactorProfileList.h">
+      <Filter>Source Files\Dialogs\Success factors\Components</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ExerciseDialog.h">
+      <Filter>Source Files\Dialogs\Exercise</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ExerciseCreationDialog.h">
+      <Filter>Source Files\Dialogs\ExerciseCreation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateDialog.h">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTable_ABC.h">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTableCrew.h">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTableEquipments.h">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTableResources.h">
+      <Filter>Source Files\Dialogs\Initial State</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\AffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ColorEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\DotationsEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\EditorFactory.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\PopulationRepartitionEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\PositionEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\Filter_ABC.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterCommand.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterDialog.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterOrbatReIndexer.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterXsl.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FileToolbar.h">
+      <Filter>Source Files\Menus</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\Menu.h">
+      <Filter>Source Files\Menus</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SymbolEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

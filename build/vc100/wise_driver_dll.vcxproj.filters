@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7C94FD4B-D10E-471b-AF90-BFE48567C825}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{fc558803-5651-40ac-94f6-d2bb27bd9c3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities">
+      <UniqueIdentifier>{dd7722da-9d3c-40a0-8e76-c655146b71aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities\Base classes">
+      <UniqueIdentifier>{e41b16e1-0831-44a4-8805-b905d053525e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities\ControlMeasures">
+      <UniqueIdentifier>{72c854c2-267b-4bb6-834c-a701784a7129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities\Components">
+      <UniqueIdentifier>{0289bf3b-8563-4a52-a22b-803f0936e53d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Simulation">
+      <UniqueIdentifier>{c391eb06-f313-4584-afbd-763dfc204578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Reports">
+      <UniqueIdentifier>{02870f58-73f9-4b1b-91d5-6f31f6ca47ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Driver">
+      <UniqueIdentifier>{859993b2-3ccb-44c8-b6f9-3c1f4d0ff651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{df6e6aa5-faa3-41db-953d-a8105e4ed7a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Definition Files">
+      <UniqueIdentifier>{E8CA6B88-063D-4588-A78F-0D8A0D8E488C}</UniqueIdentifier>
+      <Extensions>driver;connection;connectivity;templatedb</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\wise_driver_dll_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Model.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Agent.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Automat.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Formation.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\KnowledgeGroup.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Obstacle.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Party.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\WiseEntity.cpp">
+      <Filter>Source Files\Model\Entities\Base classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\BoundaryLimit.cpp">
+      <Filter>Source Files\Model\Entities\ControlMeasures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Drawing.cpp">
+      <Filter>Source Files\Model\Entities\ControlMeasures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\PhaseLine.cpp">
+      <Filter>Source Files\Model\Entities\ControlMeasures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Equipment.cpp">
+      <Filter>Source Files\Model\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Personnel.cpp">
+      <Filter>Source Files\Model\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Resource.cpp">
+      <Filter>Source Files\Model\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Simulation.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Weather.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\DetectionEvents.cpp">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\FireEngagement.cpp">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Report.cpp">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Task.cpp">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\TaskControlMeasures.cpp">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\DllEntryPoint.cpp">
+      <Filter>Source Files\Driver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\Driver.cpp">
+      <Filter>Source Files\Driver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\wise_driver_dll\SwordFacade.cpp">
+      <Filter>Source Files\Driver</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\wise_driver_dll_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Model.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Agent.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Automat.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Formation.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\KnowledgeGroup.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Obstacle.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Party.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Entity_ABC.h">
+      <Filter>Source Files\Model\Entities\Base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\WiseEntity.h">
+      <Filter>Source Files\Model\Entities\Base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\BoundaryLimit.h">
+      <Filter>Source Files\Model\Entities\ControlMeasures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Drawing.h">
+      <Filter>Source Files\Model\Entities\ControlMeasures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\PhaseLine.h">
+      <Filter>Source Files\Model\Entities\ControlMeasures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Equipment.h">
+      <Filter>Source Files\Model\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Personnel.h">
+      <Filter>Source Files\Model\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Resource.h">
+      <Filter>Source Files\Model\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Simulation.h">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Weather.h">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\DetectionEvents.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\FireEngagement.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Report.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Task.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\TaskControlMeasures.h">
+      <Filter>Source Files\Model\Reports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\Driver.h">
+      <Filter>Source Files\Driver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\SwordFacade.h">
+      <Filter>Source Files\Driver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wise_driver_dll\WiseHelpers.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\Connections\EmptySWORD.connection">
+      <Filter>Definition Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\Drivers\MASA Group.SWORD.driver">
+      <Filter>Definition Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\Databases\SWORD.templatedb">
+      <Filter>Definition Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\wise_driver_dll\Storage\SWORDDriver.connectivity">
+      <Filter>Definition Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

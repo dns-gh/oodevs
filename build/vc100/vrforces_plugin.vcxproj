@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6EE261B8-3384-40EC-846A-23D573BC4E51}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../include/vrforces;../../include/vrlink;../../include/mak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DtDISVERS=5;DtHLA=1;DtHLA_1516=1;RTI_USES_STD_FSTREAM=1;DtRPR=1;DT_USE_DLL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../include/vrforces;../../include/vrlink;../../include/mak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DtDISVERS=5;DtHLA=1;DtHLA_1516=1;RTI_USES_STD_FSTREAM=1;DtRPR=1;DT_USE_DLL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../include/vrforces;../../include/vrlink;../../include/mak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DtDISVERS=5;DtHLA=1;DtHLA_1516=1;RTI_USES_STD_FSTREAM=1;DtRPR=1;DT_USE_DLL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../include/vrforces;../../include/vrlink;../../include/mak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DtDISVERS=5;DtHLA=1;DtHLA_1516=1;RTI_USES_STD_FSTREAM=1;DtRPR=1;DT_USE_DLL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Facade.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Logger.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Plugin.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\vrforces_plugin_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Subordinate.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\ForceResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\DisaggregationArea.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\DisaggregationStrategy.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\AggregatedPosition.cpp" />
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\AggregatedState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Facade.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Logger.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Plugin.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\vrforces_plugin_pch.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Agent.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Subordinate.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\ForceResolver.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\ForceResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\ReflectedCreationListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationArea.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationArea_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationStrategy.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationStrategy_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedPosition.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedPosition_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedState.h" />
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedState_ABC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="dispatcher.vcxproj">
+      <Project>{e761ba44-a370-4f9d-97b5-a047e068ba5b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="rpr.vcxproj">
+      <Project>{70a0412c-1716-4034-bf76-39f8dd7d817f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{fae053d4-61ed-4c5c-ae17-c3b5399f8496}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\objects">
+      <UniqueIdentifier>{c5445183-740e-4f1e-8a40-8000e4cb4ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{f4fef232-0647-421f-8009-649139c6b4d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\factories">
+      <UniqueIdentifier>{8f2b43dd-384c-4e99-9f9f-dc76a6525704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mock">
+      <UniqueIdentifier>{70dbd4d9-e08b-49e1-a965-8c063d49ed5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serialization">
+      <UniqueIdentifier>{1e0a39d9-4729-4a38-b5b5-f0d1e329fea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\stub">
+      <UniqueIdentifier>{14ba7336-ee1a-40da-951f-8c859491c0d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Algorithms">
+      <UniqueIdentifier>{fbf1683d-e62b-4aa1-a7a9-188dff32fb21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Firing">
+      <UniqueIdentifier>{50d3ed2b-afd4-4884-adac-a0c663cb3237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KnowledgeGroup">
+      <UniqueIdentifier>{ca131b9f-765b-450c-8c24-d51d682b4db8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\urban">
+      <UniqueIdentifier>{8d63479b-9ec9-4616-a706-1fa6e51bb247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Knowledge">
+      <UniqueIdentifier>{85ab8038-db6e-4c2c-9303-4fca9376367f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\illumination">
+      <UniqueIdentifier>{2d58e0bb-b5b1-4d9e-a2ca-386255e85cff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Meteo">
+      <UniqueIdentifier>{df657afa-6540-4268-bb71-09ffff7a2b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{1e1ac97f-807b-4c42-bc2b-90ea1b859a8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Orders">
+      <UniqueIdentifier>{a9b782a4-7402-4822-bbc7-77343c7775d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logistic">
+      <UniqueIdentifier>{5eb8527a-ef87-4ccd-95b6-0cf87a2be21c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\Fixture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgent.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgentFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockArmy.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAutomateFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockBuilder.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockDEC_KnowledgeResolver_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockFormationFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockHuman.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockHumansComposante.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockInhabitantFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockKnowledgeGroupFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockLogisticHierarchyOwner_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_AutomateLOG.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_EntityManager_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Injury_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_LivingArea.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_MissionType_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Object_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_ObjectType_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Time_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockNET_Publisher_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectManager.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_Composante_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_FireResults_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RawVisionData_ABC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_ActiveProtection.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_Composantes.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_HumanFactors.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_Perceiver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPHY_RoleInterface_UrbanLocation.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockPopulationFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleDotations.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleInterface_Posture.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleLocation.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleNBC.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRolePerceiver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleUrbanLocation.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockToxicAttribute.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_Decision.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_KnowledgeResolver_ABC.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AgentPion.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AgentTypePion.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Automate.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AutomateType.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Mission_ABC.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_MissionParameter_ABC.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Object_ABC.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Population.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_PopulationType.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Time_ABC.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubPHY_RoleInterface_Dotation.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubTER_World.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestIndirectFireModifier.h">
+      <Filter>Source Files\Firing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPhDirectFire.h">
+      <Filter>Source Files\Firing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPk.h">
+      <Filter>Source Files\Firing</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MedicalCapacityTest.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectInstanceTest.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectInteractionTest.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectKnowledgeSerializationTest.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectLoaderTest.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ComputerTests.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\HumanTest.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MissionParametersTest.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SimpleBrainTest.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\FactoriesTest.cpp">
+      <Filter>Source Files\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\AutomateFactoryPtrSerializationTest.cpp">
+      <Filter>Source Files\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\NetworkBufferedPercentageValueTest.cpp">
+      <Filter>Source Files\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SerializationTest.cpp">
+      <Filter>Source Files\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_IntoxicationEffectTest.cpp">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ScheduleInhabitantTest.cpp">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SpeedComputerTest.cpp">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ActiveProtectionTest.cpp">
+      <Filter>Source Files\Firing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\AmmoWithObjectEffectTest.cpp">
+      <Filter>Source Files\Firing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PhComputerTest.cpp">
+      <Filter>Source Files\Firing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PkComputerTest.cpp">
+      <Filter>Source Files\Firing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\KnowledgeGroupTest.cpp">
+      <Filter>Source Files\KnowledgeGroup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\Knowledge_UrbanPerceptionTest.cpp">
+      <Filter>Source Files\urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\Knowledge_UrbanTest.cpp">
+      <Filter>Source Files\urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\KnowledgeTest.cpp">
+      <Filter>Source Files\Knowledge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\IlluminationTest.cpp">
+      <Filter>Source Files\illumination</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MeteoTest.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\GeometryTest.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\OrderTest.cpp">
+      <Filter>Source Files\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\LogisticHierarchyTest.cpp">
+      <Filter>Source Files\Logistic</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

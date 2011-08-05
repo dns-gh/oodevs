@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{664f6acf-d9b2-4349-a6ac-07b07ba5214d}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\mock">
+      <UniqueIdentifier>{14705f93-1cdd-46a4-96e6-638c52ff97e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\crossbow_plugin">
+      <UniqueIdentifier>{137dbf74-504d-4a80-9a03-b202d8047949}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\tests\plugins_test\BmlTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\FormationTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\plugins_test_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\ScriptTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\TestCoordinates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\TimelineServiceTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowDatabaseTest.cpp">
+      <Filter>Source Files\crossbow_plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowDatabaseUpdateTest.cpp">
+      <Filter>Source Files\crossbow_plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowUrlConnectionTest.cpp">
+      <Filter>Source Files\crossbow_plugin</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\tests\plugins_test\plugins_test_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\plugins_test\MockMovable.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

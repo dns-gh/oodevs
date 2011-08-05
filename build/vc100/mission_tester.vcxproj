@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E37CA6FE-E25B-402F-B3E0-34A4011F0154}</ProjectGuid>
+    <RootNamespace>mission_tester</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Automat.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Client.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Config.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Entity.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Exercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Facade.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\FilterFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\mission_tester_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\mission_tester\Model.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\ParameterFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Timeout.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Filter.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Scheduler.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\SchedulerFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\ConsoleLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\CSVFileLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\FileLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\mission_tester\Logger.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\mission_tester\Agent.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Automat.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Client.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Config.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Entity.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Exercise.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Facade.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\FilterFactory.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\FilterFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\MainFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\mission_tester_pch.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Model.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\ParameterFactory.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Timeout.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Filter.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Filter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Schedulable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Scheduler.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Scheduler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\SchedulerFactory.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\ConsoleLogger.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\CSVFileLogger.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\FileLogger.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Listener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Logger.h" />
+    <ClInclude Include="..\..\src\libraries\mission_tester\Logger_ABC.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

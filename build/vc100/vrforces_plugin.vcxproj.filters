@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{eeca0ecb-f66c-4c79-9395-f7f56886a131}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{a711574c-3da6-4c80-92d8-3170894da70e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{ba9a199f-71b2-4ffe-8888-dd2c3c586b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Observers">
+      <UniqueIdentifier>{d4beef40-5dbe-474a-9eae-6366c8aa5bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Disaggregation">
+      <UniqueIdentifier>{0fbd48ee-a6f7-414b-9027-c8b0045656e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Simulation feedback">
+      <UniqueIdentifier>{678f3435-231f-4958-9a90-20fb57a20cc1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Facade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\vrforces_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Agent.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\Subordinate.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\ForceResolver.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\DisaggregationArea.cpp">
+      <Filter>Source Files\Disaggregation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\DisaggregationStrategy.cpp">
+      <Filter>Source Files\Disaggregation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\AggregatedPosition.cpp">
+      <Filter>Source Files\Simulation feedback</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\vrforces_plugin\AggregatedState.cpp">
+      <Filter>Source Files\Simulation feedback</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Facade.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Logger.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Plugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\vrforces_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Agent.h">
+      <Filter>Source Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\Subordinate.h">
+      <Filter>Source Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\ForceResolver.h">
+      <Filter>Source Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\ForceResolver_ABC.h">
+      <Filter>Source Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\ReflectedCreationListener_ABC.h">
+      <Filter>Source Files\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationArea.h">
+      <Filter>Source Files\Disaggregation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationArea_ABC.h">
+      <Filter>Source Files\Disaggregation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationStrategy.h">
+      <Filter>Source Files\Disaggregation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\DisaggregationStrategy_ABC.h">
+      <Filter>Source Files\Disaggregation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedPosition.h">
+      <Filter>Source Files\Simulation feedback</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedPosition_ABC.h">
+      <Filter>Source Files\Simulation feedback</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedState.h">
+      <Filter>Source Files\Simulation feedback</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\vrforces_plugin\AggregatedState_ABC.h">
+      <Filter>Source Files\Simulation feedback</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,983 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{93e1b768-f93b-4697-a79b-5e0fe944d7ad}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{804ad200-7988-4fde-b5cd-7c99733f7b4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Team">
+      <UniqueIdentifier>{e8f359cd-fc77-4d30-8108-b4b782caae7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Team\Extensions">
+      <UniqueIdentifier>{cd341d89-9725-48f9-8c82-c73db5c2c725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent">
+      <UniqueIdentifier>{353acabe-512c-49fe-9b07-17ac837b6145}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent\Extensions">
+      <UniqueIdentifier>{d997a7ff-efac-4d71-baed-9965d54f20d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent\Extensions\Logistics">
+      <UniqueIdentifier>{0a998af7-6d1b-4d58-a28b-88a678168c07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent\Extensions\Dotations">
+      <UniqueIdentifier>{55e3c39e-bc61-429d-a745-8ed016e19f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent\Extensions\Initial State">
+      <UniqueIdentifier>{611944e2-562b-44db-b14f-e7db94662d99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Formation">
+      <UniqueIdentifier>{d408320c-4cd9-44d5-8fb0-69973aedd5f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Formation\Extensions">
+      <UniqueIdentifier>{2cfe9bd1-8eed-49b9-b3e7-4fbc02315714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Lines">
+      <UniqueIdentifier>{dd0c498d-73ad-4f4a-b2d6-b94f081c611e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Lines\Extensions">
+      <UniqueIdentifier>{52e41dc5-9a3e-45ab-8bc2-72ce139a828d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Populations">
+      <UniqueIdentifier>{878ab479-2303-40da-98b3-8b3ab03b0dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Populations\Extensions">
+      <UniqueIdentifier>{926b3362-e600-408f-b64c-5db26b2a2421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Weather">
+      <UniqueIdentifier>{d61ac0a5-f21b-437c-9e5c-01a3d9765e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Profiles">
+      <UniqueIdentifier>{2157452b-3cbe-48c1-9dcb-6317134dd2ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Automat">
+      <UniqueIdentifier>{3d2a98fd-ecc9-4b93-a3fe-727b880b8c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Automat\Extensions">
+      <UniqueIdentifier>{6b2edc6b-b568-4643-8ad8-990a181e393c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Templates">
+      <UniqueIdentifier>{b38ad855-b40e-458b-aaec-29c993e1f9ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Intelligence">
+      <UniqueIdentifier>{5b4bef07-1cd3-4de0-8aed-526f5541d726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Intelligence\Extensions">
+      <UniqueIdentifier>{027d8898-5b4a-4864-a43e-44b08b2cce62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Scores">
+      <UniqueIdentifier>{f46e5c0b-d37b-4467-8fbb-ca119ef9b43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\SuccessFactors">
+      <UniqueIdentifier>{2dca3de0-4ee4-49bf-af7c-b716fa0c32ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\SuccessFactors\Elements">
+      <UniqueIdentifier>{27ec52ff-35f7-4713-9d97-f64879ef39c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\SuccessFactors\Types">
+      <UniqueIdentifier>{1b68d904-0cca-4ed6-bb95-d6a609c94f1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Exercise">
+      <UniqueIdentifier>{e869fb64-ef9e-4ae3-81ed-a07b7f83f52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge Group">
+      <UniqueIdentifier>{c442731b-84b6-4717-b605-235f794159aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge Group\Extensions">
+      <UniqueIdentifier>{edd521e9-c71a-4323-a2e5-d9e586639e01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Urban">
+      <UniqueIdentifier>{5b760916-a8a5-4965-a6e9-8e2867a55f4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Urban\Extensions">
+      <UniqueIdentifier>{53ab22ec-3e36-4db8-b583-68b09b9dd2e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Urban\Infra">
+      <UniqueIdentifier>{5a3a0fda-d56e-42e6-9880-616e9ed53e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Inhabitants">
+      <UniqueIdentifier>{50426ffb-2e16-4750-82bd-b7784553e49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Inhabitants\Extensions">
+      <UniqueIdentifier>{59271172-2704-49ec-8fb7-d255ed98aec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object">
+      <UniqueIdentifier>{58bf2cba-9a98-485b-88af-939de4e59692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object\Extensions">
+      <UniqueIdentifier>{bd306f6c-29ad-4994-ae6b-4fe7d4f1687a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object\Extensions\Attributes">
+      <UniqueIdentifier>{86618c69-7b51-4388-b9a6-c6eebece6bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{6f569861-5b5d-4ca8-a520-3fde78eced90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{83cb819c-6cfc-4433-afed-a5e9e577191b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Color.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ColorController.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\DiamondFormation.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\EntityCommunications.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\EntityIntelligences.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\IdManager.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Model.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\StaticModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalHierarchies.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Tools.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Team.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TeamFactory.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TeamKarmas.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TeamsModel.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Diplomacies.cpp">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Inhabitants.cpp">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Objects.cpp">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Populations.cpp">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TeamCommunications.cpp">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TeamHierarchies.cpp">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Agent.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentFactory.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentsModel.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentsModelChecker.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentAffinities.cpp">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentCommunications.cpp">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentHierarchies.cpp">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentPositions.cpp">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\CommandPostAttributes.cpp">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticBaseStates.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevel.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticSuperior.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Dotation.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Dotations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\DotationsItem.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Dotations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Stocks.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Dotations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InitialState.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InitialStateCrew.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InitialStateEquipment.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InitialStateResource.cpp">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Formation.cpp">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\FormationFactory.cpp">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\FormationModel.cpp">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\FormationPositions.cpp">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\FormationHierarchies.cpp">
+      <Filter>Source Files\Model\Formation\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Lima.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Limit.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LimitsModel.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLine_ABC.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLines.cpp">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLineHierarchies.cpp">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLinePositions.cpp">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Population.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\PopulationHierarchies.cpp">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\PopulationPositions.cpp">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\WeatherModel.cpp">
+      <Filter>Source Files\Model\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ProfileFactory.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ProfileSelection.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ProfilesGenerator.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ProfilesModel.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UserProfile.cpp">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Automat.cpp">
+      <Filter>Source Files\Model\Automat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatCommunications.cpp">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatDecisions.cpp">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatHierarchies.cpp">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatPositions.cpp">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevelAttritube.cpp">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AgentTemplateElement.cpp">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatTemplateElement.cpp">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\FormationTemplateElement.cpp">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\HierarchyTemplate.cpp">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Intelligence.cpp">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\IntelligenceKarmas.cpp">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\IntelligencesModel.cpp">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\IntelligencePositions.cpp">
+      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Score.cpp">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ScoreFactory.cpp">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ScoresModel.cpp">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactor.cpp">
+      <Filter>Source Files\Model\SuccessFactors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorFactory.cpp">
+      <Filter>Source Files\Model\SuccessFactors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorsModel.cpp">
+      <Filter>Source Files\Model\SuccessFactors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorAction.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionParameter.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActions.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorCondition.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorConditions.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionType.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionTypeParameter.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionTypes.cpp">
+      <Filter>Source Files\Model\SuccessFactors\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Exercise.cpp">
+      <Filter>Source Files\Model\Exercise</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroup.cpp">
+      <Filter>Source Files\Model\Knowledge Group</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroupFactory.cpp">
+      <Filter>Source Files\Model\Knowledge Group</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroupsModel.cpp">
+      <Filter>Source Files\Model\Knowledge Group</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroupCommunications.cpp">
+      <Filter>Source Files\Model\Knowledge Group\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanModel.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Architecture.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanColor.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanPositions.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Usages.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InfrastructureAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Infra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Inhabitant.cpp">
+      <Filter>Source Files\Model\Inhabitants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Affinities.cpp">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InhabitantHierarchies.cpp">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InhabitantPositions.cpp">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\PeopleAffinities.cpp">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Object.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectFactory.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectsModel.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectHierarchies.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectPositions.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ActivityTimeAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\AltitudeModifierAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\BypassAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ConstructionAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\CrossingSiteAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\DelayAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\FireAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\FloodAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InputToxicCloudAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LodgingAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\MineAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\NBCAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ObstacleAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\OccupantAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ResourceNetworkAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\StockAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\StructuralStateAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\SupplyRouteAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UndergroundAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LocationSerializer.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Symbol.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Color.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ColorController.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\DiamondFormation.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\EntityCommunications.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\EntityIntelligences.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\EnumTypes.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\IdManager.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Model.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ModelChecker_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\StaticModel.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalHierarchies.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Tools.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Types.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Team.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TeamFactory.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TeamFactory_ABC.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TeamKarmas.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TeamsModel.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Diplomacies.h">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Inhabitants.h">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Objects.h">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Populations.h">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TeamCommunications.h">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TeamHierarchies.h">
+      <Filter>Source Files\Model\Team\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Agent.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentFactory.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentFactory_ABC.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentsModel.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentsModelChecker.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentAffinities.h">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentCommunications.h">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentHierarchies.h">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentPositions.h">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\CommandPostAttributes.h">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticBaseStates.h">
+      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevel.h">
+      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticSuperior.h">
+      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Dotation.h">
+      <Filter>Source Files\Model\Agent\Extensions\Dotations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\DotationsItem.h">
+      <Filter>Source Files\Model\Agent\Extensions\Dotations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Stocks.h">
+      <Filter>Source Files\Model\Agent\Extensions\Dotations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InitialState.h">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InitialStateCrew.h">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InitialStateEquipment.h">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InitialStateResource.h">
+      <Filter>Source Files\Model\Agent\Extensions\Initial State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Formation.h">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FormationFactory.h">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FormationFactory_ABC.h">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FormationModel.h">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FormationPositions.h">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FormationHierarchies.h">
+      <Filter>Source Files\Model\Formation\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Lima.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Limit.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LimitsModel.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLine_ABC.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLines.h">
+      <Filter>Source Files\Model\Lines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLineHierarchies.h">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLinePositions.h">
+      <Filter>Source Files\Model\Lines\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Population.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\PopulationRepartition.h">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\PopulationHierarchies.h">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\PopulationPositions.h">
+      <Filter>Source Files\Model\Populations\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\WeatherModel.h">
+      <Filter>Source Files\Model\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory_ABC.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileSelection.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ProfilesGenerator.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ProfilesModel.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UserProfile.h">
+      <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Automat.h">
+      <Filter>Source Files\Model\Automat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatCommunications.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatDecisions.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatHierarchies.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatPositions.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttritube.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AgentTemplateElement.h">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatTemplateElement.h">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FormationTemplateElement.h">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\HierarchyTemplate.h">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TemplateElement_ABC.h">
+      <Filter>Source Files\Model\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Intelligence.h">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\IntelligenceKarmas.h">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\IntelligencesModel.h">
+      <Filter>Source Files\Model\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\IntelligencePositions.h">
+      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Score.h">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Score_ABC.h">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory.h">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ScoresModel.h">
+      <Filter>Source Files\Model\Scores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactor.h">
+      <Filter>Source Files\Model\SuccessFactors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorFactory.h">
+      <Filter>Source Files\Model\SuccessFactors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorFactory_ABC.h">
+      <Filter>Source Files\Model\SuccessFactors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorsModel.h">
+      <Filter>Source Files\Model\SuccessFactors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorAction.h">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionParameter.h">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActions.h">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorCondition.h">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorConditions.h">
+      <Filter>Source Files\Model\SuccessFactors\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionType.h">
+      <Filter>Source Files\Model\SuccessFactors\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionTypeParameter.h">
+      <Filter>Source Files\Model\SuccessFactors\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionTypes.h">
+      <Filter>Source Files\Model\SuccessFactors\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Exercise.h">
+      <Filter>Source Files\Model\Exercise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroup.h">
+      <Filter>Source Files\Model\Knowledge Group</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroupFactory.h">
+      <Filter>Source Files\Model\Knowledge Group</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroupsModel.h">
+      <Filter>Source Files\Model\Knowledge Group</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroupCommunications.h">
+      <Filter>Source Files\Model\Knowledge Group\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanModel.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Architecture.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanColor.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanPositions.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Usages.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InfrastructureAttribute.h">
+      <Filter>Source Files\Model\Urban\Infra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Inhabitant.h">
+      <Filter>Source Files\Model\Inhabitants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Affinities.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InhabitantHierarchies.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\PeopleAffinities.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Object.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectAttributeFactory_ABC.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectFactory.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectFactory_ABC.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectsModel.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Overridable_ABC.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectHierarchies.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectPositions.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ActivityTimeAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\AltitudeModifierAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\BypassAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ConstructionAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\CrossingSiteAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\DelayAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FireAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\FloodAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InputToxicCloudAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LodgingAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\MineAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\NBCAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ObstacleAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\OccupantAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ResourceNetworkAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\StockAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\StructuralStateAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\SupplyRouteAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UndergroundAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LocationSerializer.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Symbol.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\preparation\preparation_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\preparation\preparation_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\preparation\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

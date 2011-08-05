@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4df8a0e9-e946-48a5-bc4f-d63001cc24bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Protocol">
+      <UniqueIdentifier>{c53be393-90b9-4780-aa38-e69be56e9bd4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\protocol\Aar.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\AarSenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Authentication.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\AuthenticationSenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\ClientPublisher_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\ClientSenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Dispatcher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\DispatcherSenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Launcher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\LauncherSenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Messenger.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\MessengerSenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\MsgsSimToClientListener.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Protocol.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Replay.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\ReplaySenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Senders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\ServerPublisher_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Simulation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\SimulationSenders.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Version.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\AdminToLauncher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\AuthenticationToClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToAar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToAuthentication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToMessenger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToReplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\ClientToSimulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\Common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\DispatcherToClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\DispatcherToSimulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\LauncherToAdmin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\MessengerToClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\ReplayToClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\SimulationToClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\aar_client.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\admin_launcher.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\authentication_client.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_aar.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_authentication.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_messenger.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_replay.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_simulation.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\common.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_client.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_simulation.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\launcher_admin.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\messenger_client.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\replay_client.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\simulation_client.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\protocol\proto\version.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

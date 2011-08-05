@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{22BF4C12-A16A-4FDB-BC1D-EB14C1F0D2FF}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\bml_plugin_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\BmlPlugin.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\BmlPluginFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\SerializationTools.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Simulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\UpdateListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\AgentExtension.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\AutomatExtension.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\ExtensionFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Publisher.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\PublisherActor.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\soapC.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\soapDCSOperationsSoapBindingProxy.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\stdsoap2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Mission.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionMapping.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\OrderProcessor.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameter_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterAgent.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterAutomat.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterHeading.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterLimit.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPath.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLine.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLines.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPoint.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\MissionParameterPolygon.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Point.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\PointList.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\DetectionReport.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\OrderReport.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\PositionReport.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\ReportFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\ReportingData.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Where.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin\Who.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\bml_plugin\bml_plugin_pch.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\BmlPlugin.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\BmlPluginFactory.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ResponseHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\SerializationTools.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Simulation.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\UpdateListener.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\AgentExtension.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\AutomatExtension.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\BmlExtension_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ExtensionFactory.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Publisher.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Publisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\PublisherActor.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\soapDCSOperationsSoapBindingProxy.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\soapH.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\soapStub.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\stdsoap2.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Mission.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionMapping.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterFactory.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\OrderProcessor.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterAgent.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterAutomat.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterHeading.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterLimit.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPath.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLine.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPhaseLines.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPoint.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\MissionParameterPolygon.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Point.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\PointList.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\DetectionReport.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\OrderReport.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\PositionReport.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ReportFactory.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\ReportingData.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Where.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin\Who.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\src\libraries\bml_plugin\DCSOperationsSoapBinding.nsmap">
+      <FileType>Document</FileType>
+    </CustomBuildStep>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="dispatcher.vcxproj">
+      <Project>{e761ba44-a370-4f9d-97b5-a047e068ba5b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

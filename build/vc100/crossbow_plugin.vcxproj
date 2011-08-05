@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D17BBF32-937D-4A77-9EA3-B749E640D5B6}</ProjectGuid>
+    <RootNamespace>crossbow_plugin</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../include/esri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../include/esri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../../include/esri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../../include/esri;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\crossbow_plugin_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\CrossbowPlugin.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\DatabaseUpdater.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ObjectAttributeUpdater.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ResourceNetworkUpdater.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\DatabaseEditor.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\DatabaseFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\OGR_Database.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\OGR_FeatureClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\OGR_FeatureRow.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\Area.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\Line.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\Point.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\PointCollection.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\OGR_Workspace.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ExtensionFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ReportFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ReportTemplate.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\WorkingSession.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\CrossbowPublisher.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\OrderListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\StatusListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ObjectListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ActionSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\QuerySessionData.cpp" />
+    <ClCompile Include="..\..\src\libraries\crossbow_plugin\ReportUpdater.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\crossbow_plugin_pch.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\CrossbowPlugin.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\DatabaseUpdater.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ObjectAttributeUpdater.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ResourceNetworkUpdater.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\FieldVariant.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Database_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\DatabaseEditor.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\DatabaseEditor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\DatabaseFactory.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\OGR_Database.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\OGR_FeatureClass.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Table_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\OGR_FeatureRow.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Row_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Area.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Line.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Point.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\PointCollection.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Shape_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\OGR_Workspace.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Workspace_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ExtensionFactory.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ReportFactory.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ReportTemplate.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\WorkingSession.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\WorkingSession_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\CrossbowPublisher.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\Listener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\OrderListener.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\StatusListener.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ObjectListener.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ActionSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ActionSerializer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\DatabaseUpdater_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\QuerySessionData.h" />
+    <ClInclude Include="..\..\src\libraries\crossbow_plugin\ReportUpdater.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

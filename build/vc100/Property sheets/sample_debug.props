@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <libXerces>xerces-c_3D.lib</libXerces>
+    <libXalan>Xalan-C_1D.lib</libXalan>
+    <libProtobuf>libprotobufd.lib</libProtobuf>
+    <libGeocoord>geocoord_d.lib</libGeocoord>
+    <libOpengl>opengl32.lib;QtOpenGLd4.lib</libOpengl>
+    <libQT>QtCored4.lib;QtGuid4.lib;Qt3Supportd4.lib</libQT>
+    <libUrban>urban_d.lib</libUrban>
+    <libTools>tools_d.lib</libTools>
+    <libZip>zipstream_d.lib;zlib1d.lib</libZip>
+    <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
+    <libGdal>gdal_i.lib;gdal_ogr.lib</libGdal>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\samples\$(ProjectName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\samples\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)-$(CurrentPlatform)-mt-gt</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\src\libraries;..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_d.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
+      <AdditionalLibraryDirectories>$(LibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName)_d.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="libXerces">
+      <Value>$(libXerces)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libXalan">
+      <Value>$(libXalan)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libProtobuf">
+      <Value>$(libProtobuf)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGeocoord">
+      <Value>$(libGeocoord)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libOpengl">
+      <Value>$(libOpengl)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libQT">
+      <Value>$(libQT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libUrban">
+      <Value>$(libUrban)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libTools">
+      <Value>$(libTools)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libZip">
+      <Value>$(libZip)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libDirectIA">
+      <Value>$(libDirectIA)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGdal">
+      <Value>$(libGdal)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

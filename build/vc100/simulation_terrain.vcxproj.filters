@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{fff46272-dc4f-4e1b-9ac5-5103952bd1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TER_World internal">
+      <UniqueIdentifier>{d005cc55-1925-4544-815d-56dfde84d572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pathfinder">
+      <UniqueIdentifier>{b2e1a9b6-b2c7-42f9-8c6b-28a22682f932}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{d2089903-3e29-4fc5-aae6-203dde15e23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objets">
+      <UniqueIdentifier>{c9c74713-ef07-4dcc-bac3-cc1418ecdf73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Agents">
+      <UniqueIdentifier>{de0faf5e-8041-492e-bcf8-acb2e2d828be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Population">
+      <UniqueIdentifier>{160eeb5b-01ef-46d4-b9a6-e789776ab7eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Population\Concentration">
+      <UniqueIdentifier>{0fde0a89-54af-4964-851c-38ed097ccf4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Population\Flow">
+      <UniqueIdentifier>{78e3ef1e-8acc-40c4-bebc-0765a9dcfbeb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.cpp">
+      <Filter>Source Files\TER_World internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_DynamicData.cpp">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PathFinderThread.cpp">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PathFindManager.cpp">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Localisation.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Polygon.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.cpp">
+      <Filter>Source Files\Objets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_ObjectManager.cpp">
+      <Filter>Source Files\Objets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_ObjectTraits.cpp">
+      <Filter>Source Files\Objets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Agent_ABC.cpp">
+      <Filter>Source Files\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AgentManager.cpp">
+      <Filter>Source Files\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AgentTraits.cpp">
+      <Filter>Source Files\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.cpp">
+      <Filter>Source Files\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentration_ABC.cpp">
+      <Filter>Source Files\Population\Concentration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationManager.cpp">
+      <Filter>Source Files\Population\Concentration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationTraits.cpp">
+      <Filter>Source Files\Population\Concentration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlow_ABC.cpp">
+      <Filter>Source Files\Population\Flow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowManager.cpp">
+      <Filter>Source Files\Population\Flow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowTraits.cpp">
+      <Filter>Source Files\Population\Flow</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.h">
+      <Filter>Source Files\TER_World internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_NodeFunctor_ABC.h">
+      <Filter>Source Files\TER_World internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_DynamicData.h">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFinderThread.h">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFindManager.h">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFindRequest_ABC.h">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Localisation.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Polygon.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.h">
+      <Filter>Source Files\Objets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectManager.h">
+      <Filter>Source Files\Objets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectTraits.h">
+      <Filter>Source Files\Objets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectVisitor_ABC.h">
+      <Filter>Source Files\Objets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Agent_ABC.h">
+      <Filter>Source Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentManager.h">
+      <Filter>Source Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentTraits.h">
+      <Filter>Source Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentVisitor_ABC.h">
+      <Filter>Source Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.h">
+      <Filter>Source Files\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationVisitor_ABC.h">
+      <Filter>Source Files\Population\Concentration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlow_ABC.h">
+      <Filter>Source Files\Population\Flow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowManager.h">
+      <Filter>Source Files\Population\Flow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowTraits.h">
+      <Filter>Source Files\Population\Flow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowVisitor_ABC.h">
+      <Filter>Source Files\Population\Flow</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\simulation_terrain\TER_World.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Localisation.inl">
+      <Filter>Source Files\Tools</Filter>
+    </None>
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Polygon.inl">
+      <Filter>Source Files\Tools</Filter>
+    </None>
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.inl">
+      <Filter>Source Files\Objets</Filter>
+    </None>
+    <None Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.inl">
+      <Filter>Source Files\Population</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentration_ABC.h">
+      <Filter>Source Files\Population\Concentration</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationManager.h">
+      <Filter>Source Files\Population\Concentration</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationTraits.h">
+      <Filter>Source Files\Population\Concentration</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>

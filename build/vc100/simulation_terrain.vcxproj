@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6B144816-9773-40F9-ADE6-0ACBC2EAE516}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_World.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_DynamicData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PathFinderThread.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PathFindManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Localisation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Polygon.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_ObjectManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_ObjectTraits.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Agent_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AgentManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AgentTraits.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentration_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationTraits.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlow_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowTraits.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_NodeFunctor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_DynamicData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFinderThread.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFindManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFindRequest_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Localisation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Polygon.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectTraits.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Agent_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentTraits.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentration_ABC.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationManager.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationTraits.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlow_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowTraits.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowVisitor_ABC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\simulation_terrain\TER_World.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Localisation.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Polygon.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

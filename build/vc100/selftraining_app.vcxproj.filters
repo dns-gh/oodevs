@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2015eb72-9146-4582-96fb-b2a6b3088a31}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Pages">
+      <UniqueIdentifier>{e4d184ff-1543-4b42-a630-4c8d9eef0f28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pages\Implementations">
+      <UniqueIdentifier>{c3164742-041c-49f3-bccc-09b57da64513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Widgets">
+      <UniqueIdentifier>{33d27dfc-d602-4801-b81f-df7ba35e40d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Processes">
+      <UniqueIdentifier>{6ca6d4d6-5f00-4695-8207-c90f736f4727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systray">
+      <UniqueIdentifier>{98309bfb-21eb-4239-a99a-3abd19c2661b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{d00da7a3-4429-4ed2-b5a1-21a91a8cbfda}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\selftraining_app\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\Launcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\LinkInterpreter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\selftraining_app_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ContentPage.cpp">
+      <Filter>Source Files\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\LauncherClientPage.cpp">
+      <Filter>Source Files\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\MenuPage.cpp">
+      <Filter>Source Files\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\Page_ABC.cpp">
+      <Filter>Source Files\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ProgressPage.cpp">
+      <Filter>Source Files\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\AuthoringPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\BattleCenterJoinPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\BattleCenterLauncherPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\BattleCenterPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\CreateTerrainPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\HomePage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\OptionsPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\QuitPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\RemoteControlPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ReplayPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ScenarioEditPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ScenarioLauncherPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\SelfTrainingPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\CreateExerciceWidget.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseList.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseProperties.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ExportWidget.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ImportWidget.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\MenuButton.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\MessageDialog.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ProcessDialogs.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ProfileList.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\SessionList.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\Side.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\SideList.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.cpp">
+      <Filter>Source Files\Processes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\SessionTray.cpp">
+      <Filter>Source Files\Systray</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\TrayIcon.cpp">
+      <Filter>Source Files\Systray</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\TrayIcon_win.cpp">
+      <Filter>Source Files\Systray</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\TrayMenu.cpp">
+      <Filter>Source Files\Systray</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\selftraining_app\Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\Launcher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\LinkInterpreter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\Multiplayer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\selftraining_app_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\ContentPage.h">
+      <Filter>Source Files\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\BattleCenterPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\HomePage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\SelfTrainingPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\ProcessDialogs.h">
+      <Filter>Source Files\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\Side.h">
+      <Filter>Source Files\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.h">
+      <Filter>Source Files\Processes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\SessionTray.h">
+      <Filter>Source Files\Systray</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\applications\selftraining_app\selftraining_app_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\selftraining_app\selftraining_app_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\Application.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\MainWindow.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\LauncherClientPage.h">
+      <Filter>Source Files\Pages</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\MenuPage.h">
+      <Filter>Source Files\Pages</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\Page_ABC.h">
+      <Filter>Source Files\Pages</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ProgressPage.h">
+      <Filter>Source Files\Pages</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\AuthoringPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\BattleCenterJoinPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\BattleCenterLauncherPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\CreateTerrainPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\OptionsPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\QuitPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\RemoteControlPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ReplayPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ScenarioEditPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ScenarioLauncherPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\CreateExerciceWidget.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ExerciseList.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ExerciseProperties.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ExportWidget.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ImportWidget.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\MenuButton.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\MessageDialog.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ProfileList.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\SessionList.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\SideList.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\TrayIcon.h">
+      <Filter>Source Files\Systray</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\TrayMenu.h">
+      <Filter>Source Files\Systray</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

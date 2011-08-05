@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f6df3f3f-011a-4630-af13-2b95d50b5bc2}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Conditions">
+      <UniqueIdentifier>{78c7092a-6eb0-49ca-b563-f8d5b0d27fdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{8a662770-e655-4314-839e-83fd13f28c6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands\Actions">
+      <UniqueIdentifier>{32fe8d8d-80dc-4548-8f40-0a7c2c95c0a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extensions">
+      <UniqueIdentifier>{b3f7f6eb-d8dd-4e0e-a08a-830fce42df21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extensions\Agents">
+      <UniqueIdentifier>{809e4cc4-893b-468a-b2d6-d97b0fcf310f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extensions\Automats">
+      <UniqueIdentifier>{935830f1-bfbf-4970-868f-e726d3eeede3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extensions\Knowledges">
+      <UniqueIdentifier>{d740cfd8-cc73-4016-86c8-45d5fa6e2a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extensions\Populations">
+      <UniqueIdentifier>{12feadea-d754-46ad-bd1c-6b6c5cfe3aa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Extensions\Objects">
+      <UniqueIdentifier>{c0770145-9999-4a9f-8a16-80e5142c705b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Fsm">
+      <UniqueIdentifier>{d65d166a-c476-4580-a096-66cbff83fa07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{d11087d3-4263-4305-a05f-416bf3e59d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua">
+      <UniqueIdentifier>{6657a724-c4b8-4603-ba9f-11ded9795f63}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ActionScheduler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ModelFacade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ModelResolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\Script.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\script_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ScriptPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AgentConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AutomatConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ClientConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ConditionFacade.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\IndicatorConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ScriptConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\SimpleEntityCondition.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\SimulationConditions.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ClientCommands.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\CommandString.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ScriptCommands.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\SimulationCommands.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\Actions.cpp">
+      <Filter>Source Files\Commands\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ExtensionFactory.cpp">
+      <Filter>Source Files\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AgentManipulator.cpp">
+      <Filter>Source Files\Extensions\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AgentNotifier.cpp">
+      <Filter>Source Files\Extensions\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AutomatManipulator.cpp">
+      <Filter>Source Files\Extensions\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AutomatNotifier.cpp">
+      <Filter>Source Files\Extensions\Automats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\KnowledgeManipulator.cpp">
+      <Filter>Source Files\Extensions\Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\KnowledgeNotifier.cpp">
+      <Filter>Source Files\Extensions\Knowledges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationKnowledgeManipulator.cpp">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationKnowledgeNotifier.cpp">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationManipulator.cpp">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationNotifier.cpp">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectKnowledgeManipulator.cpp">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectKnowledgeNotifier.cpp">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectManipulator.cpp">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectNotifier.cpp">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\BaseCondition.cpp">
+      <Filter>Source Files\Fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\Event.cpp">
+      <Filter>Source Files\Fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\EventCondition.cpp">
+      <Filter>Source Files\Fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\FiniteStateMachine.cpp">
+      <Filter>Source Files\Fsm</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ActionScheduler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ModelFacade.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ModelResolver.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\Script.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\script_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ScriptPlugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\AutomatConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ClientConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ConditionFacade.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\IndicatorConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ScriptConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\SimpleEntityCondition.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\SimulationConditions.h">
+      <Filter>Source Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ClientCommands.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\CommandString.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ScriptCommands.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\SimulationCommands.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\Actions.h">
+      <Filter>Source Files\Commands\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ExtensionFactory.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentManipulator.h">
+      <Filter>Source Files\Extensions\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentNotifier.h">
+      <Filter>Source Files\Extensions\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\AutomatManipulator.h">
+      <Filter>Source Files\Extensions\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\AutomatNotifier.h">
+      <Filter>Source Files\Extensions\Automats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\KnowledgeManipulator.h">
+      <Filter>Source Files\Extensions\Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\KnowledgeNotifier.h">
+      <Filter>Source Files\Extensions\Knowledges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationKnowledgeManipulator.h">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationKnowledgeNotifier.h">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationManipulator.h">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationNotifier.h">
+      <Filter>Source Files\Extensions\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectKnowledgeManipulator.h">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectKnowledgeNotifier.h">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectManipulator.h">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectNotifier.h">
+      <Filter>Source Files\Extensions\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\BaseCondition.h">
+      <Filter>Source Files\Fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\Condition_ABC.h">
+      <Filter>Source Files\Fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\Event.h">
+      <Filter>Source Files\Fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\EventCondition.h">
+      <Filter>Source Files\Fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\FiniteStateMachine.h">
+      <Filter>Source Files\Fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentEvents.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\Events.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\script_plugin\MiscEvents.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\script_plugin\doc.lua">
+      <Filter>lua</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\actions.lua">
+      <Filter>lua</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\artillery.lua">
+      <Filter>lua</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\commands.lua">
+      <Filter>lua</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\events.lua">
+      <Filter>lua</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\geometry.lua">
+      <Filter>lua</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\indicators.lua">
+      <Filter>lua</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\xml.lua">
+      <Filter>lua</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

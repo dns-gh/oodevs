@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2904015E-0B2B-45C1-BAFB-F70BCA8ADF77}</ProjectGuid>
+    <RootNamespace>script_plugin</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <PreBuildEvent>
+      <Message>Creating LUA scripts intermediate directory.</Message>
+      <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+      <Outputs>%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <ClCompile />
+    <Lib />
+    <PostBuildEvent>
+      <Message>Deploying LUA scripts.</Message>
+      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
+copy /Y "$(TargetDir)\scripts" ..\..\run\vc100\resources\scripts
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <PreBuildEvent>
+      <Message>Creating LUA scripts intermediate directory.</Message>
+      <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+      <Outputs>%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <ClCompile />
+    <Lib />
+    <PostBuildEvent>
+      <Message>Deploying LUA scripts.</Message>
+      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
+copy /Y "$(TargetDir)\scripts" ..\..\run\vc100\resources\scripts
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <PreBuildEvent>
+      <Message>Creating LUA scripts intermediate directory.</Message>
+      <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+      <Outputs>%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <ClCompile />
+    <Lib />
+    <PostBuildEvent>
+      <Message>Deploying LUA scripts.</Message>
+      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
+copy /Y $(TargetDir)\scripts ..\..\run\vc100\resources\scripts
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <PreBuildEvent>
+      <Message>Creating LUA scripts intermediate directory.</Message>
+      <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+      <Outputs>%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <ClCompile />
+    <Lib />
+    <PostBuildEvent>
+      <Message>Deploying LUA scripts.</Message>
+      <Command>if not exist ..\..\run\vc100\resources\scripts mkdir ..\..\run\vc100\resources\scripts
+copy /Y $(TargetDir)\scripts ..\..\run\vc100\resources\scripts
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ActionScheduler.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ModelFacade.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ModelResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\Script.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\script_plugin_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ScriptPlugin.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AgentConditions.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AutomatConditions.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ClientConditions.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ConditionFacade.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\IndicatorConditions.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectConditions.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationConditions.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ScriptConditions.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\SimpleEntityCondition.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\SimulationConditions.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\ClientCommands.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\CommandString.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ScriptCommands.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\SimulationCommands.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\Actions.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ExtensionFactory.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AgentManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\AgentNotifier.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\AutomatManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\AutomatNotifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\KnowledgeManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\KnowledgeNotifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationKnowledgeManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationKnowledgeNotifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\PopulationNotifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectKnowledgeManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectKnowledgeNotifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\ObjectNotifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\BaseCondition.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\Event.cpp" />
+    <ClCompile Include="..\..\src\libraries\script_plugin\EventCondition.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\script_plugin\FiniteStateMachine.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='debug|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">script_plugin_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">script_plugin_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\script_plugin\ActionScheduler.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ModelFacade.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ModelResolver.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\Script.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\script_plugin_pch.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ScriptPlugin.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\AutomatConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ClientConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ConditionFacade.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\IndicatorConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ScriptConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\SimpleEntityCondition.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\SimulationConditions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ClientCommands.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\CommandString.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ScriptCommands.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\SimulationCommands.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\Actions.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ExtensionFactory.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentNotifier.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\AutomatManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\AutomatNotifier.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\KnowledgeManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\KnowledgeNotifier.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationKnowledgeManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationKnowledgeNotifier.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\PopulationNotifier.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectKnowledgeManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectKnowledgeNotifier.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\ObjectNotifier.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\BaseCondition.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\Condition_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\Event.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\EventCondition.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\FiniteStateMachine.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\AgentEvents.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\Events.h" />
+    <ClInclude Include="..\..\src\libraries\script_plugin\MiscEvents.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\actions.lua">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\artillery.lua">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\commands.lua">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="..\..\src\libraries\script_plugin\doc.lua" />
+    <CustomBuild Include="..\..\src\libraries\script_plugin\events.lua">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\geometry.lua">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\indicators.lua">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\script_plugin\xml.lua">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Copying %(Filename)%(Extension).</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Copying %(Filename)%(Extension).</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">copy /Y %(FullPath) $(TargetDir)scripts\
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

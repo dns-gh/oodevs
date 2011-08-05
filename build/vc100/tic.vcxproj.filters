@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1c51f872-16c3-479b-b568-dbafc612092d}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Formations">
+      <UniqueIdentifier>{46ed5b41-0817-4d70-a08f-ac8d01d1f5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\internal">
+      <UniqueIdentifier>{8743d12c-551f-402e-81e2-f0526006b61f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\tic\Platform_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\PlatformAdapter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\PlatformDelegate_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\PlatformDelegateFactory_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\PlatformVisitor_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\tic_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\DiamondFormation.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\Formation_ABC.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\Movable_ABC.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\RoadFormation.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\Platform.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\PlatformDelegate.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic\PlatformDelegateFactory.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\tic\PlatformAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic\tic_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic\DiamondFormation.cpp">
+      <Filter>Source Files\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic\Formation_ABC.cpp">
+      <Filter>Source Files\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic\RoadFormation.cpp">
+      <Filter>Source Files\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic\Platform.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic\PlatformDelegate.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic\PlatformDelegateFactory.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

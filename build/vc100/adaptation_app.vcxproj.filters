@@ -1,0 +1,2304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{8598ce7f-8d65-4ebb-b906-5602121e1bf7}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Common types">
+      <UniqueIdentifier>{91f99fe6-aafa-41a3-98f2-3c2514e770e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{7fc8a6cd-3c2f-4704-9293-d0164965ab2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Wizard Tools">
+      <UniqueIdentifier>{8be4b818-a4d2-461e-b811-f74f3898baff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Exceptions">
+      <UniqueIdentifier>{1fb00eb9-35b3-472f-bd1a-56bad1f9747b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace">
+      <UniqueIdentifier>{80e9ce1e-29f3-4797-9181-34fc1f79c84b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Nbc">
+      <UniqueIdentifier>{d1bfe83f-0fbb-411b-bd23-4ffd6a25d6b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Nbc\Nbc data">
+      <UniqueIdentifier>{17edb6fb-9531-4fcf-bf42-83d12c07e4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Nbc\Nbc GUI">
+      <UniqueIdentifier>{b414429b-6324-4de3-b946-59f0085137e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Nbc\Nbc GUI\NBC Wizard">
+      <UniqueIdentifier>{e0ccd40d-2699-47ce-8b3e-62ee122fa522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Launchers">
+      <UniqueIdentifier>{132db70a-ed85-4cfe-b968-560c922b51e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Launchers\Launchers GUI">
+      <UniqueIdentifier>{41ce9ff1-e4fb-40be-8274-7293f71358f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Launchers\Launchers GUI\Launcher Wizard">
+      <UniqueIdentifier>{249600fa-f5db-4b2b-8ae1-03b7d6ace936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Launchers\Launchers Data">
+      <UniqueIdentifier>{3b83057a-280a-4107-a21f-a347f06f89b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Project">
+      <UniqueIdentifier>{d6186bc8-7198-4853-92ad-7e7e032c734b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories">
+      <UniqueIdentifier>{4e0b86be-a77c-4b8b-b68e-c0d7808a5623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Categories Data">
+      <UniqueIdentifier>{5703c360-268d-45dd-9e6c-6dfcc67a8fab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Categories GUI">
+      <UniqueIdentifier>{025c200c-dbd3-4692-8839-9743fa0e3898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Equipement">
+      <UniqueIdentifier>{74f36202-9392-4a4f-a747-ef339fac15d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Equipement\Equipement Data">
+      <UniqueIdentifier>{61a6853e-837d-4ba7-8504-48ff4890b367}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Equipement\Equipement GUI">
+      <UniqueIdentifier>{6e453dfe-0e7d-44fa-8020-a891b751625e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard">
+      <UniqueIdentifier>{99e857e9-c5bb-4dab-9837-8f866e611285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Object">
+      <UniqueIdentifier>{21172fc2-6cc7-4278-a15e-37b65a6bd6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Object\Objects Data">
+      <UniqueIdentifier>{d93c8130-2c9a-4971-b286-1f38b96888d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Object\Objects GUI">
+      <UniqueIdentifier>{4d31bbbc-6966-4787-b671-d3351969604b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Object\Objects GUI\Objects Wizard">
+      <UniqueIdentifier>{6bd2b37f-f5a0-4a4c-a530-f6802975e886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Weapons">
+      <UniqueIdentifier>{57b090a2-ae5a-47bc-9b6e-1457fd3c5805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Weapons\Weapons Data">
+      <UniqueIdentifier>{a12cccd7-d293-406b-a405-eb86eba65d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Weapons\Weapons GUI">
+      <UniqueIdentifier>{a4f33345-cc94-4036-af3a-90f80c1504c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard">
+      <UniqueIdentifier>{e126c646-ba81-420e-84ae-854d0f8c135b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Sensors">
+      <UniqueIdentifier>{d0e3f02a-86da-49b5-baf5-904d8d082e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Sensors\Sensors GUI">
+      <UniqueIdentifier>{d96f6b32-ae06-4104-9dda-1440e8c43895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Sensors\Sensors GUI\Wizard">
+      <UniqueIdentifier>{67698e61-0a2b-4a0e-bd34-9f8320255d13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Sensors\Sensors Data">
+      <UniqueIdentifier>{1be6622d-2b47-4d39-b55b-ef4953fa913e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Composantes">
+      <UniqueIdentifier>{e22c3acc-6752-4ded-82c2-3c0cf5d753c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Composantes\Composantes Data">
+      <UniqueIdentifier>{cb220e06-0d46-44f0-ac52-9065d6a167a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Composantes\Composantes GUI">
+      <UniqueIdentifier>{a85c5bd6-f85c-493f-91bb-ae567beb2be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Composantes\Composantes GUI\Composantes Wizard">
+      <UniqueIdentifier>{861e9588-13b3-466a-8ea4-ceae7e7a7354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Units">
+      <UniqueIdentifier>{25592e7e-2e9a-4e7b-afea-027e80fcbb04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Units\Units Data">
+      <UniqueIdentifier>{9a640c9c-b6be-44d9-8d0b-c5bdddb73604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Units\Units GUI">
+      <UniqueIdentifier>{6a74c536-cf53-474e-83bc-0afdd4c3f956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Units\Units GUI\Unit Wizard">
+      <UniqueIdentifier>{377cb947-e65f-46e1-a091-cbe67045d381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Models">
+      <UniqueIdentifier>{9c5b4d4a-bff0-437c-a9fe-b05e3e72c426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Models\Models GUI">
+      <UniqueIdentifier>{4f214dbd-99bf-4e1a-bec1-a91605290062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Models\Models GUI\Model Wizard">
+      <UniqueIdentifier>{abef1f03-b60c-4f73-94d0-76e60fc9a096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Models\Models Data">
+      <UniqueIdentifier>{5f08bcf2-e370-4389-a260-9ac7969fd1d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\AI Engine">
+      <UniqueIdentifier>{c177aa73-2134-4860-9bf3-3579a1f9bf7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\AI Engine\AI Engine data">
+      <UniqueIdentifier>{de3b69b9-1552-4f77-95dd-d690583392d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\AI Engine\AI Engine GUI">
+      <UniqueIdentifier>{ed9f2d6d-340d-479a-b878-4a08c50e8977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Automata">
+      <UniqueIdentifier>{553449da-1520-42a7-8ec7-6b46841a325f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Automata\Automata data">
+      <UniqueIdentifier>{f0102304-8184-4240-83a0-da4b2a3acb8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Automata\Automata GUI">
+      <UniqueIdentifier>{d35b832b-8934-4871-810c-8ee9699de9f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Automata\Automata GUI\Automata Wizard">
+      <UniqueIdentifier>{65edd81c-d2f2-4227-964f-54dc355ba257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Communications">
+      <UniqueIdentifier>{bfd37a4d-a479-4fbb-93e1-ff82da8512cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Communications\Communications data">
+      <UniqueIdentifier>{ce1da08f-cf47-4937-afc3-ad432501230c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Communications\Communications GUI">
+      <UniqueIdentifier>{b4d66ffb-3096-412c-a492-faa820043602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Human factors">
+      <UniqueIdentifier>{46f376f6-b902-4bda-9549-e8bd844b6dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Human factors\Human factors data">
+      <UniqueIdentifier>{4c0e1931-cfe9-49ef-9019-b5caed6cccd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Human factors\Human factors GUI">
+      <UniqueIdentifier>{27797829-c762-41ee-80fb-88f58228cf7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Maintenance">
+      <UniqueIdentifier>{5da50a28-14bb-4055-81da-58b5307027fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Maintenance\Maintenance data">
+      <UniqueIdentifier>{4fdb052e-a1ce-4698-8ff3-57a82a1c91d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Maintenance\Maintenance GUI">
+      <UniqueIdentifier>{da349d77-e3f3-4443-ab11-51981ccd2fd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Missions">
+      <UniqueIdentifier>{6298914c-3bb5-4e2c-85b1-3e38e9498370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Missions\Missions data">
+      <UniqueIdentifier>{f97eba06-aee7-4057-9013-734e44a47f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Missions\Missions GUI">
+      <UniqueIdentifier>{842e7022-1fa0-419e-9de1-aa9e6b836cac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Missions\Missions GUI\Mission Wizard">
+      <UniqueIdentifier>{103dc883-8415-441b-b01f-703188043f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Breakdowns">
+      <UniqueIdentifier>{fb3adc48-e4cd-46c4-aa27-419c25c433e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Breakdowns\Breakdowns data">
+      <UniqueIdentifier>{c4d1baf6-483d-4584-813c-34ce5568e6bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Breakdowns\Breakdowns GUI">
+      <UniqueIdentifier>{d73e6c3c-f5b9-4b23-94b6-b36f94af3c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Breakdowns\Breakdowns GUI\Breakdown wizard">
+      <UniqueIdentifier>{3afd622b-f664-4f49-9144-06fdc7a4a082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Knowledge groups">
+      <UniqueIdentifier>{6a117d16-9421-4f67-958b-292e4e52ab0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Knowledge groups\Knowledge groups data">
+      <UniqueIdentifier>{c9e59b48-026a-4182-a93d-0cfa51633702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Knowledge groups\Knowledge groups GUI">
+      <UniqueIdentifier>{44d8c512-6d32-4d57-a64a-22ceabd2f580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard">
+      <UniqueIdentifier>{ac00cb73-172f-4637-97fc-1de9484d01e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Health">
+      <UniqueIdentifier>{fab4964b-e031-491b-8ffc-7692285104b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Health\Health data">
+      <UniqueIdentifier>{23cebc47-0fa8-4ee3-b6be-934c27c6ad90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Health\Health GUI">
+      <UniqueIdentifier>{cf2e72cc-7f6e-4429-a4a2-84c32e2f36da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Supply">
+      <UniqueIdentifier>{83615548-389b-448e-8518-fc817a9251de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Supply\Supply data">
+      <UniqueIdentifier>{a087ec4b-c5a8-4b73-8c3e-8ec5d8ae70ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Supply\Supply GUI">
+      <UniqueIdentifier>{22952b4a-6f18-49de-bb60-cf5523575ef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Radars">
+      <UniqueIdentifier>{aed412a7-2a5e-46fc-890a-532f9b7136a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Radars\Radars data">
+      <UniqueIdentifier>{d17bad53-3504-4fda-a545-c67d785e5549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Radars\Radars GUI">
+      <UniqueIdentifier>{4a60cae5-36a5-49bc-bf89-4ce1c454cbf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Radars\Radars GUI\Radar wizard">
+      <UniqueIdentifier>{a228efce-a9b9-4cf5-a748-504eb60874de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Population">
+      <UniqueIdentifier>{ae340b71-36c4-4151-b625-fd4976f56f0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Population\Population data">
+      <UniqueIdentifier>{42b72293-8889-46c3-aea6-3b79a0bc3093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Population\Population GUI">
+      <UniqueIdentifier>{88e6d076-fac5-43db-b440-a6364d21b212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Population\Population GUI\Population Wizard">
+      <UniqueIdentifier>{81fb1696-d018-4f08-b5cc-2df5bba1df54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Reports">
+      <UniqueIdentifier>{0c323936-f49a-4b6d-a871-0becf5316d36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Reports\Reports Data">
+      <UniqueIdentifier>{f01082e9-c4be-406e-9c3c-700e7596dffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Reports\Reports GUI">
+      <UniqueIdentifier>{e8f09f1e-dc09-44b8-9f40-f6105aabda74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\ActiveProtections">
+      <UniqueIdentifier>{36f46c90-5dce-4b3e-898f-983d64191b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\ActiveProtections\ActiveProtections data">
+      <UniqueIdentifier>{3a00ef44-2e1c-4317-a385-a34cc9aff011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\ActiveProtections\ActiveProtections GUI">
+      <UniqueIdentifier>{ac85fda1-f660-4f94-baa0-1417a81c4a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\ActiveProtections\ActiveProtections GUI\ActiveProtections wizard">
+      <UniqueIdentifier>{6921490e-315b-4f5f-9231-064e71c59c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Zurb">
+      <UniqueIdentifier>{2361c9eb-4537-4b5b-9bab-727a76467555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Zurb\Zurb Data">
+      <UniqueIdentifier>{8c430aa5-92de-4e0e-87ac-1231f67e0a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Zurb\Zurb GUI">
+      <UniqueIdentifier>{b74a65f7-9a8b-4b34-8b3a-199855789f2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Helpers">
+      <UniqueIdentifier>{d7398970-f1c5-4ede-9563-274ef61362a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Resource networks">
+      <UniqueIdentifier>{0e105e99-16ae-4f70-92f6-19c316ff4f50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Resource networks\Resource networks data">
+      <UniqueIdentifier>{c5968c15-e0f1-41ae-ad48-52188c42298d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Resource networks\Resource networks GUI">
+      <UniqueIdentifier>{1f0d8138-79a5-4622-b2bf-26de2d678a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Resource networks\Resource networks GUI\Resource networks Wizard">
+      <UniqueIdentifier>{0cac5288-c409-4907-bcc6-554e4cf3cd50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\People">
+      <UniqueIdentifier>{b2b2704c-c4f2-4c2a-8587-77ae233b4a23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\People\People Data">
+      <UniqueIdentifier>{1ff05ca1-d28b-40f0-adff-5875ec0e2473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\People\People GUI">
+      <UniqueIdentifier>{dedd201e-5dae-4914-b93f-896914b54c9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\People\People GUI\People Wizard">
+      <UniqueIdentifier>{e424e7e0-5f9b-42ae-9bd5-51870fed4bd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Fires">
+      <UniqueIdentifier>{2dac1d26-7beb-4e8b-85f3-94a809cc3a98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Fires\Fires Data">
+      <UniqueIdentifier>{6e13288d-0e5e-4248-9fa1-71b214736e4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Fires\Fires GUI">
+      <UniqueIdentifier>{9cf1fb92-b5c6-4f91-99f1-d5685292359e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Fires\Fires GUI\Wizards">
+      <UniqueIdentifier>{a68f2e8f-d11a-4f34-beae-d83f94df2e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Symbols">
+      <UniqueIdentifier>{b1c44f93-5d38-4d67-b128-805c42ce0616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Symbols\Data">
+      <UniqueIdentifier>{d2343fbe-42af-437d-b612-30aaef2b9d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Symbols\GUI">
+      <UniqueIdentifier>{9de85de6-ade4-4cf0-a403-8e1108d3e177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Drawings">
+      <UniqueIdentifier>{76c8ec9a-cdf1-42cd-a345-9bd776687b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Drawings\Data">
+      <UniqueIdentifier>{01ea7c62-8423-4842-b3a0-60423b192f00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Drawings\GUI">
+      <UniqueIdentifier>{a0aa9113-e72c-42ed-8591-3b26acaec938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Undo &amp; redo">
+      <UniqueIdentifier>{9536a758-3cf5-4f2e-8bdc-945ec75e12c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Undo &amp; redo\qt undo pattern">
+      <UniqueIdentifier>{18d254ac-ee45-4cb3-893f-5af5148ab1bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Undo &amp; redo\change value">
+      <UniqueIdentifier>{45ad8a5a-b815-4bd2-9b66-22797f6680e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Undo &amp; redo\vector commands">
+      <UniqueIdentifier>{c0c0a083-a47a-4294-8ffa-6f6018cc1389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\open mode dialog">
+      <UniqueIdentifier>{edbd886b-23e1-408f-bf88-9f60dcbbae86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GQ">
+      <UniqueIdentifier>{83bb80a1-77e9-492e-959d-9de81d1415b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets">
+      <UniqueIdentifier>{cf5f4ef0-efff-47d5-b3c4-a4f8be6d79e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Standard Connectors">
+      <UniqueIdentifier>{e34f04df-1167-4b4e-baef-a83d8b2229a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Table">
+      <UniqueIdentifier>{713a9e18-7bd7-4574-b0f8-75b45653c7f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\List view">
+      <UniqueIdentifier>{3cb48548-e06a-4e3a-9032-bc85ff3a72cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Combo box">
+      <UniqueIdentifier>{54206d7a-a596-4ba7-a809-11794ca23327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Edit line">
+      <UniqueIdentifier>{acc8e967-b250-48ec-9305-d002a8588225}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Graphics">
+      <UniqueIdentifier>{654017ea-0e79-4a2a-979d-69977b47ae46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Equipement selector">
+      <UniqueIdentifier>{c0e8a4ab-5ef3-4232-8f59-e36b67d1fe08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Progress bar &amp; splash screen">
+      <UniqueIdentifier>{506b29f1-b204-43cc-8e3c-5b6f54d518f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Color selector">
+      <UniqueIdentifier>{bb92ffae-e542-4944-a620-425402e8677f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{d7fe1d98-dc81-4346-9995-4cf822f6abd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\xml">
+      <UniqueIdentifier>{7deb3dae-0cb3-485e-8e44-374d0a54d6ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\xpm">
+      <UniqueIdentifier>{6f849d77-354f-47c9-954c-8f3f2ef63ddb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{4787fa5a-706d-4875-b7c4-a6ffccc001e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.cpp">
+      <Filter>Source Files\Common types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_Vector_ABC.cpp">
+      <Filter>Source Files\Common types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Ref_ABC.cpp">
+      <Filter>Source Files\Common types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Type_Repartition.cpp">
+      <Filter>Source Files\Common types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataTreeNode_ABC.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DialogLog.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GuiBuilder.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GuiTools.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HtmlBuilder.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiPercentage.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tools.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr_Gen.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\IdentifierFactory.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ImageViewer.cpp">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Wizard_LastPage.cpp">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WizardPage_ABC.cpp">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.cpp">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_OpenFile_Exception.cpp">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.cpp">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.cpp">
+      <Filter>Source Files\Workspace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FileLoaderObserver.cpp">
+      <Filter>Source Files\Workspace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GUI_ABC.cpp">
+      <Filter>Source Files\Workspace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Workspace.cpp">
+      <Filter>Source Files\Workspace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WorkspaceElement_ABC.cpp">
+      <Filter>Source Files\Workspace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_Datas.cpp">
+      <Filter>Source Files\Workspace\Nbc\Nbc data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_GUI.cpp">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_Intox_GUI.cpp">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_NbcAgentListView.cpp">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_Wizard.cpp">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI\NBC Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.cpp">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launchers_ModifPhs_GUI.cpp">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Launchers.cpp">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launcher_Wizard.cpp">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI\Launcher Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launchers_Data.cpp">
+      <Filter>Source Files\Workspace\Launchers\Launchers Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Project_Data.cpp">
+      <Filter>Source Files\Workspace\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Categories_Data.cpp">
+      <Filter>Source Files\Workspace\Categories\Categories Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Categories_AttritionEffect_Table.cpp">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.cpp">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.cpp">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_DotationNature.cpp">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.cpp">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_Nature.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionGraph.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionTable.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GenericListView.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GUI.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard_Page0.cpp">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.cpp">
+      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Objects.cpp">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_GUI.cpp">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_FirePropagationModifier.cpp">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_LocationScore.cpp">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Wizard.cpp">
+      <Filter>Source Files\Workspace\Object\Objects GUI\Objects Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeaponFilter.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_GUI.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_ListView.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhSizeListView.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhTable.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard_Page0.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Sensors.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_DetectionAlgorithmPrevision.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Environments_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Illumination_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_LimitedToSensorsListView.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Meteos_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Sizes_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Targets_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_TargetsListView.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_UrbanBlockMaterial_GUI.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensor_Wizard.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI\Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Data.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Data.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Composantes_Sizes.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_ActiveProtectionsListView.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_BreakdownsTable.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_ConsumptionsTable.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Dotations_GUI.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_GUI.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_RadarsListView.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Sensors_GUI.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_WeaponsListView.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes_Objects.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composante_Wizard.cpp">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI\Composantes Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Data.cpp">
+      <Filter>Source Files\Workspace\Units\Units Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_Data.cpp">
+      <Filter>Source Files\Workspace\Units\Units Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Units.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Nature_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Point_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Composantes_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_LogThreshold_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Postures_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolsComboBox.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Unit_Wizard.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI\Unit Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Missions.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Models.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Orders.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_CheckItem.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard_FirstPage.cpp">
+      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Models_Data.cpp">
+      <Filter>Source Files\Workspace\Models\Models Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AiEngine_Data.cpp">
+      <Filter>Source Files\Workspace\AI Engine\AI Engine data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AiEngine_GUI.cpp">
+      <Filter>Source Files\Workspace\AI Engine\AI Engine GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_Data.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_ListView.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_SubUnitsTable.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AutomatLog_ListView.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AutomatLogCategory_ListView.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_Wizard.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata GUI\Automata Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Communications_Data.cpp">
+      <Filter>Source Files\Workspace\Communications\Communications data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Communications_GUI.cpp">
+      <Filter>Source Files\Workspace\Communications\Communications GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_Data.cpp">
+      <Filter>Source Files\Workspace\Human factors\Human factors data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_GUI.cpp">
+      <Filter>Source Files\Workspace\Human factors\Human factors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarning.cpp">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Maintenance_Data.cpp">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarningTable.cpp">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Maintenance_GUI.cpp">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_Data.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_FragOrderTypes.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_MissionTypes.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameters_Table.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameterType.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameterValues_Table.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_GUI.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FragOrder_Wizard.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FragOrder_WizardSecondPage.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_Wizard.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.cpp">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_GUI.cpp">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_ListView.cpp">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_PartsTable.cpp">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdown_Wizard.cpp">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI\Breakdown wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Data.cpp">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_GUI.cpp">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_ListView.cpp">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Wizard.cpp">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Health_Data.cpp">
+      <Filter>Source Files\Workspace\Health\Health data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.cpp">
+      <Filter>Source Files\Workspace\Health\Health GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.cpp">
+      <Filter>Source Files\Workspace\Supply\Supply data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_GUI.cpp">
+      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.cpp">
+      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.cpp">
+      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.cpp">
+      <Filter>Source Files\Workspace\Radars\Radars data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.cpp">
+      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.cpp">
+      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_Wizard.cpp">
+      <Filter>Source Files\Workspace\Radars\Radars GUI\Radar wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Data.cpp">
+      <Filter>Source Files\Workspace\Population\Population data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffectRoe_GUI.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_GUI.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_ListView.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Wizard.cpp">
+      <Filter>Source Files\Workspace\Population\Population GUI\Population Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.cpp">
+      <Filter>Source Files\Workspace\Reports\Reports Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_GUI.cpp">
+      <Filter>Source Files\Workspace\Reports\Reports GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Data.cpp">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_GUI.cpp">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.cpp">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtectionsListView.cpp">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.cpp">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Wizard.cpp">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI\ActiveProtections wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanInfrastructure_Type.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_AttritionTable.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionEffectOnHuman.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionInfos.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_CapacityInfos.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Data.cpp">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_ResourceNetworks.cpp">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.cpp">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Wizard.cpp">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI\Resource networks Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Data.cpp">
+      <Filter>Source Files\Workspace\People\People Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.cpp">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_GUI.cpp">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_ListView.cpp">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.cpp">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Wizard.cpp">
+      <Filter>Source Files\Workspace\People\People GUI\People Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_Data.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos_Table.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_ListView.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SurfaceFireInfos_Table.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects_Table.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_Wizard.cpp">
+      <Filter>Source Files\Workspace\Fires\Fires GUI\Wizards</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Symbols_Data.cpp">
+      <Filter>Source Files\Workspace\Symbols\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Symbols_GUI.cpp">
+      <Filter>Source Files\Workspace\Symbols\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Drawings_Data.cpp">
+      <Filter>Source Files\Workspace\Drawings\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Drawings_GUI.cpp">
+      <Filter>Source Files\Workspace\Drawings\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\qtundo.cpp">
+      <Filter>Source Files\Undo &amp; redo\qt undo pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Bool.cpp">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Double.cpp">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Enum.cpp">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Helper.cpp">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Int.cpp">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Pointer.cpp">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_String.cpp">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AddElementCommand.cpp">
+      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RemoveElementCommand.cpp">
+      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_OpenMode_Dialog.cpp">
+      <Filter>Source Files\open mode dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\GQ_Plot.cpp">
+      <Filter>Source Files\GQ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\GQ_PlotAxis.cpp">
+      <Filter>Source Files\GQ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\GQ_PlotCaption.cpp">
+      <Filter>Source Files\GQ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\GQ_PlotData.cpp">
+      <Filter>Source Files\GQ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\GQ_PlotDataBBox.cpp">
+      <Filter>Source Files\GQ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\GQ_PlotToolTip.cpp">
+      <Filter>Source Files\GQ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_CheckBox.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FileChooser.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Gfx_ABC.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GroupBox.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RadioButton.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TimeField.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_ListView_ABC.cpp">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_Table_ABC.cpp">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_BoolEditor.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Table.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_ABC.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_CheckItem.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBox.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBoxItem.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_TimeField.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView.cpp">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewItem.cpp">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.cpp">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\MT_ListViewItem.cpp">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox.cpp">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBoxItem.cpp">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_EditLine_ABC.cpp">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Validator.cpp">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_Graph_ABC.cpp">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Graph.cpp">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GraphData.cpp">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GraphValue.cpp">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_EquipementSelector.cpp">
+      <Filter>Source Files\Common widgets\Equipement selector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SupplyUnitSelector.cpp">
+      <Filter>Source Files\Common widgets\Equipement selector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ProgressBar.cpp">
+      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ProgressIndicator_ABC.cpp">
+      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SplashScreen.cpp">
+      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.cpp">
+      <Filter>Source Files\Common widgets\Color selector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\XmlResources.cpp">
+      <Filter>Resources\xml</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_App.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Enums.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Enums_Gen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Enum.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Repartition.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Tab_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Vector_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_VectorFixed_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TypePtr_InVector_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Types.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Callback.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataTreeNode_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DialogLog.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GuiBuilder.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GuiTools.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_HtmlBuilder.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tools.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tr.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\IdentifierFactory.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ImageViewer.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_ABC.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_ABC.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_Default.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_Image.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_LastPage.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage_ABC.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataException.h">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.h">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_OpenFile_Exception.h">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.h">
+      <Filter>Source Files\Tools\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FileLoaderObserver.h">
+      <Filter>Source Files\Workspace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WorkspaceElement.h">
+      <Filter>Source Files\Workspace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WorkspaceElement_ABC.h">
+      <Filter>Source Files\Workspace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NBC_Datas.h">
+      <Filter>Source Files\Workspace\Nbc\Nbc data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NBC_NbcAgentListView.h">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NBC_Wizard.h">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI\NBC Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launchers_ModifPhs_GUI.h">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launcher_Wizard.h">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI\Launcher Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launchers_Data.h">
+      <Filter>Source Files\Workspace\Launchers\Launchers Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Project_Data.h">
+      <Filter>Source Files\Workspace\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_Data.h">
+      <Filter>Source Files\Workspace\Categories\Categories Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_AttritionEffect_Table.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_DotationNature.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_Nature.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionTable.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_GenericListView.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard_Page0.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.h">
+      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Objects.h">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_FirePropagationModifier.h">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_LocationScore.h">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Wizard.h">
+      <Filter>Source Files\Workspace\Object\Objects GUI\Objects Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_ListView.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhSizeListView.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhTable.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard_Page0.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_LimitedToSensorsListView.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Targets_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_TargetsListView.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Data.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Data.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Composantes_Sizes.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Sensors_GUI.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_Data.h">
+      <Filter>Source Files\Workspace\Units\Units Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_Data.h">
+      <Filter>Source Files\Workspace\Units\Units Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Units.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Point_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_LogThreshold_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_Postures_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Missions.h">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Models.h">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Orders.h">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_CheckItem.h">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.h">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.h">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard.h">
+      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard_FirstPage.h">
+      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_Data.h">
+      <Filter>Source Files\Workspace\Models\Models Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AiEngine_Data.h">
+      <Filter>Source Files\Workspace\AI Engine\AI Engine data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AiEngine_GUI.h">
+      <Filter>Source Files\Workspace\AI Engine\AI Engine GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_Data.h">
+      <Filter>Source Files\Workspace\Automata\Automata data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_ListView.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AutomatLog_ListView.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_Wizard.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI\Automata Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Communications_Data.h">
+      <Filter>Source Files\Workspace\Communications\Communications data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Communications_GUI.h">
+      <Filter>Source Files\Workspace\Communications\Communications GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_Data.h">
+      <Filter>Source Files\Workspace\Human factors\Human factors data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_GUI.h">
+      <Filter>Source Files\Workspace\Human factors\Human factors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarning.h">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Maintenance_Data.h">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarningTable.h">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Maintenance_GUI.h">
+      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Data.h">
+      <Filter>Source Files\Workspace\Missions\Missions data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_MissionTypes.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionParameterType.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionParameterValues_Table.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FragOrder_Wizard.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FragOrder_WizardSecondPage.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_Wizard.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.h">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_GUI.h">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_ListView.h">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_PartsTable.h">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdown_Wizard.h">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI\Breakdown wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Data.h">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_GUI.h">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_ListView.h">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Wizard.h">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_Data.h">
+      <Filter>Source Files\Workspace\Health\Health data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.h">
+      <Filter>Source Files\Workspace\Health\Health GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.h">
+      <Filter>Source Files\Workspace\Supply\Supply data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_GUI.h">
+      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.h">
+      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.h">
+      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.h">
+      <Filter>Source Files\Workspace\Radars\Radars data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.h">
+      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.h">
+      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Wizard.h">
+      <Filter>Source Files\Workspace\Radars\Radars GUI\Radar wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Data.h">
+      <Filter>Source Files\Workspace\Population\Population data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffectRoe_GUI.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_ListView.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Wizard.h">
+      <Filter>Source Files\Workspace\Population\Population GUI\Population Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.h">
+      <Filter>Source Files\Workspace\Reports\Reports Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_GUI.h">
+      <Filter>Source Files\Workspace\Reports\Reports GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Data.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Wizard.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI\ActiveProtections wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanInfrastructure_Type.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_AttritionTable.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AttritionEffectOnHuman.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AttritionInfos.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_CapacityInfos.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Data.h">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_ResourceNetworks.h">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Wizard.h">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI\Resource networks Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Data.h">
+      <Filter>Source Files\Workspace\People\People Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.h">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_ListView.h">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Wizard.h">
+      <Filter>Source Files\Workspace\People\People GUI\People Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.h">
+      <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_Data.h">
+      <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects.h">
+      <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos_Table.h">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_ListView.h">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SurfaceFireInfos_Table.h">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects_Table.h">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_Wizard.h">
+      <Filter>Source Files\Workspace\Fires\Fires GUI\Wizards</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Symbols_Data.h">
+      <Filter>Source Files\Workspace\Symbols\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Symbols_GUI.h">
+      <Filter>Source Files\Workspace\Symbols\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Drawings_Data.h">
+      <Filter>Source Files\Workspace\Drawings\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Drawings.h">
+      <Filter>Source Files\Workspace\Drawings\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Drawings_GUI.h">
+      <Filter>Source Files\Workspace\Drawings\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Enum.h">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Helper.h">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Pointer.h">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AddElementCommand.h">
+      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_RemoveElementCommand.h">
+      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_OpenMode_Dialog.h">
+      <Filter>Source Files\open mode dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\GQ_PlotDataBBox.h">
+      <Filter>Source Files\GQ</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\GQ_PlotToolTip.h">
+      <Filter>Source Files\GQ</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\GQ_ValueConvertor.h">
+      <Filter>Source Files\GQ</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_CommonGfx.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Gfx_ABC.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Bool.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo_ABC.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Double.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Enum.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Int.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_ListView.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_ListView_ABC.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_String.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Table_ABC.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_ABC.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_CheckItem.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBox.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBoxItem.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewItem.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UserData_ListViewItem.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\MT_ListViewItem.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\MT_ValuedListViewItem.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.h">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.h">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBoxItem.h">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_EditLine.h">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Graph_ABC.h">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GraphData.h">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ProgressIndicator_ABC.h">
+      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Type_Enum.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Type_Tab_ABC.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Type_Vector_ABC.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Type_VectorFixed_ABC.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_TypePtr_InVector_ABC.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_ABC.inl">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_ABC.inl">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_Default.inl">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Drawings.inl">
+      <Filter>Source Files\Workspace\Drawings\GUI</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Enum.inl">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Pointer.inl">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_AddElementCommand.inl">
+      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_RemoveElementCommand.inl">
+      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Bool.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo_ABC.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Double.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Enum.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Int.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_String.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.inl">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_UserData_ListViewItem.inl">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.inl">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.inl">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\res\checked_box.xpm">
+      <Filter>Resources\xpm</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\res\empty_box.xpm">
+      <Filter>Resources\xpm</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\res\filenew.xpm">
+      <Filter>Resources\xpm</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\res\fileopen.xpm">
+      <Filter>Resources\xpm</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\res\filesave.xpm">
+      <Filter>Resources\xpm</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\style_scipio.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainWindow.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TableDialog.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Connector_Vector_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Ref_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MultiPercentage.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.h">
+      <Filter>Source Files\Workspace</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_GUI_ABC.h">
+      <Filter>Source Files\Workspace</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Workspace.h">
+      <Filter>Source Files\Workspace</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_NBC_GUI.h">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_NBC_Intox_GUI.h">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.h">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Launchers.h">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionGraph.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipement_GUI.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Objects_GUI.h">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_WeaponFilter.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Weapons_GUI.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Sensors.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_DetectionAlgorithmPrevision.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Environments_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Illumination_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Meteos_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Sizes_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_UrbanBlockMaterial_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensor_Wizard.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI\Wizard</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_ActiveProtectionsListView.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_BreakdownsTable.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_ConsumptionsTable.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Dotations_GUI.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_GUI.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_RadarsListView.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_WeaponsListView.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes_Objects.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composante_Wizard.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI\Composantes Wizard</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Nature_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Units_Composantes_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Units_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolsComboBox.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Unit_Wizard.h">
+      <Filter>Source Files\Workspace\Units\Units GUI\Unit Wizard</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Automata_SubUnitsTable.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_AutomatLogCategory_ListView.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_FragOrderTypes.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameters_Table.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Missions_GUI.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Population_GUI.h">
+      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_GUI.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtectionsListView.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.h">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_People_GUI.h">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.h">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\qtundo.h">
+      <Filter>Source Files\Undo &amp; redo\qt undo pattern</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Bool.h">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Double.h">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Int.h">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_String.h">
+      <Filter>Source Files\Undo &amp; redo\change value</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\GQ_Plot.h">
+      <Filter>Source Files\GQ</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\GQ_PlotAxis.h">
+      <Filter>Source Files\GQ</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\GQ_PlotCaption.h">
+      <Filter>Source Files\GQ</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\GQ_PlotData.h">
+      <Filter>Source Files\GQ</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_CheckBox.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FileChooser.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_GroupBox.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_RadioButton.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TimeField.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_BoolEditor.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Table.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TableItem_TimeField.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ComboBox.h">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_EditLine_ABC.h">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Validator.h">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Graph.h">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_GraphValue.h">
+      <Filter>Source Files\Common widgets\Graphics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_EquipementSelector.h">
+      <Filter>Source Files\Common widgets\Equipement selector</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SupplyUnitSelector.h">
+      <Filter>Source Files\Common widgets\Equipement selector</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ProgressBar.h">
+      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SplashScreen.h">
+      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.h">
+      <Filter>Source Files\Common widgets\Color selector</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

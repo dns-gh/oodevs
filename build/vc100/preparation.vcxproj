@@ -1,0 +1,434 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2F277C44-47E7-422B-9D34-BB8FBAD7AD8D}</ProjectGuid>
+    <RootNamespace>preparation</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\include_qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Color.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ColorController.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\DiamondFormation.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\EntityCommunications.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\EntityIntelligences.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\IdManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Model.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\StaticModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Symbol.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Team.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TeamFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TeamKarmas.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TeamsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Diplomacies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Inhabitants.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Objects.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Populations.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TeamCommunications.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TeamHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentsModelChecker.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentAffinities.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentCommunications.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\CommandPostAttributes.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticBaseStates.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticSuperior.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Dotation.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\DotationsItem.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Stocks.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InitialState.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InitialStateCrew.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InitialStateEquipment.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InitialStateResource.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\FormationFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\FormationModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\FormationPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\FormationHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Lima.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Limit.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LimitsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLine_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLines.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLineHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TacticalLinePositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Population.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\PopulationHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\PopulationPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\WeatherModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ProfileFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ProfileSelection.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ProfilesGenerator.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ProfilesModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UserProfile.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Automat.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatCommunications.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatDecisions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevelAttritube.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AgentTemplateElement.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AutomatTemplateElement.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\FormationTemplateElement.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\HierarchyTemplate.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Intelligence.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\IntelligenceKarmas.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\IntelligencesModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\IntelligencePositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Score.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ScoreFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ScoresModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactor.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorCondition.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorConditions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionTypeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SuccessFactorActionTypes.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Exercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroupFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroupsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\KnowledgeGroupCommunications.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Architecture.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanColor.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Usages.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InfrastructureAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Inhabitant.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Affinities.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InhabitantHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InhabitantPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\PeopleAffinities.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\Object.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectsModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ObjectPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ActivityTimeAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\AltitudeModifierAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\BypassAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ConstructionAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\CrossingSiteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\DelayAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\FireAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\FloodAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\InputToxicCloudAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LodgingAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\MineAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\NBCAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ObstacleAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\OccupantAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ResourceNetworkAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\StockAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\StructuralStateAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\SupplyRouteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UndergroundAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LocationSerializer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Color.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ColorController.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\DiamondFormation.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\EntityCommunications.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\EntityIntelligences.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\EnumTypes.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\IdManager.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Model.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ModelChecker_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\StaticModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Symbol.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Tools.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Types.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Team.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TeamFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TeamFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TeamKarmas.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TeamsModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Diplomacies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Inhabitants.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Objects.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Populations.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TeamCommunications.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TeamHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Agent.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentsModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentsModelChecker.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentAffinities.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentCommunications.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\CommandPostAttributes.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticBaseStates.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticSuperior.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Dotation.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\DotationsItem.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Stocks.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InitialState.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InitialStateCrew.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InitialStateEquipment.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InitialStateResource.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Formation.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FormationFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FormationFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FormationModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FormationPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FormationHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Lima.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Limit.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LimitsModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLine_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLines.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLineHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TacticalLinePositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Population.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\PopulationRepartition.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\PopulationHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\PopulationPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\WeatherModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileSelection.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ProfilesGenerator.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ProfilesModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UserProfile.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Automat.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatCommunications.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatDecisions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttritube.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AgentTemplateElement.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AutomatTemplateElement.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FormationTemplateElement.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\HierarchyTemplate.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TemplateElement_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Intelligence.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\IntelligenceKarmas.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\IntelligencesModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\IntelligencePositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Score.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Score_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ScoresModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactor.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorsModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorAction.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionParameter.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorCondition.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorConditions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionType.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionTypeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SuccessFactorActionTypes.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Exercise.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroup.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroupFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroupsModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\KnowledgeGroupCommunications.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Architecture.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanColor.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Usages.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InfrastructureAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Inhabitant.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Affinities.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InhabitantHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\PeopleAffinities.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Object.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectAttributeFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectsModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\Overridable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ObjectPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ActivityTimeAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\AltitudeModifierAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\BypassAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ConstructionAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\CrossingSiteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\DelayAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FireAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\FloodAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\InputToxicCloudAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LodgingAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\MineAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\NBCAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ObstacleAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\OccupantAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ResourceNetworkAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\StockAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\StructuralStateAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\SupplyRouteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UndergroundAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LocationSerializer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\preparation\preparation_es.ts" />
+    <None Include="..\..\src\libraries\preparation\preparation_fr.ts" />
+    <CustomBuild Include="..\..\src\libraries\preparation\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose "%(FullPath)"
+lrelease -verbose "%(FullPath)"
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_gui.vcxproj">
+      <Project>{414655f4-84bf-4f22-9afb-855102f9cf2a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="flood.vcxproj">
+      <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="indicators.vcxproj">
+      <Project>{a95887c7-751e-43ea-b541-38b573587c7b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

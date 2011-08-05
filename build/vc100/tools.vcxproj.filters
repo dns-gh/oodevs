@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{bab52a2e-b656-4cfe-bafd-6ad2a490b06d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Command line">
+      <UniqueIdentifier>{8e06023f-d400-4d55-bb84-75bdbef5aadf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{61e22cc3-c904-413f-9ed4-b9e364547034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\internal">
+      <UniqueIdentifier>{a3cd8eb5-9336-41cb-aa06-2730d8e827f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\abc">
+      <UniqueIdentifier>{d42ef018-18b3-4383-bdf9-8c36764b68e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\facade">
+      <UniqueIdentifier>{0ddfe996-5fd6-4313-99e6-af345f4dd934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\encoding">
+      <UniqueIdentifier>{95e11492-3eb9-414c-8221-7c83c4ea031f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\File loaders">
+      <UniqueIdentifier>{3af31ca3-90da-4f44-b5fc-7fe098782826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\File loaders\Matchers">
+      <UniqueIdentifier>{e4e787f7-ed91-4099-abf7-b65f5bff0220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\File writer">
+      <UniqueIdentifier>{01d9ccda-0f6c-4b13-8fda-b636c785252c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\CommandLineConfig_ABC.cpp">
+      <Filter>Source Files\Command line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\ExerciseConfig.cpp">
+      <Filter>Source Files\Command line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\GeneralConfig.cpp">
+      <Filter>Source Files\Command line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\SessionConfig.cpp">
+      <Filter>Source Files\Command line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\WinArguments.cpp">
+      <Filter>Source Files\Command line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\WorldParameters.cpp">
+      <Filter>Source Files\Command line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Acceptor.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\BufferedConnectionCallback.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\BufferedMessageCallback.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Connector.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Message.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\ObjectMessageService.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Socket.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\SocketManager.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\ClientNetworker.cpp">
+      <Filter>Source Files\Network\facade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\ServerNetworker.cpp">
+      <Filter>Source Files\Network\facade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\DefaultLoader.cpp">
+      <Filter>Source Files\File loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\FileMigration.cpp">
+      <Filter>Source Files\File loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Loader.cpp">
+      <Filter>Source Files\File loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\NullFileLoaderObserver.cpp">
+      <Filter>Source Files\File loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\RealFileLoader.cpp">
+      <Filter>Source Files\File loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\SchemaVersionExtractor.cpp">
+      <Filter>Source Files\File loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherFactory.cpp">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherFileName.cpp">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherNonVersionedSchema.cpp">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherRootNode.cpp">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\SchemaWriter.cpp">
+      <Filter>Source Files\File writer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\tools_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Version.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Visitor_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\xmlcodecs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\CommandLineConfig_ABC.h">
+      <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ExerciseConfig.h">
+      <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\GeneralConfig.h">
+      <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\SessionConfig.h">
+      <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\WinArguments.h">
+      <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\WorldParameters.h">
+      <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Acceptor.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\asio.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\BufferedConnectionCallback.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\BufferedMessageCallback.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ConnectionCallback_ABC.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Connector.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Handler_ABC.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Message.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageCallback_ABC.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageHandler.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageHandler_ABC.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageIdentifierFactory.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ObjectMessageService.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Socket.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\SocketManager.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageController_ABC.h">
+      <Filter>Source Files\Network\abc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageDispatcher_ABC.h">
+      <Filter>Source Files\Network\abc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageObserver_ABC.h">
+      <Filter>Source Files\Network\abc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageSender_ABC.h">
+      <Filter>Source Files\Network\abc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ClientNetworker.h">
+      <Filter>Source Files\Network\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageController.h">
+      <Filter>Source Files\Network\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageObserver.h">
+      <Filter>Source Files\Network\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ServerNetworker.h">
+      <Filter>Source Files\Network\facade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageDecoder.h">
+      <Filter>Source Files\Network\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\MessageEncoder.h">
+      <Filter>Source Files\Network\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\DefaultLoader.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMigration.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMigration_ABC.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Loader.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Loader_ABC.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\NullFileLoaderObserver.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\RealFileLoader.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\RealFileLoader_ABC.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\RealFileLoaderObserver_ABC.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\SchemaVersionExtractor.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\SchemaVersionExtractor_ABC.h">
+      <Filter>Source Files\File loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcher_ABC.h">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherFactory.h">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherFactory_ABC.h">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherFileName.h">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherNonVersionedSchema.h">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherRootNode.h">
+      <Filter>Source Files\File loaders\Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\SchemaWriter.h">
+      <Filter>Source Files\File writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\SchemaWriter_ABC.h">
+      <Filter>Source Files\File writer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

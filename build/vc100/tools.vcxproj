@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|win32">
+      <Configuration>debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|win32">
+      <Configuration>release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C11D1C79-D437-4299-A75A-98DD97036D5B}</ProjectGuid>
+    <RootNamespace>tools</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_release.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Version.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\CommandLineConfig_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\ExerciseConfig.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\GeneralConfig.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\SessionConfig.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\WinArguments.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\WorldParameters.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Acceptor.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\BufferedConnectionCallback.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\BufferedMessageCallback.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Connector.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Message.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\ObjectMessageService.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Socket.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\SocketManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\ClientNetworker.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\ServerNetworker.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\DefaultLoader.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\FileMigration.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Loader.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\NullFileLoaderObserver.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\RealFileLoader.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\SchemaVersionExtractor.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherFileName.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherNonVersionedSchema.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\FileMatcherRootNode.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\SchemaWriter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h" />
+    <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Version.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Visitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\xmlcodecs.h" />
+    <ClInclude Include="..\..\src\libraries\tools\CommandLineConfig_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ExerciseConfig.h" />
+    <ClInclude Include="..\..\src\libraries\tools\GeneralConfig.h" />
+    <ClInclude Include="..\..\src\libraries\tools\SessionConfig.h" />
+    <ClInclude Include="..\..\src\libraries\tools\WinArguments.h" />
+    <ClInclude Include="..\..\src\libraries\tools\WorldParameters.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Acceptor.h" />
+    <ClInclude Include="..\..\src\libraries\tools\asio.h" />
+    <ClInclude Include="..\..\src\libraries\tools\BufferedConnectionCallback.h" />
+    <ClInclude Include="..\..\src\libraries\tools\BufferedMessageCallback.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ConnectionCallback_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Connector.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Handler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Message.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageCallback_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageHandler.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageIdentifierFactory.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ObjectMessageService.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Socket.h" />
+    <ClInclude Include="..\..\src\libraries\tools\SocketManager.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageController_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageDispatcher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageSender_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ClientNetworker.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageController.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageObserver.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ServerNetworker.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageDecoder.h" />
+    <ClInclude Include="..\..\src\libraries\tools\MessageEncoder.h" />
+    <ClInclude Include="..\..\src\libraries\tools\DefaultLoader.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMigration.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMigration_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Loader.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Loader_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\NullFileLoaderObserver.h" />
+    <ClInclude Include="..\..\src\libraries\tools\RealFileLoader.h" />
+    <ClInclude Include="..\..\src\libraries\tools\RealFileLoader_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\RealFileLoaderObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\SchemaVersionExtractor.h" />
+    <ClInclude Include="..\..\src\libraries\tools\SchemaVersionExtractor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherFactory.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherFileName.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherNonVersionedSchema.h" />
+    <ClInclude Include="..\..\src\libraries\tools\FileMatcherRootNode.h" />
+    <ClInclude Include="..\..\src\libraries\tools\SchemaWriter.h" />
+    <ClInclude Include="..\..\src\libraries\tools\SchemaWriter_ABC.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

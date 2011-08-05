@@ -1,0 +1,1096 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a4239861-f024-4d57-b9f2-971d7352459e}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{25564a08-501a-463a-b14a-76af227a69ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Locations">
+      <UniqueIdentifier>{2d5d9f11-0bea-4b71-973c-2427097049d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Locations\Visitors">
+      <UniqueIdentifier>{3e9ed942-8479-4c38-bf38-704b860cadc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XML model">
+      <UniqueIdentifier>{e5355b31-1d7c-4378-a11f-d5a164a6358f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XML model\Symbols">
+      <UniqueIdentifier>{ddd3b91c-aa4f-41df-917a-04abc1efcd80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XML model\Decisional">
+      <UniqueIdentifier>{fae71cda-d5e7-413a-96ef-04226bd35c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XML model\Decisional\Types">
+      <UniqueIdentifier>{c39dd66f-d71a-4e4f-8c1d-c7a63d97cd41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XML model\Dictionaries">
+      <UniqueIdentifier>{ec792993-6adf-4912-bf72-4101d8981bd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kernel">
+      <UniqueIdentifier>{bfe992b9-1129-4354-b8c0-7181182570cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kernel\Observer">
+      <UniqueIdentifier>{c24b5c44-d5f0-4123-bf62-a79003c878fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kernel\Observer\Helpers">
+      <UniqueIdentifier>{ad79bed8-0c73-4a95-96c0-1b5bc7567e0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kernel\Visitor">
+      <UniqueIdentifier>{44821265-fb6d-4428-a2f9-39c26a4de727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Options">
+      <UniqueIdentifier>{3d17a96c-11b1-4651-948f-6fa3f815a7d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Display">
+      <UniqueIdentifier>{50a587cd-eaaf-4ac6-af48-d2b224601fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{2b35b9d8-41d0-4848-a30e-24d7f9b87222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Extensions">
+      <UniqueIdentifier>{8d71e213-3caa-401f-8eae-a0f8769cf265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities">
+      <UniqueIdentifier>{9a7bcdd0-d4f8-4f9a-8016-ea5e13216eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities\Intelligence">
+      <UniqueIdentifier>{21e588ff-cb89-4d29-8ee2-cd56671ffb5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities\Population">
+      <UniqueIdentifier>{4948de49-3c0c-459a-a964-acfe665f4a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{c4237bd6-81f1-4efe-b604-c0dca4826eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{e6a01cec-02a0-4fab-96f8-49fd3920e55b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ApproximativeMap.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AtlasNature.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AtlasNatures.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CoordinateConverter.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CoordinateSystems.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMap.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\objecticons.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Styles.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Circle.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Lines.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\LocationProxy.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Path.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Point.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Polygon.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Rectangle.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\LocationProximityComputer.cpp">
+      <Filter>Source Files\Tools\Locations\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SimpleLocationDrawer.cpp">
+      <Filter>Source Files\Tools\Locations\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AccommodationType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AccommodationTypes.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentComposition.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentNature.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentTypes.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AutomatComposition.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AutomatType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\BreakdownOriginType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\BreakdownType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ComponentType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DotationCapacityType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DotationType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EquipmentType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FacadeType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FireClass.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\InfrastructureType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\InhabitantType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\KnowledgeGroupType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ModelLoaded.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\NBCAgent.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\NBCTypeAgent.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectTypes.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ResourceNetworkType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\RoofShapeType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SensorType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\VolumeType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\WeaponSystemType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolCase.cpp">
+      <Filter>Source Files\XML model\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolFactory.cpp">
+      <Filter>Source Files\XML model\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolRule.cpp">
+      <Filter>Source Files\XML model\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DecisionalModel.cpp">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FragOrder.cpp">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Mission.cpp">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MissionFactory.cpp">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FragOrderType.cpp">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MagicActionType.cpp">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MissionType.cpp">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OrderParameter.cpp">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OrderParameterValue.cpp">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OrderType.cpp">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AttributeType.cpp">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryEntryType.cpp">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryType.cpp">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EntryLabelType.cpp">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ExtensionDependency.cpp">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ExtensionType.cpp">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ExtensionTypes.cpp">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ActionController.cpp">
+      <Filter>Source Files\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Controller.cpp">
+      <Filter>Source Files\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Controllers.cpp">
+      <Filter>Source Files\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ContextMenu.cpp">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ResourceNetworkSelectionObserver.cpp">
+      <Filter>Source Files\kernel\Observer\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TeamSelectionObserver.cpp">
+      <Filter>Source Files\kernel\Observer\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\FourStateOption.cpp">
+      <Filter>Source Files\Options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Options.cpp">
+      <Filter>Source Files\Options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\OptionVariant.cpp">
+      <Filter>Source Files\Options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TristateOption.cpp">
+      <Filter>Source Files\Options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Displayer_ABC.cpp">
+      <Filter>Source Files\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Formatter.cpp">
+      <Filter>Source Files\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Logger_ABC.cpp">
+      <Filter>Source Files\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\NullDisplayer.cpp">
+      <Filter>Source Files\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Viewport_ABC.cpp">
+      <Filter>Source Files\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Drawer.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\StockAttribute_ABC.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalHierarchies.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Agent_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\AgentKnowledge_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Automat_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Entity_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Formation_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Inhabitant_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\KnowledgeGroup_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Object_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectKnowledge_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLine_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Team_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.cpp">
+      <Filter>Source Files\Model\Entities\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.cpp">
+      <Filter>Source Files\Model\Entities\Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Population_ABC.cpp">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationConcentration_ABC.cpp">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.cpp">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.cpp">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\App6Symbol.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ApproximativeMap.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AtlasNature.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AtlasNatures.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CoordinateConverter.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CoordinateConverter_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CoordinateSystems.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMap.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionVisitor_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Iterator.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\objecticons.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OptionalValue.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Resolver2.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResolverAdapter.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SafePointer.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Settings_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StrongType.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Styles.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Circle.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Lines.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Location_ABC.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationProxy.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Path.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Point.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Polygon.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Rectangle.h">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationDrawer_ABC.h">
+      <Filter>Source Files\Tools\Locations\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationProximityComputer.h">
+      <Filter>Source Files\Tools\Locations\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationVisitor_ABC.h">
+      <Filter>Source Files\Tools\Locations\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleLocationDrawer.h">
+      <Filter>Source Files\Tools\Locations\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AccommodationType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AccommodationTypes.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentComposition.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentNature.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentTypes.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AutomatComposition.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AutomatType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\BreakdownOriginType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\BreakdownType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ComponentType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DotationCapacityType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DotationType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EquipmentType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FacadeType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FireClass.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\InfrastructureType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\InhabitantType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroupType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModelLoaded.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\NBCAgent.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\NBCTypeAgent.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectTypes.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetworkType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\RoofShapeType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SensorType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\VolumeType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\WeaponSystemType.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolCase.h">
+      <Filter>Source Files\XML model\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolFactory.h">
+      <Filter>Source Files\XML model\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolRule.h">
+      <Filter>Source Files\XML model\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolVisitor_ABC.h">
+      <Filter>Source Files\XML model\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DecisionalModel.h">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FragOrder.h">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Mission.h">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MissionFactory.h">
+      <Filter>Source Files\XML model\Decisional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FragOrderType.h">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MagicActionType.h">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MissionType.h">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OrderParameter.h">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OrderParameterValue.h">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OrderType.h">
+      <Filter>Source Files\XML model\Decisional\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AttributeType.h">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryEntryType.h">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryType.h">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntryLabelType.h">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionDependency.h">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionType.h">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionTypes.h">
+      <Filter>Source Files\XML model\Dictionaries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Controller.h">
+      <Filter>Source Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Controllers.h">
+      <Filter>Source Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ActivationObserver_ABC.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ContextMenu.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ContextMenuObserver_ABC.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ControllerObserver_ABC.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ElementObserver_ABC.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Observer_ABC.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SelectionObserver_ABC.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetworkSelectionObserver.h">
+      <Filter>Source Files\kernel\Observer\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TeamSelectionObserver.h">
+      <Filter>Source Files\kernel\Observer\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModelVisitor_ABC.h">
+      <Filter>Source Files\kernel\Visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\FourStateOption.h">
+      <Filter>Source Files\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Options.h">
+      <Filter>Source Files\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OptionsObserver_ABC.h">
+      <Filter>Source Files\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OptionVariant.h">
+      <Filter>Source Files\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TristateOption.h">
+      <Filter>Source Files\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Displayer_ABC.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Formatter.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GLToolColors.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GlTools_ABC.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GlTooltip_ABC.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Logger_ABC.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\NullDisplayer.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Viewport_ABC.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentKnowledgeConverter_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Drawer.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityResolver_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\InstanciationComplete.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Model_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectKnowledgeConverter_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Profile_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Time_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentExtensions.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Aggregatable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Color_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Creatable.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Diplomacies_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Displayable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Dotations_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Drawable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Extension_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Hierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Infrastructure_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LivingArea_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LivingAreaVisitor_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Moveable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectExtensions.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Pickable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Positions.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetwork_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Serializable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StockAttribute_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalHierarchies.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanExtensions.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanSelection_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Agent_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\AgentKnowledge_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Automat_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Entity_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityImplementation.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Formation_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Inhabitant_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Knowledge_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroup_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeListener_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Object_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectKnowledge_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLine_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Team_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.h">
+      <Filter>Source Files\Model\Entities\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceFactory_ABC.h">
+      <Filter>Source Files\Model\Entities\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.h">
+      <Filter>Source Files\Model\Entities\Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Population_ABC.h">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationConcentration_ABC.h">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.h">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.h">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPart_ABC.h">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPrototype.h">
+      <Filter>Source Files\Model\Entities\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryUpdated.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ValueEditor.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">
+      <Filter>Source Files\Tools</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\Displayer_ABC.inl">
+      <Filter>Source Files\Display</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.inl">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\Creatable.inl">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.inl">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\EntityImplementation.inl">
+      <Filter>Source Files\Model\Entities</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h">
+      <Filter>Source Files\kernel</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\clients_kernel\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
