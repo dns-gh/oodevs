@@ -501,6 +501,7 @@ message FormationCreation {
     required string            app6symbol            = 7;  //!< The formation APP-6 symbol
     required EnumLogisticLevel logistic_level        = 8;  //!< @todo What's this ?
     optional RgbColor          color                 = 9;  //!< The formation color @see RgbColor
+    optional string            symbol                = 10; //!< The overriden formation symbol
 }
 
 /** @struct FormationUpdate
@@ -531,6 +532,7 @@ message AutomatCreation {
     required string            app6symbol      = 7;  //!< The automat APP-6 symbol
     required EnumLogisticLevel logistic_level  = 8;  //!< The automat logistic level @see EnumLogisticLevel
     optional RgbColor          color           = 9;  //!< The automat color @see RgbColor
+    optional string            symbol          = 10; //!< The overriden automat symbol
 }
 
 /** @struct RulesOfEngagement

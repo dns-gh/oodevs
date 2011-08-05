@@ -355,7 +355,7 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
 {
     if( column < 0 )
         return;
-    while( ( int )columns_.size() <= column )
+    while( static_cast< int >( columns_.size() ) <= column )
         columns_.push_back( RichText( "", CreateRichText( "" ) ) );
     RichText& richText = columns_[ column ];
     richText.pixMap = pm;

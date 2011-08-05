@@ -134,6 +134,7 @@ private:
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     std::auto_ptr< MIL_Color > pColor_;
+    std::string symbol_;
     //@}
 };
 

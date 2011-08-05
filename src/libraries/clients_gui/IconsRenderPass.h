@@ -77,6 +77,7 @@ private:
     //@{
     kernel::GlTools_ABC& tools_;
     const geometry::Rectangle2f viewport_;
+    bool firstPass_;
     T_IconTasks tasks_;
     //@}
 };

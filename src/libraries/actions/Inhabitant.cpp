@@ -51,7 +51,7 @@ Inhabitant::Inhabitant( const kernel::OrderParameter& parameter, unsigned int id
 // Created: FPO 2011-05-30
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Inhabitant_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "crowd", false ), &resolver.GetInhabitant( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Inhabitant_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "inhabitant", false ), &resolver.GetInhabitant( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }

@@ -119,16 +119,27 @@ bool SymbolEditor::IsValid( const T_Symbols& symbols ) const
     return true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SymbolEditor::Update
-// Created: LGY 2011-07-26
-// -----------------------------------------------------------------------------
-void SymbolEditor::Update()
+namespace
 {
-    if( menu_ )
-        Update( *selected_, menu_ );
+    class MenuStyle : public QProxyStyle
+    {
+    public:
+        MenuStyle()
+        {
+            // NOTHING
+        }
+        ~MenuStyle()
+        {
+            // NOTHING
+        }
+        virtual int pixelMetric( PixelMetric metric, const QStyleOption* option = 0, const QWidget * widget = 0 ) const
+        {
+            if( metric == PM_SmallIconSize)
+                return 50;
+            return QProxyStyle::pixelMetric( metric, option, widget );
+        }
+    };
 }
-
 // -----------------------------------------------------------------------------
 // Name: SymbolEditor::Update
 // Created: LGY 2011-07-21
@@ -136,6 +147,7 @@ void SymbolEditor::Update()
 void SymbolEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     menu_ = menu.SubMenu( "Symbols", tr( "Symbol" ) );
+    menu_->setStyle( new MenuStyle() );
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
     Update();
 }
@@ -144,24 +156,29 @@ void SymbolEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu
 // Name: SymbolEditor::OnChangeSymbol
 // Created: LGY 2011-07-27
 // -----------------------------------------------------------------------------
-void SymbolEditor::OnChangeSymbol( int id )
+void SymbolEditor::OnChangeSymbol( QAction* action )
 {
-    CIT_Identifier it = identifiers_.find( id );
-    if( it != identifiers_.end() && selected_ )
+    if( selected_ )
     {
-        const_cast< kernel::SymbolHierarchy_ABC* >( selected_->Retrieve< kernel::SymbolHierarchy_ABC >() )->SetValue( it->second );
+        if( action->data().isNull() )
+            selected_.ConstCast()->Get< kernel::SymbolHierarchy_ABC >().Reset();
+        else
+            selected_.ConstCast()->Get< kernel::SymbolHierarchy_ABC >().OverrideValue( action->data().toString().toStdString() );
         UpdateHierarchies();
     }
+    menu_ = 0;
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolEditor::Update
 // Created: LGY 2011-07-27
 // -----------------------------------------------------------------------------
-void SymbolEditor::Update( const kernel::Entity_ABC& entity, Q3PopupMenu* menu )
+void SymbolEditor::Update()
 {
-    identifiers_.clear();
-    const kernel::TacticalHierarchies& pHierarchy = entity.Get< kernel::TacticalHierarchies >();
+    if( !selected_ || !menu_ )
+        return;
+    const kernel::TacticalHierarchies& pHierarchy = selected_->Get< kernel::TacticalHierarchies >();
     const std::string karma = Convert( pHierarchy.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
     std::set< std::string > symbols;
     tools::Iterator< const kernel::Entity_ABC& > it = pHierarchy.CreateSubordinateIterator();
@@ -169,17 +186,27 @@ void SymbolEditor::Update( const kernel::Entity_ABC& entity, Q3PopupMenu* menu )
         pFactory_->FillSymbols( it.NextElement().Get< kernel::TacticalHierarchies >().GetSymbol(), karma, symbols );
     T_Symbols pixmaps;
     BOOST_FOREACH( const std::string& symbol, symbols )
-        pixmaps[ symbol ] = symbols_.GetSymbol( entity, symbol, pHierarchy.GetLevel(), QSize( 32, 32 ) );
+        pixmaps[ symbol ] = symbols_.GetSymbol( *selected_, symbol, pHierarchy.GetLevel() );
     if( ! IsValid( pixmaps ) )
         QTimer::singleShot( 100, this, SLOT( Update() ) );
     else
+    {
+        bool overriden = selected_->Get< kernel::SymbolHierarchy_ABC >().IsOverriden();
         BOOST_FOREACH( const T_Symbols::value_type& pixmap, pixmaps )
         {
-            int id = menu->insertItem( pixmap.second, this, SLOT( OnChangeSymbol( int ) ) );
-            identifiers_[ id ] = pixmap.first;
-            if( pHierarchy.GetSymbol() == pixmap.first )
-                menu->setItemChecked( id, true );
+            std::string displayString = pixmap.first;
+            std::size_t position = displayString.rfind( '/' );
+            if( position != std::string::npos )
+                displayString = displayString.substr( position + 1 );
+            QAction* action = menu_->addAction( QIcon( pixmap.second ), displayString.c_str() );
+            action->setData( QVariant( pixmap.first.c_str() ) );
+            if( overriden && pHierarchy.GetSymbol() == pixmap.first )
+                action->setEnabled( false );
         }
+        if( overriden )
+            menu_->addAction( tr( "Default" ) );
+        connect( menu_, SIGNAL( triggered( QAction* ) ), this, SLOT( OnChangeSymbol( QAction* ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -188,8 +215,9 @@ void SymbolEditor::Update( const kernel::Entity_ABC& entity, Q3PopupMenu* menu )
 // -----------------------------------------------------------------------------
 void SymbolEditor::UpdateHierarchies()
 {
-    if( const kernel::TacticalHierarchies* pTactical = selected_->Retrieve< kernel::TacticalHierarchies >() )
+    if( kernel::TacticalHierarchies* pTactical = selected_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
     {
+        pTactical->UpdateSymbol();
         controllers_.controller_.Update( *pTactical );
         if( const kernel::CommunicationHierarchies* pCommunication = selected_->Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );

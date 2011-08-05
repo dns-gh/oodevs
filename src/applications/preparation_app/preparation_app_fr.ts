@@ -1637,6 +1637,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Symbol</source>
         <translation>Symbole</translation>
     </message>
+    <message>
+        <source>Default</source>
+        <translation>Par défaut</translation>
+    </message>
 </context>
 <context>
     <name>TacticalListView</name>

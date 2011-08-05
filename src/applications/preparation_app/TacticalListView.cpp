@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "TacticalListView.h"
+#include "moc_TacticalListView.cpp"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
 #include "preparation/Team.h"
@@ -24,8 +25,6 @@
 #include "icons.h"
 
 using namespace gui;
-#include "moc_TacticalListView.cpp"
-
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -134,20 +133,13 @@ void TacticalListView::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int index )
 {
-    static int flag =  0;
-    if ( flag == 0 )
-    {
-        flag = 1;
-        HierarchyListView_ABC::OnContextMenuRequested( item, pos, index );
-        if( item || !isVisible() )
-            return;
-        modelBuilder_.ClearSelection();
-        Q3PopupMenu* menu = new Q3PopupMenu( this );
-        menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
-        menu->exec( pos, index );
-    }
-    else 
-        flag  = 0;
+    HierarchyListView_ABC::OnContextMenuRequested( item, pos, index );
+    if( item || !isVisible() )
+        return;
+    modelBuilder_.ClearSelection();
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
+    menu->exec( pos, index );
 }
 
 // -----------------------------------------------------------------------------

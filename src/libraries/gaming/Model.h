@@ -56,7 +56,6 @@ class ObjectFactory_ABC;
 class ObjectKnowledgeFactory;
 class ObjectsModel;
 class Publisher_ABC;
-class RcEntityResolver_ABC;
 class ResourceNetworkModel;
 class ScoreDefinitions;
 class ScoreModel;
@@ -87,7 +86,7 @@ class Model : public kernel::Model_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver, const tools::ExerciseConfig& config );
+             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config );
     virtual ~Model();
     //@}
 

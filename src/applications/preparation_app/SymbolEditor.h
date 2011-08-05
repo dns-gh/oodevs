@@ -13,11 +13,9 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
-    class Agent_ABC;
     class Automat_ABC;
     class Entity_ABC;
     class Controllers;
@@ -51,7 +49,7 @@ class SymbolEditor: public QObject
                   , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                   , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -73,21 +71,18 @@ private slots:
     //! @name Slots
     //@{
     void Update();
-    void OnChangeSymbol( int id );
+    void OnChangeSymbol( QAction* action );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, QPixmap > T_Symbols;
-    typedef std::map< int, std::string >   T_Identifier;
-    typedef T_Identifier::const_iterator CIT_Identifier;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void Update( const kernel::Entity_ABC& entity, Q3PopupMenu* menu );
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     bool IsValid( const T_Symbols& symbols ) const;
     void UpdateHierarchies();
@@ -102,7 +97,6 @@ private:
     std::auto_ptr< kernel::SymbolFactory > pFactory_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     Q3PopupMenu* menu_;
-    T_Identifier identifiers_;
     //@}
 };
 

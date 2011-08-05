@@ -23,7 +23,6 @@ namespace kernel
 class Model;
 class Publisher_ABC;
 class StaticModel;
-class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -37,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                           Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver );
+                           Publisher_ABC& publisher, kernel::Workers& workers );
     virtual ~AgentFactory();
     //@}
 
@@ -69,7 +68,6 @@ private:
     const StaticModel& static_;
     Publisher_ABC& publisher_;
     kernel::Workers& workers_;
-    const RcEntityResolver_ABC& rcResolver_;
     //@}
 };
 

@@ -114,6 +114,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
     , pColor_                        ( new MIL_Color( xis ) )
+    , symbol_                        ( xis.attribute< std::string >( "symbol", "" ) )
 {
     Initialize( xis, gcPause, gcMult );
     if( pParentFormation_ )
@@ -306,6 +307,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nTickRcDotationSupplyQuerySent_
          >> pExtensions
          >> pColor
+         >> symbol_
          >> pLogisticHierarchy_
          >> pBrainLogistic_
          >> pDotationSupplyManager_
@@ -346,6 +348,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << nTickRcDotationSupplyQuerySent_
          << pExtensions
          << pColor
+         << symbol_
          << pLogisticHierarchy_
          << pBrainLogistic_
          << pDotationSupplyManager_
@@ -465,6 +468,8 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "engaged", bEngaged_ )
         << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() )
         << xml::attribute( "type", pType_->GetName() );
+    if( !symbol_.empty() )
+        xos << xml::attribute( "symbol", symbol_ );
     pColor_->WriteODB( xos );
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).WriteODB( xos );
@@ -875,6 +880,8 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().mutable_party()->set_id( GetArmy().GetID() );
     message().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
     message().set_app6symbol( "combat" );
+    if( !symbol_.empty() )
+        message().set_symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     message().set_name( GetName() );

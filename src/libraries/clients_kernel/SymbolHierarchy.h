@@ -22,23 +22,30 @@ namespace kernel
 // =============================================================================
 class SymbolHierarchy : public SymbolHierarchy_ABC
 {
-public:
+protected:
     //! @name Constructors/Destructor
     //@{
              SymbolHierarchy();
     virtual ~SymbolHierarchy();
     //@}
 
+public:
     //! @name Operations
     //@{
     virtual const std::string& GetValue() const;
-    virtual void SetValue( const std::string& value );
+    virtual void OverrideValue( const std::string& value );
+    virtual void MergeSymbol( const std::string& symbol );
+    virtual void PrepareForMerge();
+    virtual void Reset();
+    virtual bool IsOverriden() const;
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
     std::string symbol_;
+    std::string originalSymbol_;
+    bool overriden_;
     //@}
 };
 

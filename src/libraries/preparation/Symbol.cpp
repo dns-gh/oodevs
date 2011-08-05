@@ -16,7 +16,6 @@
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
 Symbol::Symbol()
-    : SymbolHierarchy()
 {
     // NOTHING
 }
@@ -26,12 +25,9 @@ Symbol::Symbol()
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
 Symbol::Symbol( xml::xistream& xis )
-    : SymbolHierarchy()
 {
-    std::string symbol;
-    xis >> xml::optional
-        >> xml::attribute( "symbol", symbol );
-    SetValue( symbol );
+    if( xis.has_attribute( "symbol" ) )
+        OverrideValue( xis.attribute< std::string >( "symbol" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +43,8 @@ Symbol::~Symbol()
 // Name: Symbol::SerializeAttributes
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-void Symbol::SerializeAttributes( xml::xostream& /*xos*/ ) const
+void Symbol::SerializeAttributes( xml::xostream& xos ) const
 {
-    // NOTHING
+    if( IsOverriden() )
+        xos << xml::attribute( "symbol", GetValue() );
 }

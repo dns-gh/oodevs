@@ -33,7 +33,7 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
     , name_          ( msg.name() )
     , team_          ( model.Sides().Get( msg.party().id() ) )
     , level_         ( levels.Get( msg.level() ) )
-    , symbol_        ( msg.app6symbol() )
+    , app6symbol_    ( msg.app6symbol() )
     , logisticEntity_( 0 )
     , parent_        ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
 {
@@ -43,6 +43,8 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
         team_.Register( *this );
     if( msg.has_color() )
         color_ = msg.color();
+    if( msg.has_symbol() )
+        symbol_ = msg.symbol();
     if( msg.logistic_level() != sword::none )
     {
         logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
@@ -126,7 +128,9 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     message().mutable_party()->set_id( team_.GetId() );
     message().set_level( sword::EnumNatureLevel( level_.GetId() ) );
     message().set_name( name_ );
-    message().set_app6symbol( symbol_ );
+    message().set_app6symbol( app6symbol_ );
+    if( !symbol_.empty() )
+        message().set_symbol( symbol_ );
     if( logisticEntity_.get() )
         logisticEntity_->Send( message() );
     else

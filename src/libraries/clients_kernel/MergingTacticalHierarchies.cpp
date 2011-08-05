@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "MergingTacticalHierarchies.h"
 #include "SymbolHierarchy_ABC.h"
-#include "App6Symbol.h"
 
 using namespace kernel;
 
@@ -50,7 +49,9 @@ std::string MergingTacticalHierarchies::GetSymbol() const
 // -----------------------------------------------------------------------------
 void MergingTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
 {
-    if( ! up )
+    if( up )
+        entity_.Get< SymbolHierarchy_ABC >().PrepareForMerge();
+    else
     {
         tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
         while( it.HasMoreElements() )
@@ -62,12 +63,11 @@ void MergingTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
     }
     const std::string oldSymbol = GetSymbol();
     const std::string oldLevel = GetLevel();
-    std::string symbol;
     tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
         MergeSymbol( it.NextElement() );
-    if( symbol != oldSymbol || GetLevel() != oldLevel )
-        controller_.Update( *(Symbol_ABC*)this );
+    if( GetSymbol() != oldSymbol || GetLevel() != oldLevel )
+        controller_.Update( *static_cast< Symbol_ABC* >( this ) );
     if( up )
         if( TacticalHierarchies* superior = SuperiorHierarchy() )
             superior->UpdateSymbol();
@@ -81,7 +81,7 @@ void MergingTacticalHierarchies::RegisterSubordinate( kernel::Entity_ABC& entity
 {
     EntityHierarchies< TacticalHierarchies >::RegisterSubordinate( entity );
     MergeSymbol( entity );
-    controller_.Update( *(Symbol_ABC*)this );
+    controller_.Update( *static_cast< Symbol_ABC* >( this ) );
     if( TacticalHierarchies* superior = SuperiorHierarchy() )
         superior->UpdateSymbol();
 }
@@ -103,11 +103,7 @@ void MergingTacticalHierarchies::UnregisterSubordinate( const kernel::Entity_ABC
 void MergingTacticalHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
 {
     if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
-    {
-        std::string symbol = entity_.Get< SymbolHierarchy_ABC >().GetValue();
-        App6Symbol::Merge( hierarchies->GetSymbol(), symbol );
-        entity_.Get< SymbolHierarchy_ABC >().SetValue( symbol );
-    }
+        entity_.Get< SymbolHierarchy_ABC >().MergeSymbol( hierarchies->GetSymbol() );
 }
 
 // -----------------------------------------------------------------------------

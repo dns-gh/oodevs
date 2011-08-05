@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.7.2">
-  <xs:include schemaLocation="../physical/tools.xsd"/>
+	<xs:include schemaLocation="../physical/tools.xsd"/>
 	<xs:element name="orbat">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Root element, describes the order of battle.</xs:documentation>
@@ -259,16 +259,15 @@
 			<xs:selector xpath=".//formation"/>
 			<xs:field xpath="@id"/>
 		</xs:key>
-		
-	    <xs:key name="logisticElementKey">
+		<xs:key name="logisticElementKey">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">Defines key for formations</xs:documentation>
 				<xs:documentation xml:lang="fr">Définit une clé pour les formations</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath=".//formation|.//automat"/> <!-- Should add test on logistic-level -->
+			<xs:selector xpath=".//formation|.//automat"/>
+			<!-- Should add test on logistic-level -->
 			<xs:field xpath="@id"/>
-		</xs:key>	
-		
+		</xs:key>
 		<!-- objects constraints -->
 		<xs:keyref name="objectTc2KeyRef" refer="logisticElementKey">
 			<xs:annotation>
@@ -430,74 +429,74 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="entityType">
-          <xs:all>
-            <xs:element name="composition">
-              <xs:complexType>
-                <xs:attribute name="healthy" type="T_NonNegativeInteger" use="required">
+					<xs:all>
+						<xs:element name="composition">
+							<xs:complexType>
+								<xs:attribute name="healthy" type="T_NonNegativeInteger" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the initial number of healthy people composing the crowd.</xs:documentation>
+										<xs:documentation xml:lang="fr">Définit le nombre initial d'individus sains formant la foule.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="wounded" type="T_NonNegativeInteger" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the initial number of wounded people composing the crowd.</xs:documentation>
+										<xs:documentation xml:lang="fr">Définit le nombre initial d'individus blessés formant la foule.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="dead" type="T_NonNegativeInteger" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the initial number of dead people composing the crowd.</xs:documentation>
+										<xs:documentation xml:lang="fr">Définit le nombre initial d'individus morts formant la foule.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="contaminated" type="T_NonNegativeInteger" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the initial number of contaminated people composing the crowd.</xs:documentation>
+										<xs:documentation xml:lang="fr">Définit le nombre initial d'individus contaminés formant la foule.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="adhesions" minOccurs="0"/>
+						<xs:element name="armed-individuals" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="value" type="T_ZeroToOneDouble" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the initial percentage of armed individuals composing the crowd.</xs:documentation>
+										<xs:documentation xml:lang="fr">Définit le nombre initial d'individus armés formant la foule.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="critical-intelligence" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="content" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Defines the critical intelligence known by the population.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+						<xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
+					</xs:all>
+					<xs:attribute name="attitude" type="populationAttitudeType" use="required">
 						<xs:annotation>
-                    <xs:documentation xml:lang="en">Defines the initial number of healthy people composing the crowd.</xs:documentation>
-                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus sains formant la foule.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the initial crowd attitude.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit l'attitude initiale de la foule.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
-                <xs:attribute name="wounded" type="T_NonNegativeInteger" use="required">
-						<xs:annotation>
-                    <xs:documentation xml:lang="en">Defines the initial number of wounded people composing the crowd.</xs:documentation>
-                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus blessés formant la foule.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-                <xs:attribute name="dead" type="T_NonNegativeInteger" use="required">
-                  <xs:annotation>
-                    <xs:documentation xml:lang="en">Defines the initial number of dead people composing the crowd.</xs:documentation>
-                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus morts formant la foule.</xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
-                <xs:attribute name="contaminated" type="T_NonNegativeInteger" use="required">
-                  <xs:annotation>
-                    <xs:documentation xml:lang="en">Defines the initial number of contaminated people composing the crowd.</xs:documentation>
-                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus contaminés formant la foule.</xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
-              </xs:complexType>
-            </xs:element>
-            <xs:element ref="adhesions" minOccurs="0"/>
-            <xs:element name="armed-individuals" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="value" type="T_ZeroToOneDouble" use="required">
-                  <xs:annotation>
-                    <xs:documentation xml:lang="en">Defines the initial percentage of armed individuals composing the crowd.</xs:documentation>
-                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus armés formant la foule.</xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="critical-intelligence" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="content" type="xs:string" use="required">
-                  <xs:annotation>
-                    <xs:documentation>Defines the critical intelligence known by the population.</xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
-            <xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
-          </xs:all>
-          <xs:attribute name="attitude" type="populationAttitudeType" use="required">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines the initial crowd attitude.</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit l'attitude initiale de la foule.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
 					<xs:attribute name="position" type="utmCoordinatesType" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines the initial position of the center of the crowd concentration.</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit la géolocalisation initiale du centre de la foule.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit la géolocalisation initiale du centre de la foule.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="type" type="xs:string" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines the type of crowd. References an existing crowd type from "Populations.xml".</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit le type de la foule. Renvoie vers "Populations.xml".</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit le type de la foule. Renvoie vers "Populations.xml".</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>
@@ -601,7 +600,7 @@
 			<xs:documentation xml:lang="fr"> Format des coordonnées UTM (Universal Transverse Mercator).</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-      <xs:pattern value="(\d{2})?[A-Z]{3}\d{8}(\d{2})?"/>
+			<xs:pattern value="(\d{2})?[A-Z]{3}\d{8}(\d{2})?"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="populationAttitudeType">
@@ -718,12 +717,12 @@
 							<xs:documentation xml:lang="fr">Définit la quantité de la ressource associée.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
-          <xs:attribute name="logistic-threshold" type="xs:double" use="optional">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines the logistic threshold of the associated resource.</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit le seuil logistique de la ressource associée.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
+					<xs:attribute name="logistic-threshold" type="xs:double" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the logistic threshold of the associated resource.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit le seuil logistique de la ressource associée.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
@@ -766,6 +765,12 @@
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
 							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="symbol" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
+							<xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>
@@ -845,6 +850,12 @@
 							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
+					<xs:attribute name="symbol" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
+							<xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -879,22 +890,22 @@
 											<xs:documentation xml:lang="fr">Redéfinit l'état initial de l'équipement spécifié.</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
-                      <xs:attribute name="type" type="xs:string" use="required">
+											<xs:attribute name="type" type="xs:string" use="required">
 												<xs:annotation>
-                          <xs:documentation xml:lang="en">Defines the type of equipment to define overloaded status for. References existing equipment from "Composantes.xml".</xs:documentation>
-                          <xs:documentation xml:lang="fr">Définit le type d'équipement dont on va redéfinir l'état initial. Renvoie vers "Composantes.xml".</xs:documentation>
+													<xs:documentation xml:lang="en">Defines the type of equipment to define overloaded status for. References existing equipment from "Composantes.xml".</xs:documentation>
+													<xs:documentation xml:lang="fr">Définit le type d'équipement dont on va redéfinir l'état initial. Renvoie vers "Composantes.xml".</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-                      <xs:attribute name="state" type="equipmentStateType" use="required">
+											<xs:attribute name="state" type="equipmentStateType" use="required">
 												<xs:annotation>
-                          <xs:documentation xml:lang="en">Defines the state of the equipment to define overloaded status for.</xs:documentation>
-                          <xs:documentation xml:lang="fr">Définit l'état de l'équipement dont on va redéfinir l'état initial.</xs:documentation>
+													<xs:documentation xml:lang="en">Defines the state of the equipment to define overloaded status for.</xs:documentation>
+													<xs:documentation xml:lang="fr">Définit l'état de l'équipement dont on va redéfinir l'état initial.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-                      <xs:attribute name="breakdown" type="xs:string" use="optional">
+											<xs:attribute name="breakdown" type="xs:string" use="optional">
 												<xs:annotation>
-                          <xs:documentation xml:lang="en">Defines the breakdown of the equipment to define overloaded status for. References existing breakdown from "Pannes.xml".</xs:documentation>
-                          <xs:documentation xml:lang="fr">Définit la panne de l'équipement dont on va redéfinir l'état initial. Renvoie vers "Pannes.xml".</xs:documentation>
+													<xs:documentation xml:lang="en">Defines the breakdown of the equipment to define overloaded status for. References existing breakdown from "Pannes.xml".</xs:documentation>
+													<xs:documentation xml:lang="fr">Définit la panne de l'équipement dont on va redéfinir l'état initial. Renvoie vers "Pannes.xml".</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
 										</xs:complexType>
@@ -934,46 +945,46 @@
 						<xs:element name="humans" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">Defines overloaded human components.</xs:documentation>
-                <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain.</xs:documentation>
+								<xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain.</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-                  <xs:element name="human" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation>
-                      <xs:documentation xml:lang="en">Defines overloaded status for specified human components.</xs:documentation>
-                      <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain spécifié.</xs:documentation>
-                    </xs:annotation>
+									<xs:element name="human" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Defines overloaded status for specified human components.</xs:documentation>
+											<xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain spécifié.</xs:documentation>
+										</xs:annotation>
 										<xs:complexType>
-                      <xs:attribute name="rank" type="T_CrewRank" use="required">
+											<xs:attribute name="rank" type="T_CrewRank" use="required">
 												<xs:annotation>
 													<xs:documentation xml:lang="en">Defines overloaded human state for specified count of human components.</xs:documentation>
-                          <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain.</xs:documentation>
+													<xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-                      <xs:attribute name="state" type="T_WoundType" use="required">
+											<xs:attribute name="state" type="T_WoundType" use="required">
 												<xs:annotation>
-                          <xs:documentation xml:lang="en">Defines overloaded health state for specified count of human components.</xs:documentation>
-                          <xs:documentation xml:lang="fr">Redéfinit l'état de santé de l'effectif humain.</xs:documentation>
+													<xs:documentation xml:lang="en">Defines overloaded health state for specified count of human components.</xs:documentation>
+													<xs:documentation xml:lang="fr">Redéfinit l'état de santé de l'effectif humain.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-                      <xs:attribute name="psyop" type="xs:boolean" use="required">
+											<xs:attribute name="psyop" type="xs:boolean" use="required">
 												<xs:annotation>
-                          <xs:documentation xml:lang="en">Defines whether specified count of human components is psychologically damage or not.</xs:documentation>
-                          <xs:documentation xml:lang="fr">Vrai si l'effectif humain a des dégats psychologiques.</xs:documentation>
+													<xs:documentation xml:lang="en">Defines whether specified count of human components is psychologically damage or not.</xs:documentation>
+													<xs:documentation xml:lang="fr">Vrai si l'effectif humain a des dégats psychologiques.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-                      <xs:attribute name="contaminated" type="xs:boolean" use="required">
+											<xs:attribute name="contaminated" type="xs:boolean" use="required">
 												<xs:annotation>
-                          <xs:documentation xml:lang="en">Defines whether specified count of human components is contaminated or not.</xs:documentation>
-                          <xs:documentation xml:lang="fr">Vrai si l'effectif humain est contaminé.</xs:documentation>
+													<xs:documentation xml:lang="en">Defines whether specified count of human components is contaminated or not.</xs:documentation>
+													<xs:documentation xml:lang="fr">Vrai si l'effectif humain est contaminé.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-                      <xs:attribute name="number" type="xs:nonNegativeInteger" use="required">
-                        <xs:annotation>
-                          <xs:documentation xml:lang="en">Defines the amount of human components affected.</xs:documentation>
-                          <xs:documentation xml:lang="fr">Définit la taille de l'effectif humain concerné.</xs:documentation>
-                        </xs:annotation>
-                      </xs:attribute>
+											<xs:attribute name="number" type="xs:nonNegativeInteger" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Defines the amount of human components affected.</xs:documentation>
+													<xs:documentation xml:lang="fr">Définit la taille de l'effectif humain concerné.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
 										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
@@ -1008,16 +1019,16 @@
 							</xs:unique>
 						</xs:element>
 						<xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
-            <xs:element name="critical-intelligence" minOccurs="0">
-              <xs:complexType>
-                <xs:attribute name="content" type="xs:string" use="required">
-                  <xs:annotation>
-                    <xs:documentation>Defines the critical intelligence known by the population.</xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
-              </xs:complexType>
-            </xs:element>
-            <xs:element ref="adhesions" minOccurs="0"/>
+						<xs:element name="critical-intelligence" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="content" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Defines the critical intelligence known by the population.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="adhesions" minOccurs="0"/>
 					</xs:all>
 					<xs:attribute name="type" type="xs:string" use="required">
 						<xs:annotation>
@@ -1089,15 +1100,15 @@
 			<xs:enumeration value="conscrit"/>
 		</xs:restriction>
 	</xs:simpleType>
-  <xs:simpleType name="equipmentStateType">
+	<xs:simpleType name="equipmentStateType">
 		<xs:annotation>
-      <xs:documentation xml:lang="en">Defines list of equipment states.</xs:documentation>
-      <xs:documentation xml:lang="fr">Définit la liste des niveaux caractérisant l'état d'un equipment.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines list of equipment states.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit la liste des niveaux caractérisant l'état d'un equipment.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-      <xs:enumeration value="Disponible"/>
-      <xs:enumeration value="ReparableAvecEvacuation"/>
-      <xs:enumeration value="Detruit"/>
+			<xs:enumeration value="Disponible"/>
+			<xs:enumeration value="ReparableAvecEvacuation"/>
+			<xs:enumeration value="Detruit"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="tacticalLineType">

@@ -19,8 +19,9 @@ using namespace gui;
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
 IconsRenderPass::IconsRenderPass( kernel::GlTools_ABC& tools )
-    : tools_   ( tools )
-    , viewport_( 0, 0, 600, 600 )
+    : tools_    ( tools )
+    , viewport_ ( 0, 0, 600, 600 )
+    , firstPass_( true )
 {
     // NOTHING
 }
@@ -58,12 +59,20 @@ std::string IconsRenderPass::GetName() const
 // -----------------------------------------------------------------------------
 void IconsRenderPass::Render( MapWidget_ABC& )
 {
-    glEnable( GL_LINE_SMOOTH );
-    glClear( GL_DEPTH_BUFFER_BIT );
-    for( CIT_IconTasks it = tasks_.begin(); it != tasks_.end(); ++it )
-        RenderIcon( *it );
-    tasks_.clear();
-    glDisable( GL_LINE_SMOOTH );
+    // $$$$ JSR 2011-08-02: Hack : on dessine les icones au deuxième coup, sinon les icones de l'orbat sont mal dessinées en prépa (pour une raison inconnue...)
+    if( firstPass_ )
+    {
+        firstPass_ = false;
+        return;
+    }
+    if( tasks_.size() > 0 )
+    {
+        glEnable( GL_LINE_SMOOTH );
+        for( CIT_IconTasks it = tasks_.begin(); it != tasks_.end(); ++it )
+            RenderIcon( *it );
+        tasks_.clear();
+        glDisable( GL_LINE_SMOOTH );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +81,8 @@ void IconsRenderPass::Render( MapWidget_ABC& )
 // -----------------------------------------------------------------------------
 void IconsRenderPass::RenderIcon( const T_IconTask& task )
 {
+    glClear( GL_COLOR_BUFFER_BIT );
+    glClear( GL_DEPTH_BUFFER_BIT );
     glRectf( viewport_.Left() - 50, viewport_.Bottom() - 50, viewport_.Right() + 50, viewport_.Top() + 50 );
     const SymbolIcon& symbol = task.first;
     tools_.SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );

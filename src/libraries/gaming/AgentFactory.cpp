@@ -69,6 +69,7 @@
 #include "Speeds.h"
 #include "StaticModel.h"
 #include "SupplyStates.h"
+#include "Symbol.h"
 #include "TeamsModel.h"
 #include "Transports.h"
 #include "Troops.h"
@@ -95,13 +96,12 @@
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                            Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver )
+                            Publisher_ABC& publisher, kernel::Workers& workers )
     : controllers_( controllers )
     , model_      ( model )
     , static_     ( staticModel )
     , publisher_  ( publisher )
     , workers_    ( workers )
-    , rcResolver_ ( rcResolver )
 {
     // NOTHING
 }
@@ -123,14 +123,14 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 {
     Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new kernel::SymbolHierarchy() );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_symbol() ? message.symbol() : std::string() ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     kernel::Entity_ABC* superior = 0;
 
     if( message.parent().has_formation() )
-        superior = & (( tools::Resolver< kernel::Formation_ABC >&)( model_.teams_ )) .Get( message.parent().formation().id() );
+        superior = &model_.GetFormationResolver().Get( message.parent().formation().id() );
     else
-        superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.parent().automat().id() );
+        superior = &model_.GetAutomatResolver().Get( message.parent().automat().id() );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico ) );

@@ -294,6 +294,7 @@ private:
     std::auto_ptr< MIL_StockSupplyManager >                    pStockSupplyManager_;
     std::auto_ptr< MIL_DictionaryExtensions >                  pExtensions_;
     std::auto_ptr< MIL_Color >                                 pColor_;
+    std::string                                                symbol_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );

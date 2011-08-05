@@ -95,6 +95,7 @@ private:
     const std::string                            name_;
     dispatcher::Team_ABC&                        team_;
     const kernel::HierarchyLevel_ABC&            level_;
+    std::string                                  app6symbol_;
     std::string                                  symbol_;
     sword::RgbColor                              color_;
     std::auto_ptr< LogisticEntity >              logisticEntity_;

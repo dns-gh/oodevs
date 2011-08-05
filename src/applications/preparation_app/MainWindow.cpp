@@ -160,14 +160,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
 
+    selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
+
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
+    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
 
     new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config );
 
-    selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
     RichItemFactory* factory = new RichItemFactory( this );
-    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
 
@@ -263,14 +264,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
     addToolBar( LocEditToolBar );
     
-    loadingDialog_ = new QDialog( 0, Qt::SplashScreen | Qt::Dialog );
+    loadingDialog_ = new QDialog( this, Qt::SplashScreen );
+    loadingDialog_->setModal( true );
     QLabel* label = new QLabel( loadingDialog_ );
-    label->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+    label->setFrameStyle( QFrame::Box | QFrame::Raised );
     label->setText( tr( "Loading..." ) );
-    label->setStyleSheet( "font-size: 20pt;" );
+    label->setStyleSheet( "font-size: 20pt;text-align: center;background-color: rgb( 165, 193, 221);" );
     label->setAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
     loadingDialog_->resize( label->sizeHint() );
-    loadingDialog_->show();
+    loadingDialog_->open();
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
@@ -295,7 +297,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) && Load() )
         LoadExercise();
 
-    loadingDialog_->hide();
+    loadingDialog_->close();
 }
 
 // -----------------------------------------------------------------------------
@@ -407,11 +409,12 @@ void MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::DoLoad( QString filename )
 {
-    loadingDialog_->show();
+    loadingDialog_->open();
+    qApp->processEvents();
 
     if( filename.isEmpty() )
     {
-        loadingDialog_->hide();
+        loadingDialog_->close();
         return;
     }
 
@@ -427,7 +430,7 @@ void MainWindow::DoLoad( QString filename )
         LoadExercise();
     }
 
-    loadingDialog_->hide();
+    loadingDialog_->close();
 }
 
 // -----------------------------------------------------------------------------

@@ -46,13 +46,15 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     , nOperationalState_( sword::totally_destroyed )
     , nRoe_             ( sword::RulesOfEngagement::fire_upon_order )
     , order_            ( 0 )
-    , symbol_           ( msg.app6symbol() )
+    , app6symbol_       ( msg.app6symbol() )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
         throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
     knowledgeGroup_->Register( *this );
     if( msg.has_color() )
         color_ = msg.color();
+    if( msg.has_symbol() )
+        symbol_ = msg.symbol();
     if( parentFormation_ )
         parentFormation_->Register( *this );
     else if( parentAutomat_ )
@@ -274,7 +276,9 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_name( GetName() );
     asn().mutable_party()->set_id( team_.GetId() );
     asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
-    asn().set_app6symbol( symbol_ );
+    asn().set_app6symbol( app6symbol_ );
+    if( !symbol_.empty() )
+        asn().set_symbol( symbol_ );
     if( parentFormation_ )
         asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
     if( parentAutomat_ )
