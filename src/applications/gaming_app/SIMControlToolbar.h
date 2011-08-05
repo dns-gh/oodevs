@@ -22,7 +22,6 @@ namespace kernel
 
 class ConnectDialog;
 class DisconnectDialog;
-class Q3MainWindow;
 class Simulation;
 class Services;
 class Network;

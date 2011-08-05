@@ -210,7 +210,7 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     {
         const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() );
         Q3DragObject* drag = new gui::ValuedDragObject( pos );
-        drag->drag();
+        drag->dragMove();
     }
     return result;
 }

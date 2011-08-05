@@ -153,6 +153,7 @@ private:
     bool needsSaving_;
     QString savedState_;
     QByteArray docks_;
+    QByteArray toolbars_;
     CreationPanels* pCreationPanel_;
     ScoreDialog* pScoreDialog_;
     QDialog* loadingDialog_;

@@ -776,9 +776,13 @@ void MainWindow::ToggleFullScreen()
 // -----------------------------------------------------------------------------
 void MainWindow::ToggleDocks()
 {
-    if( docks_.isNull() || docks_.isEmpty() )
+    if( docks_.isNull() || docks_.isEmpty() && toolbars_.isNull() || toolbars_.isEmpty())
     {
         docks_ = saveState();
+        toolbars_ = saveState();
+        QList< QToolBar* > toolbars = qFindChildren< QToolBar* >( this , QString() );
+        for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
+            (*it)->hide();
         QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
         for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
             (*it)->hide();
@@ -787,5 +791,7 @@ void MainWindow::ToggleDocks()
     {
         if ( restoreState( docks_ ) )
             docks_ = 0;
+        if ( restoreState( toolbars_ ) )
+            toolbars_ = 0;
     }
 }

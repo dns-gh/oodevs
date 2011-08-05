@@ -36,7 +36,7 @@ MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, ker
     setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     setFixedWidth( 800 );
-    setMinimumHeight( 600 );
+    setFixedHeight( 600 );
     SetStyle();
     pages_ = new Q3WidgetStack( this );
     HomePage* home = new HomePage( pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );

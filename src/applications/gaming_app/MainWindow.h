@@ -152,6 +152,7 @@ private:
     gui::AgentsLayer* agents_;
     StatusBar* pStatus_;
     QByteArray docks_;
+    QByteArray toolbars_;
     bool connected_;
     MissionPanel* pMissionPanel_;
     QDockWidget* pExtensionsPanel_;
