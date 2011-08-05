@@ -285,3 +285,37 @@ unsigned int NBCTypeAttribute::GetPropagationAngle() const
 {
     return propagationAngle_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NBCTypeAttribute::Update
+// Created: ABR 2011-08-05
+// -----------------------------------------------------------------------------
+bool NBCTypeAttribute::Update( const NBCTypeAttribute& rhs )
+{
+    if( concentration_ != rhs.concentration_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        concentration_ = rhs.concentration_;
+    }
+    if( pAgent_ != rhs.pAgent_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        pAgent_ = rhs.pAgent_;
+    }
+    if( width_ != rhs.width_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        width_ = rhs.width_;
+    }
+    if( length_ != rhs.length_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        length_ = rhs.length_;
+    }
+    if( propagationAngle_ != rhs.propagationAngle_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        propagationAngle_ = rhs.propagationAngle_;
+    }
+    return NeedUpdate( eOnUpdate );
+}
