@@ -264,7 +264,9 @@ void SymbolFactory::FillSymbols( const std::string& symbol, const std::string& k
 {
     std::string compare = symbol;
     std::string base = symbolBase_;
-    boost::replace_all( base, "*", karma );
+    std::string::size_type position = 0;
+    while( ( position = base.find( '*', position ) ) != std::string::npos )
+        base.replace( position, 1, karma );
     result.insert( base );
     if( !symbol.empty() )
     {
