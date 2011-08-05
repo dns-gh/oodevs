@@ -9021,6 +9021,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="LOGISTIQUE Preparer bascule"/>
+        <mission name="LOGISTIQUE Reparer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9243,6 +9244,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Trier Blesses"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9277,6 +9279,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Prendre en Compte Reactions Mentales"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9345,6 +9348,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Decontaminer Blesses"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9379,6 +9383,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Trier et Traiter Blesses"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -14462,4 +14467,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1786071782" -->
+<!-- signature="1036682977" -->
