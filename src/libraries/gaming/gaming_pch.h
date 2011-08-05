@@ -26,8 +26,9 @@
 #include <QtCore/qstring.h>
 #include <QtOpenGL/qgl.h>
 #include <QtCore/qdatetime.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
 #pragma warning( pop )
-
 #include <stdexcept>
 #include <vector>
 #include <string>
