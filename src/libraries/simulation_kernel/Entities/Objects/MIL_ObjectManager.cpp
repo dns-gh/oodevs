@@ -120,14 +120,8 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
 {
     if( !pObject )
         return;
-    try
-    {
-        objects_[ pObject->GetID() ] = pObject;
-    }
-    catch ( std::exception& e )
-    {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
-    }
+    if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     pObject->SendCreation();
     if( pObject->GetArmy() )
         pObject->GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
