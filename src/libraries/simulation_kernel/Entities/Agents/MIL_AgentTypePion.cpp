@@ -125,7 +125,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
     pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create;
     pionTypeAllocators_[ "Pion Emergency"              ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion Organization"           ] = &MIL_AgentTypePion               ::Create;
+    pionTypeAllocators_[ "Pion Organization"           ] = &MIL_AgentTypePionLOGTC2         ::Create;
     pionTypeAllocators_[ "Pion Notable"                ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Journalist"             ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Civilian"               ] = &MIL_AgentTypePion               ::Create;
