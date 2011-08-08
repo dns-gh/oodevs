@@ -12,7 +12,7 @@
     <libTools>tools_d.lib</libTools>
     <libZip>zipstream_d.lib;zlib1d.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
-    <libGdal>gdal_i.lib;gdal_ogr.lib</libGdal>
+    <libGdal>gdal_i.lib;gdal_ogr_d.lib</libGdal>
     <libGraphics>graphics_d.lib</libGraphics>
   </PropertyGroup>
   <PropertyGroup>
