@@ -10533,7 +10533,6 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Reconnaitre"/>
-        <mission name="LOGISTIQUE Se Deployer"/>
         <mission name="Reparer point du reseau"/>
         <mission name="Produire"/>
       </missions>
@@ -14553,4 +14552,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1167014167" -->
+<!-- signature="1631932434" -->
