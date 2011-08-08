@@ -51,6 +51,7 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -66,6 +67,7 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -81,6 +83,7 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -96,6 +99,7 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -139,6 +143,10 @@
     <ProjectReference Include="actions.vcxproj">
       <Project>{f8eb9126-da8e-4166-8d1d-4d0f76198a93}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="simulation_kernel.vcxproj">
       <Project>{725898a0-58c0-4dd2-9215-cb0a66df1980}</Project>

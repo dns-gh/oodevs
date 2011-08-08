@@ -51,6 +51,8 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_urban.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -65,6 +67,8 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_urban.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -79,6 +83,8 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_urban.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -93,6 +99,8 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_directIA.props" />
+    <Import Project="Property sheets\link_urban.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -103,7 +111,7 @@
       <PreprocessorDefinitions>TIMELINE_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\timeline\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\timeline\$(TargetName)_d.pdb</ProgramDatabaseFile>
     </Link>
@@ -113,7 +121,7 @@
       <PreprocessorDefinitions>TIMELINE_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\timeline\$(TargetFileName)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -122,7 +130,7 @@
       <PreprocessorDefinitions>TIMELINE_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\timeline\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\timeline\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
@@ -132,7 +140,7 @@
       <PreprocessorDefinitions>TIMELINE_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\timeline\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\timeline\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
@@ -145,13 +153,53 @@
     <ClCompile Include="..\..\src\libraries\timeline_plugin_dll\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="indicators.vcxproj">
+      <Project>{a95887c7-751e-43ea-b541-38b573587c7b}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="messenger_plugin.vcxproj">
+      <Project>{2339a774-5d7e-413a-a432-1b4939388291}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="score_plugin.vcxproj">
+      <Project>{c2ff4137-154d-4807-8276-d655fce7396f}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="script_plugin.vcxproj">
+      <Project>{2904015e-0b2b-45c1-bafb-f70bca8adf77}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
     <ProjectReference Include="timeline_plugin.vcxproj">
       <Project>{2c350ecc-d359-432f-b3ff-63aeb71cde97}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <Private>true</Private>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

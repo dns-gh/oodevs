@@ -50,6 +50,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -63,6 +64,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -76,6 +78,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -89,6 +92,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\link_graphics.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -164,6 +168,10 @@
     <ProjectReference Include="actions.vcxproj">
       <Project>{f8eb9126-da8e-4166-8d1d-4d0f76198a93}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="clients_kernel.vcxproj">
       <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
@@ -172,6 +180,10 @@
     <ProjectReference Include="crossbow_plugin.vcxproj">
       <Project>{d17bbf32-937d-4a77-9ea3-b749e640d5b6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="dispatcher.vcxproj">
       <Project>{e761ba44-a370-4f9d-97b5-a047e068ba5b}</Project>

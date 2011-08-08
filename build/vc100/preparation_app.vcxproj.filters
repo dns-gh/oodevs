@@ -489,9 +489,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\UndergroundPrototype.h">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\WeatherListView.h">
-      <Filter>Source Files\Panels\Weather</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\PropertiesPanel.h">
       <Filter>Source Files\Panels\Infos</Filter>
     </ClInclude>
@@ -747,6 +744,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\SymbolEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\WeatherListView.h">
+      <Filter>Source Files\Panels\Weather</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

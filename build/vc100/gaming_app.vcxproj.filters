@@ -1044,9 +1044,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\WeatherLayer.h">
       <Filter>Source Files\Creation\Weather</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\WeatherListView.h">
-      <Filter>Source Files\Creation\Weather</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\AgentList.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
@@ -1386,6 +1383,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\TimeTableRequestDialog.h">
       <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\WeatherListView.h">
+      <Filter>Source Files\Creation\Weather</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

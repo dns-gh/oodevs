@@ -796,6 +796,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\MeteoModel.cpp">
       <Filter>Source Files\Meteo</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Symbol.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1499,6 +1502,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\MeteoModel.h">
       <Filter>Source Files\Meteo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Symbol.h">
+      <Filter>Source Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

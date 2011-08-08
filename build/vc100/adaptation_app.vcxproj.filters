@@ -1395,9 +1395,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_Data.h">
       <Filter>Source Files\Workspace\Categories\Categories Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_AttritionEffect_Table.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
     </ClInclude>
@@ -2296,6 +2293,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\translator.pro">
       <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Categories_AttritionEffect_Table.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -97,6 +97,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Borrowings.cpp" />
@@ -316,6 +317,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Symbol.h" />
     <ClInclude Include="..\..\src\libraries\gaming\VisionConesToggler.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Availability.h" />
