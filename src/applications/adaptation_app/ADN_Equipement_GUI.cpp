@@ -183,12 +183,12 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     pFlareParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
     pFlareParametersGroup_->hide();
     builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Activation duration" ), vConnectors[ eDeployTime ] );
-    builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Span" ), vConnectors[ eLifetime ] );
+    builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Span" ), vConnectors[ eFlareLifetime ] );
     // Effect (object) parameters
     pEffectParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pIndirectGroup );
     pEffectParametersGroup_->hide();
     builder.AddField< ADN_EditLine_String >( pEffectParametersGroup_, tr( "Created object" ), vConnectors[ eEffectType ] );
-    builder.AddField< ADN_TimeField >( pEffectParametersGroup_, tr( "Span" ), vConnectors[ eLifetime ] );
+    builder.AddField< ADN_TimeField >( pEffectParametersGroup_, tr( "Span" ), vConnectors[ eEffectLifetime ] );
     // Mine parameters
     pMineParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
     pMineParametersGroup_->hide();

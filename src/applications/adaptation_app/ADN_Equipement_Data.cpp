@@ -217,8 +217,9 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , rNeutralizationRatio_( 1 )
     , vModifStance_        ()
     , deployTime_          ( "0s" )
-    , lifeTime_            ( "0s" )
+    , flareLifeTime_       ( "0s" )
     , nMineNumber_         ( 0 )
+    , effectLifeTime_      ( "0s" )
 {
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {
@@ -244,9 +245,10 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
         vModifStance_[i]->rCoeff_ = ammoInfos.vModifStance_[ i ]->rCoeff_.GetData();
 
     deployTime_ = ammoInfos.deployTime_.GetData();
-    lifeTime_ = ammoInfos.lifeTime_.GetData();
+    flareLifeTime_ = ammoInfos.flareLifeTime_.GetData();
     nMineNumber_ = ammoInfos.nMineNumber_.GetData();
     objectType_ = ammoInfos.objectType_.GetData();
+    effectLifeTime_ = ammoInfos.effectLifeTime_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -292,14 +294,14 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
         case eTypeMunitionTirIndirect_Fumigene:
         case eTypeMunitionTirIndirect_Eclairant:
             input >> xml::attribute( "setup-time", deployTime_ )
-                  >> xml::attribute( "life-time", lifeTime_ );
+                  >> xml::attribute( "life-time", flareLifeTime_ );
             break;
         case eTypeMunitionTirIndirect_Mine:
             input >> xml::attribute( "mine-count", nMineNumber_ );
             break;
         case eTypeMunitionTirIndirect_Effect:
             input >> xml::attribute( "object-type", objectType_ );
-            input >> xml::attribute( "life-time", lifeTime_ );
+            input >> xml::attribute( "life-time", effectLifeTime_ );
             break;
     }
 }
@@ -329,7 +331,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
     case eTypeMunitionTirIndirect_Fumigene:
     case eTypeMunitionTirIndirect_Eclairant:
         output << xml::attribute( "setup-time", deployTime_ )
-               << xml::attribute( "life-time", lifeTime_ );
+               << xml::attribute( "life-time", flareLifeTime_ );
         break;
 
     case eTypeMunitionTirIndirect_Mine:
@@ -337,7 +339,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
         break;
     case eTypeMunitionTirIndirect_Effect:
         output << xml::attribute( "object-type", objectType_ )
-               << xml::attribute( "life-time", lifeTime_ );
+               << xml::attribute( "life-time", effectLifeTime_ );
         break;
     }
 

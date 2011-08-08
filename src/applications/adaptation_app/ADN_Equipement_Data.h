@@ -125,15 +125,14 @@ public:
 
         // For flares
         ADN_Type_Time                                                         deployTime_;
+        ADN_Type_Time                                                         flareLifeTime_;
 
         // For smoke
         ADN_Type_Int                                                          nMineNumber_;
 
-        // Common for effect or flares
-        ADN_Type_Time                                                         lifeTime_;
-
         // For effect
         ADN_Type_String                                                       objectType_;
+        ADN_Type_Time                                                         effectLifeTime_;
     };
 
 // *****************************************************************************
