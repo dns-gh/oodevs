@@ -10,9 +10,6 @@
 #ifndef __SessionList_h_
 #define __SessionList_h_
 
-#include <Qt3Support/q3listbox.h>
-#include <Qt3Support/q3textedit.h>
-
 namespace tools
 {
     class GeneralConfig;

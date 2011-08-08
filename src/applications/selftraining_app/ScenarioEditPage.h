@@ -33,7 +33,6 @@ class ExerciseList;
 class ExportWidget;
 class ImportWidget;
 class ProgressPage;
-class QTabWidget;
 
 // =============================================================================
 /** @class  ScenarioEditPage

@@ -2,12 +2,8 @@
 #define QT_TRAYICON_H
 
 #ifndef QT_H
-#include <QtCore/qobject.h>
-#include <QtGui/qimage.h>
+
 #endif // QT_H
-
-
-class Q3PopupMenu;
 
 class TrayIcon : public QObject
 {

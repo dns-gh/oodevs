@@ -10,8 +10,6 @@
 #ifndef __SideList_h_
 #define __SideList_h_
 
-#include <Qt3Support/q3listbox.h>
-
 namespace tools
 {
     class GeneralConfig;

@@ -20,8 +20,6 @@
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/Tools.h"
 #include <boost/filesystem.hpp>
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3listview.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;

@@ -10,8 +10,6 @@
 #ifndef __ExerciseProperties_h_
 #define __ExerciseProperties_h_
 
-#include <Qt3Support/q3vbox.h>
-
 namespace frontend
 {
     class Exercise_ABC;

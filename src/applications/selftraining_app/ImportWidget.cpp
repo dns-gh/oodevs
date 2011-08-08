@@ -19,15 +19,6 @@
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( push, 0 )
-#include <QtGui/qcombobox.h>
-#include <Qt3Support/q3filedialog.h>
-#include <Qt3Support/q3progressbar.h>
-#include <QtGui/qtabbar.h>
-#include <QtGui/qtabwidget.h>
-#include <Qt3Support/q3button.h>
-#pragma warning( pop )
-
-#pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 

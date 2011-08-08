@@ -10,12 +10,6 @@
 #ifndef __Page_ABC_h_
 #define __Page_ABC_h_
 
-#include <Qt3Support/q3vbox.h>
-//Added by qt3to4:
-#include <Qt3Support/q3button.h>
-#include <Qt3Support/q3gridlayout.h>
-
-class Q3WidgetStack;
 class QuitPage;
 
 // =============================================================================

@@ -19,8 +19,6 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <Qt3Support/q3header.h>
-#include <QtGui/qcombobox.h>
 
 namespace
 {

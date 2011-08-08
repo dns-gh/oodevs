@@ -10,14 +10,13 @@
 #ifndef __MenuButton_h_
 #define __MenuButton_h_
 
-#include <QT3Support/q3button.h>
-
 // =============================================================================
 /** @class  MenuButton
     @brief  MenuButton
 */
 // Created: SBO 2008-02-21
 // =============================================================================
+
 class MenuButton : public QPushButton
 {
 
@@ -50,6 +49,7 @@ private:
     virtual void enterEvent( QEvent* ev );
     virtual void leaveEvent( QEvent* ev );
     virtual void drawButton( QPainter* painter );
+    virtual void paintEvent( QPaintEvent* event = 0 );
     virtual QSize sizeHint() const;
     //@}
 

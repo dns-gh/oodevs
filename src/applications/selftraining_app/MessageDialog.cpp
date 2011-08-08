@@ -12,7 +12,6 @@
 #include "moc_MessageDialog.cpp"
 #include "MenuButton.h"
 #include "clients_gui/Tools.h"
-#include <Qt3Support/q3boxlayout.h>
 
 namespace
 {

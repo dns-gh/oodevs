@@ -23,13 +23,6 @@
 #include "tools/DefaultLoader.h"
 #include <xeumeuleu/xml.hpp>
 
-#pragma warning( push, 0 )
-#include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
-#include <Qtcore/qtimer.h>
-#include <QtCore/qtranslator.h>
-#pragma warning( pop )
-
 namespace
 {
     QString ReadLang()

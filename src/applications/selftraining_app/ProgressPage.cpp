@@ -13,8 +13,6 @@
 #include "frontend/Process_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
-#include <Qt3Support/q3progressbar.h>
-#include <Qtcore/qtimer.h>
 
 // -----------------------------------------------------------------------------
 // Name: ProgressPage constructor

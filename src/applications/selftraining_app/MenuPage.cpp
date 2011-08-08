@@ -11,8 +11,6 @@
 #include "MenuPage.h"
 #include "moc_MenuPage.cpp"
 #include "MenuButton.h"
-#include <QtGui/qlayout.h>
-#include <QtGui/qpainter.h>
 
 namespace
 {

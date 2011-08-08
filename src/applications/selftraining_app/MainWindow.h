@@ -10,8 +10,6 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include <Qt3Support/q3mainwindow.h>
-
 namespace kernel
 {
     class Controllers;

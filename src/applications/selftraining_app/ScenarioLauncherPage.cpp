@@ -37,9 +37,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
-#include <QtCore/qfileinfo.h>
-#include <QtGui/qtabbar.h>
-#include <QtGui/qtabwidget.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;

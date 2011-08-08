@@ -19,9 +19,6 @@ namespace frontend
     class Process_ABC;
 }
 
-class Q3ProgressBar;
-class QTimer;
-
 // =============================================================================
 /** @class  ProgressPage
     @brief  ProgressPage

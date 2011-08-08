@@ -22,7 +22,6 @@
 #include "frontend/ProcessWrapper.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
-#include <QtGui/qspinbox.h>
 
 namespace
 {

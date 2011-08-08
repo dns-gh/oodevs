@@ -19,12 +19,6 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 
-#include <QtGui/qapplication.h>
-#include <Qt3Support/q3widgetstack.h>
-#include <QtGui/qpixmap.h>
-#include <QtGui/qpalette.h>
-#include <QtGui/qdesktopwidget.h>
-
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21

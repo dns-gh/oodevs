@@ -13,12 +13,6 @@
 #include "Application.h"
 #include "clients_gui/Tools.h"
 #include "Config.h"
-#include <QtGui/qcombobox.h>
-#include <Qt3Support/q3filedialog.h>
-#include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
-
-#include <Qt3Support/q3button.h>
 #include <boost/foreach.hpp>
 
 namespace

@@ -1,7 +1,5 @@
 #include "selftraining_app_pch.h"
 #include "trayicon.h"
-#include <Qt3Support/q3popupmenu.h>
-#include <QtGui/qevent.h>
 #include "moc_TrayIcon.cpp"
 
 /*!

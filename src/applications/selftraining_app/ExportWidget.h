@@ -10,14 +10,6 @@
 #ifndef __ExportWidget_h_
 #define __ExportWidget_h_
 
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3listview.h>
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3progressbar.h>
-
-class Q3ListView;
-class Q3ListViewItem;
-class Q3ProgressBar;
 class ScenarioEditPage;
 
 namespace tools

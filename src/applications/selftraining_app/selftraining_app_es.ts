@@ -415,6 +415,18 @@
         <source>Administrator</source>
         <translation>Administración</translation>
     </message>
+    <message>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Français</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Español</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>

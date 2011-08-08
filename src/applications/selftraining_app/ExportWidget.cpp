@@ -18,10 +18,6 @@
 #include "tools/Loader_ABC.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include <Qt3Support/q3filedialog.h>
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3listview.h>
-#include <Qt3Support/q3progressbar.h>
 #include <xeumeuleu/xml.h>
 #include <zipstream/zipstream.h>
 

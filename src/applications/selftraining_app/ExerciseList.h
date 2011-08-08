@@ -32,8 +32,6 @@ namespace tools
 
 class ExerciseProperties;
 class ProfileList;
-class Q3ListView;
-class Q3ListViewItem;
 
 // =============================================================================
 /** @class  ExerciseList

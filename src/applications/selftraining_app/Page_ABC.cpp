@@ -14,14 +14,6 @@
 #include "QuitPage.h"
 #include "clients_gui/Tools.h"
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3widgetstack.h>
-#include <Qt3Support/q3gridlayout.h>
-#include <Qt3Support/q3button.h>
-#include <Qt3Support/q3boxlayout.h>
-#include <QtGui/qevent.h>
-#pragma warning ( pop )
-
 QuitPage* Page_ABC::quitPage_ = 0;
 
 // -----------------------------------------------------------------------------

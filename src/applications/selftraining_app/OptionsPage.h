@@ -13,7 +13,6 @@
 #include "ContentPage.h"
 
 class Config;
-class QLineEdit;
 
 // =============================================================================
 /** @class  OptionsPage

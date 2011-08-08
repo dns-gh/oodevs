@@ -20,9 +20,7 @@
 #define __ADN_GUI_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include <QtCore/qobject.h>
 
-class QWidget;
 class ADN_MainWindow;
 class ADN_HtmlBuilder;
 

@@ -38,7 +38,6 @@ namespace tools
 
 class ExerciseList;
 class ProgressPage;
-class QTabWidget;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage

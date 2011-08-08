@@ -10,9 +10,6 @@
 #ifndef __ImportWidget_h_
 #define __ImportWidget_h_
 
-#include <Qt3Support/q3groupbox.h>
-
-class Q3ProgressBar;
 class ScenarioEditPage;
 namespace
 {

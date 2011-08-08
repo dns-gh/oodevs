@@ -10,9 +10,6 @@
 #include "selftraining_app_pch.h"
 #include "MenuButton.h"
 #include "moc_MenuButton.cpp"
-#include <QtGui/qpainter.h>
-#include <QtGui/qimage.h>
-#include <QtGui/QPushButton.h>
 
 // -----------------------------------------------------------------------------
 // Name: MenuButton constructor
@@ -67,14 +64,24 @@ void MenuButton::leaveEvent( QEvent* )
 // Name: MenuButton::drawButton
 // Created: SBO 2008-08-08
 // -----------------------------------------------------------------------------
-void MenuButton::drawButton( QPainter* painter )
+void MenuButton::drawButton( QPainter* )
 {
-    const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ;
-    const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ;
-    painter->drawImage( rect(), mask_ );
-    painter->setFont( font );
-    painter->setPen( colorGroup().color( colorRole ) );
-    painter->drawText( rect(), Qt::AlignCenter | Qt::SingleLine, text() );
+    paintEvent();
+}
+
+void MenuButton::paintEvent( QPaintEvent* )
+{
+    QPainter painter;
+    if ( painter.begin( this ) )
+    {
+        const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ;
+        const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ;
+        painter.drawImage( rect(), mask_ );
+        painter.setFont( font );
+        painter.setPen( colorGroup().color( colorRole ) );
+        painter.drawText( rect(), Qt::AlignCenter | Qt::SingleLine, text() );
+        painter.end();
+    }
 }
 
 // -----------------------------------------------------------------------------

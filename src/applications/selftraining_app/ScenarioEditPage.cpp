@@ -22,9 +22,6 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ImportExercise.h"
 #include "frontend/ProcessWrapper.h"
-#include <QtGui/qtabbar.h>
-#include <QtGui/qtabwidget.h>
-#include <QtCore/qtimer.h>
 
 namespace
 {

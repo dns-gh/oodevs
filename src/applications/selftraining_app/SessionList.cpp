@@ -17,7 +17,6 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <QtCore/qstringlist.h>
 
 namespace bfs = boost::filesystem;
 

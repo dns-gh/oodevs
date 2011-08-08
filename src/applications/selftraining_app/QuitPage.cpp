@@ -11,7 +11,6 @@
 #include "QuitPage.h"
 #include "moc_QuitPage.cpp"
 #include "clients_gui/Tools.h"
-#include <QtGui/qapplication.h>
 
 // -----------------------------------------------------------------------------
 // Name: QuitPage constructor

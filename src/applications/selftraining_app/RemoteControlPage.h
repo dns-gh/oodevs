@@ -30,8 +30,6 @@ namespace tools
 
 class Config;
 class ExerciseList;
-class QPushButton;
-class QSpinBox;
 
 // =============================================================================
 /** @class  RemoteControlPage

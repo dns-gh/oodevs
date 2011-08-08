@@ -2,15 +2,7 @@
 #include "trayicon.h"
 
 #pragma warning( push, 0 )
-#include <QtGui/qwidget.h>
-#include <QtGui/qapplication.h>
-#include <QtGui/qimage.h>
-#include <QtGui/qpixmap.h>
-#include <QtGui/qbitmap.h>
-#include <QtGui/qcursor.h>
-#include <QtCore/qlibrary.h>
-#include <QtCore/qt_windows.h>
-#include <QtGui/qevent.h>
+
 #pragma warning ( pop )
 
 static uint MYWM_TASKBARCREATED = 0;

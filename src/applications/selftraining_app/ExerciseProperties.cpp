@@ -16,13 +16,6 @@
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
-
-#pragma warning( push, 0 )
-#include <QtGui/qcombobox.h>
-#include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
-#pragma warning( pop )
-
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -133,6 +126,7 @@ void ExerciseProperties::Update()
 // -----------------------------------------------------------------------------
 void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
 {
+    Update();
     if( briefingText_ )
     {
         briefingText_->setText( tools::translate( "ExerciseProperties", "No briefing available" ) );

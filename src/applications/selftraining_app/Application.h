@@ -10,8 +10,6 @@
 #ifndef __Application_h_
 #define __Application_h_
 
-#include <QtGui/qapplication.h>
-
 namespace frontend
 {
     class LauncherClient;

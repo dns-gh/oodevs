@@ -19,9 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_GUI_ABC.h"
 
-#include <QtGui/qapplication.h>
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GUI_ABC::tr
 // Created: APE 2005-04-11

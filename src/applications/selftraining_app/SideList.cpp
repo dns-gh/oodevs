@@ -13,8 +13,6 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <QtGui/qpixmap.h>
-#include <QtGui/qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: SideList constructor

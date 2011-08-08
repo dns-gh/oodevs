@@ -11,14 +11,6 @@
 #define __CreateExerciceWidget_h_
 
 #include <boost/noncopyable.hpp>
-#pragma warning( push, 0 )
-#include <QtGui/qcombobox.h>
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3listbox.h>
-#include <Qt3Support/q3listview.h>
-#include <QtGui/qlineedit.h>
-#pragma warning( pop )
-
 
 class ScenarioEditPage;
 
@@ -27,10 +19,6 @@ namespace tools
     class GeneralConfig;
     class Loader_ABC;
 }
-
-class QListView;
-class QLineEdit;
-class QComboBox;
 
 // =============================================================================
 /** @class  CreateExerciceWidget

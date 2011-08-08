@@ -16,8 +16,6 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ExerciseFilter_ABC.h"
 #include "clients_gui/Tools.h"
-#include <QtGui/qspinbox.h>
-#include <QtGui/qtabwidget.h>
 
 namespace
 {
