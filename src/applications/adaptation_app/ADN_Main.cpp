@@ -11,6 +11,8 @@
 #include "ADN_App.h"
 #include "ADN_Exception_ABC.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
+#include "MT_Tools/MT_Version.h"
+#include "tools/Version.h"
 #include <tools/win32/FlexLm.h>
 #include <windows.h>
 #include <commctrl.h>
@@ -22,7 +24,7 @@
 
 namespace po = boost::program_options;
 
-extern const char* szADN_Version;
+static const std::string szADN_Version   = "ADN - " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
 
 /*
 #pragma init_seg(lib)
@@ -74,7 +76,7 @@ void SetConsolePos( const int nPosX, const int nPosY )
 
     int nRet;
     nRet = SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), coord );
-    SetWindowPos( FindWindow( NULL, szADN_Version ), NULL, rcPos.Left, rcPos.Top, 0, 0, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOSIZE | SWP_FRAMECHANGED  );
+    SetWindowPos( FindWindow( NULL, szADN_Version.c_str() ), NULL, rcPos.Left, rcPos.Top, 0, 0, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOSIZE | SWP_FRAMECHANGED  );
 }
 
 int main( uint nArgc, char** ppArgv )
@@ -83,7 +85,7 @@ int main( uint nArgc, char** ppArgv )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-authoring", 1.0f ) );
 #endif
     // Console
-    SetConsoleTitle( szADN_Version );
+    SetConsoleTitle( szADN_Version.c_str() );
     SetConsolePos( 0, 0 );
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );

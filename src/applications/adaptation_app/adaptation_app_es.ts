@@ -1186,6 +1186,10 @@ estacionado con motor encendido</translation>
         <source>Engineering</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Crowd transport</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

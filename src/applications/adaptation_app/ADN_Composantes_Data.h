@@ -665,6 +665,10 @@ public:
         ADN_Type_Double rWeightTransportCapacity_;
         ADN_Type_Time embarkingTimePerTon_;
         ADN_Type_Time disembarkingTimePerTon_;
+        ADN_Type_Bool bCanCarryCrowd_;
+        ADN_Type_Int nCrowdTransportCapacity_;
+        ADN_Type_Time crowdEmbarkingTimePerPerson_;
+        ADN_Type_Time crowdDisembarkingTimePerPerson_;
         ADN_Type_Bool bMaxSlope_;
         ADN_Type_Double rMaxSlope_;
         LogInfos logInfos_;

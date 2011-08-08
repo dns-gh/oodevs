@@ -1188,6 +1188,10 @@ Arrêt moteur allumé</translation>
         <source>Engineering</source>
         <translation>Génie</translation>
     </message>
+    <message>
+        <source>Crowd transport</source>
+        <translation>Transport de foules</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

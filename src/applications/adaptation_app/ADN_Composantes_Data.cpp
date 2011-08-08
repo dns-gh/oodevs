@@ -1722,29 +1722,33 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
-    : ADN_Ref_ABC               ()
-    , nMosId_                   ( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetNextId() )
-    , equipmentCategory_        ( "Autres" )
-    , ptrArmor_                 ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
-    , ptrSize_                  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
-    , rWeight_                  ( 100 )
-    , vSpeeds_                  ( false )
-    , bTroopEmbarkingTimes_     ( false )
-    , embarkingTimePerPerson_   ( "0s" )
-    , disembarkingTimePerPerson_( "0s" )
-    , bCanCarryCargo_           ( false )
-    , rWeightTransportCapacity_ ( 0 )
-    , embarkingTimePerTon_      ( "0s" )
-    , disembarkingTimePerTon_   ( "0s" )
-    , rMaxSpeed_                ( 100 )
-    , attritionBreakdowns_      ( "attrition" )
-    , randomBreakdowns_         ( "random" )
-    , bMaxSlope_                ( false )
-    , rMaxSlope_                ( 60 )
-    , nPowerDirectFire_         ( 0 )
-    , nPowerIndirectFire_       ( 0 )
-    , nPowerCloseCombat_        ( 0 )
-    , nPowerEngineering_        ( 0 )
+    : ADN_Ref_ABC()
+    , nMosId_                        ( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetNextId() )
+    , equipmentCategory_             ( "Autres" )
+    , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
+    , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
+    , rWeight_                       ( 100 )
+    , vSpeeds_                       ( false )
+    , bTroopEmbarkingTimes_          ( false )
+    , embarkingTimePerPerson_        ( "0s" )
+    , disembarkingTimePerPerson_     ( "0s" )
+    , bCanCarryCargo_                ( false )
+    , rWeightTransportCapacity_      ( 0 )
+    , embarkingTimePerTon_           ( "0s" )
+    , disembarkingTimePerTon_        ( "0s" )
+    , bCanCarryCrowd_                ( false )
+    , nCrowdTransportCapacity_       ( 0 )
+    , crowdEmbarkingTimePerPerson_   ( "0s" )
+    , crowdDisembarkingTimePerPerson_( "0s" )
+    , rMaxSpeed_                     ( 100 )
+    , attritionBreakdowns_           ( "attrition" )
+    , randomBreakdowns_              ( "random" )
+    , bMaxSlope_                     ( false )
+    , rMaxSlope_                     ( 60 )
+    , nPowerDirectFire_              ( 0 )
+    , nPowerIndirectFire_            ( 0 )
+    , nPowerCloseCombat_             ( 0 )
+    , nPowerEngineering_             ( 0 )
     {
     BindExistenceTo( &ptrArmor_ );
     BindExistenceTo( &ptrSize_ );
@@ -1870,6 +1874,10 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->rWeightTransportCapacity_ = rWeightTransportCapacity_.GetData();
     pCopy->embarkingTimePerTon_ = embarkingTimePerTon_.GetData();
     pCopy->disembarkingTimePerTon_ = disembarkingTimePerTon_.GetData();
+    pCopy->bCanCarryCrowd_ = bCanCarryCrowd_.GetData();
+    pCopy->nCrowdTransportCapacity_ = nCrowdTransportCapacity_.GetData();
+    pCopy->crowdEmbarkingTimePerPerson_ = crowdEmbarkingTimePerPerson_.GetData();
+    pCopy->crowdDisembarkingTimePerPerson_ = crowdDisembarkingTimePerPerson_.GetData();
 
     pCopy->logInfos_.CopyFrom( logInfos_ );
 
@@ -2012,9 +2020,16 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
                 >> xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
             >> xml::end
+            >> xml::optional
+            >> xml::start( "crowd" )
+                >> xml::attribute( "capacity", nCrowdTransportCapacity_ )
+                >> xml::attribute( "man-boarding-time", crowdEmbarkingTimePerPerson_ )
+                >> xml::attribute( "man-unloading-time", crowdDisembarkingTimePerPerson_ )
+            >> xml::end
           >> xml::end;
     bTroopEmbarkingTimes_ = embarkingTimePerPerson_ != "0s" || disembarkingTimePerPerson_ != "0s";
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
+    bCanCarryCrowd_ = nCrowdTransportCapacity_ != 0;
 
     consumptions_.ReadArchive( input );
 
@@ -2123,6 +2138,12 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
                 << xml::attribute( "capacity", rWeightTransportCapacity_ )
                 << xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
                 << xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
+               << xml::end;
+    if( bCanCarryCrowd_.GetData() )
+        output << xml::start( "crowd" )
+                << xml::attribute( "capacity", nCrowdTransportCapacity_ )
+                << xml::attribute( "man-boarding-time", crowdEmbarkingTimePerPerson_ )
+                << xml::attribute( "man-unloading-time", crowdDisembarkingTimePerPerson_ )
                << xml::end;
     output << xml::end;
 

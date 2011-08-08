@@ -439,9 +439,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Version.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.cpp">
       <Filter>Source Files\Common types</Filter>
     </ClCompile>

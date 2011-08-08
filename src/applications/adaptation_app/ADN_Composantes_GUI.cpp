@@ -128,6 +128,22 @@ void ADN_Composantes_GUI::Build()
     builder.AddField<ADN_TimeField>( pEmbarkTimesGroupBox, tr( "Embark time per person" ), vInfosConnectors[eEmbarkingTimePerPerson] );
     builder.AddField<ADN_TimeField>( pEmbarkTimesGroupBox, tr( "Disembark time per person" ), vInfosConnectors[eDisembarkingTimePerPerson] );
 
+    // Cargo transport groupbox
+    ADN_GroupBox* pCargoGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Cargo transport" ), pTroopGroupBox );
+    vInfosConnectors[eCanCarryCargo] = &pCargoGroupBox->GetConnector();
+
+    builder.AddField<ADN_EditLine_Double>( pCargoGroupBox, tr( "Weight capacity" ), vInfosConnectors[eWeightCapacity], tr( "T" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Loading time per ton" ), vInfosConnectors[eEmbarkingTimePerTon] );
+    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Unloading time per ton" ), vInfosConnectors[eDisembarkingTimePerTon] );
+
+    // Crowd transport groupbox
+    ADN_GroupBox* pCrowdGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Crowd transport" ), pTroopGroupBox );
+    vInfosConnectors[eCanCarryCrowd] = &pCrowdGroupBox->GetConnector();
+
+    builder.AddField<ADN_EditLine_Int>( pCrowdGroupBox, tr( "Capacity" ), vInfosConnectors[eCrowdCapacity], 0, eGreaterZero );
+    builder.AddField<ADN_TimeField>( pCrowdGroupBox, tr( "Embark time per person" ), vInfosConnectors[eCrowdEmbarkingTimePerPerson] );
+    builder.AddField<ADN_TimeField>( pCrowdGroupBox, tr( "Disembark time per person" ), vInfosConnectors[eCrowdDisembarkingTimePerPerson] );
+
     // ID groupbox
     Q3GroupBox* pIdGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Military codes" ), pDataPage );
 
@@ -135,14 +151,6 @@ void ADN_Composantes_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT6:" ), vInfosConnectors[eEMAT6Code] );
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT8:" ), vInfosConnectors[eEMAT8Code] );
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code LFRIL:" ), vInfosConnectors[eLFRILCode] );
-
-    // Cargo transport groupbox
-    ADN_GroupBox* pCargoGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Cargo transport" ), pDataPage );
-    vInfosConnectors[eCanCarryCargo] = &pCargoGroupBox->GetConnector();
-
-    builder.AddField<ADN_EditLine_Double>( pCargoGroupBox, tr( "Weight capacity" ), vInfosConnectors[eWeightCapacity], tr( "T" ), eGreaterZero );
-    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Loading time per ton" ), vInfosConnectors[eEmbarkingTimePerTon] );
-    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Unloading time per ton" ), vInfosConnectors[eDisembarkingTimePerTon] );
 
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ), pDataPage );
@@ -273,8 +281,7 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 2, 4, 0, 0 );
 
-    pDataPageLayout->addMultiCellWidget( pCargoGroupBox          , 0, 0, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pTroopGroupBox          , 1, 1, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pTroopGroupBox          , 0, 2, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pSensorsGroup           , 2, 2, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pRadarsGroup            , 3, 3, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pWeaponsGroup           , 4, 4, 1, 1 );
