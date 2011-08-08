@@ -170,6 +170,8 @@
         <mission name="MELEE S'emparer De"/>
         <mission name="STABILISATION Animer Poste De Controle"/>
         <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Interdire foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -14482,4 +14484,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1488663943" -->
+<!-- signature="3417122625" -->
