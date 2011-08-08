@@ -113,10 +113,12 @@ Section "!${PRODUCT_NAME}"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
     CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
-    SetOutPath $TEMP
+    SetOutPath "$INSTDIR\installation files"
+    File "Scipio-Sword_post_install.reg"
+    File "Scipio-Sword_post_install.bat"
     File "${OUTDIR}\vcredist_${PLATFORM}.exe"
     ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
-    Delete "vcredist_${PLATFORM}.exe"
+    
 SectionEnd
 
 ; ------------------------------------------------------------------------------
