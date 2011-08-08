@@ -56,7 +56,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_win32.props" />
-    <Import Project="Property sheets\application_debug.props" />
+    <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\include_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
