@@ -2398,6 +2398,15 @@
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.AppuiContreMobilite" dia-type="france.military.platoon.combat.support.engineer.tasks.AppuiContreMobilite" id="2078" name="MILICE Appui contre mobilite">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+    </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Valoriser" dia-type="france.military.platoon.combat.support.engineer.tasks.Valoriser" id="5010" name="GENIE Valoriser">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4964,6 +4973,15 @@
       <parameter dia-name="automat" name="Automat" optional="false" type="Automat"/>
       <parameter dia-name="position" name="Position" optional="true" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.AppuiContreMobilite" dia-type="france.military.company.combat.support.engineer.tasks.AppuiContreMobilite" id="1065" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.AppuiContreMobilite" name="MILICE Appui contre mobilite">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="332" name="Faire Mouvement">
@@ -5210,4 +5228,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2573042001" -->
+<!-- signature="2790707686" -->

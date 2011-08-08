@@ -1163,6 +1163,7 @@
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE Detruire"/>
+        <mission name="MILICE Appui contre mobilite"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -14477,6 +14478,7 @@
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE Controler"/>
+        <mission name="MILICE Appui contre mobilite"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -14551,4 +14553,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3412093092" -->
+<!-- signature="1167014167" -->
