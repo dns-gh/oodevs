@@ -12,7 +12,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "moc_ADN_Composantes_Dotations_GUI.cpp"
-#include <Qt3Support/q3popupmenu.h>
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
@@ -20,7 +19,6 @@
 #include "ADN_Composantes_Data.h"
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
-#include <Qt/qevent.h>
 
 typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
 
@@ -34,6 +32,7 @@ public:
     explicit ADN_CT_Composantes_Dotations( ADN_Composantes_Dotations_GUI& tab)
         : ADN_Connector_Table_ABC( tab, false )
         , bIncludeNormalizedConsumption_( tab.bIncludeNormalizedConsumption_ )
+        , bIncludeThreshold_( tab.bIncludeThreshold_ )
     {}
 
     void AddSubItems( int n, void* pObj )
@@ -53,7 +52,8 @@ public:
 
         tab_.setItem( n, 0, pItemName );
         tab_.setItem( n, 1, pItemQty );
-        tab_.setItem( n, 2, pItemLogThreshold );
+        if( bIncludeThreshold_ )
+            tab_.setItem( n, 2, pItemLogThreshold );
         if( bIncludeNormalizedConsumption_ )
             tab_.setItem( n, 3, pItemNormalizedConsumption );
 
@@ -66,6 +66,7 @@ public:
 
 private:
     bool bIncludeNormalizedConsumption_;
+    bool bIncludeThreshold_;
 };
 
 //-----------------------------------------------------------------------------
@@ -75,6 +76,7 @@ private:
 ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
     : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
     , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
+    , bIncludeThreshold_( bIncludeThreshold )
 {
     // Selection and sorting.
     setSorting( true );

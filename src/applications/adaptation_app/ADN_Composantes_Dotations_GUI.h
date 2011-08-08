@@ -15,7 +15,6 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_Equipement_Data.h"
 
-
 // =============================================================================
 /** @class  ADN_Composantes_Dotations_GUI
     @brief  ADN_Composantes_Dotations_GUI
@@ -39,6 +38,7 @@ private:
 
 public:
     bool bIncludeNormalizedConsumption_;
+    bool bIncludeThreshold_;
 };
 
 
