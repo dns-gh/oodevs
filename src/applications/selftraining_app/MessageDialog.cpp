@@ -25,10 +25,19 @@ namespace
             setFixedSize( 800, 300 );
         }
     protected:
-        virtual void drawContents( QPainter* painter )
+        virtual void drawContents( QPainter* )
         {
-            painter->drawImage( frameRect(), mask_ );
-            Q3HBox::drawContents( painter );
+            paintEvent();
+        }
+        virtual void paintEvent( QPaintEvent* e = 0 )
+        {
+            QPainter painter;
+            if ( painter.begin( this ) )
+            {
+                painter.drawImage( frameRect(), mask_ );
+                Q3HBox::drawContents( &painter );
+                painter.end();
+            }
         }
 
     private:

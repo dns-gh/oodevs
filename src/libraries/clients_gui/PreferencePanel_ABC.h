@@ -10,6 +10,10 @@
 #ifndef __PreferencePanel_ABC_h_
 #define __PreferencePanel_ABC_h_
 
+#pragma warning( push, 0 )
+#include <QtGui/qscrollarea.h>
+#pragma warning( pop )
+
 namespace gui
 {
 

@@ -12,6 +12,10 @@
 
 #include "ParamComboBox.h"
 
+#pragma warning( push, 0 )
+#include <Qt3Support/q3vbox.h>
+#pragma warning( pop )
+
 namespace kernel
 {
     class ActionController;
@@ -19,7 +23,9 @@ namespace kernel
     class OrderType;
 }
 
+class Q3ScrollView;
 class QTabWidget;
+class QPushButton;
 
 namespace actions
 {

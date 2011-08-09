@@ -15,6 +15,14 @@
 #include "DiffusionListLegendBar.h"
 #include "tools/Resolver.h"
 
+#pragma warning( push, 0 )
+#include <QtGui/qdialog.h>
+#pragma warning( pop )
+
+class QLineEdit;
+class Q3ButtonGroup;
+class QLabel;
+
 namespace kernel
 {
     class Agent_ABC;

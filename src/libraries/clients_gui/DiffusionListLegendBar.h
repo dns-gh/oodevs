@@ -11,8 +11,13 @@
 #define gui_DiffusionListLegendBar_h_
 
 #include <boost/noncopyable.hpp>
-#include "tools/Resolver.h"
-#include "clients_kernel/SafePointer.h"
+
+#pragma warning( push, 0 )
+#include <QtGui/qcolor.h>
+#pragma warning( pop )
+
+class QWidget;
+class QPaintEvent;
 
 namespace gui
 {

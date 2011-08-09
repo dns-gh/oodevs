@@ -69,6 +69,10 @@ void MenuButton::drawButton( QPainter* )
     paintEvent();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MenuButton::paintEvent
+// Created: FPT 2011-08-08
+// -----------------------------------------------------------------------------
 void MenuButton::paintEvent( QPaintEvent* )
 {
     QPainter painter;

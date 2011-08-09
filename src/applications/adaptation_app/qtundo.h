@@ -20,12 +20,14 @@
 #ifndef QTUNDO_H
 #define QTUNDO_H
 
+#pragma warning( push, 0 )
 #include <QtCore/qobject.h>
 #include <QtCore/qmap.h>
 #include <Qt3Support/q3ptrlist.h>
 #include <Qt3Support/q3listbox.h>
 #include <QtCore/qstringlist.h>
 #include <QtGui/qaction.h>
+#pragma warning( pop )
 
 class QWidget;
 class QAction;

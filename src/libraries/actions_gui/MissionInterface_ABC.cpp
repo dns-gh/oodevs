@@ -16,11 +16,6 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "actions_gui/resources.h"
 
-#pragma warning( push, 0 )
-#include <QtGui/qtabwidget.h>
-#include <Qt3Support/q3scrollview.h>
-#pragma warning( pop )
-
 using namespace actions::gui;
 
 namespace

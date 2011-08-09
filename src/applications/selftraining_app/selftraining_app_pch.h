@@ -52,7 +52,6 @@
 #include <QtGui/qlineedit.h>
 #include <QtGui/qdesktopwidget.h>
 
-
 #include <Qt3Support/q3progressbar.h>
 #include <Qt3Support/q3gridlayout.h>
 #include <Qt3Support/q3boxlayout.h>

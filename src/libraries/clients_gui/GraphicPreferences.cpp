@@ -123,6 +123,7 @@ void GraphicPreferences::SetupLineGraphics( const Data_ABC* pData )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::SetupLineGraphics( unsigned int /*offset*/ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
