@@ -142,7 +142,7 @@ double DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to )
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    return MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( static_cast< float >( path_.GetUnitMajorWeight() ), VECTOR_TO_POINT( from ), VECTOR_TO_POINT( to ) );
+    return path_.GetPathClass().IsFlying() ? 0.f : MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( static_cast< float >( path_.GetUnitMajorWeight() ), VECTOR_TO_POINT( from ), VECTOR_TO_POINT( to ) );
 }
 
 // -----------------------------------------------------------------------------

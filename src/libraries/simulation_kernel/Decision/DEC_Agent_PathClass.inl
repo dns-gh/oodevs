@@ -218,6 +218,16 @@ bool DEC_Agent_PathClass::IsShort() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::IsFlying
+// Created: LDC 2011-08-09
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Agent_PathClass::IsFlying() const
+{
+    return bFlying_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::GetPopulationSecurityRange
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------

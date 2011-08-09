@@ -81,6 +81,7 @@ public:
           double       GetThreshold                        () const;
 
           bool         IsShort                             () const;
+          bool         IsFlying                            () const;
     //@}
 
 private:
@@ -129,6 +130,7 @@ private:
     bool bShort_;
 
     bool bAvoidObjects_;
+    bool bFlying_;
     double rObstructionThreshold_;
     T_ObjectCosts objectCosts_;
 
