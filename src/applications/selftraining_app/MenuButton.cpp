@@ -26,7 +26,6 @@ MenuButton::MenuButton( const QString& text, QWidget* parent )
     disabledFont_.setItalic( true ) ;
     setFont( baseFont_ );
     setText( text );
-    setBackgroundOrigin( QWidget::WindowOrigin );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +79,6 @@ void MenuButton::paintEvent( QPaintEvent* )
     {
         const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ;
         const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ;
-        painter.drawImage( rect(), mask_ );
         painter.setFont( font );
         painter.setPen( colorGroup().color( colorRole ) );
         painter.drawText( rect(), Qt::AlignCenter | Qt::SingleLine, text() );

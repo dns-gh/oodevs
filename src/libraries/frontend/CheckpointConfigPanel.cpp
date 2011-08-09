@@ -69,6 +69,7 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
         {
             Q3VBox* box = Style( new Q3VBox( loadGroup_ ) );
             Style( new QLabel( tools::translate( "CheckpointConfigPanel", "Session:" ), box ) );
+            box->setSpacing( 5 );
             sessions_ = Style( new Q3ListBox( box ) );
             connect( sessions_, SIGNAL( highlighted( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
         }

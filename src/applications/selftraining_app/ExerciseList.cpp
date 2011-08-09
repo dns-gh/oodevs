@@ -271,7 +271,9 @@ void ExerciseList::AddExerciseEntry( const frontend::Exercise_ABC& exercise )
     }
     if( parent )
     {
-        parent->setPixmap( 0, pxMiss );
+        QPixmap p;
+        p.convertFromImage( mission );
+        parent->setPixmap( 0, p );
         static_cast< gui::ValuedListItem* >( parent )->SetValue( &exercise );
     }
     qApp->restoreOverrideCursor();
