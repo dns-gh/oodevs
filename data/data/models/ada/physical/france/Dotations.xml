@@ -1570,13 +1570,13 @@
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="78" id-nature="3" name="IED" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
     <attritions>
-      <attrition destruction="0.6" protection="CharLourd" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
-      <attrition destruction="0.6" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
-      <attrition destruction="0.6" protection="BlindeLeger" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
-      <attrition destruction="0.65" protection="TransportBlinde" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.1" protection="CharLourd" repairable-with-evacuation="0.05" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.2" protection="BlindeLeger" repairable-with-evacuation="0.05" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="TransportBlinde" repairable-with-evacuation="0.1" repairable-without-evacuation="0.25"/>
       <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0.65" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-      <attrition destruction="0.65" protection="Combattant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.4" protection="Combattant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.35"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Bois" value="0.9"/>
@@ -1587,6 +1587,15 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
+    <indirect-fire intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="10" y-dispersion="10">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="1"/>
+      <ph target-posture="PostePrepareGenie" value="1"/>
+    </indirect-fire>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" id-nature="3" name="Charg 7,62" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
     <attritions>
@@ -2395,4 +2404,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="6" name="électricité" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="144" id-nature="5" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3646907228" -->
+<!-- signature="1248159067" -->
