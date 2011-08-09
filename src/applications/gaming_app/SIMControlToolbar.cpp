@@ -116,8 +116,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
     pConnectButton_->setShortcut( QKeySequence( Qt::Key_C ) );
 
-
-
     pPlayButton_ = new QToolButton( this );
     pPlayButton_->setIconSet( MAKE_ICON( stop ) );
     pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
@@ -167,7 +165,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pDisconnectDlg_ = new DisconnectDialog( this, network );
     pDisconnectDlg_->hide();
 
-
     addWidget( pConnectButton_ );
     addWidget( pPlayButton_ );
     addWidget( pStepButton_ );
@@ -176,7 +173,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     addWidget( pSpeedSpinBox_ );
     addWidget( pSpeedButton_ );
     addWidget( pCheckpointButton_ );
-    addWidget( pDisconnectDlg_ );
 
     connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );
     connect( pPlayButton_,    SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
@@ -204,9 +200,7 @@ SIMControlToolbar::~SIMControlToolbar()
 void SIMControlToolbar::SlotConnectDisconnect()
 {
     if( connected_ )
-    {
         pDisconnectDlg_->show();
-    }
     else
     {
         pConnectButton_->setIconSet( MAKE_ICON( connecting ) );

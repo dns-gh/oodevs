@@ -13,6 +13,14 @@
 #include "clients_gui/Types.h"
 #include "tools/ElementObserver_ABC.h"
 
+#pragma warning( push, 0 )
+#include <QtGui/qtoolbar.h>
+#include <QtGui/qicon.h>
+#pragma warning( pop )
+
+class QToolButton;
+class QSpinBox;
+
 namespace kernel
 {
     class Controllers;
