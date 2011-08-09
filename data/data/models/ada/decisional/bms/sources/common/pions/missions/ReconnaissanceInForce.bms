@@ -84,10 +84,6 @@ includedFiles["sources/common/pions/missions/ReconnaissanceInForce.bms"] = true
         end
     end,
 
-    destroy = function( self )
-            Activate( self.activations.BEH_MAJ_Pion_INF_AgressiviteTir, 1, { 0, } )
-    end,
-
     manageFire = function( self )
         if ( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             self.ePhase = eRejoindrePosition
