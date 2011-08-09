@@ -85,7 +85,7 @@ Q3DragObject* PopulationListView::dragObject()
     if( dynamic_cast< const kernel::Population_ABC* >( &*selected_ ) )
     {
         const PopulationPositions* pos = static_cast< const PopulationPositions* >( selected_->Retrieve< kernel::Positions >() );
-        return new gui::ValuedDragObject( pos );
+        return new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
     }
     return 0;
 }

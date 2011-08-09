@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent )
     : gui::AgentsLayer  ( controllers, tools, strategy, view, profile, filter )
     , model_            ( model )
     , modelBuilder_     ( modelBuilder )
@@ -36,7 +36,7 @@ AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gu
     , selectedFormation_( controllers )
     , selectedTeam_     ( controllers )
 {
-    // NOTHING
+    setParent( parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,8 +209,8 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
         const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() );
-        Q3DragObject* drag = new gui::ValuedDragObject( pos );
-        drag->drag();
+        Q3DragObject* drag = new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
+        drag->dragMove();
     }
         return result;
 }

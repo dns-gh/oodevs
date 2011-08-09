@@ -30,6 +30,7 @@ PopulationsLayer::PopulationsLayer( kernel::Controllers& controllers, const kern
     , model_( model )
     , selectedEntity_( controllers )
     , selectedPopulation_( controllers )
+    , dummy_( new QWidget() )
 {
     // NOTHING
 }
@@ -141,7 +142,7 @@ bool PopulationsLayer::HandleMousePress( QMouseEvent* event, const geometry::Poi
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
         const PopulationPositions* pos = static_cast< const PopulationPositions* >( selectedPopulation_->Retrieve< Positions >() );
-        Q3DragObject* drag = new gui::ValuedDragObject( pos );
+        Q3DragObject* drag = new gui::ValuedDragObject( pos, dummy_ );
         drag->drag();
     }
     return result;

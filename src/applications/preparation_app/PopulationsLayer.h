@@ -61,6 +61,7 @@ private:
     Model& model_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::SafePointer< kernel::Population_ABC > selectedPopulation_;
+    QWidget* dummy_;
     //@}
 };
 

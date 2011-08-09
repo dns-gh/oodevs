@@ -85,7 +85,7 @@ Q3DragObject* InhabitantListView::dragObject()
     if( dynamic_cast< const kernel::Inhabitant_ABC* >( &*selected_ ) )
     {
         const InhabitantPositions* pos = static_cast< const InhabitantPositions* >( selected_->Retrieve< kernel::Positions >() );
-        return new gui::ValuedDragObject( pos );
+        return new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
     }
     return 0;
 }
