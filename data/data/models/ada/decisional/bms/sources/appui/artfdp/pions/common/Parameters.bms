@@ -21,7 +21,7 @@ end
 
 
 
---[[// Delai de preparation de mission par type d'arme
+--[[// Delai de preparation de mission de reco par type d'arme
 ]]--[[// ----------------------------------------------------------------------------
 ]]function M_DELAI_PREPARATION_RECO_AUF1()
     return 5
@@ -58,6 +58,49 @@ function M_DELAI_PREPARATION_RECO_CAESAR()
 end
 
 
+
+--[[// Delai de preparation de mission de tir par type d'arme
+]]--[[// ----------------------------------------------------------------------------
+]]function M_DELAI_PREPARATION_TIR_AUF1()
+    return 5
+end
+
+
+
+function M_DELAI_PREPARATION_TIR_TRF1()
+    return 5
+end
+
+
+
+function M_DELAI_PREPARATION_TIR_SAM()
+    return 5
+end
+
+
+
+function M_DELAI_PREPARATION_TIR_LRM()
+    return 7
+end
+
+
+
+function M_DELAI_PREPARATION_TIR_COBRA()
+    return 5
+end
+
+
+
+function M_DELAI_PREPARATION_TIR_CAESAR()
+    return 5
+end
+
+
+
+--[[// Distance min pour la preparation de mission de tir
+]]function DISTANCE_PREPARATION_TIR()
+    return 3000
+end
 
 
 

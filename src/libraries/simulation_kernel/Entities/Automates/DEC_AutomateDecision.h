@@ -23,6 +23,7 @@ namespace client
 }
 
 class MIL_Mission_ABC;
+class PHY_RoePopulation;
 
 // =============================================================================
 // @class  DEC_AutomateDecision
@@ -106,6 +107,8 @@ public:
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
 
     virtual const std::string& GetDIAType() const;
+    void NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState state );
+    void NotifyRulesOfEngagementPopulationStateChanged( int state );
     //@}
 
 protected:
@@ -130,6 +133,7 @@ private:
 
 private:
     // Etat décisionnel
+    const PHY_RoePopulation* pRoePopulation_;
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;
     E_OperationalState       nOperationalState_;

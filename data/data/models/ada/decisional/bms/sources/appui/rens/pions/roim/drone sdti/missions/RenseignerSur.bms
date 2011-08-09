@@ -16,8 +16,10 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
         { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
         { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
         { "ACT_Dep_Pion_RENS_VolerA", { "done_ACT_Dep_Pion_RENS_VolerA" } },
         { "ACT_Obs_Pion_RENS_ActiverCamera", { "done_ACT_Obs_Pion_RENS_ActiverCamera" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -25,10 +27,13 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
         self._namedParams.mission = self.params.mission
         self.ficelleDeVol = {}
         DEC_Copie_ListePoints( self._namedParams.mission.ficelleDeVole_, self.ficelleDeVol )
+        self.startPosition = DEC_Geometrie_CreerPoint()
+        DEC_Copie_Point( DEC_Agent_Position(), self.startPosition )
     end,
 
     activate = function( self )
-        local Activate = Activate        self.eEtat = self.eEtat or eActionEnCours
+        local Activate = Activate
+        self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//---------------------------------------------------------------------
 ]]--[[// Commencer le mode enregistrement
@@ -59,7 +64,7 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
 --[[// pour être sur de revenir au point de départ
 ]]                end
 
-            DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
+            DEC_ListePoints_PushBack( self.ficelleDeVol, self.startPosition )
             end
 --[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
@@ -83,6 +88,15 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
             ]]elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "DRONE LAUNCHED", } )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" );
+        for i, repOrdre in pairs( ordres_recus ) do
+            Activate( self.activations.ACT_Info_Trace, 1, { "$$ Ordre de conduite : "..tostring( repOrdre.eOrdre_ ) } )
+            if repOrdre.eOrdre_ == eOrdreConduite_Interrompre then
+                self.ePhaseMission = eSeReplier;
+            end
+
+            Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdre, } )
+        end
                     --[[// Progression
 ]]if( self.eEtat == eActionEffectuee ) then
                         do
@@ -103,7 +117,20 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
 ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 1000, } )
                     Activate( self.activations.ACT_Obs_Pion_RENS_ActiverCamera, 1, {} )--[[// active pd toute la durée du vol, temps réel 
 ]]
-                    
+        --//---------------------------------------------------------------------
+        --// Interruption mission
+        --//---------------------------------------------------------------------
+        elseif switch_1 == eSeReplier then
+            DEC_TRACE( "Repli..." )
+            --// Progression
+            if( self.eEtat == eActionEffectuee ) then
+                self.ePhaseMission = eFinMission
+                return
+            end
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.startPosition, eProgressionDirect, eTypeItiMouvement } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
+            Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 1000, } )  --// données doctrine
+            
                 --[[//---------------------------------------------------------------------
 ]]--[[// Fin de la mission 
 ]]--[[//---------------------------------------------------------------------
@@ -125,5 +152,7 @@ connections = connections or {}
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, "BEH_Dep_ProgressionSur", nodes.BEH_Dep_ProgressionSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, "ACT_Dep_Pion_RENS_VolerA", nodes.ACT_Dep_Pion_RENS_VolerA }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, "ACT_Obs_Pion_RENS_ActiverCamera", nodes.ACT_Obs_Pion_RENS_ActiverCamera }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

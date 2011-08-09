@@ -87,7 +87,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
          do
             local _continue = true
 --[[// adaptation du dispositif pour la mission
-]]--[[//decoupage de la zone en autant de sous zones a affecter à chacun 
+]]--[[//decoupage de la zone en autant de sous zones a affecter à chacun
 ]]--[[//des pions.
 ]]--[[// Surveiller : ordre de creation des missions
 ]]--[[// mission stationner à tous les autres
@@ -127,7 +127,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 
                             end
 
-                            self.localisationsASurveiller = S_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePionsSurveillerCDT ) )
+                            self.localisationsASurveiller = S_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePionsSurveillerCDT ), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                             if( not DIA_IsListEmpty( listePionsSurveillerCDT ) ) then
                                 Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe, 1, { ePhase_CDT, listePionsSurveillerCDT, self.localisationsASurveiller, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, self._namedParams.mission.ambianceMission_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ravitaillementDebutMission_, } )
                             end

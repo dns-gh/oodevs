@@ -6,14 +6,14 @@ local emptyTable = emptyTable
 include "bit.lua"
 
 --[[//-------------------------------------------------------------------------
-]]--[[// Renvoie le pion le plus proche du point parmis les pions passés en 
+]]--[[// Renvoie le pion le plus proche du point parmis les pions passés en
 ]]--[[// paramètre
 ]]--[[// OPT MIA: utilisé une fois pour ART Sol Air
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// -------------------------------------------------------------------------
-]]--[[// Cette fonction permet de renvoyer une liste de pions construite de la 
+]]--[[// Cette fonction permet de renvoyer une liste de pions construite de la
 ]]--[[// facon suivante
-]]--[[// 
+]]--[[//
 ]]--[[//  -   pour tous les automates embrayés, on ajoute a la liste tous les pions
 ]]--[[//      subordonnés
 ]]--[[//
@@ -21,19 +21,19 @@ include "bit.lua"
 ]]--[[//      qui ne sont pas subordonnés a un automate embrayé
 ]]--[[//
 ]]--[[//  un pion PC est un pion qui a pour PC lui meme
-]]--[[//  un pion subornonné est un pion qui a pour PC un autre pion que lui 
+]]--[[//  un pion subornonné est un pion qui a pour PC un autre pion que lui
 ]]--[[//  meme
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[//on met dans la liste des pions PC embrayés qui sont embrayés (avec
 ]]--[[//leuts subordonnés )
 ]]--[[//si je suis mon PC et que je suis embrayé, alors
-]]--[[//ajout des pions de la liste unites_ qui ne sont pas deja dans 
+]]--[[//ajout des pions de la liste unites_ qui ne sont pas deja dans
 ]]--[[//bufferPionCont
 ]]--[[//========================================================================
 ]]--[[// Gestions des états opérationnels
 ]]--[[//=========================================================================
 ]]--[[//-------------------------------------------------------------------------
-]]--[[// Renvoie vrai si je suis détruit tactiquement --> plus de 
+]]--[[// Renvoie vrai si je suis détruit tactiquement --> plus de
 ]]--[[// composantes majeurs
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[//-------------------------------------------------------------------------
@@ -191,7 +191,7 @@ end
 function S_Misc_EstDetruitTactique( )
     local _returnValue = false
     _returnValue = false
-    if( DEC_Agent_EtatOpsMajeur() == 0 ) then
+    if( DEC_Agent_EtatOpsMajeur() == 0 or DEC_Agent_EstImmobilise( myself ) ) then
         _returnValue = true
     end
 
@@ -201,7 +201,7 @@ end
 function S_Misc_EstPionDetruitTactique( pion )
     local _returnValue = false
     _returnValue = false
-    if( pion:DEC_Agent_EtatOpsMajeur() == 0 ) then
+    if( pion:DEC_Agent_EtatOpsMajeur() == 0 or DEC_Agent_EstImmobilise( pion ) ) then
         _returnValue = true
     end
 

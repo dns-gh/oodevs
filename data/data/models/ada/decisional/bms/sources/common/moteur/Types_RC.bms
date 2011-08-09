@@ -390,9 +390,13 @@ eRC_MiseEnPlaceProducePoint = 371
 eRC_ProduceImpossible = 372
 eRC_FinProducePoint = 373
 eRC_ImpossibleAtteindreObjectif = 374
-eNbr = 375
+eRC_ExplosionSurBouchonMine = 375
+eRC_PathfindWarning = 376
+eRC_DotationIndisponible = 377
+eRC_ObservationEffetTirIndirect = 378
+eNbr = 379
 --[[// Parametre : T_ConnaissanceObjet
-]]--[[// Parametre : float
+]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion
 ]]--[[// Parametre : T_Pion
 ]]--[[// Parametre : T_ConnaissanceAgent
@@ -400,11 +404,10 @@ eNbr = 375
 ]]--[[// Parametre : T_ConnaissanceAgent
 ]]--[[// Parametre : T_ConnaissanceAgent
 ]]--[[// Parametre : T_ConnaissanceAgent
-]]--[[// Parametre : T_Pion
 ]]--[[// Parametre : T_Pion
 ]]--[[// Parametre : id
-]]--[[// Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
-]]--[[// Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
+]]--[[// Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion),
+]]--[[// Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion),
 ]]--[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : TypeEquipement
 ]]--[[// Parametre : TypeEquipement
@@ -415,16 +418,24 @@ eNbr = 375
 ]]--[[// Parametre : T_Pion
 ]]--[[// Parametre : T_Pion
 ]]--[[// Parametre : TirPion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
 ]]--[[// Parametre : message
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_ConnaissancePopulation
 ]]--[[// Parametre : T_ConnaissancePopulation
 ]]--[[// Parametre : T_ConnaissancePopulation
 ]]--[[// Parametre : id
-]]--[[// Parametres : victimes (float), dont_blesses (float), 
+]]--[[// Parametres : victimes (float), dont_blesses (float),
 ]]--[[// Parametre : id
 ]]--[[// Parametre : T_ConnaissancePopulation
 ]]--[[// Parametre : T_ConnaissancePopulation
 ]]--[[// Parametre : T_ConnaissancePopulation
-]]--[[// Parametres : victimes (float), dont_blesses (float), 
+]]--[[// Parametres : victimes (float), dont_blesses (float),
+]]--[[// Parametres : section (float), directLength (float), computedPathLength (float),
+]]--[[// Parametres : pionCible (T_ID), perte_composantes (float),
 ]]

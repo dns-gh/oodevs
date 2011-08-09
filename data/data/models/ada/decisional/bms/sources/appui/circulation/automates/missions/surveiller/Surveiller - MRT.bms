@@ -3,7 +3,7 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_LOG_Surveiller
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -36,7 +36,7 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 local nErrorCode = nil
-                self.listeLocalisations = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePions ), nErrorCode )
+                self.listeLocalisations = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePions ), DEC_GetDirectionEnnemi( self._namedParams.mission ), nErrorCode )
                 nErrorCode = self.listeLocalisations.second
                 self.listeLocalisations = self.listeLocalisations.first
                 if( nErrorCode ~= eNoError ) then
@@ -49,7 +49,7 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
 --[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[//
-]]--[[// =============================================================================    
+]]--[[// =============================================================================
 ]]        end
 
          do

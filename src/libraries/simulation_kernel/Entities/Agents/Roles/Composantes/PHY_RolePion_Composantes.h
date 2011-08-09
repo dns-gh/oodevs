@@ -215,6 +215,7 @@ public:
     virtual double GetMajorOperationalState() const;
     virtual bool IsUsable() const;
     virtual const MIL_Agent_ABC& GetPion() const;
+    virtual bool IsImmobilized() const;
     //@}
 
     //! @name Network

@@ -75,7 +75,7 @@ include "Appui/Rens/Pions/Roim/Drone DRAC/Missions/Missions.bms"
 --[[// *****************************************************************************
 ]]--[[// Comportement par défaut.
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
@@ -85,6 +85,7 @@ include "Appui/Rens/Pions/Roim/Drone DRAC/Missions/Missions.bms"
     activations =
     {
         { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "BEH_MAJ_EtatOperationnel", { "done_BEH_MAJ_EtatOperationnel" } },
         { "BEH_Info_Pion_RendreCompte", { "done_BEH_Info_Pion_RendreCompte" } },
         { "BEH_Info_Pion_Rens_Disponibilite", { "done_BEH_Info_Pion_Rens_Disponibilite" } },
         { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
@@ -106,6 +107,10 @@ include "Appui/Rens/Pions/Roim/Drone DRAC/Missions/Missions.bms"
         end
 
         Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
+        Activate( self.activations.BEH_MAJ_EtatOperationnel, 1, emptyTable )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ etat destruction
+]]--[[//-----------------------------------------------------------------------------
+]]
         Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// INFO MOS
 ]]--[[//-----------------------------------------------------------------------------
@@ -172,6 +177,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MOT_DesactiveSauvegarde", nodes.BEH_MOT_DesactiveSauvegarde }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatOperationnel", nodes.BEH_MAJ_EtatOperationnel }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Info_Pion_RendreCompte", nodes.BEH_Info_Pion_RendreCompte }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Info_Pion_Rens_Disponibilite", nodes.BEH_Info_Pion_Rens_Disponibilite }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "ACT_Info_Trace", nodes.ACT_Info_Trace }

@@ -399,7 +399,7 @@ void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& /*transpo
 // Name: PHY_RoleAction_Loading::UnloadFromTransport
 // Created: AHC 2009-09-24
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
+void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/, MT_Vector2D* /*position*/ )
 {
     ForceUnloadedState();
 }

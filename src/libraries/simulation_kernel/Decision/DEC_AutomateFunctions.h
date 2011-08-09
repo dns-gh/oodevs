@@ -40,6 +40,8 @@ public:
     static bool IsParentAutomateEngaged( const MIL_Automate& callerAutomate );
 
     static std::vector< DEC_Decision_ABC* > GetPionsOfAutomateWithoutPC( const DEC_Decision_ABC* automat );
+    static void NotifyRulesOfEngagementStateChanged( MIL_Automate& callerAutomate, int state );
+    static void NotifyRulesOfEngagementPopulationStateChanged( MIL_Automate& callerAutomate, int state );
 
     // Test / debug
     static void DecisionalState( const MIL_Automate& callerAutomate, const std::string& key, const std::string& value );
@@ -50,6 +52,7 @@ public:
     // Accesseurs sur les fonctions Pion
     static bool IsPionContaminated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
     static bool IsPionNeutralized( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
+    static bool IsPionTransported( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
     static bool IsPointInPionFuseau( const MIL_Automate& callerAutomate, MT_Vector2D* pPoint, DEC_Decision_ABC* pPion );
     static bool MakePionRelievePion( const MIL_Automate& callerAutomate, DEC_Decision_ABC* relieving, DEC_Decision_ABC* relieved );
     static boost::shared_ptr< MT_Vector2D > GetPionPosition( const DEC_Decision_ABC* pion );

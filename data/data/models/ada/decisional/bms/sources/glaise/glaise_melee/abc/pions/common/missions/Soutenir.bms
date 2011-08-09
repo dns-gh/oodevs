@@ -118,7 +118,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]            local switch_1 = self.ePhaseMission
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                    Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. self._namedParams.pionAmi:GetszName_() .. " **", } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. DEC_GetSzName( self._namedParams.pionAmi ) .. " **", } )
                     self.ePhaseMission = eSuivreUnite
                     _continue = false
                 elseif switch_1 == eSuivreUnite then

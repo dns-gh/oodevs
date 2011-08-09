@@ -38,7 +38,13 @@ include "bit.lua"
 ]]--[[// Renvoie vrai si eni trop loin pour toucher avec posture réelle
 ]]--[[//--------------------------------------------------------------------------
 ]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoie vrai si eni trop loin pour toucher avec posture réelle
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
 ]]--[[// Renvoie vrai si eni trop proche pour toucher avec posture réelle
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoie vrai si eni à portée avec posture réelle
 ]]--[[//--------------------------------------------------------------------------
 ]]--[[//--------------------------------------------------------------------------
 ]]--[[// Renvoie vrai si eni à portée avec posture réelle
@@ -134,6 +140,15 @@ function S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
     do return _returnValue end
 end
 
+function S_Tir_EstTropLoin3DPourToucherPosturesReelles( repEni, rPh )
+    local _returnValue = false
+    local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( repEni, rPh )
+    local rDistanceAEni = DEC_Geometrie_Distance3D( myself:DEC_Agent_Position(), 0, S_Eni_Position( repEni ), S_Eni_Altitude( repEni ) )
+    DEC_Trace( "Portee MAX pour atteindre " .. FloatToString( rPorteeMax ) .. " avec PH " .. FloatToString( rPh ) .. " vs distance " .. FloatToString( rDistanceAEni ) )
+    _returnValue = rDistanceAEni > rPorteeMax
+    do return _returnValue end
+end
+
 function S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
     local _returnValue = false
     local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( repEni, rPh )
@@ -150,6 +165,14 @@ function S_Tir_EstAPorteePosturesReelles( repEni, rPh )
     local _returnValue = false
     local bTropProche = S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
     local bTropLoin = S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
+    _returnValue = not ( bTropProche or bTropLoin )
+    do return _returnValue end
+end
+
+function S_Tir_EstAPortee3DPosturesReelles( repEni, rPh )
+    local _returnValue = false
+    local bTropProche = S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
+    local bTropLoin = S_Tir_EstTropLoin3DPourToucherPosturesReelles( repEni, rPh )
     _returnValue = not ( bTropProche or bTropLoin )
     do return _returnValue end
 end

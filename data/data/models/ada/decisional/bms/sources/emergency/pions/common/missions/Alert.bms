@@ -197,7 +197,8 @@ node "ACT_Info_ReportPhase"
 ]]--[[// m² DEC_Geometrie_TailleLocalisation( zone ) / DEC_Pion_ZoneAlerteMax();
 ]]local sizeArea = 160000
                 local eCodeLoc = eNoError
-                self.lstLocalisations = DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.zone, sizeArea, eCodeLoc )
+                local mission = DEC_GetMission( myself )
+                self.lstLocalisations = DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.zone, sizeArea, DEC_GetDirectionEnnemi( mission ), eCodeLoc )
                 eCodeLoc = self.lstLocalisations.second
                 self.lstLocalisations = self.lstLocalisations.first
                 --[[// lstLocalisations = DEC_Geometrie_DecoupeLocalisation( zone, sizeArea, eCodeLoc );

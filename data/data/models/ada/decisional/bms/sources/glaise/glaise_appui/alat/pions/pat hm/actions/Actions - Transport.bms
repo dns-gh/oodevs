@@ -95,7 +95,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/pat hm/actions/Actions - T
         self.eEtatTransport = self.eEtatTransport or nil
         if( ModuleBegins() ) then
             do
-                self.actionDebarquer = DEC_Start_TransportDebarquer(  )
+                self.actionDebarquer = DEC_Start_TransportDebarquer( nil )
                 actionCallbacks[ self.actionDebarquer ] = function( arg ) self.eEtatTransport = arg end
 
             end
@@ -114,14 +114,14 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/pat hm/actions/Actions - T
                 if switch_1 == eActionTransport_Running then
                     _continue = false
                 elseif switch_1 == eActionTransport_Finished then
-                    DEC_StopAction( self.actionDebarquer )
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
                 if switch_1 == eActionTransport_Impossible then
-                    DEC_StopAction( self.actionDebarquer )
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end

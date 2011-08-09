@@ -12,7 +12,7 @@ include "Glaise/Glaise_Common/Pions/Actions/Actions - Transport.bms"
 --[[// *****************************************************************************
 ]]--[[// BEH_Transport_Pion_Transporter
 ]]--[[//
-]]--[[// Commentaires : Traiter la liste des unités a transporter pour ne retenir que 
+]]--[[// Commentaires : Traiter la liste des unités a transporter pour ne retenir que
 ]]--[[//                les unites que myself peut effectivement traiter
 ]]--[[// *****************************************************************************
 ]]node "BEH_Transport_Pion_Transporter"

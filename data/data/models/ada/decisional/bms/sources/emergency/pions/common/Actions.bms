@@ -772,7 +772,7 @@ node "ACT_Obj_Pion_Emergency_ExtinguishFire"
 
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.knFire ) ) then
             do
-                DEC_StopAction( self.actionID )
+                self.actionID = DEC_StopAction( self.actionID )
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end

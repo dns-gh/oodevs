@@ -3,18 +3,19 @@ includedFiles["sources/appui/alat/automates/common/Behaviors.bms"] = true
 
 local emptyTable = emptyTable
 
---[[// Common Squadron Behaviors and Actions
-]]--[[// -------------------------------------
+--[[//génériques automates scipio
 ]]include "Common/Automates/Behaviors.bms"
+
+--[[//inclusion des actions communes aux automates alat
+]]include "Appui/Alat/Automates/Common/Actions.bms"
+
 
 include "Common/Automates/Behaviors/Medo/Behaviors - Medo - ALAT.bms"
 
 
---[[// Common AAC Squadron Behaviors and Actions
-]]--[[// -----------------------------------------
-]]include "Appui/Alat/Automates/Common/Actions.bms"
-
-include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Manoeuvre.bms"
+--[[//comportements Génériques des automates ALAT
+]]--[[//------------------------------------------------------------------------------
+]]include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Manoeuvre.bms"
 
 include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Tir.bms"
 
@@ -22,12 +23,13 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Log.bms"
 
 include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
 
-include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
 
-
-
---[[// Default Behavior
-]]--[[//-----------------
+--[[//------------------------------------------------------------------------------
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// Commentaires: Les helicopteres sont tous posés pour au debut. Ils n'ont pas
+]]--[[//d'objectif ni de plot de rafitaillement
+]]--[[//------------------------------------------------------------------------------
 ]]node "BEH_Defaut"
 {
     feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
@@ -42,7 +44,6 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
         { "BEH_Rens_Automate_GererSilenceRadio", { "done_BEH_Rens_Automate_GererSilenceRadio" } },
         { "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau", { "done_BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau" } },
         { "BEH_Log_Automate_ALAT_GererPlotsRavitaillement", { "done_BEH_Log_Automate_ALAT_GererPlotsRavitaillement" } },
-        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement", { "done_BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement" } },
     },
 
     create = function( self )
@@ -54,7 +55,8 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
         local Activate = Activate
         self.listePionsAvecPC = self.listePionsAvecPC or {}
         self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
-        myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ )
+        --[[//netoyage des connaissances
+]]myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ )
         Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
@@ -65,25 +67,43 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
 ]]if( DEC_Automate_EstEmbraye() ) then
             do
                 Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
-                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )
-                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[// ---------------------------------------------------------------------
+]]--[[// Mettre les combinaisons Nbc si alerte de niveau 4
+]]--[[// ---------------------------------------------------------------------
+]]
+                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//----------------------------------------------------------------------
+]]--[[// ROE --> Tir libre, sur riposte, interdit
+]]--[[//----------------------------------------------------------------------
+]]
                 Activate( self.activations.BEH_RC_Automate_ALAT_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates spécifique à l'ALAT
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )
-                if( DEC_GetMission( myself ) ~= nil ) then
+                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[// ---------------------------------------------------------------------
+]]--[[// Gestion de l'ordre de conduite Silence Radio/radar
+]]--[[// ---------------------------------------------------------------------
+]]
+                local mission = DEC_GetMission( myself )
+                if( mission ~= nil ) then
                     do
-                        Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, emptyTable )
-                        Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, emptyTable )
+                        --[[// -----------------------------------------------------------------
+]]--[[// Ajout des plots dans mon fuseau si j'ai une mission autre que
+]]--[[// ALAT_SeRecompleter (les plots sont passes dans la mission)
+]]--[[// -----------------------------------------------------------------
+]]if( mission:GetType() ~= "T_Mission_Automate_ALAT_AllerSeRecompleter" ) then
+                            Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, emptyTable )
+                        end
+
+                        Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, emptyTable )--[[// -----------------------------------------------------------------
+]]--[[// choix des plots de ravitaillement des pions subordonnés
+]]--[[// -----------------------------------------------------------------
+]]
                     end
                 end
 
             end
---[[// gestion de l'ordre de conduite changement des paramètres de recompletement ALAT
-]]        end
+        end
 
-        Activate( self.activations.BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement, 1, emptyTable )
     end,
 
 }
@@ -97,4 +117,3 @@ connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_RC_Automate_ALAT_Situ
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_Automate_GererSilenceRadio", nodes.BEH_Rens_Automate_GererSilenceRadio }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau", nodes.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Log_Automate_ALAT_GererPlotsRavitaillement", nodes.BEH_Log_Automate_ALAT_GererPlotsRavitaillement }
-connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement", nodes.BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement }

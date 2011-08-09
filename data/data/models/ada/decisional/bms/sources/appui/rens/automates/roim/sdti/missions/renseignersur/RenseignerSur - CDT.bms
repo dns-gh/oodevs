@@ -5,7 +5,7 @@ local emptyTable = emptyTable
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -16,7 +16,6 @@ local emptyTable = emptyTable
     activations =
     {
         { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_RENS_GererPionsDetruits_" } },
-        { "BEH_Dispositif_Automate_RENS_GererLeSE_", { "done_BEH_Dispositif_Automate_RENS_GererLeSE_" } },
         { "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre", { "done_BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre" } },
     },
 
@@ -35,13 +34,13 @@ local emptyTable = emptyTable
         end
 
         Activate( self.activations.BEH_Dispositif_Automate_RENS_GererPionsDetruits_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
-]]--[[// Gestion 
+]]--[[// Gestion
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererLeSE_, 1, emptyTable )
-        Activate( self.activations.BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre, 1, emptyTable )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre, 1, emptyTable )--[[//behavior BEH_Dispositif_Automate_RENS_GererLeSE_();
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion du drone
-]]--[[//----------------------------------------------------------------------------- 
+]]--[[//-----------------------------------------------------------------------------
 ]]
     end,
 
@@ -72,7 +71,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre"
         local pionDrone = S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( "Drone_SDTI" )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Si pas de drone disponible, attendre
-]]--[[//----------------------------------------------------------------------------- 
+]]--[[//-----------------------------------------------------------------------------
 ]]if( pionDrone == nil ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for drone to be operated", } )
@@ -141,5 +140,4 @@ connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_RENS_ROIM_SDTI_G
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone, "ACT_RC_Automate", nodes.ACT_RC_Automate }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone, "BEH_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur", nodes.BEH_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur }
 connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur, "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", nodes.BEH_Dispositif_Automate_RENS_GererPionsDetruits_ }
-connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur, "BEH_Dispositif_Automate_RENS_GererLeSE_", nodes.BEH_Dispositif_Automate_RENS_GererLeSE_ }
 connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur, "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre", nodes.BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre }

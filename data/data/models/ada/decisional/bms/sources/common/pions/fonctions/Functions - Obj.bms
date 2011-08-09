@@ -14,13 +14,23 @@ include "bit.lua"
 ]]--[[// OPT: MIA SPE ART fdp
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des obstacles
+]]--[[// OPT: MIA SPE ART fdp
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie vrai si l'objet est contourne
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'objet est breche
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie la liste des objets non contourner
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie vrai si l'objet est prépapé
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'objet est construit
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// =============================================================================
 ]]--[[// Force par rapport aux objets
@@ -38,12 +48,22 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie l'objet proche de ptRef
 ]]--[[//-----------------------------------------------------------------------------
+]]--[[//Ajouté par LLS le 19/05/2008 pour    l'automate combinant la reco et la batterie de tir AUF1
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie l'objet à une certaine distance de ptRef
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie l'objet proche de ptRef barycentre de locRef
 ]]--[[//-----------------------------------------------------------------------------
 ]]function S_Obj_ListeObstacle( position, rDistance )
     local _returnValue = {}
-    _returnValue = DEC_Connaissances_ObjetsDansCercle( position, rDistance, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+    _returnValue = DEC_Connaissances_ObjetsDansCercle( position, rDistance, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectBouchonMinesParDispersion ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+    do return _returnValue end
+end
+
+function S_Obj_ListeObstacleDansLocalisation( position )
+    local _returnValue = {}
+    _returnValue = DEC_Connaissances_ObjetsDansZone( position, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectBouchonMinesParDispersion ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
     do return _returnValue end
 end
 
@@ -51,6 +71,14 @@ function S_Obj_EstContourne( objet )
     local _returnValue = false
     local countourne = DEC_ConnaissanceObjet_EstContourne( objet )
     local result = ( countourne == eTristate_True )
+    _returnValue = result
+    do return _returnValue end
+end
+
+function S_Obj_EstBreche( objet )
+    local _returnValue = false
+    local breche = DEC_ConnaissanceObjet_EstBreche( objet )
+    local result = ( breche == eTristate_True )
     _returnValue = result
     do return _returnValue end
 end
@@ -79,7 +107,7 @@ function S_Obj_EstObstacleDeManoeuvreNonActif( objet )
     if( not bResult ) then
         do
             _returnValue = false
-                        do return _returnValue end
+                        do return end
 
         end
     end
@@ -144,6 +172,29 @@ do
             local ptObj = S_Obj_Position( ksObj )
             local rDistObj = DEC_Geometrie_Distance( ptRef, ptObj )
             if( rDistObj < rDist ) then
+                do
+                    _returnValue = ksObj
+                    rDist = rDistObj
+                end
+            end
+
+        end
+
+    end
+
+    do return _returnValue end
+end
+
+function S_Obj_ObtenirObjetADistance( ptRef, lstObjets, rDistRecherche )
+    local _returnValue = nil
+    _returnValue = 0
+    local rDist = rDistRecherche
+    for _,ksObj in pairs( lstObjets or emptyTable ) do
+    local _continue = true
+do
+            local ptObj = S_Obj_Position( ksObj )
+            local rDistObj = DEC_Geometrie_Distance( ptRef, ptObj )
+            if( rDistObj == rDist ) then
                 do
                     _returnValue = ksObj
                     rDist = rDistObj

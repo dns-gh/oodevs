@@ -171,7 +171,7 @@ do
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe, 1, { ePhase_CDT, self.listePourHeliportage, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self._namedParams.mission.plotsRavitaillement_, self.listePionsAHeliporter, self._namedParams.mission.avecMateriel_, } )
                     end
 
-                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, M_DOCTRINE_ALAT_DISTANCE_PLOTS(), self._namedParams.mission.pointRegroupement_, false, } )
                     _continue = false
                 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )

@@ -3,7 +3,7 @@ includedFiles["sources/humus/humus_common/Fonctions - Geometrie.bms"] = true
 
 
 --[[// ------------------------------------------------------------------------
-]]--[[// 							Geometrie									 //
+]]--[[//                             Geometrie                                     //
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie le point barycentre d'une liste d'agents
@@ -37,7 +37,7 @@ includedFiles["sources/humus/humus_common/Fonctions - Geometrie.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[// ----------------------------------------------------------------------------
-]]--[[// Renvoie point le plus proche de la zone parmis les pooints passés en paramètre 
+]]--[[// Renvoie point le plus proche de la zone parmis les pooints passés en paramètre
 ]]--[[// OPT MIA: Spé ALAT
 ]]--[[// ----------------------------------------------------------------------------
 ]]function S_Geometrie_BarycentreAgents( listePions )
@@ -115,11 +115,11 @@ do
     do return _returnValue end
 end
 
-function S_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections )
+function S_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections, direction )
     local _returnValue = {}
     local eError = nil
     local listeLocalisationBuffer = {}
-    listeLocalisationBuffer = DEC_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections, eError )
+    listeLocalisationBuffer = DEC_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections, direction, eError )
     eError = listeLocalisationBuffer.second
     listeLocalisationBuffer = listeLocalisationBuffer.first
      do

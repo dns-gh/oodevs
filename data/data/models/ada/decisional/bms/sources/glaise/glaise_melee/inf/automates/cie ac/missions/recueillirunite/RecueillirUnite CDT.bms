@@ -39,7 +39,7 @@ node "MIS_Automate_CDT_INF_RecueillirUnite"
 ]]if( ModuleBegins() ) then
             do
                 DEC_Trace( "Conduite Recueil unite : debut" )
-                DEC_Trace( "Direction Dangereuse : " .. DEC_DirectionToString( self._namedParams.mission.directionEnnemi_ ) )
+                DEC_Trace( "Direction Dangereuse : " .. DEC_DirectionToString( DEC_GetDirectionEnnemi( self._namedParams.mission ) ) )
                 DEC_SetMission( myself, self._namedParams.mission )
                 StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )
             end

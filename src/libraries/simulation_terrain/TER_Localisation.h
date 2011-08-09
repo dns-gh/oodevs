@@ -124,7 +124,7 @@ public:
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vDroitesIntersection, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, T_PointVector& clippedPointVector ) const;
 
-    void Split    ( unsigned int nNbrParts, T_LocalisationPtrVector& locVector ) const;
+    void Split    ( unsigned int nNbrParts, T_LocalisationPtrVector& locVector, const MT_Vector2D* splitDirection = 0 ) const;
     void Scale    ( double rDist );
     void Convexify();
 

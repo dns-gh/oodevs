@@ -9,7 +9,7 @@ include "bit.lua"
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_OrienterRefugies
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_OrienterRefugies"
@@ -231,11 +231,15 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
         --[[// Calcule position
 ]]if( ModuleBegins() ) then
             do
-                self.point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
+                self.point = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( self.localisation )
                 if( self.point == nil ) then
-                    self:SendFeedback( eActionEffectuee )
-                    Halt( self )
-                    do return end
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self:SendFeedback( eActionEffectuee )
+                        Halt( self )
+                        do return end
+
+                    end
                 end
 
             end

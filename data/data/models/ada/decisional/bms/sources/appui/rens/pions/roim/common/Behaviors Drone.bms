@@ -43,6 +43,10 @@ node "ACT_Dep_Pion_RENS_VolerA"
             DEC_Agent_HauteurDeVol( self._namedParams.hauteur )
         end
 
+        if( not DEC_Agent_EstEnVol() ) then
+            DEC_Agent_HauteurDeVol( self._namedParams.hauteur )
+        end
+
     end,
 
     deselect = function( self )
@@ -57,7 +61,7 @@ node "ACT_Dep_Pion_RENS_VolerA"
 --[[// *****************************************************************************
 ]]--[[// ACT_Obs_Pion_RENS_ActiverCamera
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_Pion_RENS_ActiverCamera"

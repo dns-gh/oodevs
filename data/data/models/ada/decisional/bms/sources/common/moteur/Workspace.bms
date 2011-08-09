@@ -3,22 +3,16 @@ includedFiles["sources/common/moteur/Workspace.bms"] = true
 
 --[[// Geometrie
 ]]--[[/*T_ListePoints*//*T_ListePions*//*nb parts*/// Effacer résultat
-]]--[[/*T_Point*//*T_ListePions*//*T_Direction*//*distance en m*/]]--[[/*T_Point*//*T_ListePions*/]]--[[/*T_Point*//*T_Point src*//*T_Point dst*//*distance*/]]--[[/*T_Point*//*T_Point src*//*T_Direction*//*distance*/]]--[[/*T_Point*//*T_Point*/]]--[[/*T_Point*//*T_Point*/]]--[[/*T_Localisation*//*T_Point*/]]--[[/*T_Point*//*T_Localisation*/]]--[[/*T_Localition*/]]--[[/*T_ListePoints*/]]--[[/*T_Point*/]]--[[/*T_Direction*//*T_Point src*//*T_Point dest*/]]--[[/*T_Direction*//*T_Direction*//* B = sens trigo ?*/]]--[[/*T_Direction*/]]--[[/*T_Direction*//*T_Direction*/]]--[[/*T_Direction*//*T_Direction*//*angle en degré : dans sens trigo*/]]--[[/*T_ListePions*//*T_Pion reference*/]]--[[/*T_Point*//*T_Localisation*/]]--[[/*T_Direction*//*T_ListeDirections*/]]--[[/*T_Point*//*T_Point centre*//*rayon*/]]--[[/*T_Point*//*T_Point centre*//*rayon*/]]--[[/*T_Localisation*//*T_Point centre*//*rayon*/]]--[[/*T_ListePions*//*T_Pion*//*T_ListePions*//*dist min*/// Retourne les pions de la liste avec lesquels le pion n'est pas coordonné
-]]--[[/*T_Fuseau*/]]--[[/*T_Localisation*/]]--[[/*T_Fuseau*/]]--[[/*T_Localisation*/]]--[[/*T_ListeFuseaux*//*T_ListeFuseaux*/// Retourne liste moins ouvert -> plus ouvert
-]]--[[/*T_ListeLocalisations*//*T_ListLocalisations*/// Retourne liste moins ouvert -> plus ouvert
-]]--[[/*T_Localisation*//*T_Fuseau*/]]--[[/*T_Objectif*//*T_Fuseau*//*T_Point ref*//*T_ListeObjectifs*/]]--[[/*T_Localisation*//*T_Fuseau*//*T_Point*/]]--[[// Temps                            
-]]--[[/*T_Point src*//*T_Point dest*/]]--[[/*T_ListePoints src*//*T_ListePoints dest*/]]--[[/*T_Point src*//*T_ListePoints dest*/]]--[[/*T_Localisation src*//*T_Localisation dest*/]]--[[/*T_ListeLocalisations src*//*T_ListeLocalisations dst*/]]--[[/*T_Localisation src*//*T_ListeLocalisations dst*/]]--[[// Manipulation de listes
+]]--[[/*T_ListePoints*//*T_Itineraire*//*nb parts*/// Effacer résultat
+]]--[[/*T_Point*//*T_ListePions*//*T_Direction*//*distance en m*/]]--[[/*T_Point*//*T_ListePions*/]]--[[/*T_Point*//*T_Point src*//*T_Point dst*//*distance*/]]--[[/*T_Point*//*T_Point src*//*T_Direction*//*distance*/]]--[[/*T_Point*//*T_Point*/]]--[[/*T_Direction*//*T_Direction*/]]--[[/*T_Direction*//*T_Direction*/]]--[[/*T_Point*//*T_Point*/]]--[[/*T_Point*//* alt 1 *//*T_Point*//* alt 2 */]]--[[/*T_Localisation*//*T_Point*/]]--[[/*T_Point*//*T_Localisation*/]]--[[/*T_Localisation*//*T_Localisation*/]]--[[/*T_Localition*/]]--[[/*T_ListePoints*/]]--[[/*T_Point*/]]--[[/*T_Direction*//*T_Point src*//*T_Point dest*/]]--[[/*T_Direction*//*T_Direction*//* B = sens trigo ?*/]]--[[/*T_Direction*/]]--[[/*T_Direction*//*angle en degré : dans sens trigo*/]]--[[/*T_Direction*//*T_Direction*/]]--[[/*T_Direction*//*T_Direction*//*angle en degré : dans sens trigo*/]]--[[/*T_ListePions*//*T_Pion reference*/]]--[[/*T_Point*//*T_Localisation*/]]--[[/*T_Direction*//*T_ListeDirections*/]]--[[/*T_Point*//*T_Point centre*//*rayon*/]]--[[/*T_Point*//*T_Point centre*//*rayon*/]]--[[/*T_Localisation*//*T_Point centre*//*rayon*/]]--[[/*T_ListePions*//*T_Pion*//*T_ListePions*//*dist min*/// Retourne les pions de la liste avec lesquels le pion n'est pas coordonné
+]]--[[/*T_Localisation*/]]--[[/*T_Localisation*/]]--[[// Temps
+]]--[[/*T_Direction src*//*T_Direction dest*/]]--[[/*T_Point src*//*T_Point dest*/]]--[[/*T_ListePoints src*//*T_ListePoints dest*/]]--[[/*T_Point src*//*T_ListePoints dest*/]]--[[/*T_Localisation src*//*T_Localisation dest*/]]--[[/*T_Point src*//*T_Localisation dest*/]]--[[/*T_ListeLocalisations src*//*T_ListeLocalisations dst*/]]--[[/*T_Localisation src*//*T_ListeLocalisations dst*/]]--[[// Manipulation de li               stes
 ]]--[[/*liste*//*elt idx*/// Pour toutes les listes de UserTypes
 ]]--[[/*list*//*elt*/// Pour toutes les listes de UserTypes
 ]]--[[/*liste*//*elt*/]]--[[/*liste*//*elt*/]]--[[/*T_Point*//*T_ListePoints*//*nIdx*/// Le point retourné doit être détruit par l'utilisateur quand il n'est plus utile
-]]--[[/*T_ListePointsS_TypeObject_ToString*/]]--[[/*T_ListePoints*//*T_Point a ajouter*/]]--[[/*T_ListePoints*//*T_Point a enlever*/]]--[[// Debug                            
-]]--[[/*T_Point*/]]--[[/*T_Direction*/]]--[[/*T_Itineraire*/]]--[[// Logistique                       
-]]--[[/*T_Pion pion interrogé*/]]--[[/*T_Pion pion possèdant les blessés à transférer*//*T_Pion pc du tc2 destinataire*/]]--[[/*T_Pion*/]]--[[/*T_Pion*/]]--[[// Objets                           
-]]--[[// B                                   DEC_TypeObjet_PeutEtreContourne  ( I /*E_TypeObject*/ );
-]]--[[// B                                   DEC_TypeObjet_PeutEtreValorise   ( I /*E_TypeObject*/ );
-]]--[[// B                                   DEC_TypeObjet_PeutEtreDeManoeuvre( I /*E_TypeObject*/ );
-]]--[[// GEN objets                       
-]]--[[/*E_TypeObject*//*T_GenObjet*/]]--[[/*T_Localisation*//*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[/*T_Automate*//*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[// Objectifs
-]]--[[/*T_Localisation*//*T_Objectif*/]]--[[/*T_Objectif*//*flag*/]]--[[// Manipulation DIA Thing 
-]]--[[/*Type*/]]--[[/*Thing*/]]--[[// Rep_Points
-]]--[[/* T_Point *//*Rep_PointABC*/]]--[[/*Rep_PointABC*/]]--[[/*Rep_PointABC*/]]--[[/*Rep_PointABC*/]]--[[/*Rep_PointABC*/]]--[[/*Rep_PointABC*/]]--[[/* T_Lima *//*Rep_PointABC*/]]
+]]--[[/*T_ListePoints*/]]--[[/*T_ListePoints*//*T_Point a ajouter*/]]--[[/*T_ListePoints*//*T_Point a enlever*/]]--[[/*T_ListePoints*/]]--[[// Debug
+]]--[[/*T_Point*/]]--[[/*T_Direction*/]]--[[/*T_Itineraire*/]]--[[// Logistique
+]]--[[/*T_Pion pion interrogé*/]]--[[/*T_Pion pion possèdant les blessés à transférer*//*T_Pion pc du tc2 destinataire*/]]--[[/*T_Pion*/]]--[[/*T_Pion*/]]--[[// Objets
+]]--[[/*E_TypeObject*/]]--[[/*E_TypeObject*/]]--[[/*E_TypeObject*/]]--[[/*E_TypeObject*/]]--[[// GEN objets
+]]--[[/*E_TypeObject*//*T_GenObjet*/]]--[[/*T_Localisation*//*T_GenObjet*/]]--[[/*T_ID*//*T_GenObjet*/]]--[[/*Nom*//*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[/*E_MissionGenSousTypeObstacle*//*T_GenObjet*/]]--[[/*T_BrainLogistic*//*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[/*T_GenObjet*/]]--[[/* T_ConnaissanceObjet *//*T_GenObjet*/]]--[[// Manipulation DIA Thing
+]]--[[/*Type*/]]--[[/*Thing*/]]

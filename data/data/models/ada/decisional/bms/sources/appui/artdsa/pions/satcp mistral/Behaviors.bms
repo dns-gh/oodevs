@@ -75,3 +75,5 @@ include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Defendre Site A Partir Positi
 
 include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Surveiller.bms"
 
+include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Defendre Unites.bms"
+

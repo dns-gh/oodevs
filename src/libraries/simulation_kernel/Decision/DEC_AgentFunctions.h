@@ -95,6 +95,7 @@ public:
     static void Suicide( MIL_Agent_ABC& callerAgent );
     static bool CanIlluminate( DEC_Decision_ABC* pAgent );
     static float GetIlluminatingRange( const MIL_Agent_ABC&  callerAgent );
+    static bool IsImmobilized( DEC_Decision_ABC* pAgent );
     
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );

@@ -149,6 +149,145 @@ elseif switch_1 == eActionObjetTerminee then
 
 }
 
+--[[//LLS 01/09/2009 pour automate artillerie à la fois reco + tir
+]]node "ACT_Obj_Pion_ASS_RealiserUnObjet"
+{
+    feedbacks = { { { "done_ACT_Obj_Pion_ASS_RealiserUnObjet" }, "ACT_Obj_Pion_ASS_RealiserUnObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_ASS_RealiserUnObjet, {value} ) end,
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeObjet = self.params[1]
+        self._namedParams.locObjet = self.params[2]
+        self._namedParams.pionEnCours = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or 0
+        self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.repObj = self.repObj or nil--[[//objet reel pour la creation de la representation de l'abatti
+]]
+        if( ModuleBegins() ) then
+            do
+                if( self._namedParams.locObjet == nil ) then
+                    do
+                        --[[// RC_ TravauxImpossible
+]]                        self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
+
+                    end
+                end
+
+                if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.eTypeObjet ) ) ) then
+                    self:SendFeedback( eActionImpossible )
+                    Halt( self )
+                    do return end
+                end
+
+                DEC_Trace( "realisation objet : debut" )
+                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+                actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
+
+                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutTravaux )
+                    else
+                        DEC_Message( eRC_DebutTravaux )
+                    end
+
+                end
+
+            end
+        end
+
+         do
+            local _continue = true
+--[[//Insertion de l'objet crée, zone implantation canon, dans la liste des connaissances objet du pion reco
+]]            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_UserTypeList_PushBack( self._namedParams.pionEnCours:GetlisteZonesTir_(), self.repObj )
+                    DEC_Trace( "realisation objet : fin realisation" )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self:SendFeedback( eActionEffectuee )
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                elseif switch_1 == eActionObjetPasDeCapacite then
+                    DEC_Trace( "realisation objet : pas de capacites" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self:SendFeedback( eActionImpossible )
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                elseif switch_1 == eActionObjetManqueDotation then
+                    DEC_Trace( "realisation objet : manque dotation" )
+                                cases_switch_1[4] = true
+                end
+                if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self:SendFeedback( eActionImpossible )
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                                end
+            end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "reprise realisation" )
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_Trace( "realisation suspendue" )
+        DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "realisation arretee" )
+        self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
 node "ACT_Info_Pion_ASS_DisponibiliteAuTir"
 {
     feedbacks = { { { "done_ACT_Info_Pion_ASS_DisponibiliteAuTir" }, "ACT_Info_Pion_ASS_DisponibiliteAuTir" } },
@@ -219,7 +358,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
         myself.eEtatTir_Indirect_ = self.eTir
          do
             local _continue = true
---[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );                
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
 ]]--[[// {	if( ! DEC_Agent_AutomateEstEmbraye() )	    DEC_RC(  eRC_TirAnnule  );    else        DEC_Message(  eRC_TirAnnule  );}
 ]]            local switch_1 = self.eTir
                 if switch_1 == eActionTirIndirect_Impossible then
@@ -368,6 +507,74 @@ node "ACT_Tir_Pion_ASS_PreparerTirSur"
             do
                 DEC_Trace( "Prepare fire ..." )
             end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_Rens_AssurerLaLiaisonAvec
+]]--[[//
+]]--[[// Commentaires:partage de la connaissance avec le pion passé en paramètre
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pion_Rens_AssurerLaLiaisonAvec"
+{
+    feedbacks = { { { "done_ACT_Pion_Rens_AssurerLaLiaisonAvec" }, "ACT_Pion_Rens_AssurerLaLiaisonAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Rens_AssurerLaLiaisonAvec, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAmi = self.params[1]
+    end,
+
+    select = function( self )
+        --[[// contrainte de la fonction moteur...
+]]        self.listeAutomate = self.listeAutomate or {}
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutLiaison )
+                    else
+                        DEC_Message( eRC_DebutLiaison )
+                    end
+
+                end
+
+                DEC_Trace( " ------------ L'unité assure la liaison ------------" )
+            end
+--[[//---------------------------------------------------------------------
+]]--[[// Partage connaissance // Instantanée ici
+]]--[[//---------------------------------------------------------------------
+]]--[[/*délai en minute */]]        end
+
+        DEC_Connaissances_PartageConnaissancesAvec( DEC_GetAutomate( self._namedParams.pionAmi ), 0.01 )
+    end,
+
+    deselect = function( self )
+                do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinLiaison )
+            else
+                DEC_Message( eRC_FinLiaison )
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinLiaison )
+            else
+                DEC_Message( eRC_FinLiaison )
+            end
+
         end
 
     end,

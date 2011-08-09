@@ -19,17 +19,24 @@ include "Glaise/Glaise_Appui/ArtFdp/Automates/Common/Globals Poly.bms"
 --[[// ----------------------------------------------------------------------------
 ]]--[[// S_Misc_Automate_ASS_ExtraitPoint_ProchePosition
 ]]--[[//
-]]--[[// 	Renvoie la position (appartenant a une liste de points) la plus proche
+]]--[[//     Renvoie la position (appartenant a une liste de points) la plus proche
 ]]--[[//  d'une autre position
-]]--[[// ----------------------------------------------------------------------------		
-]]--[[// 1105199104		
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// 1105199104
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// S_Misc_Automate_ASS_ExtraitPoint_ProchePosition
 ]]--[[//
-]]--[[// 	Renvoie la position (appartenant a une liste de points) la plus proche
+]]--[[//     Renvoie la position (appartenant a une liste de points) la plus proche
 ]]--[[//  d'une autre position
-]]--[[// ----------------------------------------------------------------------------		
-]]--[[// 1105199104		
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// 1105199104
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// S_Misc_Automate_ASS_ExtraitZone_ProchePosition
+]]--[[//
+]]--[[//  Renvoie la position (appartenant a une liste de points) la plus proche
+]]--[[//  d'une autre position
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// 1105199104
 ]]function S_Geometrie_Automate_ASS_CopiePointDansFuseau( lstPos_Mission, lstPos_Reco )
     local rIt = 0
     local rTailleListe = DEC_ListePoints_Size( lstPos_Mission )
@@ -120,6 +127,50 @@ do
             ptCopie = DEC_Geometrie_CreerPoint()
             DEC_Copie_Point( DEC_ListePoints_GetAt( lstPos_Reco, rId_Zone ), ptCopie )
             DEC_ListePoints_Remove( lstPos_Reco, rId_Zone )
+        end
+    end
+
+    _returnValue = ptCopie
+    do return _returnValue end
+end
+
+function S_Misc_Automate_ASS_ExtraitZone_ProchePionDansFuseau( lstZones_Reco, pionASS )
+    local _returnValue = nil
+    local rMin = 1105199104
+    local rIt = 0
+    local rTailleListe = #( lstZones_Reco )
+    local rId_Zone = rTailleListe
+    local ptPion = DEC_Automate_PionPosition( pionASS )
+    rIt = 0
+    while rIt < rTailleListe do
+        local _continue = true
+do
+            local ptZone = nil
+            ptZone = DEC_UserTypeList_GetAt( lstZones_Reco, rIt )
+            local ptBary = S_Geometrie_BarycentreZone( ptZone )
+            if( not DEC_Automate_EstPointDansFuseauPion( ptBary, pionASS ) ) then
+                _continue = false
+            end
+
+                if _continue then
+                local rDist_Zone = DEC_Geometrie_Distance( ptPion, ptBary )
+                if( rDist_Zone < rMin ) then
+                    do
+                        rMin = rDist_Zone
+                        rId_Zone = rIt
+                    end
+                end
+
+            end
+        end
+    rIt = rIt + 1
+    end
+
+    local ptCopie = 0
+    if( rId_Zone < rTailleListe ) then
+        do
+            DEC_Copie_Localisation( DEC_UserTypeList_GetAt( lstZones_Reco, rId_Zone ), ptCopie )
+            DEC_UserTypeList_Remove( lstZones_Reco, DEC_UserTypeList_GetAt( lstZones_Reco, rId_Zone ) )
         end
     end
 

@@ -9,7 +9,7 @@ include "bit.lua"
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_OrienterRefugies
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_OrienterRefugies"
@@ -32,9 +32,10 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        self.ePhase = self.ePhase or ePreparerMission
+                self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
-        if( ModuleBegins() ) then
+        --[[// Init
+]]if( ModuleBegins() ) then
             do
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_SetMission( myself, self._namedParams.mission )
@@ -59,7 +60,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
          do
             local _continue = true
---[[// 1) Preparation de la mission
+--[[// Récuperer les réfugies et aller les déposer dans le camp
 ]]--[[// Fin mission
 ]]            local switch_1 = self.ePhase
                 if switch_1 == ePreparerMission then
@@ -68,11 +69,22 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     _continue = false
                 elseif switch_1 == eEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                    if( S_Liste_RefugiesTousEmbarques( self._namedParams.mission.refugies_ ) ) then
+                        self.ePhase = eDebarquer
+                    end
+
+                    Activate( self.activations.BEH_Dep_Pion_AllerRecupererRefugies, 1, { self._namedParams.mission.refugies_, } )
+                    _continue = false
+                elseif switch_1 == eDebarquer then
+                    if( S_Misc_Pion_RefugiesTousDebarquesDansCamp( self._namedParams.mission.refugies_, self._namedParams.mission.campRefugies_ ) ) then
+                        self.ePhase = eFinMission
+                    end
+
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                self.ePhase = eDebarquer
+                                self.ePhase = eFinMission
                                                                 do return end
 
                             end
@@ -80,11 +92,6 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_AllerRecupererRefugies, 1, { self._namedParams.mission.refugies_, } )
-self.done_BEH_Dep_Pion_AllerRecupererRefugies = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
-                elseif switch_1 == eDebarquer then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
                     Activate( self.activations.BEH_Dep_Pion_AllerDebarquerRefugies, 1, { self._namedParams.mission.refugies_, self._namedParams.mission.campRefugies_, } )
 self.done_BEH_Dep_Pion_AllerDebarquerRefugies = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -94,6 +101,15 @@ self.done_BEH_Dep_Pion_AllerDebarquerRefugies = function( self, _, v ) self.eEta
                     _continue = false
                                 end
             end
+
+    end,
+
+    destroy = function( self )
+                for _,refugie in pairs( self._namedParams.mission.refugies_ or emptyTable ) do
+        local _continue = true
+            DEC_Refugies_Debarquer( refugie )
+
+        end
 
     end,
 
@@ -205,11 +221,15 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
         --[[// Calcule position
 ]]if( ModuleBegins() ) then
             do
-                self.point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
+                self.point = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( self.localisation )
                 if( self.point == nil ) then
-                    self:SendFeedback( eActionEffectuee )
-                    Halt( self )
-                    do return end
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self:SendFeedback( eActionEffectuee )
+                        Halt( self )
+                        do return end
+
+                    end
                 end
 
             end
@@ -240,11 +260,6 @@ node "ACT_Transport_Pion_EmbarquerRefugie"
 {
     feedbacks = { { { "done_ACT_Transport_Pion_EmbarquerRefugie" }, "ACT_Transport_Pion_EmbarquerRefugie" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_EmbarquerRefugie, {value} ) end,
-    actuators =
-    {
-        deplacement = 1,
-    },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.refugie = self.params[1]
@@ -269,11 +284,6 @@ node "ACT_Transport_Pion_EmbarquerRefugie"
 {
     feedbacks = { { { "done_ACT_Transport_Pion_DebarquerRefugieDansCamp" }, "ACT_Transport_Pion_DebarquerRefugieDansCamp" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_DebarquerRefugieDansCamp, {value} ) end,
-    actuators =
-    {
-        deplacement = 1,
-    },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.refugie = self.params[1]

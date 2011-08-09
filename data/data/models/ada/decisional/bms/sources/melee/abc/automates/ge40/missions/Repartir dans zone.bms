@@ -88,7 +88,8 @@ node "BEH_GTIA_RepartirPionsDansZones"
             do return end
         end
 
-        self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ) )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ), DEC_GetDirectionEnnemi( self.mission ) )
         local itZone = 0
         for _,pion in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
@@ -132,7 +133,8 @@ node "BEH_GTIA_RepartirPionsMeleeDansZones"
             do return end
         end
 
-        self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePionsMelee ) )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePionsMelee ), DEC_GetDirectionEnnemi( self.mission ) )
         Activate( self.activations.BEH_GTIA_AssignerZoneMeleeSuivantTerrain, g_rRapTerrainComp, { self._namedParams.listePionsMelee, self.zones, } )
         Activate( self.activations.BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques, g_rRapEniEmbarques, { self._namedParams.listePionsMelee, self.zones, } )
         Activate( self.activations.BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques, g_rRapEniDebarques, { self._namedParams.listePionsMelee, self.zones, } )

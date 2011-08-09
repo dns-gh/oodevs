@@ -200,10 +200,9 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
 
         if( myself.eEtatTir_Indirect_ == eActionTirIndirect_None and self.eAction == eActionEffectuee ) then
             do
-                self.ptTir = DEC_Geometrie_PositionAleatoireSurCercle( self._namedParams.ptCentre, 500 )
                 Activate( self.activations.ACT_RC, 1, { eRC_ChangementDePosition, } )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Changement position : horaire", } )
-                StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self.ptTir, eProgressionDirect, eTypeItiMouvement, } )
+                StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptCentre, eProgressionDirect, eTypeItiMouvement, } )
                 self.eAction = eActionEnCours
             end
         end
@@ -266,16 +265,16 @@ node "BEH_MAJ_Pion_ASS_TirDefaut"
         if( ModuleBegins() ) then
             do
                 --[[/*
-		myself.rPortee_Explosif_	= M_DISTANCE_PorteeMaxObusExplosif();
-		myself.rPortee_Grenade_		= M_DISTANCE_PorteeMaxObusGrenade();		
-		myself.rPortee_Mine_ 		= M_DISTANCE_PorteeMaxObusMine();
-		myself.rPortee_ACED_ 		= M_DISTANCE_PorteeMaxObusACED();
-		myself.rPortee_Fumigene_ 	= M_DISTANCE_PorteeMaxObusFumigene();
-		myself.rPortee_Eclairant_ 	= M_DISTANCE_PorteeMaxObusEclairant();
-		
-		myself.rPortee_Min_ 		= M_DISTANCE_PorteeMin();
-		*/]]--[[// action ACT_MAJ_Pion_ASS_EtatTirIndirect( eActionTirIndirect_None ) : strength = 0.5;
-]]--[[// action ACT_MAJ_Pion_ASS_EtatTir( eActionTir_None );	
+        myself.rPortee_Explosif_    = M_DISTANCE_PorteeMaxObusExplosif();
+        myself.rPortee_Grenade_        = M_DISTANCE_PorteeMaxObusGrenade();
+        myself.rPortee_Mine_         = M_DISTANCE_PorteeMaxObusMine();
+        myself.rPortee_ACED_         = M_DISTANCE_PorteeMaxObusACED();
+        myself.rPortee_Fumigene_     = M_DISTANCE_PorteeMaxObusFumigene();
+        myself.rPortee_Eclairant_     = M_DISTANCE_PorteeMaxObusEclairant();
+
+        myself.rPortee_Min_         = M_DISTANCE_PorteeMin();
+        */]]--[[// action ACT_MAJ_Pion_ASS_EtatTirIndirect( eActionTirIndirect_None ) : strength = 0.5;
+]]--[[// action ACT_MAJ_Pion_ASS_EtatTir( eActionTir_None );
 ]]--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
 ]]myself.eEtatTir_Indirect_ = eActionTirIndirect_None
             end

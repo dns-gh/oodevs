@@ -28,4 +28,5 @@ eTestConvoyerStep_Chargement = 1
 eTestConvoyerStep_DeplacementVersPointDechargement = 2
 eTestConvoyerStep_Dechargement = 3
 eTestConvoyerStep_DeplacementRetour = 4
+eTestConvoyerStep_SePoster = 5
 

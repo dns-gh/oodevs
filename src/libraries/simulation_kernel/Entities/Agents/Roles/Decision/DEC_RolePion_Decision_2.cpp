@@ -96,6 +96,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif" ] = &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated;
     brain[ "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre" ] = &DEC_KnowledgeObjectFunctions::IsReservedObstacle;
     brain[ "DEC_ConnaissanceObjet_EstContourne" ] = &DEC_KnowledgeObjectFunctions::IsBypassed;
+    brain[ "DEC_ConnaissanceObjet_EstBreche" ] = &DEC_KnowledgeObjectFunctions::IsBreached;
     brain[ "DEC_ConnaissanceObjet_NiveauConstruction" ] = &DEC_KnowledgeObjectFunctions::GetConstructionLevel;
     brain[ "DEC_ConnaissanceObjet_NiveauValorisation" ] = &DEC_KnowledgeObjectFunctions::GetValorizationLevel;
     brain[ "DEC_ConnaissanceObjet_Localisation" ] = &DEC_KnowledgeObjectFunctions::GetLocalisation;
@@ -120,6 +121,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_Connaissance_GetRawMission" ] = &DEC_KnowledgeAgentFunctions::GetMission;
     brain[ "DEC_HasMission" ] = &DEC_AgentFunctions::HasMission;
     brain[ "DEC_GetDirectionDanger" ] = &DEC_AgentFunctions::GetDirectionDanger;
+    brain[ "DEC_GetDirectionEnnemi" ] = &DEC_AgentFunctions::GetDirectionDanger;
 
     //Calculs de positions
     brain[ "DEC_Geometrie_PionDevant" ] = &DEC_GeometryFunctions::GetFrontestPion;
@@ -656,9 +658,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Geometrie_CalculerEntreeFuseauLaPlusProche" ] =
         boost::bind( &DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint, boost::ref( GetPion() ) );
     brain[ "DEC_Geometry_SplitLocalisation" ] =
-        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int, MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_Geometry_SplitLocalisationSurface" ] =
-        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSurfaces< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int, MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSurfaces< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_Geometry_RecursiveSplitLocalisationSurface" ] =
         boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Geometrie_DecoupeFuseauEnTroncons" ] =
@@ -748,9 +750,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Logistique
     brain[ "DEC_StartPreterVSRAM" ] =
-        boost::function< unsigned int( DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< unsigned int( DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartPreterRemorqueurs" ] =
-        boost::function< unsigned int( DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< unsigned int( DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_RecupererVSRAM" ] =
         boost::function< void( const DEC_Decision_ABC*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendCollectionComposantes, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_RecupererRemorqueurs" ] =
@@ -768,7 +770,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Transport_AjouterPions" ] =
         boost::function< void( const std::vector< DEC_Decision_ABC* >&, bool ) >( boost::bind( &DEC_ActionFunctions::Transport_AddPions, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Start_TransportEmbarquer" ] = boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTransportLoad >, boost::ref( GetPion() ) );
-    brain[ "DEC_Start_TransportDebarquer" ] = boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTransportUnload >, boost::ref( GetPion() ) );
+    brain[ "DEC_Start_TransportDebarquer" ] = 
+        boost::function< unsigned int( MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTransportUnload, MT_Vector2D* >, boost::ref( GetPion() ), _1 ) );
 
     brain[ "DEC_Transport_EmbarquerDansTransporteurSansDelais" ] = boost::function< void ( const DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::Transport_MagicLoadPionInCarrier, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Transport_DebarquerDeTransporteurSansDelais" ] = boost::function< void () >( boost::bind( &DEC_ActionFunctions::Transport_MagicUnloadPionFromCarrier, boost::ref( GetPion() ) ) );

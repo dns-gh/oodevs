@@ -56,7 +56,7 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
 --[[// *****************************************************************************
 ]]--[[// BEH_Defaut
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
@@ -124,7 +124,7 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
 --[[// *****************************************************************************
 ]]--[[// BEH_Mot_AffecterVariablesDEtat
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -144,7 +144,7 @@ node "BEH_Mot_AffecterVariablesDEtat"
 ]]--[[// *****************************************************************************
 ]]--[[// BEH_LOG_Pion_FaireDesMesures
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -163,10 +163,8 @@ node "BEH_LOG_Pion_FaireDesMesures"
 
     activate = function( self )
         local Activate = Activate
-        --[[// Ici normalement: si bonne gestion des objets (NBC)
-]]--[[// If (pas mesurée) alors mesurer --> faire une action et pas un comportement
-]]--[[//---------------------------------------------------------------------
-]]--[[// Des que l'on est proche d'un objet, faire une mesure au cas ou 
+        --[[//---------------------------------------------------------------------
+]]--[[// Des que l'on est proche d'un objet, faire une mesure au cas ou
 ]]--[[// il s'agirait d'une zone contaminée
 ]]--[[//---------------------------------------------------------------------
 ]]local listeObjet = DEC_Connaissances_CollisionsObjets()
@@ -181,7 +179,7 @@ node "BEH_LOG_Pion_FaireDesMesures"
 --[[// *****************************************************************************
 ]]--[[// BEH_LOG_Pion_FaireUneMesureDans
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -234,7 +232,7 @@ node "BEH_LOG_Pion_FaireUneMesureDans"
 --[[// *****************************************************************************
 ]]--[[// BEH_Ordre_Pion_CIRCU_OrdresInopines
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -265,11 +263,12 @@ do
                     local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
                             local repOrdreRenforcer = repOrdre
-                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), myself, repOrdreRenforcer:GetnbrRemorqueurs_(), } )
                             _continue = false
                         elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
                             local repOrdreTransferer = repOrdre
-                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_RecupererRemorqueurs, 1, { repOrdreTransferer:GetpionRenforce_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetpionRenforce_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
                             _continue = false
                         elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
                             local repOrdreReprendre = repOrdre
@@ -289,7 +288,7 @@ do
 ]]--[[// *****************************************************************************
 ]]--[[// BEH_Dep_Virtuel_ProgressionVers
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}

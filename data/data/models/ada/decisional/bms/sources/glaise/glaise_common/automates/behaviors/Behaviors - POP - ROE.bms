@@ -6,9 +6,9 @@ local emptyTable = emptyTable
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_RecevoirOrdreInopine
 ]]--[[//
-]]--[[// Commentaires : MIA: ATTENTION --> La gestion des ordres a été implémenté de cette 
+]]--[[// Commentaires : MIA: ATTENTION --> La gestion des ordres a été implémenté de cette
 ]]--[[//                manière (systeme start/stop ) pour gerer le fait de rajouter
-]]--[[//                un pion en dynamique dans l'automate. 
+]]--[[//                un pion en dynamique dans l'automate.
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "BEH_ROE_Automate_RecevoirOrdreInopinePopulation"
@@ -19,6 +19,7 @@ local emptyTable = emptyTable
     {
         { "BEH_ROE_Automate_EmploiForceInterdit", { "done_BEH_ROE_Automate_EmploiForceInterdit" } },
         { "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux", { "done_BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux" } },
+        { "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs", { "done_BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs" } },
         { "BEH_ROE_Automate_ArmesLetalesAutorisees", { "done_BEH_ROE_Automate_ArmesLetalesAutorisees" } },
         { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
@@ -48,6 +49,7 @@ do
 --[[// cast
 ]]--[[// TIR INTERDIT POP
 ]]--[[// TIR SOMMATION POP
+]]--[[// TIR DISSUASION POP
 ]]--[[// TIR NEUTRALISATION POP
 ]]                            local switch_1 = repOrdre:GetType()
                                 if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
@@ -62,6 +64,10 @@ do
                                             elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                                                                                             DEC_Trace( " === ORDRE --> ROE POPULATION: MAINTIEN A DISTANCE PAR MOYENS NON LETAUX" )
                                                 Activate( self.activations.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, 1, emptyTable )
+                                                _continue = false
+                                            elseif switch_2 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
+                                                                                            DEC_Trace( " === ORDRE --> ROE POPULATION: ARMES LETALES AUTORISEES" )
+                                                Activate( self.activations.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, 1, emptyTable )
                                                 _continue = false
                                             elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
                                                                                             DEC_Trace( " === ORDRE --> ROE TIR DE NEUTRALISATION SUR POPULATIONS" )
@@ -94,7 +100,7 @@ do
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_EmploiForceInterdit
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -105,6 +111,7 @@ node "BEH_ROE_Automate_EmploiForceInterdit"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_EmploiForceInterdit, {value} ) end,
     activations =
     {
+        { "ACT_ROE_Automate_PasserEnEmploiForceInterdit", { "done_ACT_ROE_Automate_PasserEnEmploiForceInterdit" } },
         { "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit", { "done_ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit" } },
     },
 
@@ -113,6 +120,7 @@ node "BEH_ROE_Automate_EmploiForceInterdit"
 
     activate = function( self )
         local Activate = Activate
+        Activate( self.activations.ACT_ROE_Automate_PasserEnEmploiForceInterdit, 1, emptyTable )
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit, 1, { pion, } )
@@ -124,7 +132,7 @@ node "BEH_ROE_Automate_EmploiForceInterdit"
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -135,6 +143,7 @@ node "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, {value} ) end,
     activations =
     {
+        { "ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux", { "done_ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux" } },
         { "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux", { "done_ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux" } },
     },
 
@@ -143,6 +152,7 @@ node "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux"
 
     activate = function( self )
         local Activate = Activate
+        Activate( self.activations.ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux, 1, { pion, } )
@@ -152,9 +162,41 @@ node "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux"
     end,
 
 --[[// *****************************************************************************
+]]--[[// BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs"
+{
+    feedbacks = { { { "done_BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs" }, "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, {value} ) end,
+    activations =
+    {
+        { "ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs", { "done_ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs" } },
+        { "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs", { "done_ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        Activate( self.activations.ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs, 1, emptyTable )
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
+        local _continue = true
+            Activate( self.activations.ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_ArmesLetalesAutorisees
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -165,6 +207,7 @@ node "BEH_ROE_Automate_ArmesLetalesAutorisees"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_ArmesLetalesAutorisees, {value} ) end,
     activations =
     {
+        { "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees", { "done_ACT_ROE_Automate_PasserEnArmesLetalesAutorisees" } },
         { "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees", { "done_ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees" } },
     },
 
@@ -173,6 +216,7 @@ node "BEH_ROE_Automate_ArmesLetalesAutorisees"
 
     activate = function( self )
         local Activate = Activate
+        Activate( self.activations.ACT_ROE_Automate_PasserEnArmesLetalesAutorisees, 1, emptyTable )
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees, 1, { pion, } )
@@ -182,14 +226,110 @@ node "BEH_ROE_Automate_ArmesLetalesAutorisees"
     end,
 
 --[[// *****************************************************************************
-]]--[[// ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit
+]]--[[// ACT_ROE_Automate_PasserEnArmesLetalesAutorisees
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
 
-node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
+node "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_PasserEnArmesLetalesAutorisees" }, "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_PasserEnArmesLetalesAutorisees, {value} ) end,
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Automate_ChangeEtatROEPopulation( eEtatROEPopulation_ArmesLetalesAutorisees )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs" }, "ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Automate_ChangeEtatROEPopulation( eEtatROEPopulation_DispersionParMoyensDeDefenseActifs )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux" }, "ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux, {value} ) end,
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Automate_ChangeEtatROEPopulation( eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_PasserEnEmploiForceInterdit
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_PasserEnEmploiForceInterdit"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_PasserEnEmploiForceInterdit" }, "ACT_ROE_Automate_PasserEnEmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_PasserEnEmploiForceInterdit, {value} ) end,
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Automate_ChangeEtatROEPopulation( eEtatROEPopulation_EmploiForceInterdit )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 {
     feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit" }, "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit, {value} ) end,
@@ -203,6 +343,7 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
             do
                 self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 1 )
                 self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
             end
         end
@@ -214,7 +355,7 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 --[[// *****************************************************************************
 ]]--[[// ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux"
@@ -231,6 +372,36 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
             do
                 self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 1 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs" }, "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 1 )
                 self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
             end
         end
@@ -242,7 +413,7 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 --[[// *****************************************************************************
 ]]--[[// ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees"
@@ -259,6 +430,7 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
             do
                 self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 1 )
             end
         end
@@ -268,10 +440,16 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 }
 
 connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_ArmesLetalesAutorisees, "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees", nodes.ACT_ROE_Automate_PasserEnArmesLetalesAutorisees }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_ArmesLetalesAutorisees, "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees", nodes.ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, "ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs", nodes.ACT_ROE_Automate_PasserEnDispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs", nodes.ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_EmploiForceInterdit, "ACT_ROE_Automate_PasserEnEmploiForceInterdit", nodes.ACT_ROE_Automate_PasserEnEmploiForceInterdit }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_EmploiForceInterdit, "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit", nodes.ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, "ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux", nodes.ACT_ROE_Automate_PasserEnMaintienADistanceParMoyensNonLetaux }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux", nodes.ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_EmploiForceInterdit", nodes.BEH_ROE_Automate_EmploiForceInterdit }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux", nodes.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs", nodes.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_ArmesLetalesAutorisees", nodes.BEH_ROE_Automate_ArmesLetalesAutorisees }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

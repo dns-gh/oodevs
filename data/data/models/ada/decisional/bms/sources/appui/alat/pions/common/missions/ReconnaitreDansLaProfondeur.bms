@@ -52,7 +52,7 @@ include "bit.lua"
 ]]--[[// -------------------------------------------------
 ]]
                 local listeSousSecteurs = {}
-                listeSousSecteurs = DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.mission.zone_, 10000000, eEtatDecoupeLocalisation )
+                listeSousSecteurs = DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.mission.zone_, 10000000, DEC_GetDirectionEnnemi( self._namedParams.mission ), eEtatDecoupeLocalisation )
                 eEtatDecoupeLocalisation = listeSousSecteurs.second
                 listeSousSecteurs = listeSousSecteurs.first
                 DEC_Copie_ListeLocalisations( listeSousSecteurs, self.listeLocalisations )

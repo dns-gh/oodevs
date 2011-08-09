@@ -41,14 +41,14 @@ local emptyTable = emptyTable
             do
                 local nErrorCode1 = nil
                 local listeSousSecteurs = {}
-                listeSousSecteurs = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneAObserver_, #( self._namedParams.selPions ), nErrorCode1 )
+                listeSousSecteurs = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneAObserver_, #( self._namedParams.selPions ), DEC_GetDirectionEnnemi( self.mission ), nErrorCode1 )
                 nErrorCode1 = listeSousSecteurs.second
                 listeSousSecteurs = listeSousSecteurs.first
                 --[[// Gestion erreur
 ]]if( nErrorCode1 ~= eNoError ) then
                     do
                         DEC_Trace( "Impossiblde de trouver des sous secteurs dans localisation" )
-                        --[[// JCR : 11/08/2005 10:55                        
+                        --[[// JCR : 11/08/2005 10:55
 ]]DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                         StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                 self:SendFeedback( eActionImpossible )

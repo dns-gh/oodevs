@@ -95,7 +95,7 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
         self.eEtatTransport = self.eEtatTransport or nil
         if( ModuleBegins() ) then
             do
-                self.actionDebarquer = DEC_Start_TransportDebarquer(  )
+                self.actionDebarquer = DEC_Start_TransportDebarquer( nil )
                 actionCallbacks[ self.actionDebarquer ] = function( arg ) self.eEtatTransport = arg end
 
             end
@@ -114,14 +114,14 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
                 if switch_1 == eActionTransport_Running then
                     _continue = false
                 elseif switch_1 == eActionTransport_Finished then
-                    DEC_StopAction( self.actionDebarquer )
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
                 if switch_1 == eActionTransport_Impossible then
-                    DEC_StopAction( self.actionDebarquer )
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -137,7 +137,7 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
     end,
 
     destroy = function( self )
-                DEC_StopAction( self.actionDebarquer )
+                self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
     end,
 
 }

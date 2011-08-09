@@ -537,7 +537,7 @@ node "BEH_Dep_ReagirFaceAObstacle"
         --[[// -----------------------------------------------------------------------------
 ]]--[[// 1) Demander au moteur les prochains objets sur itineraire
 ]]--[[// -----------------------------------------------------------------------------
-]]self.bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+]]self.bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectBouchonMinesParDispersion ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
         self.repObjet = self.bObjetProcheSurItineraire.second.first
         self.rDist = self.bObjetProcheSurItineraire.second.second
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire.first
@@ -547,7 +547,7 @@ node "BEH_Dep_ReagirFaceAObstacle"
 ]]--[[// MIA ATTENTION: si on change la valeur de M_DISTANCE_REACTION_FACE_A_OBSTACLE()
 ]]--[[// ---> LE GENIE NE MARCHE PLUS
 ]]--[[//-----------------------------------------------------------------------------
-]]if( self.bObjetProcheSurItineraire and DEC_ConnaissanceObjet_EstValide( self.repObjet ) and self.rDist < M_DISTANCE_REACTION_FACE_A_OBSTACLE() and not S_Obj_EstContourne( self.repObjet ) and not S_Obj_EstObstacleDeManoeuvreNonActif( self.repObjet ) ) then
+]]if( self.bObjetProcheSurItineraire and DEC_ConnaissanceObjet_EstValide( self.repObjet ) and self.rDist < M_DISTANCE_REACTION_FACE_A_OBSTACLE() and not S_Obj_EstContourne( self.repObjet ) and not S_Obj_EstObstacleDeManoeuvreNonActif( self.repObjet ) and not S_Obj_EstBreche( self.repObjet ) ) then
             do
                 --[[// {    if ( F_POLY_OBJET_REAGIR_FACE_A_OBSTACLE() )    {        action ACT_RC_SurObjet( eRC_EnPosteFaceAObstacle,  repObjet  );        action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( appuiGeniePions() )    {        if( myself.mission_ != 0 && myself.mission_.__type_ == T_Mission_Pion_GEN_ReconnaitreItineraire )            action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( meleeAbcPionsCommon() )    {        action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( meleeInfPionsCommon() )    {        action ACT_RC_SurObjet( eRC_EnPosteFaceAObstacle,  repObjet  );	    start behavior BEH_Objet_Pion_INF_ReagirFaceAObstacle(  repObjet  );    }}
 ]]                self:SendFeedback( eActionEffectuee )

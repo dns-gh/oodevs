@@ -21,8 +21,10 @@ include "bit.lua"
         { "BEH_Obs_Pion_Rens_GererObservationDans", { "done_BEH_Obs_Pion_Rens_GererObservationDans" } },
         { "ACT_Connaissance_Rens_EnregistrerDonnees", { "done_ACT_Connaissance_Rens_EnregistrerDonnees" } },
         { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
         { "ACT_Dep_Pion_RENS_VolerA", { "done_ACT_Dep_Pion_RENS_VolerA" } },
         { "ACT_Connaissance_Rens_ExtraireDonnees", { "done_ACT_Connaissance_Rens_ExtraireDonnees" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -30,6 +32,8 @@ include "bit.lua"
         self._namedParams.mission = self.params.mission
         self.ficelleDeVol = {}
         DEC_Copie_ListePoints( self._namedParams.mission.ficelleDeVole_, self.ficelleDeVol )
+        self.startPosition = DEC_Geometrie_CreerPoint()
+        DEC_Copie_Point( DEC_Agent_Position(), self.startPosition )
     end,
 
     activate = function( self )
@@ -65,7 +69,7 @@ include "bit.lua"
 --[[// pour être sur de revenir au point de départ
 ]]                end
 
-            DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
+            DEC_ListePoints_PushBack( self.ficelleDeVol, self.startPosition )
             end
 --[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
@@ -89,6 +93,16 @@ include "bit.lua"
             ]]elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "---------LANCEMENT DU DRONE---------", } )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" );
+        for i, repOrdre in pairs( ordres_recus ) do
+            Activate( self.activations.ACT_Info_Trace, 1, { "$$ Ordre de conduite : "..tostring( repOrdre.eOrdre_ ) } )
+            if repOrdre.eOrdre_ == eOrdreConduite_Interrompre then
+                self.ePhaseMission = eSeReplier;
+            end
+
+            Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdre, } )
+        end
+
                     --[[//---------------------------------------------------------------------
 ]]--[[// Observation et enregistrement des donnees
 ]]--[[//---------------------------------------------------------------------
@@ -115,7 +129,22 @@ include "bit.lua"
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[// données doctrine 
 ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 350, } )
-                    
+
+        --//---------------------------------------------------------------------
+        --// Interruption mission
+        --//---------------------------------------------------------------------
+        elseif switch_1 == eSeReplier then
+            DEC_TRACE( "Repli..." )
+            --// Progression
+            if( self.eEtat == eActionEffectuee ) then
+                self.ePhaseMission = eFinMission
+                return
+            end
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.startPosition, eProgressionDirect, eTypeItiMouvement } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
+            Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 1000, } )  --// données doctrine
+
+
                 --[[//---------------------------------------------------------------------
 ]]--[[// Fin de la mission  //SPE CL 289
 ]]--[[//---------------------------------------------------------------------
@@ -309,5 +338,7 @@ connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur, "BEH_Obs_Pion_Rens_GererObservationDans", nodes.BEH_Obs_Pion_Rens_GererObservationDans }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur, "ACT_Connaissance_Rens_EnregistrerDonnees", nodes.ACT_Connaissance_Rens_EnregistrerDonnees }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur, "BEH_Dep_ProgressionSur", nodes.BEH_Dep_ProgressionSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur, "ACT_Dep_Pion_RENS_VolerA", nodes.ACT_Dep_Pion_RENS_VolerA }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur, "ACT_Connaissance_Rens_ExtraireDonnees", nodes.ACT_Connaissance_Rens_ExtraireDonnees }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROIM_CL289_RenseignerSur, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

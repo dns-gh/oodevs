@@ -131,7 +131,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 
                     Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeJalonnerOperationnels, 0, } )
                     Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, 1, { self.listeJalonnerOperationnels, 15000, } )
-                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, M_DOCTRINE_ALAT_DISTANCE_PLOTS(), self._namedParams.mission.pointRegroupement_, false, } )
                     _continue = false
                 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )

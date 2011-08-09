@@ -57,7 +57,7 @@ do
                         end
                     else
 do
-                            Activate( self.activations.BEH_Eni_Pion_ASA_InterceptionBalistique_Direct, 1, { self._namedParams.ennemi, self._namedParams.niveauPerception, 0.67, self._namedParams.pH, self._namedParams.vitesseProjectile, self._namedParams.sePosterEnAttendant, } )
+                            Activate( self.activations.BEH_Eni_Pion_ASA_InterceptionBalistique_Direct, 1, { self._namedParams.ennemi, self._namedParams.niveauPerception, 1, self._namedParams.pH, self._namedParams.vitesseProjectile, self._namedParams.sePosterEnAttendant, } )
                         end
                     end
 
@@ -98,7 +98,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
         for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
         local _continue = true
 do
-                Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )
+                Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), 700, myself.typeDeploiement_, true, } )
             end
 
         end
@@ -106,7 +106,7 @@ do
     end,
 
 --[[// -----------------------------------------------------------------------------
-]]--[[// BEH_GererEnnemisMissionDefendreSite : Ce comportement permet de gerer les 
+]]--[[// BEH_GererEnnemisMissionDefendreSite : Ce comportement permet de gerer les
 ]]--[[// ennemis dans le cadre de la mission defendre Site
 ]]--[[//
 ]]--[[// on doit réaliser une selection sur un ennemi dans les comportements sous
@@ -133,7 +133,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
         for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
         local _continue = true
 do
-                Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )
+                Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), 700, myself.typeDeploiement_, true, } )
             end
 
         end
@@ -141,7 +141,7 @@ do
     end,
 
 --[[// -----------------------------------------------------------------------------
-]]--[[// BEH_GererEnnemisMissionSurveiller : Ce comportement permet de gerer les 
+]]--[[// BEH_GererEnnemisMissionSurveiller : Ce comportement permet de gerer les
 ]]--[[// ennemis dans le cadre de ma mission Escorter
 ]]--[[// -----------------------------------------------------------------------------
 ]]}
@@ -164,7 +164,7 @@ node "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller"
         for _,x in pairs( listeEnnemiesVivantesPercuesVolantes or emptyTable ) do
         local _continue = true
 do
-                Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_Surveiller( x ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )
+                Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_Surveiller( x ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), 700, myself.typeDeploiement_, true, } )
             end
 
         end

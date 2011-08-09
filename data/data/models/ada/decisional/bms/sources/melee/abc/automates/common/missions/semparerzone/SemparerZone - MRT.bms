@@ -42,7 +42,8 @@ local emptyTable = emptyTable
             do
                 --[[// Ajout ADA --> Main?
 ]]DEC_MRT_AffecteFuseaux( self._namedParams.selPions )
-                self.listeSecteur = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zoneAPrendre, #( self._namedParams.selPions ), self.nErrorCode )
+                local mission = DEC_GetMission( myself )
+                self.listeSecteur = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zoneAPrendre, #( self._namedParams.selPions ), DEC_GetDirectionEnnemi( mission ), self.nErrorCode )
                 self.nErrorCode = self.listeSecteur.second
                 self.listeSecteur = self.listeSecteur.first
                 --[[//-----------------------------------------------------------------------------

@@ -6,8 +6,8 @@ local emptyTable = emptyTable
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA
-]]--[[// 
-]]--[[// Commentaires: 
+]]--[[//
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA"
@@ -40,7 +40,7 @@ local emptyTable = emptyTable
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                self.listeZone = DEC_Geometrie_DecoupeLocalisation( mission.zone_, #( self._namedParams.selPions ), self.nErrorCode )
+                self.listeZone = DEC_Geometrie_DecoupeLocalisation( mission.zone_, #( self._namedParams.selPions ), DEC_GetDirectionEnnemi( mission ), self.nErrorCode )
                 self.nErrorCode = self.listeZone.second
                 self.listeZone = self.listeZone.first
                 --[[//-----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ local emptyTable = emptyTable
 ]]if( self.nErrorCode ~= eNoError ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
-                        Activate( self.activations.ACT_Info_Trace, 1, { "Can't compute position in this localisation, mission canceled", } )
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Can't compute position in this location, mission canceled", } )
                                                 do return end
 
                     end

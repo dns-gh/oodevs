@@ -1,11 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/pions/Globals.bms"] = true
 
-
---[[// fonctions moteur
-]]include "Common/Pions/Globals.bms"
+include "Common/Pions/Globals.bms"
 
 
 --[[// paramètres et macro Trans
 ]]include "Appui/Trans/Pions/Parameters.bms"
-

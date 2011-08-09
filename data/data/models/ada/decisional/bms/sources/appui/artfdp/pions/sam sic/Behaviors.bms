@@ -59,5 +59,9 @@ etat_ROE = 1,
 
 include "Appui/ArtFdp/Pions/SAM SIC/Missions/AssurerMiseEnOeuvre2Zones.bms"
 
---[[//include "Appui\ArtFdp\Pions\SAM\Missions\AssurerMiseEnOeuvreSurPosition.bms"
-]]
+include "Appui/ArtFdp/Pions/SAM SIC/Missions/AssurerMiseEnOeuvreSurPosition.bms"
+
+include "Appui/ArtFdp/Pions/SAM SIC/Missions/AssurerMiseEnOeuvre.bms"
+
+include "Appui/ArtFdp/Pions/SAM SIC/Missions/AssurerMiseEnBatterieInopinee.bms"
+

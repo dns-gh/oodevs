@@ -69,7 +69,7 @@ local emptyTable = emptyTable
                     end
                 end
 
-                DEC_Trace( "Mission 'Appuyer ( " .. self.repAmi:GetszName_() .. " )' : debut" )
+                DEC_Trace( "Mission 'Appuyer ( " .. DEC_GetSzName( self.repAmi ) .. " )' : debut" )
             end
         end
 

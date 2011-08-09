@@ -156,6 +156,7 @@ public:
     virtual       bool           HasChanged() const = 0;//@TODO MGD CLEAN ALL hasChanged on interface and move private
     virtual       bool           IsUsable  () const = 0;
     virtual const MIL_Agent_ABC& GetPion   () const = 0;
+    virtual       bool           IsImmobilized() const = 0;
     //@}
 
     //! @name Composante reserved

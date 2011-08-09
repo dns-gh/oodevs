@@ -104,7 +104,7 @@ end
 ]]--[[// Paramètres de PH efficace considéré dans la doctrine
 ]]--[[// =============================================================================
 ]]function M_DOCTRINE_PION_ALAT_PH()
-    return 0.5
+    return 0.2
 end
 
 

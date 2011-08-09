@@ -324,7 +324,7 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/common/Actions.bms"] = tru
                 end
 
                 DEC_Trace( "**** Activation brouillage ****" )
-                DEC_CreerObjetSansDelais( self._namedParams.eTypeObjectZoneBrouillage, gNullID, self.localisation )
+                DEC_CreerObjetSansDelais( S_TypeObject_ToString( self._namedParams.eTypeObjectZoneBrouillage ), self.localisation )
             end
         end
 

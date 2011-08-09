@@ -78,6 +78,7 @@ include "Appui/AppuiMob/Pions/Missions/Missions.bms"
         { "BEH_Ambiance", { "done_BEH_Ambiance" } },
         { "BEH_Nbc", { "done_BEH_Nbc" } },
         { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Ordre_Pion_LOG_OrdresInopines", { "done_BEH_Ordre_Pion_LOG_OrdresInopines" } },
         { "BEH_Rens_PasserEnSilenceRadioPartiel", { "done_BEH_Rens_PasserEnSilenceRadioPartiel" } },
     },
 
@@ -110,6 +111,7 @@ include "Appui/AppuiMob/Pions/Missions/Missions.bms"
 ]]
         Activate( self.activations.BEH_Nbc, 1, emptyTable )
         Activate( self.activations.BEH_ROE, 1, emptyTable )
+        Activate( self.activations.BEH_Ordre_Pion_LOG_OrdresInopines, 1, emptyTable )
         Activate( self.activations.BEH_Rens_PasserEnSilenceRadioPartiel, 1, emptyTable )
     end,
 
@@ -226,6 +228,83 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     end,
 
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Pion_LOG_OrdresInopines
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Pion_LOG_OrdresInopines"
+{
+    feedbacks = { { { "done_BEH_Ordre_Pion_LOG_OrdresInopines" }, "BEH_Ordre_Pion_LOG_OrdresInopines" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Pion_LOG_OrdresInopines, {value} ) end,
+    activations =
+    {
+        { "ACT_Misc_Pion_LOG_PreterRemorqueurs", { "done_ACT_Misc_Pion_LOG_PreterRemorqueurs" } },
+        { "ACT_Misc_Pion_LOG_RecupererRemorqueurs", { "done_ACT_Misc_Pion_LOG_RecupererRemorqueurs" } },
+        { "ACT_Misc_Pion_LOG_PreterVSRAM", { "done_ACT_Misc_Pion_LOG_PreterVSRAM" } },
+        { "ACT_Misc_Pion_LOG_RecupererVSRAM", { "done_ACT_Misc_Pion_LOG_RecupererVSRAM" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus or emptyTable ) do
+        local _continue = true
+do
+                local ordre = x
+                local repOrdre = ordre
+                DEC_Trace( "$$ Ordre de conduite : " .. EnumToString( repOrdre:GeteOrdre_(), E_TypeOrdreConduite ) )
+                 do
+                    local _continue = true
+                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
+                            local repOrdreRenforcer = ordre
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), myself, repOrdreRenforcer:GetnbrRemorqueurs_(), } )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
+                            local repOrdreTransferer = ordre
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererRemorqueurs, 1, { repOrdreTransferer:GetpionRenforce_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetpionRenforce_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
+                            local repOrdreReprendre = ordre
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_RenforcerEnVSRAM" then
+                            local repOrdreRenforcer = ordre
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreRenforcer:GetpionARenforcer_(), myself, repOrdreRenforcer:GetnbrAmbulances_(), } )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_TransfererVSRAM" then
+                            local repOrdreTransferer = ordre
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererVSRAM, 1, { repOrdreTransferer:GetpionRenforce_(), repOrdreTransferer:GetnbrAmbulances_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetpionRenforce_(), repOrdreTransferer:GetnbrAmbulances_(), } )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
+                            local repOrdreReprendre = ordre
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererVSRAM, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrAmbulances_(), } )
+                            _continue = false
+                        
+                        else
+                            Activate( self.activations.ACT_Info_Trace, 1, { "Ordre " .. EnumToString( repOrdre:GeteOrdre_(), E_TypeOrdreConduite ) .. " inconnu", } )
+                            _continue = false
+                                                end
+                    end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
+            end
+
+        end
+
+    end,
+
 }
 
 connections = connections or {}
@@ -235,5 +314,12 @@ connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_Embarquer", 
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Pion_LOG_OrdresInopines", nodes.BEH_Ordre_Pion_LOG_OrdresInopines }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_PasserEnSilenceRadioPartiel", nodes.BEH_Rens_PasserEnSilenceRadioPartiel }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_LOG_OrdresInopines, "ACT_Misc_Pion_LOG_PreterRemorqueurs", nodes.ACT_Misc_Pion_LOG_PreterRemorqueurs }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_LOG_OrdresInopines, "ACT_Misc_Pion_LOG_RecupererRemorqueurs", nodes.ACT_Misc_Pion_LOG_RecupererRemorqueurs }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_LOG_OrdresInopines, "ACT_Misc_Pion_LOG_PreterVSRAM", nodes.ACT_Misc_Pion_LOG_PreterVSRAM }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_LOG_OrdresInopines, "ACT_Misc_Pion_LOG_RecupererVSRAM", nodes.ACT_Misc_Pion_LOG_RecupererVSRAM }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_LOG_OrdresInopines, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_LOG_OrdresInopines, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

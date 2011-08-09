@@ -9,6 +9,10 @@ local emptyTable = emptyTable
 ]]--[[// Commentaires: 
 ]]--[[//
 ]]--[[// *****************************************************************************
+]]
+--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_ASS_ReconnaitreZoneDeploiement"
 {
     feedbacks = { { { "done_MIS_Pion_ASS_ReconnaitreZoneDeploiement" }, "MIS_Pion_ASS_ReconnaitreZoneDeploiement" } },
@@ -16,7 +20,7 @@ local emptyTable = emptyTable
     activations =
     {
         { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
-        { "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission", { "done_BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission" } },
+        { "BEH_Pion_ASS_ReconnaitreZoneDeploiement", { "done_BEH_Pion_ASS_ReconnaitreZoneDeploiement" } },
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
     },
 
@@ -52,8 +56,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             local _continue = true
             local switch_1 = self.ePhase
                 if switch_1 == eReconnaitre then
-                    Activate( self.activations.BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission, GetMotivation( "MOT_Mission" ), { eTypeObjectZoneImplantationCanon, M_DELAI_PREPARATION_RECO_AUF1(), } )
-self.done_BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission = function( self, _, v ) self.eAction = v[1] end
+                    Activate( self.activations.BEH_Pion_ASS_ReconnaitreZoneDeploiement, GetMotivation( "MOT_Mission" ), { eTypeObjectZoneImplantationCanon, M_DELAI_PREPARATION_RECO_AUF1(), } )
+self.done_BEH_Pion_ASS_ReconnaitreZoneDeploiement = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -79,5 +83,5 @@ eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Pion_ASS_ReconnaitreZoneDeploiement = { "mission" }
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission", nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Pion_ASS_ReconnaitreZoneDeploiement", nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_ReconnaitreZoneDeploiement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

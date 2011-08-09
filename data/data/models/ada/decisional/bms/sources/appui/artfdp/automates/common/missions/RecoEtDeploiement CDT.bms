@@ -3,12 +3,15 @@ includedFiles["sources/appui/artfdp/automates/common/missions/RecoEtDeploiement 
 
 local emptyTable = emptyTable
 
+include "bit.lua"
+
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Automates/Common/Missions/RecoEtDeploiement CDT.hal $
-]]--[[// $Author: 
+]]--[[// $Author:
 ]]--[[// $Modtime: 23/10/08  $
-]]--[[// $Revision: 
+]]--[[// $Revision:
 ]]--[[// $Workfile: RecoEtDeploiement CDT.hal $
 ]]--[[// *****************************************************************************
 ]]
@@ -19,8 +22,10 @@ node "BEH_Conduite_Automate_ASS_RecoEtDeploiement"
     activations =
     {
         { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "done_BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
         { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
         { "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", { "done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
+        { "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA", { "done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA" } },
         { "BEH_Conduite_Automate_ASS_SuivreA", { "done_BEH_Conduite_Automate_ASS_SuivreA" } },
     },
 
@@ -31,80 +36,150 @@ node "BEH_Conduite_Automate_ASS_RecoEtDeploiement"
         local Activate = Activate
         --[[//Définition du type de la mission ce qui permet d'accéder aux paramètres du formulaire associé
 ]]self.mission = self.mission or DEC_GetMission( myself )
-        --[[//Création de la liste des points nécessaires à la reco(lstPos_Reco)
-]]self.lstPos_Reco = self.lstPos_Reco or DEC_Geometrie_CreerListePoints()
-        self.listeObstacle = self.listeObstacle or {}--[[//Variables représentant la liste des objets de type zoneImplantationCanon existants
+        self.lstZones_Reco = self.lstZones_Reco or {}--[[//Création de la liste des points nécessaires à la reco(lstZones_Reco)
 ]]
-        self.listeZones = self.listeZones or {}
         self.zoneTir1 = self.zoneTir1 or nil--[[//Variables représentant les zones d'implantation canon de chaque batterie de tir
 ]]
         self.zoneTir2 = self.zoneTir2 or nil
         --[[//Liste de tous les pions de l'automate, PC inclus
 ]]self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
-        --[[//Liste permettant de tester le type du pion parmi ceux n'ayant pas la mission de reconnaissance pour 
+        --[[//Liste permettant de tester le type du pion parmi ceux n'ayant pas la mission de reconnaissance pour
 ]]--[[//que les pions de type SectionASS_Tir ne suivent pas les pions reco mais attendent la fin des travaux
 ]]--[[//avant de se déplacer
-]]local selPion_ASS_Tir = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Tir" )
-        --[[//Variable représentant la position d'un objet dans la liste "listeObstacle"
-]]local compteur = 0
-        local indice = 0--[[//Variable représentant la position d'un objet dans la liste "listeZones"
-]]
+]]local selPion_ASS_Tir = S_ASS_ChercheSectionsTir( self.selPions )
         self.ptZone = self.ptZone or nil--[[//Variable représentant la position à reconnaître
 ]]
-        --[[//Variable signalant si les pions de type SectionASS_Tir peuvent effectuer leur mission
+        self.RECODETRUITE = self.RECODETRUITE or 0--[[//Variable nécessaire lors de la destruction d'une section de reco
+]]--[[//3 états : 0 : pas de pion de reco détruit ; 1 = pion de reco détruit ; 2 = fin de mission globale
+]]
+        --[[//Il n'est pas possible d'effectuer le travail de sauvegarde du point de reco de l'autre équipe de reconnaissance
+]]--[[//à l'aide de la liste de points "lstPos_Reco" car les points de cette liste sont détruits
+]]--[[//au fur et à mesure du traitement du point "ptZone" dans la fonction "S_Misc_Automate_ASS_ExtraitPoint_ProchePionDansFuseau"
+]]--[[//Variable signalant si les pions de type SectionASS_Tir peuvent effectuer leur mission
 ]]--[[//Suite à la réception de l'ordre de conduite POURSUIVRE
 ]]local poursuivre = false
-        if( ModuleBegins() ) then
-            --[[//Copie des points de reconnaissance du formulaire de la mission
-]]--[[//dans la liste lstPos_Reco pour les pions de reconnaissance
-]]S_Geometrie_Automate_ASS_CopiePointDansFuseau( self.mission.positionsAReconnaitre_, self.lstPos_Reco )
-        end
-
         --[[//Définition des pions de type reco
 ]]local selPion_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
+        if( ModuleBegins() ) then
+            do
+                local zonesMissions = {}--[[//Copie des points de reconnaissance du formulaire de la mission
+]]--[[//dans la liste lstPos_Reco pour les pions de reconnaissance
+]]
+                DEC_UserTypeList_PushBack( zonesMissions, self.mission.zoneDeploiement1_ )
+                if( self.mission.zoneDeploiement2_ ~= nil ) then
+                    do
+                        DEC_UserTypeList_PushBack( zonesMissions, self.mission.zoneDeploiement2_ )
+                    end
+                end
+
+                S_Geometrie_Automate_ASS_CopieZoneDansFuseau( zonesMissions, self.lstZones_Reco )
+                for _,x in pairs( --[[//Sauvegarde des points à reconnaitre dans une liste de points associée à la section de reconnaissance
+]]selPion_ASS_Reco or emptyTable ) do
+                local _continue = true
+do
+                        local pionPourReco = x
+                        --[[//Effacer les anciennes zones de tir des sections de reconnaissance
+]]pionPourReco:ClearlisteZonesTir_()
+                    end
+
+                end
+
+                self.RECODETRUITE = 0
+            end
+        end
+
         for _,x_ass in pairs( selPion_ASS_Reco or emptyTable ) do
         local _continue = true
 do
-                --[[//Donner la mission qu'au pion ne possédant pas la mission de reconnaissance
-]]--[[//Eviter de traiter plusieurs fois le même pion
-]]if( S_Misc_EstMissionAffectee_Pion( x_ass, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" ) ) then
-                    _continue = false
-                end
+                local pionDeReco = x_ass
+                --[[//Pion reco en cours de traitement
+]]local pionReco = x_ass
+                --[[//La déclaration d'un pion de reco détruit ne se fait qu'une fois
+]]if( self.RECODETRUITE == 0 ) then
+                    do
+                        --[[//Gestion de la destruction tactique d'un pion reco qui n'est pas en fin de mission
+]]--[[//Transfert des zones canon sur l'autre pion reco
+]]if( F_Pion_GeteEtatPhaseMission( pionDeReco ) ~= eEtatPhaseMission_FinMission and ( S_Pion_EstDetruitTactique( x_ass ) or S_Pion_EstDetruitPhysique( x_ass ) ) ) then
+                            do
+                                self.RECODETRUITE = 1
+                                _continue = false
+                            end
+                        end
+
+                    end
+--[[//Déplacement vers l'emplacement à reconnaitre de la section détruite
+]]                end
 
                     if _continue then
-                    --[[//Chercher la position la plus proche du pion disponible
-]]self.ptZone = S_Misc_Automate_ASS_ExtraitPoint_ProchePionDansFuseau( self.lstPos_Reco, x_ass )
-                    --[[//Forcer le comportement à continuer car le point de reconnaissance n'est connu
-]]--[[//qu'à la première lecture du code
-]]if( self.ptZone == nil ) then
-                        _continue = false
-                    else
-do
-                            --[[//Recherche et destruction de toutes zones canon existantes dans le fuseau
-]]self.listeZones = DEC_Connaissances_ObjetsDansFuseau( eTypeObjectZoneImplantationCanon )
-                            indice = 0
-                            --[[//Calcul du nombre d'éléments dans la liste des zones canon
-]]local taillelisteZones = #( self.listeZones )
-                            if( taillelisteZones ~= 0 ) then
-                                do
-                                    for _,x in pairs( self.listeZones or emptyTable ) do
-                                    local _continue = true
-                                        do
-                                            x = DEC_UserTypeList_GetAt( self.listeZones, indice )
-                                            DEC_DetruireObjetSansDelais( x )
-                                            indice = indice + 1
-                                        end
+                    if( ( F_Pion_GeteEtatPhaseMission( pionDeReco ) == eEtatPhaseMission_FinMission or not S_Misc_EstMissionAffectee_Pion( x_ass, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" ) ) and self.RECODETRUITE == 1 and pionReco:GetptRecoDetruite_() ~= nil ) then
+                        do
+                            Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { x_ass, pionReco:GetptRecoDetruite_(), } )
+                        end
+--[[//Affichage compte-rendu "Attente ordre de conduite poursuivre" une fois la reconnaissance effectuée
+]]                    end
 
+                    if( F_Pion_GeteEtatPhaseMission( pionDeReco ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            --[[//La première reco a terminé sa propre mission
+]]--[[//Elle va effectuer la mission de l'autre section de reco
+]]if( self.RECODETRUITE == 1 ) then
+                                do
+                                    F_Pion_SeteEtatPhaseMission( pionDeReco, eEtatPhaseMission_EnAttenteDeMission )
+                                    Activate( self.activations.ACT_RC_Automate, 1, { eRC_ZoneReconnue, } )
+                                    self.RECODETRUITE = 2
+                                    _continue = false
+                                end
+--[[//La mission de reconnaissance est complètement terminée
+]]                            end
+
+                                if _continue then
+                                if( self.RECODETRUITE ~= 1 ) then
+                                    do
+                                        F_Pion_SeteEtatPhaseMission( pionDeReco, eEtatPhaseMission_EnAttenteDeMission )
+                                        Activate( self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdrePoursuivre, } )
+                                    end
+                                end
+
+                            end
+                        end
+--[[//Donner la mission au pion ne possédant pas la mission de reconnaissance
+]]--[[//Eviter de traiter plusieurs fois le même pion
+]]                    end
+
+                        if _continue then
+                        if( S_Misc_EstMissionAffectee_Pion( x_ass, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" ) ) then
+                            _continue = false
+                        end
+
+                            if _continue then
+                            --[[//Chercher la position la plus proche du pion disponible
+]]self.ptZone = S_Misc_Automate_ASS_ExtraitZone_ProchePionDansFuseau( self.lstZones_Reco, x_ass )
+                            --[[//Sauvegarde du point de reconnaissance de l'autre section de reco
+]]--[[//pour l'éventualité ou celle-ci serait détruite
+]]if( self.ptZone ~= nil ) then
+                                do
+                                    if( DEC_Geometrie_LocalisationsEgales( self.mission.zoneDeploiement1_, self.ptZone ) ) then
+                                        --[[//Sauvegarde de l'autre point de reco différent de celui en cours de reconnaissance par la section
+]]pionReco:SetptRecoDetruite_( self.mission.zoneDeploiement2_ )
+                                    else
+                                        pionReco:SetptRecoDetruite_( self.mission.zoneDeploiement1_ )
                                     end
 
                                 end
+                            else
+                                pionReco:SetptRecoDetruite_( self.mission.zoneDeploiement1_ )
                             end
 
-                        end
-                    end
+                            --[[//Forcer le comportement à continuer car le point de reconnaissance n'est connu
+]]--[[//qu'à la première lecture du code
+]]if( self.ptZone == nil ) then
+                                _continue = false
+                            end
 
-                        if _continue then
-                        Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { x_ass, self.ptZone, } )
+                                if _continue then
+                                Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { x_ass, self.ptZone, } )
+                            end
+                        end
                     end
                 end
             end
@@ -138,41 +213,73 @@ do
 
         if( poursuivre ) then
             do
-                --[[//Liste des objets de types "ZoneImplantationCanon"
-]]self.listeObstacle = DEC_Connaissances_ObjetsDansFuseau( eTypeObjectZoneImplantationCanon )
-                --[[//Calcul du nombre d'éléments dans la liste des zones canon
-]]local tailleListeObstacle = #( self.listeObstacle )
-                --[[//Il existe des objets dans le fuseau de l'automate
-]]if( tailleListeObstacle ~= 0 ) then
+                --[[//Variable représentant le nombre de section de tir
+]]local nbPionTir = #( selPion_ASS_Tir )
+                DEC_Trace( "NB sections tir " .. FloatToString( nbPionTir ) )
+                --[[//Compteur représentant l'indice de la section de tir dans la liste de type "selection"
+]]local compteur = 0
+                --[[//Compteur représentant le nombre de sections de tir associées à un pion de reconnaissance
+]]local tailleListeTir = 0
+                for _,x_reco in pairs( --[[//Traitement d'un pion reco dans la liste des pions de type Reco
+]]selPion_ASS_Reco or emptyTable ) do
+                local _continue = true
                     do
-                        for _,x_pionTir in pairs( selPion_ASS_Tir or emptyTable ) do
-                        local _continue = true
-                            do
-                                local pionTir = x_pionTir
-                                if( compteur < tailleListeObstacle ) then
-                                    do
-                                        self.zoneTir1 = DEC_UserTypeList_GetAt( self.listeObstacle, compteur )
-                                        if( ( compteur + 1 ) < tailleListeObstacle ) then
-                                            self.zoneTir2 = DEC_UserTypeList_GetAt( self.listeObstacle, compteur + 1 )
-                                        else
-                                            self.zoneTir2 = DEC_UserTypeList_GetAt( self.listeObstacle, compteur )
-                                        end
+                        --[[//Pion reco en cours de traitement
+]]local pionReco = x_reco
+                        --[[//Si le pion de reco est détruit, ne pas le traiter
+]]if( S_Pion_EstDetruitTactique( x_reco ) or S_Pion_EstDetruitPhysique( x_reco ) ) then
+                            _continue = false
+                        end
 
-                                        --[[//Mise en oeuvre sur la zone d'implantation de tir
-]]Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, 1, { pionTir, self.zoneTir1, self.zoneTir2, } )
-                                        --[[//Incrémentation de l'indice d'un objet de 2 car une zone canon 
-]]--[[//se compose de deux objets
-]]compteur = compteur + 2
-                                    end
+                            if _continue then
+                            --[[//Calcul du nombre de zones de tir reconnues par la section de reconnaissance
+]]tailleListeTir = #( pionReco:GetlisteZonesTir_() )
+                            --[[//Tant que les zones de tir reconnues ne sont pas traités
+]]local cpt = 0
+                            while cpt < tailleListeTir do
+                                local _continue = true
+do
+                                    --[[//Traitement d'une section de tir
+]]if( compteur < nbPionTir ) then
+                                        do
+                                            --[[//Section de tir en cours de traitement
+]]local pionTir = DIA_GetAt( selPion_ASS_Tir, compteur )
+                                            --[[//Pion de tir en cours de traitement
+]]local pionsTir = pionTir
+                                            --[[// Position de sauvegarde
+]]local ptSauvegarde = nil
+                                            if( self.mission.sauvegardeAutomatique_ ) then
+                                                ptSauvegarde = pionReco:GetptSauvegarde_()
+                                            end
+
+                                            --[[//Zones de tir reconnues par le pion reco en cours de traitement
+]]self.zoneTir1 = DEC_UserTypeList_GetAt( pionReco:GetlisteZonesTir_(), cpt )
+                                            if( cpt + 1 < tailleListeTir ) then
+                                                do
+                                                    self.zoneTir2 = DEC_UserTypeList_GetAt( pionReco:GetlisteZonesTir_(), cpt + 1 )
+                                                    Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, 1, { pionTir, self.zoneTir1, self.zoneTir2, self.mission.sauvegardeAutomatique_, ptSauvegarde, } )
+                                                end
+                                            else
+do
+                                                    Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA, 1, { pionTir, self.zoneTir1, self.mission.sauvegardeAutomatique_, ptSauvegarde, } )
+                                                end
 --[[//Le PC suit une section de tir
-]]                                end
+]]                                            end
 
-                                Activate( self.activations.BEH_Conduite_Automate_ASS_SuivreA, 1, { DEC_Automate_PionPC(), pionTir, } )
+                                            Activate( self.activations.BEH_Conduite_Automate_ASS_SuivreA, 1, { DEC_Automate_PionPC(), pionTir, } )
+                                            --[[//Incrémentation de l'indice représentant une section de tir dans la liste selPion_ASS_Tir
+]]compteur = compteur + 1
+                                        end
+                                    end
+
+                                                                        cpt = cpt + 1
+                                end
+                            cpt = cpt + 1
                             end
 
                         end
-
                     end
+
                 end
 
             end
@@ -196,12 +303,41 @@ node "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
         self._namedParams.pPion = self.params[1]
         self._namedParams.zoneImplantationTir1 = self.params[2]
         self._namedParams.zoneImplantationTir2 = self.params[3]
+        self._namedParams.sauvegardeAutomatique = self.params[4]
+        self._namedParams.ptSauvegarde = self.params[5]
     end,
 
     activate = function( self )
         local Activate = Activate
         if( ModuleBegins() ) then
-            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.zoneImplantationTir2, } )
+            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.zoneImplantationTir2, self._namedParams.sauvegardeAutomatique, self._namedParams.ptSauvegarde, } )
+        end
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA"
+{
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA" }, "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA, {value} ) end,
+    activations =
+    {
+        { "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA", { "done_BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pPion = self.params[1]
+        self._namedParams.zoneImplantationTir1 = self.params[2]
+        self._namedParams.sauvegardeAutomatique = self.params[3]
+        self._namedParams.ptSauvegarde = self.params[4]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        if( ModuleBegins() ) then
+            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.sauvegardeAutomatique, self._namedParams.ptSauvegarde, } )
         end
 
     end,
@@ -210,7 +346,10 @@ node "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
 
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA, "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA", nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement, "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", nodes.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement, "ACT_RC_Automate", nodes.ACT_RC_Automate }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement, "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", nodes.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement, "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA", nodes.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvreA }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement, "BEH_Conduite_Automate_ASS_SuivreA", nodes.BEH_Conduite_Automate_ASS_SuivreA }

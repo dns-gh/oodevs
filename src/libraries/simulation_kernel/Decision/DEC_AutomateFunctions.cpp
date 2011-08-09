@@ -267,6 +267,16 @@ bool DEC_AutomateFunctions::IsPionNeutralized( DEC_Decision_ABC* pCallerAutomate
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::IsPionTransported
+// Created: LDC 2011-08-08
+// -----------------------------------------------------------------------------
+bool DEC_AutomateFunctions::IsPionTransported( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion )
+{
+    assert( pPion && IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) );
+    return pPion->IsTransported();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsPointInPionFuseau
 // Created: JVT 2005-01-03
 // -----------------------------------------------------------------------------
@@ -371,4 +381,23 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_AutomateFunctions::GetMission( DEC_Deci
 void DEC_AutomateFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     object->SetMission( mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged
+// Created: LDC 2011-08-05
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged( MIL_Automate& callerAutomate, int state )
+{
+    dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged
+// Created: LDC 2011-08-05
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged( MIL_Automate& /*callerAutomate*/, int /*state*/ )
+{
+    // $$$$ LDC This function could be implemented when/if the .proto includes a message for pop roe on automats
+    //          It's actually only useful for gui, the sim doesn't care about it.
 }

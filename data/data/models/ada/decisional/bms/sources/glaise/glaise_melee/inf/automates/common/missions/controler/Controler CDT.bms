@@ -146,7 +146,7 @@ node "BEH_Conduite_Automate_INF_GererReductionSur"
                 end
 --[[// Assigne la mission Reduire
 ]]
-                DEC_Trace( "Assigne mission Reduire a: " .. self._namedParams.pionAppui:GetszName_() )
+                DEC_Trace( "Assigne mission Reduire a: " .. DEC_GetSzName( self._namedParams.pionAppui ) )
                 --[[// On reassigne la mission Appuye
 ]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Reduire, 1, { ePhase_CDT, self._namedParams.pionAppui, self._namedParams.ksEni_Zone, eEtatEchelon_Second, } )
             end

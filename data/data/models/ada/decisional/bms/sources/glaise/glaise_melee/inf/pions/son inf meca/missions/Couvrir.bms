@@ -57,7 +57,7 @@ node "MIS_Pion_INF_Couvrir"
                     end
                 end
 
-                DEC_Trace( "Mission 'Couvrir ( " .. self._namedParams.mission.cible_:GetszName_() .. " )' : debut" )
+                DEC_Trace( "Mission 'Couvrir ( " .. DEC_GetSzName( self._namedParams.mission.cible_ ) .. " )' : debut" )
             end
         end
 

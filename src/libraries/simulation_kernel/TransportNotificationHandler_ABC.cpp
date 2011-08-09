@@ -42,7 +42,7 @@ void TransportNotificationHandler_ABC::LoadForTransport( const MIL_Agent_ABC& /*
 // Name: TransportNotificationHandler_ABC::UnloadFromTransport
 // Created: LDC 2009-10-05
 // -----------------------------------------------------------------------------
-void TransportNotificationHandler_ABC::UnloadFromTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
+void TransportNotificationHandler_ABC::UnloadFromTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/, MT_Vector2D* /*position*/ )
 {
 
 }

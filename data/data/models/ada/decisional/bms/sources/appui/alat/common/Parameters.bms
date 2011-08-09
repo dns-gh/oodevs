@@ -16,3 +16,10 @@ function M_DOCTRINE_ALAT_TEMPS_SECURITE()
     return 20
 end
 
+
+
+function M_DOCTRINE_ALAT_DISTANCE_PLOTS()
+    return 30000
+end
+
+

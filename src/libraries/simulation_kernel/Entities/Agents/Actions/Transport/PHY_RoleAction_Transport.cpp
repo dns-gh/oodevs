@@ -191,7 +191,7 @@ double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
 // Name: PHY_RoleAction_Transport::Unload
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Transport::Unload()
+int PHY_RoleAction_Transport::Unload( MT_Vector2D* position )
 {
     bLoadUnloadHasBeenUpdated_ = true;
     if( nState_ == eNothing )
@@ -204,7 +204,7 @@ int PHY_RoleAction_Transport::Unload()
         if( comp->WeightUnloadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
-        const double rWeightUnloaded = DoUnload( comp->WeightUnloadedPerTimeStep() );
+        const double rWeightUnloaded = DoUnload( comp->WeightUnloadedPerTimeStep(), position );
         rWeightTransported_ -= rWeightUnloaded;
         if( rWeightUnloaded == 0. || rWeightTransported_ <= 0. )
         {
@@ -221,7 +221,7 @@ int PHY_RoleAction_Transport::Unload()
 // Name: PHY_RoleAction_Transport::DoUnload
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload )
+double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload, MT_Vector2D* position )
 {
     double rWeightUnloaded = 0.;
     for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightUnloaded < rWeightToUnload ; )
@@ -239,7 +239,7 @@ double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload )
         {
             bHasChanged_ = true;
             MIL_Agent_ABC& pion = *it->first;
-            pion.Apply(&TransportNotificationHandler_ABC::UnloadFromTransport,  transporter_, it->second.bTransportOnlyLoadable_ );
+            pion.Apply(&TransportNotificationHandler_ABC::UnloadFromTransport,  transporter_, it->second.bTransportOnlyLoadable_, position );
             it = transportedPions_.erase( it );
         }
         else
@@ -400,7 +400,8 @@ void PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
     if( it == transportedPions_.end() )
         return;
 
-    transported.Apply(&TransportNotificationHandler_ABC::UnloadFromTransport, transporter_, it->second.bTransportOnlyLoadable_ );
+    MT_Vector2D* positionDummy( 0 );
+    transported.Apply(&TransportNotificationHandler_ABC::UnloadFromTransport, transporter_, it->second.bTransportOnlyLoadable_, positionDummy );
 
     assert( rWeightTransported_ >= it->second.rTransportedWeight_ );
     rWeightTransported_ -= it->second.rTransportedWeight_;

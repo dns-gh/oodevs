@@ -64,3 +64,9 @@ include "Appui/ArtFdp/Pions/Common/Missions/MettreEnOeuvre.bms"
 
 include "Appui/ArtFdp/Pions/Son CAESAR SIC/Missions/AssurerMiseEnOeuvre2Zones.bms"
 
+include "Appui/ArtFdp/Pions/Son CAESAR SIC/Missions/AssurerMiseEnOeuvre.bms"
+
+include "Appui/ArtFdp/Pions/Son CAESAR SIC/Missions/AssurerMiseEnBatterieInopinee.bms"
+
+include "Appui/ArtFdp/Pions/Son CAESAR SIC/Missions/AssurerMiseEnOeuvreSurPosition.bms"
+

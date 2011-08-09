@@ -90,7 +90,7 @@ include "bit.lua"
                     DEC_Trace( FloatToString( #( self.sPion_PE ) ) .. " pions pris en compte." )
                     self.ptRgpt_Bary = S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
                     if( #( self.sPion_PE ) > 0 ) then
-                        self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneRegroupement_, #( self.sPion_PE ), self.eCodeLoc )
+                        self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneRegroupement_, #( self.sPion_PE ), DEC_GetDirectionEnnemi( self.mission ), self.eCodeLoc )
                         self.eCodeLoc = self.lstLocRgpt.second
                         self.lstLocRgpt = self.lstLocRgpt.first
                     end

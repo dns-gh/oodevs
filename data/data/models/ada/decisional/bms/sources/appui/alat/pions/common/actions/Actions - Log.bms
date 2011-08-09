@@ -20,7 +20,10 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
         self.localisation = self.localisation or nil
         self.actionCreerPlot = self.actionCreerPlot or 0
         assert( self._namedParams.point ~= nil, "ALAT : Realiser plot log position invalide" )
-        if( ModuleBegins() ) then
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init --> commencer à construire l'objet
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
             do
                 self.localisation = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.point )
                 self.actionCreerPlot = DEC_StartCreerObjet( self.repPlotLogistique, S_TypeObject_ToString( eTypeObjectPlotRavitaillement ), self.localisation )
@@ -33,6 +36,7 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
         if( self.bInterompu ) then
             do
                 self.bInterompu = false
+                DEC_Trace( "Reprise construction plot" )
                 DEC_ReprendAction( self.actionCreerPlot )
             end
         end
@@ -56,6 +60,7 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
                                 end
                 if switch_1 == eActionObjetImpossible then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
+                    DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> objet impossible " )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -63,6 +68,7 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
                                 end
                 if switch_1 == eActionObjetPasDeCapacite then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
+                    DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> pas de capacite " )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end

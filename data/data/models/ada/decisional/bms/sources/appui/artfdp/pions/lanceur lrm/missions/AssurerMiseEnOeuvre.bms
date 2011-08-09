@@ -61,7 +61,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 --[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux, 1, { true, } )
+        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux, 1, { false, } )
         --[[// Mission
 ]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
          do
@@ -69,7 +69,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 --[[//---------------------------------------------------------------------
 ]]            local switch_1 = self.ePhase
                 if switch_1 == eMettreEnOeuvre then
-                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_LRM(), } )
+                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_TIR_LRM(), } )
                     _continue = false
                 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )

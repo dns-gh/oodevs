@@ -5,3 +5,106 @@ function M_MODELE_Pion_TRANS_DELAI_MISEENPLACE()
     return 45
 end
 
+
+
+function M_DEPLACEMENT_ACTUATEURS()
+    return deplacement
+end
+
+
+
+function M_TIR_ACTUATEURS()
+    return tir
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Paramètres de reconnaissance des points - devrait être dans ADN
+]]--[[// =============================================================================
+]]--[[//Valeurs correctes pour les Pions TRANS? (LLS)
+]]function M_POLY_MODELE_PION_CAPACITE_RECO_POINT()
+    return 500
+end
+
+
+
+function M_POLY_MODELE_PION_VITESSE_RECO_POINT()
+    return 6
+end
+
+
+
+
+--[[// ---------------------------------------------------------------------------
+]]--[[// M_POLY lies a la progression // Points particuliers
+]]--[[// ---------------------------------------------------------------------------
+]]
+--[[// Progression sur avant point
+]]--[[// ----------------------------------------------------------------------------
+]]
+--[[// Points CCT / Bonds
+]]
+
+
+
+
+
+
+
+
+
+
+
+--[[// =============================================================================
+]]--[[// Gestion des LIMAS
+]]--[[// =============================================================================
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Init specifique a l'arme de la mission generique 'SeDeplacer'
+]]--[[//-----------------------------------------------------------------------------
+]]
+function M_POLY_PH_TIR_ENI_EFFICACE()
+    return 0.5
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Réaction si on rencontre un ennemi inopinément
+]]--[[// =============================================================================
+]]
+
+
+--[[// =============================================================================
+]]--[[// Ph pour la riposte
+]]--[[// =============================================================================
+]]function M_POLY_PH_RIPOSTE()
+    return 0.3
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Modulation de la vitesse pour les unités AIR - devrait être dans ADN
+]]--[[// =============================================================================
+]]function M_POLY_DOCTRINE_MODULATION_VITESSE_RALENTIR()
+    return 0.1
+end
+
+
+

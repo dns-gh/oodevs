@@ -23,7 +23,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa tcp/mis
         local Activate = Activate
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
         self.barycentreLocalisation = self.barycentreLocalisation or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
-        self.pointDevantDispositif = self.pointDevantDispositif or DEC_Geometrie_PositionTranslateDir( self.barycentreLocalisation, self._namedParams.mission.directionEnnemi_, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() )
+        self.pointDevantDispositif = self.pointDevantDispositif or DEC_Geometrie_PositionTranslateDir( self.barycentreLocalisation, DEC_GetDirectionEnnemi( self._namedParams.mission ), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() )
         self.listePositionsPourSectionsRestantes = self.listePositionsPourSectionsRestantes or DEC_Geometrie_CreerListePoints()
         self.selPions = self.selPions or {}
         self.listeDefendreSite = self.listeDefendreSite or {}

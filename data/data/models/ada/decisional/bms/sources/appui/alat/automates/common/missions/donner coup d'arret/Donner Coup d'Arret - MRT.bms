@@ -142,15 +142,15 @@ include "bit.lua"
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listeDonnerCoupArretGauche ) + #( self.listeDonnerCoupArretDroit ) + #( self.listePionRef ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsDonnerCoupArret = v[1] end
                     if( not DIA_IsListEmpty( self.listeDonnerCoupArretGauche ) ) then
-                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listeDonnerCoupArretGauche, self._namedParams.mission.zone_, self.pointDeDislocationGauche, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listeDonnerCoupArretGauche, self._namedParams.mission.zone_, self.pointDeDislocationGauche, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, DEC_GetDirectionEnnemi( self._namedParams.mission ), } )
                     end
 
                     if( not DIA_IsListEmpty( self.listeDonnerCoupArretDroit ) ) then
-                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listeDonnerCoupArretDroit, self._namedParams.mission.zone_, self.pointDeDislocationDroit, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listeDonnerCoupArretDroit, self._namedParams.mission.zone_, self.pointDeDislocationDroit, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, DEC_GetDirectionEnnemi( self._namedParams.mission ), } )
                     end
 
                     if( not DIA_IsListEmpty( self.listePionRef ) ) then
-                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listePionRef, self._namedParams.mission.zone_, self.pointDeDislocationRef, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listePionRef, self._namedParams.mission.zone_, self.pointDeDislocationRef, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, DEC_GetDirectionEnnemi( self._namedParams.mission ), } )
                     end
 
                     _continue = false

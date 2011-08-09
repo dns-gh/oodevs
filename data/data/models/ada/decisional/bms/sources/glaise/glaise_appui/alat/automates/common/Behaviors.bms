@@ -85,10 +85,15 @@ include "glaise/glaise_Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
 ]]
                 if( DEC_GetMission( myself ) ~= nil ) then
                     do
-                        Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, emptyTable )--[[// -----------------------------------------------------------------
-]]--[[// Ajout des plots dans mon fuseau si j'ai une mission
+                        --[[// -----------------------------------------------------------------
+]]--[[// Ajout des plots dans mon fuseau si j'ai une mission autre que
+]]--[[// ALAT_SeRecompleter (les plots sont passes dans la mission)
 ]]--[[// -----------------------------------------------------------------
-]]
+]]local mission = DEC_GetMission( myself )
+                        if( mission:GetType() ~= "T_Mission_Automate_ALAT_AllerSeRecompleter" ) then
+                            Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, emptyTable )
+                        end
+
                         Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, emptyTable )--[[// -----------------------------------------------------------------
 ]]--[[// choix des plots de ravitaillement des pions subordonnés
 ]]--[[// -----------------------------------------------------------------

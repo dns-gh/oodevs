@@ -50,7 +50,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Tir.bms"] = 
                 or switch_1 == eActionTirDirect_NoCapacity
                 or switch_1 == eActionTirDirect_EnemyDestroyed
                 or switch_1 == eActionTirDirect_Finished then
-                    DEC_StopAction( self.actionTir )
+                    self.actionTir = DEC_StopAction( self.actionTir )
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
@@ -68,7 +68,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Tir.bms"] = 
 
     deselect = function( self )
                 F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-        DEC_StopAction( self.actionTir )
+        self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Fin ouverture du feu" )
                 self:SendFeedback( eActionHalt )
         Halt( self )

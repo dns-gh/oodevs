@@ -15,3 +15,5 @@ includedFiles["sources/appui/appuimob/pions/missions/Missions.bms"] = true
 include "Appui/AppuiMob/Pions/Missions/Transporter.bms"
 
 include "Appui/Log/Pions/Missions/Renforcer.bms"
+
+include "Appui/Log/Pions/Missions/SeDeployer.bms"

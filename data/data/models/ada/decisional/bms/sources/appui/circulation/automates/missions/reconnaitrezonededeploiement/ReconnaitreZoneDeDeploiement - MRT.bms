@@ -3,7 +3,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonededep
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -35,7 +35,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonededep
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 local nErrorCode = nil
-                self.listeLoclisations = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePions ), nErrorCode )
+                self.listeLoclisations = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePions ), DEC_GetDirectionEnnemi( self._namedParams.mission ), nErrorCode )
                 nErrorCode = self.listeLoclisations.second
                 self.listeLoclisations = self.listeLoclisations.first
                 if( nErrorCode ~= eNoError ) then

@@ -4,12 +4,20 @@ includedFiles["sources/appui/artfdp/pions/son auf1/missions/AssurerMiseEnOeuvreS
 local emptyTable = emptyTable
 
 --[[// *****************************************************************************
-]]--[[// MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition
-]]--[[//
-]]--[[// Commentaires: 
-]]--[[//
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 19/09/05 10:12 $
+ * $Revision: 12 $
+ *
+ */]]--[[// Created: JCR 03-02-13
 ]]--[[// *****************************************************************************
-]]node "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition"
+]]--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]
+
+node "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition"
 {
     feedbacks = { { { "done_MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition" }, "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, {value} ) end,
@@ -34,10 +42,13 @@ local emptyTable = emptyTable
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
-                DEC_Trace( "On receipt of order: 'To enable operations'" )
+                --[[// Prise en charge de l'ordre d'application des feux
+]]F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+                --[[//---------------------------------------------------------------------
+]]DEC_Trace( "On receipt of order: 'To enable operations'" )
             end
-        end
+--[[// Gere la disponibilite aux feux
+]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
@@ -47,21 +58,18 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 self.ePhase = eFinMission
                 self.eEtatOrdreFinMission = eActionEnCours
             end
---[[// Prise en charge de l'ordre d'application des feux
-]]--[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux, 1, { true, } )
-        --[[// Gere la disponibilite aux feux
-]]--[[//---------------------------------------------------------------------
+        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux, 1, { false, } )
+        --[[// Mission
 ]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
          do
             local _continue = true
---[[// Mission
-]]--[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]            local switch_1 = self.ePhase
                 if switch_1 == eMettreEnOeuvre then
-                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_AUF1(), } )
+                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_TIR_AUF1(), } )
                     _continue = false
                 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )

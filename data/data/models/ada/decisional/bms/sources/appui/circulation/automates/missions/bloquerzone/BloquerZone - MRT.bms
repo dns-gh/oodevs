@@ -3,7 +3,7 @@ includedFiles["sources/appui/circulation/automates/missions/bloquerzone/BloquerZ
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -35,7 +35,7 @@ includedFiles["sources/appui/circulation/automates/missions/bloquerzone/BloquerZ
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 local nErrorCode = nil
-                self.listeSousSecteurs = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( selPions ), nErrorCode )
+                self.listeSousSecteurs = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( selPions ), DEC_GetDirectionEnnemi( self._namedParams.mission ), nErrorCode )
                 nErrorCode = self.listeSousSecteurs.second
                 self.listeSousSecteurs = self.listeSousSecteurs.first
                 if( nErrorCode ~= eNoError ) then

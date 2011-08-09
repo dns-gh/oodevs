@@ -126,7 +126,7 @@ node "BEH_Medo_Automate_Emergency_PrepareMission_Alert"
                         do
                             local eCodeLoc = eNoError
                             local zone = DEC_UserTypeList_GetAt( self._namedParams.mission.zones_, 0 )
-                            self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( zone, sizePions, eCodeLoc )
+                            self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( zone, sizePions, DEC_GetDirectionEnnemi( self._namedParams.mission ), eCodeLoc )
                             eCodeLoc = self.lstLocalisations.second
                             self.lstLocalisations = self.lstLocalisations.first
                              do

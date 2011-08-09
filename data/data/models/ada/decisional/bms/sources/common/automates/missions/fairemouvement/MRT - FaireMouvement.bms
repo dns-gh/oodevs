@@ -5,7 +5,7 @@ local emptyTable = emptyTable
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_FaireMouvement
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -68,15 +68,16 @@ local emptyTable = emptyTable
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( DEC_Automate_PionsAvecPC() ), } )
+        local listePions = S_ObtenirPionsNonTransportes()
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( listePions ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
-        Activate( self.activations.BEH_Medo_Automate_AssignerFaireMouvementA, 1, { DEC_Automate_PionsAvecPC(), } )
+        Activate( self.activations.BEH_Medo_Automate_AssignerFaireMouvementA, 1, { listePions, } )
     end,
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Medo_Automate_AssignerFaireMouvementA
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -98,10 +99,16 @@ node "BEH_Medo_Automate_AssignerFaireMouvementA"
     activate = function( self )
         local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
-        if( ModuleBegins() ) then
-for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
-            local _continue = true
-                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementSurItA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
+        --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                for _,pion in pairs( self._namedParams.listePions or emptyTable ) do
+                local _continue = true
+                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementSurItA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
+
+                end
 
             end
         end

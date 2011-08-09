@@ -23,6 +23,9 @@ include "bit.lua"
 ]]--[[// Position d'une unite ( T_ConnaissanceAgent )
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[//-------------------------------------------------------------------------
+]]--[[// Position d'une unite ( T_ConnaissanceAgent )
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
 ]]--[[// Renvoie l'eni le plus proche de la position passée en paramètre
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
@@ -84,6 +87,12 @@ end
 function S_Eni_Position( repUnite )
     local _returnValue = nil
     _returnValue = DEC_ConnaissanceAgent_Position( repUnite )
+    do return _returnValue end
+end
+
+function S_Eni_Altitude( repUnite )
+    local _returnValue = 0
+    _returnValue = DEC_ConnaissanceAgent_Altitude( repUnite )
     do return _returnValue end
 end
 

@@ -10,16 +10,16 @@ includedFiles["sources/common/Fonctions - RC.bms"] = true
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[//a faire
 ]]--[[// MIA phase = En progressionSurAxe si reco it ou axe non?
-]]--[[// ggr : ajouter un RC pour la reconnaissance 
+]]--[[// ggr : ajouter un RC pour la reconnaissance
 ]]--[[// ( quand ce n'est pas une localisation )
 ]]--[[// MIA --> pas une phase de mission CR dans l'action de contrôle de zone
 ]]--[[// : eRC_DebutControleZone, eRC_FinControleZone
-]]--[[// JCR --> Permet a l'automate de faire un compte rendu de controle 
-]]--[[// de zone. Si l'action est en pause ou interrompue, le pion fait un 
+]]--[[// JCR --> Permet a l'automate de faire un compte rendu de controle
+]]--[[// de zone. Si l'action est en pause ou interrompue, le pion fait un
 ]]--[[// rc eRC_FinControleZone ...
-]]--[[//Donc CR à faire dans l'action    			
+]]--[[//Donc CR à faire dans l'action
 ]]--[[// MIA IDEM sauf ALAT peut être
-]]--[[// MIA: idem pas phase de mission?: Arrive sur Position et si pas de déplacement de sauvegarde 
+]]--[[// MIA: idem pas phase de mission?: Arrive sur Position et si pas de déplacement de sauvegarde
 ]]--[[// et en poste (aménagé alors CR enPosition DANS l'action d'installation
 ]]--[[// A voir ca se discute
 ]]--[[// Pour automate
@@ -40,6 +40,9 @@ includedFiles["sources/common/Fonctions - RC.bms"] = true
         local switch_1 = eSituationMission
             if switch_1 == eEtatPhaseMission_DebutMission then
                 _returnValue = eRC_DebutMission
+                _continue = false
+            elseif switch_1 == eEtatPhaseMission_PreparationMission then
+                _returnValue = eRC_PreparationMission
                 _continue = false
             elseif switch_1 == eEtatPhaseMission_RejointUnite then
                 _returnValue = eRC_RejointUnite
@@ -140,8 +143,12 @@ includedFiles["sources/common/Fonctions - RC.bms"] = true
             elseif switch_1 == eEtatPhaseMission_None then
                 _returnValue = eNbr
                 _continue = false
+            elseif switch_1 == eEtatPhaseMission_AttentePoursuivre then
+                _returnValue = eRC_AttenteOrdrePoursuivre
+                _continue = false
             
             else
+                DEC_Trace( "! **** Manque_RC --> " .. EnumToString( eSituationMission, E_EtatPion_PhaseMission ) )
                 _returnValue = eNbr
                         end
         end

@@ -1,5 +1,5 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/automates/Actions.bms"] = true
 
-include "Appui/Trans/Automates/Actions/Actions - Ordre.bms"
+include "Common/Automates/Actions - Ordre.bms"
 

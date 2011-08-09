@@ -11,19 +11,23 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_AgentFunctions.h"
+#include "DEC_AutomateFunctions.h"
+#include "DEC_GeometryFunctions.h"
+#include "DotationComputer_ABC.h"
+#include "OnComponentComputer_ABC.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
-#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -41,13 +45,9 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "OnComponentComputer_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "DEC_AutomateFunctions.h"
-#include "DEC_GeometryFunctions.h"
-#include "DotationComputer_ABC.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "protocol/ClientSenders.h"
 
@@ -937,6 +937,15 @@ float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent
 {
     const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
     return roleDotations.GetIlluminatingRange( );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsImmobilized
+// Created: LDC 2011-08-04
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsImmobilized( DEC_Decision_ABC* pAgent )
+{
+    return pAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().IsImmobilized();
 }
 
 // -----------------------------------------------------------------------------

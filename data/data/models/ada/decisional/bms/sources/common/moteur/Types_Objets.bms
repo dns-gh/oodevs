@@ -59,4 +59,6 @@ eTypeObjectDirtyBomb = 43
 eTypeObjectHospital = 44
 eTypeObjectWeaponCache = 45
 eTypeObjectLeaflet = 46
+eTypeObjectBouchonMinesParDispersion = 47
+eTypeObjectBrechageObstacle = 48
 

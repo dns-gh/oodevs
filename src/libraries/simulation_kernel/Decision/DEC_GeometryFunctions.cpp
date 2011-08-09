@@ -232,6 +232,15 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndRotateDirection( 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::CompareLocalisations
+// Created: LDC 2011-08-08
+// -----------------------------------------------------------------------------
+bool DEC_GeometryFunctions::CompareLocalisations( TER_Localisation* pLocalisation1, TER_Localisation* pLocalisation2 )
+{
+    return *pLocalisation1 == *pLocalisation2;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau
 /**
 *   Calcule les points dans une localisation pour un nombre de pions donné, répartis
@@ -363,6 +372,20 @@ double DEC_GeometryFunctions::Distance( const MT_Vector2D* p1, const MT_Vector2D
     if( !p1 || !p2 )
         throw std::runtime_error( "Computing distance with null point" );
     return MIL_Tools::ConvertSimToMeter( p1->Distance( *p2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::Distance3D
+// Created: LDC 2011-08-05
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::Distance3D( const MT_Vector2D* p1, float altitude1, const MT_Vector2D* p2, float altitude2 )
+{
+    if( !p1 || !p2 )
+        throw std::runtime_error( "Computing distance with null point" );
+
+    MT_Vector3D p3d1( p1->rX_, p1->rY_, altitude1 );
+    MT_Vector3D p3d2( p2->rX_, p2->rY_, altitude2 );
+    return MIL_Tools::ConvertSimToMeter( p3d1.Distance( p3d2 ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -904,12 +927,12 @@ bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& lo
 // Name: DEC_GeometryFunctions::SplitLocalisation
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
-unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, std::vector< boost::shared_ptr< TER_Localisation > >& result )
+unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, const MT_Vector2D* splitDirection, std::vector< boost::shared_ptr< TER_Localisation > >& result )
 {
     assert( nNbrParts > 0 );
 
     result.clear();
-    localisation.Split( nNbrParts, result );
+    localisation.Split( nNbrParts, result, splitDirection );
 
     if( result.size() != nNbrParts )
         return eWarning_DecoupageIncomplet;

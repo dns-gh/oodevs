@@ -24,8 +24,9 @@ namespace client
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
-class PHY_ComposantePion;
 class MIL_ToxicEffectManipulator;
+class MT_Vector2D;
+class PHY_ComposantePion;
 
 namespace transport
 {
@@ -113,7 +114,7 @@ public:
 
     int  Load           ();
     void LoadSuspended  ();
-    int  Unload         ();
+    int  Unload         ( MT_Vector2D* position );
     void UnloadSuspended();
     //@}
 
@@ -155,7 +156,7 @@ private:
     void ComputeLoadingTime( double& rLoadingTime, double& rWeightToLoad ) const;
     double ComputeUnloadingTime() const;
     double DoLoad( const double rWeightToLoad );
-    double DoUnload( const double rWeightToUnload );
+    double DoUnload( const double rWeightToUnload, MT_Vector2D* position );
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ );

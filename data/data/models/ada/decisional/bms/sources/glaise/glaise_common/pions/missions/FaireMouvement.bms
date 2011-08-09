@@ -168,9 +168,10 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
                     self.ePhase = eProgresser
                     _continue = false
                 elseif switch_1 == eProgresser then
-                    if( myself.pionEnEscorte_ ~= nil ) then
+                    local pionEnEscorte = F_Pion_GetpionEnEscorte( myself )
+                    if( pionEnEscorte ~= nil ) then
                         do
-                            if( not self.bAttenteEffectuee and DEC_Geometrie_Distance( DEC_Agent_Position(), myself.pionEnEscorte_:DEC_Agent_Position() ) > 1000 ) then
+                            if( not self.bAttenteEffectuee and DEC_Geometrie_Distance( DEC_Agent_Position(), pionEnEscorte:DEC_Agent_Position() ) > 1000 ) then
                                 do
                                     Activate( self.activations.ACT_Info_Trace, 1, { "***--- L'UNITE EST ESCORTEE ---***", } )
                                     Activate( self.activations.ACT_Info_Trace, 1, { "Attente de l'escorte", } )
@@ -180,7 +181,7 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
                             end
 
                             self.bAttenteEffectuee = true
-                            Activate( self.activations.BEH_Dep_Suivre, 1, { myself.pionEnEscorte_, 800, } )
+                            Activate( self.activations.BEH_Dep_Suivre, 1, { pionEnEscorte, 800, } )
                                                         do return end
 
                         end
@@ -192,7 +193,7 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                myself.itMvt_ = 0
+                                F_Pion_SetitMvt( myself, nil )
                                 self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionAvecEscortePossibleSur" )
                                                                 self:SendFeedback( eActionEffectuee )
                                 Halt( self )
@@ -213,7 +214,7 @@ self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
     end,
 
     destroy = function( self )
-                myself.itMvt_ = 0
+                F_Pion_SetitMvt( myself, nil )
         self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionAvecEscortePossibleSur" )
     end,
 

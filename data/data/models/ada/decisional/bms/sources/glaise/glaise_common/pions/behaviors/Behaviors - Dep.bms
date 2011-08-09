@@ -534,7 +534,7 @@ node "BEH_Dep_ReagirFaceAObstacle"
         --[[// -----------------------------------------------------------------------------
 ]]--[[// 1) Demander au moteur les prochains objets sur itineraire
 ]]--[[// -----------------------------------------------------------------------------
-]]self.bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+]]self.bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectBouchonMinesParDispersion ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
         self.repObjet = self.bObjetProcheSurItineraire.second.first
         self.rDist = self.bObjetProcheSurItineraire.second.second
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire.first
@@ -880,7 +880,7 @@ node "BEH_Dep_Suivre_Elastique"
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// En parallèle, surveiller que l'on est pas près de cette unite.
 ]]--[[// Dans ce cas on est prêt pour l'intervention
-]]--[[//-----------------------------------------------------------------------------                
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Obstacles
 ]]--[[//-----------------------------------------------------------------------------

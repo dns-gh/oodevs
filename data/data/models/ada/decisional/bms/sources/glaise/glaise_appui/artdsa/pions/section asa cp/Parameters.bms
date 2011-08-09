@@ -23,7 +23,7 @@ end
 ]]--[[// facteur d'élongation de l'unité déployée
 ]]--[[// =============================================================================
 ]]function M_POLY_DOCTRINE_ELONGATION_DEPLOIEMENT()
-    return 1.4
+    return 1.0
 end
 
 

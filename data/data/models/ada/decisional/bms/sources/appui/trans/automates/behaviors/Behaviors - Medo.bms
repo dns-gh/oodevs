@@ -3,9 +3,6 @@ includedFiles["sources/appui/trans/automates/behaviors/Behaviors - Medo.bms"] = 
 
 local emptyTable = emptyTable
 
-include "bit.lua"
-
-
 include "Appui/Trans/Automates/Actions/Actions - Medo.bms"
 
 
@@ -15,58 +12,13 @@ include "Appui/Trans/Automates/Actions/Actions - Medo.bms"
 ]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]node "BEH_Medo_Automate_ControleCreationMission"
-{
-    feedbacks = { { { "done_BEH_Medo_Automate_ControleCreationMission" }, "BEH_Medo_Automate_ControleCreationMission" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ControleCreationMission, {value} ) end,
-    activations =
-    {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.rN_Pion = self.params[1]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        self.eAction_EnCours = self.eAction_EnCours or eActionEnCours
-        self.eAction_NOK = self.eAction_NOK or eActionEnCours
-        self.eAction_OK = self.eAction_OK or eActionEnCours
-        if( self.eAction_NOK == eActionHalt ) then
-            self:SendFeedback( eActionImpossible )
-            do return end
-        end
-
-        if( ( self.eAction_OK == eActionEffectuee ) or ( self._namedParams.rN_Pion == 0 ) ) then
-            self:SendFeedback( eActionEffectuee )
-            Halt( self )
-            do return end
-        end
-
-        Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, 1, emptyTable )
-self.done_ACT_Mission_Automate_ControleCreation_EnCours = function( self, _, v ) self.eAction_EnCours = v[1] end
-        Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, self._namedParams.rN_Pion, emptyTable )
-self.done_ACT_Mission_Automate_ControleCreation_OK = function( self, _, v ) self.eAction_OK = v[1] end
-        Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
-self.done_ACT_Mission_Automate_ControleCreation_NOK = function( self, _, v ) self.eAction_NOK = v[1] end
-    end,
-
---[[//-----------------------------------------------------------------------------
-]]--[[// TRANS
-]]--[[//-----------------------------------------------------------------------------
 ]]--[[// ****************************************************************************
 ]]--[[// BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe
 ]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// ****************************************************************************
-]]}
-
-node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
+]]node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
 {
     feedbacks = { { { "done_BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe" }, "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe, {value} ) end,
@@ -96,63 +48,6 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
             end
         end
 
-    end,
-
---[[// *****************************************************************************
-]]--[[// BEH_Medo_Mission_Automate_AssignerFaireMouvementSurItA
-]]--[[// 
-]]--[[// Commentaires: Pour suivre un itineraire
-]]--[[//
-]]--[[// *****************************************************************************
-]]}
-
-node "BEH_Mission_Automate_AssignerFaireMouvementSurItA"
-{
-    feedbacks = { { { "done_BEH_Mission_Automate_AssignerFaireMouvementSurItA" }, "BEH_Mission_Automate_AssignerFaireMouvementSurItA" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_AssignerFaireMouvementSurItA, {value} ) end,
-    activations =
-    {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
-        { "ACT_Mission_Automate_AssignerFaireMouvementSurItA", { "done_ACT_Mission_Automate_AssignerFaireMouvementSurItA" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.ePhase = self.params[1]
-        self._namedParams.pion = self.params[2]
-        self._namedParams.itineraire = self.params[3]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        do
-        end
-
-        self.eActionCreation = self.eActionCreation or eActionEnCours
-        local rForce = 1 / GetActivity()
-         do
-            local _continue = true
-            local switch_1 = self.eActionCreation
-                if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
-                    _continue = false
-                elseif switch_1 == eActionHalt
-                or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
-                                        do return end
-
-                                end
-                if switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
-                                        do return end
-
-                                end
-            end
-
-        Activate( self.activations.ACT_Mission_Automate_AssignerFaireMouvementSurItA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.itineraire, } )
-self.done_ACT_Mission_Automate_AssignerFaireMouvementSurItA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -209,133 +104,9 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA"
 self.done_ACT_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
---[[// *****************************************************************************
-]]--[[// BEH_Medo_Mission_Automate_AssignerFaireMouvementA
-]]--[[// 
-]]--[[// Commentaires: Pour aller vers un point
-]]--[[//
-]]--[[// *****************************************************************************
-]]}
-
-node "BEH_Mission_Automate_AssignerFaireMouvementA"
-{
-    feedbacks = { { { "done_BEH_Mission_Automate_AssignerFaireMouvementA" }, "BEH_Mission_Automate_AssignerFaireMouvementA" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_AssignerFaireMouvementA, {value} ) end,
-    activations =
-    {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
-        { "ACT_Mission_Automate_AssignerFaireMouvementA", { "done_ACT_Mission_Automate_AssignerFaireMouvementA" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.ePhase = self.params[1]
-        self._namedParams.pion = self.params[2]
-        self._namedParams.dest = self.params[3]
-        self._namedParams.eEtatEchelon = self.params[4]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        self.eActionCreation = self.eActionCreation or eActionEnCours
-        local rForce = 1 / GetActivity()
-         do
-            local _continue = true
-            local switch_1 = self.eActionCreation
-                if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
-                    _continue = false
-                elseif switch_1 == eActionHalt
-                or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
-                                        do return end
-
-                                end
-                if switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
-                                        do return end
-
-                                end
-            end
-
-        Activate( self.activations.ACT_Mission_Automate_AssignerFaireMouvementA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.dest, self._namedParams.eEtatEchelon, } )
-self.done_ACT_Mission_Automate_AssignerFaireMouvementA = function( self, _, v ) self.eActionCreation = v[1] end
-    end,
-
---[[// *****************************************************************************
-]]--[[// BEH_Mission_Automate_AssignerSeFaireTransporterA
-]]--[[// 
-]]--[[// Commentaires: 
-]]--[[//
-]]--[[// *****************************************************************************
-]]}
-
-node "BEH_Mission_Automate_AssignerSeFaireTransporterA"
-{
-    feedbacks = { { { "done_BEH_Mission_Automate_AssignerSeFaireTransporterA" }, "BEH_Mission_Automate_AssignerSeFaireTransporterA" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_AssignerSeFaireTransporterA, {value} ) end,
-    activations =
-    {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
-        { "ACT_Mission_Automate_AssignerSeFaireTransporterA", { "done_ACT_Mission_Automate_AssignerSeFaireTransporterA" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.ePhase = self.params[1]
-        self._namedParams.pion = self.params[2]
-        self._namedParams.ptHeli = self.params[3]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        self.eActionCreation = self.eActionCreation or eActionEnCours
-        local rForce = 1 / GetActivity()
-         do
-            local _continue = true
-            local switch_1 = self.eActionCreation
-                if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
-                    _continue = false
-                elseif switch_1 == eActionHalt
-                or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
-                                        do return end
-
-                                end
-                if switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
-                                        do return end
-
-                                end
-            end
-
-        Activate( self.activations.ACT_Mission_Automate_AssignerSeFaireTransporterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.ptHeli, } )
-self.done_ACT_Mission_Automate_AssignerSeFaireTransporterA = function( self, _, v ) self.eActionCreation = v[1] end
-    end,
-
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ControleCreationMission, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ControleCreationMission, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ControleCreationMission, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementA, "ACT_Mission_Automate_AssignerFaireMouvementA", nodes.ACT_Mission_Automate_AssignerFaireMouvementA }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementSurItA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementSurItA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementSurItA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementSurItA, "ACT_Mission_Automate_AssignerFaireMouvementSurItA", nodes.ACT_Mission_Automate_AssignerFaireMouvementSurItA }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerSeFaireTransporterA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerSeFaireTransporterA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerSeFaireTransporterA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerSeFaireTransporterA, "ACT_Mission_Automate_AssignerSeFaireTransporterA", nodes.ACT_Mission_Automate_AssignerSeFaireTransporterA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }

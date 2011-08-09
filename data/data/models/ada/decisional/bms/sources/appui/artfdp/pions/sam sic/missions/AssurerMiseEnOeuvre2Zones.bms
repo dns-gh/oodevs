@@ -12,11 +12,6 @@ local emptyTable = emptyTable
  *
  */]]--[[// Created: JCR 03-02-13
 ]]--[[// *****************************************************************************
-]]--[[//------------------------------------------------------------------------------
-]]--[[//Rejoins une position et cree un site de deploiement
-]]--[[//------------------------------------------------------------------------------
-]]
---[[//behavior MIS_Pion_ASS_AssurerMiseEnOeuvre( T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones mission, id blurp )
 ]]
 node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
 {
@@ -25,9 +20,8 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
     activations =
     {
         { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
-        { "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC", { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC" } },
+        { "BEH_Pion_ASS_GererOrdre_AppliquerFeux_Mortier", { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux_Mortier" } },
         { "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", { "done_BEH_Info_Pion_ASS_GererDisponibiliteAuTir" } },
-        { "ACT_Pion_ASS_DebarquerLanceur", { "done_ACT_Pion_ASS_DebarquerLanceur" } },
         { "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", { "done_BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" } },
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
     },
@@ -39,17 +33,15 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
 
     activate = function( self )
         local Activate = Activate
-                DEC_Trace( "DEDANS" )
-        self.eAction = self.eAction or eActionEnCours
-        self.ePhase = self.ePhase or eMettreEnOeuvre
+                self.ePhase = self.ePhase or eMettreEnOeuvre
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Second )
                 --[[// Prise en charge de l'ordre d'application des feux
-]]F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Second )
-                --[[//---------------------------------------------------------------------
-]]DEC_Trace( "Reception mission 'AssurerMiseEnOeuvre'" )
+]]--[[//---------------------------------------------------------------------
+]]DEC_Trace( "Reception mission 'AssurerMiseEnOeuvre 2 zones'" )
             end
 --[[// Gere la disponibilite aux feux
 ]]        end
@@ -60,22 +52,20 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
-                self.eAction = eActionEnCours
                 self.eEtatOrdreFinMission = eActionEnCours
             end
 --[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, 1, { true, self._namedParams.mission.zoneImplantation2_, } )
-        Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
+        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux_Mortier, 1, { false, } )
+        --[[// Mission
+]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
          do
             local _continue = true
---[[// Mission
-]]--[[//---------------------------------------------------------------------
+--[[//---------------------------------------------------------------------
 ]]            local switch_1 = self.ePhase
                 if switch_1 == eMettreEnOeuvre then
-                    Activate( self.activations.ACT_Pion_ASS_DebarquerLanceur, 1, emptyTable )
-                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_SAM(), } )
+                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_TIR_SAM(), } )
                     _continue = false
                 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -101,8 +91,7 @@ eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones = { "mission" }
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC", nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Pion_ASS_GererOrdre_AppliquerFeux_Mortier", nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_Mortier }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", nodes.BEH_Info_Pion_ASS_GererDisponibiliteAuTir }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "ACT_Pion_ASS_DebarquerLanceur", nodes.ACT_Pion_ASS_DebarquerLanceur }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

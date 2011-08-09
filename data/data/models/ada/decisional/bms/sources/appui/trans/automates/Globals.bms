@@ -3,5 +3,3 @@ includedFiles["sources/appui/trans/automates/Globals.bms"] = true
 
 include "Common/Automates/Globals.bms"
 
-include "Appui/Trans/Automates/Fonctions.bms"
-

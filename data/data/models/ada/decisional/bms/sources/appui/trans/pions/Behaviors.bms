@@ -13,8 +13,7 @@ local emptyTable = emptyTable
 ]]--[[// $Workfile: Behaviors.hal $
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]
---[[// Paramètres généraux
+]]--[[// Paramètres généraux
 ]]--[[// -------------------
 ]]use_priority = no
 
@@ -28,17 +27,25 @@ silenceradio = 1,
 installation = 1,
 etat_OrdreCoordination = 1,
 deplacement = 1,
+tir = 1,
 debarquement = 1,
+vitesse = 1,
+ennemi = 1,
+reconnaissance = 1,
 observation = 1,
 etat_Dec = 1,
 etat_Lima = 1,
 etat_Destruction = 1,
+objectifEsquive = 1,
 etat_Mission = 1,
+controlePopulation = 1,
+etat_ROE = 1,
 }
 
 
---[[// actions des pions trans
-]]include "Appui/Trans/Pions/Actions.bms"
+
+--[[// include common en remplacement
+]]include "Common/Pions/Behaviors.bms"
 
 
 --[[// Embarquement (apres heliportage)
@@ -48,19 +55,19 @@ etat_Mission = 1,
 --[[// comportements spécifiques Trans
 ]]include "Appui/Trans/Pions/Behaviors/Behaviors - Dep.bms"
 
-include "Appui/Trans/Pions/Behaviors/Behaviors - Maj.bms"
 
-include "Appui/Trans/Pions/Behaviors/Behaviors - Info.bms"
-
-include "Appui/Trans/Pions/Behaviors/Behaviors - Ordre.bms"
-
-
---[[// mission trans
+--[[//Missions Trans
 ]]include "Appui/Trans/Pions/Missions/EtablirGererLiaison.bms"
 
 include "Appui/Trans/Pions/Missions/SeFaireTransporter.bms"
 
 include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
+
+include "Appui/Trans/Pions/Missions/Franchir.bms"
+
+
+--[[//Mission Log utilisée pour les Trans
+]]include "Appui/Trans/Pions/Missions/Basculer.bms"
 
 
 --[[// *****************************************************************************
@@ -75,6 +82,7 @@ include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
     {
         { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
         { "BEH_Info_Pion_RendreCompte", { "done_BEH_Info_Pion_RendreCompte" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
         { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
     },
 
@@ -88,9 +96,9 @@ include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
         Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[// RC par défaut
 ]]
         Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// gestion NBC
-]]--[[//behavior BEH_Nbc();
-]]--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )--[[// Gestion NBC
+]]
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Embarquement apres Heliportage
 ]]--[[// ------------------------------------------------------------------------
 ]]
@@ -101,4 +109,5 @@ include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatDefaut", nodes.BEH_MAJ_EtatDefaut }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Info_Pion_RendreCompte", nodes.BEH_Info_Pion_RendreCompte }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }

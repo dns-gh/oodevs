@@ -515,7 +515,7 @@ do
 
         --[[//-----------------------------------------------------------------------------		
 ]]if( ModuleBegins() ) then
-            DEC_Trace( "$$ " .. DEC_GetSzName( self._namedParams.pPion ) .. " --> Mission Suivre " .. self._namedParams.pionASuivre:GetszName_() .. " $$" )
+            DEC_Trace( "$$ " .. DEC_GetSzName( self._namedParams.pPion ) .. " --> Mission Suivre " .. DEC_GetSzName( self._namedParams.pionASuivre ) .. " $$" )
         else
             self:SendFeedback( eActionEffectuee )
             do return end

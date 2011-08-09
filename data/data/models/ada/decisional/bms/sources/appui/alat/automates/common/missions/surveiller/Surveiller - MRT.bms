@@ -80,7 +80,7 @@ local emptyTable = emptyTable
 ]]--[[//des pions.
 ]]                end
 
-                self.localisationsASurveiller = S_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( self.listeSurveiller ) )
+                self.localisationsASurveiller = S_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( self.listeSurveiller ), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                 if( DIA_IsListEmpty( self.localisationsASurveiller ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )

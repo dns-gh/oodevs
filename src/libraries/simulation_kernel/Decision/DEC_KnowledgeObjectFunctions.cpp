@@ -267,6 +267,15 @@ int DEC_KnowledgeObjectFunctions::IsBypassed( boost::shared_ptr< DEC_Knowledge_O
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsBreached
+// Created: LDC 2011-08-05
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::IsBreached( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return false; // $$$$ LDC: TODO depending on how we re-code breach. Current implementation (scipio v1.11) doesn't work very well.
+}
+
+// -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_KnowledgeObjectFunctions::GetLocalisation
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
@@ -338,7 +347,7 @@ bool DEC_KnowledgeObjectFunctions::IsRecon( boost::shared_ptr< DEC_Knowledge_Obj
 // Name: DEC_KnowledgeObjectFunctions::IsAnEnemy
 // Created: MGD 2010-01-26
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         return static_cast< int >( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
@@ -349,7 +358,7 @@ int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Agent_ABC& callerAgent, b
 // Name: DEC_KnowledgeObjectFunctions::IsAFriend
 // Created: MGD 2010-01-26
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         return static_cast< int >( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );

@@ -224,7 +224,7 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
                 --[[//----------------------------------------------------------------------
 ]]--[[// Decoupage de la zone A surveiller
 ]]--[[//----------------------------------------------------------------------
-]]self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( self.mission.area_, #( self._namedParams.lstPions ), self.eCodeLoc )
+]]self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( self.mission.area_, #( self._namedParams.lstPions ), DEC_GetDirectionEnnemi( self.mission ), self.eCodeLoc )
                 self.eCodeLoc = self.lstLocalisations.second
                 self.lstLocalisations = self.lstLocalisations.first
                  do

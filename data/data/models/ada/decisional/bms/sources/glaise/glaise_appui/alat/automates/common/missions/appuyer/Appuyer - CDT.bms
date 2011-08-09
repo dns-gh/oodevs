@@ -140,7 +140,7 @@ do
                     end
 
                     if( not DIA_IsListEmpty( self.listeDetruire ) ) then
-                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, DEC_GetDirectionEnnemi( self._namedParams.mission ), } )
                     end
 
                     if( not DIA_IsListEmpty( self.listeAppuyer ) ) then

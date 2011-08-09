@@ -49,9 +49,47 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
         self.eAction = self.eAction or eActionEnCours
         self.eActionReco = self.eActionReco or eActionEnCours
         self.ptRepli = self.ptRepli or nil
+        self.ptDestination = self.ptDestination or nil
+        self.localisation1 = self.localisation1 or nil
+        self.localisation2 = self.localisation2 or nil
         if( ModuleBegins() ) then
             do
-                self.ptRepli = S_Geometrie_PtInvDirDangereuse( self.mission.positionDeploiement_, DEC_GetDirectionDanger( self.mission ), 500 )
+                 do
+                    local _continue = true
+--[[// TODO ahc change
+]]                    local switch_1 = self._namedParams.eType_ZoneImplantation
+                        if switch_1 == eTypeObjectZoneImplantationCanon
+                        or switch_1 == eTypeObjectZoneImplantationMortier then
+                                                    local pionAss = myself
+                            S_Geometrie_CreerPositionTir_Canon( self.mission.zoneDeploiement_, 750, self.mission.dirDangereuse_, self.localisation1, self.localisation2, pionAss:GetptSauvegarde_() )
+                            if( self.localisation1 == nil or self.localisation2 == nil or pionAss:GetptSauvegarde_() == nil ) then
+                                do
+                                    DEC_Trace( "Calcul positions implatation impossible" )
+                                                                        do
+                                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                                            DEC_RC( eRC_MissionImpossible )
+                                        else
+                                            DEC_Message( eRC_MissionImpossible )
+                                        end
+
+                                    end
+
+                                                                        self:SendFeedback( eActionImpossible )
+                                    Halt( self )
+                                    do return end
+
+                                end
+                            end
+
+                            self.ptDestination = S_Geometrie_BarycentreZone( self.localisation1 )
+                            _continue = false
+                        
+                        else
+                            self.ptDestination = S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
+                        end
+                    end
+
+                self.ptRepli = S_Geometrie_PtInvDirDangereuse( self.ptDestination, self.mission.dirDangereuse_, 500 )
             end
         end
 
@@ -59,7 +97,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
             local _continue = true
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
-]]--[[//-----------------------------------------------------------------------------	        
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[// Rejoindre la position du site
 ]]--[[// ------------------------------------------------------------------------
@@ -101,12 +139,202 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.positionDeploiement_, 800 ) ) then
-                        Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, { self.mission.positionDeploiement_, } )
+                    if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptDestination, 800 ) ) then
+                        Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, { self.ptDestination, } )
 self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, _, v ) self.eActionReco = v[1] end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.positionDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDestination, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
+                    _continue = false
+                elseif switch_1 == eDeployer then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                            self.ePhase = eFinMission
+                                                        do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.mission.dirDangereuse_, } )
+                     do
+                        local _continue = true
+                        local switch_2 = self._namedParams.eType_ZoneImplantation
+                            if switch_2 == eTypeObjectZoneImplantationCanon then
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
+                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
+                                _continue = false
+                            elseif switch_2 == eTypeObjectZoneImplantationLRM then
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, { self.mission.zoneDeploiement_, self._namedParams.eType_ZoneImplantation, } )
+self.done_BEH_Pion_ASS_Installer_ZoneImplantationLRM = function( self, _, v ) self.eAction = v[1] end
+                                _continue = false
+                            elseif switch_2 == eTypeObjectZoneImplantationMortier then
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
+                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
+                                _continue = false
+                            
+                            else
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationSimple, 1.1, { self.ptDestination, self._namedParams.eType_ZoneImplantation, } )
+                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
+                                                        end
+                        end
+
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self:SendFeedback( eActionEffectuee )
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                                        self:SendFeedback( eActionEffectuee )
+                    do return end
+
+                                end
+            end
+
+    end,
+
+--[[//LLS le 02/09/2009 pour artillerie reco + tir
+]]}
+
+node "BEH_Pion_ASS_ReconnaitreZoneDeploiement"
+{
+    feedbacks = { { { "done_BEH_Pion_ASS_ReconnaitreZoneDeploiement" }, "BEH_Pion_ASS_ReconnaitreZoneDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_ReconnaitreZoneDeploiement, {value} ) end,
+    activations =
+    {
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_RC_PreparationMission", { "done_ACT_RC_PreparationMission" } },
+        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", { "done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco", { "done_BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco" } },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationLRM", { "done_BEH_Pion_ASS_Installer_ZoneImplantationLRM" } },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationSimple", { "done_BEH_Pion_ASS_Installer_ZoneImplantationSimple" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eType_ZoneImplantation = self.params[1]
+        self._namedParams.rDelaiPreparation = self.params[2]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionReco = self.eActionReco or eActionEnCours
+        self.ptRepli = self.ptRepli or nil
+        self.ptDestination = self.ptDestination or nil
+        self.localisation1 = self.localisation1 or nil
+        self.localisation2 = self.localisation2 or nil
+        if( ModuleBegins() ) then
+            do
+                 do
+                    local _continue = true
+--[[// TODO ahc change
+]]                    local switch_1 = self._namedParams.eType_ZoneImplantation
+                        if switch_1 == eTypeObjectZoneImplantationCanon
+                        or switch_1 == eTypeObjectZoneImplantationMortier then
+                                                    local pionAss = myself
+                            S_Geometrie_CreerPositionTir_Canon( self.mission.zoneDeploiement_, 750, self.mission.dirDangereuse_, self.localisation1, self.localisation2, pionAss:GetptSauvegarde_() )
+                            if( self.localisation1 == nil or self.localisation2 == nil or pionAss:GetptSauvegarde_() == nil ) then
+                                do
+                                    DEC_Trace( "Calcul positions implatation impossible" )
+                                                                        do
+                                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                                            DEC_RC( eRC_MissionImpossible )
+                                        else
+                                            DEC_Message( eRC_MissionImpossible )
+                                        end
+
+                                    end
+
+                                                                        self:SendFeedback( eActionImpossible )
+                                    Halt( self )
+                                    do return end
+
+                                end
+                            end
+
+                            self.ptDestination = S_Geometrie_BarycentreZone( self.localisation1 )
+                            _continue = false
+                        
+                        else
+                            self.ptDestination = S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
+                        end
+                    end
+
+                self.ptRepli = S_Geometrie_PtInvDirDangereuse( self.ptDestination, self.mission.dirDangereuse_, 500 )
+            end
+        end
+
+         do
+            local _continue = true
+--[[//-----------------------------------------------------------------------------
+]]--[[// Preparation de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Rejoindre la position du site
+]]--[[// ------------------------------------------------------------------------
+]]--[[// On fait une reconnaissance de la position lorsque l'on arrive
+]]--[[// a proximite
+]]--[[// On s'oriente vers la direction dangereuse
+]]--[[// ------------------------------------------------------------------------
+]]--[[//  Fin de mission --> rejoindre plot munition
+]]--[[// ------------------------------------------------------------------------
+]]            local switch_1 = self.ePhase
+                if switch_1 == ePreparerMission then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
+                                self.ePhase = eRejoindre
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.2, { eEtatPhaseMission_PreparationMission, } )
+                    Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelaiPreparation, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
+                    Activate( self.activations.ACT_RC_PreparationMission, 1, { self._namedParams.rDelaiPreparation, } )
+                    _continue = false
+                elseif switch_1 == eRejoindre then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                            Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                            self.ePhase = eDeployer
+                                                        do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptDestination, 800 ) ) then
+                        Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, { self.ptDestination, } )
+self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, _, v ) self.eActionReco = v[1] end
+                    end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDestination, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 elseif switch_1 == eDeployer then
@@ -125,17 +353,22 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                         local _continue = true
                         local switch_2 = self._namedParams.eType_ZoneImplantation
                             if switch_2 == eTypeObjectZoneImplantationCanon then
-                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                 _continue = false
                             elseif switch_2 == eTypeObjectZoneImplantationLRM then
-                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, { self.mission.zoneDeploiement_, self._namedParams.eType_ZoneImplantation, } )
 self.done_BEH_Pion_ASS_Installer_ZoneImplantationLRM = function( self, _, v ) self.eAction = v[1] end
+                                _continue = false
+                            elseif switch_2 == eTypeObjectZoneImplantationMortier then
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
+                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                 _continue = false
                             
                             else
-                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationSimple, 1.1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationSimple, 1.1, { self.ptDestination, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                                         end
@@ -164,9 +397,9 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
 
 --[[// ============================================================================
 ]]--[[// $Created : JCR : 17/03/2005 18:23
-]]--[[// Installe les zone de deploiement 
-]]--[[//		- Mortier
-]]--[[//		- COBRA
+]]--[[// Installe les zone de deploiement
+]]--[[//        - Mortier
+]]--[[//        - COBRA
 ]]--[[// ============================================================================
 ]]}
 
@@ -236,60 +469,25 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
 
     create = function( self )
         self._namedParams = {}
-        self._namedParams.ptInstallation = self.params[1]
-        self._namedParams.eType_ZoneImplantation = self.params[2]
+        self._namedParams.locInstallation_1 = self.params[1]
+        self._namedParams.locInstallation_2 = self.params[2]
+        self._namedParams.eType_ZoneImplantation = self.params[3]
     end,
 
     activate = function( self )
         local Activate = Activate
-        self.locInstallation_1 = self.locInstallation_1 or nil
-        self.locInstallation_2 = self.locInstallation_2 or nil
         self.eActionObj1 = self.eActionObj1 or eActionEnCours
         self.eActionObj2 = self.eActionObj2 or eActionEnCours
-        if( ModuleBegins() ) then
-            do
-                local rFloat = 750
-                local lstObstacles = S_Obj_ListeObstacle( self._namedParams.ptInstallation, rFloat + 100 )
-                local repObj = nil
-                local dirPos = nil
-                local ptPos = nil
-                local mission = DEC_GetMission( myself )
-                --[[// Point d'installation 1		
-]]--[[// ---------------------------------------------------------------------
-]]self.locInstallation_1 = nil
-                local directionDanger = DEC_GetDirectionDanger( mission )
-                dirPos = DEC_Geometrie_CreerDirectionPerpendiculaire( directionDanger, true )
-                ptPos = DEC_Geometrie_PositionTranslateDir( self._namedParams.ptInstallation, dirPos, rFloat )
-                --[[// Chercher un position valide ?
-]]repObj = S_Obj_ObtenirObjetProcheDePosition( ptPos, lstObstacles, rFloat + 100 )
-                if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
-                    self.locInstallation_1 = DEC_Geometrie_ConvertirPointEnLocalisation( ptPos )
-                end
-
-                --[[// Point d'installation 2
-]]--[[// ---------------------------------------------------------------------
-]]self.locInstallation_2 = nil
-                dirPos = DEC_Geometrie_CreerDirectionPerpendiculaire( directionDanger, false )
-                ptPos = DEC_Geometrie_PositionTranslateDir( self._namedParams.ptInstallation, dirPos, rFloat )
-                --[[// Chercher un position valide ?
-]]repObj = S_Obj_ObtenirObjetProcheDePosition( ptPos, lstObstacles, rFloat + 100 )
-                if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
-                    self.locInstallation_2 = DEC_Geometrie_ConvertirPointEnLocalisation( ptPos )
-                end
-
-            end
-        end
-
         if( self.eActionObj1 ~= eActionEnCours and self.eActionObj2 ~= eActionEnCours ) then
             self:SendFeedback( eActionEffectuee )
             do return end
         end
 
-        if( self.locInstallation_1 == nil ) then
+        if( self._namedParams.locInstallation_1 == nil ) then
             self.eActionObj1 = eActionImpossible
         end
 
-        if( self.locInstallation_2 == nil ) then
+        if( self._namedParams.locInstallation_2 == nil ) then
             self.eActionObj2 = eActionImpossible
         end
 
@@ -297,13 +495,74 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
         if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then
             do
                 if( self.eActionObj1 == eActionEnCours ) then
-                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self.locInstallation_1, } )
+                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self._namedParams.locInstallation_1, } )
 self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionObj1 = v[1] end
                 end
 
                 if( self.eActionObj2 == eActionEnCours ) then
-                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self.locInstallation_2, } )
+                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self._namedParams.locInstallation_2, } )
 self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionObj2 = v[1] end
+                end
+
+            end
+        else
+            Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
+        end
+
+    end,
+
+--[[//LLS 02/09/2009 pour automate artillerie à la fois reco + tir
+]]--[[// ============================================================================
+]]--[[// $Created : JCR : 17/03/2005 18:23
+]]--[[// Installe les zone de deploiement Canon
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco"
+{
+    feedbacks = { { { "done_BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco" }, "BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco, {value} ) end,
+    activations =
+    {
+        { "ACT_Obj_Pion_ASS_RealiserUnObjet", { "done_ACT_Obj_Pion_ASS_RealiserUnObjet" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locInstallation_1 = self.params[1]
+        self._namedParams.locInstallation_2 = self.params[2]
+        self._namedParams.eType_ZoneImplantation = self.params[3]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.eActionObj1 = self.eActionObj1 or eActionEnCours
+        self.eActionObj2 = self.eActionObj2 or eActionEnCours
+        if( self.eActionObj1 ~= eActionEnCours and self.eActionObj2 ~= eActionEnCours ) then
+            self:SendFeedback( eActionEffectuee )
+            do return end
+        end
+
+        if( self._namedParams.locInstallation_1 == nil ) then
+            self.eActionObj1 = eActionImpossible
+        end
+
+        if( self._namedParams.locInstallation_2 == nil ) then
+            self.eActionObj2 = eActionImpossible
+        end
+
+        local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+        if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then
+            do
+                if( self.eActionObj1 == eActionEnCours ) then
+                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserUnObjet, 1, { self._namedParams.eType_ZoneImplantation, self._namedParams.locInstallation_1, myself, } )
+self.done_ACT_Obj_Pion_ASS_RealiserUnObjet = function( self, _, v ) self.eActionObj1 = v[1] end
+                end
+
+                if( self.eActionObj2 == eActionEnCours ) then
+                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserUnObjet, 1, { self._namedParams.eType_ZoneImplantation, self._namedParams.locInstallation_2, myself, } )
+self.done_ACT_Obj_Pion_ASS_RealiserUnObjet = function( self, _, v ) self.eActionObj2 = v[1] end
                 end
 
             end
@@ -330,7 +589,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
 
     create = function( self )
         self._namedParams = {}
-        self._namedParams.ptInstallation = self.params[1]
+        self._namedParams.zoneInstallation = self.params[1]
         self._namedParams.eType_ZoneImplantation = self.params[2]
     end,
 
@@ -342,7 +601,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
         self.rIt = self.rIt or 0
         if( ModuleBegins() ) then
             do
-                self.lstPositions = S_Geometrie_CreerPositionTir_LRM( self._namedParams.ptInstallation, 750 )
+                self.lstPositions = S_Geometrie_CreerPositionTir_LRM( self._namedParams.zoneInstallation, 750 )
                 --[[// Recupere la premiere position d'installation
 ]]if( DEC_ListePoints_Size( self.lstPositions ) == 0 ) then
                     self:SendFeedback( eActionEffectuee )
@@ -386,10 +645,22 @@ self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionOb
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationCanon, "ACT_Obj_Pion_ASS_RealiserObjet", nodes.ACT_Obj_Pion_ASS_RealiserObjet }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationCanon, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco, "ACT_Obj_Pion_ASS_RealiserUnObjet", nodes.ACT_Obj_Pion_ASS_RealiserUnObjet }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationLRM, "ACT_Obj_Pion_ASS_RealiserObjet", nodes.ACT_Obj_Pion_ASS_RealiserObjet }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationSimple, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationSimple, "ACT_Obj_Pion_ASS_RealiserObjet", nodes.ACT_Obj_Pion_ASS_RealiserObjet }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_Installer_ZoneImplantationSimple, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "ACT_RC_PreparationMission", nodes.ACT_RC_PreparationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", nodes.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco", nodes.BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Pion_ASS_Installer_ZoneImplantationLRM", nodes.BEH_Pion_ASS_Installer_ZoneImplantationLRM }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Pion_ASS_Installer_ZoneImplantationSimple", nodes.BEH_Pion_ASS_Installer_ZoneImplantationSimple }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }

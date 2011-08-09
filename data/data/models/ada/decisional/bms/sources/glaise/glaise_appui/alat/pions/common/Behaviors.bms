@@ -3,6 +3,9 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/Behaviors.bms"] = t
 
 local emptyTable = emptyTable
 
+include "bit.lua"
+
+
 --[[//génériques pions scipio
 ]]include "glaise/glaise_Common/Pions/Behaviors.bms"
 
@@ -135,7 +138,11 @@ include "glaise/glaise_Appui/Alat/Pions/Common/Behaviors/Behaviors - Ambiance.bm
 ]]local automate = DEC_GetAutomate( myself )
         if( DEC_GetMission( automate ) == nil ) then
             do
-                Activate( self.activations.BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau, 1, emptyTable )
+                local mission = DEC_GetMission( myself )
+                if( mission == nil or mission:GetType() ~= "T_Mission_Pion_ALAT_AllerSeRecompleter" ) then
+                    Activate( self.activations.BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau, 1, emptyTable )
+                end
+
                 Activate( self.activations.BEH_Log_Pion_ALAT_GererPlotsRavitaillement, 1, emptyTable )
             end
 --[[// implémentation du pathfind adaptatif

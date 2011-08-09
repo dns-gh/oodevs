@@ -12,5 +12,5 @@ includedFiles["sources/appui/rens/pions/roim/drone cl289/Motivations.bms"] = tru
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]
-include "Common/Pions/Motivations.bms"
+include "Appui/Rens/Pions/Roim/Common/Motivations Drone.bms"
 

@@ -223,9 +223,13 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
             do
                 self.point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
                 if( self.point == nil ) then
-                    self:SendFeedback( eActionEffectuee )
-                    Halt( self )
-                    do return end
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self:SendFeedback( eActionEffectuee )
+                        Halt( self )
+                        do return end
+
+                    end
                 end
 
             end

@@ -31,10 +31,11 @@ node "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement"
     activate = function( self )
         local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
-        self.lstPos_Reco = self.lstPos_Reco or DEC_Geometrie_CreerListePoints()
+        self.lstZones_Reco = self.lstZones_Reco or {}
         self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
         if( ModuleBegins() ) then
-            S_Geometrie_Automate_ASS_CopiePointDansFuseau( self.mission.positionsAReconnaitre_, self.lstPos_Reco )
+            --[[//S_Geometrie_Automate_ASS_CopiePointDansFuseau( mission.zonesAReconnaitre_, lstZones_Reco );
+]]DEC_Copie_ListeLocalisations( self.mission.zonesAReconnaitre_, self.lstZones_Reco )
         end
 
         local selPion_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
@@ -51,7 +52,7 @@ do
 
                     if _continue then
                     --[[// Cherche la position la plus proche du pion disponible
-]]local ptZone = S_Misc_Automate_ASS_ExtraitPoint_ProchePionDansFuseau( self.lstPos_Reco, x_ass )
+]]local ptZone = S_Misc_Automate_ASS_ExtraitZone_ProchePionDansFuseau( self.lstZones_Reco, x_ass )
                     if( ptZone == nil ) then
                         _continue = false
                     end
@@ -61,8 +62,8 @@ do
                     end
                 end
             end
---[[// Si plus de position a reconnaitre et 
-]]--[[// if ( DEC_ListePoints_Size( lstPos_Reco ) == 0 ) 
+--[[// Si plus de position a reconnaitre et
+]]--[[// if ( DEC_ListePoints_Size( lstPos_Reco ) == 0 )
 ]]
         end
 

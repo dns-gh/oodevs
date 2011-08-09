@@ -3,7 +3,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezoneconta
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -35,7 +35,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezoneconta
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 local nErrorCode = nil
-                self.listeLocalisaitons = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( selPions ), nErrorCode )
+                self.listeLocalisaitons = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( selPions ), DEC_GetDirectionEnnemi( self._namedParams.mission ), nErrorCode )
                 nErrorCode = self.listeLocalisaitons.second
                 self.listeLocalisaitons = self.listeLocalisaitons.first
                 if( nErrorCode ~= eNoError ) then

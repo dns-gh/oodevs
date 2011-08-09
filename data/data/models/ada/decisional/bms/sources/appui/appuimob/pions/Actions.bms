@@ -220,3 +220,149 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
 
 }
 
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_PreterVSRAM
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_PreterVSRAM"
+{
+    feedbacks = { { { "done_ACT_Misc_Pion_LOG_PreterVSRAM" }, "ACT_Misc_Pion_LOG_PreterVSRAM" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_LOG_PreterVSRAM, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionA = self.params[1]
+        self._namedParams.pionDepart = self.params[2]
+        self._namedParams.fAmb = self.params[3]
+    end,
+
+    select = function( self )
+                self.actionPreterVSRAM = self.actionPreterVSRAM or 0
+        self.bFinManoeuvre = self.bFinManoeuvre or false
+        if( self.bFinManoeuvre ) then
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            do return end
+        end
+
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionPreterVSRAM = DEC_StartPreterVSRAM( self._namedParams.pionA, self._namedParams.pionDepart, self._namedParams.fAmb )
+            actionCallbacks[ self.actionPreterVSRAM ] = function( arg ) self.bFinManoeuvre = arg end
+
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPreterVSRAM )
+    end,
+
+    destroy = function( self )
+                DEC_StopAction( self.actionPreterVSRAM )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_RecupererVSRAM
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_RecupererVSRAM"
+{
+    feedbacks = { { { "done_ACT_Misc_Pion_LOG_RecupererVSRAM" }, "ACT_Misc_Pion_LOG_RecupererVSRAM" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_LOG_RecupererVSRAM, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDe = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+        DEC_RecupererVSRAM( self._namedParams.pionDe, self._namedParams.fAmb )
+                self:SendFeedback( eActionEffectuee )
+        Halt( self )
+        do return end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_PreterRemorqueurs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_PreterRemorqueurs"
+{
+    feedbacks = { { { "done_ACT_Misc_Pion_LOG_PreterRemorqueurs" }, "ACT_Misc_Pion_LOG_PreterRemorqueurs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_LOG_PreterRemorqueurs, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionA = self.params[1]
+        self._namedParams.pionDepart = self.params[2]
+        self._namedParams.fAmb = self.params[3]
+    end,
+
+    select = function( self )
+                self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or 0
+        self.bFinManoeuvre = self.bFinManoeuvre or false
+        if( self.bFinManoeuvre ) then
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            do return end
+        end
+
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( self._namedParams.pionA, self._namedParams.pionDepart, self._namedParams.fAmb )
+            actionCallbacks[ self.actionPreterRemorqueurs ] = function( arg ) self.bFinManoeuvre = arg end
+
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPreterRemorqueurs )
+    end,
+
+    destroy = function( self )
+                DEC_StopAction( self.actionPreterRemorqueurs )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_RecupererRemorqueurs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_RecupererRemorqueurs"
+{
+    feedbacks = { { { "done_ACT_Misc_Pion_LOG_RecupererRemorqueurs" }, "ACT_Misc_Pion_LOG_RecupererRemorqueurs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_LOG_RecupererRemorqueurs, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDe = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+        DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
+                self:SendFeedback( eActionEffectuee )
+        Halt( self )
+        do return end
+
+    end,
+
+}
+

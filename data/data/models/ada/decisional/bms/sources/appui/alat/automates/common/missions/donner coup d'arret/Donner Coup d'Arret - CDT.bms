@@ -95,6 +95,8 @@ do
 ]]--[[//pas de traitement des ROE de l'unité la plus en arrière
 ]]--[[//les autres unités sont postées et en tir restreint
 ]]--[[//pas de coordination nécessaire dans cette mission
+]]--[[// les unités sur coté droit et gauche n'ont pas d'intention d'ouvrir
+]]--[[// le feu tant que les pions de reference n'ont pas frappé l'enneni
 ]]--[[// ravitaillements et IMEX
 ]]            local switch_1 = self.ePhase
                 if switch_1 == eDetruire then
@@ -148,7 +150,7 @@ do
                     end
 
                     Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeDetruire, 0, } )
-                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, M_DOCTRINE_ALAT_DISTANCE_PLOTS(), self._namedParams.mission.pointRegroupement_, false, } )
                     _continue = false
                 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )

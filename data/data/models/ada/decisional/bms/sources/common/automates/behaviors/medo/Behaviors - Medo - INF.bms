@@ -3,6 +3,9 @@ includedFiles["sources/common/automates/behaviors/medo/Behaviors - Medo - INF.bm
 
 local emptyTable = emptyTable
 
+include "bit.lua"
+
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -21,24 +24,24 @@ local emptyTable = emptyTable
 ]]--[[//
 ]]--[[// Surete
 ]]--[[//-----------------------------------------------------------------------------
-]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Appuyer
+]]--[[//        behavior BEH_Mission_Automate_INF_AssignerA_Appuyer
 ]]--[[//
 ]]--[[//
 ]]--[[//
 ]]--[[//
 ]]--[[//
 ]]--[[//-----------------------------------------------------------------------------
-]]--[[// Offensif		
-]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Semparer
-]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Reconnaitre
-]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Reduire
+]]--[[// Offensif
+]]--[[//        behavior BEH_Mission_Automate_INF_AssignerA_Semparer
+]]--[[//        behavior BEH_Mission_Automate_INF_AssignerA_Reconnaitre
+]]--[[//        behavior BEH_Mission_Automate_INF_AssignerA_Reduire
 ]]--[[//
 ]]--[[//
 ]]--[[//
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Defensif
-]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Interdire
-]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Couvrir
+]]--[[//        behavior BEH_Mission_Automate_INF_AssignerA_Interdire
+]]--[[//        behavior BEH_Mission_Automate_INF_AssignerA_Couvrir
 ]]--[[//
 ]]--[[//
 ]]--[[//
@@ -54,8 +57,8 @@ include "Common/Automates/Actions/Medo/Actions - Medo - INF.bms"
 ]]--[[//=============================================================================
 ]]
 --[[// ----------------------------------------------------------------------------
-]]--[[// $$$$ Les comportements BEH_Auto_MRT ou BEH_Auto_CDT font un halt apres le 
-]]--[[// 		1 ticks .. Ils ne faut donc pas les relancer ..
+]]--[[// $$$$ Les comportements BEH_Auto_MRT ou BEH_Auto_CDT font un halt apres le
+]]--[[//         1 ticks .. Ils ne faut donc pas les relancer ..
 ]]--[[// ----------------------------------------------------------------------------
 ]]
 node "BEH_Mission_Automate_INF_AssignerAppuyerA_Max"
@@ -109,12 +112,6 @@ node "BEH_Mission_Automate_INF_AssignerAppuyerA"
 
     activate = function( self )
         local Activate = Activate
-        do
-        end
-
-        do
-        end
-
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -138,9 +135,6 @@ node "BEH_Mission_Automate_INF_AssignerAppuyerA"
 
         Activate( self.activations.ACT_Mission_Automate_INF_AssignerAppuyerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, self._namedParams.eEtatEchelon, } )
 self.done_ACT_Mission_Automate_INF_AssignerAppuyerA = function( self, _, v ) self.eActionCreation = v[1] end
-        do
-        end
-
     end,
 
 --[[//=============================================================================
@@ -688,9 +682,9 @@ self.done_ACT_Mission_Automate_INF_AssignerA_Freiner = function( self, _, v ) se
 --[[//=============================================================================
 ]]--[[// Mission : Couvrir
 ]]--[[//
-]]--[[//	T_Pion			@pAppui :	elt a appuyer
-]]--[[//	T_Localisation	@locCouv :  position que l'on doit couvrir. On calcul une
-]]--[[//								nouvelle position par rapport a celle-ci
+]]--[[//    T_Pion            @pAppui :    elt a appuyer
+]]--[[//    T_Localisation    @locCouv :  position que l'on doit couvrir. On calcul une
+]]--[[//                                nouvelle position par rapport a celle-ci
 ]]--[[//=============================================================================
 ]]}
 
@@ -1022,11 +1016,13 @@ node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
         self._namedParams.pPion = self.params[2]
-        self._namedParams.ptBarrer = self.params[3]
+        self._namedParams.zoneBarrer = self.params[3]
     end,
 
     activate = function( self )
         local Activate = Activate
+        self.ptBarrer = self.ptBarrer or nil
+        self.bValide = self.bValide or false
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1048,7 +1044,19 @@ node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Barrer, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptBarrer, true, } )
+        if( ModuleBegins() ) then
+            self.bValide = DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion( self._namedParams.zoneBarrer, self.ptBarrer, self._namedParams.pPion )
+        end
+
+        if( not self.bValide or self.ptBarrer == 0 ) then
+            do
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
+                                do return end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Barrer, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self.ptBarrer, true, } )
 self.done_ACT_Mission_Automate_INF_AssignerA_Barrer = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1107,7 +1115,7 @@ self.done_BEH_Mission_Automate_AssignerFaireMouvementA = function( self, _, v ) 
 --[[//Ajouté par LLS 01/03/2007 pour mission Escorter de la PROTERRE
 ]]--[[// *****************************************************************************
 ]]--[[// BEH_Mission_Automate_INF_AssignerEscorterA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -1162,7 +1170,7 @@ self.done_ACT_Mission_Automate_INF_AssignerEscorterA = function( self, _, v ) se
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Automate_INF_AssignerEscorterAutomateA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -1217,7 +1225,7 @@ self.done_ACT_Mission_Automate_INF_AssignerEscorterUnitesA = function( self, _, 
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Automate_INF_AssignerSoutenirA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************

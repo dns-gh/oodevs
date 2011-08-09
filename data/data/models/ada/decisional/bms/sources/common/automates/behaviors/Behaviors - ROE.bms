@@ -17,7 +17,7 @@ local emptyTable = emptyTable
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_GererOrdre
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "BEH_ROE_Automate_GererOrdre"
@@ -41,9 +41,9 @@ local emptyTable = emptyTable
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_RecevoirOrdreInopine
 ]]--[[//
-]]--[[// Commentaires : MIA: ATTENTION --> La gestion des ordres a été implémenté de cette 
+]]--[[// Commentaires : MIA: ATTENTION --> La gestion des ordres a été implémenté de cette
 ]]--[[//                manière (systeme start/stop ) pour gerer le fait de rajouter
-]]--[[//                un pion en dynamique dans l'automate. 
+]]--[[//                un pion en dynamique dans l'automate.
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -119,7 +119,7 @@ do
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_TirLibre
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -130,6 +130,7 @@ node "BEH_ROE_Automate_TirLibre"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_TirLibre, {value} ) end,
     activations =
     {
+        { "ACT_ROE_Automate_PasserEnTirLibre", { "done_ACT_ROE_Automate_PasserEnTirLibre" } },
         { "ACT_ROE_Automate_DonnerOrdreTirLibre", { "done_ACT_ROE_Automate_DonnerOrdreTirLibre" } },
     },
 
@@ -138,6 +139,7 @@ node "BEH_ROE_Automate_TirLibre"
 
     activate = function( self )
         local Activate = Activate
+        Activate( self.activations.ACT_ROE_Automate_PasserEnTirLibre, 1, emptyTable )
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { pion, } )
@@ -149,7 +151,7 @@ node "BEH_ROE_Automate_TirLibre"
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_TirRestreint
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -160,6 +162,7 @@ node "BEH_ROE_Automate_TirRestreint"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_TirRestreint, {value} ) end,
     activations =
     {
+        { "ACT_ROE_Automate_PasserEnTirRestreint", { "done_ACT_ROE_Automate_PasserEnTirRestreint" } },
         { "ACT_ROE_Automate_DonnerOrdreTirRestreint", { "done_ACT_ROE_Automate_DonnerOrdreTirRestreint" } },
     },
 
@@ -168,6 +171,7 @@ node "BEH_ROE_Automate_TirRestreint"
 
     activate = function( self )
         local Activate = Activate
+        Activate( self.activations.ACT_ROE_Automate_PasserEnTirRestreint, 1, emptyTable )
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirRestreint, 1, { pion, } )
@@ -179,7 +183,7 @@ node "BEH_ROE_Automate_TirRestreint"
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_Automate_TirInterdit
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -190,6 +194,7 @@ node "BEH_ROE_Automate_TirInterdit"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_TirInterdit, {value} ) end,
     activations =
     {
+        { "ACT_ROE_Automate_PasserEnTirInterdit", { "done_ACT_ROE_Automate_PasserEnTirInterdit" } },
         { "ACT_ROE_Automate_DonnerOrdreTirInterdit", { "done_ACT_ROE_Automate_DonnerOrdreTirInterdit" } },
     },
 
@@ -198,6 +203,7 @@ node "BEH_ROE_Automate_TirInterdit"
 
     activate = function( self )
         local Activate = Activate
+        Activate( self.activations.ACT_ROE_Automate_PasserEnTirInterdit, 1, emptyTable )
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirInterdit, 1, { pion, } )
@@ -207,14 +213,86 @@ node "BEH_ROE_Automate_TirInterdit"
     end,
 
 --[[// *****************************************************************************
-]]--[[// ACT_ROE_Automate_DonnerOrdreTirLibre
+]]--[[// ACT_ROE_Automate_PasserEnTirLibre
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
 
-node "ACT_ROE_Automate_DonnerOrdreTirLibre"
+node "ACT_ROE_Automate_PasserEnTirLibre"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_PasserEnTirLibre" }, "ACT_ROE_Automate_PasserEnTirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_PasserEnTirLibre, {value} ) end,
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Automate_ChangeEtatROE( eEtatROE_TirLibre )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_PasserEnTirRestreint
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_PasserEnTirRestreint"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_PasserEnTirRestreint" }, "ACT_ROE_Automate_PasserEnTirRestreint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_PasserEnTirRestreint, {value} ) end,
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Automate_ChangeEtatROE( eEtatROE_TirSurRiposte )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_PasserEnTirInterdit
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_PasserEnTirInterdit"
+{
+    feedbacks = { { { "done_ACT_ROE_Automate_PasserEnTirInterdit" }, "ACT_ROE_Automate_PasserEnTirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_PasserEnTirInterdit, {value} ) end,
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Automate_ChangeEtatROE( eEtatROE_TirInterdit )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_DonnerOrdreTirLibre
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 {
     feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreTirLibre" }, "ACT_ROE_Automate_DonnerOrdreTirLibre" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreTirLibre, {value} ) end,
@@ -239,7 +317,7 @@ node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 --[[// *****************************************************************************
 ]]--[[// ACT_ROE_Automate_DonnerOrdreTirRestreint
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreTirRestreint"
@@ -267,7 +345,7 @@ node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 --[[// *****************************************************************************
 ]]--[[// ACT_ROE_Automate_DonnerOrdreTirInterdit
 ]]--[[//
-]]--[[// Commentaires : 
+]]--[[// Commentaires :
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreTirInterdit"
@@ -298,6 +376,9 @@ connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopine,
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopine, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopine, "BEH_ROE_Automate_TirInterdit", nodes.BEH_ROE_Automate_TirInterdit }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_TirInterdit, "ACT_ROE_Automate_PasserEnTirInterdit", nodes.ACT_ROE_Automate_PasserEnTirInterdit }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_TirInterdit, "ACT_ROE_Automate_DonnerOrdreTirInterdit", nodes.ACT_ROE_Automate_DonnerOrdreTirInterdit }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_TirLibre, "ACT_ROE_Automate_PasserEnTirLibre", nodes.ACT_ROE_Automate_PasserEnTirLibre }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_TirLibre, "ACT_ROE_Automate_DonnerOrdreTirLibre", nodes.ACT_ROE_Automate_DonnerOrdreTirLibre }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_TirRestreint, "ACT_ROE_Automate_PasserEnTirRestreint", nodes.ACT_ROE_Automate_PasserEnTirRestreint }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_TirRestreint, "ACT_ROE_Automate_DonnerOrdreTirRestreint", nodes.ACT_ROE_Automate_DonnerOrdreTirRestreint }

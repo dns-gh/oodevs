@@ -14,7 +14,7 @@ local emptyTable = emptyTable
 ]]--[[// Si l'objet est dans le fuseau, on ne considère que sa localisation 
 ]]--[[// inscrite dans le fuseau, sinon, toute sa localisation
 ]]--[[//-----------------------------------------------------------------------------
-]]--[[// Calcul de la position de l'objet dans la fuseau
+]]--[[// Calcul de la position de l'objet dans le fuseau
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie vrai si l'objet est dans la localisation
 ]]--[[//-----------------------------------------------------------------------------

@@ -1,154 +1,15 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Dep.bms"] = true
 
-local emptyTable = emptyTable
-
 --[[// *****************************************************************************
 ]]--[[// BEH_Dep_ProgressionVers
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]node "BEH_Dep_ProgressionVers"
-{
-    feedbacks = { { { "done_BEH_Dep_ProgressionVers" }, "BEH_Dep_ProgressionVers" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_ProgressionVers, {value} ) end,
-    instances =
-    {
-        max = 1,
-    },
-
-    activations =
-    {
-        { "BEH_Dep_SeDeplacer", { "done_BEH_Dep_SeDeplacer" } },
-        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.pointArrivee = self.params[1]
-        self._namedParams.eTypeProgression = self.params[2]
-        self._namedParams.eTypeIti = self.params[3]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-                self.eEtat = self.eEtat or eActionEnCours
-        self.it = self.it or DEC_CreerItineraire( self._namedParams.pointArrivee, self._namedParams.eTypeIti )
-        --[[//-----------------------------------------------------------------------------
-]]--[[// Deplacement de base
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
-            do
-                self.eEtat = eActionEnCours
-                                do
-                    self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
-                                        self:SendFeedback( eActionEffectuee )
-                    Halt( self )
-                    do return end
-
-                end
-
-            end
-        end
-
-        Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
-self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )--[[//-----------------------------------------------------------------------------
-]]--[[// Observation
-]]--[[//-----------------------------------------------------------------------------
-]]
-    end,
-
-    destroy = function( self )
-                self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
-    end,
-
---[[// ******************************************************************************
-]]--[[// BEH_Dep_SeDeplacer
-]]--[[//
-]]--[[// Commentaires: appelé par BEH_ProgressionVers et BEH_ProgressionSur
-]]--[[//
-]]--[[// ******************************************************************************
-]]}
-
-node "BEH_Dep_SeDeplacer"
-{
-    feedbacks = { { { "done_BEH_Dep_SeDeplacer" }, "BEH_Dep_SeDeplacer" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_SeDeplacer, {value} ) end,
-    activations =
-    {
-        { "ACT_Pions_SeDesinstaller", { "done_ACT_Pions_SeDesinstaller" } },
-        { "ACT_Dep_SeDeplacer", { "done_ACT_Dep_SeDeplacer" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.it = self.params[1]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        self.eEtat = self.eEtat or eActionEnCours
-        if( self.eEtat == eActionEffectuee ) then
-            do
-                self.eEtat = eActionEnCours
-                                do
-                                        self:SendFeedback( eActionEffectuee )
-                    Halt( self )
-                    do return end
-
-                end
-
-            end
-        end
-
-        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, emptyTable )
-        if( not DEC_Agent_EstDesinstalle() ) then
-            do return end
-        end
-
-        Activate( self.activations.ACT_Dep_SeDeplacer, 1, { self._namedParams.it, } )
-self.done_ACT_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
-    end,
-
---[[// *****************************************************************************
-]]--[[// BEH_Dep_SePosterFaceADirectionDangereuse
-]]--[[//
-]]--[[// Commentaires :
-]]--[[//
 ]]--[[// *****************************************************************************
-]]}
-
-node "BEH_Dep_SePosterFaceADirectionDangereuse"
-{
-    feedbacks = { { { "done_BEH_Dep_SePosterFaceADirectionDangereuse" }, "BEH_Dep_SePosterFaceADirectionDangereuse" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_SePosterFaceADirectionDangereuse, {value} ) end,
-    activations =
-    {
-        { "ACT_Dep_SePosterFaceADir", { "done_ACT_Dep_SePosterFaceADir" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
-    },
-
-    create = function( self )
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        local mission = DEC_GetMission( myself )
-        if( mission == nil ) then
-            do return end
-        end
-
-        Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-    end,
-
---[[// *****************************************************************************
 ]]--[[// BEH_Dep_Virtuel_ProgressionVers
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]}
-
-node "BEH_Dep_Virtuel_ProgressionVers"
+]]node "BEH_Dep_Virtuel_ProgressionVers"
 {
     feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
@@ -192,10 +53,4 @@ node "BEH_Dep_Virtuel_PreparationAction"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionVers, "BEH_Dep_SeDeplacer", nodes.BEH_Dep_SeDeplacer }
-connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionVers, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
-connections[ #connections + 1 ] = { nodes.BEH_Dep_SeDeplacer, "ACT_Pions_SeDesinstaller", nodes.ACT_Pions_SeDesinstaller }
-connections[ #connections + 1 ] = { nodes.BEH_Dep_SeDeplacer, "ACT_Dep_SeDeplacer", nodes.ACT_Dep_SeDeplacer }
-connections[ #connections + 1 ] = { nodes.BEH_Dep_SePosterFaceADirectionDangereuse, "ACT_Dep_SePosterFaceADir", nodes.ACT_Dep_SePosterFaceADir }
-connections[ #connections + 1 ] = { nodes.BEH_Dep_SePosterFaceADirectionDangereuse, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }

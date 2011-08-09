@@ -1,3 +1,4 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/automates/Motivations.bms"] = true
 
+include "Common/Pions/Motivations v3/Etats.bms"

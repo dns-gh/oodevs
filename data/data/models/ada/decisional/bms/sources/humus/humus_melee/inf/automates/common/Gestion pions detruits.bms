@@ -54,7 +54,7 @@ local emptyTable = emptyTable
         local _continue = true
 do
                 local pionDetruit = x
-                DEC_Trace( " Pion Ecl " .. pionDetruit:GetszName_() .. " --> non operationnel" )
+                DEC_Trace( " Pion Ecl " .. DEC_GetSzName( pionDetruit ) .. " --> non operationnel" )
                 --[[// Echelonnage 
 ]]--[[// on le fait passer en deuxieme echelon
 ]]F_Pion_SeteEtatEchelon( pionDetruit, eEtatEchelon_Second )
@@ -72,7 +72,7 @@ do
         local _continue = true
 do
                 local pionDetruit = x
-                DEC_Trace( " Pion Ecl " .. pionDetruit:GetszName_() .. " --> non operationnel" )
+                DEC_Trace( " Pion Ecl " .. DEC_GetSzName( pionDetruit ) .. " --> non operationnel" )
                 --[[/************************** RELEVE eventuelle *****************************/]]--[[// cas des AMX / Leclerc mission barrer, reco, attaquer
 ]]if( self._namedParams.bAvecReleve ) then
                     do
@@ -140,7 +140,7 @@ node "BEH_Dispositif_Automate_INF_AssignerReleve"
 ]]if( ModuleBegins() ) then
             do
                 DEC_Automate_PionRelevePion( self._namedParams.pionEnSoutien, self._namedParams.pionEnDifficulte )
-                DEC_Trace( "$*$ " .. self._namedParams.pionEnSoutien:GetszName_() .. " --> Relève de " .. self._namedParams.pionEnDifficulte:GetszName_() .. " $*$" )
+                DEC_Trace( "$*$ " .. DEC_GetSzName( self._namedParams.pionEnSoutien ) .. " --> Relève de " .. self._namedParams.pionEnDifficulte:GetszName_() .. " $*$" )
                 --[[// Echelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pionEnSoutien, eEtatEchelon_Premier )
                 --[[// on le fait passer en deuxieme echelon

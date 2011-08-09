@@ -3,6 +3,9 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - CDT.bms"] = tru
 
 local emptyTable = emptyTable
 
+include "bit.lua"
+
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_SeDeployer
 ]]--[[//
@@ -16,6 +19,12 @@ local emptyTable = emptyTable
     activations =
     {
         { "ACT_Ordre_Automate_LOG_OrdresInopines", { "done_ACT_Ordre_Automate_LOG_OrdresInopines" } },
+        { "BEH_Mission_Automate_LOG_AssignerSeDeployerA", { "done_BEH_Mission_Automate_LOG_AssignerSeDeployerA" } },
+        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA", { "done_BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA" } },
+        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", { "done_BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA" } },
+        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA", { "done_BEH_Mission_Automate_LOG_AssignerTraiterBlessesA" } },
+        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", { "done_BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA" } },
+        { "BEH_Mission_Automate_LOG_AssignerReparerA", { "done_BEH_Mission_Automate_LOG_AssignerReparerA" } },
     },
 
     create = function( self )
@@ -26,6 +35,84 @@ local emptyTable = emptyTable
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.ACT_Ordre_Automate_LOG_OrdresInopines, 1, emptyTable )
+        --[[// traitement des renforts
+]]local selPions = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        local selIdle = {}
+        for _,x in pairs( --[[// recherche pions libres
+]]selPions or emptyTable ) do
+        local _continue = true
+do
+                local pion = x
+                local missionPion = DEC_GetMission( pion )
+                if( missionPion == nil or missionPion:GetType() == "T_Mission_Pion_LOG_Renforcer" or F_Pion_GeteEtatPhaseMission_Mission( missionPion ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DIA_PushFront( selIdle, pion )
+                    end
+                end
+
+            end
+--[[// affectation mission
+]]
+        end
+
+        for _,x in pairs( selIdle or emptyTable ) do
+        local _continue = true
+do
+                local pion = x
+                local posPion = DEC_Automate_PionPosition( pion )
+                DEC_Trace( "Assignation mission a nouveau pion " .. DEC_GetSzName( pion ) )
+                 do
+                    local _continue = true
+--[[// Suivant le type de pions...
+]]--[[// rien
+]]                    local switch_1 = pion:GetType()
+                        if switch_1 == "GroupeRamassage" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "DecontaminationNBC" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "SectionTriage" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "ACA" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "UniteSoin" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "UniteSpy" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "PionStock" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "PionTransport" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "GroupeMaintenanceEvacuation" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "SectionMaintenance" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "SectionLOGTC2" then
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { ePhase_CDT, pion, posPion, eEtatEchelon_Second, } )
+                            _continue = false
+                        elseif switch_1 == "PionConvoi" then
+                            _continue = false
+                        
+                        else
+                            --[[// rien
+]]DEC_Trace( "Pas de mission possible pour " .. DEC_GetSzName( pion ) )
+                            _continue = false
+                                                end
+                    end
+
+            end
+
+        end
+
     end,
 
 }
@@ -34,3 +121,9 @@ eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Automate_CDT_LOG_SeDeployer = { "mission" }
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "ACT_Ordre_Automate_LOG_OrdresInopines", nodes.ACT_Ordre_Automate_LOG_OrdresInopines }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "BEH_Mission_Automate_LOG_AssignerSeDeployerA", nodes.BEH_Mission_Automate_LOG_AssignerSeDeployerA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA", nodes.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", nodes.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA", nodes.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", nodes.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "BEH_Mission_Automate_LOG_AssignerReparerA", nodes.BEH_Mission_Automate_LOG_AssignerReparerA }

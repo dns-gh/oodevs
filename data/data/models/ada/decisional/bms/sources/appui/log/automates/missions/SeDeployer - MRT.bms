@@ -46,6 +46,7 @@ local emptyTable = emptyTable
         self.sel_groupeMaintenanceEvacuation = self.sel_groupeMaintenanceEvacuation or {}
         self.sel_sectionMaintenance = self.sel_sectionMaintenance or {}
         self.sel_sectionLOGTC2 = self.sel_sectionLOGTC2 or {}
+        self.sel_sectionCdtLOG = self.sel_sectionCdtLOG or {}
         self.selAutres = self.selAutres or {}
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -117,8 +118,12 @@ do
                                         _continue = false
                                     elseif switch_2 == "PionConvoi" then
                                         _continue = false
+                                    elseif switch_2 == "SectionCdtLOG" then
+                                        DIA_PushFront( self.sel_sectionCdtLOG, pion )
+                                        _continue = false
                                     
                                     else
+                                        DEC_Trace( "SeDeployer MRT - pion autre " .. DEC_GetSzName( pion ) )
                                         DIA_PushFront( self.selAutres, pion )
                                         _continue = false
                                                                         end
@@ -130,18 +135,19 @@ do
 
                     if( #( self.selPions ) ~= 0 ) then
                         do
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionStock, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionTransport, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_sectionLOGTC2, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeRamassage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_sectionTriage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_ACA, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe, 1, { ePhase_MRT, self.sel_decontaminationNBC, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_uniteSoin, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe, 1, { ePhase_MRT, self.sel_uniteSpy, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerAListe, 1, { ePhase_MRT, self.sel_sectionMaintenance, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionStock, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionTransport, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_sectionLOGTC2, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_sectionCdtLOG, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeRamassage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_sectionTriage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_ACA, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe, 1, { ePhase_MRT, self.sel_decontaminationNBC, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_uniteSoin, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe, 1, { ePhase_MRT, self.sel_uniteSpy, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerAListe, 1, { ePhase_MRT, self.sel_sectionMaintenance, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Second, } )
                             if( self._namedParams.mission.positionDeploiement_ ~= nil ) then
                                 Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementAListe, 1, { ePhase_MRT, self.selAutres, self._namedParams.mission.positionDeploiement_, } )
                             end
@@ -154,6 +160,7 @@ do
 
                     _continue = false
                 elseif switch_1 == eMRT_MissionImpossible then
+                    DEC_Trace( "MISSION IMPOSSIBLE" )
                     Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossible, } )
                     _continue = false
                 elseif switch_1 == eMRT_Valider then

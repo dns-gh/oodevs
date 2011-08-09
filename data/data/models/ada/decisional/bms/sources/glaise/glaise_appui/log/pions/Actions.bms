@@ -215,7 +215,8 @@ includedFiles["sources/glaise/glaise_appui/log/pions/Actions.bms"] = true
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionA = self.params[1]
-        self._namedParams.fAmb = self.params[2]
+        self._namedParams.pionDepart = self.params[2]
+        self._namedParams.fAmb = self.params[3]
     end,
 
     select = function( self )
@@ -231,8 +232,8 @@ includedFiles["sources/glaise/glaise_appui/log/pions/Actions.bms"] = true
 ]]--[[// Init
 ]]--[[//------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-            self.actionPreterVSRAM = DEC_StartPreterVSRAM( self._namedParams.fAmb, self.bFinManoeuvre )
-            actionCallbacks[ self.actionPreterVSRAM ] = function( arg ) self._namedParams.pionA = arg end
+            self.actionPreterVSRAM = DEC_StartPreterVSRAM( self._namedParams.pionA, self._namedParams.pionDepart, self._namedParams.fAmb )
+            actionCallbacks[ self.actionPreterVSRAM ] = function( arg ) self.bFinManoeuvre = arg end
 
         end
 
@@ -287,7 +288,8 @@ includedFiles["sources/glaise/glaise_appui/log/pions/Actions.bms"] = true
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionA = self.params[1]
-        self._namedParams.fAmb = self.params[2]
+        self._namedParams.pionDepart = self.params[2]
+        self._namedParams.fAmb = self.params[3]
     end,
 
     select = function( self )
@@ -303,8 +305,8 @@ includedFiles["sources/glaise/glaise_appui/log/pions/Actions.bms"] = true
 ]]--[[// Init
 ]]--[[//------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-            self.actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( self._namedParams.fAmb, self.bFinManoeuvre )
-            actionCallbacks[ self.actionPreterRemorqueurs ] = function( arg ) self._namedParams.pionA = arg end
+            self.actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( self._namedParams.pionA, self._namedParams.pionDepart, self._namedParams.fAmb )
+            actionCallbacks[ self.actionPreterRemorqueurs ] self.bFinManoeuvre = function( arg ) = arg end
 
         end
 

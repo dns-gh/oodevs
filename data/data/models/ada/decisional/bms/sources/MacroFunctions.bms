@@ -364,7 +364,7 @@ local tableRC = {}
 tableRC[ eRC_EnPosteFaceAObstacle ] = 
     function( typeMessage, id, list ) return DEC_RC_ObjectKnowledge( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_PreparationMission ] = 
-    function( typeMessage, id, list ) return DEC_RC_Float( myself, typeMessage, id, list[1] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float( myself, typeMessage, id, list[1] or 0 ) end
 tableRC[ eRC_SurPIA ] = 
     function( typeMessage, id, list ) return DEC_RC_Pion( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_UniteRecueillie ] = 
@@ -621,12 +621,12 @@ function DEC_Connaissances_ObjetsDansZone( localisation, ... )
     return DEC_ObjectKnowledgesInZone( localisation, {...} )
 end
 
-function DEC_Geometrie_DecoupeLocalisation( localisation, nbrParts, returnCode )
-    return DEC_Geometry_SplitLocalisation( localisation, nbrParts )
+function DEC_Geometrie_DecoupeLocalisation( localisation, nbrParts, direction, returnCode )
+    return DEC_Geometry_SplitLocalisation( localisation, nbrParts, direction )
 end
 
-function DEC_Geometrie_DecoupeLocalisationSurface( localisation, area, returnCode )
-    return DEC_Geometry_SplitLocalisationSurface( localisation, area )
+function DEC_Geometrie_DecoupeLocalisationSurface( localisation, area, direction, returnCode )
+    return DEC_Geometry_SplitLocalisationSurface( localisation, area, direction )
 end
 
 function DEC_ConnaissancePopulation_Domination( pop, returnCode )

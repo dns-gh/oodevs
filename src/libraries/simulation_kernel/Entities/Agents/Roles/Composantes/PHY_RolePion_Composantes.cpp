@@ -1431,6 +1431,15 @@ const MIL_Agent_ABC& PHY_RolePion_Composantes::GetPion() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::IsImmobilized
+// Created: LDC 2011-08-04
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::IsImmobilized() const
+{
+    return ( rOperationalState_ < 0.1 ); // $$$$ FIXME This 0.1 should be read from Decisionnel.xml or maybe defined in decisional model
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::RepairAllComposantes
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------

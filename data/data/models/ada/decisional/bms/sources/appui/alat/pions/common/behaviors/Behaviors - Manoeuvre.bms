@@ -4,7 +4,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Manoeuvre.b
 local emptyTable = emptyTable
 
 --[[// -----------------------------------------------------------------------------
-]]--[[// Ce comportement doit etre appelé avec une force comprise entre la plage des 
+]]--[[// Ce comportement doit etre appelé avec une force comprise entre la plage des
 ]]--[[// forces reservée pour les comportements de mission, et la plage entre reservée
 ]]--[[// aux comportements de combat de rencontre
 ]]--[[// -----------------------------------------------------------------------------
@@ -65,7 +65,8 @@ node "BEH_Manoeuvre_Pion_GestionDestruction"
                 if( self.eEtat == eActionEffectuee ) then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                 else
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { myself.pointRegroupement_, eProgressionDefaut, eTypeItiInfiltration, } )
+                    --[[//behavior BEH_Dep_Pion_ALAT_RejoindrePoint( myself.pointRegroupement_, eProgressionDefaut, eTypeItiInfiltration, 0, 0, 0, 0 ) return in eEtat;
+]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { myself.pointRegroupement_, eProgressionDefaut, eTypeItiRepli, 0, 0, 0, 0, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                 end
 

@@ -18,7 +18,7 @@ include "Humus/Humus_Common/Automates/Actions/Medo/Actions - Medo - ALAT.bms"
 
 
 --[[// -----------------------------------------------------------------------------
-]]--[[// Comportements Permettant de Preparer et Donner des Missions a des Listes de Pions 
+]]--[[// Comportements Permettant de Preparer et Donner des Missions a des Listes de Pions
 ]]--[[// -----------------------------------------------------------------------------
 ]]
 --[[// Preparer et Donner Missions Missions Surveiller A Liste
@@ -492,6 +492,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
         self._namedParams.ciblesPrioritaires = self.params[9]
         self._namedParams.neutraliser = self.params[10]
         self._namedParams.bRavitaillementDebutMission = self.params[11]
+        self._namedParams.dirSplit = self.params[12]
     end,
 
     activate = function( self )
@@ -500,7 +501,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
         if( ModuleBegins() ) then
             do
                 --[[// decoupage de la zone et définition des points de dislocation
-]]local listeZones = S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ) )
+]]local listeZones = S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ), self._namedParams.dirSplit )
                 if( #( listeZones ) == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )

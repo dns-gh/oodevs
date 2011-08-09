@@ -121,7 +121,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_ABC_ReleverUnite: debut", } )
-                    Activate( self.activations.ACT_Info_Trace, 1, { "** Relève de " .. self._namedParams.mission.uniteARelever_:GetszName_() .. " **", } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** Relève de " .. DEC_GetSzName( self._namedParams.mission.uniteARelever_ ) .. " **", } )
                     self.ePhaseMission = eProgresser
                     _continue = false
                 elseif switch_1 == eProgresser then

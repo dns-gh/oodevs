@@ -15,6 +15,7 @@ local emptyTable = emptyTable
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Inopine, {value} ) end,
     activations =
     {
+        { "BEH_Transport_Ordre_RecupererTransporteur", { "done_BEH_Transport_Ordre_RecupererTransporteur" } },
         { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
@@ -67,6 +68,10 @@ do
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "======= Frag order --> RESUME =====" )
                             SetStateVariable( "VE_SePoster", 0 )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_RecupererTransporteurs" then
+                            DEC_Trace( "======= Ordre --> RECUPERER TRANSPORTEUR =====" )
+                            StartActivateOverride( self, self.activations.BEH_Transport_Ordre_RecupererTransporteur, 1, emptyTable )
                             _continue = false
                                                 end
                     end
@@ -137,6 +142,28 @@ node "BEH_Ordre_SePoster_EnAttente"
 
 }
 
+node "BEH_Transport_Ordre_RecupererTransporteur"
+{
+    feedbacks = { { { "done_BEH_Transport_Ordre_RecupererTransporteur" }, "BEH_Transport_Ordre_RecupererTransporteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Ordre_RecupererTransporteur, {value} ) end,
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+                if( ModuleBegins() ) then
+            DEC_RecupererTransporteursSansDelai()
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Fin BEH_Transport_Ordre_RecupererTransporteur" )
+    end,
+
+}
+
 connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Inopine, "BEH_Transport_Ordre_RecupererTransporteur", nodes.BEH_Transport_Ordre_RecupererTransporteur }
 connections[ #connections + 1 ] = { nodes.BEH_Ordre_Inopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_Ordre_SePoster_EnAttente, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }

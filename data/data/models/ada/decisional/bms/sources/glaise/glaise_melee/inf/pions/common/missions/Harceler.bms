@@ -212,7 +212,8 @@ node "BEH_Pion_INF_Detruire_Harceler"
             do
                 --[[// Determine la position dans le secteur d'arrive			
 ]]local eCodeLocRgpt = eNoError
-                self.selPointsAttente = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zone, 3, eCodeLocRgpt )
+                local mission = DEC_GetMission( myself )
+                self.selPointsAttente = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zone, 3, DEC_GetDirectionEnnemi( mission ), eCodeLocRgpt )
                 eCodeLocRgpt = self.selPointsAttente.second
                 self.selPointsAttente = self.selPointsAttente.first
                  do

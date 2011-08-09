@@ -22,7 +22,7 @@
 // Name: PHY_ActionLendComposantes constructor
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_Decision_ABC* pAgent, unsigned int nbrToLend, T_ComposantePredicate predicate )
+PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_Decision_ABC* pStart, DEC_Decision_ABC* pTarget, unsigned int nbrToLend, T_ComposantePredicate predicate )
     : PHY_DecisionCallbackAction_ABC    ( pion )
     , role_             ( pion.GetRole< PHY_RolePion_Composantes >() )
     , pTarget_          ( 0 )
@@ -30,11 +30,13 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_D
     , nNbrToLend_       ( nbrToLend )
     , bLoanDone_        ( false )
 {
-    assert( pAgent );
+    assert( pTarget );
 
-    pTarget_ = &pAgent->GetPion().GetRole< PHY_RolePion_Composantes >();
+    pTarget_ = &pTarget->GetPion().GetRole< PHY_RolePion_Composantes >();
 
-    nTimer_ = role_.GetLentComposantesTravelTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
+    PHY_RolePion_Composantes& roleDepart = pStart->GetPion().GetRole< PHY_RolePion_Composantes >();
+    nTimer_ = roleDepart.GetLentComposantesTravelTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
+
     MIL_Report::PostEvent( pion, MIL_Report::eReport_EquipmentLoanInProgress );
 
     Callback( false );

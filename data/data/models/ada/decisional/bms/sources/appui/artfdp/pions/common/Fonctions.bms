@@ -10,38 +10,47 @@ local emptyTable = emptyTable
 ]]--[[// ============================================================================
 ]]--[[// $Created : JCR : 17/03/2005 18:23
 ]]--[[// Calcul les positions d'installation pour lanceurs Canon
-]]--[[// OPT MIA: 
+]]--[[// OPT MIA:
 ]]--[[// ============================================================================
-]]--[[/*IN*//*IN*/]]--[[/*OUT*/]]--[[/*OUT*/]]--[[// Point d'installation 1		
+]]--[[/*IN*//*IN*//* IN */]]--[[/*OUT*/]]--[[/*OUT*/]]--[[/* OUT */]]--[[// Point d'installation 1
 ]]--[[// ---------------------------------------------------------------------
-]]--[[// Chercher un position valide ?
 ]]--[[// Point d'installation 2
 ]]--[[// ---------------------------------------------------------------------
-]]--[[// Chercher un position valide ?
+]]--[[// Point de sauvegarde
+]]--[[// ---------------------------------------------------------------------
 ]]--[[// ============================================================================
 ]]--[[// $Created : JCR : 17/03/2005 18:23
 ]]--[[// Calcul les positions d'installation pour lanceurs LRM
 ]]--[[// ============================================================================
 ]]--[[/*IN*//*IN*/]]--[[// Emplacements 1 et 2
-]]--[[// Point d'installation 1		
+]]--[[// Point d'installation 1
 ]]--[[// ---------------------------------------------------------------------
 ]]--[[// Chercher un position valide ?
 ]]--[[// Point d'installation 2
 ]]--[[// ---------------------------------------------------------------------
 ]]--[[// Chercher un position valide ?
 ]]--[[// Point d'installation 3
-]]--[[// ---------------------------------------------------------------------					
+]]--[[// ---------------------------------------------------------------------
 ]]--[[// Chercher un position valide ?
 ]]--[[// Point d'installation 4
-]]--[[// ---------------------------------------------------------------------		
+]]--[[// ---------------------------------------------------------------------
 ]]--[[// Chercher un position valide ?
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// $Created : JCR : 16/06/2004 10:47
 ]]--[[// Cree un itineraire a partir d'un seul point
 ]]--[[// ----------------------------------------------------------------------------
-]]function S_Cherche_Pion_ASS_ASuivreProcheZone( pAutomate, zone )
+]]function S_SuppressionZoneTir( typeObjectZoneImplantation )
+    local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+    if( eNiveauInstallation_PosteAmenage <= eNiveauInstallation ) then
+        DEC_DetruireObjetSansDelais( DEC_Connaissances_ObjetLePlusProche( typeObjectZoneImplantation ) )
+    end
+
+end
+
+function S_Cherche_Pion_ASS_ASuivreProcheZone( pAutomate, zone )
     local _returnValue = nil
     _returnValue = DEC_Pion_PionPCDeAutomate( pAutomate )
+    local ptZone = DEC_Geometrie_CreerPoint()
     local rMin = 1105199104
     local ptZone = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( zone )
     if( ptZone == nil ) then
@@ -79,41 +88,56 @@ do
     do return _returnValue end
 end
 
-function S_Geometrie_CreerPositionTir_Canon( ptInstallation, rFloat, locInstallation_1, locInstallation_2 )
-    local lstObstacles = S_Obj_ListeObstacle( ptInstallation, rFloat + 100 )
+function S_Geometrie_CreerPositionTir_Canon( zoneInstallation, rFloat, direction, locInstallation_1, locInstallation_2, ptSauvegarde )
+    local lstObstacles = {}
     local repObj = nil
-    local dirPos = nil
-    local ptPos = nil
-    local mission = DEC_GetMission( myself )
     locInstallation_1 = nil
-    local directionDanger = DEC_GetDirectionDanger( mission )
-    dirPos = DEC_Geometrie_CreerDirectionPerpendiculaire( directionDanger, true )
-    ptPos = DEC_Geometrie_PositionTranslateDir( ptInstallation, dirPos, rFloat )
-    repObj = S_Obj_ObtenirObjetProcheDePosition( ptPos, lstObstacles, rFloat + 100 )
-    if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
-        locInstallation_1 = DEC_Geometrie_ConvertirPointEnLocalisation( ptPos )
+    locInstallation_2 = nil
+    ptSauvegarde = nil
+    local subLocs = S_Geometrie_DecoupeLocalisation( zoneInstallation, 3, direction )
+    if( #( subLocs ) < 3 ) then
+        do return end
     end
 
-    locInstallation_2 = nil
-    dirPos = DEC_Geometrie_CreerDirectionPerpendiculaire( directionDanger, false )
-    ptPos = DEC_Geometrie_PositionTranslateDir( ptInstallation, dirPos, rFloat )
-    repObj = S_Obj_ObtenirObjetProcheDePosition( ptPos, lstObstacles, rFloat + 100 )
+    local tempLoc = nil
+    local tempPoint = nil
+    tempLoc = DEC_UserTypeList_GetAt( subLocs, 0 )
+    lstObstacles = S_Obj_ListeObstacleDansLocalisation( tempLoc )
+    tempPoint = S_Geometrie_BarycentreZone( tempLoc )
+    repObj = S_Obj_ObtenirObjetProcheDePosition( tempLoc, lstObstacles, rFloat + 100 )
     if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
-        locInstallation_2 = DEC_Geometrie_ConvertirPointEnLocalisation( ptPos )
+        locInstallation_1 = DEC_Geometrie_ConvertirPointEnLocalisation( tempPoint )
+    end
+
+    tempLoc = DEC_UserTypeList_GetAt( subLocs, 2 )
+    lstObstacles = S_Obj_ListeObstacleDansLocalisation( tempLoc )
+    tempPoint = S_Geometrie_BarycentreZone( tempLoc )
+    repObj = S_Obj_ObtenirObjetProcheDePosition( tempLoc, lstObstacles, rFloat + 100 )
+    if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
+        locInstallation_2 = DEC_Geometrie_ConvertirPointEnLocalisation( tempPoint )
+    end
+
+    tempLoc = DEC_UserTypeList_GetAt( subLocs, 1 )
+    lstObstacles = S_Obj_ListeObstacleDansLocalisation( tempLoc )
+    tempPoint = S_Geometrie_BarycentreZone( tempLoc )
+    repObj = S_Obj_ObtenirObjetProcheDePosition( tempLoc, lstObstacles, rFloat + 100 )
+    if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
+        ptSauvegarde = tempPoint
     end
 
 end
 
-function S_Geometrie_CreerPositionTir_LRM( ptInstallation, rFloat )
+function S_Geometrie_CreerPositionTir_LRM( zoneInstallation, rFloat )
     local _returnValue = {}
     local lstPositionsLRM = DEC_Geometrie_CreerListePoints()
-    local lstObstacles = S_Obj_ListeObstacle( ptInstallation, rFloat + 100 )
+    local lstObstacles = S_Obj_ListeObstacleDansLocalisation( zoneInstallation )
     local repObj = nil
     local dirPos = nil
     local ptTemp = nil
     local ptPos = nil
     local ptPos1 = nil
     local ptPos2 = nil
+    local ptInstallation = S_Geometrie_BarycentreZone( zoneInstallation )
     local mission = DEC_GetMission( myself )
     local directionDanger = DEC_GetDirectionDanger( mission )
     ptTemp = DEC_Geometrie_PositionTranslateDir( ptInstallation, directionDanger, rFloat )

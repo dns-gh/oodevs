@@ -24,32 +24,16 @@ max_activations = 100
 
 
 
-include "Appui/Trans/Automates/Actions.bms"
+--[[//Insertion des comportements gérant les ordres de conduite
+]]include "Common/Automates/Behaviors.bms"
 
 
 include "Appui/Trans/Automates/Behaviors/Behaviors - Medo.bms"
-
-include "Appui/Trans/Automates/Behaviors/Behaviors - Ordre.bms"
 
 
 include "Appui/Trans/Automates/Missions/Commander/Commander - MRT.bms"
 
 include "Appui/Trans/Automates/Missions/Commander/Commander - CDT.bms"
-
-
-include "Appui/Trans/Automates/Missions/FaireMouvement/FaireMouvement - MRT.bms"
-
-include "Appui/Trans/Automates/Missions/FaireMouvement/FaireMouvement - CDT.bms"
-
-
-include "Appui/Trans/Automates/Missions/SeRecompleter/SeRecompleter - MRT.bms"
-
-include "Appui/Trans/Automates/Missions/SeRecompleter/SeRecompleter - CDT.bms"
-
-
-include "Appui/Trans/Automates/Missions/SeFaireTransporter/MRT - SeFaireTransporter.bms"
-
-include "Appui/Trans/Automates/Missions/SeFaireTransporter/CDT - SeFaireTransporter.bms"
 
 
 --[[// *****************************************************************************
@@ -65,6 +49,7 @@ include "Appui/Trans/Automates/Missions/SeFaireTransporter/CDT - SeFaireTranspor
     activations =
     {
         { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "done_BEH_Nbc_Automate_GererAlerteNiv4" } },
     },
 
     create = function( self )
@@ -77,6 +62,10 @@ include "Appui/Trans/Automates/Missions/SeFaireTransporter/CDT - SeFaireTranspor
         if( DEC_Automate_EstEmbraye() ) then
             do
                 Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[//-----------------------------------------------------------------------------
+]]--[[// NBC --> alerte de niveau 4
+]]--[[//-----------------------------------------------------------------------------
+]]
             end
         end
 
@@ -86,3 +75,4 @@ include "Appui/Trans/Automates/Missions/SeFaireTransporter/CDT - SeFaireTranspor
 
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc_Automate_GererAlerteNiv4", nodes.BEH_Nbc_Automate_GererAlerteNiv4 }

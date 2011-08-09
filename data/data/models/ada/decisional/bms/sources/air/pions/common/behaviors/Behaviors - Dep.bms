@@ -371,15 +371,15 @@ self.done_BEH_Dep_Pion_AIR_RejoindrePoint = function( self, _, v ) self.eEtat = 
 --[[// *****************************************************************************
 ]]--[[// RejoindreParItineraire
 ]]--[[// ======================
-]]--[[// Ce comportement permet de rejoindre une position en acceptant certains 
-]]--[[// compromis. Il arrive qu'il ne soit pas possible de rejoindre un point 
+]]--[[// Ce comportement permet de rejoindre une position en acceptant certains
+]]--[[// compromis. Il arrive qu'il ne soit pas possible de rejoindre un point
 ]]--[[// (exemple : si dans de l'eau...)
-]]--[[// Pour eviter les comportements bloquants, on va autoriser la validation du 
+]]--[[// Pour eviter les comportements bloquants, on va autoriser la validation du
 ]]--[[// comportement selon plusieurs criteres :
 ]]--[[//
-]]--[[//                  - distance significative   : distance que l'on est censé 
+]]--[[//                  - distance significative   : distance que l'on est censé
 ]]--[[//                                              avoir parcouru avant evaluation
-]]--[[//                  - force enlevée à la volonter de rejoindre a chaque tic où 
+]]--[[//                  - force enlevée à la volonter de rejoindre a chaque tic où
 ]]--[[//                    l'on n'arrive pas a progresser
 ]]--[[//                  - force ajoutee à chaque fois que l'on arrive a progresser
 ]]--[[//                    ( on ne depasse pas l'envie max)
@@ -389,7 +389,7 @@ self.done_BEH_Dep_Pion_AIR_RejoindrePoint = function( self, _, v ) self.eEtat = 
 ]]--[[// Forces :
 ]]--[[// -------
 ]]--[[//
-]]--[[// La force sur l'action de deplacement est la force propagée dans les 
+]]--[[// La force sur l'action de deplacement est la force propagée dans les
 ]]--[[// comportements de plus hauts niveaux. Le test sur la satisfaction se fait
 ]]--[[// simplement en verifiant que la volonté de parcourir l'itineraire est superieure
 ]]--[[// a 1
@@ -402,7 +402,7 @@ self.done_BEH_Dep_Pion_AIR_RejoindrePoint = function( self, _, v ) self.eEtat = 
 ]]--[[//      les containtes passés en argument. Typiquement, si on essaie de rejoindre
 ]]--[[//      un point en dehors du fuseau et que l'on specifie comme argument de
 ]]--[[//      pathfind eInfoFuseau, alors, l'itineraire sera calculé dans le fuseau
-]]--[[//      => aucune chance de rejoindre le point. Il faut donc considerer ce cas 
+]]--[[//      => aucune chance de rejoindre le point. Il faut donc considerer ce cas
 ]]--[[//      dans la mission
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -415,7 +415,6 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
     activations =
     {
         { "BEH_Dep_Pion_AIR_Voler", { "done_BEH_Dep_Pion_AIR_Voler" } },
-        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
         { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
         { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
@@ -443,17 +442,6 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
         --[[//variables locales
 ]]local forceEnvieRejoindre = 0
         local envieArret = 0
-        --[[//condition d'arret
-]]if( DEC_Geometrie_PositionsEgales( myself:DEC_Agent_Position(), DEC_ListePoints_GetAt( self._namedParams.listePoints, DEC_ListePoints_Size( self._namedParams.listePoints ) - 1 ) ) ) then
-            do
-                self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
-                                self:SendFeedback( eActionEffectuee )
-                Halt( self )
-                do return end
-
-            end
-        end
-
         if( ModuleBegins() ) then
             do
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
@@ -484,7 +472,6 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
         end
 
         Activate( self.activations.BEH_Dep_Pion_AIR_Voler, 1, emptyTable )
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
         Activate( self.activations.BEH_Dep_Progresser, 1, { self.itineraire, self._namedParams.typeProgression, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
          do
@@ -713,7 +700,7 @@ self.done_BEH_Dep_Pion_AIR_RejoindrePoint = function( self, _, v ) self.eEtat = 
     end,
 
 --[[// *****************************************************************************
-]]--[[// SuivreSurFlanc : Ce comportement permet de suivre un groupe d'agent face à 
+]]--[[// SuivreSurFlanc : Ce comportement permet de suivre un groupe d'agent face à
 ]]--[[//une direction donnée
 ]]--[[//
 ]]--[[// En outre, on favorise l'observation face à cette direction
@@ -744,7 +731,7 @@ node "BEH_Dep_Pion_AIR_SuivreSurFlanc"
 
     activate = function( self )
         local Activate = Activate
-        --[[// variables persistantes   
+        --[[// variables persistantes
 ]]self.eEtat = self.eEtat or eActionEnCours
         self.pointARejoindre = self.pointARejoindre or nil
         if( ModuleBegins() ) then
@@ -794,7 +781,6 @@ connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_PremiereAllure, "ACT_
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_PremiereAllureAvecAppuis, "ACT_Dep_Pions_AIR_Voler", nodes.ACT_Dep_Pions_AIR_Voler }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_PremiereAllureAvecAppuis, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_RejoindreParItineraire, "BEH_Dep_Pion_AIR_Voler", nodes.BEH_Dep_Pion_AIR_Voler }
-connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_RejoindreParItineraire, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_RejoindreParItineraire, "BEH_Dep_Progresser", nodes.BEH_Dep_Progresser }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_RejoindreParItineraire, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AIR_RejoindrePion, "BEH_Dep_Pion_AIR_RejoindrePoint", nodes.BEH_Dep_Pion_AIR_RejoindrePoint }

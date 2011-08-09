@@ -188,7 +188,11 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
 
     // State
     brain[ "DEC_Automate_EstEmbraye" ] = boost::bind( &DEC_AutomateFunctions::IsEngaged, this );
-
+    brain[ "DEC_Automate_ChangeEtatROE" ] =
+        boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, boost::ref( GetAutomate() ), _1 ) );
+    brain[ "DEC_Automate_ChangeEtatROEPopulation" ] =
+        boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged, boost::ref( GetAutomate() ), _1 ) );
+    
     // Debug
     brain[ "DEC_DecisionalState" ] =
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::DecisionalState, boost::ref( GetAutomate() ), _1, _2 ) );
@@ -217,7 +221,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) );
     brain[ "DEC_Connaissances_Populations" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulations< MIL_Automate >, boost::cref( GetAutomate() ) );
 
-
     // Intelligence
     brain[ "DEC_Rens_PourcentageEnnemisDebarquesDansZone" ] =
         boost::function< float( const TER_Localisation* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeUnloadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
@@ -227,8 +230,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
     brain[ "DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau" ] =
         boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
-
-
     brain[ "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques" ] =
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const std::vector< boost::shared_ptr< TER_Localisation > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies, boost::cref( GetAutomate() ), _1 ) );
     brain[ "DEC_Rens_TrierFuseauxSelonPresenceEnnemisDebarques" ] =
@@ -244,7 +245,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Geometry_SplitLocalisation" ] =
-        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) );
+        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Geometrie_DecoupeFuseauEnTroncons" ] =
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_Automate >, boost::ref( GetAutomate() ), _1  ) );
     brain[ "DEC_Geometrie_CalculerPositionObstacle" ] =
@@ -323,6 +324,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionContaminated, this, _1 ) );
     brain[ "DEC_Automate_PionEstNeutralise" ] =
         boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionNeutralized, this, _1 ) );
+    brain[ "DEC_Automate_PionEstTransporte" ] =
+        boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionTransported, this, _1 ) );
     brain[ "DEC_Automate_PionRelevePion" ] =
         boost::function< bool( DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::MakePionRelievePion, boost::cref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Automate_PionPeutReleverPion" ] =
@@ -784,4 +787,17 @@ const std::string& DEC_AutomateDecision::GetDIAType() const
 bool DEC_AutomateDecision::IsAutomateEngaged() const
 {
     return pEntity_->IsEngaged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged
+// Created: LDC 2011-08-05
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState state )
+{
+    if( nRulesOfEngagementState_ != state )
+    {
+        nRulesOfEngagementState_ = state;
+        bStateHasChanged_  = true;
+    }
 }

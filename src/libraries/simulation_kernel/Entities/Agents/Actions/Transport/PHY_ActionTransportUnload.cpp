@@ -18,11 +18,13 @@
 // Name: PHY_ActionTransportUnload constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionTransportUnload::PHY_ActionTransportUnload( MIL_AgentPion& pion )
+PHY_ActionTransportUnload::PHY_ActionTransportUnload( MIL_AgentPion& pion, MT_Vector2D* position )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_         ( pion.GetRole< transport::PHY_RoleAction_Transport >() )
+    , role_    ( pion.GetRole< transport::PHY_RoleAction_Transport >() )
 {
     Callback( role_.GetInitialReturnCode() );
+    if( position )
+        position_.reset( new MT_Vector2D( *position ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +51,7 @@ void PHY_ActionTransportUnload::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionTransportUnload::Execute()
 {
-    int nResult = role_.Unload();
+    int nResult = role_.Unload( position_.get() );
     Callback( nResult );
 }
 

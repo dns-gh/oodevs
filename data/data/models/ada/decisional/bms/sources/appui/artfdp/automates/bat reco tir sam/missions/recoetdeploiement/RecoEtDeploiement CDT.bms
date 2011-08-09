@@ -17,7 +17,7 @@ local emptyTable = emptyTable
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASS_RecoEtDeploiement, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM", { "done_BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM" } },
+        { "BEH_Conduite_Automate_ASS_RecoEtDeploiement", { "done_BEH_Conduite_Automate_ASS_RecoEtDeploiement" } },
     },
 
     create = function( self )
@@ -38,172 +38,7 @@ local emptyTable = emptyTable
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM, 1, emptyTable )
-    end,
-
-}
-
-node "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM"
-{
-    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM" }, "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM, {value} ) end,
-    activations =
-    {
-        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "done_BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
-        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
-        { "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", { "done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
-        { "BEH_Conduite_Automate_ASS_SuivreA", { "done_BEH_Conduite_Automate_ASS_SuivreA" } },
-    },
-
-    create = function( self )
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        --[[//Définition du type de la mission ce qui permet d'accéder aux paramètres du formulaire associé
-]]self.mission = self.mission or DEC_GetMission( myself )
-        --[[//Création de la liste des points nécessaires à la reco(lstPos_Reco)
-]]self.lstPos_Reco = self.lstPos_Reco or DEC_Geometrie_CreerListePoints()
-        self.listeObstacle = self.listeObstacle or {}--[[//Variables représentant la liste des objets de type zoneImplantationCanon existants
-]]
-        self.listeZones = self.listeZones or {}
-        self.zoneTir1 = self.zoneTir1 or nil--[[//Variables représentant les zones d'implantation canon de chaque batterie de tir
-]]
-        self.zoneTir2 = self.zoneTir2 or nil
-        --[[//Liste de tous les pions de l'automate, PC inclus
-]]self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
-        --[[//Liste permettant de tester le type du pion parmi ceux n'ayant pas la mission de reconnaissance pour 
-]]--[[//que les pions de type SectionASS_Tir ne suivent pas les pions reco mais attendent la fin des travaux
-]]--[[//avant de se déplacer
-]]local selPion_ASS_Tir = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Tir" )
-        --[[//Variable représentant la position d'un objet dans la liste "listeObstacle"
-]]local compteur = 0
-        local indice = 0--[[//Variable représentant la position d'un objet dans la liste "listeZones"
-]]
-        self.ptZone = self.ptZone or nil--[[//Variable représentant la position à reconnaître
-]]
-        --[[//Variable signalant si les pions de type SectionASS_Tir peuvent effectuer leur mission
-]]--[[//Suite à la réception de l'ordre de conduite POURSUIVRE
-]]local poursuivre = false
-        if( ModuleBegins() ) then
-            --[[//Copie des points de reconnaissance du formulaire de la mission
-]]--[[//dans la liste lstPos_Reco pour les pions de reconnaissance
-]]S_Geometrie_Automate_ASS_CopiePointDansFuseau( self.mission.positionsAReconnaitre_, self.lstPos_Reco )
-        end
-
-        --[[//Définition des pions de type reco
-]]local selPion_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
-        for _,x_ass in pairs( selPion_ASS_Reco or emptyTable ) do
-        local _continue = true
-do
-                --[[//Donner la mission qu'au pion ne possédant pas la mission de reconnaissance
-]]--[[//Eviter de traiter plusieurs fois le même pion
-]]if( S_Misc_EstMissionAffectee_Pion( x_ass, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" ) ) then
-                    _continue = false
-                end
-
-                    if _continue then
-                    --[[//Chercher la position la plus proche du pion disponible
-]]self.ptZone = S_Misc_Automate_ASS_ExtraitPoint_ProchePionDansFuseau( self.lstPos_Reco, x_ass )
-                    --[[//Forcer le comportement à continuer car le point de reconnaissance n'est connu
-]]--[[//qu'à la première lecture du code
-]]if( self.ptZone == nil ) then
-                        _continue = false
-                    else
-do
-                            --[[//Recherche et destruction de toutes zones mortier existantes dans le fuseau
-]]self.listeZones = DEC_Connaissances_ObjetsDansFuseau( eTypeObjectZoneImplantationMortier )
-                            indice = 0
-                            --[[//Calcul du nombre d'éléments dans la liste des zones mortier
-]]local taillelisteZones = #( self.listeZones )
-                            if( taillelisteZones ~= 0 ) then
-                                do
-                                    for _,x in pairs( self.listeZones or emptyTable ) do
-                                    local _continue = true
-                                        do
-                                            x = DEC_UserTypeList_GetAt( self.listeZones, indice )
-                                            DEC_DetruireObjetSansDelais( x )
-                                            indice = indice + 1
-                                        end
-
-                                    end
-
-                                end
-                            end
-
-                        end
-                    end
-
-                        if _continue then
-                        Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { x_ass, self.ptZone, } )
-                    end
-                end
-            end
---[[//Gestion de la réception de l'ordre de conduite Poursuivre, ne concerne que les pions de type SectionASS_Tir
-]]
-        end
-
-        local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or emptyTable ) do
-        local _continue = true
-do
-                local ordre = x
-                local repOrdre = ordre
-                 do
-                    local _continue = true
-                    local switch_1 = repOrdre:GetType()
-                    local cases_switch_1 = {}
-                        if switch_1 == "Rep_OrderConduite_Poursuivre" then
-                            DEC_Trace( "======= Ordre --> POURSUIVRE =====" )
-                            poursuivre = true
-                                                cases_switch_1[1] = true
-                        end
-                    end
-
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
-            end
---[[//Gestion du déplacement des sections de tir vers les zones reconnues
-]]--[[//et de la poursuite de la mission sur l'ordre de conduite poursuivre
-]]
-        end
-
-        if( poursuivre ) then
-            do
-                --[[//Liste des objets de types "ZoneImplantationCanon"
-]]self.listeObstacle = DEC_Connaissances_ObjetsDansFuseau( eTypeObjectZoneImplantationMortier )
-                --[[//Calcul du nombre d'éléments dans la liste des zones canon
-]]local tailleListeObstacle = #( self.listeObstacle )
-                --[[//Il existe des objets dans le fuseau de l'automate
-]]if( tailleListeObstacle ~= 0 ) then
-                    do
-                        for _,x_pionTir in pairs( selPion_ASS_Tir or emptyTable ) do
-                        local _continue = true
-                            do
-                                local pionTir = x_pionTir
-                                if( compteur < tailleListeObstacle ) then
-                                    do
-                                        self.zoneTir1 = DEC_UserTypeList_GetAt( self.listeObstacle, compteur )
-                                        self.zoneTir2 = DEC_UserTypeList_GetAt( self.listeObstacle, compteur + 1 )
-                                        --[[//Mise en oeuvre sur la zone d'implantation de tir
-]]Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, 1, { pionTir, self.zoneTir1, self.zoneTir2, } )
-                                        --[[//Incrémentation de l'indice d'un objet de 2 car une zone mortier 
-]]--[[//se compose de deux objets
-]]compteur = compteur + 2
-                                    end
---[[//Le PC suit une section de tir
-]]                                end
-
-                                Activate( self.activations.BEH_Conduite_Automate_ASS_SuivreA, 1, { DEC_Automate_PionPC(), pionTir, } )
-                            end
-
-                        end
-
-                    end
-                end
-
-            end
-        end
-
+        Activate( self.activations.BEH_Conduite_Automate_ASS_RecoEtDeploiement, 1, emptyTable )
     end,
 
 }
@@ -211,8 +46,4 @@ do
 eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Automate_CDT_ASS_RecoEtDeploiement = { "mission" }
 connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM, "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", nodes.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA }
-connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
-connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM, "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", nodes.BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA }
-connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM, "BEH_Conduite_Automate_ASS_SuivreA", nodes.BEH_Conduite_Automate_ASS_SuivreA }
-connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ASS_RecoEtDeploiement, "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM", nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ASS_RecoEtDeploiement, "BEH_Conduite_Automate_ASS_RecoEtDeploiement", nodes.BEH_Conduite_Automate_ASS_RecoEtDeploiement }

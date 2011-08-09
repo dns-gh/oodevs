@@ -10,8 +10,6 @@ include "Common/Moteur/Types.bms"
 include "Common/Types A VIRER.bms"
 
 
-
-
 --[[// MIA: a deplacer
 ]]--[[//necessaire??
 ]]
@@ -168,6 +166,7 @@ eGererPionDetruit = 127
 eGererSecondEchelon = 128
 eSelectionnerFeuAEteindre = 129
 eEteindreIncendie = 130
+eDecrocherTotalement = 131
 
 
 ePhase_MRT = 0
@@ -343,6 +342,7 @@ eEtatPhaseMission_SuitUnite = 39
 eEtatPhaseMission_TransportEnCours = 40
 eEtatPhaseMission_TransportEmbarquement = 41
 eEtatPhaseMission_TransportDebarquement = 42
+eEtatPhaseMission_AttentePoursuivre = 43
 --[[// le pion va avoir une mission au tic suivant	
 ]]
 
@@ -414,10 +414,11 @@ eEtatDeploiement_omnidirectionnel = 1
 ]]--[[// ---> Utilisés seulement par INF...a mon avis à virer/simplifier
 ]]--[[// MIA à virer cf. avec génie
 ]]--[[// MIA à virer cf. FT sur tenir avec JCR
+]]--[[// MIA redondant avec myself.eEtatFeu_
 ]]--[[//spe INF MILICE
 ]]--[[//spé INF
 ]]--[[//spé INF
-]]--[[// <--- 
+]]--[[// <---
 ]]--[[// A revoir
 ]]--[[//ASA-ALAT-INF
 ]]--[[//ASA-ALAT-INF
@@ -517,6 +518,9 @@ eEtatDeploiement_omnidirectionnel = 1
 
 
 
+
+
+
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Trans
 ]]--[[//-----------------------------------------------------------------------------
@@ -561,6 +565,7 @@ eEtatDeploiement_omnidirectionnel = 1
 
 
 --[[// PIONS
+]]--[[// pour mission jalonner // TEMP
 ]]
 
 
@@ -623,6 +628,12 @@ eEtatDeploiement_omnidirectionnel = 1
 
 --[[// Sections de tir
 ]]--[[// ----------------------------------------------------------------------------
+]]--[[// ****************************************************************************
+]]--[[//La section de Tir doit pouvoir se déplacer sur les zones reconnues par
+]]--[[// sa section de reco
+]]--[[// ----------------------------------------------------------------------------
+]]--[[//15/07/2009
+]]--[[// ****************************************************************************
 ]]--[[// Parametres utililés et initialisés lorsque l'automate recois un ordre 
 ]]--[[// de tir
 ]]
@@ -630,6 +641,8 @@ eEtatDeploiement_omnidirectionnel = 1
 --[[// Parametres utililés et initialisés lorsque l'automate recois un ordre 
 ]]--[[// de tir
 ]]
+
+
 
 --[[// Observations
 ]]--[[// ----------------------------------------------------------------------------
@@ -668,10 +681,6 @@ eEtatDeploiement_omnidirectionnel = 1
 ]]--[[// Objectif Courant
 ]]--[[//--------------------------------------------------------------------------
 ]]
-
-
-
-
 
 
 
@@ -984,6 +993,5 @@ include "RENS\Automates\Rens - Auto - Types.bms"*/]]
 ]]
 --[[//-----------------------------------------------------------------------------
 ]]--[[/*include "Logistique\LOG - Types.bms"*/]]
-
 
 

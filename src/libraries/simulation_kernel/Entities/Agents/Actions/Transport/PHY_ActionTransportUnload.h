@@ -31,7 +31,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-    explicit PHY_ActionTransportUnload( MIL_AgentPion& pion );
+             PHY_ActionTransportUnload( MIL_AgentPion& pion, MT_Vector2D* position );
     virtual ~PHY_ActionTransportUnload();
 
     //! @name Operations
@@ -43,6 +43,7 @@ public:
 
 private:
     transport::PHY_RoleAction_Transport& role_;
+    std::auto_ptr< MT_Vector2D > position_;
 };
 
 #endif // __PHY_ActionTransportUnload_h_

@@ -51,7 +51,8 @@ local emptyTable = emptyTable
 ]]if( ModuleBegins() ) then
             do
                 local nErrorCode1 = nil
-                self.listeSousSecteurs = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zoneAControler, #( self._namedParams.selPions ), nErrorCode1 )
+                local mission = DEC_GetMission( myself )
+                self.listeSousSecteurs = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zoneAControler, #( self._namedParams.selPions ), DEC_GetDirectionEnnemi( mission ), nErrorCode1 )
                 nErrorCode1 = self.listeSousSecteurs.second
                 self.listeSousSecteurs = self.listeSousSecteurs.first
                 --[[// Gestion erreur

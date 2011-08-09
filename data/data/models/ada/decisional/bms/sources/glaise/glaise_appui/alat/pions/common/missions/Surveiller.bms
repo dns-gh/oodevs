@@ -12,18 +12,18 @@ include "bit.lua"
 ]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//--------------
-]]--[[// Chercher à deceler toute activité de l'ennemi dans une zone dans le but 
+]]--[[// Chercher à deceler toute activité de l'ennemi dans une zone dans le but
 ]]--[[// d'alerter et de renseigner.
 ]]--[[//
 ]]--[[//
-]]--[[//rythme : plus rapide que la reconnaissance tant que l'on a pas une presence 
-]]--[[//ennemi possible. Parcourir la localisation avec la technique de reconnaisance 
+]]--[[//rythme : plus rapide que la reconnaissance tant que l'on a pas une presence
+]]--[[//ennemi possible. Parcourir la localisation avec la technique de reconnaisance
 ]]--[[//en deux passage
 ]]--[[//
 ]]--[[// une fois que l'on a fini toutes les zones, on recommence
 ]]--[[//
-]]--[[// Feu : 	sur riposte
-]]--[[//  		ordre suite a un compte rendu
+]]--[[// Feu :     sur riposte
+]]--[[//          ordre suite a un compte rendu
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_ALAT_Surveiller"
@@ -69,11 +69,11 @@ include "bit.lua"
                     Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end
 
-                local eEtatDecoupeLocalisation = nil--[[// surface de la zone et decoupage en zones de 10km²            
+                local eEtatDecoupeLocalisation = nil--[[// surface de la zone et decoupage en zones de 10km²
 ]]--[[// ------------------------------------------------
 ]]
                 local listeSousSecteurs = {}
-                listeSousSecteurs = DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.mission.zone_, 10000000, eEtatDecoupeLocalisation )
+                listeSousSecteurs = DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.mission.zone_, 10000000, DEC_GetDirectionEnnemi( self._namedParams.mission ), eEtatDecoupeLocalisation )
                 eEtatDecoupeLocalisation = listeSousSecteurs.second
                 listeSousSecteurs = listeSousSecteurs.first
                 DEC_Copie_ListeLocalisations( listeSousSecteurs, self.listeLocalisations )

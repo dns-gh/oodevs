@@ -36,7 +36,7 @@ function S_Misc_Pion_Rens_ObtenirDronesDisponibles( )
     local _continue = true
 do
             local pion = x
-            if( pion:GetType() == "Drone_CL289" or pion:GetType() == "Drone_SDTI" ) then
+            if( ( pion:GetType() == "Drone_CL289" or pion:GetType() == "Drone_SDTI" ) and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None ) then
                 do
                     local pionDrone = x
                     if( not pionDrone:GetbMiseEnOeuvre_() and not pionDrone:GetbEnExploitation_() ) then

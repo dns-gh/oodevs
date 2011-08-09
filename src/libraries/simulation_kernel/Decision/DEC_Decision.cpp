@@ -117,6 +117,7 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
         boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AutomateFunctions::SetMission, _1, _2 ) );
     brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
     brain[ "DEC_Pion_GetMilPionType" ] = &DEC_AgentFunctions::GetMilPionType;
+    brain[ "DEC_Agent_EstImmobilise" ] = &DEC_AgentFunctions::IsImmobilized;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,44 +145,28 @@ void RegisterPopulationFunctions( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 void RegisterAgentKnowledgeFunctions( directia::brain::Brain& brain )
 {
-    brain[ "DEC_ConnaissanceAgent_EtatOps" ] =
-        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetOperationalState, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstDetruitTactique" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Position" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPositionPtr, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstEnVol" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_NatureAtlas" ] =
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetNatureAtlas, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_NiveauPerceptionMax" ] =
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_DangerositeSurPion" ] =
-        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) );
-    brain[ "DEC_ConnaissanceAgent_DangerositeSurConnaissance" ] =
-        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) );
-    brain[ "DEC_ConnaissanceAgent_EstValide" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsKnowledgeValid, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstEnMouvement" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsMoving, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstPrisonnier" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPrisoner, _1 ) );
+    brain[ "DEC_ConnaissanceAgent_EtatOps" ] = &DEC_KnowledgeAgentFunctions::GetOperationalState;
+    brain[ "DEC_ConnaissanceAgent_EstDetruitTactique" ] = &DEC_KnowledgeAgentFunctions::GetMajorOperationalState;
+    brain[ "DEC_ConnaissanceAgent_Position" ] = &DEC_KnowledgeAgentFunctions::GetPositionPtr;
+    brain[ "DEC_ConnaissanceAgent_EstEnVol" ] = &DEC_KnowledgeAgentFunctions::IsFlying;
+    brain[ "DEC_ConnaissanceAgent_Altitude" ] = &DEC_KnowledgeAgentFunctions::DEC_ConnaissanceAgent_Altitude;
+    brain[ "DEC_ConnaissanceAgent_NatureAtlas" ] = &DEC_KnowledgeAgentFunctions::GetNatureAtlas;
+    brain[ "DEC_ConnaissanceAgent_NiveauPerceptionMax" ] = &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup;
+    brain[ "DEC_ConnaissanceAgent_DangerositeSurPion" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion;
+    brain[ "DEC_ConnaissanceAgent_DangerositeSurConnaissance" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge;
+    brain[ "DEC_ConnaissanceAgent_EstValide" ] = &DEC_KnowledgeAgentFunctions::IsKnowledgeValid;
+    brain[ "DEC_ConnaissanceAgent_EstEnMouvement" ] = &DEC_KnowledgeAgentFunctions::IsMoving;
+    brain[ "DEC_ConnaissanceAgent_SEstRendu" ] = &DEC_KnowledgeAgentFunctions::IsSurrendered;
+    brain[ "DEC_ConnaissanceAgent_EstPrisonnier" ] = &DEC_KnowledgeAgentFunctions::IsPrisoner;
     brain[ "DEC_ConnaissanceAgent_EstRenduAMonCamp" ] = &DEC_KnowledgeAgentFunctions::IsSurrenderToMyArmy;
     brain[ "DEC_ConnaissanceAgent_EstRefugie" ] = &DEC_KnowledgeAgentFunctions::IsRefugee;
-    brain[ "DEC_ConnaissanceAgent_EstMort" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDead, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Verrouiller" ] =
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] =
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_TuerOfficiers" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::KillOfficers, _1 ) );
-    brain[ "DEC_Connaissances_UnitesPrenantAPartieSurAmi"  ] =
-        boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* )  >( boost::bind( &DEC_KnowledgeFunctions::GetAgentsAttackingAlly, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Verrouiller" ] =
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] =
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) );
+    brain[ "DEC_ConnaissanceAgent_EstMort" ] = &DEC_KnowledgeAgentFunctions::IsDead;
+    brain[ "DEC_ConnaissanceAgent_Verrouiller" ] = &DEC_KnowledgeAgentFunctions::Lock;
+    brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] = &DEC_KnowledgeAgentFunctions::Unlock;
+    brain[ "DEC_ConnaissanceAgent_TuerOfficiers" ] = &DEC_KnowledgeAgentFunctions::KillOfficers;
+    brain[ "DEC_Connaissances_UnitesPrenantAPartieSurAmi"  ] = &DEC_KnowledgeFunctions::GetAgentsAttackingAlly;
+    brain[ "DEC_ConnaissanceAgent_Verrouiller" ] = &DEC_KnowledgeAgentFunctions::Lock;
+    brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] = &DEC_KnowledgeAgentFunctions::Unlock;
     brain[ "DEC_ConnaissanceAgent_GetMilPionType" ] = &DEC_KnowledgeAgentFunctions::GetMilPionType;
     brain[ "DEC_Agent_RapportDeForceLocal" ] = &DEC_AgentFunctions::GetRapForLocalAgent;
 }
@@ -201,7 +186,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_PositionTranslateDir" ] = &DEC_GeometryFunctions::TranslatePositionInDirection;
     brain[ "DEC_Geometrie_PositionTranslateVector" ] = &DEC_GeometryFunctions::TranslatePositionInVector;
     brain[ "DEC_Geometrie_PositionsEgales" ] = &DEC_GeometryFunctions::ComparePositions;
-    brain[ "DEC_Geometrie_Distance" ] = &DEC_GeometryFunctions::Distance;//@TODO MGD Replace by ComputeDistance on shared_ptr
+    brain[ "DEC_Geometrie_Distance" ] = &DEC_GeometryFunctions::Distance;
+    brain[ "DEC_Geometrie_Distance3D" ] = &DEC_GeometryFunctions::Distance3D;
     brain[ "DEC_Geometrie_ConvertirPointEnLocalisation" ] = &DEC_GeometryFunctions::ConvertPointToLocalisation;
     brain[ "DEC_Geometrie_EstPointDansLocalisation" ] = &DEC_GeometryFunctions::IsPointInsideLocalisation;
     brain[ "DEC_Geometrie_CreerLocalisation" ] = &DEC_GeometryFunctions::CreateLocalisation;
@@ -252,6 +238,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
         boost::function< boost::shared_ptr< MT_Vector2D >( MIL_Fuseau& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDestPointForFuseau, _1 ) );
     brain[ "DEC_Geometrie_CalculerLocalisationsBU" ] = &DEC_GeometryFunctions::ComputeUrbanBlockLocalisations;
     brain[ "DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau" ] = &DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau;
+    brain[ "DEC_Geometrie_LocalisationsEgales" ] = &DEC_GeometryFunctions::CompareLocalisations;
 }
 
 // -----------------------------------------------------------------------------

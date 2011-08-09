@@ -196,6 +196,17 @@ bool DEC_KnowledgeAgentFunctions::IsFlying( boost::shared_ptr< DEC_Knowledge_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::DEC_ConnaissanceAgent_Altitude
+// Created: LDC 2011-08-05
+// -----------------------------------------------------------------------------
+double DEC_KnowledgeAgentFunctions::DEC_ConnaissanceAgent_Altitude( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if ( !pKnowledge )
+        return 0.;
+    return pKnowledge->GetAltitude();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsKnowledgeValid
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
@@ -238,10 +249,10 @@ bool DEC_KnowledgeAgentFunctions::IsDead( boost::shared_ptr< DEC_Knowledge_Agent
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::HasSurrenderedTo
+// Name: DEC_KnowledgeAgentFunctions::IsSurrendered
 // Created: NLD 2011-05-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::HasSurrenderedTo( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* /*pTarget*/ )
+bool DEC_KnowledgeAgentFunctions::IsSurrendered( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsSurrendered();
 }

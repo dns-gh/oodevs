@@ -99,7 +99,7 @@ do
 
                                         end
 
-                                        self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionSurveiller ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
+                                        self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionSurveiller ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                                         _continue = false
                                     elseif switch_1 == deploiementNasseQuatreSections then
                                         for _,x in pairs( self.listeSectionMistral or emptyTable ) do
@@ -116,7 +116,7 @@ do
 
                                         end
 
-                                        self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionSurveiller ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
+                                        self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionSurveiller ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                                         _continue = false
                                     elseif switch_1 == deploiementDoubleRideau then
                                         self.listeSectionMistralPourMissionSurveiller = self.listeSectionMistral
@@ -137,7 +137,7 @@ do
 
                                         end
 
-                                        self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionSurveiller ), self.barycentreZone, 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
+                                        self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionSurveiller ), self.barycentreZone, 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                                         _continue = false
                                                                         end
                                 end

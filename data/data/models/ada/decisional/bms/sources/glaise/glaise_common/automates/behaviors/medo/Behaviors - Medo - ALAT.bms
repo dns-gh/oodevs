@@ -465,6 +465,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.ciblesPrioritaires = self.params[7]
         self._namedParams.neutraliser = self.params[8]
+        self._namedParams.dirSplit = self.params[9]
     end,
 
     activate = function( self )
@@ -473,7 +474,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
         if( ModuleBegins() ) then
             do
                 --[[// decoupage de la zone et définition des points de dislocation
-]]local listeZones = S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ) )
+]]local listeZones = S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ), self._namedParams.dirSplit )
                 if( #( listeZones ) == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )

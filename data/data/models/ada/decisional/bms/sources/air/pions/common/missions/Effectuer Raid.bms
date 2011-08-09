@@ -16,9 +16,9 @@ local emptyTable = emptyTable
         { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
         { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
-        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
         { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
         { "BEH_Dep_Pion_AIR_RejoindreParItineraire", { "done_BEH_Dep_Pion_AIR_RejoindreParItineraire" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
         { "BEH_Eni_Pion_AIR_EffectuerRaid", { "done_BEH_Eni_Pion_AIR_EffectuerRaid" } },
         { "BEH_Dep_Pion_AIR_SePoser", { "done_BEH_Dep_Pion_AIR_SePoser" } },
     },
@@ -38,7 +38,10 @@ local emptyTable = emptyTable
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
+                    do
+                        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
+                    end
                 end
 
             end
@@ -72,7 +75,6 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAttaque, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.barycentreZone, } )
                     Activate( self.activations.BEH_Dep_Pion_AIR_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, 0, 500, 0, 0, } )
 self.done_BEH_Dep_Pion_AIR_RejoindreParItineraire = function( self, _, v ) self.eEtat = v[1] end
@@ -153,8 +155,8 @@ connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT
 connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Dep_Pion_AIR_RejoindreParItineraire", nodes.BEH_Dep_Pion_AIR_RejoindreParItineraire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Eni_Pion_AIR_EffectuerRaid", nodes.BEH_Eni_Pion_AIR_EffectuerRaid }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Dep_Pion_AIR_SePoser", nodes.BEH_Dep_Pion_AIR_SePoser }

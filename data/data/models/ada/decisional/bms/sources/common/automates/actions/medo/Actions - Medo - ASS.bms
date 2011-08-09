@@ -1,9 +1,12 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] = true
 
+
+
+
 --[[// *****************************************************************************
-]]--[[// ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA
-]]--[[// 
+]]--[[// ACT_Mission_Automate_NBC_AssignerReconnaitreZoneA
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -21,7 +24,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
     select = function( self )
         self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
 ]]--[[// Cree la Mission
-]]--[[//-----------------------------------------------------------------------------	
+]]--[[//-----------------------------------------------------------------------------
 ]]
         if( ModuleBegins() ) then
             do
@@ -50,7 +53,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
             do return end
         end
 
-        --[[//-----------------------------------------------------------------------------		
+        --[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
             end
@@ -60,8 +63,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
         end
 
         --[[// Zone
-]]DEC_Copie_Point_Mission( self._namedParams.ptZone, self.missionPion, "positionDeploiement_" )
-        --[[// Infos globales	    
+]]DEC_Copie_Localisation_Mission( self._namedParams.ptZone, self.missionPion, "zoneDeploiement_" )
+        --[[// Infos globales
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[// Marquage échelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
@@ -101,7 +104,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
     select = function( self )
         self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
 ]]--[[// Cree la Mission
-]]--[[//-----------------------------------------------------------------------------	
+]]--[[//-----------------------------------------------------------------------------
 ]]
         if( ModuleBegins() ) then
             do
@@ -130,7 +133,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
             do return end
         end
 
-        --[[//-----------------------------------------------------------------------------		
+        --[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
             end
@@ -143,7 +146,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
 ]]DEC_Copie_Point_Mission( self._namedParams.ptDeploiement, self.missionPion, "positionDeploiement_" )
         --[[// Zone
 ]]DEC_Copie_Localisation_Mission( self._namedParams.locZone, self.missionPion, "zoneAObserver_" )
-        --[[// Infos globales	    
+        --[[// Infos globales
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[// Marquage échelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
@@ -161,10 +164,10 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
 
 }
 
---[[//-----------------------------------------------------------------------------	
+--[[//-----------------------------------------------------------------------------
 ]]--[[// *****************************************************************************
 ]]--[[// ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -327,7 +330,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
 ]]--[[//23/10/2008
 ]]--[[// *****************************************************************************
 ]]--[[// ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -341,12 +344,14 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
         self._namedParams.pion = self.params[2]
         self._namedParams.zoneImplantationTir1 = self.params[3]
         self._namedParams.zoneImplantationTir2 = self.params[4]
+        self._namedParams.sauvegardeAutomatique = self.params[5]
+        self._namedParams.ptSauvegarde = self.params[6]
     end,
 
     select = function( self )
         self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
 ]]--[[// Cree la Mission
-]]--[[//-----------------------------------------------------------------------------	
+]]--[[//-----------------------------------------------------------------------------
 ]]
         if( ModuleBegins() ) then
             do
@@ -375,7 +380,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
             do return end
         end
 
-        --[[//-----------------------------------------------------------------------------		
+        --[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
             end
@@ -384,11 +389,96 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
             do return end
         end
 
-        --[[// Infos globales	    
+        --[[// Infos globales
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//Insertion des données des deux zones d'implantation de tir dans les paramètres de la mission
 ]]DEC_AssignMissionParameter( self.missionPion, "zoneImplantation1_", self._namedParams.zoneImplantationTir1 )
         DEC_AssignMissionParameter( self.missionPion, "zoneImplantation2_", self._namedParams.zoneImplantationTir2 )
+        DEC_AssignMissionParameter( self.missionPion, "sauvegardeAutomatique_", self._namedParams.sauvegardeAutomatique )
+        DEC_AssignMissionParameter( self.missionPion, "positionSauvegarde_", self._namedParams.ptSauvegarde )
+        --[[// Marquage échelon
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self:SendFeedback( eActionEffectuee )
+        do return end
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// *****************************************************************************
+]]--[[// ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre"
+{
+    feedbacks = { { { "done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre" }, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zoneImplantationTir1 = self.params[3]
+        self._namedParams.sauvegardeAutomatique = self.params[4]
+        self._namedParams.ptSauvegarde = self.params[5]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------
+]]
+        if( ModuleBegins() ) then
+            do
+                 do
+                    local _continue = true
+                    local switch_1 = self._namedParams.ePhase
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" )
+                            self.missionPion = misMRT
+                            _continue = false
+                        elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" )
+                            self.missionPion = misCDT
+                            _continue = false
+                        
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self:SendFeedback( eActionImpossible )
+            do return end
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+            end
+        else
+            self:SendFeedback( eActionEffectuee )
+            do return end
+        end
+
+        --[[// Infos globales
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//Insertion des données des deux zones d'implantation de tir dans les paramètres de la mission
+]]DEC_AssignMissionParameter( self.missionPion, "zoneImplantation_", self._namedParams.zoneImplantationTir1 )
+        DEC_AssignMissionParameter( self.missionPion, "sauvegardeAutomatique_", self._namedParams.sauvegardeAutomatique )
+        DEC_AssignMissionParameter( self.missionPion, "positionSauvegarde_", self._namedParams.ptSauvegarde )
         --[[// Marquage échelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
         --[[//-----------------------------------------------------------------------------

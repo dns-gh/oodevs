@@ -76,3 +76,5 @@ include "Glaise/Glaise_Appui/ArtDsa/Pions/groupe ASA TCP/Missions/Defendre Site 
 
 include "Glaise/Glaise_Appui/ArtDsa/Pions/groupe ASA TCP/Missions/Surveiller.bms"
 
+include "Glaise/Glaise_Appui/ArtDsa/Pions/groupe ASA TCP/Missions/Defendre Unites.bms"
+

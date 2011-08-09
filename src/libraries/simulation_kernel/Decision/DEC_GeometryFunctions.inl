@@ -48,7 +48,7 @@ const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_Automate& autom
 // Modified: JVT 2004-11-03
 // -----------------------------------------------------------------------------
 template< typename T >
-std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts )
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
 {
     assert( pLocalisation );
 
@@ -57,7 +57,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
     TER_Localisation clippedLocalisation;
     unsigned int errCode = eError_LocalisationPasDansFuseau;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
-        errCode = SplitLocalisation( *pLocalisation, nNbrParts, result );
+        errCode = SplitLocalisation( *pLocalisation, nNbrParts, direction, result );
     return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
 }
 
@@ -66,7 +66,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
 template< typename T >
-std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea )
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea, MT_Vector2D* direction )
 {
     assert( pLocalisation );
 
@@ -77,7 +77,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
         const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( pLocalisation->GetArea() / rAverageArea ) );
-        errCode = SplitLocalisation( *pLocalisation, nNbrParts, result );
+        errCode = SplitLocalisation( *pLocalisation, nNbrParts, direction, result );
     }
     return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
 }
@@ -107,7 +107,9 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
             for( unsigned int n = 1; n < nNbrParts; n *= 4 )
             {
                 T_ResultVector splitted;
-                std::for_each( result.begin(), result.end(), boost::bind( &TER_Localisation::Split, _1, 4, boost::ref( splitted ) ) );
+                MT_Vector2D* splitDirection = 0;
+                for( T_ResultVector::const_iterator it = result.begin(); it != result.end(); ++it )
+                    (*it)->Split( 4, splitted, splitDirection );
                 std::swap( result, splitted );
             }
         }

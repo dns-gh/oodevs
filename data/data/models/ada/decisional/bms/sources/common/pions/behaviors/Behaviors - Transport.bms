@@ -246,8 +246,18 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                         end
                     end
 
-                    Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, emptyTable )
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.posDebarquement ) > self._namedParams.distanceEmbarquement ) then
+                        do
+                            Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, { myself:DEC_Agent_Position(), } )
 self.done_ACT_Transport_Pion_TransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
+                        end
+                    else
+do
+                            Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, { self._namedParams.posDebarquement, } )
+self.done_ACT_Transport_Pion_TransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
+                        end
+                    end
+
                     _continue = false
                                 end
             end

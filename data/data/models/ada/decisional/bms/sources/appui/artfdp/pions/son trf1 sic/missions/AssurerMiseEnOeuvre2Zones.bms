@@ -16,8 +16,7 @@ local emptyTable = emptyTable
 ]]--[[//Rejoins une position et cree un site de deploiement
 ]]--[[//------------------------------------------------------------------------------
 ]]
---[[//behavior MIS_Pion_ASS_AssurerMiseEnOeuvre( T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones mission, id blurp )
-]]
+
 node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
 {
     feedbacks = { { { "done_MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones" }, "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones" } },
@@ -25,7 +24,7 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
     activations =
     {
         { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
-        { "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC", { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC" } },
+        { "BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon", { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon" } },
         { "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", { "done_BEH_Info_Pion_ASS_GererDisponibiliteAuTir" } },
         { "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", { "done_BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" } },
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
@@ -46,7 +45,7 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
                 --[[// Prise en charge de l'ordre d'application des feux
 ]]F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
                 --[[//---------------------------------------------------------------------
-]]DEC_Trace( "Reception mission 'AssurerMiseEnOeuvre'" )
+]]DEC_Trace( "Reception mission 'AssurerMiseEnOeuvre 2 zones'" )
             end
         end
 
@@ -62,15 +61,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, 1, { true, self._namedParams.mission.zoneImplantation2_, } )
-        --[[// Mission 
+        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon, 1, { false, } )
+        --[[// Mission
 ]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
          do
             local _continue = true
 --[[//---------------------------------------------------------------------
 ]]            local switch_1 = self.ePhase
                 if switch_1 == eMettreEnOeuvre then
-                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_TRF1(), } )
+                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_TIR_TRF1(), } )
                     _continue = false
                 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -96,7 +95,7 @@ eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones = { "mission" }
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC", nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon", nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", nodes.BEH_Info_Pion_ASS_GererDisponibiliteAuTir }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

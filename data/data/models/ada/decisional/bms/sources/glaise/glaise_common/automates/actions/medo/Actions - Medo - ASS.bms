@@ -6,7 +6,7 @@ includedFiles["sources/glaise/glaise_common/automates/actions/medo/Actions - Med
 
 --[[// *****************************************************************************
 ]]--[[// ACT_Mission_Automate_NBC_AssignerReconnaitreZoneA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -63,7 +63,7 @@ includedFiles["sources/glaise/glaise_common/automates/actions/medo/Actions - Med
         end
 
         --[[// Zone
-]]DEC_Copie_Point_Mission( self._namedParams.ptZone, self.missionPion, "positionDeploiement_" )
+]]DEC_Copie_Localisation_Mission( self._namedParams.ptZone, self.missionPion, "zoneDeploiement_" )
         --[[// Infos globales	    
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[// Marquage échelon

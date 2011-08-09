@@ -3,6 +3,9 @@ includedFiles["sources/appui/log/automates/Actions.bms"] = true
 
 local emptyTable = emptyTable
 
+include "bit.lua"
+
+
 --[[// *****************************************************************************
 ]]--[[// ACT_Ordre_Automate_LOG_OrdresInopines
 ]]--[[//
@@ -30,7 +33,8 @@ do
                 local repOrdre = x
                  do
                     local _continue = true
-                    local switch_1 = repOrdre:GetType()
+--[[//Gestion de la réception de l'ordre de conduite Poursuivre, ne concerne que les pions de type Convoi
+]]                    local switch_1 = repOrdre:GetType()
                         if switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
                             local repOrderRegimeMaint = repOrdre
                             DEC_Maintenance_ChangerRegimeTravail( repOrderRegimeMaint:GetorderConduiteModifierRegimeTravailMaintenance_() )
@@ -44,12 +48,31 @@ do
                             DEC_Sante_ChangerPriorites( repOrdrePrioriteSan:GetorderConduiteModifierPrioritesBlesses_() )
                             _continue = false
                         elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
-                            local repOrdrePrioriteTactiqueMain = repOrdre
-                            DEC_Maintenance_ChangerPrioritesTactiques( repOrdrePrioriteTactiqueMain:GetorderConduiteModifierPrioritesTactiquesReparations_() )
+                            local repOrdrePrioriteMain = repOrdre
+                            DEC_Maintenance_ChangerPrioritesTactiques( repOrdrePrioriteMain:GetorderConduiteModifierPrioritesTactiquesReparations_() )
                             _continue = false
                         elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
-                            local repOrdrePrioriteTactiqueSan = repOrdre
-                            DEC_Sante_ChangerPrioritesTactiques( repOrdrePrioriteTactiqueSan:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
+                            local repOrdrePrioriteSan = repOrdre
+                            DEC_Sante_ChangerPrioritesTactiques( repOrdrePrioriteSan:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
+                            local selPions = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+                            for _,y in pairs( selPions or emptyTable ) do
+                            local _continue = true
+do
+                                    local pion = y
+                                    local mission = DEC_GetMission( pion )
+                                    if( pion:GetType() == "PionConvoi" and mission ~= nil and mission:GetType() == "T_Mission_Pion_LOG_Convoyer" and F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_AttentePoursuivre ) then
+                                        do
+                                            DEC_Trace( "Transfert ODC Poursuivre a pion " .. DEC_GetSzName( pion ) )
+                                            DEC_CDT_DonneOrdreConduiteAPion( pion, eOrdreConduite_Poursuivre )
+                                        end
+                                    end
+
+                                end
+
+                            end
+
                             _continue = false
                                                 end
                     end

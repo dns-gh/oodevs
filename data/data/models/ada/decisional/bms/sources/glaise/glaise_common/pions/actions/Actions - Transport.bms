@@ -2,14 +2,14 @@ includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bms"] = true
 
 
---[[// ****************************************************************************** 
+--[[// ******************************************************************************
 ]]--[[// ACT_Transport_Pion_TransportEmbarquer
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
-]]--[[//                Embarque les composantes des unites definies par 
+]]--[[//                Embarque les composantes des unites definies par
 ]]--[[//                DEC_Transport_AjouterPions
 ]]--[[//
-]]--[[// ****************************************************************************** 
+]]--[[// ******************************************************************************
 ]]node "ACT_Transport_Pion_TransportEmbarquer"
 {
     feedbacks = { { { "done_ACT_Transport_Pion_TransportEmbarquer" }, "ACT_Transport_Pion_TransportEmbarquer" } },
@@ -26,7 +26,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                 self.actionEmbarquer = self.actionEmbarquer or 0
         self.actionEnPause = self.actionEnPause or false
         self.eEtatTransport = self.eEtatTransport or nil
-        --[[// ----------------------------------------------------------------------------- 
+        --[[// -----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
@@ -39,7 +39,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                 DEC_ReprendAction( self.actionEmbarquer )
                 self.actionEnPause = false
             end
---[[// ----------------------------------------------------------------------------- 
+--[[// -----------------------------------------------------------------------------
 ]]--[[//  En fonction etat transport
 ]]--[[// -----------------------------------------------------------------------------
 ]]        end
@@ -56,7 +56,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                     do
                     end
 
-                    DEC_StopAction( self.actionEmbarquer )
+                    self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
@@ -66,7 +66,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                     do
                     end
 
-                    DEC_StopAction( self.actionEmbarquer )
+                    self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -88,13 +88,13 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
 
 }
 
---[[// ****************************************************************************** 
+--[[// ******************************************************************************
 ]]--[[// ACT_Transport_Pion_TransportDebarquer
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
-]]--[[//                Debarque les composantes des unites definies par 
+]]--[[//                Debarque les composantes des unites definies par
 ]]--[[//                DEC_Transport_AjouterPions
-]]--[[// ****************************************************************************** 
+]]--[[// ******************************************************************************
 ]]node "ACT_Transport_Pion_TransportDebarquer"
 {
     feedbacks = { { { "done_ACT_Transport_Pion_TransportDebarquer" }, "ACT_Transport_Pion_TransportDebarquer" } },
@@ -113,7 +113,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                 self.actionDebarquer = self.actionDebarquer or 0
         self.actionEnPause = self.actionEnPause or false
         self.eEtatTransport = self.eEtatTransport or nil
-        --[[// ----------------------------------------------------------------------------- 
+        --[[// -----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
@@ -126,7 +126,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                 DEC_ReprendAction( self.actionDebarquer )
                 self.actionEnPause = false
             end
---[[// ----------------------------------------------------------------------------- 
+--[[// -----------------------------------------------------------------------------
 ]]--[[// Suivant l'état du transport...
 ]]--[[// -----------------------------------------------------------------------------
 ]]        end
@@ -143,7 +143,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                     do
                     end
 
-                    DEC_StopAction( self.actionDebarquer )
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
@@ -153,7 +153,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Transport.bm
                     do
                     end
 
-                    DEC_StopAction( self.actionDebarquer )
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end

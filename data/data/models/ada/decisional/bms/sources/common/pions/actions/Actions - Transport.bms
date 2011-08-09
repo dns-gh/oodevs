@@ -2,14 +2,14 @@ includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
 
 
---[[// ****************************************************************************** 
+--[[// ******************************************************************************
 ]]--[[// ACT_Transport_Pion_TransportEmbarquer
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
-]]--[[//                Embarque les composantes des unites definies par 
+]]--[[//                Embarque les composantes des unites definies par
 ]]--[[//                DEC_Transport_AjouterPions
 ]]--[[//
-]]--[[// ****************************************************************************** 
+]]--[[// ******************************************************************************
 ]]node "ACT_Transport_Pion_TransportEmbarquer"
 {
     feedbacks = { { { "done_ACT_Transport_Pion_TransportEmbarquer" }, "ACT_Transport_Pion_TransportEmbarquer" } },
@@ -26,7 +26,7 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
                 self.actionEmbarquer = self.actionEmbarquer or 0
         self.actionEnPause = self.actionEnPause or false
         self.eEtatTransport = self.eEtatTransport or nil
-        --[[// ----------------------------------------------------------------------------- 
+        --[[// -----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
@@ -41,7 +41,7 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
                 DEC_ReprendAction( self.actionEmbarquer )
                 self.actionEnPause = false
             end
---[[// ----------------------------------------------------------------------------- 
+--[[// -----------------------------------------------------------------------------
 ]]--[[//  En fonction etat transport
 ]]--[[// -----------------------------------------------------------------------------
 ]]        end
@@ -90,13 +90,13 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
 
 }
 
---[[// ****************************************************************************** 
+--[[// ******************************************************************************
 ]]--[[// ACT_Transport_Pion_TransportDebarquer
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
-]]--[[//                Debarque les composantes des unites definies par 
+]]--[[//                Debarque les composantes des unites definies par
 ]]--[[//                DEC_Transport_AjouterPions
-]]--[[// ****************************************************************************** 
+]]--[[// ******************************************************************************
 ]]node "ACT_Transport_Pion_TransportDebarquer"
 {
     feedbacks = { { { "done_ACT_Transport_Pion_TransportDebarquer" }, "ACT_Transport_Pion_TransportDebarquer" } },
@@ -107,17 +107,19 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
     },
 
     create = function( self )
+        self._namedParams = {}
+        self._namedParams.posDebarquement = self.params[1]
     end,
 
     select = function( self )
                 self.actionDebarquer = self.actionDebarquer or 0
         self.actionEnPause = self.actionEnPause or false
         self.eEtatTransport = self.eEtatTransport or nil
-        --[[// ----------------------------------------------------------------------------- 
+        --[[// -----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-            self.actionDebarquer = DEC_Start_TransportDebarquer(  )
+            self.actionDebarquer = DEC_Start_TransportDebarquer( self._namedParams.posDebarquement )
             actionCallbacks[ self.actionDebarquer ] = function( arg ) self.eEtatTransport = arg end
 
         end
@@ -128,7 +130,7 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
                 DEC_ReprendAction( self.actionDebarquer )
                 self.actionEnPause = false
             end
---[[// ----------------------------------------------------------------------------- 
+--[[// -----------------------------------------------------------------------------
 ]]--[[// Suivant l'état du transport...
 ]]--[[// -----------------------------------------------------------------------------
 ]]        end

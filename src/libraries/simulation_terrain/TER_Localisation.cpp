@@ -766,7 +766,7 @@ void TER_Localisation::GetPointsClippedBetweenTwoLines( const MT_Droite& leftDro
 // Name: TER_Localisation::Split
 // Created: NLD 2003-08-22
 // -----------------------------------------------------------------------------
-void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& locVector ) const
+void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& locVector, const MT_Vector2D* splitDirection ) const
 {
     if( nNbrParts == 0 )
         locVector.clear();
@@ -803,7 +803,7 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
         // 2. Stockage des droites de découpe
         typedef std::vector< MT_Droite > T_DroiteVector;
         T_DroiteVector droiteVector;
-        MT_Vector2D vDir( 0, 1 );
+        MT_Vector2D vDir = splitDirection ? *splitDirection : MT_Vector2D( 0, 1 );
         double rAngle = 2. * MT_PI / nNbrParts;
         droiteVector.push_back( MT_Droite( vBarycenter, vDir + vBarycenter ) );
         for( unsigned int i = 0; i < nNbrParts; ++i )

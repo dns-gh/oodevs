@@ -9,7 +9,7 @@ include "bit.lua"
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_PrendreEnComptePrisonniers
 ]]--[[//
-]]--[[// Commentaires: 
+]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_PrendreEnComptePrisonniers"
@@ -34,11 +34,23 @@ include "bit.lua"
         local Activate = Activate
                 self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
+        self.verifRendues = self.verifRendues or {}
         --[[// Init
 ]]if( ModuleBegins() ) then
             do
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_SetMission( myself, self._namedParams.mission )
+                for _,prisonnier in pairs( self._namedParams.mission.unitesRendues_ or emptyTable ) do
+                local _continue = true
+                    do
+                        if( DEC_ConnaissanceAgent_SEstRendu( prisonnier ) ) then
+                            DEC_UserTypeList_PushBack( self.verifRendues, prisonnier )
+                        end
+
+                    end
+
+                end
+
             end
 --[[// Validite camp
 ]]        end
@@ -69,14 +81,14 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     _continue = false
                 elseif switch_1 == eEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    if( S_Liste_PrisonniersTousEmbarques( self._namedParams.mission.unitesRendues_ ) ) then
+                    if( S_Liste_PrisonniersTousEmbarques( self.verifRendues ) ) then
                         self.ePhase = eDebarquer
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_AllerRecupererPrisonniers, 1, { self._namedParams.mission.unitesRendues_, } )
+                    Activate( self.activations.BEH_Dep_Pion_AllerRecupererPrisonniers, 1, { self.verifRendues, } )
                     _continue = false
                 elseif switch_1 == eDebarquer then
-                    if( S_Misc_Pion_PrisonniersTousDebarquesDansCamp( self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_ ) ) then
+                    if( S_Misc_Pion_PrisonniersTousDebarquesDansCamp( self.verifRendues, self._namedParams.mission.campPrisonniers_ ) ) then
                         self.ePhase = eFinMission
                     end
 
@@ -92,7 +104,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_AllerDebarquerPrisonniers, 1, { self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_, } )
+                    Activate( self.activations.BEH_Dep_Pion_AllerDebarquerPrisonniers, 1, { self.verifRendues, self._namedParams.mission.campPrisonniers_, } )
 self.done_BEH_Dep_Pion_AllerDebarquerPrisonniers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eFinMission then
@@ -105,10 +117,12 @@ self.done_BEH_Dep_Pion_AllerDebarquerPrisonniers = function( self, _, v ) self.e
     end,
 
     destroy = function( self )
-                for _,prisonnier in pairs( self._namedParams.mission.unitesRendues_ or emptyTable ) do
-        local _continue = true
-            DEC_Prisonniers_Debarquer( prisonnier )
+                if( self.ePhase ~= eFinMission ) then
+for _,prisonnier in pairs( self._namedParams.mission.unitesRendues_ or emptyTable ) do
+            local _continue = true
+                DEC_Prisonniers_Debarquer( prisonnier )
 
+            end
         end
 
     end,

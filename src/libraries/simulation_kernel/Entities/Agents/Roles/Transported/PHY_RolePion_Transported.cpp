@@ -144,14 +144,14 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 // Name: PHY_RolePion_Transported::UnloadFromTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, MT_Vector2D* position )
 {
-
     if( pTransporter_ != &transporter )
         return ; //false;
 
     assert( pTransporter_ );
-    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    const MT_Vector2D& unloadPosition = position ? *position : pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition();
+    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, unloadPosition );
 
     pTransporter_ = 0;
     bHasChanged_  = true;

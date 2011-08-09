@@ -32,7 +32,13 @@ end
 
 
 function M_DELAI_SAUVEGARDE_TIR()
-    return 10
+    return 2
+end
+
+
+
+function M_DELAI_SAUVEGARDE_TIR_SIC()
+    return 2
 end
 
 

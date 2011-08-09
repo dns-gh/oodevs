@@ -19,7 +19,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ASS.bms"
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -71,7 +71,7 @@ self.done_ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA = functio
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Automate_ASS_AcquerirObjectifsA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -236,7 +236,7 @@ self.done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition = func
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA
-]]--[[// 
+]]--[[//
 ]]--[[// Commentaires: Ajouter par LLS le 23/10/2008
 ]]--[[//
 ]]--[[// *****************************************************************************
@@ -260,6 +260,8 @@ node "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
         self._namedParams.pPion = self.params[2]
         self._namedParams.zoneImplantationTir1 = self.params[3]
         self._namedParams.zoneImplantationTir2 = self.params[4]
+        self._namedParams.sauvegardeAutomatique = self.params[5]
+        self._namedParams.ptSauvegarde = self.params[6]
     end,
 
     activate = function( self )
@@ -285,8 +287,64 @@ node "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.zoneImplantationTir2, } )
+        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.zoneImplantationTir2, self._namedParams.sauvegardeAutomatique, self._namedParams.ptSauvegarde, } )
 self.done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones = function( self, _, v ) self.eActionCreation = v[1] end
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA"
+{
+    feedbacks = { { { "done_BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA" }, "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA, {value} ) end,
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre", { "done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.zoneImplantationTir1 = self.params[3]
+        self._namedParams.sauvegardeAutomatique = self.params[4]
+        self._namedParams.ptSauvegarde = self.params[5]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+         do
+            local _continue = true
+            local switch_1 = self.eActionCreation
+                if switch_1 == eActionEnCours then
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
+                    _continue = false
+                elseif switch_1 == eActionHalt
+                or switch_1 == eActionImpossible then
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
+                                        do return end
+
+                                end
+                if switch_1 == eActionEffectuee then
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
+                                        do return end
+
+                                end
+            end
+
+        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.sauvegardeAutomatique, self._namedParams.ptSauvegarde, } )
+self.done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 }
@@ -300,6 +358,10 @@ connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssur
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones", nodes.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreA, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre", nodes.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }

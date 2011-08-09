@@ -13,6 +13,7 @@
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
+class MIL_Entity_ABC;
 class MT_Vector2D;
 class PHY_DotationCategory;
 class TER_Localisation;
@@ -31,6 +32,7 @@ public:
     static const TER_Localisation* GetLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsInAvoidanceArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int IsBreached( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacle( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
@@ -57,8 +59,8 @@ public:
     static int EquipLogisticRoute( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsStockSupplied( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static int IsAnEnemy( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static int IsAFriend( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int IsAnEnemy( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int IsAFriend( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int GetCurrentPerceptionLevel( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

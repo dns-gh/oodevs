@@ -48,11 +48,12 @@ public:
     static float GetROE                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  GetMajorOperationalState               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsFlying                               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static double DEC_ConnaissanceAgent_Altitude        ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsKnowledgeValid                       ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool IsSurrenderToMyArmy                     ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsPrisoner                             ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsDead                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool  HasSurrenderedTo                       ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget );
+    static bool  IsSurrendered                          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static int   Lock                                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  Unlock                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  UnitDecisionalState                    ( const DEC_Knowledge_Agent& callerAgent, const std::string& key, const std::string& value );

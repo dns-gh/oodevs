@@ -60,12 +60,14 @@ public:
     static void ReverseDirection( boost::shared_ptr< MT_Vector2D > pDir );
     static boost::shared_ptr< MT_Vector2D > CopyAndReverseDirection( const MT_Vector2D* );
     static boost::shared_ptr< MT_Vector2D > CopyAndRotateDirection ( const MT_Vector2D*, const double angle );
+    static bool CompareLocalisations( TER_Localisation* pLocalisation1, TER_Localisation* pLocalisation2 );
     static bool IsPointInsideLocalisation( MT_Vector2D* pPoint, TER_Localisation* pLocalisation );
     static bool ComparePositions(  MT_Vector2D* p1, MT_Vector2D* p2 );
     static boost::shared_ptr< MT_Vector2D > TranslatePosition( MT_Vector2D* p1, MT_Vector2D* p2, double d );
     static boost::shared_ptr< MT_Vector2D > TranslatePositionInDirection( MT_Vector2D* p1, MT_Vector2D* p2, double d );
     static boost::shared_ptr< MT_Vector2D > TranslatePositionInVector( MT_Vector2D* position, MT_Vector2D* offset );
     static double Distance( const MT_Vector2D* p1, const MT_Vector2D* p2 );
+    static double Distance3D( const MT_Vector2D* p1, float altitude1, const MT_Vector2D* p2, float altitude2 );
     static boost::shared_ptr< TER_Localisation > ConvertPointToLocalisation( const MT_Vector2D* pPos );
     static boost::shared_ptr< TER_Localisation > CreateCircleLocalisation( const MT_Vector2D* pCenter, const double );
     static boost::shared_ptr< TER_Localisation > CreateLineLocalisation( const MT_Vector2D* pPoint1, const MT_Vector2D* pPoint2 );
@@ -130,8 +132,8 @@ public:
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePointsBeforeLima ( const MIL_Automate& callerAutomate, unsigned int nLimaID, double rDistBeforeLima, unsigned int nNbrPoints );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLima( const T& caller, int phaseLine, float distanceBefore );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaInFuseau( const T& caller, unsigned int limaID, double rDistBeforeLima, const MIL_Fuseau* pFuseau );
-    template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts );
-    template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea );
+    template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction );
+    template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea, MT_Vector2D* direction );
     template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > RecursiveSplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea );
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSections( const T& caller, const double rSectionLength );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenterInFuseau( const T& caller, TER_Localisation* pLocalisation );
@@ -179,7 +181,7 @@ private:
 
 private:
     static bool ClipLocalisationInFuseau( const TER_Localisation& localisation, const MIL_Fuseau& fuseau, TER_Localisation& clippedLocalisation );
-    static unsigned int SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, std::vector< boost::shared_ptr< TER_Localisation > >& result );
+    static unsigned int SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, const MT_Vector2D* splitDirection, std::vector< boost::shared_ptr< TER_Localisation > >& result );
     static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin,  const MT_Vector2D& vDirection, double rSectionLength );
 
     //! @name Tools

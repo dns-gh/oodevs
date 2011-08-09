@@ -89,12 +89,12 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Detruire Ennemi :
-]]--[[// 
+]]--[[//
 ]]--[[// Pas de valeur de retour dans ce comportement
 ]]--[[// On decide de tirer quand l'objectif est identifié et qu'on le voit.
 ]]--[[//
-]]--[[// On ne tir pas sur une connaissance non vue pas l'un de nos capteur 
-]]--[[// 
+]]--[[// On ne tir pas sur une connaissance non vue pas l'un de nos capteur
+]]--[[//
 ]]--[[// Ce comportement ne doit pas etre appellé directement. En effet, il n'a pas
 ]]--[[// de selected boost => gros risques d'oscillation. On préferera utiliser un
 ]]--[[// comportement de plus haut niveau, comme par exemple attendrePuisDetuireDirect
@@ -164,7 +164,7 @@ node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
         --[[//MAJ de l'ennemi en cours de traitement
 ]]Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ennemi, } )
         --[[//on fait feu
-]]if( DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.ennemi ) and S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ennemi, self._namedParams.niveauPerception ) and S_Tir_EstAPorteePosturesReelles( self._namedParams.ennemi, self._namedParams.pH ) ) then
+]]if( DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.ennemi ) and S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ennemi, self._namedParams.niveauPerception ) and S_Tir_EstAPortee3DPosturesReelles( self._namedParams.ennemi, self._namedParams.pH ) ) then
             do
                 Activate( self.activations.ACT_Tir_DirectSurTypeMunition, GetMotivation( "MOT_ASA_TirerSurEnis" ), { self._namedParams.ennemi, self._namedParams.pourcentageComposantes, eMunitionClasse_MissileAir, } )
 self.done_ACT_Tir_DirectSurTypeMunition = function( self, _, v ) self.eEtatTir = v[1] end
@@ -283,8 +283,8 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
         --[[//doit etre fonction du ph doctrine
 ]]self.pointInterception = DEC_Geometrie_PositionInterception( self._namedParams.ennemi, myself:DEC_Agent_Position(), self._namedParams.vitesseProjectile )
         --[[//si pas de position d'interception possible => fin comportememnt
-]]--[[//Si on était en train d'ouvrir le feu et que l'on perd le point 
-]]--[[//d'interception, alors, on arrete le comportement 
+]]--[[//Si on était en train d'ouvrir le feu et que l'on perd le point
+]]--[[//d'interception, alors, on arrete le comportement
 ]]if( self.pointInterception == nil ) then
             do
                                 Halt( self )

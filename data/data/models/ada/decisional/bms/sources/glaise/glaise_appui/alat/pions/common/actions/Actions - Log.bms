@@ -26,7 +26,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
 ]]if( ModuleBegins() ) then
             do
                 self.localisation = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.point )
-                self.actionCreerPlot = DEC_StartCreerObjet( self.repPlotLogistique, eTypeObjectPlotRavitaillement, gNullID, self.localisation, "", -1 )
+                self.actionCreerPlot = DEC_StartCreerObjet( self.repPlotLogistique, S_TypeObject_ToString( eTypeObjectPlotRavitaillement ), self.localisation )
                 actionCallbacks[ self.actionCreerPlot ] = function( arg ) self.eEtatConstruction = arg end
                 actionKnowledgeCallbacks[ self.actionCreerPlot ] = function( arg ) self.repPlotLogistique = arg end
 
@@ -51,21 +51,21 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
             local _continue = true
             local switch_1 = self.eEtatConstruction
                 if switch_1 == eActionObjetTerminee then
-                    DEC_StopAction( self.actionCreerPlot )
+                    self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
                 if switch_1 == eActionObjetManqueDotation then
-                    DEC_StopAction( self.actionCreerPlot )
+                    self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
                 if switch_1 == eActionObjetImpossible then
-                    DEC_StopAction( self.actionCreerPlot )
+                    self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                     DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> objet impossible " )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -73,7 +73,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
 
                                 end
                 if switch_1 == eActionObjetPasDeCapacite then
-                    DEC_StopAction( self.actionCreerPlot )
+                    self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                     DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> pas de capacite " )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

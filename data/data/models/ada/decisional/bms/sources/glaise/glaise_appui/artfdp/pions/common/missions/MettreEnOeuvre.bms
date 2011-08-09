@@ -100,11 +100,13 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
         self.eAction = self.eAction or eActionEnCours
         --[[// Parametres de la mission
 ]]self.ptObjImplantation = self.ptObjImplantation or DEC_Geometrie_CreerPoint()
+        self.ptSauvegarde = self.ptSauvegarde or nil
+        self.ptSauvegardeAuto = self.ptSauvegardeAuto or nil
         self.repObjImplantation = self.repObjImplantation or nil
         self.bPresenceContreBatterie = self.bPresenceContreBatterie or false
         if( ModuleBegins() ) then
             do
-                --[[// Suivant le type de mission, on possede ou non des informations sur 
+                --[[// Suivant le type de mission, on possede ou non des informations sur
 ]]--[[// les zones d'implantation
 ]]local missionPion = DEC_GetMission( myself )
                  do
@@ -113,17 +115,20 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
                         if switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" then
                                                     local mission = DEC_GetMission( myself )
                             DEC_Copie_Point( mission.positionImplantation_, self.ptObjImplantation )
-                            self.bPresenceContreBatterie = mission.presenceContreBatterie_
+                            self.bPresenceContreBatterie = mission.sauvegardeAutomatique_
+                            self.ptSauvegarde = mission.positionSauvegarde_
                             _continue = false
                         elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                                                     local mission = DEC_GetMission( myself )
                             self.repObjImplantation = mission.zoneImplantation_
                             self.ptObjImplantation = S_Obj_Position( self.repObjImplantation )
-                            self.bPresenceContreBatterie = mission.presenceContreBatterie_
+                            self.bPresenceContreBatterie = mission.sauvegardeAutomatique_
+                            self.ptSauvegarde = mission.positionSauvegarde_
                             _continue = false
                                                 end
                     end
 
+                self.ptSauvegardeAuto = DEC_Geometrie_PositionAleatoireSurCercle( self.ptObjImplantation, 500 )
             end
 --[[// behavior BEH_Info_Pion_ASS_GererDisponibiliteAuTir();
 ]]        end
@@ -132,7 +137,7 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
             local _continue = true
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
-]]--[[//-----------------------------------------------------------------------------		        
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// action ACT_RC_PreparationMission( rDelaiPreparation );
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Rejoindre la position du site
@@ -197,11 +202,11 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     end
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
-                    if( self.bPresenceContreBatterie or ( myself:GetType() == "SectionASS_LRM" ) ) then
-                        Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, 2.1, { self.ptObjImplantation, } )
+                    if( self.bPresenceContreBatterie ) then
+                        Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, 2.1, { self.ptSauvegarde, } )
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 2, { self.ptObjImplantation, } )
+                    Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 2, { self.ptSauvegardeAuto, } )
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
@@ -351,10 +356,9 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
 
         if( self.eAction == eActionEffectuee ) then
             do
-                self.ptTir = DEC_Geometrie_PositionAleatoireSurCercle( self._namedParams.ptCentre, 500 )
                 Activate( self.activations.ACT_RC, 1, { eRC_ChangementDePosition, } )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Changement position : contre batterie", } )
-                StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self.ptTir, eProgressionDirect, eTypeItiMouvement, } )
+                StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptCentre, eProgressionDirect, eTypeItiMouvement, } )
                 self.eAction = eActionEnCours
             end
         end
@@ -510,7 +514,7 @@ self.done_ACT_Tir_Pion_ASS_SurPosition = function( self, _, v ) self.eAction = v
 
 --[[// ============================================================================
 ]]--[[// BEH_Tir_Pion_ASS_PreparerTirSur:
-]]--[[//		Prepare un tir sur la position @ptCible pendant @rDelai
+]]--[[//        Prepare un tir sur la position @ptCible pendant @rDelai
 ]]--[[// ============================================================================
 ]]}
 

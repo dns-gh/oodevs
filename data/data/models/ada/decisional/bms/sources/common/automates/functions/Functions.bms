@@ -22,7 +22,7 @@ include "bit.lua"
 ]]--[[// Renvoie l'eni le plus proche de la position passée en paramètre
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// -----------------------------------------------------------------------------
-]]--[[// Renvoie une force entre 1 et 2 en fonction de la distance des pion passés 
+]]--[[// Renvoie une force entre 1 et 2 en fonction de la distance des pion passés
 ]]--[[//
 ]]--[[//                                   1
 ]]--[[//  force = 1 + -----------------------------------------------
@@ -58,6 +58,9 @@ include "bit.lua"
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// Renvoie l'eni en cours du pion passé en paramètre
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie les pions on transportes
 ]]--[[//-------------------------------------------------------------------------
 ]]function S_Pion_EstDetruitTactique( pion )
     local _returnValue = false
@@ -178,6 +181,26 @@ end
 function S_Pion_EniEnCours( pion )
     local _returnValue = nil
     _returnValue = F_Pion_GeteniEnCours( pion )
+    do return _returnValue end
+end
+
+function S_ObtenirPionsNonTransportes( )
+    local _returnValue = {}
+    local listePionsTemp = {}
+    local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
+    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
+    local _continue = true
+do
+            local pion = x
+            if( not DEC_Automate_PionEstTransporte( pion ) ) then
+                DIA_PushFront( listePionsTemp, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = listePionsTemp
     do return _returnValue end
 end
 
