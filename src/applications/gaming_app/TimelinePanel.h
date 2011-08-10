@@ -55,12 +55,6 @@ public:
     virtual ~TimelinePanel();
     //@}
 
-public slots:
-    //! @name Slots
-    //@{
-    void OnViewChanged();
-    //@}
-
 signals:
     //! @name Signal
     //@{
@@ -76,6 +70,7 @@ private:
 
     //! @name Types
     //@{
+public:
     typedef boost::ptr_vector< actions::ActionsFilter_ABC > T_Filters;
     //@}
 

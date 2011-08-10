@@ -12,6 +12,7 @@
 #include "moc_TimelinePanel.cpp"
 #include "ActionsToolbar.h"
 #include "TimelineWidget.h"
+#include "TabWidget.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionTasker.h"
@@ -75,15 +76,6 @@ namespace
             return false;
         }
     };
-
-    class TabWidget : public QTabWidget
-    {
-    public:
-        explicit TabWidget( Q3VBox* box ) : QTabWidget( box )
-        {
-            connect( tabBar(), SIGNAL( selected( int ) ), box, SLOT( OnViewChanged() ) );
-        }
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -97,9 +89,10 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
     Q3VBox* box = new Q3VBox( this );
     toolbar_ = new ActionsToolbar( box, model, config, controllers );
-    connect( toolbar_, SIGNAL(PlanificationModeChange() ), this, SIGNAL( PlanificationModeChange()) );
     tabs_ = new TabWidget( box );
     timeline_ = new TimelineWidget( box, controllers, model, scheduler, factory );
+    connect( toolbar_, SIGNAL(PlanificationModeChange() ), this, SIGNAL( PlanificationModeChange()) );
+    static_cast< TabWidget* >( tabs_ )->setConnect( timeline_, filters_, toolbar_ );
     {
         Q3VBox* box = new Q3VBox( tabs_ );
         filters_.push_back( new GlobalFilter( profile ) );
@@ -126,9 +119,3 @@ TimelinePanel::~TimelinePanel()
 // Name: TimelinePanel::OnViewChanged
 // Created: SBO 2010-05-06
 // -----------------------------------------------------------------------------
-void TimelinePanel::OnViewChanged()
-{
-    const actions::ActionsFilter_ABC& filter = filters_.at( tabs_->currentPageIndex() );
-    toolbar_->SetFilter( filter );
-    timeline_->SetFilter( filter );
-}

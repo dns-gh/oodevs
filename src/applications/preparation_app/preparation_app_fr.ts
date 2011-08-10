@@ -679,11 +679,11 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Contour Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lignes de contour</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Lignes de contour</translation>
+        <translation>Proprietés</translation>
     </message>
     <message>
         <source>Creation</source>
