@@ -607,13 +607,16 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 // -----------------------------------------------------------------------------
 bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
-    float weight = static_cast< float >( GetUnitMajorWeight() );
-    for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
+    if( !pathClass_.IsFlying() )
     {
-        if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
-            return false;
-        if( it != pathPoints_.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *( it - 1 ), *it ) )
-            return false;
+        float weight = static_cast< float >( GetUnitMajorWeight() );
+        for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
+        {
+            if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
+                return false;
+            if( it != pathPoints_.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *( it - 1 ), *it ) )
+                return false;
+        }
     }
 
     T_KnowledgeObjectVector knowledgesObject;
