@@ -95,3 +95,12 @@ void Simulation::Update( const sword::ControlBeginTick& message )
             initial_ = current_;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetTimeAsString
+// Created: ABR 2011-08-10
+// -----------------------------------------------------------------------------
+QString Simulation::GetTimeAsString() const
+{
+    return GetDateTime().date().toString();
+}

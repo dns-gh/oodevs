@@ -32,6 +32,7 @@ namespace
         virtual QDateTime GetDateTime() const { return QDateTime(); }
         virtual QDateTime GetInitialDateTime() const { return QDateTime(); }
         virtual unsigned int GetTickDuration() const { return 0; }
+        virtual QString GetTimeAsString() const { return QString(); }
     };
 }
 

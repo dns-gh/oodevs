@@ -47,6 +47,7 @@ public:
     virtual QDateTime GetDateTime() const;
     virtual QDateTime GetInitialDateTime() const;
     virtual unsigned int GetTickDuration() const;
+    virtual QString GetTimeAsString() const;
     //@}
 
 private:

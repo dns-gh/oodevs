@@ -85,7 +85,7 @@ public:
     //@{
     virtual QDateTime GetInitialDateTime() const;
     virtual QDateTime GetDateTime() const;
-    QString GetTimeAsString() const;
+    virtual QString GetTimeAsString() const;
     QString GetDateAsString() const;
 
     int GetTime() const;                    //!< seconds since simulation start

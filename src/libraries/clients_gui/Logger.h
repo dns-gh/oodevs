@@ -14,7 +14,10 @@
 #include "clients_kernel/Logger_ABC.h"
 #include <fstream>
 
-class Simulation;
+namespace kernel
+{
+    class Time_ABC;
+}
 
 namespace gui
 {
@@ -33,7 +36,7 @@ class Logger : public Q3ListView, public kernel::Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation, const std::string& filename );
+             Logger( QWidget* pParent, ItemFactory_ABC& factory, const kernel::Time_ABC& simulation, const std::string& filename );
     virtual ~Logger();
     //@}
 
@@ -73,7 +76,7 @@ private:
     //! @name Member data
     //@{
     ItemFactory_ABC& factory_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     Q3PopupMenu popupMenu_;
     T_Items items_;
     std::ofstream log_;

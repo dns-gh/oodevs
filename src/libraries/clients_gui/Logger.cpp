@@ -14,7 +14,7 @@
 #include "moc_Logger.cpp"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
-#include "gaming/Simulation.h"
+#include "clients_kernel\Time_ABC.h"
 
 using namespace gui;
 
@@ -22,7 +22,7 @@ using namespace gui;
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation, const std::string& filename )
+Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const kernel::Time_ABC& simulation, const std::string& filename )
     : Q3ListView  ( pParent )
     , factory_   ( factory )
     , simulation_( simulation )
@@ -46,7 +46,7 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& si
 
 namespace
 {
-    void MakeHeader( std::ostream& s, const Simulation& simulation )
+    void MakeHeader( std::ostream& s, const kernel::Time_ABC& simulation )
     {
         s << "[" << QTime::currentTime().toString() << "] [" << simulation.GetTimeAsString() << "] ";
     }
