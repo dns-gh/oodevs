@@ -1,0 +1,133 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/missions/Franchir.bms"] = true
+
+local emptyTable = emptyTable
+
+include "bit.lua"
+
+
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_SeFaireDecontaminer
+]]--[[//
+]]--[[// Commentaires: T_Point pointArrivee_;
+]]--[[//               T_ConnaissanceObjet siteDecontamination_;
+]]--[[//
+]]--[[//
+]]--[[// MIA: ce qui serait bien c'est que cela fonctionne comme la décontamination,
+]]--[[// c'est à dire que le pion fasse une demande pour passer (il interagit avec l'objet)
+]]--[[// Les pions du génie "animent" le site de franchissement.
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_Franchir"
+{
+    feedbacks = { { { "done_MIS_Pion_Franchir" }, "MIS_Pion_Franchir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Franchir, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionSite = self.positionSite or 0
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mis )
+                local localisation = S_Obj_Localisation( self._namedParams.mis.pontFlottant_ )
+                if( localisation == 0 or not DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( localisation, self.positionSite ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
+
+                    end
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eRejoindre
+                    _continue = false
+                elseif switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eSeMettreEnPlace
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionSite, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
+                    _continue = false
+                elseif switch_1 == eSeMettreEnPlace then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mis.pointArrivee_, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
+                    _continue = false
+                                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Franchir = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Franchir, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Franchir, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Franchir, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Franchir, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
