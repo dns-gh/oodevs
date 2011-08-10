@@ -1,0 +1,97 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/missions/Basculer.bms"] = true
+
+local emptyTable = emptyTable
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_LOG_PreparerBascule()
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_LOG_PreparerBascule"
+{
+    feedbacks = { { { "done_MIS_Pion_LOG_PreparerBascule" }, "MIS_Pion_LOG_PreparerBascule" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_LOG_PreparerBascule, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "MIS_Pion_Log_PreparerBascule : debut" )
+                DEC_SetMission( myself, self._namedParams.mis )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+         do
+            local _continue = true
+--[[// Preparation de la mission
+]]--[[// Progression jusqu'au lieu de rendez-vous
+]]--[[// Renforce l'unité amie
+]]--[[// Fin mission
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eRejoindrePosition
+                    _continue = false
+                elseif switch_1 == eRejoindrePosition then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eSeMettreEnPlace
+                                _continue = false
+                            end
+
+                        end
+                    end
+
+                        if _continue then
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mis.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
+                        _continue = false
+                    end
+                elseif switch_1 == eSeMettreEnPlace then
+                    self.ePhaseMission = eFinMission
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    _continue = false
+                                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_PreparerBascule = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
