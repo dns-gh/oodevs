@@ -79,9 +79,9 @@ namespace
     class TabWidget : public QTabWidget
     {
     public:
-        explicit TabWidget( TimelinePanel* panel ) : QTabWidget( panel )
+        explicit TabWidget( Q3VBox* box ) : QTabWidget( box )
         {
-            connect( tabBar(), SIGNAL( selected( int ) ), panel, SLOT( OnViewChanged() ) );
+            connect( tabBar(), SIGNAL( selected( int ) ), box, SLOT( OnViewChanged() ) );
         }
     };
 }
@@ -95,20 +95,22 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
 {
     setObjectName( "timeLine" );
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
-    tabs_ = new TabWidget( this );
-    Q3VBox* box = new Q3VBox( tabs_ );
+    Q3VBox* box = new Q3VBox( this );
     toolbar_ = new ActionsToolbar( box, model, config, controllers );
     connect( toolbar_, SIGNAL(PlanificationModeChange() ), this, SIGNAL( PlanificationModeChange()) );
+    tabs_ = new TabWidget( box );
     timeline_ = new TimelineWidget( box, controllers, model, scheduler, factory );
     {
+        Q3VBox* box = new Q3VBox( tabs_ );
         filters_.push_back( new GlobalFilter( profile ) );
         tabs_->addTab( box, tools::translate( "TimelinePanel", "Global view" ) );
     }
     {
+        Q3VBox* box = new Q3VBox( tabs_ );
         filters_.push_back( new CurrentSessionFilter( profile ) );
         tabs_->addTab( box, tools::translate( "TimelinePanel", "Current session" ) );
     }
-    setWidget( tabs_ );
+    setWidget( box );
 }
 
 // -----------------------------------------------------------------------------
