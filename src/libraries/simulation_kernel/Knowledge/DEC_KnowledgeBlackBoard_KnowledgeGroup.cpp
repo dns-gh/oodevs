@@ -642,6 +642,25 @@ DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledg
     return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );
 }
 
+namespace
+{
+    class UpdateRelevanceHelper
+    {
+    public:
+        UpdateRelevanceHelper( DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer )
+            : pKnowledgeObjectContainer_( pKnowledgeObjectContainer ) {}
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object > knowledge )
+        {
+            MIL_Object_ABC* knownObject = knowledge->GetObjectKnown();
+            knowledge->UpdateRelevance();
+            if( pKnowledgeObjectContainer_&& knownObject && !knowledge->GetObjectKnown() )
+                pKnowledgeObjectContainer_->NotifyKnowledgeObjectDissociatedFromRealObject( *knownObject, *knowledge );
+        }
+    private:
+        DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer
 // Created: SBO 2010-05-19
@@ -650,7 +669,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer()
 {
     if( pKnowledgeObjectContainer_ )
     {
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::UpdateRelevance, _1 );
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
+        UpdateRelevanceHelper visitor( pKnowledgeObjectContainer_ );
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( visitor );
     }
 }

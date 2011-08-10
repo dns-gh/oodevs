@@ -430,7 +430,7 @@ void DEC_Knowledge_Object::UpdateRelevance()
     // L'objet réel va être détruit
     if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
     {
-        if( pObjectKnown_->Retrieve< CrowdCapacity >() )
+        if( pObjectKnown_->Retrieve< CrowdCapacity >() ) // $$$$ _RC_ LDC 2011:08:10 Should be pObjectKnown_->IsUniversal() and ADN modified accordingly.
             rRelevance_ = 0.;
         pObjectKnown_ = 0;
         NotifyAttributeUpdated( eAttr_RealObject );
