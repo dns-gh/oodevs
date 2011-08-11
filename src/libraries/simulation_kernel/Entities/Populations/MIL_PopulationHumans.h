@@ -44,6 +44,9 @@ public:
     //! @name Operations
     //@{
     MIL_PopulationHumans& operator +=( const MIL_PopulationHumans& humans );
+    MIL_PopulationHumans& operator -=( const MIL_PopulationHumans& humans );
+    MIL_PopulationHumans& operator *=( double ratio );
+    void Empty();
     bool IsEmpty() const;
     unsigned int GetAllHumans() const;
     unsigned int GetTotalLivingHumans() const;

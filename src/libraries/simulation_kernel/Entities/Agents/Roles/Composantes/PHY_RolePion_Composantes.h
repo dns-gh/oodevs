@@ -50,7 +50,6 @@ namespace moving
 
 class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
-class MIL_AgentPion_ABC;
 class PHY_DotationStock;
 class PHY_RoleInterface_Supply;
 
@@ -145,7 +144,7 @@ public:
     void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const;
     //! @name Logistic - maintenance
     //@{
-    virtual void PreprocessRandomBreakdowns ( unsigned int nEndDayTimeStep ) const;
+    virtual void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const;
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
@@ -173,6 +172,7 @@ public:
     virtual void ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
     virtual void ApplyBurn                        ( const MIL_BurnEffectManipulator& burn );
     virtual void ApplyFlood                       ( const MIL_FloodEffectManipulator& flood );
+    virtual void ApplyInjury                      ( MIL_Injury_ABC& injury );
 
     virtual double GetDangerosity                  ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const;
     virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;
@@ -183,7 +183,6 @@ public:
     virtual double GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     virtual double GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     virtual double GetMaxRangeToFire               ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
-    virtual void ApplyInjury( MIL_Injury_ABC& injury );
     //@}
 
     //! @name Perception / Knowledge
@@ -199,6 +198,10 @@ public:
     //! @name Load / unload / transport
     //@{
     virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
+    bool CanTransportCrowd() const;
+    unsigned int GetCrowdTransporterCapacity() const;
+    double GetCrowdTransporterLoadedPerTimeStep() const;
+    double GetCrowdTransporterUnloadedPerTimeStep() const;
     //@}
 
     //! @name Notifications (internal)

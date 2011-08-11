@@ -139,6 +139,46 @@ double PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep() con
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanTransportCrowd
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposanteTypePion::CanTransportCrowd() const
+{
+    return nCrowdTransporterCapacity_ > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetCrowdTransporterCapacity
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+inline
+unsigned int PHY_ComposanteTypePion::GetCrowdTransporterCapacity() const
+{
+    return nCrowdTransporterCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetCrowdTransporterLoadedPerTimeStep
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+inline
+double PHY_ComposanteTypePion::GetCrowdTransporterLoadedPerTimeStep() const
+{
+    return rCrowdTransporterLoadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetCrowdTransporterUnloadedPerTimeStep
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+inline
+double PHY_ComposanteTypePion::GetCrowdTransporterUnloadedPerTimeStep() const
+{
+    return rCrowdTransporterUnloadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetSensorRotationAngle_
 // Created: JVT 2004-10-20
 // -----------------------------------------------------------------------------

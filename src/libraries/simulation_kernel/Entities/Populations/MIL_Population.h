@@ -82,6 +82,7 @@ public:
     unsigned int GetWoundedHumans() const;
     unsigned int GetContaminatedHumans() const;
     unsigned int GetDeadHumans() const;
+    unsigned int GetAllHumansInConcentration( unsigned int concentrationId );
     double GetArmedIndividuals() const;
     void SetArmedIndividuals( double armedIndividuals );
     double GetNewArmedIndividuals() const;
@@ -104,6 +105,7 @@ public:
     MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
     MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
     boost::shared_ptr< MT_Vector2D > GetBarycenter() const;
+    boost::shared_ptr< MT_Vector2D > GetConcentrationPosition( unsigned int concentrationId ) const;
     MT_Vector2D GetFlowHeadPosition();
     //@}
 
@@ -142,6 +144,7 @@ public:
     void SetBlinded( bool blinded );
     bool IsBlinded() const;
     MIL_PopulationElement_ABC* GetClosestAliveElement( const MIL_Agent_ABC& reference ) const;
+    MIL_PopulationConcentration* GetClosestConcentration( const MT_Vector2D& position, int maxDistance ) const;
     void ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, double& rMinDistance ) const;
     double GetUrbanBlockAngriness() const;
     void SetUrbanBlockAngriness( double );
@@ -154,6 +157,7 @@ public:
     MIL_PopulationFlow& CreateFlow( MIL_PopulationConcentration& concentration );
     MIL_PopulationFlow& CreateFlow( const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
     MIL_PopulationConcentration& GetConcentration( const MT_Vector2D& position );
+    MIL_PopulationConcentration* RetrieveConcentration( unsigned int concentrationId ) const;
     //@}
 
     //! @name Network

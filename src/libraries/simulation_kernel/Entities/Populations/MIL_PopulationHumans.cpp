@@ -84,6 +84,55 @@ MIL_PopulationHumans& MIL_PopulationHumans::operator +=( const MIL_PopulationHum
     return *this;
 }
 
+namespace
+{
+    void SubstractUnsigned( unsigned int& result, unsigned int value )
+    {
+        if( result >= value )
+            result -= value;
+        else
+            result = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::operator -=
+// Created: JSR 2011-08-11
+// -----------------------------------------------------------------------------
+MIL_PopulationHumans& MIL_PopulationHumans::operator -=( const MIL_PopulationHumans& humans )
+{
+    SubstractUnsigned( healthy_, humans.healthy_ );
+    SubstractUnsigned( wounded_, humans.wounded_ );
+    SubstractUnsigned( contaminated_, humans.contaminated_ );
+    SubstractUnsigned( dead_, humans.dead_ );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::operator *=
+// Created: JSR 2011-08-11
+// -----------------------------------------------------------------------------
+MIL_PopulationHumans& MIL_PopulationHumans::operator *=( double ratio )
+{
+    healthy_ = static_cast< unsigned int >( healthy_ * ratio );
+    wounded_ = static_cast< unsigned int >( wounded_ * ratio );
+    contaminated_ = static_cast< unsigned int >( contaminated_ * ratio );
+    dead_ = static_cast< unsigned int >( dead_ * ratio );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::Empty
+// Created: JSR 2011-08-11
+// -----------------------------------------------------------------------------
+void MIL_PopulationHumans::Empty()
+{
+    healthy_ = 0;
+    wounded_ = 0;
+    contaminated_ = 0;
+    dead_ = 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationHumans::GetHealthyHumans
 // Created: JSR 2011-03-10

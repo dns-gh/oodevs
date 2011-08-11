@@ -556,6 +556,29 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetClosestConcentration
+// Created: JSR 2011-08-09
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration* MIL_Population::GetClosestConcentration( const MT_Vector2D& position, int maxDistance ) const
+{
+    MIL_PopulationConcentration* ret = 0;
+    double minDistance = std::numeric_limits< double >::max();
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    {
+        if( ( *itConcentration)->IsValid() )
+        {
+            double d = ( *itConcentration )->GetLocation().ComputeBarycenter().Distance( position );
+            if( d <= maxDistance && d < minDistance )
+            {
+                ret = *itConcentration;
+                minDistance = d;
+            }
+        }
+    }
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetClosestElement
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
@@ -701,6 +724,18 @@ boost::shared_ptr< MT_Vector2D > MIL_Population::GetBarycenter() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetConcentrationPosition
+// Created: JSR 2011-08-09
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > MIL_Population::GetConcentrationPosition( unsigned int concentrationId ) const
+{
+    for( CIT_ConcentrationVector itC = concentrations_.begin(); itC != concentrations_.end(); ++itC )
+        if( ( *itC )->GetID() == concentrationId )
+            return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ( *itC )->GetPosition() ) );
+     return boost::shared_ptr< MT_Vector2D >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::HasFlow
 // Created: LGY 2010-12-27
 // -----------------------------------------------------------------------------
@@ -796,6 +831,18 @@ unsigned int MIL_Population::GetDeadHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetAllHumansInConcentration
+// Created: JSR 2011-08-09
+// -----------------------------------------------------------------------------
+unsigned int MIL_Population::GetAllHumansInConcentration( unsigned int concentrationId )
+{
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        if( ( *itConcentration )->GetID() == concentrationId )
+            return ( *itConcentration )->GetAllHumans();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetArmedIndividuals
 // Created: MMC 2011-03-28
 // -----------------------------------------------------------------------------
@@ -825,6 +872,7 @@ double MIL_Population::GetNewArmedIndividuals() const
 {
     return rNewArmedIndividuals_;
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::SetNewArmedIndividuals
 // Created: LMT 2011-04-04
@@ -936,6 +984,18 @@ MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, position );
     concentrations_.push_back( pConcentration );
     return *pConcentration;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::RetrieveConcentration
+// Created: JSR 2011-08-10
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration* MIL_Population::RetrieveConcentration( unsigned int concentrationId ) const
+{
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        if( ( *it )->GetID() == concentrationId )
+            return *it;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

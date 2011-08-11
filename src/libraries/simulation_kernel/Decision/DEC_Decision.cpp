@@ -919,7 +919,7 @@ bool ResourceNetworkFunctionBM( directia::brain::Brain& brain, directia::tools::
     boost::shared_ptr< DEC_ResourceNetwork > value;
     if( element.ToResourceNetwork( value ) && value )
     {
-		knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, false );
         return true;
     }
     return false;
@@ -930,7 +930,7 @@ bool ResourceNetworkListFunctionBM( directia::brain::Brain& brain, directia::too
     std::vector< boost::shared_ptr< DEC_ResourceNetwork > > value;
     if( element.ToResourceNetworkList( value ) )
     {
-		knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, true );
         return true;
     }
     return false;

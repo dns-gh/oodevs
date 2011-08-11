@@ -8,8 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "simulation_kernel/DefaultHealComputer.h"
-#include "simulation_kernel/Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "MIL_Random.h"
+#include "DefaultHealComputer.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 
 namespace human
 {

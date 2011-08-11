@@ -675,6 +675,7 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     if( from.has_adhesions() )
         for( int i = 0; i < from.adhesions().adhesion_size(); ++i )
             ConvertPartyAdhesion( from.adhesions().adhesion( i ), to->mutable_adhesions()->add_adhesion() );
+    CONVERT( transported_crowd );
 }
 
 // -----------------------------------------------------------------------------

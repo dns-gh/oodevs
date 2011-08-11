@@ -68,7 +68,7 @@ PHY_RolePion_Composantes::T_ComposanteTypeProperties::T_ComposanteTypeProperties
 bool PHY_RolePion_Composantes::T_ComposanteTypeProperties::HasUsableComposantes() const
 {
     for( unsigned int i = 0; i < nbrsPerState_.size(); ++i )
-        if( nbrsPerState_[i] > 0 && PHY_ComposanteState::Find( i ).IsUsable() )
+        if( nbrsPerState_[ i ] > 0 && PHY_ComposanteState::Find( i ).IsUsable() )
             return true;
     return false;
 }
@@ -732,6 +732,57 @@ void PHY_RolePion_Composantes::DamageTransported( double rWeightToDamage, const 
                 rWeightToDamage -= composante.GetWeight();
             }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CanTransportCrowd
+// Created: JSR 2011-08-09
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CanTransportCrowd() const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( ( *it )->CanTransportCrowd() )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetCrowdTransporterCapacity
+// Created: JSR 2011-08-10
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::GetCrowdTransporterCapacity() const
+{
+    unsigned int ret = 0;
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( ( *it )->CanTransportCrowd() )
+            ret += ( *it )->GetCrowdTransporterCapacity();
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetCrowdTransporterLoadedPerTimeStep
+// Created: JSR 2011-08-10
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Composantes::GetCrowdTransporterLoadedPerTimeStep() const
+{
+    double ret = 0;
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( ( *it )->CanTransportCrowd() )
+            ret += ( *it )->GetCrowdTransporterLoadedPerTimeStep();
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetCrowdTransporterUnloadedPerTimeStep
+// Created: JSR 2011-08-10
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Composantes::GetCrowdTransporterUnloadedPerTimeStep() const
+{
+    double ret = 0;
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( ( *it )->CanTransportCrowd() )
+            ret += ( *it )->GetCrowdTransporterUnloadedPerTimeStep();
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

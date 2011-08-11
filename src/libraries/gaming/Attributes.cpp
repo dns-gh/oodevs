@@ -63,6 +63,7 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , fRefugeesLodgingSatisfactionPercent_( 0.0f )
     , fRefugeesSecuritySatisfactionPercent_( 0.0f )
     , fRefugeesHealthSatisfactionPercent_( 0.0f )
+    , crowdTransported_( -1 )
 {
     CreateDictionary( dictionary );
 }
@@ -214,6 +215,9 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
             fRefugeesHealthSatisfactionPercent_ = 100.0f * message.refugees_satisfaction().access_to_health_care();
     }
 
+    if( message.has_transported_crowd() )
+        crowdTransported_ = message.transported_crowd();
+
     controller_.Update( *(Attributes_ABC*)this );
 }
 
@@ -292,6 +296,9 @@ void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Attributes", "Speed:" ) , nSpeed_ * Units::kilometersPerHour )
              .Display( tools::translate( "Attributes", "Height:" ), nAltitude_ * Units::meters )
              .Display( tools::translate( "Attributes", "Troops:" ), bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) );
+    if( crowdTransported_!= -1 )
+        displayer.Display( tools::translate( "Attributes", "Crowd transported:" ), crowdTransported_ );
+
 }
 
 // -----------------------------------------------------------------------------

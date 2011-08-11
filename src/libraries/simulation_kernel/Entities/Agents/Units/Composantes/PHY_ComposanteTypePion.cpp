@@ -133,6 +133,9 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rPionTransporterWeightCapacity_            ( 0. )
     , rPionTransporterWeightLoadedPerTimeStep_   ( 0. )
     , rPionTransporterWeightUnloadedPerTimeStep_ ( 0. )
+    , nCrowdTransporterCapacity_                 ( 0 )
+    , rCrowdTransporterLoadedPerTimeStep_        ( 0. )
+    , rCrowdTransporterUnloadedPerTimeStep_      ( 0. )
     , rHaulerWeightCapacity_                     ( 0. )
     , rHaulerLoadingTime_                        ( 0. )
     , rHaulerUnloadingTime_                      ( 0. )
@@ -422,6 +425,7 @@ void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
     xis >> xml::start( "transports" )
             >> xml::list( "crew", *this, &PHY_ComposanteTypePion::ReadTransportCrew )
             >> xml::list( "unit", *this, &PHY_ComposanteTypePion::ReadTransportUnit )
+            >> xml::list( "crowd", *this, &PHY_ComposanteTypePion::ReadTransportCrowd )
         >> xml::end;
 }
 
@@ -445,14 +449,14 @@ void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
 {
-    xis >> xml::attribute( "capacity", rPionTransporterWeightCapacity_ );
+    rPionTransporterWeightCapacity_ = xis.attribute< double >( "capacity" );
     if( rPionTransporterWeightCapacity_ <= 0 )
         xis.error( "unit: capacity <= 0" );
     if( !tools::ReadTimeAttribute( xis, "ton-loading-time", rPionTransporterWeightLoadedPerTimeStep_ )
       || rPionTransporterWeightLoadedPerTimeStep_ < 0 )
         xis.error( "unit: ton-loading-time < 0" );
     if( rPionTransporterWeightLoadedPerTimeStep_ > 0 )
-        rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
+        rPionTransporterWeightLoadedPerTimeStep_  = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_ );
     else
         rPionTransporterWeightLoadedPerTimeStep_ = std::numeric_limits< double >::max();
     if( !tools::ReadTimeAttribute( xis, "ton-unloading-time", rPionTransporterWeightUnloadedPerTimeStep_ )
@@ -462,6 +466,31 @@ void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
         rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
     else
         rPionTransporterWeightUnloadedPerTimeStep_ = std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadTransportCrowd
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadTransportCrowd( xml::xistream& xis )
+{
+    nCrowdTransporterCapacity_ = xis.attribute< unsigned int >( "capacity" );
+    if( nCrowdTransporterCapacity_ == 0 )
+        xis.error( "unit: capacity == 0" );
+    if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rCrowdTransporterLoadedPerTimeStep_ )
+      || rCrowdTransporterLoadedPerTimeStep_ < 0 )
+        xis.error( "unit: man-boarding-time < 0" );
+    if( rCrowdTransporterLoadedPerTimeStep_ > 0 )
+        rCrowdTransporterLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rCrowdTransporterLoadedPerTimeStep_ );
+    else
+        rCrowdTransporterLoadedPerTimeStep_ = std::numeric_limits< double >::max();
+    if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rCrowdTransporterUnloadedPerTimeStep_ )
+      || rCrowdTransporterUnloadedPerTimeStep_ < 0 )
+        xis.error( "unit: man-unloading-time < 0" );
+    if( rCrowdTransporterUnloadedPerTimeStep_ > 0 )
+        rCrowdTransporterUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rCrowdTransporterUnloadedPerTimeStep_ );
+    else
+        rCrowdTransporterUnloadedPerTimeStep_ = std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------

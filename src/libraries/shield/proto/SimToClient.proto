@@ -515,6 +515,7 @@ message MsgUnitAttributes {
     optional Common.PartyAdhesions              adhesions                     = 49;
     optional EquipmentUpdate                    equipment_update              = 50;
     optional Common.Extension                   extension                     = 51;
+    optional int32                              transported_crowd             = 52;
 }
 
 message MsgUnitPathFind {

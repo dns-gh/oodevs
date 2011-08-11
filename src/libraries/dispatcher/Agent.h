@@ -177,6 +177,7 @@ private:
     std::string                                criticalIntelligence_;
     Localisation                               currentPath_;
     T_Affinities                               affinities_;
+    int                                        transportedCrowd_;
 };
 
 }

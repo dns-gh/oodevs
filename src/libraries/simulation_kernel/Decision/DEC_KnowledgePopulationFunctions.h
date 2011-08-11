@@ -34,6 +34,8 @@ public:
     template< typename T > static bool IsRecon( const T& caller, unsigned int knowledgeId );
     template< typename T > static bool IsInZone( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc );
                            static bool IsPerceivedByAgent( const MIL_AgentPion& caller, int knowledgeId );
+                           static boost::shared_ptr< MT_Vector2D > GetConcentrationPosition( const MIL_AgentPion& caller, int knowledgeId, unsigned int concentrationId );
+                           static unsigned int GetAllHumansInConcentration( const MIL_AgentPion& caller, int knowledgeId, unsigned int concentrationId );
                            static boost::shared_ptr< MT_Vector2D > ClosestPoint( const MIL_AgentPion& caller, int knowledgeId );
                            static void Secure( const MIL_AgentPion& caller, int knowledgeId );
                            static boost::shared_ptr< MT_Vector2D > SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );
@@ -45,6 +47,7 @@ public:
                            static float GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId );
                            static int GetCrowdAttitude( const MIL_AgentPion& callerAgent, int knowledgeId );
                            static boost::shared_ptr< MT_Vector2D > GetFlowHead( const DEC_Decision_ABC& callerAgent, int knowledgeId );
+                           static int GetClosestConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, const MT_Vector2D& point, int refDistance );
     //@}
 };
 

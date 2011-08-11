@@ -56,6 +56,8 @@
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionOnMajorComposantes.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionControlZone.h"
 #include "Entities/Agents/Actions/Firing/Illumination/PHY_ActionIllumination.h"
+#include "Entities/Agents/Actions/CrowdTransport/PHY_ActionLoadCrowd.h"
+#include "Entities/Agents/Actions/CrowdTransport/PHY_ActionUnloadCrowd.h"
 #include "Entities/Agents/Actions/Transport/PHY_ActionTransportLoad.h"
 #include "Entities/Agents/Actions/Transport/PHY_ActionTransportUnload.h"
 #include "Entities/Agents/Actions/Loading/PHY_ActionLoad.h"
@@ -519,6 +521,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_GetAttitudePopulation" ] =
         boost::function< int (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAttitude , boost::cref( GetPion() ), _1 ) );
+    brain[ "DEC_GetConcentrationLaPlusProche" ] = &DEC_KnowledgePopulationFunctions::GetClosestConcentration;
+    brain[ "DEC_GetPositionConcentration" ] = &DEC_KnowledgePopulationFunctions::GetConcentrationPosition;
+    brain[ "DEC_GetNombrePersonnesDansConcentration" ] = &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration;
 
     // Urban knowledges accessors
     brain[ "DEC_Connaissances_BlocUrbain" ] =
@@ -797,6 +802,12 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_PeutTransporterPion" ] =
         boost::function< bool( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::CanTransportPion, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Connaissance_PeutTransporterPion" ] = &DEC_ActionFunctions::CanTransportKnowledge;
+
+    brain[ "DEC_Agent_PeutTransporterFoule" ] = &DEC_ActionFunctions::CanTransportCrowd;
+    brain[ "DEC_StartEmbarquerFouleDUneConcentration" ] =
+        boost::function< unsigned int( int, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< crowdtransport::PHY_ActionLoadCrowd, int, unsigned int >, boost::ref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_StartDebarquerFouleSurPosition " ] =
+        boost::function< unsigned int( int, MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< crowdtransport::PHY_ActionUnloadCrowd, int, MT_Vector2D* >, boost::ref( GetPion() ), _1, _2 ) );
 
     // Transport connaissance
     brain[ "DEC_Connaissance_Transporter" ] = &DEC_ActionFunctions::Knowledge_Load;

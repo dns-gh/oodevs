@@ -12,20 +12,6 @@
 #include "ADN_Composantes_GUI.h"
 #include "moc_ADN_Composantes_GUI.cpp"
 
-#include <Qt3Support/q3frame.h>
-#include <QtGui/qlabel.h>
-#include <QtGui/qlayout.h>
-#include <Qt3Support/q3vgroupbox.h>
-#include <Qt3Support/q3hgroupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3vbox.h>
-#include <Qt3Support/q3grid.h>
-#include <Qt3Support/q3whatsthis.h>
-#include <QtGui/qtabwidget.h>
-#include <QtGui/qdialog.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
-
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Composantes_Data.h"
@@ -245,7 +231,7 @@ void ADN_Composantes_GUI::Build()
 
     // Log page.
    {
-	 Q3VBox* pLogPage = new Q3VBox( pTabWidget );
+    Q3VBox* pLogPage = new Q3VBox( pTabWidget );
     pLogPage->layout()->setAlignment( Qt::AlignTop );
     pLogPage->setMargin( 5 );
     pLogPage->setSpacing( 5 );

@@ -306,6 +306,15 @@ bool DEC_ActionFunctions::CanTransportKnowledge( DEC_Decision_ABC& callerAgent, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::CanTransportCrowd
+// Created: JSR 2011-08-09
+// -----------------------------------------------------------------------------
+bool DEC_ActionFunctions::CanTransportCrowd( DEC_Decision_ABC& callerAgent )
+{
+    return callerAgent.GetPion().GetRole< PHY_RolePion_Composantes >().CanTransportCrowd();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Transport_IsTransporting
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------

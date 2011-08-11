@@ -864,6 +864,7 @@ message UnitAttributes {
     optional Extension                   extension                  = 49; //!< The extension fields
     optional Satisfaction                refugees_satisfaction      = 50; //!< The refugees satisfaction
     optional EnumUnitStress              stress                     = 53; //!< The stress @see EnumUnitStress
+    optional int32                       transported_crowd          = 54; //!< The number of transported humans from a crowd
 }
 
 /** @struct UnitPathFind

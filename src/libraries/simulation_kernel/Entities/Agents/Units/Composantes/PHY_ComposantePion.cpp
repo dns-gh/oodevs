@@ -445,6 +445,26 @@ PHY_InjuredHuman* PHY_ComposantePion::GetInjury() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetProtectionHumanDeadRatio
+// Created: JSR 2011-08-11
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetProtectionHumanDeadRatio( const PHY_ComposanteState& state ) const
+{
+    assert( pType_ );
+    return pType_->GetProtection().GetHumanDeadRatio( state );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetProtectionHumanWoundedRatio
+// Created: JSR 2011-08-11
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetProtectionHumanWoundedRatio( const PHY_ComposanteState& state ) const
+{
+    assert( pType_ );
+    return pType_->GetProtection().GetHumanWoundedRatio( state );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
@@ -1147,6 +1167,26 @@ bool PHY_ComposantePion::CanTransportPion() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanTransportCrowd
+// Created: JSR 2011-08-09
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::CanTransportCrowd() const
+{
+    assert( pType_ && pState_ );
+    return pState_->CanTransport() && pType_->CanTransportCrowd() && CanBeUsed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetCrowdTransporterCapacity
+// Created: JSR 2011-08-10
+// -----------------------------------------------------------------------------
+unsigned int PHY_ComposantePion::GetCrowdTransporterCapacity() const
+{
+    assert( pType_ );
+    return pType_->GetCrowdTransporterCapacity();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetPionTransporterWeightCapacity
 // Created: NLD 2006-03-23
 // -----------------------------------------------------------------------------
@@ -1154,6 +1194,26 @@ double PHY_ComposantePion::GetPionTransporterWeightCapacity() const
 {
     assert( pType_ );
     return pType_->GetPionTransporterWeightCapacity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetCrowdTransporterLoadedPerTimeStep
+// Created: JSR 2011-08-10
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetCrowdTransporterLoadedPerTimeStep() const
+{
+    assert( pType_ );
+    return pType_->GetCrowdTransporterLoadedPerTimeStep();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetCrowdTransporterUnloadedPerTimeStep
+// Created: JSR 2011-08-10
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetCrowdTransporterUnloadedPerTimeStep() const
+{
+    assert( pType_ );
+    return pType_->GetCrowdTransporterUnloadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------

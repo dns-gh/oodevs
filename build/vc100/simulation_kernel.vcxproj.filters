@@ -496,6 +496,9 @@
     <Filter Include="Source Files\Urban\Types">
       <UniqueIdentifier>{b8b12129-4f57-470d-b20b-2ac33bc996e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Agents\Actions\CrowdTransport">
+      <UniqueIdentifier>{4894cd33-7e3d-4b09-bcd1-17b557c9d938}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp">
@@ -2447,6 +2450,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp">
       <Filter>Source Files\Urban\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4786,6 +4798,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.h">
       <Filter>Source Files\Urban\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h">
+      <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h">
+      <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h">
+      <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

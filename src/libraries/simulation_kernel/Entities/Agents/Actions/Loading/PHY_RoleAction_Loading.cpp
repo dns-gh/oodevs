@@ -161,14 +161,16 @@ int PHY_RoleAction_Loading::Load()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eLoading;
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentStarted );    }
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentStarted );
+    }
 
     if( nState_ == eLoading )
     {
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentFinished );            SetLoadedState();
+            MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentFinished );
+            SetLoadedState();
             return eEnd;
         }
         return eRunning;

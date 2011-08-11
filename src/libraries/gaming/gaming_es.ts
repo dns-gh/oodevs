@@ -342,6 +342,10 @@
         <source>Info/Neutralized</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Crowd transported:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

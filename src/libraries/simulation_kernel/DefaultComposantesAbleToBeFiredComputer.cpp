@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "simulation_kernel/DefaultComposantesAbleToBeFiredComputer.h"
-#include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "DefaultComposantesAbleToBeFiredComputer.h"
+#include "MIL_Random.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 using namespace firing;
 

@@ -84,6 +84,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , pLogMaintenance_            ( 0 )
     , pLogSupply_                 ( 0 )
     , order_                      ( 0 )
+    , transportedCrowd_           ( -1 )
 {
     automat_->Register( *this );
     if( msg.has_color() )
@@ -299,6 +300,8 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
             affinities_[ adhesion.party().id() ] = adhesion.value();
         }
 
+    UPDATE_ASN_ATTRIBUTE( transported_crowd, transportedCrowd_ );
+
     Observable< sword::UnitAttributes >::Notify( message );
 }
 
@@ -502,6 +505,8 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             adhesion.mutable_party()->set_id( affinity.first );
             adhesion.set_value( affinity.second );
         }
+        if( transportedCrowd_ != -1 )
+            asn().set_transported_crowd( transportedCrowd_ );
         asn.Send( publisher );
     }
 

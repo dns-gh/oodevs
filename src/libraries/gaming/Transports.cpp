@@ -21,8 +21,8 @@ using namespace kernel;
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 Transports::Transports( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
-    : controller_( controller )
-    , resolver_( resolver )
+    : controller_ ( controller )
+    , resolver_   ( resolver )
     , transporter_( 0 )
 {
     CreateDictionary( dico );
@@ -41,7 +41,7 @@ Transports::~Transports()
 // Name: Transports::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void Transports::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void Transports::CreateDictionary( PropertiesDictionary& dico ) const
 {
     dico.Register( *this, tools::translate( "Transports", "Transports/Tow trucks" ), transporter_ );
     dico.Register( *this, tools::translate( "Transports", "Transports/Towed units" ), transported_ );

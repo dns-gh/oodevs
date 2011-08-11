@@ -72,8 +72,7 @@ ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const st
     setSelectionMode( Q3Table::Single );
     setShowGrid( false );
 
-    setMinimumHeight( 150 );
-    setMaximumHeight( 150 );
+    setFixedHeight( 150 );
 
     // hide vertical header
     verticalHeader()->hide();

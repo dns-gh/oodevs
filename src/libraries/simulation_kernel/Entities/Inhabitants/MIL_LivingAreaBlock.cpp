@@ -268,7 +268,7 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
         {
             if( firstAccommodation.empty() )
                 firstAccommodation = accommodation->first;
-            unsigned long nbr = persons * proportion;
+            unsigned long nbr = static_cast< unsigned long >( persons * proportion );
             persons_[ accommodation->first ] = nbr;
             blockTmp -= nbr;
         }
@@ -295,7 +295,7 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
     for( PHY_AccomodationType::CIT_AccomodationMap accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end(); ++accommodation )
         blockOccupation += GetNominalOccupation( accommodation->first, accommodation->second );
     int totalPopulation = urbanObject_->GetTotalInhabitants() - totalPerson;
-    return std::min( static_cast< int >( totalPerson ), std::max( 0, blockOccupation - totalPopulation ) );
+    return static_cast< float >( std::min( static_cast< int >( totalPerson ), std::max( 0, blockOccupation - totalPopulation ) ) );
 }
 
 namespace

@@ -164,6 +164,8 @@ public:
     double GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     double GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWantedPH ) const;
     PHY_InjuredHuman* GetInjury() const;
+    double GetProtectionHumanDeadRatio( const PHY_ComposanteState& state ) const;
+    double GetProtectionHumanWoundedRatio( const PHY_ComposanteState& state ) const;
     //@}
 
     //! @name Accessors
@@ -221,6 +223,10 @@ public:
 
     bool CanBeTransported() const;
     bool CanTransportPion() const;
+    bool CanTransportCrowd() const;
+    unsigned int GetCrowdTransporterCapacity() const;
+    double GetCrowdTransporterLoadedPerTimeStep() const;
+    double GetCrowdTransporterUnloadedPerTimeStep() const;
     double GetPionTransporterWeightCapacity() const;
     double GetPionTransporterWeightLoadedPerTimeStep() const;
     double GetPionTransporterWeightUnloadedPerTimeStep() const;

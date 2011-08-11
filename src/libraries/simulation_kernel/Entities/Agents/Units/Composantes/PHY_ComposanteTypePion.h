@@ -13,11 +13,9 @@
 #define __PHY_ComposanteType_h_
 
 #include "MIL.h"
-#include "MIL_Random.h"
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
-#include "MT_Tools/MT_String.h"
 
 namespace sword
 {
@@ -29,7 +27,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_AgentPion;
 class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
 class MIL_Time_ABC;
@@ -64,7 +61,7 @@ public:
     //! @name Static initialization
     //@{
     static void Initialize( const MIL_Time_ABC& time, xml::xistream& xis );
-    static void Terminate ();
+    static void Terminate();
 
     static const PHY_ComposanteTypePion* Find( const std::string& strName );
     static const PHY_ComposanteTypePion* Find( sword::EquipmentType nAsnID );
@@ -73,9 +70,9 @@ public:
     //! @name Instanciation
     //@{
     PHY_ComposantePion& InstanciateComposante( PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const;
-    void                InstanciateWeapons   ( std::back_insert_iterator < std::vector< PHY_Weapon* > > inserter ) const;
-    void                InstanciateSensors   ( std::back_insert_iterator < std::vector< PHY_Sensor* > > inserter ) const;
-    void                InstanciateProtections  ( std::back_insert_iterator < std::vector< PHY_HumanProtection* > > inserter ) const;
+    void InstanciateWeapons( std::back_insert_iterator< std::vector< PHY_Weapon* > > inserter ) const;
+    void InstanciateSensors( std::back_insert_iterator< std::vector< PHY_Sensor* > > inserter ) const;
+    void InstanciateProtections( std::back_insert_iterator< std::vector< PHY_HumanProtection* > > inserter ) const;
     //@}
 
     //! @name Dotations
@@ -105,6 +102,11 @@ public:
     double GetPionTransporterWeightCapacity           () const;
     double GetPionTransporterWeightLoadedPerTimeStep  () const;
     double GetPionTransporterWeightUnloadedPerTimeStep() const;
+
+    bool   CanTransportCrowd                     () const;
+    unsigned int GetCrowdTransporterCapacity     () const;
+    double GetCrowdTransporterLoadedPerTimeStep  () const;
+    double GetCrowdTransporterUnloadedPerTimeStep() const;
     //@}
 
     //! @name Objects
@@ -299,6 +301,7 @@ private:
     void ReadRadar               ( xml::xistream& xis );
     void ReadTransportCrew       ( xml::xistream& xis );
     void ReadTransportUnit       ( xml::xistream& xis );
+    void ReadTransportCrowd      ( xml::xistream& xis );
     void ReadObject              ( xml::xistream& xis );
     void ReadConsumption         ( xml::xistream& xis );
     void ReadMaintenance         ( xml::xistream& xis );
@@ -332,6 +335,11 @@ private:
     double rPionTransporterWeightCapacity_;
     double rPionTransporterWeightLoadedPerTimeStep_;
     double rPionTransporterWeightUnloadedPerTimeStep_;
+
+    // Crowd
+    unsigned int nCrowdTransporterCapacity_;
+    double rCrowdTransporterLoadedPerTimeStep_;
+    double rCrowdTransporterUnloadedPerTimeStep_;
 
     double  rWeight_;
 

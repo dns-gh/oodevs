@@ -65,6 +65,7 @@
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
+#include "Entities/Agents/Actions/CrowdTransport/PHY_RoleAction_CrowdTransport.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 
@@ -381,6 +382,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause
     pion.RegisterRole( *new PHY_RolePion_Population( pion ) );
     pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) );
     pion.RegisterRole( *new transport::PHY_RoleAction_Transport( pion ) );
+    pion.RegisterRole( *new crowdtransport::PHY_RoleAction_CrowdTransport( pion ) );
     pion.RegisterRole( *new moving::PHY_RoleAction_Moving( pion ) );
     pion.RegisterRole( *new PHY_RoleAction_Objects( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );

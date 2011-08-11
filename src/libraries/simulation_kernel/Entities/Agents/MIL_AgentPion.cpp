@@ -41,6 +41,7 @@
 #include "Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 #include "Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
+#include "Actions/CrowdTransport/PHY_RoleAction_CrowdTransport.h"
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -240,6 +241,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< PHY_RolePion_Population >( file, *this );
     LoadRole< transport::PHY_RoleAction_Loading >( file, *this );
     LoadRole< transport::PHY_RoleAction_Transport >( file, *this );
+    LoadRole< crowdtransport::PHY_RoleAction_CrowdTransport >( file, *this );
     LoadRole< moving::PHY_RoleAction_Moving >( file, *this );
     LoadRole< PHY_RoleAction_Objects >( file, *this );
     LoadRole< firing::PHY_RoleAction_DirectFiring >( file, *this );
@@ -296,6 +298,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< PHY_RolePion_Population >( *this, file );
     SaveRole< transport::PHY_RoleAction_Loading >( *this, file );
     SaveRole< transport::PHY_RoleAction_Transport >( *this, file );
+    SaveRole< crowdtransport::PHY_RoleAction_CrowdTransport >( *this, file );
     SaveRole< moving::PHY_RoleAction_Moving >( *this, file );
     SaveRole< PHY_RoleAction_Objects >( *this, file );
     SaveRole< firing::PHY_RoleAction_DirectFiring >( *this, file );
@@ -453,6 +456,7 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RolePion_Perceiver >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
     GetRole< transport::PHY_RoleAction_Loading >().Update( bIsDead );
     GetRole< transport::PHY_RoleAction_Transport >().Update( bIsDead );
+    GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Update( bIsDead );
     GetRole< PHY_RoleAction_Objects >().Update( bIsDead );
     GetRole< moving::PHY_RoleAction_Moving >().Update( bIsDead );
     GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
@@ -528,6 +532,7 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_Population >().Clean();
     GetRole< transport::PHY_RoleInterface_Transported >().Clean();
     GetRole< transport::PHY_RoleAction_Transport >().Clean();
+    GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Clean();
     GetRole< transport::PHY_RoleAction_Loading >().Clean();
     GetRole< PHY_RoleAction_Objects >().Clean();
     GetRole< moving::PHY_RoleAction_Moving >().Clean();

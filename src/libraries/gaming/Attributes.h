@@ -116,6 +116,7 @@ public:
     float fRefugeesLodgingSatisfactionPercent_;
     float fRefugeesSecuritySatisfactionPercent_;
     float fRefugeesHealthSatisfactionPercent_;
+    int crowdTransported_;
     //@}
 };
 
