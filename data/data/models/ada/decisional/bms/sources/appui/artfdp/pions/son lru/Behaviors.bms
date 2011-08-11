@@ -1,0 +1,72 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/son lru/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created:  $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Son AUF1 SIC/Behaviors.hal $
+]]--[[// $Author:  $
+]]--[[// $Modtime: $
+]]--[[// $Revision:  $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+silenceradio = 1,
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+tir_indirect = 1,
+controle_zone = 1,
+vitesse = 1,
+ennemi = 1,
+objectifEsquive = 1,
+etat_Ambiance = 1,
+controlePopulation = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+etat_ROE = 1,
+}
+
+
+--[[// Actions de la section AUF1 Pour les SIC
+]]--[[// ---------------------------------------------
+]]
+--[[// Comportements de la section d infanterie
+]]--[[// -----------------------------------------
+]]include "Appui/ArtFdp/Pions/Common/Behaviors.bms"
+
+
+
+--[[//=============================================================================
+]]--[[// Declaration de toutes les missions de la Section d'artillerie AUF1
+]]--[[//=============================================================================
+]]
+include "Appui/ArtFdp/Pions/Common/Missions/MettreEnOeuvre.bms"
+
+include "Appui/ArtFdp/Pions/Son LRU/Missions/AssurerMiseEnOeuvre2Zones.bms"
+
+include "Appui/ArtFdp/Pions/Son LRU/Missions/AssurerMiseEnOeuvre.bms"
+
+include "Appui/ArtFdp/Pions/Son LRU/Missions/AssurerMiseEnBatterieInopinee.bms"
+
+include "Appui/ArtFdp/Pions/Son LRU/Missions/AssurerMiseEnOeuvreSurPosition.bms"
+

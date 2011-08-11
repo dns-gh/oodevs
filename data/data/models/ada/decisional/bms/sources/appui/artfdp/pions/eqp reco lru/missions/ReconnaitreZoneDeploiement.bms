@@ -1,0 +1,91 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/eqp reco lru/missions/ReconnaitreZoneDeploiement.bms"] = true
+
+local emptyTable = emptyTable
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 19/09/05 10:12 $
+ * $Revision: 16 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]
+
+node "MIS_Pion_ASS_ReconnaitreZoneDeploiement"
+{
+    feedbacks = { { { "done_MIS_Pion_ASS_ReconnaitreZoneDeploiement" }, "MIS_Pion_ASS_ReconnaitreZoneDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ASS_ReconnaitreZoneDeploiement, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Pion_ASS_ReconnaitreZoneDeploiement", { "done_BEH_Pion_ASS_ReconnaitreZoneDeploiement" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+                self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eReconnaitre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.ePhase
+                if switch_1 == eReconnaitre then
+                    Activate( self.activations.BEH_Pion_ASS_ReconnaitreZoneDeploiement, GetMotivation( "MOT_Mission" ), { eTypeObjectZoneImplantationCanon, M_DELAI_PREPARATION_RECO_AUF1(), } )
+self.done_BEH_Pion_ASS_ReconnaitreZoneDeploiement = function( self, _, v ) self.eAction = v[1] end
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self:SendFeedback( eActionEffectuee )
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                    _continue = false
+                                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASS_ReconnaitreZoneDeploiement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_ReconnaitreZoneDeploiement, "BEH_Pion_ASS_ReconnaitreZoneDeploiement", nodes.BEH_Pion_ASS_ReconnaitreZoneDeploiement }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_ReconnaitreZoneDeploiement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

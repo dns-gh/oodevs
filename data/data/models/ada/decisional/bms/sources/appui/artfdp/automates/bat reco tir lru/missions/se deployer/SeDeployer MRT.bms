@@ -1,0 +1,93 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/automates/bat reco tir lru/missions/se deployer/SeDeployer MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Automates/Bat Tir TRF1/Missions/Se Deployer/SeDeployer MRT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:46 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: SeDeployer MRT.hal $
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_Stationner
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_ASS_SeDeployer"
+{
+    feedbacks = { { { "done_MIS_Automate_MRT_ASS_SeDeployer" }, "MIS_Automate_MRT_ASS_SeDeployer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ASS_SeDeployer, {value} ) end,
+    activations =
+    {
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_AssignerSeDeployerA", { "done_BEH_Medo_Automate_AssignerSeDeployerA" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "$ Mission 'SeDeployer': debut MRT $" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[// RC
+]]        end
+
+        Activate( self.activations.ACT_RC_Automate, 1, { eRC_DebutMission, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation et vérification
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
+                end
+
+                                self:SendFeedback( eActionImpossible )
+                Halt( self )
+                do return end
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        self:SendFeedback( eActionEffectuee )
+                    Halt( self )
+                    do return end
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( DEC_Automate_PionsAvecPC() ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
+        Activate( self.activations.BEH_Medo_Automate_AssignerSeDeployerA, 1, { DEC_Automate_PionsAvecPC(), } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ASS_SeDeployer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASS_SeDeployer, "ACT_RC_Automate", nodes.ACT_RC_Automate }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASS_SeDeployer, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASS_SeDeployer, "BEH_Medo_Automate_AssignerSeDeployerA", nodes.BEH_Medo_Automate_AssignerSeDeployerA }

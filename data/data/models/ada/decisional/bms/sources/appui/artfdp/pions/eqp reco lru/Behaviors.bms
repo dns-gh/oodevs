@@ -1,0 +1,66 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/eqp reco lru/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Son Reco AUF1/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:06 $
+]]--[[// $Revision: 15 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+silenceradio = 1,
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 2,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+tir_indirect = 1,
+controle_zone = 1,
+vitesse = 1,
+ennemi = 1,
+objectifEsquive = 1,
+controlePopulation = 1,
+etat_Ambiance = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+etat_ROE = 1,
+}
+
+
+--[[// Actions de la section de reco AUF1
+]]--[[// ---------------------------------------------
+]]
+--[[// Comportements de la section d infanterie
+]]--[[// -----------------------------------------
+]]include "Appui/ArtFdp/Pions/Common/Behaviors.bms"
+
+
+
+--[[//=============================================================================
+]]--[[// Declaration de toutes les missions de la Section de Reco AUF1
+]]--[[//=============================================================================
+]]
+include "Appui/ArtFdp/Pions/Common/Missions/ReconnaitreZoneDeploiement.bms"
+
+include "Appui/ArtFdp/Pions/Eqp Reco LRU/Missions/ReconnaitreZoneDeploiement.bms"
+

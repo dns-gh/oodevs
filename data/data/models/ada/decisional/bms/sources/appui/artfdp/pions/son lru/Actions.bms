@@ -1,0 +1,13 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/son lru/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 24/05/05 16:47 $
+ * $Revision: 11 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]

@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/eqp reco lru/Motivations.bms"] = true
+
+include "Common/Pions/Motivations.bms"
+
+

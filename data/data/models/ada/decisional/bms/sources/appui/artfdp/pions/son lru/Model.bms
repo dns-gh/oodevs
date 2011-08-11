@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/son lru/Model.bms"] = true
+
+--[[// *****************************************************************************
+]]
+--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Son AUF1 SIC/Model.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 11 $
+]]--[[// $Workfile: Model.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[// Modele de Section Tir AUF1 pour SIC
+]]--[[//=============================================================================
+]]include "MacroFunctions.bms"
+
+include "Appui/ArtFdp/Pions/Son LRU/Globals.bms"
+include "Common/Pions/Perception.bms"
+include "Appui/ArtFdp/Pions/Son LRU/Motivations.bms"
+include "Appui/ArtFdp/Pions/Son LRU/Behaviors.bms"
+
+local actualConnections = {}
+if connections then
+    for i, entry in pairs( connections ) do
+        if entry[3] == nil then
+            entry[3] = nodes[entry[2]]
+        end
+        if entry[3] ~= nil or type( entry[2] ) ~= "string" then
+            actualConnections[#actualConnections + 1] = entry
+        end
+    end
+end
+eventmanager_plugin = eventmanager_plugin or {}
+if not nodes.BEH_Defaut then node "BEH_Defaut" {} end
+eventmanager_plugin.BEH_Defaut = {}
+local table = {
+    eventmanager_plugin = eventmanager_plugin,
+    connections = actualConnections,
+    actuators = actuators or {},
+    motivation_plugin = motivation_plugin or {},
+}
+local dummyClass = setmetatable( { "dummyClass" }, { __persist = function() end } )
+brain "name" ( table )

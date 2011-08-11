@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/son lru/Parameters.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Son AUF1/Parameters.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Parameters.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+function M_DISTANCE_PorteeMaxObusExplosif()
+    return 25000
+end
+
+
+
+function M_DISTANCE_PorteeMaxObusGrenade()
+    return 28500
+end
+
+
+
+function M_DISTANCE_PorteeMaxObusACED()
+    return 27000
+end
+
+
+
+function M_DISTANCE_PorteeMaxObusFumigene()
+    return 23300
+end
+
+
+
+function M_DISTANCE_PorteeMaxObusEclairant()
+    return 21500
+end
+
+
+
+
+function M_DISTANCE_PorteeMin()
+    return 2500
+end
+
+
+
+

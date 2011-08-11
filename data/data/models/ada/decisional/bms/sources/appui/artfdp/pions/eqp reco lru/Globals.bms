@@ -1,0 +1,27 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/eqp reco lru/Globals.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Son Reco AUF1/Globals.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 12 $
+]]--[[// $Workfile: Globals.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[// Parametres constants
+]]--[[//=============================================================================
+]]include "Appui/ArtFdp/Pions/Common/Globals.bms"
+
+
+
+
+
+
+
+
