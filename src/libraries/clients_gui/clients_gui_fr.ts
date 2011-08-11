@@ -1475,8 +1475,8 @@ Voulez-vous le supprimer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> </source>
-        <translation type="unfinished"></translation>
+        <source>Line thickness: </source>
+        <translation>Epaisseur du trait: </translation>
     </message>
 </context>
 <context>
