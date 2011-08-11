@@ -99,6 +99,7 @@ private:
     QToolButton*        pSpeedButton_;
     QSpinBox*           pSpeedSpinBox_;
     QToolButton*        pCheckpointButton_;
+    QAction*            pCheckpointAction_ ;
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;

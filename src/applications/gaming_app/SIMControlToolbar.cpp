@@ -142,7 +142,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pCheckpointButton_->setIconSet( MAKE_ICON( checkpoint ) );
     pCheckpointButton_->setTextLabel( tr( "Save checkpoint" ) );
     pCheckpointButton_->setEnabled( false );
-    pCheckpointButton_->setShown( false );
 
     {
         Q3PopupMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
@@ -172,7 +171,8 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     addWidget( new QLabel( tr( "Speed factor: " ), this ) );
     addWidget( pSpeedSpinBox_ );
     addWidget( pSpeedButton_ );
-    addWidget( pCheckpointButton_ );
+    pCheckpointAction_ = addWidget( pCheckpointButton_ );
+    pCheckpointAction_->setVisible( false );
 
     connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );
     connect( pPlayButton_,    SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
@@ -383,7 +383,8 @@ void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
     pPlayButton_->setEnabled( super );
     pSpeedSpinBox_->setEnabled( super );
     pSpeedButton_->setEnabled( super );
-    pCheckpointButton_->setShown( super );
+    pCheckpointButton_->setEnabled( super );
+    pCheckpointAction_->setVisible( super );
 }
 
 // -----------------------------------------------------------------------------
