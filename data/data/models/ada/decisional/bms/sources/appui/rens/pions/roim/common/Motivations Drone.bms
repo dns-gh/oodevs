@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roim/common/Motivations Drone.bms"] = true
+
+include "Appui/Rens/Pions/Roim/Common/Motivations Drone/Stimulus.bms"
+
+include "Appui/Rens/Pions/Roim/Common/Motivations Drone/Etats.bms"
+
+include "Appui/Rens/Pions/Roim/Common/Motivations Drone/Motivations.bms"
+
+
+--[[// CAPACITE POPU
+]]include "Common/Pions/MotivationsReactionPopulations.bms"
+
+

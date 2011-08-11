@@ -1,0 +1,157 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roim/common/motivations drone/Stimulus.bms"] = true
+
+local emptyTable = emptyTable
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//  STIMULUS ORDRE MISSION
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.stimuli["STIM_Mission"] = function()
+        if( DEC_GetMission( myself ) ~= nil ) then
+            SetStimulus( "STIM_Mission", 1 )
+        else
+            SetStimulus( "STIM_Mission", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_PriseAPartieTirDirect
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+
+motivation_plugin.stimuli["STIM_PriseAPartieTirDirect"] = function()
+        local listeConnaissances = DEC_Connaissances_UnitesPrenantAPartie()
+        if( not DIA_IsListEmpty( listeConnaissances ) ) then
+            SetStimulus( "STIM_PriseAPartieTirDirect", 1 )
+        else
+            SetStimulus( "STIM_PriseAPartieTirDirect", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_PriseAPartieTirInDirect
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+
+motivation_plugin.stimuli["STIM_PriseAPartieTirInDirect"] = function()
+        if( DEC_Agent_EstNeutralise() and ( DEC_Agent_NiveauInstallation() < eNiveauInstallation_PosteAmenage ) ) then
+            SetStimulus( "STIM_PriseAPartieTirInDirect", 1 )
+        else
+            SetStimulus( "STIM_PriseAPartieTirInDirect", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIM_PresenceEnisRendus
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+
+motivation_plugin.stimuli["STIM_PresenceEnisRendus"] = function()
+        --[[// Default
+]]SetStimulus( "STIM_PresenceEnisRendus", 0 )
+        --[[// Transport circu
+]]if( g_bTransportEnCours ) then
+            do return end
+--[[// Si on est e mission de transport
+]]        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// PRISONNIERS
+]]--[[//-----------------------------------------------------------------------------
+]]local listeEniRendus = DEC_Connaissances_UnitesRenduesAProximite( 1000 )
+        for _,eniRendu in pairs( listeEniRendus or emptyTable ) do
+        local _continue = true
+do
+                local eValidite = nil
+                if( not DEC_ConnaissanceAgent_EstPrisonnier( eniRendu, eValidite ) ) then
+                    do
+                        SetStimulus( "STIM_PresenceEnisRendus", 1 )
+                                                do return end
+
+                    end
+                end
+
+            end
+
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIM_PresenceRefugies
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+
+motivation_plugin.stimuli["STIM_PresenceRefugies"] = function()
+        --[[// Default
+]]SetStimulus( "STIM_PresenceRefugies", 0 )
+        --[[// Transport circu
+]]if( g_bTransportEnCours ) then
+            do return end
+--[[// Si on est e mission de transport
+]]        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// REFUGIES
+]]--[[//-----------------------------------------------------------------------------
+]]local listeRefugies = DEC_Connaissances_RefugiesAProximite( 1000 )
+        for _,repRefugies in pairs( listeRefugies or emptyTable ) do
+        local _continue = true
+do
+                local eValidite = nil
+                if( not DEC_Refugies_EstEmbarque( repRefugies, eValidite ) ) then
+                    do
+                        SetStimulus( "STIM_PresenceRefugies", 1 )
+                                                do return end
+
+                    end
+                end
+
+            end
+
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIM_PresenceZoneTirInterdit
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+
+motivation_plugin.stimuli["STIM_PresenceZoneTirInterdit"] = function()
+        SetStimulus( "STIM_PresenceZoneTirInterdit", 0 )
+        local listeObjet = DEC_Connaissances_CollisionsObjets()
+        for _,objet in pairs( listeObjet or emptyTable ) do
+        local _continue = true
+do
+                local eValidite = nil
+                if( DEC_ConnaissanceObjet_Type( objet, eValidite ) == eTypeObjectZoneInterditeTir ) then
+                    SetStimulus( "STIM_PresenceZoneTirInterdit", 2 )
+                end
+
+            end
+
+        end
+
+        end
+

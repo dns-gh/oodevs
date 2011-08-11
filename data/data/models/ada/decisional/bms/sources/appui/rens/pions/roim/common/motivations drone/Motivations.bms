@@ -1,0 +1,1141 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roim/common/motivations drone/Motivations.bms"] = true
+
+local emptyTable = emptyTable
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 2003-03-27 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Pions/Motivations v3/Motivations.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 7/09/05 10:30 $
+]]--[[// $Revision: 43 $
+]]--[[// $Workfile: Motivations.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// *****************************************************************************
+]]--[[//  MOTIVATION MISSION --> ordre de mission strength = 1
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.motivations[ "MOT_Mission" ] =
+{
+    activation = {
+        STIM_Mission = 1,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1,
+    max_decrease_rate = 1,
+    max_output_value = 1,
+}
+
+node "ActivatedByMOT_Mission"
+{
+    feedbacks = { { { "done_ActivatedByMOT_Mission" }, "ActivatedByMOT_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Mission, {value} ) end,
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+    end,
+
+}
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executer quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// *****************************************************************************
+]]--[[//  MOT_GarderSesDistances
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_GarderSesDistances" ] =
+{
+    activation = {
+        VE_RapFor = 1000,
+        STIM_PriseAPartieTirDirect = 1000,
+        STIM_PriseAPartieTirInDirect = 1000,
+    },
+    amplification = {
+        STIM_PriseAPartieTirDirect = { 0, 1 }    },
+    reduction = {
+    },
+    max_increase_rate = 5000,
+    max_decrease_rate = 10,
+    max_output_value = 5000,
+}
+
+node "ActivatedByMOT_GarderSesDistances"
+{
+    feedbacks = { { { "done_ActivatedByMOT_GarderSesDistances" }, "ActivatedByMOT_GarderSesDistances" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_GarderSesDistances, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_GarderSesDistances", { "done_BEH_MOT_GarderSesDistances" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Mise à jour si moral mauvais ==> valeur = celle du rapFor
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]if( S_Misc_EstDetruitPhysique() ) then
+            do return end
+        end
+
+        --[[//ce comportement permet de décrocher à une position de sécurité/fixation
+]]Activate( self.activations.BEH_MOT_GarderSesDistances, GetMotivation( "MOT_GarderSesDistances" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_GarderSesDistanceFaceATirsIndirects
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_GarderSesDistanceFaceATirsIndirects" ] =
+{
+    activation = {
+        STIM_PriseAPartieTirInDirect = 10000,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1000,
+    max_decrease_rate = 10,
+    max_output_value = 10000,
+}
+
+node "ActivatedByMOT_GarderSesDistanceFaceATirsIndirects"
+{
+    feedbacks = { { { "done_ActivatedByMOT_GarderSesDistanceFaceATirsIndirects" }, "ActivatedByMOT_GarderSesDistanceFaceATirsIndirects" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_GarderSesDistanceFaceATirsIndirects, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_GarderSesDistancesFaceATirsIndirects", { "done_BEH_MOT_GarderSesDistancesFaceATirsIndirects" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]if( S_Misc_EstDetruitPhysique() ) then
+            do return end
+        end
+
+        --[[//ce comportement permet de décrocher à une position de sécurité/fixation
+]]Activate( self.activations.BEH_MOT_GarderSesDistancesFaceATirsIndirects, GetMotivation( "MOT_GarderSesDistanceFaceATirsIndirects" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_EtrePrudent
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[//  GGR : peut permettre de réaliser facilement les missions rétrogrades
+]]--[[//  (freiner, jalonner)
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_EtrePrudent" ] =
+{
+    activation = {
+        VE_RapForPrudence = 1000,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1000,
+    max_decrease_rate = 10,
+    max_output_value = 1000,
+}
+
+node "ActivatedByMOT_EtrePrudent"
+{
+    feedbacks = { { { "done_ActivatedByMOT_EtrePrudent" }, "ActivatedByMOT_EtrePrudent" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_EtrePrudent, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_EtrePrudent", { "done_BEH_MOT_EtrePrudent" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Mise à jour si moral bon/moyen ==> valeur = celle du rapFor
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Pour certaines missions (Jalonner / Freiner...)
+]]if( g_bDesactiveSauvegarde ) then
+            do return end
+        end
+
+        Activate( self.activations.BEH_MOT_EtrePrudent, GetMotivation( "MOT_EtrePrudent" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_Tenir
+]]--[[//
+]]--[[//    Commentaires: MOT_GarderSesDistances < MOT_Tenir dans certaine mission
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_Tenir" ] =
+{
+    activation = {
+        VE_Courage = 10000,
+    },
+    amplification = {
+    },
+    reduction = {
+        STIM_PriseAPartieTirInDirect = { 0, 1 }    },
+    max_increase_rate = 1000,
+    max_decrease_rate = 1000,
+    max_output_value = 10000,
+}
+
+node "ActivatedByMOT_Tenir"
+{
+    feedbacks = { { { "done_ActivatedByMOT_Tenir" }, "ActivatedByMOT_Tenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Tenir, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_TenirFaceAuxEnis", { "done_BEH_MOT_TenirFaceAuxEnis" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_TenirFaceAuxEnis, GetMotivation( "MOT_Tenir" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_ManoeuvrerSurEnis
+]]--[[//
+]]--[[//    Commentaires: force de cette motivation utilisée dans certaine mission
+]]--[[//                mais n'active rien de "générique"
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_ManoeuvrerSurEnis" ] =
+{
+    activation = {
+        VE_Agressivite_Manoeuvre = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_ManoeuvrerSurEnis"
+{
+    feedbacks = { { { "done_ActivatedByMOT_ManoeuvrerSurEnis" }, "ActivatedByMOT_ManoeuvrerSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_ManoeuvrerSurEnis, {value} ) end,
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+    end,
+
+}
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellemnt d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// La force engendrée poar cette motivation est utilisée
+]]--[[// par les comportements spécifiques aux missions
+]]--[[// *****************************************************************************
+]]--[[//  MOT_TirerSurEnis
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_TirerSurEnis" ] =
+{
+    activation = {
+        VE_Agressivite_Tir = 150,
+        VE_TirRestreint = - 150,
+        VE_TirInterdit = - 150,
+    },
+    amplification = {
+    },
+    reduction = {
+        STIM_PresenceZoneTirInterdit = { 0, 1 }    },
+    max_increase_rate = 150,
+    max_decrease_rate = 150,
+    max_output_value = 150,
+}
+
+node "ActivatedByMOT_TirerSurEnis"
+{
+    feedbacks = { { { "done_ActivatedByMOT_TirerSurEnis" }, "ActivatedByMOT_TirerSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_TirerSurEnis, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_TirerSurEnis", { "done_BEH_MOT_TirerSurEnis" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_TirerSurEnis, GetMotivation( "MOT_TirerSurEnis" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_RiposterSurEnis
+]]--[[//
+]]--[[//    Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_RiposterSurEnis" ] =
+{
+    activation = {
+        STIM_PriseAPartieTirDirect = 200,
+        VE_TirInterdit = - 200,
+    },
+    amplification = {
+    },
+    reduction = {
+        STIM_PresenceZoneTirInterdit = { 0, 1 }    },
+    max_increase_rate = 200,
+    max_decrease_rate = 200,
+    max_output_value = 200,
+}
+
+node "ActivatedByMOT_RiposterSurEnis"
+{
+    feedbacks = { { { "done_ActivatedByMOT_RiposterSurEnis" }, "ActivatedByMOT_RiposterSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_RiposterSurEnis, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_RiposterSurEnis", { "done_BEH_MOT_RiposterSurEnis" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_RiposterSurEnis, GetMotivation( "MOT_RiposterSurEnis" ), emptyTable )
+    end,
+
+}
+
+--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// INTERFACE MOTIVATIONNELLE POUR AUTOMATES ET GESTION ORDRE
+]]--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// *****************************************************************************
+]]--[[//  MOT_SePoster
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES pour coordination
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_SePoster" ] =
+{
+    activation = {
+        VE_SePoster = 100,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 50,
+    max_decrease_rate = 50,
+    max_output_value = 100,
+}
+
+node "ActivatedByMOT_SePoster"
+{
+    feedbacks = { { { "done_ActivatedByMOT_SePoster" }, "ActivatedByMOT_SePoster" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_SePoster, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_SePoster", { "done_BEH_MOT_SePoster" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_SePoster, GetMotivation( "MOT_SePoster" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_Ralentir
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_Ralentir" ] =
+{
+    activation = {
+        VE_Ralentir = 100,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 100,
+}
+
+node "ActivatedByMOT_Ralentir"
+{
+    feedbacks = { { { "done_ActivatedByMOT_Ralentir" }, "ActivatedByMOT_Ralentir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Ralentir, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_Ralentir", { "done_BEH_MOT_Ralentir" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Ordre automate pour coordination
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_Ralentir, GetMotivation( "MOT_Ralentir" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_PasserEnAlerteDeNiveau4
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnAlerteDeNiveau4" ] =
+{
+    activation = {
+        VE_NiveauNBC = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnAlerteDeNiveau4" }, "ActivatedByMOT_PasserEnAlerteDeNiveau4" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnAlerteDeNiveau4, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_PasserEnAlerteDeNiveau4", { "done_BEH_MOT_PasserEnAlerteDeNiveau4" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnAlerteDeNiveau4, GetMotivation( "MOT_PasserEnAlerteDeNiveau4" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_PasserEnSilenceRadio
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnSilenceRadio" ] =
+{
+    activation = {
+        VE_SilenceRadio = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnSilenceRadio"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnSilenceRadio" }, "ActivatedByMOT_PasserEnSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnSilenceRadio, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_PasserEnSilenceRadio", { "done_BEH_MOT_PasserEnSilenceRadio" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnSilenceRadio, GetMotivation( "MOT_PasserEnSilenceRadio" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_PasserEnSilenceRadar
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnSilenceRadar" ] =
+{
+    activation = {
+        VE_SilenceRadar = 1,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnSilenceRadar"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnSilenceRadar" }, "ActivatedByMOT_PasserEnSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnSilenceRadar, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_SilenceRadars", { "done_BEH_MOT_SilenceRadars" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_SilenceRadars, GetMotivation( "MOT_PasserEnSilenceRadar" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PasserEnTirRestreint
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnTirRestreint" ] =
+{
+    activation = {
+        VE_TirRestreint = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+        STIM_PresenceZoneTirInterdit = { 0, 1 }    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnTirRestreint"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnTirRestreint" }, "ActivatedByMOT_PasserEnTirRestreint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnTirRestreint, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_PasserEnTirRestreint", { "done_BEH_MOT_PasserEnTirRestreint" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnTirRestreint, GetMotivation( "MOT_PasserEnTirRestreint" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PasserEnTirInterdit
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnTirInterdit" ] =
+{
+    activation = {
+        VE_TirInterdit = 10,
+        STIM_PresenceZoneTirInterdit = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnTirInterdit"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnTirInterdit" }, "ActivatedByMOT_PasserEnTirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnTirInterdit, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_PasserEnTirInterdit", { "done_BEH_MOT_PasserEnTirInterdit" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnTirInterdit, GetMotivation( "MOT_PasserEnTirInterdit" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PasserEnTirLibre
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnTirLibre" ] =
+{
+    activation = {
+        VE_TirLibre = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+        STIM_PresenceZoneTirInterdit = { 0, 1 }    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnTirLibre"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnTirLibre" }, "ActivatedByMOT_PasserEnTirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnTirLibre, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_PasserEnTirLibre", { "done_BEH_MOT_PasserEnTirLibre" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// si les états tir interdit et tir restreint engendrent une motivation
+]]--[[// nulle, c'est qu'il faut activer la motivation de tir libre.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnTirLibre, GetMotivation( "MOT_PasserEnTirLibre" ), emptyTable )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PreparationMission
+]]--[[//
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PreparationMission" ] =
+{
+    activation = {
+        VE_PreparationMission = 1,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 2,
+}
+
+node "ActivatedByMOT_PreparationMission"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PreparationMission" }, "ActivatedByMOT_PreparationMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PreparationMission, {value} ) end,
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+    end,
+
+}
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]connections = connections or {}
+connections[ #connections + 1 ] = { motivation( "MOT_Mission", 1 ), nodes.ActivatedByMOT_Mission }
+connections[ #connections + 1 ] = { motivation( "MOT_GarderSesDistances", 1 ), nodes.ActivatedByMOT_GarderSesDistances }
+connections[ #connections + 1 ] = { motivation( "MOT_GarderSesDistanceFaceATirsIndirects", 1 ), nodes.ActivatedByMOT_GarderSesDistanceFaceATirsIndirects }
+connections[ #connections + 1 ] = { motivation( "MOT_EtrePrudent", 1 ), nodes.ActivatedByMOT_EtrePrudent }
+connections[ #connections + 1 ] = { motivation( "MOT_Tenir", 1 ), nodes.ActivatedByMOT_Tenir }
+connections[ #connections + 1 ] = { motivation( "MOT_ManoeuvrerSurEnis", 1 ), nodes.ActivatedByMOT_ManoeuvrerSurEnis }
+connections[ #connections + 1 ] = { motivation( "MOT_TirerSurEnis", 1 ), nodes.ActivatedByMOT_TirerSurEnis }
+connections[ #connections + 1 ] = { motivation( "MOT_RiposterSurEnis", 1 ), nodes.ActivatedByMOT_RiposterSurEnis }
+connections[ #connections + 1 ] = { motivation( "MOT_SePoster", 1 ), nodes.ActivatedByMOT_SePoster }
+connections[ #connections + 1 ] = { motivation( "MOT_Ralentir", 1 ), nodes.ActivatedByMOT_Ralentir }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnAlerteDeNiveau4", 1 ), nodes.ActivatedByMOT_PasserEnAlerteDeNiveau4 }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnSilenceRadio", 1 ), nodes.ActivatedByMOT_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnSilenceRadar", 1 ), nodes.ActivatedByMOT_PasserEnSilenceRadar }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirRestreint", 1 ), nodes.ActivatedByMOT_PasserEnTirRestreint }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirInterdit", 1 ), nodes.ActivatedByMOT_PasserEnTirInterdit }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirLibre", 1 ), nodes.ActivatedByMOT_PasserEnTirLibre }
+connections[ #connections + 1 ] = { motivation( "MOT_PreparationMission", 1 ), nodes.ActivatedByMOT_PreparationMission }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_EtrePrudent, "BEH_MOT_EtrePrudent", nodes.BEH_MOT_EtrePrudent }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_GarderSesDistanceFaceATirsIndirects, "BEH_MOT_GarderSesDistancesFaceATirsIndirects", nodes.BEH_MOT_GarderSesDistancesFaceATirsIndirects }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_GarderSesDistances, "BEH_MOT_GarderSesDistances", nodes.BEH_MOT_GarderSesDistances }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnAlerteDeNiveau4, "BEH_MOT_PasserEnAlerteDeNiveau4", nodes.BEH_MOT_PasserEnAlerteDeNiveau4 }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnSilenceRadar, "BEH_MOT_SilenceRadars", nodes.BEH_MOT_SilenceRadars }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnSilenceRadio, "BEH_MOT_PasserEnSilenceRadio", nodes.BEH_MOT_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnTirInterdit, "BEH_MOT_PasserEnTirInterdit", nodes.BEH_MOT_PasserEnTirInterdit }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnTirLibre, "BEH_MOT_PasserEnTirLibre", nodes.BEH_MOT_PasserEnTirLibre }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnTirRestreint, "BEH_MOT_PasserEnTirRestreint", nodes.BEH_MOT_PasserEnTirRestreint }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Ralentir, "BEH_MOT_Ralentir", nodes.BEH_MOT_Ralentir }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_RiposterSurEnis, "BEH_MOT_RiposterSurEnis", nodes.BEH_MOT_RiposterSurEnis }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_SePoster, "BEH_MOT_SePoster", nodes.BEH_MOT_SePoster }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Tenir, "BEH_MOT_TenirFaceAuxEnis", nodes.BEH_MOT_TenirFaceAuxEnis }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_TirerSurEnis, "BEH_MOT_TirerSurEnis", nodes.BEH_MOT_TirerSurEnis }

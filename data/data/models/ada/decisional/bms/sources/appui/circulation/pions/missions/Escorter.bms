@@ -1,0 +1,518 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/missions/Escorter.bms"] = true
+
+local emptyTable = emptyTable
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Grp ProTerre/Missions/Escorter.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 19/09/05 10:25 $
+]]--[[// $Revision: 17 $
+]]--[[// $Workfile: Escorter.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[// *****************************************************************************
+]]--[[// MIS_Pion_ABC_EscorterUnite
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ABC_EscorterUnite"
+{
+    feedbacks = { { { "done_MIS_Pion_ABC_EscorterUnite" }, "MIS_Pion_ABC_EscorterUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_EscorterUnite, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Mission_Pion_CIRCU_Escorter", { "done_BEH_Mission_Pion_CIRCU_Escorter" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.eEtat = eActionEffectuee
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        if( self.eEtat == eActionImpossible ) then
+            self:SendFeedback( eActionImpossible )
+            Halt( self )
+            do return end
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            do return end
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Pion_CIRCU_Escorter, 1, { self._namedParams.mission.uniteAEscorter_, 0.6, eReconnu, } )
+self.done_BEH_Mission_Pion_CIRCU_Escorter = function( self, _, v ) self.eEtat = v[1] end
+    end,
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ABC_EscorterUnites
+]]--[[// *****************************************************************************
+]]}
+
+node "MIS_Pion_ABC_EscorterUnites"
+{
+    feedbacks = { { { "done_MIS_Pion_ABC_EscorterUnites" }, "MIS_Pion_ABC_EscorterUnites" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_EscorterUnites, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Mission_Pion_CIRCU_EscorterAutomate", { "done_BEH_Mission_Pion_CIRCU_EscorterAutomate" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.eEtat = eActionEffectuee
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        if( self.eEtat == eActionImpossible ) then
+            self:SendFeedback( eActionImpossible )
+            Halt( self )
+            do return end
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            do return end
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Pion_CIRCU_EscorterAutomate, 1, { self._namedParams.mission.automateAEscorter_, 0.6, eReconnu, } )
+self.done_BEH_Mission_Pion_CIRCU_EscorterAutomate = function( self, _, v ) self.eEtat = v[1] end
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_CIRCU_Escorter (issu de l'ABC)
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Pion_CIRCU_Escorter"
+{
+    feedbacks = { { { "done_BEH_Mission_Pion_CIRCU_Escorter" }, "BEH_Mission_Pion_CIRCU_Escorter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_CIRCU_Escorter, {value} ) end,
+    activations =
+    {
+        { "BEH_MAJ_Pion_CIRCU_AgressiviteTir", { "done_BEH_MAJ_Pion_CIRCU_AgressiviteTir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Misc_Pion_CIRCU_Escorter", { "done_ACT_Misc_Pion_CIRCU_Escorter" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "done_BEH_Dep_ReagirFaceAObstacle" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAmi = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_MAJ_Pion_CIRCU_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            do return end
+        end
+
+         do
+            local _continue = true
+--[[// 1) Preparation de la mission
+]]--[[// Progression tactique
+]]--[[// Escorter (dire à l'unite qu'on l'escorte)
+]]--[[// Aller au plus vite
+]]--[[// se dépecher
+]]--[[// Escorter l'unite à bonne distance
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Rejoindre unite
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Escorte
+]]--[[// Escorter (dire à l'unite qu'on l'escorte)
+]]--[[// Aller au plus vite
+]]--[[// Objectif de l'unité escorté
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Reconnaissance sur l'axe
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Obstacle
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_ABC_Escorter: debut", } )
+                    self.ePhaseMission = eRejoindre
+                    _continue = false
+                elseif switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
+                    Activate( self.activations.ACT_Misc_Pion_CIRCU_Escorter, 1, { self._namedParams.pionAmi, } )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < 200 ) then
+                        do
+                            self.ePhaseMission = eProgresser
+                                                        do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, 50, 90, } )
+                    _continue = false
+                elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
+                    Activate( self.activations.ACT_Misc_Pion_CIRCU_Escorter, 1, { self._namedParams.pionAmi, } )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( F_Pion_GetitMvt( self._namedParams.pionAmi ) == nil ) then
+                        do
+                            Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escortée doit avoir un objectif **** ", } )
+                                                        do return end
+
+                        end
+                    end
+
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Progresser, 1, { F_Pion_GetitMvt( self._namedParams.pionAmi ), eProgressionReco, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
+                    Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    if( F_Pion_GetitMvt( self._namedParams.pionAmi ) == nil ) then
+                        do
+                            self.ePhaseMission = eProgresser
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
+                    _continue = false
+                
+                else
+                                end
+            end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_CIRCU_Escorter (issu de l'ABC)
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Misc_Pion_CIRCU_Escorter"
+{
+    feedbacks = { { { "done_ACT_Misc_Pion_CIRCU_Escorter" }, "ACT_Misc_Pion_CIRCU_Escorter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_CIRCU_Escorter, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAmi = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            F_Pion_SetpionEnEscorte( self._namedParams.pionAmi, myself )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetpionEnEscorte( self._namedParams.pionAmi, nil )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_CIRCU_EscorterAutomate (issu de l'ABC)
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_CIRCU_EscorterAutomate"
+{
+    feedbacks = { { { "done_BEH_Mission_Pion_CIRCU_EscorterAutomate" }, "BEH_Mission_Pion_CIRCU_EscorterAutomate" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_CIRCU_EscorterAutomate, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_CIRCU_AgressiviteTir", { "done_BEH_MAJ_Pion_CIRCU_AgressiviteTir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Misc_Pion_CIRCU_Escorter", { "done_ACT_Misc_Pion_CIRCU_Escorter" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "done_BEH_Dep_ReagirFaceAObstacle" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.automateAmi = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        --[[//-------------------------------------------------------------------------
+]]--[[// MAJ pion ami
+]]--[[//-------------------------------------------------------------------------
+]]--[[// On prend le PC pour rejoindre l'unité
+]]local pionASuivre = DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Détermination d'un pion de PE
+]]--[[//-------------------------------------------------------------------------
+]]local listePionsAmis = DEC_Pion_PionsDeAutomateSansPC( self._namedParams.automateAmi )
+        --[[// Pion de premier échelon au hasard de l'unité à escorter
+]]local pionTemoin = nil
+        for _,x in pairs( listePionsAmis or emptyTable ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Premier ) then
+                    pionTemoin = pion
+                end
+
+            end
+
+        end
+
+        if( pionTemoin == nil ) then
+            do
+                --[[// Cas ou un PC dans l'automate
+]]local pionPC = DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi )
+                if( F_Pion_GeteEtatEchelon( pionPC ) == eEtatEchelon_Premier ) then
+                    pionTemoin = pionPC
+                end
+
+            end
+        end
+
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_MAJ_Pion_CIRCU_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            do return end
+        end
+
+         do
+            local _continue = true
+--[[// 1) Preparation de la mission
+]]--[[// Progression tactique
+]]--[[// Escorter (dire à l'unite qu'on l'escorte)
+]]--[[// PC
+]]--[[// Aller au plus vite
+]]--[[// se dépecher
+]]--[[// Escorter l'unite à bonne distance
+]]--[[// Escorte
+]]--[[// Escorter (dire à l'unite qu'on l'escorte)
+]]--[[// PC
+]]--[[// IL FAUT QUE L'AUTOMATE QUE L'ON ESCORTE AIT LA MISSION 'FAIRE MOUVEMENT'
+]]--[[// On prend l'itineraire d'un pion au hasard dans l'automate
+]]--[[// Objectif de l'unité escortée
+]]--[[// Aller au plus vite
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Reconnaissance sur l'axe
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Obstacle
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]--[[// tous les pions ont fini de bouger                
+]]            local switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "BEH_Mission_Pion_CIRCU_EscorterAutomate: debut", } )
+                    self.ePhaseMission = eRejoindre
+                    _continue = false
+                elseif switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
+                    for _,pion in pairs( listePionsAmis or emptyTable ) do
+                    local _continue = true
+                        Activate( self.activations.ACT_Misc_Pion_CIRCU_Escorter, 1, { pion, } )
+
+                    end
+
+                    Activate( self.activations.ACT_Misc_Pion_CIRCU_Escorter, 1, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), pionASuivre:DEC_Agent_Position() ) < 200 ) then
+                        do
+                            self.ePhaseMission = eProgresser
+                                                        do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Suivre, 1, { pionASuivre, 50, 90, } )
+                    _continue = false
+                elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
+                    for _,pion in pairs( listePionsAmis or emptyTable ) do
+                    local _continue = true
+                        Activate( self.activations.ACT_Misc_Pion_CIRCU_Escorter, 1, { pion, } )
+
+                    end
+
+                    Activate( self.activations.ACT_Misc_Pion_CIRCU_Escorter, 1, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
+                    if( pionTemoin == nil or F_Pion_GetitMvt( pionTemoin ) == nil ) then
+                        do
+                            Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escortée doit avoir un objectif **** ", } )
+                                                        do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Progresser, 1, { F_Pion_GetitMvt( pionTemoin ), eProgressionReco, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
+                    Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
+                    local pionPC = DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi )
+                    if( F_Pion_GetitMvt( pionPC ) == nil ) then
+                        self.ePhaseMission = eProgresser
+                    end
+
+                    _continue = false
+                
+                else
+                                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ABC_EscorterUnite = { "mission" }
+eventmanager_plugin.MIS_Pion_ABC_EscorterUnites = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "BEH_MAJ_Pion_CIRCU_AgressiviteTir", nodes.BEH_MAJ_Pion_CIRCU_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "ACT_Misc_Pion_CIRCU_Escorter", nodes.ACT_Misc_Pion_CIRCU_Escorter }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "BEH_Dep_Suivre", nodes.BEH_Dep_Suivre }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "BEH_Dep_Progresser", nodes.BEH_Dep_Progresser }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "BEH_Dep_ReagirFaceAObstacle", nodes.BEH_Dep_ReagirFaceAObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_Escorter, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "BEH_MAJ_Pion_CIRCU_AgressiviteTir", nodes.BEH_MAJ_Pion_CIRCU_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "ACT_Misc_Pion_CIRCU_Escorter", nodes.ACT_Misc_Pion_CIRCU_Escorter }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "BEH_Dep_Suivre", nodes.BEH_Dep_Suivre }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "BEH_Dep_Progresser", nodes.BEH_Dep_Progresser }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "BEH_Dep_ReagirFaceAObstacle", nodes.BEH_Dep_ReagirFaceAObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_EscorterUnite, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_EscorterUnite, "BEH_Mission_Pion_CIRCU_Escorter", nodes.BEH_Mission_Pion_CIRCU_Escorter }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_EscorterUnites, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_EscorterUnites, "BEH_Mission_Pion_CIRCU_EscorterAutomate", nodes.BEH_Mission_Pion_CIRCU_EscorterAutomate }

@@ -1,0 +1,104 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/son auf1 sic/missions/AssurerMiseEnBatterieInopinee.bms"] = true
+
+local emptyTable = emptyTable
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 19/09/05 10:11 $
+ * $Revision: 16 $
+ *
+ */]]--[[// Created: AHC 2010-01-19
+]]--[[// *****************************************************************************
+]]--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]
+
+node "MIS_Pion_ASS_AssurerMiseEnBatterieInopinee"
+{
+    feedbacks = { { { "done_MIS_Pion_ASS_AssurerMiseEnBatterieInopinee" }, "MIS_Pion_ASS_AssurerMiseEnBatterieInopinee" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ASS_AssurerMiseEnBatterieInopinee, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Pion_ASS_GererOrdre_AppliquerFeux", { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux" } },
+        { "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", { "done_BEH_Info_Pion_ASS_GererDisponibiliteAuTir" } },
+        { "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", { "done_BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+                self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eMettreEnOeuvre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                --[[// Prise en charge de l'ordre d'application des feux
+]]F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Second )
+                --[[//---------------------------------------------------------------------
+]]DEC_Trace( "Reception mission 'AssurerMiseEnBatterieInopinee'" )
+            end
+--[[// Gere la disponibilite aux feux
+]]        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//---------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux, 1, { false, } )
+        --[[// Mission
+]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
+         do
+            local _continue = true
+--[[//---------------------------------------------------------------------
+]]--[[// pas de delai
+]]            local switch_1 = self.ePhase
+                if switch_1 == eMettreEnOeuvre then
+                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { 0, } )
+                    _continue = false
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self:SendFeedback( eActionEffectuee )
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                    _continue = false
+                                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASS_AssurerMiseEnBatterieInopinee = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnBatterieInopinee, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnBatterieInopinee, "BEH_Pion_ASS_GererOrdre_AppliquerFeux", nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnBatterieInopinee, "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", nodes.BEH_Info_Pion_ASS_GererDisponibiliteAuTir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnBatterieInopinee, "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnBatterieInopinee, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
