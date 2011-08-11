@@ -67,7 +67,6 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( OnHeightChanged( int ) ) );
         connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
-        addSeparator();
         QToolButton* button = new QToolButton( this );
         button->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
         QToolTip::add( button, tools::translate( "gui::GisToolBar", "Show terrain profiler tool" ) );
@@ -75,7 +74,6 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
         connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
         
-        addSeparator();
         Q3HBox* contourBox = new Q3HBox( this );
         contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
         QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );
@@ -90,7 +88,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         addWidget( height_ );
         addWidget( color_ );
         addWidget( button );
-        addWidget(contourBoxEnabled_ );
+        addWidget( contourBoxEnabled_ );
         addWidget( colorContourLines_ );
     }
     OnToggleWatershedEnabled( false );

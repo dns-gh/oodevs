@@ -71,6 +71,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             QToolButton* pTimeTableButton = new QToolButton( this );
             pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
             pTimeTableButton->setTextLabel( tr( "Time table" ) );
+            addWidget( pTimeTableButton );
             connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
             connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );

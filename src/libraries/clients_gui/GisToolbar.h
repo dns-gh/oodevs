@@ -13,6 +13,16 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
+#pragma warning( push, 0 )
+#include <QtGui/qtoolbar.h>
+#pragma warning( pop )
+
+class QColor;
+class QDockWidget;
+class QCheckBox;
+class QComboBox;
+class QSpinBox;
+
 namespace kernel
 {
     class Controllers;

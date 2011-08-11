@@ -51,6 +51,8 @@ AfterAction::~AfterAction()
 void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
 {
     aarDock_ = new QDockWidget( "aar", window );
+    aarDock_->setObjectName( tools::translate( "AfterAction", "After action review" ) );
+    window->addDockWidget( Qt::LeftDockWidgetArea, aarDock_ );
     Q3VBox* box = new Q3VBox( aarDock_ );
     box->setMinimumSize( 250, 200 );
     functionsTab_ = new QTabWidget( box );
@@ -86,7 +88,6 @@ void AfterAction::NotifyUpdated( const Services& services )
         aar_ = aarDock_->isShown();
     firstUpdate_ = false;
     const bool isAar = services.HasService< aar::Service >() && services.HasService< replay::Service >();
-//    window_->setAppropriate( aarDock_, isAar );
     aarDock_->setShown( aar_ && isAar );
 }
 
