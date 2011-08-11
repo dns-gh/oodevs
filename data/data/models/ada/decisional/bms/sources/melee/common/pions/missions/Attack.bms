@@ -28,9 +28,9 @@ node "MIS_Pion_MELEE_Attack"
         end
         self.enemy = self.params.mission.enemy_ -- optional parameter
         if not self.enemy then
-            local enemies = DEC_Connaissances_UnitesEnnemiesDangereuses()
-            local distance = math.huge
             local myposition = DEC_Agent_Position()
+            local enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myposition, 50000 )
+            local distance = math.huge
             for i, enemy in pairs( enemies ) do
                 local enemyPosition = DEC_ConnaissanceAgent_Position( enemy )
                 local distToEnemy = DEC_Geometrie_Distance( enemyPosition, myposition )
@@ -39,12 +39,12 @@ node "MIS_Pion_MELEE_Attack"
                     distance = distToEnemy
                 end
             end
-        end
-        if not self.enemy then
-            DEC_Trace( "No enemy found" )
-            DEC_RC( eRC_MissionImpossible )
-            Halt( self )
-            do return end
+		        if not self.enemy then
+		            DEC_Trace( "No enemy found" )
+		            DEC_RC( eRC_MissionImpossible )
+		            Halt( self )
+		            do return end
+		        end
         end
     end,
 

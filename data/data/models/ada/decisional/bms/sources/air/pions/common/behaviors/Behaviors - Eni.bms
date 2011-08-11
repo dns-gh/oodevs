@@ -31,6 +31,7 @@ include "bit.lua"
         self._namedParams.nombreIT = self.params[3]
         self._namedParams.typeObus = self.params[4]
         self._namedParams.pH = self.params[5]
+        self._namedParams.dotation = self.params[6]
     end,
 
     activate = function( self )
@@ -43,10 +44,11 @@ include "bit.lua"
             do return end
         end
 
-        local peutToucher = S_Tir_DistancePorteeIndirect_EstValide( DEC_Tir_MunitionPourTirIndirect( self._namedParams.typeObus, DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ) ), DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ) )
+				local dotationToUse = self._namedParams.dotation or DEC_Tir_MunitionPourTirIndirect( self._namedParams.typeObus, DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ) )
+        local peutToucher = S_Tir_DistancePorteeIndirect_EstValide( dotationToUse, DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ) )
         --[[// si la connaissance est du niveau demandé et qu'elle est a portée de tir
 ]]if( peutToucher and S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ennemi, self._namedParams.niveauPerception ) ) then
-            Activate( self.activations.ACT_Tir_IndirectSurPosition, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ), self._namedParams.nombreIT, DEC_Tir_MunitionPourTirIndirect( self._namedParams.typeObus, DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ) ), } )
+            Activate( self.activations.ACT_Tir_IndirectSurPosition, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ), self._namedParams.nombreIT, dotationToUse, } )
         end
 
     end,
