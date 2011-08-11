@@ -486,7 +486,7 @@ public:
         eRC_ZoneConfined,
         eRC_ArrivedOnConfinedZone,
         eRC_PasDeDroneDisponible,
-        eRC_TerroristNeutralized,
+        eRC_TerroristCaptured,
         eRC_MiseEnPlaceProducePoint,
         eRC_ProduceImpossible,
         eRC_FinProducePoint,

@@ -320,6 +320,17 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetNearbyTerrorists
+// Created: DDA 2011-08-10
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyTerrorists( const MIL_AgentPion& callerAgent, double radius )
+{
+    T_ConstKnowledgeAgentVector knowledges; 
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetTerroristsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetNearbySurrenderedAgents
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------

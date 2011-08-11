@@ -329,6 +329,23 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_ConstKnowled
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetTerroristsInCircle
+// Created: DDA 2006-08-10
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetTerroristsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const
+{
+    assert( pKnowledgeAgentContainer_ );
+    container.clear();
+    const T_KnowledgeAgentVector& terrorists = pKnowledgeAgentContainer_->GetTerrorists();
+    for( CIT_KnowledgeAgentVector it = terrorists.begin(); it != terrorists.end(); ++it )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
+        if( center.Distance( knowledge->GetPosition() ) <= rRadius )
+            container.push_back( knowledge );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------

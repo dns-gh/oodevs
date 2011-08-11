@@ -535,7 +535,7 @@
   <report category="operational" id="367" message="Un supérieur logistique est nécessaire"/>
   <report category="operational" id="368" message="Le site de franchissement doit être reconnu"/>
   <report category="operational" id="369" message="Objet invalide"/>
-  <report category="operational" id="370" message="Le terroriste est neutralise %1">
+  <report category="operational" id="370" message="Terroriste %1 capturé">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="371" message="Mise en place de la production pour le reseau de ressources"/>
@@ -558,4 +558,4 @@
   <report category="operational" id="3018" message="Demande un renfort de police"/>
   <report category="operational" id="3019" message="Demande un renfort médical"/>
 </reports>
-<!-- signature="4284380395" -->
+<!-- signature="0275584301" -->

@@ -117,6 +117,7 @@ public:
     bool EnemyPresenceInCircle( const MT_Vector2D& center, double rRadius ) const;
 
     void GetRefugeesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
+    void GetTerroristsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
     void GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
 
     // Knowledge populations

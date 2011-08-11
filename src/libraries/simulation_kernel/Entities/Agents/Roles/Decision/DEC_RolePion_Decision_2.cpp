@@ -566,6 +566,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< T_ConstKnowledgeAgentVector( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetLivingEnemiesInBU, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_RefugiesAProximite" ] =
         boost::function< T_ConstKnowledgeAgentVector( double ) > ( boost::bind( &DEC_KnowledgeFunctions::GetNearbyRefugees, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_Connaissances_TerroristsAProximite" ] =
+        boost::function< T_ConstKnowledgeAgentVector( double ) > ( boost::bind( &DEC_KnowledgeFunctions::GetNearbyTerrorists, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_UnitesRenduesAProximite" ] =
         boost::function< T_ConstKnowledgeAgentVector ( double ) > ( boost::bind( &DEC_KnowledgeFunctions::GetNearbySurrenderedAgents, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_PresenceEnnemieDansCercle" ] =
