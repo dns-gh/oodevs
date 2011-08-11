@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "tools/Loader.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/filesystem/operations.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -51,6 +52,25 @@ Config::~Config()
     // NOTHING
 }
 
+namespace
+{
+    void ReadDebugConfigFile( const std::string& filename, unsigned int& logFiles, unsigned int& logSize, unsigned int& shieldLogFiles, unsigned int& shieldLogSize )
+    {
+        if( boost::filesystem::exists( filename ) )
+        {
+            xml::xifstream xis( filename );
+            xis >> xml::start( "debug" )
+                    >> xml::optional >> xml::start( "dispatcher" )
+                        >> xml::optional >> xml::attribute( "logfiles", logFiles )
+                        >> xml::optional >> xml::attribute( "logsize", logSize )
+                    >> xml::end
+                    >> xml::optional >>xml::start( "shield" )
+                        >> xml::optional >> xml::attribute( "logfiles", shieldLogFiles )
+                        >> xml::optional >> xml::attribute( "logsize", shieldLogSize );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Config::Parse
 // Created: NLD 2007-01-10
@@ -85,6 +105,7 @@ void Config::Parse( int argc, char** argv )
                             >> xml::attribute( "server", networkShieldParameters_ )
                             >> xml::optional >> xml::attribute( "logfiles", shieldLogFiles_ )
                             >> xml::optional >> xml::attribute( "logsize", shieldLogSize_ );
+    ReadDebugConfigFile( BuildExerciseChildFile( "debug.xml" ), logFiles_, logSize_, shieldLogFiles_, shieldLogSize_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
