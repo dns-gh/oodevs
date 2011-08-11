@@ -24,6 +24,7 @@ using namespace gui;
 UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, const char* name /*= 0*/ )
     : UnitStateTable_ABC( 0, 7, parent, name )
 {
+    tr( "" ); // $$$$ ABR 2011-08-11: HACK: neccessaire sinon le premier appel a tr n'est pas traduit !??!?!?!?!?
     horizontalHeader()->setLabel( eRank,         tr( "Rank" ) );
     horizontalHeader()->setLabel( eState,        tr( "State" ) );
     horizontalHeader()->setLabel( eInjuries,     tr( "Injury seriousness" ) ); // $$$$ ABR 2011-08-11: should become Injuries with story 660

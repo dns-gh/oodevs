@@ -23,6 +23,7 @@ using namespace gui;
 UnitStateTableResource::UnitStateTableResource( QWidget* parent, bool forPreparation /*= false*/, const char* name /*= 0*/ )
     : UnitStateTable_ABC( 0, 6, parent, name )
 {
+    tr( "" ); // $$$$ ABR 2011-08-11: HACK: neccessaire sinon le premier appel a tr n'est pas traduit !??!?!?!?!?
     horizontalHeader()->setLabel( eName,       tr( "Resources" ) );
     horizontalHeader()->setLabel( eCategory,   tr( "Category" ) );
     horizontalHeader()->setLabel( eQuantity,   tr( "Quantity" ) );

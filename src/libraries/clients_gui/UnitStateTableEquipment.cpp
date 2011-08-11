@@ -22,7 +22,8 @@ using namespace gui;
 UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, const char* name /*= 0*/ )
     : UnitStateTable_ABC( 0, 3, parent, name )
 {
-    horizontalHeader()->setLabel( eName,      tr( "Equipment" ) );
+    tr( "" ); // $$$$ ABR 2011-08-11: HACK: neccessaire sinon le premier appel a tr n'est pas traduit !??!?!?!?!?
+    horizontalHeader()->setLabel( eName,      tr( "Equipments" ) );
     horizontalHeader()->setLabel( eState,     tr( "State" ) );
     horizontalHeader()->setLabel( eBreakdown, tr( "Breakdown" ) );
     setColumnReadOnly( eName, true );

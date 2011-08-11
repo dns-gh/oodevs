@@ -1607,6 +1607,10 @@ Voulez-vous le supprimer?</translation>
         <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rank</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitStateTableEquipment</name>
@@ -1616,6 +1620,10 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Breakdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1643,6 +1651,10 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Logistic threshold (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -421,6 +421,9 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_extension", sword::UnitMagicAction::change_extension ) );
     RegisterActionType( *new MagicActionType( "change_critical_intelligence", sword::UnitMagicAction::change_critical_intelligence ) );
     RegisterActionType( *new MagicActionType( "transfer_equipment", sword::UnitMagicAction::transfer_equipment ) );
+    RegisterActionType( *new MagicActionType( "change_equipment_state", sword::UnitMagicAction::change_equipment_state ) );
+    RegisterActionType( *new MagicActionType( "change_human_state", sword::UnitMagicAction::change_human_state ) );
+    RegisterActionType( *new MagicActionType( "change_dotation", sword::UnitMagicAction::change_dotation ) );
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::KnowledgeMagicAction::enable ) );
