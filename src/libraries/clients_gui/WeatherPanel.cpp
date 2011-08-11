@@ -55,10 +55,10 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     localLayout_ = new Q3VBox( group );
     // Buttons
     setWidget( mainLayout );
-    Q3Button okBtn     = new QPushButton( tr( "Validate" ) , buttonsLayout );
-    Q3Button cancelBtn = new QPushButton( tr( "Cancel" ), buttonsLayout );
-    connect( &okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
-    connect( &cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
+    QPushButton* okBtn     = new QPushButton( tr( "Validate" ) , buttonsLayout );
+    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), buttonsLayout );
+    connect( okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,8 +83,8 @@ void WeatherPanel::CreateLocalParameters()
     new QLabel( tr( "End time:" ), parametersGroup_ );
     endTime_ = new QDateTimeEdit( parametersGroup_ );
 
-    Q3Button btn = new QPushButton( tr( "Set location" ), localLayout_ );
-    connect( &btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
+    QPushButton* btn = new QPushButton( tr( "Set location" ), localLayout_ );
+    connect( btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
 
     OnTypeChanged( 0 );
 }
