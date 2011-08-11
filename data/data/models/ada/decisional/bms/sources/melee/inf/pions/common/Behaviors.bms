@@ -238,6 +238,8 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
         local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionDeb = self.eActionDeb or eActionEnCours
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         --[[// Verifie que les HOT ne debarquent pas .. 
 ]]--[[// .. Sinon attention aux surprises
 ]]local bDebarquement = self._namedParams.bDemandeDebarquement and ( myself:GetType() ~= "SectionInfanterie_HOT" ) and DEC_Agent_EstEmbarque()
@@ -246,8 +248,7 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
         end
 
         Activate( self.activations.ACT_RC, 1, { eRC_EnPosteFaceADirectionDangereuse, } )
-        local mission = DEC_GetMission( myself )
-        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
         if( self.eAction == eActionEnCours ) then
             Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_DELAI_TOMBE_EN_GARDE(), "Tombe en garde", } )
 self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end

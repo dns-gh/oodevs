@@ -47,6 +47,8 @@ node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
 
     activate = function( self )
         local Activate = Activate
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------
@@ -61,8 +63,7 @@ node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
         --[[// Si l'on trouve un embossement a proximite, on le rejoint
 ]]Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, emptyTable )
         Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
-        local mission = DEC_GetMission( myself )
-        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
     end,
 
 }

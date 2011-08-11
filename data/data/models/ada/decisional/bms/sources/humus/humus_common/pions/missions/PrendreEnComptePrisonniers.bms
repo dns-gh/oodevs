@@ -33,7 +33,7 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        self.ePhase = self.ePhase or ePreparerMission
+                self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         self.verifRendues = self.verifRendues or {}
         --[[// Init

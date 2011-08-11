@@ -183,6 +183,8 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eAppuyer
         self.repCurEni = self.repCurEni or nil
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         if( ModuleBegins() ) then
             do
                 F_AddToselUnitesEnAppui( self._namedParams.tAmi )
@@ -215,8 +217,7 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
                     _continue = false
                 elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_RC, 1, { eRC_EnAppui, } )
-                    local mission = DEC_GetMission( myself )
-                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
                     Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )
                     _continue = false
                 

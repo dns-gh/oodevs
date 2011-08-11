@@ -662,9 +662,9 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Posture / Vision
 ]]--[[//-----------------------------------------------------------------------------
-]]local directionDanger = DEC_GetDirectionDanger( DEC_GetMission( myself ) )
-        Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { directionDanger, } )
-        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { directionDanger, } )
+]]self.directionDanger = self.directionDanger or DEC_GetDirectionDanger( DEC_GetMission( myself ) )
+        Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { self.directionDanger, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionDanger, } )
     end,
 
 --[[// *****************************************************************************

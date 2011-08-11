@@ -223,6 +223,8 @@ node "BEH_Pion_INF_Barrer_DispositifArret"
     activate = function( self )
         local Activate = Activate
         self.eActionDebarquer = self.eActionDebarquer or eActionEnCours
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         if( not DEC_Nuit() ) then
             do
                 if( ModuleBegins() ) then
@@ -242,8 +244,7 @@ self.done_ACT_Transport_Pion_INF_Debarquer = function( self, _, v ) self.eAction
 
                 --[[// detectabilite tres faible
 ]]--[[// vulnerabilite faible	
-]]local mission = DEC_GetMission( myself )
-                Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+]]Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
             end
         else
 do

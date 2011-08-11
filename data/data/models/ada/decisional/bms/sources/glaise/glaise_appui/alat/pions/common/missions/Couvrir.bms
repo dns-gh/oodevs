@@ -48,6 +48,7 @@ include "bit.lua"
         self.listePionsACouvrir = self.listePionsACouvrir or {}
         self.listeCourantePionsACouvrir = self.listeCourantePionsACouvrir or {}
         self.directionGroupe = self.directionGroupe or nil
+        self.directionDanger = self.directionDanger or DEC_GetDirectionDanger( self._namedParams.mission )
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
@@ -191,17 +192,16 @@ do
 
                     end
 
-                    local directionDanger = DEC_GetDirectionDanger( self._namedParams.mission )
-                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { directionDanger, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionDanger, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.barycentreListePions, } )
                     if( bSePoser ) then
                         Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
                     else
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_SuivreSurFlanc, GetMotivation( "MOT_Manoeuvrer" ), { self.listeCourantePionsACouvrir, directionDanger, 4500, 1000, eProgressionDefaut, eTypeItiInfiltration, } )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_SuivreSurFlanc, GetMotivation( "MOT_Manoeuvrer" ), { self.listeCourantePionsACouvrir, self.directionDanger, 4500, 1000, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_SuivreSurFlanc = function( self, _, v ) self.eEtat = v[1] end
                     end
 
-                    Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniCouvrir, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self.listePionsACouvrir, directionDanger, self._namedParams.mission.ciblesPrioritaires_, } )
+                    Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniCouvrir, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self.listePionsACouvrir, self.directionDanger, self._namedParams.mission.ciblesPrioritaires_, } )
                     _continue = false
                 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )

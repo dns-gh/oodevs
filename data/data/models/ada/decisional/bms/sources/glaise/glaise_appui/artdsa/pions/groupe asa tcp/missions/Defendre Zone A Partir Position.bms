@@ -42,6 +42,7 @@ include "bit.lua"
 ]]self.eEtat = self.eEtat or eActionEnCours
         self.eEtatODC = self.eEtatODC or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self._namedParams.mission )
         --[[//debut mission
 ]]Activate( self.activations.ACT_Info_Trace, 1, { "Mission ASA : Defendre Zone A Partir d'Une Position", } )
         if( ModuleBegins() ) then
@@ -95,7 +96,7 @@ self.done_BEH_Dep_Pion_ASA_RejoindrePoint = function( self, _, v ) self.eEtat = 
                     _continue = false
                 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                    Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
+                    Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { self.directionEnnemi, } )
                     if( DEC_Agent_EstInstalle() and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
                         do
                             Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )

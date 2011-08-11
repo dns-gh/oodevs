@@ -77,13 +77,13 @@ include "bit.lua"
             local _continue = true
 --[[// Calcul le point de regroupement
 ]]--[[// ------------------------------------------------------------
-]]--[[// Pas de point de regroupement trouve				
+]]--[[// Pas de point de regroupement trouve                
 ]]--[[// Fait rompre les pions par etape
 ]]--[[// ------------------------------------------------------------
 ]]--[[// Recupere le point de regroupement
 ]]--[[// TODO : Delete pt
 ]]--[[// On prend un pion a chaque phase
-]]--[[// Demande aux pions qui interdisent de rompre le contact									
+]]--[[// Demande aux pions qui interdisent de rompre le contact                                    
 ]]            local switch_1 = self.ePhase
                 if switch_1 == ePhase_Decroche then
                     DEC_Trace( "Processus de rupture de contact : en cours [Decroche]" )

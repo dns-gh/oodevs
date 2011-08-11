@@ -254,8 +254,9 @@ node "BEH_Pion_ASS_InstallationSurZone"
         self.ptObjImplantation = self.ptObjImplantation or S_Obj_Position( self._namedParams.repObjImplantation )
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         --[[// S'oriente vers la direction dangereuses
-]]local mission = DEC_GetMission( myself )
-        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+]]self.mission = self.mission or DEC_GetMission( myself )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
         Activate( self.activations.ACT_Obj_Pion_AnimerSite, 1, { self._namedParams.repObjImplantation, } )
         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationSurZoneImplantation, } )
         --[[// Lorsque l'on est sur la zone d'implantation
@@ -299,8 +300,9 @@ node "BEH_Pion_ASS_InstallationSurPosition"
         local Activate = Activate
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         --[[// S'oriente vers la direction dangereuses
-]]local mission = DEC_GetMission( myself )
-        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+]]self.mission = self.mission or DEC_GetMission( myself )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
         --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_DeploiementSurPosition );
 ]]--[[// Debut installation -> Fin Installation

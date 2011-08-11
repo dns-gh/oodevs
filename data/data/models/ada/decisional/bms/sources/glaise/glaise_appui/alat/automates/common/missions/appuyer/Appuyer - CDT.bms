@@ -45,6 +45,7 @@ local emptyTable = emptyTable
         self.listePionsAAppuyer = self.listePionsAAppuyer or {}
         self.listePionsAAppuyerIMEX = self.listePionsAAppuyerIMEX or {}
         self.listeHMLog = self.listeHMLog or {}
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionEnnemi( self._namedParams.mission )
         self.eEtatODC = self.eEtatODC or eActionEnCours
         if( self.eEtatODC == eActionHalt ) then
             do
@@ -140,7 +141,7 @@ do
                     end
 
                     if( not DIA_IsListEmpty( self.listeDetruire ) ) then
-                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, DEC_GetDirectionEnnemi( self._namedParams.mission ), } )
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, self.directionEnnemi, } )
                     end
 
                     if( not DIA_IsListEmpty( self.listeAppuyer ) ) then

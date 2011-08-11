@@ -24,7 +24,6 @@ include "bit.lua"
 ]]--[[//		. Prepare les obstacles en fonction du terrain
 ]]
 --[[//=============================================================================
-]]--[[//-----------------------------------------------------------------------------
 ]]node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
 {
     feedbacks = { { { "done_BEH_Dispositif_Pion_VAB_InstallationDefensive" }, "BEH_Dispositif_Pion_VAB_InstallationDefensive" } },
@@ -46,9 +45,12 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        --[[// On se met en formation pour recevoir du monde :)
-]]--[[//-----------------------------------------------------------------------------
+        --[[//-----------------------------------------------------------------------------
 ]]self.locInstallation = self.locInstallation or DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptInstallation )
+        --[[// On se met en formation pour recevoir du monde :)
+]]self.mission = self.mission or DEC_GetMission( myself )
+        --[[//-----------------------------------------------------------------------------
+]]self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         if( ModuleBegins() ) then
             do
                 --[[// Demande a etre debarqe
@@ -64,9 +66,8 @@ include "bit.lua"
         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
         --[[// Si un ennemi arrive, on arrete les travaux ...
 ]]Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, emptyTable )
-        local mission = DEC_GetMission( myself )
         Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
-        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
         if( S_EstDetecteParEnis() or F_Pion_GeteniEnCours( myself ) ~= nil ) then
             StopActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_InstallerPlanObstacle, { self.locInstallation, } )
         end

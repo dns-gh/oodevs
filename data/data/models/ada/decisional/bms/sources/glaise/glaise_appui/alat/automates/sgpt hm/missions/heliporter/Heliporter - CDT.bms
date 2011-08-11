@@ -50,6 +50,7 @@ include "bit.lua"
         self.listePionsAHeliporter = self.listePionsAHeliporter or {}
         self.listePourHeliportage = self.listePourHeliportage or {}
         self.heliportageInit = self.heliportageInit or false
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionEnnemi( self._namedParams.mission )
         if( ModuleBegins() ) then
             do
                 DEC_Copie_Point( self._namedParams.mission.pointDebarquement_, self.pointDeDebarquement )
@@ -214,7 +215,7 @@ do
                     end
 
                     if( not DIA_IsListEmpty( self.listePionsPourMissionsCouvrir ) ) then
-                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe, 1, { ePhase_CDT, self.listePionsPourMissionsCouvrir, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, self._namedParams.mission.ambianceMission_, self._namedParams.mission.plotsRavitaillement_, eNatureAtlas_Helicoptere, self.listeHeliporter, DEC_GetDirectionEnnemi( self._namedParams.mission ), 60, false, } )
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe, 1, { ePhase_CDT, self.listePionsPourMissionsCouvrir, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, self._namedParams.mission.ambianceMission_, self._namedParams.mission.plotsRavitaillement_, eNatureAtlas_Helicoptere, self.listeHeliporter, self.directionEnnemi, 60, false, } )
                     end
 
                     Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listePionsPeuventCouvrirOuEscorter, 0, } )

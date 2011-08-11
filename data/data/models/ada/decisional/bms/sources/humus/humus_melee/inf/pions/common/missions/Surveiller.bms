@@ -48,6 +48,7 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
         self.eAction = self.eAction or eActionEnCours
         self.ptMission = self.ptMission or self.mission.positionInstallation_
         self.ptFoo = self.ptFoo or 0
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
             do
                 if( ModuleBegins() ) then
@@ -139,7 +140,7 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
 elseif switch_1 == eSurveiller then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                             Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
-                            Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( self.mission ), } )
+                            Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
                             Activate( self.activations.ACT_Dep_Pion_INF_ActiverFurtivite, 1.2, { 0.1, } )
                             Activate( self.activations.ACT_Obs_ObserverZone, 1, { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), } )
                             if( not S_Geometrie_EstProchePosition( self.ptMission, DEC_Agent_Position(), 1000 ) ) then

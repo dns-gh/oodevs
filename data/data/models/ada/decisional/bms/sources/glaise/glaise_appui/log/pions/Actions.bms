@@ -306,7 +306,7 @@ includedFiles["sources/glaise/glaise_appui/log/pions/Actions.bms"] = true
 ]]--[[//------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             self.actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( self._namedParams.pionA, self._namedParams.pionDepart, self._namedParams.fAmb )
-            actionCallbacks[ self.actionPreterRemorqueurs ] self.bFinManoeuvre = function( arg ) = arg end
+            actionCallbacks[ self.actionPreterRemorqueurs ] = function( arg ) self.bFinManoeuvre = arg end
 
         end
 

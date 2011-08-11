@@ -36,6 +36,7 @@ local emptyTable = emptyTable
         local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self._namedParams.mission )
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
@@ -88,7 +89,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     _continue = false
                 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                    Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
+                    Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { self.directionEnnemi, } )
                     Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller, 1, emptyTable )
                     Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )
                     if( F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then

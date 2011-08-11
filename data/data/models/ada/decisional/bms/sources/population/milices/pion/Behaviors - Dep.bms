@@ -108,6 +108,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
         self.eActionIti = self.eActionIti or eActionEnCours
         self.eActionPreparation = self.eActionPreparation or eActionEnCours
         self.eActionRejoindre = self.eActionRejoindre or eActionEnCours
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         if( self.eActionRejoindre == eActionImpossible ) then
             do
                                 do
@@ -192,8 +194,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre
                                 cases_switch_1[2] = true
                 end
                 if cases_switch_1[2] or switch_1 == eSurveiller then
-                    local mission = DEC_GetMission( myself )
-                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours

@@ -242,6 +242,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement"
         self.ptDestination = self.ptDestination or nil
         self.localisation1 = self.localisation1 or nil
         self.localisation2 = self.localisation2 or nil
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self.mission )
         if( ModuleBegins() ) then
             do
                  do
@@ -348,7 +349,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( self.mission ), } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eType_ZoneImplantation

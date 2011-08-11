@@ -49,6 +49,7 @@ include "bit.lua"
         self.ePhase = self.ePhase or eAppuyer
         self.listePionsASuivre = self.listePionsASuivre or {}
         self.listePionsAPotentiellementExtraire = self.listePionsAPotentiellementExtraire or {}
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self._namedParams.mission )
         local bufferListe = {}
         if( ModuleBegins() ) then
             do
@@ -115,7 +116,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     if( not DIA_IsListEmpty( self.listePionsASuivre ) ) then
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_Suivre, GetMotivation( "MOT_Manoeuvrer" ), { DEC_Geometrie_PionDerriere( self.listePionsASuivre, DEC_GetDirectionDanger( self._namedParams.mission ) ), 7000, eProgressionDefaut, eTypeItiInfiltration, } )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_Suivre, GetMotivation( "MOT_Manoeuvrer" ), { DEC_Geometrie_PionDerriere( self.listePionsASuivre, self.directionEnnemi ), 7000, eProgressionDefaut, eTypeItiInfiltration, } )
                     end
 
                     _continue = false

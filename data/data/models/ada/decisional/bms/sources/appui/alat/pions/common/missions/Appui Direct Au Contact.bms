@@ -43,6 +43,7 @@ include "bit.lua"
         self.ePhase = self.ePhase or eAppuyer
         self.listeCourantePionsAAppuyer = self.listeCourantePionsAAppuyer or {}
         self.barycentreListePions = self.barycentreListePions or DEC_Geometrie_CreerPoint()
+        self.directionDanger = self.directionDanger or DEC_GetDirectionDanger( self._namedParams.mission )
         self.listeCourantePionsAAppuyer = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAAppuyer_ )
         self.listeCourantePionsAAppuyer = S_Liste_Pion_ALAT_UnitesAAppuyer( self.listeCourantePionsAAppuyer )
         if( DIA_IsListEmpty( self.listeCourantePionsAAppuyer ) ) then
@@ -90,10 +91,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]            local switch_1 = self.ePhase
                 if switch_1 == eAppuyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
-                    local directionDanger = DEC_GetDirectionDanger( self._namedParams.mission )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SuivreSurFlanc, GetMotivation( "MOT_Manoeuvrer" ), { self.listeCourantePionsAAppuyer, directionDanger, -2500, eProgressionDefaut, eTypeItiInfiltration, } )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SuivreSurFlanc, GetMotivation( "MOT_Manoeuvrer" ), { self.listeCourantePionsAAppuyer, self.directionDanger, -2500, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_SuivreSurFlanc = function( self, _, v ) self.eEtat = v[1] end
-                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { directionDanger, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionDanger, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.barycentreListePions, } )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniAppuyer, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self.listeCourantePionsAAppuyer, } )
                     for _,x in pairs( self.listeCourantePionsAAppuyer or emptyTable ) do

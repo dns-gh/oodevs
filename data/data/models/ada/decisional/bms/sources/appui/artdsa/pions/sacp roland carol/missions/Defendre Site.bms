@@ -40,6 +40,7 @@ include "bit.lua"
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.barycentreZone = self.barycentreZone or S_Geometrie_BarycentreZone( self._namedParams.mission.site_ )
+        self.directionEnnemi = self.directionEnnemi or DEC_GetDirectionDanger( self._namedParams.mission )
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
@@ -94,7 +95,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                    Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
+                    Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { self.directionEnnemi, } )
                     Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )
                     if( DEC_Agent_EstInstalle() and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
                         do

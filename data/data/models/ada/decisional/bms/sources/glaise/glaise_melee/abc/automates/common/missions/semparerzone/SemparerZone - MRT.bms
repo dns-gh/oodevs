@@ -52,7 +52,7 @@ local emptyTable = emptyTable
 ]]if( ModuleBegins() ) then
             do
                 local mission = DEC_GetMission( myself )
-                self.listeSecteur = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zoneAPrendre, #( self._namedParams.selPions ), DEC_GetDirectionEnnemi( mission ), self.nErrorCode )
+                self.listeSecteur = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zoneAPrendre, #( self._namedParams.selPions ), DEC_GetDirectionEnnemi( myself ), self.nErrorCode )
                 self.nErrorCode = self.listeSecteur.second
                 self.listeSecteur = self.listeSecteur.first
                 --[[//-----------------------------------------------------------------------------
