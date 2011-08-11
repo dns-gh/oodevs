@@ -7,53 +7,52 @@
 //
 // *****************************************************************************
 
-#ifndef __InitialStateTableResources_h_
-#define __InitialStateTableResources_h_
+#ifndef __UnitStateTableResource_h_
+#define __UnitStateTableResource_h_
 
-#include "InitialStateTable_ABC.h"
+#include "clients_gui/UnitStateTableResource.h"
+
+namespace kernel
+{
+    class Entity_ABC;
+}
 
 class StaticModel;
-class InitialState;
 
 // =============================================================================
-/** @class  InitialStateTableResources
-    @brief  InitialStateTableResources
+/** @class  UnitStateTableResource
+    @brief  UnitStateTableResource
 */
-// Created: ABR 2011-02-24
+// Created: ABR 2011-07-05
 // =============================================================================
-class InitialStateTableResources : public InitialStateTable_ABC
+class UnitStateTableResource : public gui::UnitStateTableResource
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InitialStateTableResources( QWidget* parent, const StaticModel& staticModel, const char* name = 0 );
-    virtual ~InitialStateTableResources();
+    explicit UnitStateTableResource( const StaticModel& staticModel, QWidget* parent, const char* name = 0 );
+    virtual ~UnitStateTableResource();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ReadExtension( const InitialState& extension );
-    virtual void WriteExtension( InitialState& extension ) const;
+    virtual void Load( kernel::Entity_ABC& selected );
+    virtual void Commit( kernel::Entity_ABC& selected ) const;
+    virtual bool HasChanged( kernel::Entity_ABC& selected ) const;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_Column { eName = 0, eCategory = 1, eNumber = 2, eThreshold = 3 };
-    //@}
-
     //! @name Helpers
     //@{
     virtual void keyPressEvent( QKeyEvent * e );
-    void OnAddItem( int id );
-    void AddLine( const QString& name, const QString& category, unsigned number = 0, double threshold = 0. );
+    void AddItem( int id );
     bool IsDotationAlreadyPresent( const QString& name ) const;
     //@}
 
 private slots:
-    //! @name Slots
+    //! @name Member data
     //@{
     void OnRemoveCurrentItem();
     void OnRequestContextMenu( int row, int col, const QPoint& pos );
@@ -66,4 +65,4 @@ private:
     //@}
 };
 
-#endif // __InitialStateTableResources_h_
+#endif // __UnitStateTableResource_h_

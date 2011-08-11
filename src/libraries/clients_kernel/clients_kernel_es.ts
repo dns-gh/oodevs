@@ -220,41 +220,6 @@
     </message>
 </context>
 <context>
-    <name>E_TroopHealthState</name>
-    <message>
-        <source>Total</source>
-        <translation>Total</translation>
-    </message>
-    <message>
-        <source>Operational</source>
-        <translation>Operacional</translation>
-    </message>
-    <message>
-        <source>Dead</source>
-        <translation>Muerto</translation>
-    </message>
-    <message>
-        <source>Injured</source>
-        <translation>Herido</translation>
-    </message>
-    <message>
-        <source>Mentally injured</source>
-        <translation>Herido psicologicamente</translation>
-    </message>
-    <message>
-        <source>Contaminated</source>
-        <translation>Contaminado</translation>
-    </message>
-    <message>
-        <source>Under treatment </source>
-        <translation>En tratamiento</translation>
-    </message>
-    <message>
-        <source>Assigned to maintenance</source>
-        <translation>Asignado a mantenimiento</translation>
-    </message>
-</context>
-<context>
     <name>E_WeatherType</name>
     <message>
         <source>PasDePrecipitation</source>

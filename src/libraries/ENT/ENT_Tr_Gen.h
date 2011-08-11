@@ -30,8 +30,6 @@ public:
     static const std::string& ConvertFromDotationFamily( E_DotationFamily, E_Conversion = eToSim );
     static const std::string& ConvertFromAmmunitionFamily( E_AmmunitionFamily, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
-    static const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
-    static const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
     static const std::string& ConvertFromDiplomacy( E_Diplomacy, E_Conversion = eToSim );
     static const std::string& ConvertFromForceRatioStatus( E_ForceRatioStatus, E_Conversion = eToSim );
     static const std::string& ConvertFromMeetingEngagementStatus( E_MeetingEngagementStatus, E_Conversion = eToSim );
@@ -54,14 +52,18 @@ public:
     static const std::string& ConvertFromLocation( E_Location, E_Conversion = eToSim );
     static const std::string& ConvertFromActionParameter( E_ActionParameter, E_Conversion = eToSim );
     static const std::string& ConvertFromCrossingType( E_CrossingType, E_Conversion = eToSim );
+    static const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
+    static const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
+    static const std::string& ConvertFromHumanState( E_HumanState, E_Conversion = eToSim );
+    static const std::string& ConvertFromHumanLocation( E_HumanLocation, E_Conversion = eToSim );
+    static const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
+    static const std::string& ConvertFromInjuriesSeriousness( E_InjuriesSeriousness, E_Conversion = eToSim );
 
     // ConvertTo functions
     static E_LocationType ConvertToLocationType( const std::string& );
     static E_DotationFamily ConvertToDotationFamily( const std::string& );
     static E_AmmunitionFamily ConvertToAmmunitionFamily( const std::string& );
     static E_NatureLevel ConvertToNatureLevel( const std::string& );
-    static E_HumanWound ConvertToHumanWound( const std::string& );
-    static E_HumanRank ConvertToHumanRank( const std::string& );
     static E_Diplomacy ConvertToDiplomacy( const std::string& );
     static E_ForceRatioStatus ConvertToForceRatioStatus( const std::string& );
     static E_MeetingEngagementStatus ConvertToMeetingEngagementStatus( const std::string& );
@@ -83,6 +85,12 @@ public:
     static E_Location ConvertToLocation( const std::string& );
     static E_ActionParameter ConvertToActionParameter( const std::string& );
     static E_CrossingType ConvertToCrossingType( const std::string& );
+    static E_HumanWound ConvertToHumanWound( const std::string& );
+    static E_HumanRank ConvertToHumanRank( const std::string& );
+    static E_HumanState ConvertToHumanState( const std::string& );
+    static E_HumanLocation ConvertToHumanLocation( const std::string& );
+    static E_EquipmentState ConvertToEquipmentState( const std::string& );
+    static E_InjuriesSeriousness ConvertToInjuriesSeriousness( const std::string& );
 
 private:
     // Typedefs
@@ -90,8 +98,6 @@ private:
     typedef ENT_Tr::converter<E_DotationFamily> T_ConverterDotationFamily;
     typedef ENT_Tr::converter<E_AmmunitionFamily> T_ConverterAmmunitionFamily;
     typedef ENT_Tr::converter<E_NatureLevel> T_ConverterNatureLevel;
-    typedef ENT_Tr::converter<E_HumanWound> T_ConverterHumanWound;
-    typedef ENT_Tr::converter<E_HumanRank> T_ConverterHumanRank;
     typedef ENT_Tr::converter<E_Diplomacy> T_ConverterDiplomacy;
     typedef ENT_Tr::converter<E_ForceRatioStatus> T_ConverterForceRatioStatus;
     typedef ENT_Tr::converter<E_MeetingEngagementStatus> T_ConverterMeetingEngagementStatus;
@@ -114,14 +120,18 @@ private:
     typedef ENT_Tr::converter<E_Location> T_ConverterLocation;
     typedef ENT_Tr::converter<E_ActionParameter> T_ConverterActionParameter;
     typedef ENT_Tr::converter<E_CrossingType> T_ConverterCrossingType;
+    typedef ENT_Tr::converter<E_HumanWound> T_ConverterHumanWound;
+    typedef ENT_Tr::converter<E_HumanRank> T_ConverterHumanRank;
+    typedef ENT_Tr::converter<E_HumanState> T_ConverterHumanState;
+    typedef ENT_Tr::converter<E_HumanLocation> T_ConverterHumanLocation;
+    typedef ENT_Tr::converter<E_EquipmentState> T_ConverterEquipmentState;
+    typedef ENT_Tr::converter<E_InjuriesSeriousness> T_ConverterInjuriesSeriousness;
 
     // Converters
     static T_ConverterLocationType LocationTypeConverter_ [];
     static T_ConverterDotationFamily DotationFamilyConverter_ [];
     static T_ConverterAmmunitionFamily AmmunitionFamilyConverter_ [];
     static T_ConverterNatureLevel NatureLevelConverter_ [];
-    static T_ConverterHumanWound HumanWoundConverter_ [];
-    static T_ConverterHumanRank HumanRankConverter_ [];
     static T_ConverterDiplomacy DiplomacyConverter_ [];
     static T_ConverterForceRatioStatus ForceRatioStatusConverter_ [];
     static T_ConverterMeetingEngagementStatus MeetingEngagementStatusConverter_ [];
@@ -144,6 +154,12 @@ private:
     static T_ConverterLocation LocationConverter_ [];
     static T_ConverterActionParameter ActionParameterConverter_ [];
     static T_ConverterCrossingType CrossingTypeConverter_ [];
+    static T_ConverterHumanWound HumanWoundConverter_ [];
+    static T_ConverterHumanRank HumanRankConverter_ [];
+    static T_ConverterHumanState HumanStateConverter_ [];
+    static T_ConverterHumanLocation HumanLocationConverter_ [];
+    static T_ConverterEquipmentState EquipmentStateConverter_ [];
+    static T_ConverterInjuriesSeriousness InjuriesSeriousnessConverter_ [];
 };
 
 #endif // __ENT_Tr_Gen_h_

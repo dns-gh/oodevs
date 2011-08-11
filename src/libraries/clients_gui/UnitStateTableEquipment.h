@@ -7,53 +7,55 @@
 //
 // *****************************************************************************
 
-#ifndef __InitialStateTableEquipments_h_
-#define __InitialStateTableEquipments_h_
+#ifndef __gui_UnitStateTableEquipment_h_
+#define __gui_UnitStateTableEquipment_h_
 
-#include "InitialStateTable_ABC.h"
+#include "UnitStateTable_ABC.h"
 
-class InitialState;
-
+namespace gui
+{
 // =============================================================================
-/** @class  InitialStateTableEquipments
-    @brief  InitialStateTableEquipments
+/** @class  UnitStateTableEquipment
+    @brief  UnitStateTableEquipment
 */
-// Created: ABR 2011-02-24
+// Created: ABR 2011-07-05
 // =============================================================================
-class InitialStateTableEquipments : public InitialStateTable_ABC
+class UnitStateTableEquipment : public UnitStateTable_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InitialStateTableEquipments( QWidget* parent, const char* name = 0 );
-    virtual ~InitialStateTableEquipments();
+    explicit UnitStateTableEquipment( QWidget* parent, const char* name = 0 );
+    virtual ~UnitStateTableEquipment();
     //@}
 
-    //! @name Operations
+protected:
+    //! @name Helpers
     //@{
-    virtual void ReadExtension( const InitialState& extension );
-    virtual void WriteExtension( InitialState& extension ) const;
+    void AddLines( const QString& name, int size, E_EquipmentState state, const QStringList& breakdowns, const std::vector< unsigned int > currentBreakdowns = std::vector< unsigned int >() );
     //@}
 
-private:
+protected:
     //! @name Types
     //@{
     enum E_Column { eName = 0, eState = 1, eBreakdown = 2 };
     //@}
 
-private slots:
+protected slots:
     //! @name Slots
     //@{
     virtual void OnValueChanged( int row, int col );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
-    QStringList states_;
+    QStringList selectionableStates_;
+    QStringList readOnlyStates_;
     //@}
 };
+}
 
-#endif // __InitialStateTableEquipments_h_
+#endif // __gui_UnitStateTableEquipment_h_

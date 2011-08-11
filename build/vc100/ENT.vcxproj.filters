@@ -28,9 +28,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\Ent\ENT_en.ts">
-      <Filter>Translations</Filter>
-    </None>
     <None Include="..\..\src\libraries\Ent\ENT_es.ts">
       <Filter>Translations</Filter>
     </None>

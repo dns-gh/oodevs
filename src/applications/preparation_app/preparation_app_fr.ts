@@ -48,7 +48,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Avertissement</translation>
+        <translation>Avertissement</translation>
     </message>
 </context>
 <context>
@@ -423,158 +423,6 @@
     <message>
         <source>---</source>
         <translation>---</translation>
-    </message>
-</context>
-<context>
-    <name>InitialStateDialog</name>
-    <message>
-        <source>Initial state</source>
-        <translation>Etat initial</translation>
-    </message>
-    <message>
-        <source>Crew</source>
-        <translation>Personnel</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation>Equipements</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Dotations</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation>Reset</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Change initial state</source>
-        <translation>Modifier l&apos;état initial</translation>
-    </message>
-</context>
-<context>
-    <name>InitialStateTableCrew</name>
-    <message id="0">
-        <source>Rank</source>
-        <translation>Grade</translation>
-    </message>
-    <message>
-        <source>State</source>
-        <translation>Etat</translation>
-    </message>
-    <message>
-        <source>Psyop</source>
-        <translation>Psy</translation>
-    </message>
-    <message>
-        <source>Contaminated</source>
-        <translation>Contaminé</translation>
-    </message>
-    <message>
-        <source>Number</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Officer</source>
-        <translation>Officier</translation>
-    </message>
-    <message>
-        <source>Warrant officer</source>
-        <translation>Sous-officier</translation>
-    </message>
-    <message>
-        <source>Private</source>
-        <translation>Militaire du rang</translation>
-    </message>
-    <message>
-        <source>Healthy</source>
-        <translation>Sain</translation>
-    </message>
-    <message>
-        <source>UE Wounded - UE</source>
-        <translation>Blessé - UE</translation>
-    </message>
-    <message>
-        <source>U1 Wounded - U1</source>
-        <translation>Blessé - U1</translation>
-    </message>
-    <message>
-        <source>U2 Wounded - U2</source>
-        <translation>Blessé - U2</translation>
-    </message>
-    <message>
-        <source>U3 Wounded - U3</source>
-        <translation>Blessé - U3</translation>
-    </message>
-    <message>
-        <source>Dead</source>
-        <translation>Mort</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Vider</translation>
-    </message>
-</context>
-<context>
-    <name>InitialStateTableEquipments</name>
-    <message>
-        <source>State</source>
-        <translation>Etat</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Pannes</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation>Détruit</translation>
-    </message>
-    <message>
-        <source>Broken down</source>
-        <translation>En panne</translation>
-    </message>
-</context>
-<context>
-    <name>InitialStateTableResources</name>
-    <message>
-        <source>Category</source>
-        <translation>Catégorie</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantité</translation>
-    </message>
-    <message>
-        <source>Add resource</source>
-        <translation>Ajouter dotation</translation>
-    </message>
-    <message>
-        <source>Remove resource</source>
-        <translation>Supprimer dotation</translation>
-    </message>
-    <message>
-        <source>Logistic threshold (%)</source>
-        <translation>Seuil logistique (%)</translation>
     </message>
 </context>
 <context>
@@ -1684,6 +1532,29 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>UnitStateDialog</name>
+    <message>
+        <source>Initial state</source>
+        <translation>Etat initial</translation>
+    </message>
+    <message>
+        <source>Crew</source>
+        <translation>Personnel</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation>Ressources</translation>
+    </message>
+    <message>
+        <source>Change initial state</source>
+        <translation>Modifier l&apos;état initial</translation>
+    </message>
+</context>
+<context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
@@ -1777,31 +1648,31 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <name>WeatherPanel</name>
     <message>
         <source>Exercise date:</source>
-        <translation type="unfinished">Date de l&apos;exercice:</translation>
+        <translation>Date de l&apos;exercice:</translation>
     </message>
     <message>
         <source>Ephemerides</source>
-        <translation type="unfinished">Ephéméride</translation>
+        <translation>Ephéméride</translation>
     </message>
     <message>
         <source>Sunrise:</source>
-        <translation type="unfinished">Lever du soleil:</translation>
+        <translation>Lever du soleil:</translation>
     </message>
     <message>
         <source>Sunset:</source>
-        <translation type="unfinished">Coucher du soleil:</translation>
+        <translation>Coucher du soleil:</translation>
     </message>
     <message>
         <source>Day lighting:</source>
-        <translation type="unfinished">Eclairage de jour:</translation>
+        <translation>Eclairage de jour:</translation>
     </message>
     <message>
         <source>Night lighting:</source>
-        <translation type="unfinished">Eclairage de nuit:</translation>
+        <translation>Eclairage de nuit:</translation>
     </message>
     <message>
         <source>Weather parameters</source>
-        <translation type="unfinished">Paramètres météo</translation>
+        <translation>Paramètres météo</translation>
     </message>
 </context>
 <context>

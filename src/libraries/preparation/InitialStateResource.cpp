@@ -15,10 +15,11 @@
 // Name: InitialStateResource::InitialStateResource
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-InitialStateResource::InitialStateResource( const QString& name, const QString& category, unsigned int number, double threshold  )
+InitialStateResource::InitialStateResource( const QString& name, const QString& category, unsigned int number, unsigned int maximum, double threshold  )
     : name_     ( name )
     , category_ ( category )
     , number_   ( number )
+    , maximum_  ( maximum )
     , threshold_( threshold )
 {
     // NOTHING
@@ -29,6 +30,8 @@ InitialStateResource::InitialStateResource( const QString& name, const QString& 
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 InitialStateResource::InitialStateResource( xml::xistream& xis )
+    : category_( "" )
+    , maximum_  ( 0 )
 {
     std::string name;
     xis >> xml::attribute( "name", name )

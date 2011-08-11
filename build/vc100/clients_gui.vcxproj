@@ -97,6 +97,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ComboTableItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
@@ -135,6 +136,11 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableResource.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ValuedListItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.cpp" />
@@ -403,6 +409,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ComboTableItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ItemFactory_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\Logger.h">
@@ -711,6 +718,11 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateDialog.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableResource.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedDragObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h" />

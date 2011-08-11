@@ -78,6 +78,10 @@ UndergroundPrototype_ABC.cpp \
 UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
+UnitStateDialog.cpp \
+UnitStateTableCrew.cpp \
+UnitStateTableEquipment.cpp \
+UnitStateTableResource.cpp \
 Usages.cpp \
 VisualisationScalesPanel.cpp \
 WeatherListView.cpp \

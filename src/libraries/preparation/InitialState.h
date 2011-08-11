@@ -76,6 +76,7 @@ private:
     //! @name Helpers
     //@{
     void Initialize();
+    void UpdateResourceMaximum();
     void FillResources( tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator, unsigned factor = 1 );
     void ReadCrew( xml::xistream& xis );
     void ReadEquipment( xml::xistream& xis );

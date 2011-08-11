@@ -10,36 +10,7 @@
 #include "preparation_pch.h"
 #include "InitialStateEquipment.h"
 #include <xeumeuleu/xml.hpp>
-
-// =============================================================================
-// Enum conversion
-// =============================================================================
-
-namespace
-{
-    static InitialStateEquipment::E_EquipmentState EquipmentStateStringToEnum( const std::string& value )
-    {
-        if( value == "Disponible" )
-            return InitialStateEquipment::eAvailable;
-        else if( value == "Detruit" )
-            return InitialStateEquipment::eDestroyed;
-        else if( value == "ReparableAvecEvacuation" )
-            return InitialStateEquipment::eBroken;
-        assert( false );
-        return InitialStateEquipment::eAvailable;
-    }
-    static const std::string EquipmentStateEnumToString( const InitialStateEquipment::E_EquipmentState& value )
-    {
-        if( value == InitialStateEquipment::eAvailable )
-            return "Disponible";
-        else if( value == InitialStateEquipment::eDestroyed )
-            return "Detruit";
-        else if( value == InitialStateEquipment::eBroken )
-            return "ReparableAvecEvacuation";
-        assert( false );
-        return "";
-    }
-}
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: InitialStateEquipment::InitialStateEquipment
@@ -59,14 +30,14 @@ InitialStateEquipment::InitialStateEquipment( const QString& name, E_EquipmentSt
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 InitialStateEquipment::InitialStateEquipment( xml::xistream& xis )
-: currentBreakdown_( 0 )
+    : currentBreakdown_( 0 )
 {
     std::string name;
     std::string state;
     xis >> xml::attribute( "type", name )
         >> xml::attribute( "state", state );
     name_ = name.c_str();
-    state_ = EquipmentStateStringToEnum( state );
+    state_ = ENT_Tr::ConvertToEquipmentState( state );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +57,8 @@ void InitialStateEquipment::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "equipment" )
         << xml::attribute( "type", name_ )
-        << xml::attribute( "state", EquipmentStateEnumToString( state_ ) );
-    if( state_ == eBroken )
+        << xml::attribute( "state", ENT_Tr::ConvertFromEquipmentState( state_, ENT_Tr_ABC::eToSim ) );
+    if( state_ == eEquipmentState_RepairableWithEvacuation )
         xos << xml::attribute( "breakdown", breakdowns_[ currentBreakdown_ ] );
     xos << xml::end;
 }

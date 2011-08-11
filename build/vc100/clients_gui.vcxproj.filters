@@ -131,6 +131,9 @@
     <Filter Include="Translations">
       <UniqueIdentifier>{42ff555e-934d-4edc-bbdd-80d6371105c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Unit state">
+      <UniqueIdentifier>{e8554d88-bc82-45a3-987b-288d58dbfb0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
@@ -829,6 +832,24 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.cpp">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ComboTableItem.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableResource.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1337,6 +1358,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.h">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ComboTableItem.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateDialog.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableResource.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

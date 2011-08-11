@@ -10,6 +10,8 @@
 #ifndef __InitialStateCrew_h_
 #define __InitialStateCrew_h_
 
+#include "ENT/ENT_Enums_Gen.h"
+
 namespace xml
 {
     class xistream;
@@ -25,12 +27,9 @@ namespace xml
 class InitialStateCrew
 {
 public:
-    enum E_CrewRanks  { eOfficer = 0, eWarrant = 1, ePrivate = 2 };
-    enum E_CrewStates { eHealthy = 0, eWounded_ue = 1, eWounded_u1 = 2, eWounded_u2 = 3, eWounded_u3 = 4, eDead = 5 };
-
     //! @name Constructors/Destructor
     //@{
-             InitialStateCrew( E_CrewRanks rank, E_CrewStates state, bool psyop, bool contaminated, unsigned int number );
+             InitialStateCrew( E_HumanRank rank, E_HumanState state, E_InjuriesSeriousness injurySeriousness, bool psyop, bool contaminated, unsigned int number );
     explicit InitialStateCrew( xml::xistream& xis );
     virtual ~InitialStateCrew();
     //@}
@@ -42,11 +41,28 @@ public:
     bool operator!=( const InitialStateCrew& object ) const;
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    void LoadInjuries( const std::string& injuries );
+    const std::string SaveInjuries() const;
+    //@}
+
+public:
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, E_InjuriesSeriousness >   T_Injuries;
+    typedef T_Injuries::iterator                             IT_Injuries;
+    typedef T_Injuries::const_iterator                      CIT_Injuries;
+    //@}
+
 public:
     //! @name Member data
     //@{
-    E_CrewRanks  rank_;
-    E_CrewStates state_;
+    E_HumanRank  rank_;
+    E_HumanState state_;
+    E_InjuriesSeriousness currentSeriousness_; // $$$$ ABR 2011-07-20: Temporaire en attente de l'histoire 660
+    T_Injuries   injuries_; // $$$$ ABR 2011-07-20: En avance sur l'histoire 660
     bool         psyop_;
     bool         contaminated_;
     unsigned int number_;

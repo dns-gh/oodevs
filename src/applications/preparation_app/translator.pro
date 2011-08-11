@@ -51,6 +51,7 @@ SymbolEditor.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
+UnitStateDialog.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \

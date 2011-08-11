@@ -164,18 +164,6 @@
         <translation>herido extrema gravedad</translation>
     </message>
     <message>
-        <source>officer</source>
-        <translation>oficial</translation>
-    </message>
-    <message>
-        <source>warrant officer</source>
-        <translation>suboficial</translation>
-    </message>
-    <message>
-        <source>trooper</source>
-        <translation>soldado de caballeria</translation>
-    </message>
-    <message>
         <source>unknown</source>
         <translation>desconocido</translation>
     </message>
@@ -701,6 +689,82 @@
     </message>
     <message>
         <source>stressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Healthy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Injured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Officer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warrant officer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trooper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On battlefield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assigned to maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In medical treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prisoner</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

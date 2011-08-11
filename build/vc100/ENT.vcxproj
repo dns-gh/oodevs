@@ -115,7 +115,6 @@
     <ClCompile Include="..\..\src\libraries\Ent\ENT_Tr_Gen.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\Ent\ENT_en.ts" />
     <None Include="..\..\src\libraries\Ent\ENT_es.ts" />
     <None Include="..\..\src\libraries\Ent\ENT_fr.ts" />
     <CustomBuild Include="..\..\src\libraries\Ent\translator.pro">

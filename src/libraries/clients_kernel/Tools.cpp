@@ -47,28 +47,6 @@ QString tools::Unknown()
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
-// Created: APE 2004-04-29
-// -----------------------------------------------------------------------------
-QString tools::ToString( E_TroopHealthState nState )
-{
-    static const QString healthStates[] =
-    {
-        tools::translate( "E_TroopHealthState", "Total" ),
-        tools::translate( "E_TroopHealthState", "Operational" ),
-        tools::translate( "E_TroopHealthState", "Dead" ),
-        tools::translate( "E_TroopHealthState", "Injured" ),
-        tools::translate( "E_TroopHealthState", "Mentally injured" ),
-        tools::translate( "E_TroopHealthState", "Contaminated" ),
-        tools::translate( "E_TroopHealthState", "Under treatment " ),
-        tools::translate( "E_TroopHealthState", "Assigned to maintenance" )
-    };
-    if( nState >= 0 && nState < eTroopHealthStateNbrStates )
-        return healthStates[ nState ];
-    return Unknown();
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToString
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_PerceptionResult nResult )
@@ -462,6 +440,51 @@ QString tools::ToString( E_DotationFamily nType )
 QString tools::ToString( E_LocationType nType )
 {
     return ENT_Tr::ConvertFromLocationType( nType ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_HumanRank nType )
+{
+    return ENT_Tr::ConvertFromHumanRank( nType, ENT_Tr_ABC::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_HumanState nType )
+{
+    return ENT_Tr::ConvertFromHumanState( nType, ENT_Tr_ABC::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: ABR 2011-07-25
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_HumanLocation nType )
+{
+    return ENT_Tr::ConvertFromHumanLocation( nType, ENT_Tr_ABC::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_EquipmentState nType )
+{
+    return ENT_Tr::ConvertFromEquipmentState( nType, ENT_Tr_ABC::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_InjuriesSeriousness nType )
+{
+    return ENT_Tr::ConvertFromInjuriesSeriousness( nType, ENT_Tr_ABC::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------

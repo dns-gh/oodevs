@@ -65,9 +65,6 @@
     <Filter Include="Source Files\Dialogs\ExerciseCreation">
       <UniqueIdentifier>{7a558ed5-afe4-467c-b659-2ac2fa4f5558}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Dialogs\Initial State">
-      <UniqueIdentifier>{93087ba4-df48-4e23-8fb1-3cdc8fef2a80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Dialogs\Editors">
       <UniqueIdentifier>{951552ec-9ba5-4b29-8b28-f13a0d165637}</UniqueIdentifier>
     </Filter>
@@ -85,6 +82,9 @@
     </Filter>
     <Filter Include="Translations">
       <UniqueIdentifier>{f3e26d10-9fb2-45b0-bd7a-2ef4a89e1b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Unit state">
+      <UniqueIdentifier>{a5aa3f3b-c881-4675-8f00-ea9dfa99db35}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -322,21 +322,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ExerciseCreationDialog.cpp">
       <Filter>Source Files\Dialogs\ExerciseCreation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateDialog.cpp">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTable_ABC.cpp">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTableCrew.cpp">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTableEquipments.cpp">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\InitialStateTableResources.cpp">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\AffinitiesDialog.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
@@ -408,6 +393,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UnitStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableCrew.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableEquipment.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableResource.cpp">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -558,6 +555,18 @@
     <ClInclude Include="..\..\src\applications\preparation_app\SaveModelChecker.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UnitStateDialog.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UnitStateTableCrew.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UnitStateTableEquipment.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UnitStateTableResource.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
@@ -684,21 +693,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ExerciseCreationDialog.h">
       <Filter>Source Files\Dialogs\ExerciseCreation</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateDialog.h">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTable_ABC.h">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTableCrew.h">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTableEquipments.h">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\InitialStateTableResources.h">
-      <Filter>Source Files\Dialogs\Initial State</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\AffinitiesDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>

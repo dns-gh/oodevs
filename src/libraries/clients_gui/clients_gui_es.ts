@@ -1543,6 +1543,110 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::UnitStateDialog</name>
+    <message>
+        <source>Unit state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Sword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>---</source>
+        <translation type="unfinished">---</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UnitStateTableCrew</name>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Injury seriousness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mentally injured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::UnitStateTableEquipment</name>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::UnitStateTableResource</name>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">Catégorie</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ADN quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Percentage (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic threshold (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::UnitsPanel</name>
     <message>
         <source>Units</source>

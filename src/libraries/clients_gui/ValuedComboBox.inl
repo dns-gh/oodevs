@@ -23,7 +23,7 @@ ValuedComboBox<T>::ValuedComboBox( QWidget* parent, const char* name )
     : QComboBox( false, parent, name )
     , sorting_( false )
 {
-    if( parent->inherits( "QTable" ) ) // $$$$ SBO 2006-10-30: emulate QComboTableItem
+    if( parent->inherits( "Q3Table" ) ) // $$$$ SBO 2006-10-30: emulate QComboTableItem
         QObject::connect( this, SIGNAL( activated( int ) ), (Q3Table*)parent, SLOT( doValueChanged() ) );
 }
 

@@ -10,69 +10,51 @@
 #include "preparation_pch.h"
 #include "InitialStateCrew.h"
 #include <xeumeuleu/xml.hpp>
-
-// =============================================================================
-// Enum conversion
-// =============================================================================
+#include "ENT/ENT_Tr.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 namespace
 {
-    static InitialStateCrew::E_CrewRanks CrewRanksStringToEnum( const std::string& value )
+    // $$$$ ABR 2011-07-20: Temporaire en attente de l'histoire 660
+    void LoadInjury( const std::string& value, E_HumanState& state, E_InjuriesSeriousness& injurySeriousness )
     {
-        if( value == "Officier" )
-            return InitialStateCrew::eOfficer;
-        else if( value == "SousOfficier" )
-            return InitialStateCrew::eWarrant;
-        else if( value == "MilitaireDuRang" )
-            return InitialStateCrew::ePrivate;
-        assert( false );
-        return InitialStateCrew::eOfficer;
-    }
-    static const std::string CrewRanksEnumToString( const InitialStateCrew::E_CrewRanks& value )
-    {
-        if( value == InitialStateCrew::eOfficer )
-            return "Officier";
-        else if( value == InitialStateCrew::eWarrant )
-            return "SousOfficier";
-        else if( value == InitialStateCrew::ePrivate )
-            return "MilitaireDuRang";
-        assert( false );
-        return "";
-    }
+        injurySeriousness = eInjuriesSeriousness_U1;
+        state = eHumanState_Injured;
 
-    static InitialStateCrew::E_CrewStates CrewStatesStringToEnum( const std::string& value )
-    {
         if( value == "healthy" )
-            return InitialStateCrew::eHealthy;
+            state = eHumanState_Healthy;
         else if( value == "ue" )
-            return InitialStateCrew::eWounded_ue;
+            injurySeriousness = eInjuriesSeriousness_UE;
         else if( value == "u1" )
-            return InitialStateCrew::eWounded_u1;
+            injurySeriousness = eInjuriesSeriousness_U1;
         else if( value == "u2" )
-            return InitialStateCrew::eWounded_u2;
+            injurySeriousness = eInjuriesSeriousness_U2;
         else if( value == "u3" )
-            return InitialStateCrew::eWounded_u3;
+            injurySeriousness = eInjuriesSeriousness_U3;
         else if( value == "dead" )
-            return InitialStateCrew::eDead;
-        assert( false );
-        return InitialStateCrew::eHealthy;
+            state = eHumanState_Dead;
     }
-    static const std::string CrewStatesEnumToString( const InitialStateCrew::E_CrewStates& value )
+    std::string SaveInjury( E_HumanState state, E_InjuriesSeriousness injurySeriousness )
     {
-        if( value == InitialStateCrew::eHealthy )
+        if( state == eHumanState_Healthy )
             return "healthy";
-        else if( value == InitialStateCrew::eWounded_ue )
-            return "ue";
-        else if( value == InitialStateCrew::eWounded_u1 )
-            return "u1";
-        else if( value == InitialStateCrew::eWounded_u2 )
-            return "u2";
-        else if( value == InitialStateCrew::eWounded_u3 )
-            return "u3";
-        else if( value == InitialStateCrew::eDead )
+        else if( state == eHumanState_Injured )
+        {
+            if( injurySeriousness == eInjuriesSeriousness_UE )
+                return "ue";
+            else if( injurySeriousness == eInjuriesSeriousness_U1 )
+                return "u1";
+            else if( injurySeriousness == eInjuriesSeriousness_U2 )
+                return "u2";
+            else if( injurySeriousness == eInjuriesSeriousness_U3 )
+                return "u3";
+        }
+        else if( state == eHumanState_Dead )
             return "dead";
         assert( false );
-        return "";
+        return "healhty";
     }
 }
 
@@ -80,9 +62,10 @@ namespace
 // Name: InitialStateCrew::InitialStateCrew
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-InitialStateCrew::InitialStateCrew( E_CrewRanks rank, E_CrewStates state, bool psyop, bool contaminated, unsigned int number )
+InitialStateCrew::InitialStateCrew( E_HumanRank rank, E_HumanState state, E_InjuriesSeriousness injurySeriousness, bool psyop, bool contaminated, unsigned int number )
     : rank_        ( rank )
     , state_       ( state )
+    , currentSeriousness_( injurySeriousness )
     , psyop_       ( psyop )
     , contaminated_( contaminated )
     , number_      ( number )
@@ -98,13 +81,19 @@ InitialStateCrew::InitialStateCrew( xml::xistream& xis )
 {
     std::string rank;
     std::string state;
+    std::string injuries;
     xis >> xml::attribute( "rank", rank )
         >> xml::attribute( "state", state )
+        >> xml::optional >> xml::attribute( "injuries", injuries )
         >> xml::attribute( "psyop", psyop_ )
         >> xml::attribute( "contaminated", contaminated_ )
         >> xml::attribute( "number", number_ );
-    rank_ = CrewRanksStringToEnum( rank );
-    state_ = CrewStatesStringToEnum( state );
+    rank_ = ENT_Tr::ConvertToHumanRank( rank );
+    //rank_ = tools::HumanRankFromString( rank );
+
+    LoadInjury( state, state_, currentSeriousness_ ); // $$$$ ABR 2011-07-20: Temporaire en attente de l'histoire 660
+    //state_ = tools::HumanStateFromString( state );
+    LoadInjuries( injuries );// $$$$ ABR 2011-07-20: En avance sur l'histoire 660
 }
 
 // -----------------------------------------------------------------------------
@@ -123,12 +112,50 @@ InitialStateCrew::~InitialStateCrew()
 void InitialStateCrew::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "human" )
-        << xml::attribute( "rank", CrewRanksEnumToString( rank_ ) )
-        << xml::attribute( "state", CrewStatesEnumToString( state_ ) )
-        << xml::attribute( "psyop", psyop_ )
+        << xml::attribute( "rank", ENT_Tr::ConvertFromHumanRank( rank_, ENT_Tr_ABC::eToSim ) )
+        //<< xml::attribute( "rank", tools::ToString( rank_ ) )
+        << xml::attribute( "state", SaveInjury( state_, currentSeriousness_ ) );
+        //<< xml::attribute( "state", tools::ToString( state_ ) );
+
+    if( !injuries_.empty() )
+        xos << xml::attribute( "injuries", SaveInjuries() );// $$$$ ABR 2011-07-20: En avance sur l'histoire 660
+
+    xos << xml::attribute( "psyop", psyop_ )
         << xml::attribute( "contaminated", contaminated_ )
         << xml::attribute( "number", number_ )
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialStateCrew::LoadInjuries
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+void InitialStateCrew::LoadInjuries( const std::string& injuries )
+{
+    std::vector< std::string > injuriesList;
+    boost::split( injuriesList, injuries, boost::algorithm::is_any_of( ";" ) );
+//     for( std::vector< std::string >::const_iterator it = injuriesList.begin(); it != injuriesList.end(); ++it )
+//     {
+//         unsigned int id = 0;
+//         E_InjuriesSeriousness seriousness = eInjuriesSeriousness_U1;
+//         //injuries_[ id ] = seriousness; // $$$$ ABR 2011-07-19: FIXME
+//     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialStateCrew::SaveInjuries
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+const std::string InitialStateCrew::SaveInjuries() const
+{
+    std::string result;
+//     for( CIT_Injuries it = injuries_.begin(); it != injuries_.end(); ++it )
+//     {
+//         unsigned int id = it->first;
+//         E_InjuriesSeriousness seriousness = it->second;
+//         //result << id << seriousness; // $$$$ ABR 2011-07-19: FIXME
+//     }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +164,12 @@ void InitialStateCrew::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool InitialStateCrew::operator==( const InitialStateCrew& object ) const
 {
-    return rank_ == object.rank_ && state_ == object.state_ && psyop_ == object.psyop_ && contaminated_ == object.contaminated_ && number_ == object.number_;
+    return rank_ == object.rank_ &&
+           state_ == object.state_ &&
+           currentSeriousness_ == object.currentSeriousness_ && // $$$$ ABR 2011-07-20: Temporaire en attente de l'histoire 660
+           psyop_ == object.psyop_ &&
+           contaminated_ == object.contaminated_ &&
+           number_ == object.number_;
 }
 
 // -----------------------------------------------------------------------------

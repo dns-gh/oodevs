@@ -63,25 +63,6 @@ ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
     T_ConverterNatureLevel( "", "", (E_NatureLevel)-1 )
 };
 
-ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
-{
-    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "unwounded" ), eHumanWound_NonBlesse ),
-    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "dead" ), eHumanWound_Mort ),
-    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 1" ), eHumanWound_BlesseUrgence1 ),
-    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 2" ), eHumanWound_BlesseUrgence2 ),
-    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 3" ), eHumanWound_BlesseUrgence3 ),
-    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded extreme seriousness" ), eHumanWound_BlesseUrgenceExtreme ),
-    T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
-};
-
-ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
-{
-    T_ConverterHumanRank( "officier", QT_TRANSLATE_NOOP( "ENT_Tr", "officer" ), eHumanRank_Officier ),
-    T_ConverterHumanRank( "sous officer", QT_TRANSLATE_NOOP( "ENT_Tr", "warrant officer" ), eHumanRank_SousOfficer ),
-    T_ConverterHumanRank( "mdr", QT_TRANSLATE_NOOP( "ENT_Tr", "trooper" ), eHumanRank_Mdr ),
-    T_ConverterHumanRank( "", "", (E_HumanRank)-1 )
-};
-
 ENT_Tr::T_ConverterDiplomacy ENT_Tr::DiplomacyConverter_[] =
 {
     T_ConverterDiplomacy( "inconnu", QT_TRANSLATE_NOOP( "ENT_Tr", "unknown" ), eDiplomacy_Inconnu ),
@@ -340,6 +321,61 @@ ENT_Tr::T_ConverterCrossingType ENT_Tr::CrossingTypeConverter_[] =
     T_ConverterCrossingType( "", "", ( E_CrossingType ) - 1 )
 };
 
+ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
+{
+    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "unwounded" ), eHumanWound_NonBlesse ),
+    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "dead" ), eHumanWound_Mort ),
+    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 1" ), eHumanWound_BlesseUrgence1 ),
+    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 2" ), eHumanWound_BlesseUrgence2 ),
+    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 3" ), eHumanWound_BlesseUrgence3 ),
+    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded extreme seriousness" ), eHumanWound_BlesseUrgenceExtreme ),
+    T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
+};
+
+ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
+{
+    T_ConverterHumanRank( "Officier", QT_TRANSLATE_NOOP( "ENT_Tr", "Officer" ), eHumanRank_Officier ),
+    T_ConverterHumanRank( "SousOfficier", QT_TRANSLATE_NOOP( "ENT_Tr", "Warrant officer" ), eHumanRank_SousOfficer ),
+    T_ConverterHumanRank( "MilitaireDuRang", QT_TRANSLATE_NOOP( "ENT_Tr", "Trooper" ), eHumanRank_Mdr ),
+    T_ConverterHumanRank( "", "", (E_HumanRank)-1 )
+};
+
+ENT_Tr::T_ConverterHumanState ENT_Tr::HumanStateConverter_ [] =
+{
+    T_ConverterHumanState( "healthy", QT_TRANSLATE_NOOP( "ENT_Tr", "Healthy" ), eHumanState_Healthy ),
+    T_ConverterHumanState( "injured", QT_TRANSLATE_NOOP( "ENT_Tr", "Injured" ), eHumanState_Injured ),
+    T_ConverterHumanState( "dead",    QT_TRANSLATE_NOOP( "ENT_Tr", "Dead" ), eHumanState_Dead ),
+    T_ConverterHumanState( "", "", ( E_HumanState ) - 1 )
+};
+
+ENT_Tr::T_ConverterHumanLocation ENT_Tr::HumanLocationConverter_ [] =
+{
+    T_ConverterHumanLocation( "battlefield", QT_TRANSLATE_NOOP( "ENT_Tr", "On battlefield" ), eHumanLocation_Battlefield ),
+    T_ConverterHumanLocation( "maintenance", QT_TRANSLATE_NOOP( "ENT_Tr", "Assigned to maintenance" ), eHumanLocation_Maintenance ),
+    T_ConverterHumanLocation( "medical",     QT_TRANSLATE_NOOP( "ENT_Tr", "In medical treatment" ), eHumanLocation_Medical),
+    T_ConverterHumanLocation( "", "", ( E_HumanLocation ) - 1 )
+};
+
+ENT_Tr::T_ConverterEquipmentState ENT_Tr::EquipmentStateConverter_ [] =
+{
+    T_ConverterEquipmentState( "Disponible",              QT_TRANSLATE_NOOP( "ENT_Tr", "Available" ), eEquipmentState_Available ),
+    T_ConverterEquipmentState( "Detruit",                 QT_TRANSLATE_NOOP( "ENT_Tr", "Destroyed" ), eEquipmentState_Destroyed ),
+    T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP( "ENT_Tr", "Maintenance support needed" ), eEquipmentState_RepairableWithEvacuation ),
+    T_ConverterEquipmentState( "ReparableSurPlace",       QT_TRANSLATE_NOOP( "ENT_Tr", "On site fixable" ), eEquipmentState_OnSiteFixable ),
+    T_ConverterEquipmentState( "EnMaintenance",           QT_TRANSLATE_NOOP( "ENT_Tr", "In maintenance" ), eEquipmentState_InMaintenance ),
+    T_ConverterEquipmentState( "Prisonnier",               QT_TRANSLATE_NOOP( "ENT_Tr", "Prisoner" ), eEquipmentState_Prisonner ),
+    T_ConverterEquipmentState( "", "", ( E_EquipmentState ) - 1 )
+};
+
+ENT_Tr::T_ConverterInjuriesSeriousness ENT_Tr::InjuriesSeriousnessConverter_ [] =
+{
+    T_ConverterInjuriesSeriousness( "U1", QT_TRANSLATE_NOOP( "ENT_Tr", "U1" ), eInjuriesSeriousness_U1 ),
+    T_ConverterInjuriesSeriousness( "U2", QT_TRANSLATE_NOOP( "ENT_Tr", "U2" ), eInjuriesSeriousness_U2 ),
+    T_ConverterInjuriesSeriousness( "U3", QT_TRANSLATE_NOOP( "ENT_Tr", "U3" ), eInjuriesSeriousness_U3 ),
+    T_ConverterInjuriesSeriousness( "UE", QT_TRANSLATE_NOOP( "ENT_Tr", "UE" ), eInjuriesSeriousness_UE ),
+    T_ConverterInjuriesSeriousness( "", "", ( E_InjuriesSeriousness ) - 1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -350,8 +386,6 @@ void ENT_Tr::InitTranslations()
     InitTr( DotationFamilyConverter_, "ENT_Tr" );
     InitTr( AmmunitionFamilyConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
-    InitTr( HumanWoundConverter_, "ENT_Tr" );
-    InitTr( HumanRankConverter_, "ENT_Tr" );
     InitTr( DiplomacyConverter_, "ENT_Tr" );
     InitTr( ForceRatioStatusConverter_, "ENT_Tr" );
     InitTr( MeetingEngagementStatusConverter_, "ENT_Tr" );
@@ -374,6 +408,11 @@ void ENT_Tr::InitTranslations()
     InitTr( LocationConverter_, "ENT_Tr" );
     InitTr( ActionParameterConverter_, "ENT_Tr" );
     InitTr( CrossingTypeConverter_, "ENT_Tr" );
+    InitTr( HumanWoundConverter_, "ENT_Tr" );
+    InitTr( HumanRankConverter_, "ENT_Tr" );
+    InitTr( HumanStateConverter_, "ENT_Tr" );
+    InitTr( EquipmentStateConverter_, "ENT_Tr" );
+    InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -410,24 +449,6 @@ const std::string& ENT_Tr::ConvertFromAmmunitionFamily( E_AmmunitionFamily nValu
 const std::string& ENT_Tr::ConvertFromNatureLevel( E_NatureLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( NatureLevelConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanRank
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanRank( E_HumanRank nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( HumanRankConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -530,7 +551,7 @@ const std::string& ENT_Tr::ConvertFromUnitExperience( E_UnitExperience nValue, E
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertFromUnitStress
+// Name: ENT_Tr::ConvertFromUnitStress
 // Created: LDC 2011-06-17
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromUnitStress( E_UnitStress nValue, E_Conversion nConverterType )
@@ -628,6 +649,61 @@ const std::string& ENT_Tr::ConvertFromCrossingType( E_CrossingType nValue, ENT_T
     return ENT_Tr::InverseFindInConverter( CrossingTypeConverter_, nValue, nConverterType );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromHumanWound
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromHumanRank
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromHumanRank( E_HumanRank nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( HumanRankConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromHumanState
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromHumanState( E_HumanState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( HumanStateConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertFromHumanLocation
+// Created: ABR 2011-07-25
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromHumanLocation( E_HumanLocation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( HumanLocationConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromEquipmentState
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( EquipmentStateConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromInjuriesSeriousness
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromInjuriesSeriousness( E_InjuriesSeriousness nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( InjuriesSeriousnessConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -661,24 +737,6 @@ E_AmmunitionFamily ENT_Tr::ConvertToAmmunitionFamily( const std::string& strName
 E_NatureLevel ENT_Tr::ConvertToNatureLevel( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( NatureLevelConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanRank
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_HumanRank ENT_Tr::ConvertToHumanRank( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( HumanRankConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -781,7 +839,7 @@ E_UnitExperience ENT_Tr::ConvertToUnitExperience( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertToUnitStress
+// Name: ENT_Tr::ConvertToUnitStress
 // Created: LDC 2011-06-17
 // -----------------------------------------------------------------------------
 E_UnitStress ENT_Tr::ConvertToUnitStress( const std::string& strName )
@@ -868,4 +926,58 @@ E_ActionParameter ENT_Tr::ConvertToActionParameter( const std::string& strName )
 E_CrossingType ENT_Tr::ConvertToCrossingType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( CrossingTypeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToHumanWound
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToHumanRank
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_HumanRank ENT_Tr::ConvertToHumanRank( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( HumanRankConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToHumanState
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+E_HumanState ENT_Tr::ConvertToHumanState( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( HumanStateConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToHumanLocation
+// Created: ABR 2011-07-25
+// -----------------------------------------------------------------------------
+E_HumanLocation ENT_Tr::ConvertToHumanLocation( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( HumanLocationConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToEquipmentState
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+E_EquipmentState ENT_Tr::ConvertToEquipmentState( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( EquipmentStateConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToInjuriesSeriousness
+// Created: ABR 2011-07-19
+// -----------------------------------------------------------------------------
+E_InjuriesSeriousness ENT_Tr::ConvertToInjuriesSeriousness( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( InjuriesSeriousnessConverter_, strName );
 }

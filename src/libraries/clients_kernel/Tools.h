@@ -26,7 +26,6 @@ namespace tools
     QString translate( const char* context, const char* what );
     QString findTranslation( const char* context, const char* what );
 
-    QString ToString( kernel::E_TroopHealthState nState );
     QString ToString( kernel::E_PerceptionResult nResult );
     QString ToString( kernel::E_DayLightingType lighting );
     QString ToString( kernel::E_NightLightingType lighting );
@@ -54,6 +53,11 @@ namespace tools
     QString ToString( E_LogMaintenanceHandlingStatus nType );
     QString ToString( E_DotationFamily nType );
     QString ToString( E_LocationType nType );
+    QString ToString( E_EquipmentState nType );
+    QString ToString( E_HumanRank nType );
+    QString ToString( E_HumanState nType );
+    QString ToString( E_HumanLocation nType );
+    QString ToString( E_InjuriesSeriousness nType );
 
     QString Unknown();
 

@@ -139,11 +139,6 @@ void Formatter< E_UnitTiredness >::operator()( const E_UnitTiredness& e, Display
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void Formatter< E_TroopHealthState >::operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const
-{
-    displayer.AddToDisplay( tools::ToString( e ) );
-}
-
 void  Formatter< E_HumanWound >::operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const
 {
     displayer.AddToDisplay( tools::ToString( e ) );

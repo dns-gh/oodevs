@@ -64,25 +64,6 @@ enum E_NatureLevel
     eNbrNatureLevel
 };
 
-enum E_HumanWound
-{
-    eHumanWound_NonBlesse,
-    eHumanWound_Mort,
-    eHumanWound_BlesseUrgence1,
-    eHumanWound_BlesseUrgence2,
-    eHumanWound_BlesseUrgence3,
-    eHumanWound_BlesseUrgenceExtreme,
-    eNbrHumanWound
-};
-
-enum E_HumanRank
-{
-    eHumanRank_Officier,
-    eHumanRank_SousOfficer,
-    eHumanRank_Mdr,
-    eNbrHumanRank
-};
-
 enum E_Diplomacy
 {
     eDiplomacy_Inconnu,
@@ -323,7 +304,6 @@ enum E_Location
     eNbrLocation
 };
 
-
 enum E_ActionParameter
 {
     eActionParameter_DangerDirection,
@@ -340,6 +320,61 @@ enum E_CrossingType
     eSecondaryRoad,
     eCountryRoad,
     eNbrCrossingType
+};
+
+enum E_EquipmentState
+{
+    eEquipmentState_Available                = 0,
+    eEquipmentState_Destroyed                = 1,
+    eEquipmentState_RepairableWithEvacuation = 2,
+    eEquipmentState_OnSiteFixable            = 3,
+    eEquipmentState_InMaintenance            = 4,
+    eEquipmentState_Prisonner                = 5,
+    eNbrEquipmentState                       = 6
+};
+
+enum E_HumanWound
+{
+    eHumanWound_NonBlesse,
+    eHumanWound_Mort,
+    eHumanWound_BlesseUrgence1,
+    eHumanWound_BlesseUrgence2,
+    eHumanWound_BlesseUrgence3,
+    eHumanWound_BlesseUrgenceExtreme,
+    eNbrHumanWound
+};
+
+enum E_HumanRank
+{
+    eHumanRank_Officier    = 0,
+    eHumanRank_SousOfficer = 1,
+    eHumanRank_Mdr         = 2,
+    eNbrHumanRank          = 3
+};
+
+enum E_HumanState // $$$$ ABR 2011-07-19: Here to replace HumanWounds
+{
+    eHumanState_Healthy = 0,
+    eHumanState_Injured = 1,
+    eHumanState_Dead    = 2,
+    eNbrHumanState      = 3
+};
+
+enum E_HumanLocation
+{
+    eHumanLocation_Battlefield = 0,
+    eHumanLocation_Maintenance = 1,
+    eHumanLocation_Medical     = 2,
+    eNbrHumanLocation          = 3
+};
+
+enum E_InjuriesSeriousness
+{
+    eInjuriesSeriousness_U1 = 0,
+    eInjuriesSeriousness_U2 = 1,
+    eInjuriesSeriousness_U3 = 2,
+    eInjuriesSeriousness_UE = 3,
+    eNbrInjuriesSeriousness = 4
 };
 
 #endif // __ENT_Enums_Gen_h_

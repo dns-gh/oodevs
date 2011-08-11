@@ -1543,6 +1543,110 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::UnitStateDialog</name>
+    <message>
+        <source>Unit state</source>
+        <translation>Etat du pion</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Réinitialiser</translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation>Valider</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Sword</source>
+        <translation>Sword</translation>
+    </message>
+    <message>
+        <source>---</source>
+        <translation>---</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UnitStateTableCrew</name>
+    <message>
+        <source>State</source>
+        <translation>Etat</translation>
+    </message>
+    <message>
+        <source>Injury seriousness</source>
+        <translation>Gravité de la blessure</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Emplacement</translation>
+    </message>
+    <message>
+        <source>Mentally injured</source>
+        <translation>Reac. mentale</translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation>Contaminés</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Vider</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UnitStateTableEquipment</name>
+    <message>
+        <source>State</source>
+        <translation>Etat</translation>
+    </message>
+    <message>
+        <source>Breakdown</source>
+        <translation>Panne</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UnitStateTableResource</name>
+    <message>
+        <source>Category</source>
+        <translation>Catégorie</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>ADN quantity</source>
+        <translation>Quantité ADN</translation>
+    </message>
+    <message>
+        <source>Maximal capacity</source>
+        <translation>Capacité maximale</translation>
+    </message>
+    <message>
+        <source>Percentage (%)</source>
+        <translation>Pourcentage (%)</translation>
+    </message>
+    <message>
+        <source>Logistic threshold (%)</source>
+        <translation>Seuil logistique (%)</translation>
+    </message>
+</context>
+<context>
     <name>gui::UnitsPanel</name>
     <message>
         <source>Units</source>

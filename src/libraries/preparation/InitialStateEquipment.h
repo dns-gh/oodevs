@@ -16,6 +16,8 @@ namespace xml
     class xostream;
 }
 
+enum E_EquipmentState;
+
 // =============================================================================
 /** @class  InitialStateEquipment
     @brief  InitialStateEquipment
@@ -25,9 +27,6 @@ namespace xml
 class InitialStateEquipment
 {
 public:
-
-    enum E_EquipmentState { eAvailable = 0, eDestroyed = 1, eBroken = 2 };
-
     //! @name Constructors/Destructor
     //@{
              InitialStateEquipment( const QString& name, E_EquipmentState state, const QStringList& breakdowns, unsigned int currentBreakdown = 0 );

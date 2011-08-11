@@ -65,6 +65,7 @@ InitialState::InitialState( xml::xistream& xis, const StaticModel& staticModel, 
         xis >> xml::start( "resources" )
                 >> xml::list( "resource", *this, &InitialState::ReadResource )
             >> xml::end;
+        UpdateResourceMaximum();
     }
 }
 
@@ -90,19 +91,16 @@ void InitialState::ReadEquipment( xml::xistream& xis )
             equipment.breakdowns_ = it->breakdowns_;
             break;
         }
-    if( equipment.state_ == InitialStateEquipment::eBroken )
+    if( equipment.state_ == eEquipmentState_RepairableWithEvacuation )
     {
         const std::string breakdown = xis.attribute( "breakdown", "" );
-        assert( !breakdown.empty() );
-        for( QStringList::const_iterator it = equipment.breakdowns_.begin(); it != equipment.breakdowns_.end(); ++it, ++equipment.currentBreakdown_ )
-            if( breakdown.c_str() == *it )
-                break;
+        equipment.currentBreakdown_ = std::max( 0, equipment.breakdowns_.findIndex( breakdown.c_str() ) );
     }
     equipments_.push_back( equipment );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InitialState::ReadCrewMember
+// Name: InitialState::ReadCrew
 // Created: ABR 2011-03-03
 // -----------------------------------------------------------------------------
 void InitialState::ReadCrew( xml::xistream& xis )
@@ -238,11 +236,11 @@ void InitialState::Initialize()
             }
         }
         for( unsigned i = 0; i < agentComposition.GetCount(); ++i )
-            originalEquipments_.push_back( InitialStateEquipment( agentName.c_str(), InitialStateEquipment::eAvailable, breakdowns ) );
+            originalEquipments_.push_back( InitialStateEquipment( agentName.c_str(), eEquipmentState_Available, breakdowns ) );
     }
-    originalCrews_.push_back( InitialStateCrew( InitialStateCrew::eOfficer, InitialStateCrew::eHealthy, false, false, agent.GetNbrOfficers() ) );
-    originalCrews_.push_back( InitialStateCrew( InitialStateCrew::eWarrant, InitialStateCrew::eHealthy, false, false, agent.GetNbrWarrantOfficers() ) );
-    originalCrews_.push_back( InitialStateCrew( InitialStateCrew::ePrivate, InitialStateCrew::eHealthy, false, false, nbrTotalOfficers - agent.GetNbrOfficers() - agent.GetNbrWarrantOfficers() ) );
+    originalCrews_.push_back( InitialStateCrew( eHumanRank_Officier,    eHumanState_Healthy, eInjuriesSeriousness_U1, false, false, agent.GetNbrOfficers() ) );
+    originalCrews_.push_back( InitialStateCrew( eHumanRank_SousOfficer, eHumanState_Healthy, eInjuriesSeriousness_U1, false, false, agent.GetNbrWarrantOfficers() ) );
+    originalCrews_.push_back( InitialStateCrew( eHumanRank_Mdr,         eHumanState_Healthy, eInjuriesSeriousness_U1, false, false, nbrTotalOfficers - agent.GetNbrOfficers() - agent.GetNbrWarrantOfficers() ) );
     Reset();
 }
 
@@ -260,10 +258,11 @@ void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacit
             if( originalResources_[ i ].name_ == dotation.GetName().c_str() )
             {
                 originalResources_[ i ].number_ += dotation.GetCapacity() * factor;
+                originalResources_[ i ].maximum_ += dotation.GetCapacity() * factor;
                 break;
             }
-            if( i == originalResources_.size() )
-                originalResources_.push_back( InitialStateResource( dotation.GetName().c_str(), RetrieveResourceCategory( dotation.GetName().c_str() ), dotation.GetCapacity(), dotation.GetLogisticThreshold() ) );
+        if( i == originalResources_.size() )
+            originalResources_.push_back( InitialStateResource( dotation.GetName().c_str(), RetrieveResourceCategory( dotation.GetName().c_str() ), dotation.GetCapacity() * factor, dotation.GetCapacity() * factor, dotation.GetLogisticThreshold() ) );
     }
 }
 
@@ -275,4 +274,19 @@ const QString InitialState::RetrieveResourceCategory( const QString& resourceNam
 {
     const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.ascii() );
     return category.GetCategory().c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialState::UpdateResourceMaximum
+// Created: ABR 2011-07-06
+// -----------------------------------------------------------------------------
+void InitialState::UpdateResourceMaximum()
+{
+    for( unsigned int i = 0; i < resources_.size(); ++i )
+        for( unsigned int j = 0; j < originalResources_.size(); ++j )
+            if( resources_[ i ].name_ == originalResources_[ j ].name_ )
+            {
+                resources_[ i ].maximum_ = originalResources_[ j ].maximum_;
+                break;
+            }
 }

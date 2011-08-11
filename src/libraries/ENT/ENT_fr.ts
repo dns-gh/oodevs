@@ -164,18 +164,6 @@
         <translation>blessé urgence extrème</translation>
     </message>
     <message>
-        <source>officer</source>
-        <translation>officier</translation>
-    </message>
-    <message>
-        <source>warrant officer</source>
-        <translation>sous-officier</translation>
-    </message>
-    <message>
-        <source>trooper</source>
-        <translation>fantassin</translation>
-    </message>
-    <message>
         <source>unknown</source>
         <translation>inconnu</translation>
     </message>
@@ -485,7 +473,7 @@
     </message>
     <message>
         <source>rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>rectangle</translation>
     </message>
     <message>
         <source>No rainfall</source>
@@ -681,15 +669,15 @@
     </message>
     <message>
         <source>danger direction</source>
-        <translation type="unfinished"></translation>
+        <translation>direction dangereuse</translation>
     </message>
     <message>
         <source>limit 1</source>
-        <translation type="unfinished"></translation>
+        <translation>limit 1</translation>
     </message>
     <message>
         <source>limit 2</source>
-        <translation type="unfinished"></translation>
+        <translation>limit 2</translation>
     </message>
     <message>
         <source>calm</source>
@@ -702,6 +690,82 @@
     <message>
         <source>stressed</source>
         <translation>stressé</translation>
+    </message>
+    <message>
+        <source>Officer</source>
+        <translation>Officier</translation>
+    </message>
+    <message>
+        <source>Warrant officer</source>
+        <translation>Sous officier</translation>
+    </message>
+    <message>
+        <source>Trooper</source>
+        <translation>Militaire du rang</translation>
+    </message>
+    <message>
+        <source>Healthy</source>
+        <translation>Sain</translation>
+    </message>
+    <message>
+        <source>Injured</source>
+        <translation>Blessé</translation>
+    </message>
+    <message>
+        <source>Dead</source>
+        <translation>Mort</translation>
+    </message>
+    <message>
+        <source>U1</source>
+        <translation>U1</translation>
+    </message>
+    <message>
+        <source>U2</source>
+        <translation>U2</translation>
+    </message>
+    <message>
+        <source>U3</source>
+        <translation>U3</translation>
+    </message>
+    <message>
+        <source>UE</source>
+        <translation>UE</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation>Détruit</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation>Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>On battlefield</source>
+        <translation>Sur le champ de bataille</translation>
+    </message>
+    <message>
+        <source>Assigned to maintenance</source>
+        <translation>Assigné à la maintenance</translation>
+    </message>
+    <message>
+        <source>In medical treatment</source>
+        <translation>Dans la chaine médicale</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation>Réparable sur place</translation>
+    </message>
+    <message>
+        <source>In maintenance</source>
+        <translation>Dans la chaine maintenance</translation>
+    </message>
+    <message>
+        <source>Prisoner</source>
+        <translation>Prisonnier</translation>
     </message>
 </context>
 </TS>
