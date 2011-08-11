@@ -1362,19 +1362,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ComboTableItem.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateDialog.h">
-      <Filter>Source Files\Dialogs\Unit state</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h">
-      <Filter>Source Files\Dialogs\Unit state</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.h">
-      <Filter>Source Files\Dialogs\Unit state</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.h">
-      <Filter>Source Files\Dialogs\Unit state</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTableResource.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1695,6 +1683,18 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\translator.pro">
       <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateDialog.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateTableResource.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
