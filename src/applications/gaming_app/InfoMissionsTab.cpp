@@ -96,14 +96,11 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
     if( selected_ != entity )
     {
         selected_ = entity;
-        const MissionParameters* extension = selected_ ? selected_->Retrieve< MissionParameters >() : 0;
+        const MissionParameters* extension = entity ? entity->Retrieve< MissionParameters >() : 0;
         if( extension )
             NotifyUpdated( *extension );
         else
             clear();
-        int current = parent_->currentPageIndex();
-        parent_->setTabEnabled( this, extension != 0 );
-        parent_->setCurrentPage( current );
     }
 }
 

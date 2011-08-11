@@ -94,7 +94,4 @@ InfoReportsTab::~InfoReportsTab()
 // -----------------------------------------------------------------------------
 void InfoReportsTab::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    int current = parent_->currentPageIndex();
-    parent_->setTabEnabled( this, entity && entity->Retrieve< Reports >() );
-    parent_->setCurrentPage( current );
 }

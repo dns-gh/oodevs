@@ -46,8 +46,6 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
     tabs->addTab( new InfoReportsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
     tabs->addTab( new InfoConflictsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
     tabs->addTab( new InfoMissionsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( mission ), tr( "Missions" ) );
-    for( unsigned int i = 0; i < 3; ++i )
-        tabs->setTabEnabled( tabs->page( i ), false );
     tabs->setCurrentPage( 0 );
 }
 

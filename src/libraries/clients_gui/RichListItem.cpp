@@ -340,8 +340,9 @@ void RichListItem::setText( int column, const QString& text )
     if( richText.base != text )
     {
         richText.base = text;
-        delete richText.rich;
+        Q3SimpleRichText* oldRich = richText.rich;
         richText.rich = CreateRichText( text );
+        delete oldRich;
         widthChanged();
         listView()->triggerUpdate();
     }

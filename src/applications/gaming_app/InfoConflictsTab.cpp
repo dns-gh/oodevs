@@ -42,7 +42,4 @@ InfoConflictsTab::~InfoConflictsTab()
 // -----------------------------------------------------------------------------
 void InfoConflictsTab::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    int current = parent_->currentPageIndex();
-    parent_->setTabEnabled( this, entity && entity->Retrieve< Fires >() );
-    parent_->setCurrentPage( current );
 }
