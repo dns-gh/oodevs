@@ -24,7 +24,7 @@ namespace extractors
 /** @class  Humans
     @brief  Humans
             ranks='officer,sub-officer,troopers'
-            states='total,operational,dead,wounded,mental,nbc,in-treatment,in-maintenance'
+            states='total,operational,dead,wounded,mental,nbc,in-treatment,in-maintenance,wounded-not-evacuated'
 */
 // Created: AGE 2007-10-29
 // =============================================================================

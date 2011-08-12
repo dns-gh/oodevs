@@ -45,13 +45,14 @@ public:
     {
         if( wrapper.message().has_urban_update() && wrapper.message().urban_update().has_attributes() )
         {
-            const sword::UrbanAttributes& attributes = wrapper.message().urban_update().attributes();
-            if( !hasInfrastructure_ && attributes.has_infrastructures() && attributes.infrastructures().has_infrastructure() )
-                hasInfrastructure_ = true;
+            if( !hasInfrastructure_ )
+            {
+                const sword::UrbanAttributes& attributes = wrapper.message().urban_update().attributes();
+                if( attributes.has_infrastructures() && attributes.infrastructures().has_infrastructure() )
+                    hasInfrastructure_ = true;
+            }
 
-            return ( hasInfrastructure_ && wrapper.message().has_urban_update()
-                  && wrapper.message().urban_update().has_attributes()
-                  && wrapper.message().urban_update().attributes().has_structure() );
+            return ( hasInfrastructure_ && wrapper.message().urban_update().attributes().has_structure() );
         }
         return false;
     }

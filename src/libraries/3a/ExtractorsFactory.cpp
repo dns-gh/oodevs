@@ -68,45 +68,46 @@ namespace
         // A terme les noms incohérents avec le reste devront être supprimés, pourquoi pas dans la prochaine version de SWORD.
         // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ FIX ME
         std::map< Key, Value > extractors = boost::assign::list_of< std::pair< Key, Value > >
-            ( "operational-state"                     , BuildExtractor< Value, attributes::OperationalState >() ) // A VIRER
-            ( "operational-states"                    , BuildExtractor< Value, attributes::OperationalState >() )
-            ( "force-ratio"                           , BuildExtractor< Value, attributes::ForceRatioValue >() )
-            ( "position"                              , BuildExtractor< Value, attributes::Positions >() )        // A VIRER
-            ( "positions"                             , BuildExtractor< Value, attributes::Positions >() )
-            ( "resources"                             , BuildExtractor< Value, attributes::Resources >() )
-            ( "equipments"                            , BuildExtractor< Value, attributes::Equipments >() )
-            ( "humans"                                , BuildExtractor< Value, attributes::Humans >() )
-            ( "populations"                           , BuildExtractor< Value, attributes::PopulationStates >() )
+            ( "ambulances"                            , BuildExtractor< Value, attributes::LogMedicalEquipments >() )
+            ( "close-combat-power"                    , BuildExtractor< Value, attributes::CloseCombatPower >( model ) )
             ( "crowd-states"                          , BuildExtractor< Value, attributes::CrowdStates >() )
-            ( "satisfactions"                         , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
-            ( "population-in-selected-blocks"         , BuildExtractor< Value, attributes::PopulationUrbanOccupation >() )
-            ( "infrastructures-functional-states"     , BuildExtractor< Value, attributes::StructuralStates >() )
-            ( "resource-networks-functional-states"   , BuildExtractor< Value, attributes::ResourcesNetworksFunctionalStates >() )
-            ( "stocks"                                , BuildExtractor< Value, attributes::LogSupplyStocks >() )
-            ( "maintenance-handling-units"            , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() )
-            ( "maintenance-handling-unit"             , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() ) // A VIRER
+            ( "damage-indirect-fires"                 , BuildExtractor< Value, events::DamageIndirectFire >() )
+            ( "detecting-unit"                        , BuildExtractor< Value, attributes::Detections >() )
+            ( "direct-fire-power"                     , BuildExtractor< Value, attributes::DirectFirePower >( model ) )
+            ( "direct-fire-targets"                   , BuildExtractor< Value, existences::DirectFireTargetsId >() )
             ( "direct-fire-unit"                      , BuildExtractor< Value, existences::DirectFireUnitsId >() )        // A VIRER
             ( "direct-fire-units"                     , BuildExtractor< Value, existences::DirectFireUnitsId >() )
-            ( "direct-fire-targets"                   , BuildExtractor< Value, existences::DirectFireTargetsId >() )
-            ( "indirect-fire-unit"                    , BuildExtractor< Value, existences::IndirectFireUnitsId >() )      // A VIRER
-            ( "indirect-fire-units"                   , BuildExtractor< Value, existences::IndirectFireUnitsId >() )
-            ( "indirect-fire-positions"               , BuildExtractor< Value, existences::IndirectFireTargetsPositions >() )
-            ( "damage-indirect-fires"                 , BuildExtractor< Value, events::DamageIndirectFire >() )
-            ( "fire-component-damages"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
+            ( "engineering-power"                     , BuildExtractor< Value, attributes::EngineeringPower >( model ) )
+            ( "equipments"                            , BuildExtractor< Value, attributes::Equipments >() )
             ( "fire-component-damage"                 , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() ) // A VIRER
+            ( "fire-component-damages"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
             ( "fire-component-loss"                   , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
             ( "fire-human-damages"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
             ( "fire-human-loss"                       , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
             ( "fire-human-loss-by-crowd-fires"        , BuildExtractor< Value, events::CrowdHumanDamages >() )
-            ( "ambulances"                            , BuildExtractor< Value, attributes::LogMedicalEquipments >() )
-            ( "maintenances"                          , BuildExtractor< Value, attributes::LogMaintenanceEquipments >() )
-            ( "waiting-for-medical"                   , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() )
-            ( "detecting-unit"                        , BuildExtractor< Value, attributes::Detections >() )
-            ( "mounted"                               , BuildExtractor< Value, attributes::Mounted >() )
-            ( "direct-fire-power"                     , BuildExtractor< Value, attributes::DirectFirePower >( model ) )
+            ( "force-ratio"                           , BuildExtractor< Value, attributes::ForceRatioValue >() )
+            ( "humans"                                , BuildExtractor< Value, attributes::Humans >() )
+            ( "indirect-fire-positions"               , BuildExtractor< Value, existences::IndirectFireTargetsPositions >() )
             ( "indirect-fire-power"                   , BuildExtractor< Value, attributes::IndirectFirePower >( model ) )
-            ( "close-combat-power"                    , BuildExtractor< Value, attributes::CloseCombatPower >( model ) )
-            ( "engineering-power"                     , BuildExtractor< Value, attributes::EngineeringPower >( model ) );
+            ( "indirect-fire-unit"                    , BuildExtractor< Value, existences::IndirectFireUnitsId >() )      // A VIRER
+            ( "indirect-fire-units"                   , BuildExtractor< Value, existences::IndirectFireUnitsId >() )
+            ( "infrastructures-functional-states"     , BuildExtractor< Value, attributes::StructuralStates >() )
+            ( "maintenances"                          , BuildExtractor< Value, attributes::LogMaintenanceEquipments >() )
+            ( "maintenance-handling-unit"             , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() ) // A VIRER
+            ( "maintenance-handling-units"            , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() )
+            ( "mounted"                               , BuildExtractor< Value, attributes::Mounted >() )
+            ( "operational-state"                     , BuildExtractor< Value, attributes::OperationalState >() ) // A VIRER
+            ( "operational-states"                    , BuildExtractor< Value, attributes::OperationalState >() )
+            ( "population-in-selected-blocks"         , BuildExtractor< Value, attributes::PopulationUrbanOccupation >() )
+            ( "populations"                           , BuildExtractor< Value, attributes::PopulationStates >() )
+            ( "position"                              , BuildExtractor< Value, attributes::Positions >() )        // A VIRER
+            ( "positions"                             , BuildExtractor< Value, attributes::Positions >() )
+            ( "resource-networks-functional-states"   , BuildExtractor< Value, attributes::ResourcesNetworksFunctionalStates >() )
+            ( "resources"                             , BuildExtractor< Value, attributes::Resources >() )
+            ( "satisfactions"                         , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
+            ( "satisfactions-dpre"                    , BuildExtractor< Value, attributes::DPRESatisfaction >() )
+            ( "stocks"                                , BuildExtractor< Value, attributes::LogSupplyStocks >() )
+            ( "waiting-for-medical"                   , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() );
         return extractors;
     }
 }

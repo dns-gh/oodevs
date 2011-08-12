@@ -1451,7 +1451,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestComponentsDestroyedFromDirectFire, Fixture )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestNombretirsIndirectsQuiOntFaireDegats
+// Name: Facade_TestNombretirsIndirectsFires
 // Created: FPO 2011-05-26
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Facade_TestDamageIndirectFires, Fixture )
@@ -1465,10 +1465,14 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDamageIndirectFires, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeUnitDamages( 13, 12, 1, 3, 17, false ) );
+    task->Receive( TestTools::MakeUnitDamages( 25, 17, 4, 5, 21, false ) );
     task->Receive( TestTools::MakeUnitDamages( 23, 12, 6, 5, 19, true ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 25, 17, 4, 5, 21, false ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeUnitDamages( 25, 17, 4, 5, 21, false ) );
@@ -1479,6 +1483,80 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDamageIndirectFires, Fixture )
     MakeExpectation( expectedResult );
     task->Commit();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestEfficaciteTirsIndirects1
+// Created: JSR 2011-08-12
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestEfficaciteTirsIndirects1, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='damage-indirect-fires' id='fires'/>"
+                             "    <transform function='is-one-of' type='int' select='13,23' input='fires' id='selected-units'/>"
+                             "    <extract function='indirect-fire-positions' id='positions'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='inputzone'/>"
+                             "    <transform function='contains' input='inputzone,positions' id='tmp-fires'/>"
+                             "    <transform function='filter' type='position' input='tmp-fires,positions' id='selected-fires'/>"
+                             "    <transform function='filter' type='position' input='selected-units,selected-fires' id='the-fires'/>"
+                             "    <reduce type='position' function='count' input='the-fires' id='count'/>"
+                             "    <result function='plot' input='count' type='unsigned'/>"
+                             "</indicator>" );
+
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateIndirectFire( 17, 13, "31TBN7728449218" ) );
+    task->Receive( TestTools::CreateIndirectFire( 19, 23, "31TBN7728449218" ) );
+    task->Receive( TestTools::CreateIndirectFire( 31, 24, "31TBN7722222222" ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 13, 1, 1, 3, 17, false ) );
+    task->Receive( TestTools::MakeUnitDamages( 13, 2, 6, 5, 17, true ) );
+    task->Receive( TestTools::MakeUnitDamages( 23, 3, 1, 3, 19, false ) );
+    task->Receive( TestTools::MakeUnitDamages( 24, 4, 6, 5, 31, true ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0 )( 2 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestEfficaciteTirsIndirects2
+// Created: JSR 2011-08-12
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestEfficaciteTirsIndirects2, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "    <extract function='indirect-fire-units' id='fires'/>"
+        "    <transform function='is-one-of' type='int' select='13,23' input='fires' id='selected-units'/>"
+        "    <extract function='indirect-fire-positions' id='positions'/>"
+        "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='inputzone'/>"
+        "    <transform function='contains' input='inputzone,positions' id='tmp-fires'/>"
+        "    <transform function='filter' type='position' input='tmp-fires,positions' id='selected-fires'/>"
+        "    <transform function='filter' type='position' input='selected-units,selected-fires' id='the-fires'/>"
+        "    <reduce type='position' function='count' input='the-fires' id='count'/>"
+        "    <result function='plot' input='count' type='unsigned'/>"
+        "</indicator>" );
+
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateIndirectFire( 17, 13, "31TBN7728449218" ) );
+    task->Receive( TestTools::CreateIndirectFire( 19, 23, "31TBN7728449218" ) );
+    task->Receive( TestTools::CreateIndirectFire( 31, 24, "31TBN7722222222" ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 31, 24 ) );
+    task->Receive( TestTools::StopFire( 17, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 19, 23 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 )( 1 )( 0 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestLogEvacuation

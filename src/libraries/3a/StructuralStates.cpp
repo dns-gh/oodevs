@@ -46,8 +46,5 @@ StructuralStates::StructuralStates( xml::xistream& /*xis*/ )
 // -----------------------------------------------------------------------------
 int StructuralStates::Extract( const sword::SimToClient& wrapper )
 {
-    int result = 0;
-    const sword::UrbanUpdate& update = wrapper.message().urban_update();
-    result = update.attributes().structure().state();
-    return result;
+    return wrapper.message().urban_update().attributes().structure().state();
 }

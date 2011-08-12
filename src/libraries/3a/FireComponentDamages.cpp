@@ -45,9 +45,9 @@ namespace
     {
         if( !xis.has_attribute( "fire-types" ) )
             return true;
-        FilterHelper< std::string > equipments( xis, "fire-types" );
+        FilterHelper< std::string > fireTypes( xis, "fire-types" );
         bool result = false;
-        if( equipments.IsAllowed( firetype ) )
+        if( fireTypes.IsAllowed( firetype ) )
             result = true;
         return result;
     }

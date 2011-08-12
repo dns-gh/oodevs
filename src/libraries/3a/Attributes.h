@@ -21,6 +21,7 @@
 #include "LogSupplyStocks.h"
 #include "PopulationStates.h"
 #include "LogMedicalWaitingAttention.h"
+#include "DPRESatisfaction.h"
 #include "PopulationSatisfaction.h"
 #include "PopulationUrbanOccupation.h"
 #include "StructuralStates.h"
@@ -106,6 +107,7 @@ typedef Attribute< extractors::LogMaintenanceEquipments >          LogMaintenanc
 typedef Attribute< extractors::LogSupplyStocks >                   LogSupplyStocks;
 typedef Attribute< extractors::PopulationStates >                  PopulationStates;
 typedef Attribute< extractors::PopulationSatisfaction >            PopulationSatisfaction;
+typedef Attribute< extractors::DPRESatisfaction >                  DPRESatisfaction;
 typedef Attribute< extractors::PopulationUrbanOccupation >         PopulationUrbanOccupation;
 typedef Attribute< extractors::CrowdStates >                       CrowdStates;
 typedef Attribute< extractors::StructuralStates >                  StructuralStates;

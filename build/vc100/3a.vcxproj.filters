@@ -274,6 +274,9 @@
     <ClInclude Include="..\..\src\libraries\3a\Zone_ABC.h">
       <Filter>Source Files\types</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\DPRESatisfaction.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\3a\ModelFunctionComposite.cpp">
@@ -383,6 +386,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\3a\Zone.cpp">
       <Filter>Source Files\types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\DPRESatisfaction.cpp">
+      <Filter>Source Files\model\values</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
