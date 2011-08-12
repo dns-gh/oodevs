@@ -107,6 +107,20 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState( unsigned int /*nCtx*
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::Update
+// Created: LDC 2011-08-12
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::Update( int currentTimeStep )
+{
+    if( pKnowledgeObjectContainer_ )
+    {
+        std::mem_fun_ref_t< void, DEC_Knowledge_Object > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_Object::Prepare );
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( objectFunctor );
+    }
+    DEC_KnowledgeBlackBoard_ABC::Update( currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
@@ -116,6 +130,14 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState() const
     pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( agentFunctor );
     boost::function< void( DEC_Knowledge_Population& ) > populationFunctor = boost::bind( &DEC_Knowledge_Population::UpdateOnNetwork, _1 );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( populationFunctor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::SendObjectChangedState
+// Created: LDC 2011-08-12
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendObjectChangedState() const
+{
     if( pKnowledgeObjectContainer_ )
     {
         boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::UpdateOnNetwork, _1 );

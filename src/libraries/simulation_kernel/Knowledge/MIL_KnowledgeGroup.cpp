@@ -301,8 +301,6 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
         (**it).UpdateKnowledges(currentTimeStep);
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).UpdateKnowledges(currentTimeStep); // LTO
-    if( jammedPion_ )
-        jammedPion_->GetKnowledge().Update(currentTimeStep);
     assert( knowledgeBlackBoard_ );
     if( createdByJamming_ )
     {
@@ -311,6 +309,15 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
     }
     else
         knowledgeBlackBoard_->Update(currentTimeStep);
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledges
+// Created: LDC 2011-08-12
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledges(int currentTimeStep)
+{
+    knowledgeBlackBoard_->SendObjectChangedState();
 }
 
 // -----------------------------------------------------------------------------

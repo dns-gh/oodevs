@@ -241,7 +241,7 @@ void PHY_RolePion_Communications::SendChangedState( client::UnitAttributes& msg 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
-    if( pJammingKnowledgeGroup_ )
+    if( bHasChanged_ && pJammingKnowledgeGroup_ )
         pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Singletons::GetTime().GetCurrentTick() );
     if( bHasChanged_ )
         entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );

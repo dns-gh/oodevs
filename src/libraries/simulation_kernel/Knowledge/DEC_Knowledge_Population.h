@@ -127,19 +127,19 @@ private:
 private:
     //! @name Data Members
     //@{
+    static MIL_IDManager idManager_;
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
     MIL_Population* pPopulationKnown_;
+    const PHY_PerceptionLevel* pHackedPerceptionLevel_;
+    std::string criticalIntelligence_;
     const unsigned int nID_;
     T_ConcentrationMap concentrations_;
     T_FlowMap flows_;
+    double rDominationState_;
     bool bIsRecon_;
     bool bReconAttributesValid_;
-    double rDominationState_;
     bool bDecStateUpdated_;
-    static MIL_IDManager idManager_;
     bool bCriticalIntelligenceUpdated_;
-    std::string criticalIntelligence_;
-    const PHY_PerceptionLevel* pHackedPerceptionLevel_;
     //@}
 };
 

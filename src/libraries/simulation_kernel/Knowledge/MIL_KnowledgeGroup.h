@@ -103,6 +103,7 @@ public:
     void UnregisterAutomate( MIL_Automate& automate );
 
     void UpdateKnowledges(int currentTimeStep);
+    void UpdateObjectKnowledges(int currentTimeStep);
     void CleanKnowledges ();
     bool IsPerceived     ( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceived     ( const DEC_Knowledge_Agent&  knowledge ) const;

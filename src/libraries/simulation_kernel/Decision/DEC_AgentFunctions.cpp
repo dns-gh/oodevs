@@ -435,7 +435,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::HasLoadable( const MIL_Agent_ABC& callerAgent )
 {
-    HasLoadableComputer computer;
+    static HasLoadableComputer computer;
     const_cast< MIL_Agent_ABC& >( callerAgent ).Execute< OnComponentComputer_ABC >( computer );
     return computer.HasLoadable();
 }

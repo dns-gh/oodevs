@@ -117,8 +117,8 @@ private:
     T_PerceptionSource previousPerceivedByAutomate_;
     T_PerceptionAgentSource perceivedByAgent_;
     // Network
-    bool bCreatedOnNetwork_;
     unsigned int nTimeLastUpdate_;
+    bool bCreatedOnNetwork_;
     bool bLastPerceived_;
     bool bCurrentProgressUpdated_;
     bool bMaxProgressUpdated_;

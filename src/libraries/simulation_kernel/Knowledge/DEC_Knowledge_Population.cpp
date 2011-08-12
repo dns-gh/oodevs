@@ -40,13 +40,13 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
     , nID_                         ( idManager_.GetFreeId() )
     , pKnowledgeGroup_             ( &knowledgeGroup )
     , pPopulationKnown_            ( &populationKnown )
+    , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
+    , rDominationState_            ( 0. )
+    , criticalIntelligence_        ( "" )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
     , bCriticalIntelligenceUpdated_( false )
-    , rDominationState_            ( 0. )
-    , criticalIntelligence_        ( "" )
-    , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
 {
     SendMsgCreation();
 }
@@ -60,13 +60,13 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , nID_                         ( 0 )
     , pKnowledgeGroup_             ( 0 )
     , pPopulationKnown_            ( 0 )
+    , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
+    , rDominationState_            ( 0. )
+    , criticalIntelligence_        ( "" )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
     , bCriticalIntelligenceUpdated_( false )
-    , rDominationState_            ( 0. )
-    , criticalIntelligence_        ( "" )
-    , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
 {
     // NOTHING
 }
@@ -128,6 +128,8 @@ void DEC_Knowledge_Population::Prepare()
         it->second->Prepare();
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->Prepare();
+    bDecStateUpdated_ = false;
+    bCriticalIntelligenceUpdated_ = false;
 }
 
 // -----------------------------------------------------------------------------

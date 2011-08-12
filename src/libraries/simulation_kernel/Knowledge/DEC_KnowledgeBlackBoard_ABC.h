@@ -41,7 +41,7 @@ public:
 
     //! @name Main operations
     //@{
-    void Update( int currentTimeStep );
+    virtual void Update( int currentTimeStep );
     void Clean ();
     //@}
 

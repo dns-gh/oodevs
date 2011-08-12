@@ -71,6 +71,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Update( int currentTimeStep );
     void Jam();
     //@}
 
@@ -78,6 +79,7 @@ public:
     //@{
     virtual void SendFullState( unsigned int nCtx ) const;
     virtual void SendChangedState() const;
+    virtual void SendObjectChangedState() const;
     //@}
 
     //! @name tools::Resolver

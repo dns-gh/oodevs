@@ -509,10 +509,14 @@ void MIL_Army::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 // -----------------------------------------------------------------------------
 void MIL_Army::UpdateKnowledges(int currentTimeStep)
 {
+    // Update population and agent knowledge (in knowledge groups)
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
         itKnowledgeGroup->second->UpdateKnowledges(currentTimeStep);
     assert( pKnowledgeBlackBoard_ );
+    // Update objects (at army level plus those in jammed groups)
     pKnowledgeBlackBoard_->Update( currentTimeStep );
+    for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
+        itKnowledgeGroup->second->UpdateObjectKnowledges(currentTimeStep);
 }
 
 // -----------------------------------------------------------------------------
