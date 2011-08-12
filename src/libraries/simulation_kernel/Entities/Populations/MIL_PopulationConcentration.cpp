@@ -269,11 +269,11 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& 
     if( pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() == 0. )
         MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Blocked );
     else
-	{
-		const AnimatorAttribute* animatorAttribute = pSplittingObject_->RetrieveAttribute<AnimatorAttribute>();
-		if( animatorAttribute && animatorAttribute->GetAnimators().size() > 0 )
-			MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Filtered );
-	}
+    {
+        const AnimatorAttribute* animatorAttribute = pSplittingObject_->RetrieveAttribute<AnimatorAttribute>();
+        if( animatorAttribute && animatorAttribute->GetAnimators().size() > 0 )
+            MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Filtered );
+    }
 }
 
 // -----------------------------------------------------------------------------
