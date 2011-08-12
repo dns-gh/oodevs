@@ -334,12 +334,12 @@ enum E_StockCategory
     eNbrStockCategory
 };
 
-enum E_EquipmentState
+enum E_EquipmentState_ADN
 {
-    eEquipmentState_FixableWithEvac,
-    eEquipmentState_FixableInPlace,
-    eEquipmentState_Destroyed,
-    eNbrEquipmentState
+    eEquipmentState_ADN_FixableWithEvac,
+    eEquipmentState_ADN_FixableInPlace,
+    eEquipmentState_ADN_Destroyed,
+    eNbrEquipmentStateADN
 };
 
 enum E_TypeMunitionTirIndirect

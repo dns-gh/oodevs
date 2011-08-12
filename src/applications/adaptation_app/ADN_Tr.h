@@ -44,7 +44,7 @@ public:
     static const std::string& ConvertFromMunitionType( E_MunitionType, E_Conversion = eToSim );
     static const std::string& ConvertFromRadarType( E_RadarType, E_Conversion = eToSim );
     static const std::string& ConvertFromStockCategory( E_StockCategory, E_Conversion = eToSim );
-    static const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
+    static const std::string& ConvertFromEquipmentState( E_EquipmentState_ADN, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionParameterType( E_MissionParameterType, E_Conversion = eToSim );
     //@}
@@ -69,7 +69,7 @@ public:
     static E_MunitionType    ConvertToMunitionType     ( const std::string& );
     static E_RadarType       ConvertToRadarType        ( const std::string& );
     static E_StockCategory   ConvertToStockCategory    ( const std::string& );
-    static E_EquipmentState  ConvertToEquipmentState   ( const std::string& );
+    static E_EquipmentState_ADN  ConvertToEquipmentState( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_MissionParameterType ConvertToMissionParameterType( const std::string& );
     //@}
@@ -97,7 +97,7 @@ public:
     typedef converter<E_MunitionType>               T_ConverterMunitionType;
     typedef converter<E_RadarType>                  T_ConverterRadarType;
     typedef converter<E_StockCategory>              T_ConverterStockCategory;
-    typedef converter<E_EquipmentState>             T_ConverterEquipmentState;
+    typedef converter<E_EquipmentState_ADN>         T_ConverterEquipmentState;
     typedef converter<E_TypeMunitionTirIndirect>    T_ConverterTypeMunitionTirIndirect;
     typedef converter<E_MissionParameterType>       T_ConverterMissionParameterType;
     //@}

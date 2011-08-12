@@ -186,11 +186,11 @@ void ADN_Equipement_AttritionGraph::Update()
             GraphData visuUndamaged( 6 );
             visuUndamaged.strName_ = tr( "Undamaged" );
             GraphData visuNoEvac( 6 );
-            visuNoEvac.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_FixableInPlace ).c_str();
+            visuNoEvac.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_ADN_FixableInPlace ).c_str();
             GraphData visuWithEvac( 6 );
-            visuWithEvac.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_FixableWithEvac ).c_str();
+            visuWithEvac.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_ADN_FixableWithEvac ).c_str();
             GraphData visuDestroyed( 6 );
-            visuDestroyed.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_Destroyed ).c_str();
+            visuDestroyed.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_ADN_Destroyed ).c_str();
 
             visuUndamaged.value_ = ( int )( 100.0 - rDestroyed - rReparableWithoutEvacuation - rReparableWithEvacuation );
             visuNoEvac.value_ = ( int )rReparableWithoutEvacuation;
@@ -204,13 +204,13 @@ void ADN_Equipement_AttritionGraph::Update()
                 GraphData* localData = 0;
                 switch( ( *effect )->nEquipmentState_.GetData() )
                 {
-                case eEquipmentState_Destroyed:
+                case eEquipmentState_ADN_Destroyed:
                     localData = &visuDestroyed;
                     break;
-                case eEquipmentState_FixableWithEvac:
+                case eEquipmentState_ADN_FixableWithEvac:
                     localData = &visuWithEvac;
                     break;
-                case eEquipmentState_FixableInPlace:
+                case eEquipmentState_ADN_FixableInPlace:
                     localData = &visuNoEvac;
                     break;
                 default:

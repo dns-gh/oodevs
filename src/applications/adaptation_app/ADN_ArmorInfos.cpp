@@ -28,16 +28,16 @@ ArmorInfos::ArmorInfos()
 void ArmorInfos::CreateDefaultAttrition()
 {
     AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
-    pNewEffect->nEquipmentState_ = eEquipmentState_FixableWithEvac ;
-    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableWithEvac );
+    pNewEffect->nEquipmentState_ = eEquipmentState_ADN_FixableWithEvac ;
+    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_ADN_FixableWithEvac );
     vAttritionEffects_.AddItem( pNewEffect );
     pNewEffect = new AttritionEffectOnHuman();
-    pNewEffect->nEquipmentState_ = eEquipmentState_FixableInPlace ;
-    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableInPlace );
+    pNewEffect->nEquipmentState_ = eEquipmentState_ADN_FixableInPlace ;
+    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_ADN_FixableInPlace );
     vAttritionEffects_.AddItem( pNewEffect );
     pNewEffect = new AttritionEffectOnHuman();
-    pNewEffect->nEquipmentState_ =  eEquipmentState_Destroyed ;
-    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_Destroyed );
+    pNewEffect->nEquipmentState_ =  eEquipmentState_ADN_Destroyed ;
+    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_ADN_Destroyed );
     vAttritionEffects_.AddItem( pNewEffect );
 }
 

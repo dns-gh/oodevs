@@ -31,7 +31,7 @@ public:
     void WriteArchive( xml::xostream& );
 
 public:
-    ADN_Type_Enum< E_EquipmentState, eNbrEquipmentState > nEquipmentState_;
+    ADN_Type_Enum< E_EquipmentState_ADN, eNbrEquipmentStateADN > nEquipmentState_;
     ADN_Type_Int nInjuredPercentage_;
     ADN_Type_Int nDeadPercentage_;
     ADN_Type_String strName_;

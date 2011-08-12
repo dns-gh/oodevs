@@ -248,10 +248,10 @@ ADN_Tr::T_ConverterStockCategory ADN_Tr::stockCategoryConverter_[] =
 
 ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
 {
-    T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP("ADN_Tr", "Maintenance support needed" ), eEquipmentState_FixableWithEvac ),
-    T_ConverterEquipmentState( "ReparableSurPlace"      , QT_TRANSLATE_NOOP("ADN_Tr", "On site fixable"),             eEquipmentState_FixableInPlace ),
-    T_ConverterEquipmentState( "Detruit"                , QT_TRANSLATE_NOOP("ADN_Tr", "Destroyed"),                   eEquipmentState_Destroyed ),
-    T_ConverterEquipmentState( "", "", (E_EquipmentState)-1 )
+    T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP("ADN_Tr", "Maintenance support needed" ), eEquipmentState_ADN_FixableWithEvac ),
+    T_ConverterEquipmentState( "ReparableSurPlace"      , QT_TRANSLATE_NOOP("ADN_Tr", "On site fixable"),             eEquipmentState_ADN_FixableInPlace ),
+    T_ConverterEquipmentState( "Detruit"                , QT_TRANSLATE_NOOP("ADN_Tr", "Destroyed"),                   eEquipmentState_ADN_Destroyed ),
+    T_ConverterEquipmentState( "", "", (E_EquipmentState_ADN)-1 )
 };
 
 ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[] =
@@ -466,7 +466,7 @@ const std::string& ADN_Tr::ConvertFromStockCategory( E_StockCategory nValue, E_C
 // Name: ADN_Tr::ConvertFromEquipmentState
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, E_Conversion nConversion )
+const std::string& ADN_Tr::ConvertFromEquipmentState( E_EquipmentState_ADN nValue, E_Conversion nConversion )
 {
     return ADN_Tr::InverseFindInConverter( equipmentStateConverter_, nValue, nConversion );
 }
@@ -663,7 +663,7 @@ E_StockCategory ADN_Tr::ConvertToStockCategory( const std::string& strName )
 // Name: ADN_Tr::ConvertToEquipmentState
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-E_EquipmentState ADN_Tr::ConvertToEquipmentState( const std::string& strName )
+E_EquipmentState_ADN ADN_Tr::ConvertToEquipmentState( const std::string& strName )
 {
     return ADN_Tr::FindInConverter( equipmentStateConverter_, strName );
 }
