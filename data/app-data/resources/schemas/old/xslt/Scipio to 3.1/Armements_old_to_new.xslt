@@ -32,7 +32,27 @@
 		</direct-fire>
 	</xsl:template>
 
-	<xsl:template match="Direct/PHs/VolumeCible*">
+	<xsl:template match="Direct/PHs/VolumeCibleDrone">
+		<hit-probabilities target="{substring-after (name(), 'VolumeCible')}">
+			<xsl:apply-templates />
+		</hit-probabilities>
+	</xsl:template>
+    <xsl:template match="Direct/PHs/VolumeCibleGros">
+		<hit-probabilities target="{substring-after (name(), 'VolumeCible')}">
+			<xsl:apply-templates />
+		</hit-probabilities>
+	</xsl:template>
+    <xsl:template match="Direct/PHs/VolumeCibleMoyen">
+		<hit-probabilities target="{substring-after (name(), 'VolumeCible')}">
+			<xsl:apply-templates />
+		</hit-probabilities>
+	</xsl:template>
+    	<xsl:template match="Direct/PHs/VolumeCiblePetit">
+		<hit-probabilities target="{substring-after (name(), 'VolumeCible')}">
+			<xsl:apply-templates />
+		</hit-probabilities>
+	</xsl:template>
+    	<xsl:template match="Direct/PHs/VolumeCiblePersonnel">
 		<hit-probabilities target="{substring-after (name(), 'VolumeCible')}">
 			<xsl:apply-templates />
 		</hit-probabilities>
@@ -41,5 +61,4 @@
 	<xsl:template match="PH">
 		<hit-probability distance="{@dist}" percentage="{.}"/>
 	</xsl:template>
-	
 </xsl:transform>
