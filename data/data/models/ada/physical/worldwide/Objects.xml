@@ -250,10 +250,10 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="line point" name="Bridge (continuous)" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
+  <object geometry="line" name="Bridge (continuous)" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
     <bridging type="bridge"/>
   </object>
-  <object geometry="line point" name="Bridge (discontinuous)" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
+  <object geometry="line" name="Bridge (discontinuous)" symbol="S*GPEVED--*****" type="discontinuous pontoon bridge">
     <bridging type="bridge"/>
     <workable max-animator="0"/>
   </object>
@@ -438,4 +438,4 @@
     <bridging type="secondary road"/>
   </object>
 </objects>
-<!-- signature="3329120066" -->
+<!-- signature="4249087852" -->

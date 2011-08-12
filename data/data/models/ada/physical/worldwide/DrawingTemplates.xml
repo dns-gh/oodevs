@@ -650,8 +650,7 @@
                 </g>
             </marker-start>
         </template>
-        <template code="S*GPEVEB--*****" name="Bridge" type="point">
-            <segment/>
+        <template code="S*GPEVEB--*****" name="Bridge" type="line">
             <marker-start unit="m">
                 <g fill="none" stroke="currentColor">
                     <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5" stroke-width="4px"/>
@@ -661,6 +660,44 @@
                     </g>
                 </g>
             </marker-start>
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-mid unit='px'>
+                <g stroke-width='2px'>
+                    <line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
+                    <line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
+                </g>
+            </marker-mid> 
+            <marker-end unit="m">
+                <g fill="none" stroke="currentColor">
+                    <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5" stroke-width="4px"/>
+                    <g  stroke-width="3px">
+                        <path d="M-90,120 L-50,140 L-50,460 L-90,480"/>
+                        <path d="M90,120 L50,140 L50,460 L90,480"/>
+                    </g>
+                </g>
+            </marker-end>            
+        </template>
+        <template code="S*GPEVED--*****" name="Bridge discontinuous" type="line">
+            <marker-start unit="m">
+                <g fill="none" stroke="currentColor">
+                    <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5" stroke-width="4px"/>
+                    <g  stroke-width="3px">
+                        <path d="M-90,120 L-50,140 L-50,460 L-90,480"/>
+                        <path d="M90,120 L50,140 L50,460 L90,480"/>
+                    </g>
+                </g>
+            </marker-start>
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment> 
+            <marker-mid unit='px'>
+                <g stroke-width='2px'>
+                    <line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
+                    <line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
+                </g>
+            </marker-mid>         
         </template>
         <template code="S*GPI-----*****" name="Installation" type="point">
             <segment/>
@@ -746,4 +783,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="4244187457" -->
+<!-- signature="2629291926" -->
