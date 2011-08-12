@@ -273,6 +273,12 @@ struct Formatter< E_UnitTiredness >
 };
 
 template< >
+struct Formatter< E_TroopHealthState >
+{
+    void operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const;
+};
+
+template< >
 struct Formatter< E_HumanWound >
 {
     void operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const;

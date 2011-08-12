@@ -220,6 +220,41 @@
     </message>
 </context>
 <context>
+    <name>E_TroopHealthState</name>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operational</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Injured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mentally injured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Under treatment </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assigned to maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>E_WeatherType</name>
     <message>
         <source>PasDePrecipitation</source>

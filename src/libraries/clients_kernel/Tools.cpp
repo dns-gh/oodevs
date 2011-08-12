@@ -47,6 +47,28 @@ QString tools::Unknown()
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
+// Created: APE 2004-04-29
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_TroopHealthState nState )
+{
+    static const QString healthStates[] =
+    {
+        tools::translate( "E_TroopHealthState", "Total" ),
+        tools::translate( "E_TroopHealthState", "Operational" ),
+        tools::translate( "E_TroopHealthState", "Dead" ),
+        tools::translate( "E_TroopHealthState", "Injured" ),
+        tools::translate( "E_TroopHealthState", "Mentally injured" ),
+        tools::translate( "E_TroopHealthState", "Contaminated" ),
+        tools::translate( "E_TroopHealthState", "Under treatment " ),
+        tools::translate( "E_TroopHealthState", "Assigned to maintenance" )
+    };
+    if( nState >= 0 && nState < eTroopHealthStateNbrStates )
+        return healthStates[ nState ];
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_PerceptionResult nResult )

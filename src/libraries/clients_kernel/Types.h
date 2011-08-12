@@ -24,6 +24,19 @@ namespace kernel
 {
     struct Nothing {};
 
+enum E_TroopHealthState
+{
+    eTroopHealthStateTotal = 0,
+    eTroopHealthStateOperational,
+    eTroopHealthStateDead,
+    eTroopHealthStateWounded,
+    eTroopHealthStateMentalWounds,
+    eTroopHealthStateContaminated,
+    eTroopHealthStateInTreatment,
+    eTroopHealthStateUsedForMaintenance,
+    eTroopHealthStateNbrStates
+};
+
 enum E_PerceptionResult
 {
     eNotSeen        = 0,
