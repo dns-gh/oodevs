@@ -44,7 +44,7 @@ include "bit.lua"
 do
                 local pion = x
                 local missionPion = DEC_GetMission( pion )
-                if( missionPion == nil or missionPion:GetType() == "T_Mission_Pion_LOG_Renforcer" or F_Pion_GeteEtatPhaseMission_Mission( missionPion ) == eEtatPhaseMission_FinMission ) then
+                if( missionPion == nil or missionPion:GetType() == "T_Mission_Pion_LOG_Renforcer" or F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) then
                     do
                         DIA_PushFront( selIdle, pion )
                     end
