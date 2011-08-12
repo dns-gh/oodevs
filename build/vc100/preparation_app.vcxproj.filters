@@ -555,9 +555,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\SaveModelChecker.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\UnitStateDialog.h">
-      <Filter>Source Files\Dialogs\Unit state</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UnitStateTableCrew.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
     </ClInclude>
@@ -740,6 +737,9 @@
       <Filter>Source Files\Panels\Weather</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UnitStateTableResource.h">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UnitStateDialog.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
     </CustomBuild>
   </ItemGroup>

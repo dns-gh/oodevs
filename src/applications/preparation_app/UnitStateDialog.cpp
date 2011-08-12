@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "UnitStateDialog.h"
+#include "moc_UnitStateDialog.cpp"
 #include "UnitStateTableCrew.h"
 #include "UnitStateTableEquipment.h"
 #include "UnitStateTableResource.h"

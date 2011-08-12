@@ -36,6 +36,8 @@ class UnitStateDialog : public gui::UnitStateDialog
                       , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                       , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
