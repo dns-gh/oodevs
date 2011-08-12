@@ -17,6 +17,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Network/NET_ASN_Tools.h"
@@ -268,7 +269,11 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& 
     if( pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() == 0. )
         MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Blocked );
     else
-        MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Filtered );
+	{
+		const AnimatorAttribute* animatorAttribute = pSplittingObject_->RetrieveAttribute<AnimatorAttribute>();
+		if( animatorAttribute && animatorAttribute->GetAnimators().size() > 0 )
+			MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Filtered );
+	}
 }
 
 // -----------------------------------------------------------------------------
