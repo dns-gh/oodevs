@@ -148,9 +148,9 @@ void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireR
 void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireResults_ABC& fireResult )
 {
     bHumansUpdated_ = true;
-    unsigned int pK = 15;
+    unsigned int pK = 33;
 
-    unsigned int hitRoll = ( unsigned int )MIL_Random::rand_ii( 0, 100, MIL_Random::eWounds );
+    unsigned int hitRoll = ( unsigned int )MIL_Random::rand_ii( 0, 99, MIL_Random::eWounds );
     if( hitRoll < pK )
     {
         humans_.ApplyNumberOfDead( nHit );
