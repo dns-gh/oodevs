@@ -58,8 +58,8 @@ namespace
                         break;
                     }
             }
-            connect( listView_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( MenuListItemSelected() ) );
-            connect( listView_, SIGNAL( returnPressed( Q3ListViewItem* ) ), this, SLOT( MenuListItemSelected() ) );            
+            connect( listView_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), receiver_, SLOT( MenuListItemSelected() ) );
+            connect( listView_, SIGNAL( returnPressed( Q3ListViewItem* ) ), receiver_, SLOT( MenuListItemSelected() ) );            
             return listView_;
         }
 
