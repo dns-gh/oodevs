@@ -200,9 +200,17 @@ void MissionPanel::AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, co
     if( list.empty() )
         return;
      if( prefix.isEmpty() )
-       menu.addSeparator()->setText( tools::translate( "MissionPanel", "" ) );
+     {
+        if( menu.idAt( 0 ) != -1 )
+           menu.addSeparator()->setText( tools::translate( "MissionPanel", "" ) );
+     }
     else
-       menu.addSeparator()->setText( prefix );
+    {
+        if ( menu.count() )  // $$$$ FPT 2011-08-12 : Can't have a separator without an item before
+           menu.insertItem( "", this, "" );
+        else
+           menu.addSeparator()->setText( prefix );
+     }
     for( T::const_iterator it = list.begin(); it != list.end(); ++it )
     {
         const E& order = **it;

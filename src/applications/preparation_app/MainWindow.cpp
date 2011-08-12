@@ -144,6 +144,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , needsSaving_    ( false )
     , loading_        ( false )
 {
+    QSettings settings;
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    settings.beginGroup( "/Gaming" );
+    restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
+
     if( config_.HasGenerateScores() )
     {
         staticModel_.Load( config_ );
@@ -291,12 +296,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     SetWindowTitle( false );
     EnableWorkspace( false );
-    ReadSettings();
     ReadOptions();
 
     if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) && Load() )
         LoadExercise();
 
+    restoreState(settings.value("mainWindowState").toByteArray());
     loadingDialog_->close();
 }
 
@@ -615,46 +620,15 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
         pEvent->ignore();
         return;
     }
-    WriteSettings();
+    QSettings settings;
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    settings.beginGroup( "/Gaming" );
+    settings.setValue("mainWindowGeometry", saveGeometry());
+    settings.setValue("mainWindowState", saveState());
+
     WriteOptions();
+
     QMainWindow::closeEvent( pEvent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::WriteSettings
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::WriteSettings()
-{
-    Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Preparation" );
-    if( docks_.isNull() || docks_.isEmpty() )
-        docks_ = saveState();
-    settings.writeEntry( "/Panels", savedState_ );
-    settings.WriteMainWindowEntries( "/MainWindow", *this );
-    settings.endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ReadSettings
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::ReadSettings()
-{
-    Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Preparation" );
-
-    // Pannel configuration
-    QString strDockConfig;
-    strDockConfig = settings.readEntry( "/Panels" );
-    Q3TextStream strDockConfigStream( &strDockConfig, QIODevice::ReadOnly );
-//    strDockConfigStream >> *this;
-
-    // Main window configuration
-    settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
-    settings.endGroup();
 }
 
 // -----------------------------------------------------------------------------

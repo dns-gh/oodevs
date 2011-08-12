@@ -163,6 +163,11 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , onPlanif_        ( false )
 
 {
+    QSettings settings;
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    settings.beginGroup( "/Gaming" );
+    restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
+
     setAttribute( Qt::WA_DeleteOnClose, true ); 
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
@@ -378,12 +383,14 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
 
-    ReadSettings();
+//    ReadSettings();
     ReadOptions();
 
     pMissionPanel_->hide();
     replayerToolbar->hide();
     aar->SetStartup();
+
+    restoreState(settings.value("mainWindowState").toByteArray());
 }
 
 // -----------------------------------------------------------------------------
@@ -540,51 +547,16 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    WriteSettings();
+    QSettings settings;
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    settings.beginGroup( "/Gaming" );
+    settings.setValue("mainWindowGeometry", saveGeometry());
+    settings.setValue("mainWindowState", saveState());
+
     WriteOptions();
+
     Close();
     QMainWindow::closeEvent( pEvent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::WriteSettings
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::WriteSettings()
-{
-    gui::Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Gaming" );
-    if( savedState_.isNull() || savedState_.isEmpty() )
-    {
-        QTextStream stream( &savedState_, IO_WriteOnly );
-        stream << this;
-    }
-    settings.writeEntry( "/Panels", savedState_ );
-    settings.WriteMainWindowEntries( "/MainWindow", *this );
-    settings.endGroup(); // gaming
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ReadSettings
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::ReadSettings()
-{
-    gui::Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Gaming" );
-
-    // Pannel configuration
-    QString strDockConfig;
-    strDockConfig = settings.readEntry( "/Panels" );
-    QTextStream strDockConfigStream( &strDockConfig, QIODevice::ReadOnly );
-//  strDockConfigStream >> *this; $$$$ FPT 2011-08-03: operator doesnt exists anymore.
-
-    // Main window configuration
-    settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
-
-    settings.endGroup(); // gaming
 }
 
 // -----------------------------------------------------------------------------

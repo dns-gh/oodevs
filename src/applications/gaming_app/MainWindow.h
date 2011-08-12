@@ -106,8 +106,6 @@ private:
     //! @name Helpers
     //@{
     void closeEvent( QCloseEvent* pEvent );
-    void WriteSettings();
-    void ReadSettings();
 
     void WriteOptions();
     void ReadOptions();
