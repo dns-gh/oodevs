@@ -227,7 +227,7 @@ namespace
         void ReadMessage( unsigned int size, const std::string& description )
         {
             // log message reception
-            if( log_level_ >= 1 )
+            if( log_level_ == 1 )
                 std::cout << "Received " << description << std::endl;
             // decode message
             Message message;
@@ -235,7 +235,7 @@ namespace
                 Fail( "Deserialization failed" );
             // log message content
             if( log_level_ == 2 )
-                message.PrintDebugString();
+                std::cout << "Received " << message.ShortDebugString() << std::endl;
         }
 
         bool Connected() const

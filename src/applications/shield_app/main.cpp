@@ -32,8 +32,11 @@ namespace
     class Client : public tools::ClientNetworker
     {
     public:
-        explicit Client( const std::string& host )
+        explicit Client( const std::string& host, const std::string& profile, const std::string& password )
             : tools::ClientNetworker( host )
+            , profile_ (profile)
+            , password_ (password)
+
         {
             RegisterMessage( *this, &Client::ReceiveSimToClient );
             RegisterMessage( *this, &Client::ReceiveAuthenticationToClient );
@@ -91,15 +94,15 @@ namespace
         {
             std::cout << "received from " << link << " : " << message.ShortDebugString() << std::endl;
         }
-    private:
+    private: 
         virtual void ConnectionSucceeded( const std::string& host )
         {
             host_ = host;
             std::cout << "connection succeeded : " << host << std::endl;
             tools::ClientNetworker::ConnectionSucceeded( host );
             MsgsClientToAuthentication::MsgClientToAuthentication request;
-            request.mutable_message()->mutable_authentication_request()->set_login( "" );
-            request.mutable_message()->mutable_authentication_request()->set_password( "" );
+            request.mutable_message()->mutable_authentication_request()->set_login( profile_ );
+            request.mutable_message()->mutable_authentication_request()->set_password( password_ );
             request.mutable_message()->mutable_authentication_request()->mutable_version()->set_value( Version::ProtocolVersion().value() );
             Send( request );
         }
@@ -114,15 +117,51 @@ namespace
             tools::ClientNetworker::ConnectionError( host, error );
         }
     private:
-        std::string host_;
+    std::string host_;
+    std::string profile_;
+    std::string password_;
     };
 }
 
-int main( int /*argc*/, char* /*argv*/[] )
+int main( int argc, char* argv[] )
 {
+
+    // default configuration
+    std::string host = "localhost";
+    std::string port = "30001";
+    std::string profile = "Supervisor";
+    std::string password = "";
+
     try
     {
-        Client client( "localhost:30001" );
+        // read command line arguments
+        if( argc == 2 && std::string( argv[1] ) == "--help" )
+        {
+            std::cout << "Usage: shield_app.exe [-h host] [-p port] [-u profile] [-a password]" << std::endl;
+            return EXIT_SUCCESS;
+        }
+        for( int i = 1; i < argc - 1; ++i )
+        {
+            const std::string argument( argv[i] );
+            if( argument == "-h" )
+                host = argv[i + 1];
+            else if( argument == "-p" )
+                port = argv[i + 1];
+            else if( argument == "-u" )
+                profile = argv[i + 1];
+            else if( argument == "-a" )
+                password = argv[i + 1];
+        }
+    }
+    catch( std::exception& e )
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    try
+    {
+        Client client( host+":"+port, profile, password );
         while( true )
             client.Update();
     }
