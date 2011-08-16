@@ -84,6 +84,11 @@ do
         self.listeUnitesPretesPrecedantes = self.listeUnitesPretes
         self.listeUnitesPretes = {}
         self.listeUnitesPretes = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "T_Mission_Pion_SeFaireTransporter" )
+        local listelisteUnitesPretesBM = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "T_Task_Pion_SeFaireTransporter" )
+        for _,xBM in pairs( listelisteUnitesPretesBM or emptyTable ) do
+            local _continue = true
+            DIA_PushBack( self.listeUnitesPretes, xBM )
+        end
         for _,x in pairs( --[[//liste des unites qui n'ont plus la mission se faire transporter
 ]]self._namedParams.unitesAHelitransporter or emptyTable ) do
         local _continue = true
