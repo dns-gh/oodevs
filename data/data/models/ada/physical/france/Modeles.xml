@@ -9647,6 +9647,127 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Peloton Transport Blindes">
+      <missions>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Transporter"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Patrouille Circulation">
+      <missions>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Transporter"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.PC Appui Mob">
+      <missions>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Transporter"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
   </units>
   <automats>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.SGTIA">
@@ -10837,6 +10958,68 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.CIRCU.Escadron Transport Blindes">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.CIRCU.Peloton Circulation">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Groupe Assaut AIR">
@@ -14764,4 +14947,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2299271531" -->
+<!-- signature="3578411908" -->
