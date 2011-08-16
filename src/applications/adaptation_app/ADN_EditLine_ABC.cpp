@@ -56,11 +56,5 @@ void ADN_EditLine_ABC::setEnabled( bool b )
 // -----------------------------------------------------------------------------
 void ADN_EditLine_ABC::focusOutEvent( QFocusEvent* pEvent )
 {
-    if( this->validator() != 0 )
-    {
-        QString strText = this->text();
-        validator()->fixup( strText );
-        setText( strText );
-    }
     QLineEdit::focusOutEvent( pEvent );
 }

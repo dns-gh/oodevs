@@ -47,12 +47,6 @@ protected:
 
     void focusOutEvent( QFocusEvent* pEvent )
     {
-        if( validator() != 0 )
-        {
-            QString strText = text();
-            validator()->fixup( strText );
-            setText( strText );
-        }
         QLineEdit::focusOutEvent( pEvent );
     }
 

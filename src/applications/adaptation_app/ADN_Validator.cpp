@@ -131,7 +131,7 @@ QValidator::State ADN_PercentageValidator::validate( QString& input, int& nPos )
 
     if( entered > t )
     {
-        this->fixup( input );
+        input = QString::number( t );
         nPos = input.length();
         return Acceptable;
     }
@@ -247,7 +247,7 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
 
     if( entered > t )
     {
-        this->fixup( input );
+        input = QString::number( t );
         nPos = input.length();
         return Acceptable;
     }
