@@ -1580,14 +1580,14 @@
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Bois" value="0.9"/>
-      <urban-modifier material-type="Beton" value="0.1"/>
+      <urban-modifier material-type="Beton" value="0.6"/>
       <urban-modifier material-type="Brique" value="0.6"/>
-      <urban-modifier material-type="Metal" value="0.3"/>
-      <urban-modifier material-type="Torchis" value="0.9"/>
-      <urban-modifier material-type="Prefabrique" value="0.6"/>
-      <urban-modifier material-type="Vegetation" value="0.9"/>
+      <urban-modifier material-type="Metal" value="0.7"/>
+      <urban-modifier material-type="Torchis" value="0.8"/>
+      <urban-modifier material-type="Prefabrique" value="0.9"/>
+      <urban-modifier material-type="Vegetation" value="0.5"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="10" y-dispersion="10">
+    <indirect-fire intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="30" y-dispersion="30">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2404,4 +2404,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="6" name="électricité" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="144" id-nature="5" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="1248159067" -->
+<!-- signature="3084242712" -->
