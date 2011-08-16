@@ -148,6 +148,28 @@
         <outter-tolerance cost-per-meter="0" distance="1000000"/>
       </automat-zone>
     </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="criminal">
+      <preferred-altitude value="-0.001"/>
+      <preferred-terrains strength="50">
+        <preferred-terrain type="forest"/>
+        <preferred-terrain type="urban area"/>
+      </preferred-terrains>
+      <avoided-terrains strength="50">
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
+      </avoided-terrains>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="checkpoint" value="10000"/>
+      </object-costs>
+      <population-costs maximum="100" outside-of-population="100" security-range="50">
+        <population-cost attitude="calme" contact-cost="0"/>
+        <population-cost attitude="agitee" contact-cost="0"/>
+        <population-cost attitude="excitee" contact-cost="0"/>
+        <population-cost attitude="agressive" contact-cost="0"/>
+      </population-costs>
+    </rule>
     <rule autonomous="false" flying="true" type="base">
       <optimisation shortest="false"/>
       <preferred-altitude value="0"/>
@@ -294,6 +316,7 @@
       <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
       <enemies cost-at-security-range="0" cost-on-contact="0"/>
     </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="criminal"/>
     <rule autonomous="true" flying="false" inherits="base" type="movement"/>
     <rule autonomous="true" flying="true" inherits="base" type="movement"/>
     <rule autonomous="true" flying="false" inherits="base" type="recon"/>
@@ -310,9 +333,11 @@
     <rule autonomous="true" flying="true" inherits="base" type="minesweep"/>
     <rule autonomous="true" flying="false" inherits="base" type="logistic"/>
     <rule autonomous="true" flying="true" inherits="base" type="logistic"/>
+    <rule autonomous="true" flying="false" inherits="base" type="criminal"/>
+    <rule autonomous="true" flying="true" inherits="base" type="criminal"/>
   </unit-rules>
   <population-rules>
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="1398490212" -->
+<!-- signature="2121422495" -->
