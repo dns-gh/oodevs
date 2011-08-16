@@ -1842,6 +1842,7 @@
         <mission name="GEN Realiser Travaux Contre Mobilite"/>
         <mission name="GEN Realiser Travaux Protection"/>
         <mission name="GEN Contourner Obstacles"/>
+        <mission name="GEN Brecher Obstacle"/>
         <mission name="GEN Degager Obstacles"/>
         <mission name="GEN Reconnaitre Itineraire"/>
         <mission name="GEN Ouvrir Itineraire"/>
@@ -1966,6 +1967,7 @@
       <missions>
         <mission name="Franchir"/>
         <mission name="GEN Renforcer"/>
+        <mission name="GEN Brecher Obstacle"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
         <mission name="Soutenir sur position en mesure de"/>
@@ -2350,6 +2352,9 @@
         <mission name="Stationner"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="GEN Degager Obstacles"/>
+        <mission name="GEN Ouvrir Itineraire"/>
+        <mission name="GEN Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -3008,6 +3013,7 @@
         <mission name="Se Faire Transporter"/>
         <mission name="ABC Escorter Unites"/>
         <mission name="ABC Appuyer Sur Position"/>
+        <mission name="ABC Attaquer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -3056,6 +3062,7 @@
         <mission name="ABC Escorter Unites"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="ABC Attaquer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -3390,6 +3397,12 @@
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
+          <fragorder name="Pion Transferer Remorqueurs"/>
+          <fragorder name="Pion Renforcer En Remorqueurs"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
         </mission>
         <mission name="Franchir"/>
         <mission name="Orienter Refugies"/>
@@ -3428,7 +3441,11 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Transporter"/>
-        <mission name="LOG Renforcer"/>
+        <mission name="LOG Renforcer">
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
+        </mission>
         <mission name="LOG Reparer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Reparations"/>
@@ -3521,6 +3538,9 @@
         <mission name="LOG Trier Et Traiter Blesses">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
         </mission>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3565,10 +3585,16 @@
         <mission name="LOG Trier Blesses">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
         </mission>
         <mission name="LOG Traiter Blesses">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
         </mission>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3613,6 +3639,9 @@
         <mission name="LOG Traiter Blesses">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
         </mission>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3657,6 +3686,9 @@
         <mission name="LOG Decontaminer Blesses">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
         </mission>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3701,6 +3733,9 @@
         <mission name="LOG Prendre En Compte Reactions Mentales">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
         </mission>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3824,7 +3859,9 @@
     </unit>
     <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" masalife="false" name="Convoi">
       <missions>
-        <mission name="LOG Convoyer"/>
+        <mission name="LOG Convoyer">
+          <fragorder name="Poursuivre"/>
+        </mission>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
@@ -3861,7 +3898,11 @@
     </unit>
     <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" masalife="false" name="Peloton Transport">
       <missions>
-        <mission name="LOG Se Deployer"/>
+        <mission name="LOG Se Deployer">
+          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
+          <fragorder name="Pion Transferer Remorqueurs"/>
+          <fragorder name="Pion Renforcer En Remorqueurs"/>
+        </mission>
         <mission name="LOG Preparer Bascule"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3899,7 +3940,11 @@
     </unit>
     <unit dia-type="PionStock" file="Appui\Log\Pions\Model.bms" masalife="false" name="Stock">
       <missions>
-        <mission name="LOG Se Deployer"/>
+        <mission name="LOG Se Deployer">
+          <fragorder name="Pion Renforcer En Remorqueurs"/>
+          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
+          <fragorder name="Pion Transferer Remorqueurs"/>
+        </mission>
         <mission name="LOG Preparer Bascule"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3979,6 +4024,7 @@
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -3992,6 +4038,7 @@
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -6134,7 +6181,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS SAM">
+    <unit dia-type="SectionASS_Tir" file="Glaise\Glaise_Appui\ArtFdp\Pions\SAM\Model.bms" masalife="false" name="GLAISE ASS SAM">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -6302,7 +6349,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS section tractee">
+    <unit dia-type="SectionASS_Tir" file="glaise\glaise_Appui\ArtFdp\Pions\ASS tractee\Model.bms" masalife="false" name="GLAISE ASS section tractee">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -6342,7 +6389,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS section automoteur">
+    <unit dia-type="SectionASS_Tir" file="Glaise\Glaise_Appui\ArtFdp\Pions\ASS automoteur\Model.bms" masalife="false" name="GLAISE ASS section automoteur">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -6382,7 +6429,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" masalife="false" name="GLAISE ASS section LRM">
+    <unit dia-type="SectionASS_LRM" file="Glaise\Glaise_Appui\ArtFdp\Pions\ASS LRM\Model.bms" masalife="false" name="GLAISE ASS section LRM">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -6421,7 +6468,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="GLAISE ASS PC ART">
+    <unit dia-type="PC_ASS" file="Glaise\Glaise_Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="GLAISE ASS PC ART">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6457,7 +6504,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="GLAISE ASA section cp">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Glaise\Glaise_Appui\ArtDsa\Pions\section ASA CP\model.bms" masalife="false" name="GLAISE ASA section cp">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -6651,7 +6698,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="GLAISE ASA groupe tcp">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Glaise\Glaise_appui\ArtDsa\Pions\groupe ASA TCP\model.bms" masalife="false" name="GLAISE ASA groupe tcp">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -6692,7 +6739,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" masalife="false" name="GLAISE NBC Groupe Reco">
+    <unit dia-type="Patrouille_NBC_Reco" file="Glaise\Glaise_Appui\Nbc\Pions\Pat Reco\model.bms" masalife="false" name="GLAISE NBC Groupe Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6766,7 +6813,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="GLAISE RENS Pat URH">
+    <unit dia-type="Patrouille_URH" file="Glaise\Glaise_Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="GLAISE RENS Pat URH">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6869,7 +6916,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" masalife="false" name="GLAISE ASA  Section MP">
+    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Glaise\Glaise_Appui\ArtDsa\Pions\section ASA MP\Model.bms" masalife="false" name="GLAISE ASA  Section MP">
       <missions>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -6988,7 +7035,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" masalife="false" name="GLAISE ASS EO">
+    <unit dia-type="SectionASS_EO" file="glaise\glaise_Appui\ArtFdp\Pions\EO\Model.bms" masalife="false" name="GLAISE ASS EO">
       <missions>
         <mission name="ASS EO Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -7025,7 +7072,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" masalife="false" name="GLAISE ASS RECO">
+    <unit dia-type="SectionASS_Reco" file="Glaise\glaise_Appui\ArtFdp\Pions\Son Reco\Model.bms" masalife="false" name="GLAISE ASS RECO">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -7062,7 +7109,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" masalife="false" name="GLAISE ASA PC">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="glaise\glaise_Appui\ArtDsa\Pions\PC asa cp\model.bms" masalife="false" name="GLAISE ASA PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -7098,7 +7145,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
+    <unit dia-type="TransportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
       <missions>
         <mission name="ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -7140,7 +7187,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Tigre\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -7184,7 +7231,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
       <missions>
         <mission name="ALAT Eclairer"/>
         <mission name="ALAT Jalonner"/>
@@ -7223,7 +7270,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
+    <unit dia-type="AACCP" file="glaise\glaise_appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Se Faire Decontaminer"/>
@@ -7614,6 +7661,19 @@
         <mission name="ASS Assurer Mise En Oeuvre2Zones">
           <fragorder name="Poursuivre"/>
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Batterie Inopinee">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre Sur Position">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
       </missions>
       <fragorders>
@@ -7649,6 +7709,19 @@
         <mission name="ASS Assurer Mise En Oeuvre2Zones">
           <fragorder name="Poursuivre"/>
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Batterie Inopinee">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre Sur Position">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
       </missions>
       <fragorders>
@@ -7675,6 +7748,7 @@
         <mission name="ASS Assurer Mise En Oeuvre2Zones">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -7685,6 +7759,18 @@
         <mission name="Stationner"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="ASS Assurer Mise En Batterie Inopinee">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre Sur Position">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7751,6 +7837,19 @@
         <mission name="ASS Assurer Mise En Oeuvre2Zones">
           <fragorder name="Poursuivre"/>
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Batterie Inopinee">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre Sur Position">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
       </missions>
       <fragorders>
@@ -8155,6 +8254,52 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
+    </unit>
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRU\Model.hal" masalife="false" name="Equipe Reco LRU">
+      <missions>
+        <mission name="ASS Reconnaitre Zone Deploiement"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Suivre"/>
+        <mission name="Decrocher"/>
+        <mission name="Franchir"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son LRU\Model.hal" masalife="false" name="Section LRU">
+      <missions>
+        <mission name="Faire Mouvement"/>
+        <mission name="Suivre"/>
+        <mission name="Decrocher"/>
+        <mission name="Franchir"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="ASS Assurer Mise En Oeuvre2Zones">
+          <fragorder name="Poursuivre"/>
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Batterie Inopinee">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+        <mission name="ASS Assurer Mise En Oeuvre Sur Position">
+          <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
+      </missions>
+      <fragorders/>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Energie et traitement des eaux">
       <missions>
@@ -10535,6 +10680,7 @@
         <mission name="GENIE Reconnaitre"/>
         <mission name="Reparer point du reseau"/>
         <mission name="Produire"/>
+        <mission name="GENIE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -12112,6 +12258,39 @@
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir SAM\Model.bms" masalife="false" name="Batterie Tir SAM">
+      <missions>
+        <mission name="ASS Se Deployer"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
+        <mission name="Suivre"/>
+        <mission name="Decrocher"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Recompleter"/>
+        <mission name="Stationner"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="Franchir"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir CEASAR\Model.bms" masalife="false" name="Batterie Tir CEASAR">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -14244,6 +14423,39 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir LRU\Model.bms" masalife="false" name="Batterie Reco et Tir LRU">
+      <missions>
+        <mission name="Faire Mouvement"/>
+        <mission name="Decrocher"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Se Recompleter"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="ASS Reco Et Deploiement">
+          <fragorder name="Poursuivre"/>
+        </mission>
+        <mission name="ASS Se Deployer"/>
+        <mission name="Franchir"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
+    </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir TRF1\Model.bms" masalife="false" name="Batterie Reco et Tir TRF1">
       <missions>
         <mission name="Faire Mouvement"/>
@@ -14552,4 +14764,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1631932434" -->
+<!-- signature="3757807765" -->

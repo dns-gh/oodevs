@@ -270,7 +270,8 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zoneImplantation_" name="Zone implantation" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="presenceContreBatterie_" name="Presence contre batterie" optional="false" type="Boolean"/>
+      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" id="30" name="ASS Assurer Mise En Oeuvre Sur Position">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -278,7 +279,8 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positionImplantation_" name="Position implantation" optional="false" type="Point"/>
-      <parameter dia-name="presenceContreBatterie_" name="Presence contre batterie" optional="false" type="Boolean"/>
+      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones" id="1005" name="ASS Assurer Mise En Oeuvre2Zones">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -287,7 +289,16 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zoneImplantation1_" name="Zone implantation1" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="zoneImplantation2_" name="Zone implantation2" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="presenceContreBatterie_" name="Presence contre batterie" optional="false" type="Boolean"/>
+      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnBatterieInopinee" dia-type=" T_Mission_Pion_ASS_AssurerMiseEnBatterieInopinee" id="465" name="ASS Assurer Mise En Batterie Inopinee">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_ReconnaitreZoneDeploiement" dia-type="T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" id="31" name="ASS Reconnaitre Zone Deploiement" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -523,6 +534,13 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_GEN_BrecherObstacle" dia-type="T_Mission_Pion_GEN_BrecherObstacle" id="463" name="GEN Brecher Obstacle" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="brechagePlannifie_" name="Brechage" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_OuvrirItineraire" dia-type="T_Mission_Pion_GEN_OuvrirItineraire" id="63" name="GEN Ouvrir Itineraire" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4787,7 +4805,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objective" name="Position" optional="false" type="LocationComposite">
+      <parameter dia-name="objective" name="Position" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -4982,6 +5000,19 @@
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.SeDeployer" dia-type="france.military.company.combat.support.engineer.tasks.SeDeployer" id="28749" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.SeDeployer" name="GENIE Se Deployer">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="position" name="Position" optional="true" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="332" name="Faire Mouvement">
@@ -5047,6 +5078,9 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Attendre" id="398" name="Attendre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_EffectuerMouvementDeSauvegarde" id="464" name="Effectuer Mouvement De Sauvegarde">
+      <parameter dia-name="destination_point_" name="Destination" optional="false" type="Point"/>
+    </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerAmbiance" id="345" name="Changer Ambiance">
       <parameter dia-name="orderConduiteChangerAmbiance_" name="Ordre conduite changer ambiance" optional="false" type="Enumeration">
         <value id="0" name="surete"/>
@@ -5228,4 +5262,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2790707686" -->
+<!-- signature="0933781989" -->
