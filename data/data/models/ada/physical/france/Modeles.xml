@@ -8255,7 +8255,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRU\Model.hal" masalife="false" name="Equipe Reco LRU">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRU\Model.bms" masalife="false" name="Equipe Reco LRU">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -8270,7 +8270,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son LRU\Model.hal" masalife="false" name="Section LRU">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son LRU\Model.bms" masalife="false" name="Section LRU">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -14764,4 +14764,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3757807765" -->
+<!-- signature="2299271531" -->
