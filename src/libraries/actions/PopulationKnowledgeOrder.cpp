@@ -54,11 +54,31 @@ bool PopulationKnowledgeOrder::CheckKnowledgeValidity() const
 // -----------------------------------------------------------------------------
 void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
 {
-    message.set_null_value( false );
     const kernel::PopulationKnowledge_ABC* pKnowledge = converter_.Find( population_, owner_ );
     if( pKnowledge )
     {
+        message.set_null_value( false );
         sword::CrowdKnowledgeId& id = *message.mutable_value()->Add()->mutable_crowdknowledge();
         id.set_id( pKnowledge->GetEntity()->GetId() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgeOrder::CommitTo
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) const
+{
+    const kernel::PopulationKnowledge_ABC* pKnowledge = converter_.Find( population_, owner_ );
+    if( pKnowledge )
+        message.mutable_crowdknowledge()->set_id( pKnowledge->GetEntity()->GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgeOrder::IsSet
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+bool PopulationKnowledgeOrder::IsSet() const
+{
+    return CheckKnowledgeValidity();
 }

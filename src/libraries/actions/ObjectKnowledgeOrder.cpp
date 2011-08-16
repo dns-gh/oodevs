@@ -51,6 +51,32 @@ ObjectKnowledgeOrder::~ObjectKnowledgeOrder()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeOrder::CommitTo
+// Created: LGY 2011-07-07
+// -----------------------------------------------------------------------------
+void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
+{
+    const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( object_, owner_ );
+    if( pKnowledge )
+    {
+        message.set_null_value( false );
+        sword::ObjectKnowledgeId& id = *message.mutable_value()->Add()->mutable_objectknowledge();
+        id.set_id( pKnowledge->GetEntity()->GetId() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeOrder::CommitTo
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) const
+{
+    const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( object_, owner_ );
+    if( pKnowledge )
+        message.mutable_objectknowledge()->set_id( pKnowledge->GetEntity()->GetId() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeOrder::CheckKnowledgeValidity
 // Created: LGY 2011-07-08
 // -----------------------------------------------------------------------------
@@ -60,16 +86,10 @@ bool ObjectKnowledgeOrder::CheckKnowledgeValidity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeOrder::CommitTo
-// Created: LGY 2011-07-07
+// Name: ObjectKnowledgeOrder::IsSet
+// Created: LGY 2011-08-16
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
+bool ObjectKnowledgeOrder::IsSet() const
 {
-    message.set_null_value( false );
-    const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( object_, owner_ );
-    if( pKnowledge )
-    {
-        sword::ObjectKnowledgeId& id = *message.mutable_value()->Add()->mutable_objectknowledge();
-        id.set_id( pKnowledge->GetEntity()->GetId() );
-    }
+    return CheckKnowledgeValidity();
 }

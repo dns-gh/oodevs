@@ -55,11 +55,31 @@ bool AgentKnowledgeOrder::CheckKnowledgeValidity() const
 // -----------------------------------------------------------------------------
 void AgentKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
 {
-    message.set_null_value( false );
     const kernel::AgentKnowledge_ABC* pKnowledge = converter_.Find( agent_, owner_ );
     if( pKnowledge )
     {
+        message.set_null_value( false );
         sword::UnitKnowledgeId& id = *message.mutable_value()->Add()->mutable_agentknowledge();
         id.set_id( pKnowledge->GetEntity()->GetId() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgeOrder::CommitTo
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+void AgentKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) const
+{
+    const kernel::AgentKnowledge_ABC* pKnowledge = converter_.Find( agent_, owner_ );
+    if( pKnowledge )
+        message.mutable_agentknowledge()->set_id( pKnowledge->GetEntity()->GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgeOrder::IsSet
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+bool AgentKnowledgeOrder::IsSet() const
+{
+    return CheckKnowledgeValidity();
 }
