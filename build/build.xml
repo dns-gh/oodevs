@@ -1268,7 +1268,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.plugins" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow" description="package plugin individual installers"/>
@@ -1333,6 +1333,15 @@
         </copy>
         <zip destfile="${dist.dir}/SWORD_debug_${platform}_${version.major}.zip">
             <fileset dir="${out.dir}/pdb" includes="*.pdb"/>
+        </zip>
+    </target>
+
+    <target name="package.ts" description="create a zip with all ts files">
+        <copy todir="${out.dir}/ts" flatten="true">
+            <fileset dir="${src.dir}" includes="**/*.ts"/>
+        </copy>
+        <zip destfile="${dist.dir}/SWORD_ts_${version.major}.zip">
+            <fileset dir="${out.dir}/ts" includes="*.ts"/>
         </zip>
     </target>
 
