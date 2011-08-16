@@ -138,6 +138,8 @@ void ADN_Units_GUI::Build()
     Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
     QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
     pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
+    pSymbolWidget_->makeCurrent();
+    pSymbolWidget_->initializeGL();
     pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     pSymbolWidget_->setMinimumSize( 130, 140 );
     pSymbolWidget_->setMaximumSize( 130, 140 );

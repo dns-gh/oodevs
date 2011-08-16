@@ -56,6 +56,7 @@ ADN_SymbolWidget::~ADN_SymbolWidget()
 // -----------------------------------------------------------------------------
 void ADN_SymbolWidget::initializeGL()
 {
+    QGLWidget::initializeGL();
     glShadeModel( GL_SMOOTH );
     glEnable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );

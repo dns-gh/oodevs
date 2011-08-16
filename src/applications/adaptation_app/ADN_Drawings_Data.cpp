@@ -226,12 +226,12 @@ void ADN_Drawings_Data::DrawingInfo::Draw()
     }
 
     // $$$$ ABR 2011-04-21: draw icon
-    //if( geometry == "polygon" )
-    //    DrawOnPolygon();
-    //else if( geometry == "line" )
-    //    DrawOnLine();
-    //else if( geometry == "point" )
-    //    DrawOnPoint();
+    if( geometry == "polygon" )
+        DrawOnPolygon();
+    else if( geometry == "line" )
+        DrawOnLine();
+    else if( geometry == "point" )
+        DrawOnPoint();
 
     glPopMatrix();
     glPopAttrib();

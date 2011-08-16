@@ -65,6 +65,7 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
         }
         catch( ... )
         {
+            DWORD errCode = GetLastError();
             std::cout << "Could not open svg symbol '" << filename << "'" << std::endl;// $$$$ AGE 2006-10-23:
         }
     }
