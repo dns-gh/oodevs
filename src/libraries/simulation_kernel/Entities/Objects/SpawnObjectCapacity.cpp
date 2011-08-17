@@ -30,7 +30,7 @@ SpawnObjectCapacity::SpawnObjectCapacity()
 // Created: LGY 2011-08-17
 // -----------------------------------------------------------------------------
 SpawnObjectCapacity::SpawnObjectCapacity( xml::xistream& xis )
-    : type_( xis.attribute< std::string >( "type" ) )
+    : type_( xis.attribute< std::string >( "object" ) )
 {
     // NOTHING
 }
