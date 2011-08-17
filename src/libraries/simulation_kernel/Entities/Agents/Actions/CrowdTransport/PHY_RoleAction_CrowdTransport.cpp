@@ -172,7 +172,6 @@ int PHY_RoleAction_CrowdTransport::LoadCrowd( MIL_Population& crowd, unsigned in
         double toBeLoaded = std::min( static_cast< double >( crowdNumber ), transporter_.GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterLoadedPerTimeStep() );
         if( loadable > toBeLoaded )
         {
-            // TODO envoyer un CR ?
             currentProgress_ += toBeLoaded;
             return eRunning;
         }

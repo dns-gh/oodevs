@@ -80,9 +80,9 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::SecuringPoint( 
 // Name: DEC_KnowledgePopulationFunctions::GetConcentrationPosition
 // Created: JSR 2011-08-09
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_KnowledgePopulationFunctions::GetConcentrationPosition( const MIL_AgentPion& caller, int knowledgeId, unsigned int concentrationId )
+boost::shared_ptr< MT_Vector2D > DEC_KnowledgePopulationFunctions::GetConcentrationPosition( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId )
 {
-    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
         return boost::shared_ptr< MT_Vector2D >();
     else
@@ -93,9 +93,9 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgePopulationFunctions::GetConcentrat
 // Name: DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration
 // Created: JSR 2011-08-09
 // -----------------------------------------------------------------------------
-unsigned int DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration( const MIL_AgentPion& caller, int knowledgeId, unsigned int concentrationId )
+unsigned int DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId )
 {
-    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
         return 0;
     else

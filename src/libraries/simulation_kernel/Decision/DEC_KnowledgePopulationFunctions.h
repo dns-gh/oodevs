@@ -34,8 +34,8 @@ public:
     template< typename T > static bool IsRecon( const T& caller, unsigned int knowledgeId );
     template< typename T > static bool IsInZone( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc );
                            static bool IsPerceivedByAgent( const MIL_AgentPion& caller, int knowledgeId );
-                           static boost::shared_ptr< MT_Vector2D > GetConcentrationPosition( const MIL_AgentPion& caller, int knowledgeId, unsigned int concentrationId );
-                           static unsigned int GetAllHumansInConcentration( const MIL_AgentPion& caller, int knowledgeId, unsigned int concentrationId );
+                           static boost::shared_ptr< MT_Vector2D > GetConcentrationPosition( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );
+                           static unsigned int GetAllHumansInConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );
                            static boost::shared_ptr< MT_Vector2D > ClosestPoint( const MIL_AgentPion& caller, int knowledgeId );
                            static void Secure( const MIL_AgentPion& caller, int knowledgeId );
                            static boost::shared_ptr< MT_Vector2D > SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );
