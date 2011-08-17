@@ -34,7 +34,9 @@ class TER_AgentManager;
 class TER_ObjectManager;
 class TER_PopulationManager;
 class TER_CoordinateManager;
+class TER_GraphManager;
 class TER_PathFindManager;
+class TER_AnalyzerManager;
 class TER_PathFinderThread;
 class MT_Rect;
 
@@ -95,6 +97,7 @@ public:
     //! @name Accessors
     //@{
     TER_PathFindManager&   GetPathFindManager  () const;
+    TER_AnalyzerManager&   GetAnalyzerManager  () const;
     TER_AgentManager&      GetAgentManager     () const;
     TER_ObjectManager&     GetObjectManager    () const;
     TER_PopulationManager& GetPopulationManager() const;
@@ -112,11 +115,13 @@ private:
 private:
     //! @name Member data
     //@{
-    static TER_World*  pInstance_;
+    static TER_World*      pInstance_;
     TER_AgentManager*      pAgentManager_;
     TER_ObjectManager*     pObjectManager_;
     TER_CoordinateManager* pCoordinateManager_;
+    TER_GraphManager*      pGraphManager_;
     TER_PathFindManager*   pPathfindManager_;
+    TER_AnalyzerManager*   pAnalyzerManager_;
     TER_PopulationManager* pPopulationManager_;
     //@}
 };

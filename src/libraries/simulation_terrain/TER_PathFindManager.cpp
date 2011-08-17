@@ -21,6 +21,7 @@
 #include "TER_PathFinderThread.h"
 #include "TER_World.h"
 #include "TER_DynamicData.h"
+#include "TER_StaticData.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFindManager::GetPathFindManager
@@ -35,10 +36,8 @@ TER_PathFindManager& TER_PathFindManager::GetPathFindManager()
 // Name: TER_PathFindManager constructor
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-TER_PathFindManager::TER_PathFindManager( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive )
-    : strGraphArchive_( strGraphArchive )
-    , strNodeArchive_ ( strNodeArchive  )
-    , strLinkArchive_ ( strLinkArchive  )
+TER_PathFindManager::TER_PathFindManager( const TER_StaticData& staticData )
+    : staticData_( staticData )
 {
     // NOTHING
 }
@@ -59,7 +58,7 @@ TER_PathFindManager::~TER_PathFindManager()
 // -----------------------------------------------------------------------------
 TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread /*= false*/ )
 {
-    threads_.push_back( new TER_PathFinderThread( strGraphArchive_, strNodeArchive_, strLinkArchive_, queue, bUseSameThread ) );
+    threads_.push_back( new TER_PathFinderThread( staticData_, queue, bUseSameThread ) );
     return *threads_.back();
 }
 
@@ -81,52 +80,6 @@ void TER_PathFindManager::RemoveDynamicData( TER_DynamicData& data )
 {
     for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
         data.AddForUnregistration( **it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::DefaultTerrainData
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-TerrainData& TER_PathFindManager::DefaultTerrainData()
-{
-    static TerrainData data;
-    return data;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::DefaultTerrainData
-// Created: RPD 2009-08-18
-// -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius )
-{
-    return threads_.back()->FindCrossroadsWithinCircle( center, radius );
-}
-
-// -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindSafetyPositionsWithinCircle
-// Created: LDC 2010-10-28
-// -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )
-{
-    return threads_.back()->FindSafetyPositionsWithinCircle( center, radius, safetyDistance );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainData TER_PathFindManager::FindTerrainDataWithinCircle
-// Created: BCI 2010-12-20
-// -----------------------------------------------------------------------------
-TerrainData TER_PathFindManager::FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius )
-{
-    return threads_.back()->FindTerrainDataWithinCircle( center, radius );
-}
-
-// -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindAllPositions
-// Created: BCI 2011-04-01
-// -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindAllPositions( const MT_Vector2D& center, float radius )
-{
-    return threads_.back()->FindAllPositions( center, radius );
 }
 
 // -----------------------------------------------------------------------------

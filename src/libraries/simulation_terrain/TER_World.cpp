@@ -22,7 +22,9 @@
 #include "TER_ObjectManager.h"
 #include "TER_PopulationManager.h"
 #include "TER_CoordinateManager.h"
+#include "TER_GraphManager.h"
 #include "TER_PathFindManager.h"
+#include "TER_AnalyzerManager.h"
 #include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
 #include "tools/WorldParameters.h"
@@ -80,7 +82,9 @@ TER_World::TER_World( const tools::WorldParameters& config )
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
     pCoordinateManager_ = new TER_CoordinateManager( config.latitude_, config.longitude_, extent );
-    pPathfindManager_   = new TER_PathFindManager( config.pathfindGraph_, config.pathfindNodes_, config.pathfindLinks_ );
+    pGraphManager_      = new TER_GraphManager     ( config.pathfindGraph_, config.pathfindNodes_, config.pathfindLinks_, 10.f );
+    pPathfindManager_   = new TER_PathFindManager  ( *pGraphManager_ );
+    pAnalyzerManager_   = new TER_AnalyzerManager  ( *pGraphManager_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +93,9 @@ TER_World::TER_World( const tools::WorldParameters& config )
 // -----------------------------------------------------------------------------
 TER_World::~TER_World()
 {
+    delete pAnalyzerManager_;
     delete pPathfindManager_;
+    delete pGraphManager_;
     delete pCoordinateManager_;
     delete pObjectManager_;
     delete pAgentManager_;

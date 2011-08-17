@@ -22,6 +22,7 @@ class TerrainRetractationHandle;
 class TER_NodeFunctor_ABC;
 class TER_PathFindRequest_ABC;
 class TER_DynamicData;
+class TER_StaticData;
 class TerrainData;
 
 // =============================================================================
@@ -32,7 +33,7 @@ class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread );
+             TER_PathFinderThread( const TER_StaticData& staticData, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread );
     virtual ~TER_PathFinderThread();
     //@}
 
@@ -46,23 +47,12 @@ public:
 
     //! @name Terrain analysis
     //@{
-    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const;
-
-    std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );
-    std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance );
-    std::vector< boost::shared_ptr< MT_Vector2D > > FindAllPositions( const MT_Vector2D& center, float radius );
-    TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
     TerrainData Pick( const MT_Vector2D& pos );
     //@}
 
     //! @name Operations
     //@{
     void ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
-    //@}
-
-    //! @name Debug
-    //@{
-    void Dump( const std::string& strBaseArchiveName ) const;
     //@}
 
 private:
@@ -76,7 +66,6 @@ private:
     //@{
     virtual void Process           ( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
             void ProcessDynamicData();
-            void Dump              () const;
     //@}
 
 private:

@@ -42,6 +42,17 @@ TER_PathFindManager& TER_World::GetPathFindManager() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_World::GetAnalyzerManager
+// Created: CMA 2011-08-16
+// -----------------------------------------------------------------------------
+inline
+TER_AnalyzerManager& TER_World::GetAnalyzerManager() const
+{
+    assert( pAnalyzerManager_ );
+    return *pAnalyzerManager_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_World::GetAgentManager
 // Created: NLD 2005-10-07
 // -----------------------------------------------------------------------------
