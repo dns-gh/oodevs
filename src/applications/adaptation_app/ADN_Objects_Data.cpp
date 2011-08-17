@@ -627,7 +627,7 @@ ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::ADN_CapacityInfos_SpawnObject()
 void ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::ReadArchive( xml::xistream& xis )
 {
     bPresent_ = true;
-    xis >> xml::attribute( "type", objectName_ );
+    xis >> xml::attribute( "object", objectName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -648,7 +648,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::Load()
 void ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::WriteArchive( xml::xostream& xos )
 {
     std::string type = ( load_ && object_.GetData() ) ? object_.GetData()->strType_.GetData() : objectName_;
-    xos << xml::attribute( "type", type );
+    xos << xml::attribute( "object", type );
 }
 
 // -----------------------------------------------------------------------------
