@@ -13,7 +13,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
-#include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_AnalyzerManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis constructor
@@ -100,7 +100,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateCrossroads()
             ++it;
     }
     //Add new points
-    std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( lastPos_, static_cast< float >( range ) );
+    std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_AnalyzerManager::GetAnalyzerManager().FindCrossroadsWithinCircle( lastPos_, static_cast< float >( range ) );
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = temp.begin(); it != temp.end(); it++ )
         crossroadsBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
@@ -135,7 +135,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateSafety( float radius, float safetyDista
             ++it;
     }
     //Add new points
-    std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_PathFindManager::GetPathFindManager().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance );
+    std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_AnalyzerManager::GetAnalyzerManager().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance );
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = temp.begin(); it != temp.end(); it++ )
         safetyBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau

@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "AvoidanceCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include "MIL_Object_ABC.h"
 #include "Tools/MIL_Tools.h"
@@ -131,5 +131,5 @@ void AvoidanceCapacity::ResetDynamicData( MIL_Object_ABC& object )
     const T_PointVector& points = avoid_.GetPoints();
     assert( points.size() > 3 );
 
-    handler_.Reset( new TER_DynamicData( points, TER_PathFindManager::DefaultTerrainData() ) );
+    handler_.Reset( new TER_DynamicData( points, TER_AnalyzerManager::DefaultTerrainData() ) );
 }

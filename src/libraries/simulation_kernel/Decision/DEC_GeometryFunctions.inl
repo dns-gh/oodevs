@@ -19,7 +19,7 @@
 #include "Decision/DEC_Objective.h"
 #include "Entities/Objects/TerrainHeuristicCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
@@ -269,7 +269,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePosition(
     if ( pCapacity )
     {
         sBestNodeForObstacle  costEvaluationFunctor( caller.GetOrderManager().GetFuseau(), *pCapacity, *pCenter, rRadius );
-        TER_World::GetWorld().GetPathFindManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
+        TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
         if( costEvaluationFunctor.FoundAPoint() )
             pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
     }

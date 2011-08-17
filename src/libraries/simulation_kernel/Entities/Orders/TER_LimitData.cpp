@@ -15,6 +15,7 @@
 #include "MIL_TacticalLineManager.h"
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 
 // -----------------------------------------------------------------------------
@@ -51,7 +52,7 @@ double TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
 // -----------------------------------------------------------------------------
 TER_LimitData::TER_LimitData( const T_PointVector& points )
     : points_       ( points )
-    , pPathFindData_( new TER_DynamicData( points_, TER_PathFindManager::DefaultTerrainData() ) )
+    , pPathFindData_( new TER_DynamicData( points_, TER_AnalyzerManager::DefaultTerrainData() ) )
     , distancesData_()
     , nNbRefs_      ( 0 )
 {
