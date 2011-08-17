@@ -275,9 +275,9 @@ self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActio
 
                     _continue = false
                 elseif switch_1 == eMRT_AssignerMissions then
-                                        self:SendFeedback( eActionEffectuee )
-                    Halt( self )
-                    do return end
+                                        --self:SendFeedback( eActionEffectuee )
+                    --Halt( self )
+                    --do return end
 
                     if( self.eValidationMRT == eActionImpossible ) then
                         do

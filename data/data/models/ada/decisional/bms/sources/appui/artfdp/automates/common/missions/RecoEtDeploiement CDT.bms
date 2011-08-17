@@ -30,6 +30,7 @@ node "BEH_Conduite_Automate_ASS_RecoEtDeploiement"
     },
 
     create = function( self )
+        self.ptRecoDetruite_ = {}
     end,
 
     activate = function( self )
@@ -111,9 +112,9 @@ do
 ]]                end
 
                     if _continue then
-                    if( ( F_Pion_GeteEtatPhaseMission( pionDeReco ) == eEtatPhaseMission_FinMission or not S_Misc_EstMissionAffectee_Pion( x_ass, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" ) ) and self.RECODETRUITE == 1 and pionReco:GetptRecoDetruite_() ~= nil ) then
+                    if( ( F_Pion_GeteEtatPhaseMission( pionDeReco ) == eEtatPhaseMission_FinMission or not S_Misc_EstMissionAffectee_Pion( x_ass, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" ) ) and self.RECODETRUITE == 1 and self.ptRecoDetruite_[pionReco] ~= nil ) then
                         do
-                            Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { x_ass, pionReco:GetptRecoDetruite_(), } )
+                            Activate( self.activations.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { x_ass, self.ptRecoDetruite_[pionReco], } )
                         end
 --[[//Affichage compte-rendu "Attente ordre de conduite poursuivre" une fois la reconnaissance effectuée
 ]]                    end
@@ -160,14 +161,14 @@ do
                                 do
                                     if( DEC_Geometrie_LocalisationsEgales( self.mission.zoneDeploiement1_, self.ptZone ) ) then
                                         --[[//Sauvegarde de l'autre point de reco différent de celui en cours de reconnaissance par la section
-]]pionReco:SetptRecoDetruite_( self.mission.zoneDeploiement2_ )
+]]self.ptRecoDetruite_[pionReco] = self.mission.zoneDeploiement2_
                                     else
-                                        pionReco:SetptRecoDetruite_( self.mission.zoneDeploiement1_ )
+                                        self.ptRecoDetruite_[pionReco] = self.mission.zoneDeploiement1_
                                     end
 
                                 end
                             else
-                                pionReco:SetptRecoDetruite_( self.mission.zoneDeploiement1_ )
+                                self.ptRecoDetruite_[pionReco] = self.mission.zoneDeploiement1_
                             end
 
                             --[[//Forcer le comportement à continuer car le point de reconnaissance n'est connu

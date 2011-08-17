@@ -89,6 +89,7 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > GetObjMisEnCours();
     virtual void SetObjMisEnCours( boost::shared_ptr< DEC_Knowledge_Object > );
     virtual boost::shared_ptr< MT_Vector2D > GetObjectifCourant();
+    virtual MT_Vector2D* GetPtSauvegarde();
     virtual boost::shared_ptr< DEC_Knowledge_Object > GetPlotRavitaillementAssigne();
     virtual void SetPlotRavitaillementAssigne( boost::shared_ptr< DEC_Knowledge_Object > );
     virtual int GetPorteeAction();
@@ -104,7 +105,8 @@ public:
     virtual void SetTarget( boost::shared_ptr< MT_Vector2D > );
     virtual boost::shared_ptr< MT_Vector2D > GetTarget();
 
-
+    virtual std::vector<DEC_Knowledge_Object*> GetListeZonesTir();
+    virtual void ClearListeZonesTir();
     virtual void ClearListeEnisTirAutorise();
     virtual void ClearListePionsCoordination();
     virtual void ClearPlotsRavitaillement();

@@ -45,7 +45,7 @@ local emptyTable = emptyTable
                 F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_Trace( "Mission 'Freiner' : debut" )
-                DEC_Trace( "Direction Dangereuse : " .. DEC_DirectionToString( self._namedParams.mission.dirDangereuse_ ) )
+                DEC_Trace( "Direction Dangereuse : " .. DEC_DirectionToString( DEC_GetDirectionEnnemi( self._namedParams.mission ) ) )
             end
         end
 

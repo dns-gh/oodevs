@@ -88,12 +88,12 @@ do
     do return _returnValue end
 end
 
-function S_Geometrie_CreerPositionTir_Canon( zoneInstallation, rFloat, direction, locInstallation_1, locInstallation_2, ptSauvegarde )
+function S_Geometrie_CreerPositionTir_Canon( zoneInstallation, rFloat, direction )
     local lstObstacles = {}
     local repObj = nil
-    locInstallation_1 = nil
-    locInstallation_2 = nil
-    ptSauvegarde = nil
+    local locInstallation_1 = nil
+    local locInstallation_2 = nil
+    local ptSauvegarde = nil
     local subLocs = S_Geometrie_DecoupeLocalisation( zoneInstallation, 3, direction )
     if( #( subLocs ) < 3 ) then
         do return end
@@ -124,6 +124,8 @@ function S_Geometrie_CreerPositionTir_Canon( zoneInstallation, rFloat, direction
     if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
         ptSauvegarde = tempPoint
     end
+
+    return locInstallation_1, locInstallation_2, ptSauvegarde
 
 end
 

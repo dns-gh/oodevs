@@ -52,7 +52,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
         if( ModuleBegins() ) then
             do
                 self.ptDestination = S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
-                self.ptRepli = S_Geometrie_PtInvDirDangereuse( self.ptDestination, self.mission.dirDangereuse_, 500 )
+                self.ptRepli = S_Geometrie_PtInvDirDangereuse( self.ptDestination, DEC_GetDirectionEnnemi( self.mission ), 500 )
             end
         end
 
@@ -121,7 +121,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.mission.dirDangereuse_, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionEnnemi( self.mission ), } )
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eType_ZoneImplantation

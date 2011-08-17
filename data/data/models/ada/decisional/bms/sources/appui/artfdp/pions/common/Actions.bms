@@ -163,7 +163,6 @@ elseif switch_1 == eActionObjetTerminee then
         self._namedParams = {}
         self._namedParams.eTypeObjet = self.params[1]
         self._namedParams.locObjet = self.params[2]
-        self._namedParams.pionEnCours = self.params[3]
     end,
 
     select = function( self )
@@ -218,7 +217,7 @@ elseif switch_1 == eActionObjetTerminee then
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionObjetTerminee then
-                    DEC_UserTypeList_PushBack( self._namedParams.pionEnCours:GetlisteZonesTir_(), self.repObj )
+                    DEC_UserTypeList_PushBack( myself:GetlisteZonesTir_(), self.repObj )
                     DEC_Trace( "realisation objet : fin realisation" )
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then

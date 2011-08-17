@@ -766,6 +766,16 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetObjectifCourant()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetPtSauvegarde
+// Created: LDC 2011-08-16
+// -----------------------------------------------------------------------------
+template< class T >
+MT_Vector2D* DEC_Decision< T >::GetPtSauvegarde()
+{
+    return GetVariable< MT_Vector2D* >( "myself.ptSauvegarde_" );
+}
+    
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::GetPlotRavitaillementAssigne(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
@@ -846,6 +856,27 @@ void DEC_Decision< T >::ClearPlotsRavitaillement()
 {
     const std::vector< int > list;
     SetVariable( "myself.plotsRavitaillement_", list );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector<DEC_Knowledge_Object*> DEC_Decision::GetListeZonesTir
+// Created: LDC 2011-08-16
+// -----------------------------------------------------------------------------
+template< class T >
+std::vector<DEC_Knowledge_Object*> DEC_Decision< T >::GetListeZonesTir()
+{
+    return GetVariable< std::vector<DEC_Knowledge_Object*> >( "myself.listeZonesTir_" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::ClearListeZonesTir
+// Created: LDC 2011-08-16
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::ClearListeZonesTir()
+{
+    const std::vector< int > list;
+    SetVariable( "myself.listeZonesTir_", list );
 }
 
 // -----------------------------------------------------------------------------

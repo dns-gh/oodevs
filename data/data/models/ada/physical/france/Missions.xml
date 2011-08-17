@@ -305,7 +305,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
+      <parameter dia-name="zoneDeploiement_" name="Position deploiement" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" id="32" name="ASS Acquerir Lanceurs Eni" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3277,7 +3277,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="positionsAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Positions a reconnaitre" optional="false" type="Point"/>
+      <parameter dia-name="zonesAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Zones a reconnaitre" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_RecoEtDeploiement" dia-type="T_Mission_Automate_ASS_RecoEtDeploiement" id="1007" mrt-dia-behavior="MIS_Automate_MRT_ASS_RecoEtDeploiement" name="ASS Reco Et Deploiement">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -5262,4 +5262,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0933781989" -->
+<!-- signature="1347719906" -->

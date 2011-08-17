@@ -55,14 +55,12 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
         if( ModuleBegins() ) then
             do
                  do
-                    local _continue = true
 --[[// TODO ahc change
 ]]                    local switch_1 = self._namedParams.eType_ZoneImplantation
                         if switch_1 == eTypeObjectZoneImplantationCanon
                         or switch_1 == eTypeObjectZoneImplantationMortier then
-                                                    local pionAss = myself
-                            S_Geometrie_CreerPositionTir_Canon( self.mission.zoneDeploiement_, 750, self.mission.dirDangereuse_, self.localisation1, self.localisation2, pionAss:GetptSauvegarde_() )
-                            if( self.localisation1 == nil or self.localisation2 == nil or pionAss:GetptSauvegarde_() == nil ) then
+                            self.localisation1, self.localisation2, myself.ptSauvegarde_ = S_Geometrie_CreerPositionTir_Canon( self.mission.positionDeploiement_, 750, DEC_GetDirectionEnnemi( self.mission ) )
+                            if( self.localisation1 == nil or self.localisation2 == nil or myself.ptSauvegarde_ == nil ) then
                                 do
                                     DEC_Trace( "Calcul positions implatation impossible" )
                                                                         do
@@ -82,7 +80,6 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
                             end
 
                             self.ptDestination = S_Geometrie_BarycentreZone( self.localisation1 )
-                            _continue = false
                         
                         else
                             self.ptDestination = S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
@@ -94,7 +91,6 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
         end
 
          do
-            local _continue = true
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------
@@ -126,7 +122,6 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
                     Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelaiPreparation, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     Activate( self.activations.ACT_RC_PreparationMission, 1, { self._namedParams.rDelaiPreparation, } )
-                    _continue = false
                 elseif switch_1 == eRejoindre then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -146,7 +141,6 @@ self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, 
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDestination, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
-                    _continue = false
                 elseif switch_1 == eDeployer then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -158,24 +152,20 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.mission.dirDangereuse_, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionEnnemi( self.mission ), } )
                      do
-                        local _continue = true
                         local switch_2 = self._namedParams.eType_ZoneImplantation
                             if switch_2 == eTypeObjectZoneImplantationCanon then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
-                                _continue = false
                             elseif switch_2 == eTypeObjectZoneImplantationLRM then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, { self.mission.zoneDeploiement_, self._namedParams.eType_ZoneImplantation, } )
 self.done_BEH_Pion_ASS_Installer_ZoneImplantationLRM = function( self, _, v ) self.eAction = v[1] end
-                                _continue = false
                             elseif switch_2 == eTypeObjectZoneImplantationMortier then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
-                                _continue = false
                             
                             else
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationSimple, 1.1, { self.ptDestination, self._namedParams.eType_ZoneImplantation, } )
@@ -184,7 +174,6 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                                                         end
                         end
 
-                    _continue = false
                 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
@@ -246,14 +235,12 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement"
         if( ModuleBegins() ) then
             do
                  do
-                    local _continue = true
 --[[// TODO ahc change
 ]]                    local switch_1 = self._namedParams.eType_ZoneImplantation
                         if switch_1 == eTypeObjectZoneImplantationCanon
                         or switch_1 == eTypeObjectZoneImplantationMortier then
-                                                    local pionAss = myself
-                            S_Geometrie_CreerPositionTir_Canon( self.mission.zoneDeploiement_, 750, self.mission.dirDangereuse_, self.localisation1, self.localisation2, pionAss:GetptSauvegarde_() )
-                            if( self.localisation1 == nil or self.localisation2 == nil or pionAss:GetptSauvegarde_() == nil ) then
+                            self.localisation1, self.localisation2, myself.ptSauvegarde_ = S_Geometrie_CreerPositionTir_Canon( self.mission.zoneDeploiement_, 750, DEC_GetDirectionEnnemi( self.mission ) )
+                            if( self.localisation1 == nil or self.localisation2 == nil or myself.ptSauvegarde_ == nil ) then
                                 do
                                     DEC_Trace( "Calcul positions implatation impossible" )
                                                                         do
@@ -265,7 +252,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement"
 
                                     end
 
-                                                                        self:SendFeedback( eActionImpossible )
+                                    self:SendFeedback( eActionImpossible )
                                     Halt( self )
                                     do return end
 
@@ -273,19 +260,17 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement"
                             end
 
                             self.ptDestination = S_Geometrie_BarycentreZone( self.localisation1 )
-                            _continue = false
                         
                         else
                             self.ptDestination = S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
                         end
                     end
 
-                self.ptRepli = S_Geometrie_PtInvDirDangereuse( self.ptDestination, self.mission.dirDangereuse_, 500 )
+                self.ptRepli = S_Geometrie_PtInvDirDangereuse( self.ptDestination, DEC_GetDirectionEnnemi( self.mission ), 500 )
             end
         end
 
          do
-            local _continue = true
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
 ]]--[[//-----------------------------------------------------------------------------
@@ -317,7 +302,6 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement"
                     Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelaiPreparation, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     Activate( self.activations.ACT_RC_PreparationMission, 1, { self._namedParams.rDelaiPreparation, } )
-                    _continue = false
                 elseif switch_1 == eRejoindre then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -337,7 +321,6 @@ self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, 
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDestination, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
-                    _continue = false
                 elseif switch_1 == eDeployer then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -351,22 +334,18 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionEnnemi, } )
                      do
-                        local _continue = true
                         local switch_2 = self._namedParams.eType_ZoneImplantation
                             if switch_2 == eTypeObjectZoneImplantationCanon then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
-                                _continue = false
                             elseif switch_2 == eTypeObjectZoneImplantationLRM then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, { self.mission.zoneDeploiement_, self._namedParams.eType_ZoneImplantation, } )
 self.done_BEH_Pion_ASS_Installer_ZoneImplantationLRM = function( self, _, v ) self.eAction = v[1] end
-                                _continue = false
                             elseif switch_2 == eTypeObjectZoneImplantationMortier then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanonPourReco, 1.1, { self.localisation1, self.localisation2, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
-                                _continue = false
                             
                             else
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationSimple, 1.1, { self.ptDestination, self._namedParams.eType_ZoneImplantation, } )
@@ -375,7 +354,6 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                                                         end
                         end
 
-                    _continue = false
                 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then

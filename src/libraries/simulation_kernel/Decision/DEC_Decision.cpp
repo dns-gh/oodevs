@@ -524,6 +524,9 @@ void RegisterTelepathyFunctions( directia::brain::Brain& brain )
     brain.Register( "ClearlisteEnisTirAutorise_", &DEC_Decision_ABC::ClearListeEnisTirAutorise );
     brain.Register( "GetlistePionsCoordination_", &DEC_Decision_ABC::GetListePionsCoordination );
     brain.Register( "ClearlistePionsCoordination_", &DEC_Decision_ABC::ClearListePionsCoordination );
+    brain.Register( "GetptSauvegarde_", &DEC_Decision_ABC::GetPtSauvegarde );
+    brain.Register( "GetlisteZonesTir_", &DEC_Decision_ABC::GetListeZonesTir );
+    brain.Register( "ClearlisteZonesTir_", &DEC_Decision_ABC::ClearListeZonesTir );
     brain.Register( "GetobjMisEnCours_", &DEC_Decision_ABC::GetObjMisEnCours );
     brain.Register( "SetobjMisEnCours_", &DEC_Decision_ABC::SetObjMisEnCours );
     brain.Register( "GetobjectifCourant_", &DEC_Decision_ABC::GetObjectifCourant );
