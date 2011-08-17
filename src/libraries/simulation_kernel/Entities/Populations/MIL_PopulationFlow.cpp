@@ -263,6 +263,9 @@ double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*envir
     if( CanObjectInteractWith( object ) )
     {
         result = object().ApplySpeedPolicy( object().GetMaxSpeed(), result, result, GetPopulation() );
+        const PopulationAttribute* populationAttribute = object.RetrieveAttribute< PopulationAttribute >();
+        if( populationAttribute )
+            result *= populationAttribute->GetDensity();
     }
     return result;
 }
