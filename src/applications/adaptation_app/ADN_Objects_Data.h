@@ -299,6 +299,27 @@ public:
         ADN_Type_Int max_toxic_;
     };
 
+    class ObjectInfos;
+    class ADN_CapacityInfos_SpawnObject
+        : public helpers::ADN_CapacityInfos_Default< helpers::eSpawnObjectCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+
+        ADN_CapacityInfos_SpawnObject();
+
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+
+        void Load();
+
+    public:
+        ADN_TypePtr_InVector_ABC< ADN_Objects_Data::ObjectInfos > object_;
+        std::string objectName_;
+        bool load_;
+    };
+
     class ADN_CapacityInfos_Mobility
         : public helpers::ADN_CapacityInfos_Default< helpers::eMobilityCapacity >
     {
@@ -461,7 +482,6 @@ public:
         ADN_Type_Time identTime_; // LTO
     };
 
-    class ObjectInfos;
     class ADN_CapacityInfos_Spawn : public helpers::ADN_CapacityInfos_Default< helpers::eSpawnCapacity >
     {
     public:

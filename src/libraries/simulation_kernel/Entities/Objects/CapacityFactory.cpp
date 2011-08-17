@@ -43,6 +43,7 @@
 #include "ResourceNetworkCapacity.h"
 #include "ScatteringCapacity.h"
 #include "SpawnCapacity.h"
+#include "SpawnObjectCapacity.h"
 #include "StructuralCapacity.h"
 #include "SupplyCapacity.h"
 #include "TerrainHeuristicCapacity.h"
@@ -166,6 +167,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
     DoRegister( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
     DoRegister( "spawn", boost::bind( &AddBuilder< SpawnCapacity >::Add, _1, _2 ) );
+    DoRegister( "spawnObject", boost::bind( &AddBuilder< SpawnObjectCapacity >::Add, _1, _2 ) );
     DoRegister( "structural-state", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     // $$$$ JSR 2010-09-08: on garde l'attribut "structural" en double emploi de "structural-state" : il est utilisé par les objets et on ne peut pas changer les xsd pour l'instant.
     // Ca sera à supprimer quand les xml des objets seront à jour (voir avec RPD).

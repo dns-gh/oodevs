@@ -3200,6 +3200,10 @@ du tireur</translation>
         <source>Underground network exit</source>
         <translation>Issue de réseau souterrain</translation>
     </message>
+    <message>
+        <source>Can spawn a cloud</source>
+        <translation>Peut générer un nuage</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

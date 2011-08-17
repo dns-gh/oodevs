@@ -77,7 +77,8 @@ enum E_Capacities
     eLodgingCapacity,
     eAltitudeModifierCapacity,
     eStockCapacity,
-    eUndergroundNetworkCapacity
+    eUndergroundNetworkCapacity,
+    eSpawnObjectCapacity
 };
 
 template< E_Capacities T, typename DefaultFieldsHolderType = NullType >

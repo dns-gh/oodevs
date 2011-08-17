@@ -149,6 +149,10 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     ADN_Objects_Data::ADN_CapacityInfos_Intoxication& intoxication = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Intoxication >( ADN_Objects_GUI::eIntoxicationCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eIntoxicationCapacity_MaxToxic ]->Connect( &intoxication.max_toxic_, bConnect );
 
+    ADN_Objects_Data::ADN_CapacityInfos_SpawnObject& spawnObject = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_SpawnObject >( ADN_Objects_GUI::eSpawnObjectCapacityPresent );
+    spawnObject.Load();
+    vItemConnectors_[ ADN_Objects_GUI::eSpawnObjectType ]->Connect( &spawnObject.object_, bConnect );
+
     ADN_Objects_Data::ADN_CapacityInfos_Population& populationFilter = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Population >( ADN_Objects_GUI::ePopulationCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::ePopulationFilter_Density ]->Connect( &populationFilter.density_, bConnect );
 

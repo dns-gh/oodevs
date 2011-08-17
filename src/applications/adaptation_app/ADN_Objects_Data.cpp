@@ -609,6 +609,49 @@ void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostrea
 //@}
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_SpawnObject
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::ADN_CapacityInfos_SpawnObject()
+    : object_      ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 )
+    , objectName_  ( "" )
+    , load_        ( false )
+{
+    BindExistenceTo( &object_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadArchive
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::ReadArchive( xml::xistream& xis )
+{
+    bPresent_ = true;
+    xis >> xml::attribute( "type", objectName_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::Load
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::Load()
+{
+    load_ = true;
+    if( !objectName_.empty() )
+        object_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectName_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::WriteArchive
+// Created: LGY 2011-08-16
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_SpawnObject::WriteArchive( xml::xostream& xos )
+{
+    std::string type = ( load_ && object_.GetData() ) ? object_.GetData()->strType_.GetData() : objectName_;
+    xos << xml::attribute( "type", type );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Protection
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
@@ -1167,6 +1210,7 @@ INIT_DATA( ADN_CapacityInfos_TerrainHeuristic,        "Terrain Heuristic",      
 INIT_DATA( ADN_CapacityInfos_TimeLimited,             "TimeLimited",             "time-limited" );
 INIT_DATA( ADN_CapacityInfos_Workable,                "Workable",                "workable" );
 INIT_DATA( ADN_CapacityInfos_Spawn,                   "Spawn",                   "spawn" );
+INIT_DATA( ADN_CapacityInfos_SpawnObject,             "SpawnObject",             "spawnObject" );
 INIT_DATA( ADN_CapacityInfos_Structural,              "Structural",              "structural" );
 INIT_DATA( ADN_CapacityInfos_AttitudeModifier,        "AttitudeModifier",        "attitude-modifier" );
 INIT_DATA( ADN_CapacityInfos_Perception,              "Perception",              "perception" );
@@ -1258,6 +1302,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_TimeLimited::TAG ].reset( new ADN_CapacityInfos_TimeLimited() );
     capacities_[ ADN_CapacityInfos_Workable::TAG ].reset( new ADN_CapacityInfos_Workable() );
     capacities_[ ADN_CapacityInfos_Spawn::TAG ].reset( new ADN_CapacityInfos_Spawn() );
+    capacities_[ ADN_CapacityInfos_SpawnObject::TAG ].reset( new ADN_CapacityInfos_SpawnObject() );
     capacities_[ ADN_CapacityInfos_Structural::TAG ].reset( new ADN_CapacityInfos_Structural() );
     capacities_[ ADN_CapacityInfos_AttitudeModifier::TAG ].reset( new ADN_CapacityInfos_AttitudeModifier() );
     capacities_[ ADN_CapacityInfos_Perception::TAG ].reset( new ADN_CapacityInfos_Perception() );

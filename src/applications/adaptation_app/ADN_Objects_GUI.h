@@ -121,6 +121,8 @@ public:
         eAltitudeModifierCapacityPresent,
         eUndergroundNetworkCapacityPresent,
         eBridgingCapacity_Type,
+        eSpawnObjectCapacityPresent,
+        eSpawnObjectType,
         eNbrGuiElements
     };
 

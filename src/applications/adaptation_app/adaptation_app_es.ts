@@ -3198,6 +3198,10 @@ tirador</translation>
         <source>Bridge / Road</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can spawn a cloud</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
