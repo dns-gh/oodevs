@@ -1113,6 +1113,7 @@
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
         <mission name="LOGISTIQUE Transporter"/>
+        <mission name="LOGISTIQUE Transporter Foule"/>
         <mission name="Produire"/>
       </missions>
       <fragorders>
@@ -9700,6 +9701,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Appuyer Franchissement Sur Point"/>
         <mission name="LOGISTIQUE Transporter"/>
       </missions>
       <fragorders>
@@ -14947,4 +14949,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3578411908" -->
+<!-- signature="2140023174" -->

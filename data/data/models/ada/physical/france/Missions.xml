@@ -305,7 +305,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneDeploiement_" name="Position deploiement" optional="false" type="Polygon"/>
+      <parameter dia-name="zoneDeploiement_" name="Zone deploiement" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" id="32" name="ASS Acquerir Lanceurs Eni" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2992,6 +2992,23 @@
       </parameter>
       <parameter dia-name="InjuriesTreated" name="Blessures traitees" optional="true" type="MedicalPriorities"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.tasks.TransporterFoule" dia-type="france.military.platoon.tasks.TransporterFoule" id="2163" name="LOGISTIQUE Transporter Foule">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="crowd" name="Foule" optional="false" type="CrowdKnowledge"/>
+      <parameter dia-name="loadingPoint" name="Position d'embarquement" optional="false" type="Point"/>
+      <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.log.tasks.AppuyerFranchissementSurPoint" dia-type="france.military.platoon.combat.support.log.tasks.AppuyerFranchissementSurPoint" id="2164" name="LOGISTIQUE Appuyer Franchissement Sur Point">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectif" name="Pont flottant" optional="false" type="ObjectKnowledge"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ALAT Aller Se Recompleter">
@@ -3277,7 +3294,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zonesAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Zones a reconnaitre" optional="false" type="Polygon"/>
+      <parameter dia-name="zonesAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Positions a reconnaitre" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_RecoEtDeploiement" dia-type="T_Mission_Automate_ASS_RecoEtDeploiement" id="1007" mrt-dia-behavior="MIS_Automate_MRT_ASS_RecoEtDeploiement" name="ASS Reco Et Deploiement">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -5262,4 +5279,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1347719906" -->
+<!-- signature="3048451542" -->
