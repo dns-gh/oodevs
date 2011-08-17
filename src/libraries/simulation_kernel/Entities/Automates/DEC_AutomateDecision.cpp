@@ -801,3 +801,27 @@ void DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngagem
         bStateHasChanged_  = true;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::AddReconnoiteredPoint
+// Created: LMT 2011-08-16
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::AddReconnoiteredPointBy( DEC_Decision_ABC* pPion, MT_Vector2D& point )
+{
+    listReconnoitringPoint_[point] = pPion;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::PointIsReconnoiteredByMeOrNoOne
+// Created: LMT 2011-08-16
+// -----------------------------------------------------------------------------
+bool DEC_AutomateDecision::PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pPion,MT_Vector2D& point ) const
+{
+    std::map< MT_Vector2D, DEC_Decision_ABC* >::const_iterator it = listReconnoitringPoint_.find( point );
+    if( it != listReconnoitringPoint_.end() )
+    {
+        if( it->second != pPion )
+            return false;
+    }
+    return true;
+}

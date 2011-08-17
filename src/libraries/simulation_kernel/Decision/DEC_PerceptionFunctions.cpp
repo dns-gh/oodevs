@@ -25,6 +25,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
@@ -436,4 +437,24 @@ double DEC_PerceptionFunctions::GetPerception( const MIL_AgentPion& callerAgent,
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( callerAgent.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     const_cast< MIL_AgentPion& >( callerAgent ).Execute( *dataComputer );
     return dataFunctor.GetEnergy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::AddReconnoiteredPointBy
+// Created: LMT 2011-08-16
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::AddReconnoiteredPointBy( DEC_Decision_ABC* pPion, MT_Vector2D& point )
+{
+    DEC_AutomateDecision* pAutomat = pPion->GetDecAutomate();
+    dynamic_cast< DEC_AutomateDecision* >( pAutomat )->AddReconnoiteredPointBy( pPion, point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::PointIsReconnoiteredByMeOrNoOne
+// Created: LMT 2011-08-16
+// -----------------------------------------------------------------------------
+bool DEC_PerceptionFunctions::PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pPion, MT_Vector2D& point )
+{
+    DEC_AutomateDecision* pAutomat = pPion->GetDecAutomate();
+    return dynamic_cast< DEC_AutomateDecision* >( pAutomat )->PointIsReconnoiteredByMeOrNoOne( pPion, point );
 }

@@ -62,6 +62,8 @@ public:
     static void DisableSensors( MIL_Agent_ABC& callerAgent );
     static void EnableSensors( MIL_Agent_ABC& callerAgent );
     static double GetPerception( const MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget );
+    static void AddReconnoiteredPointBy( DEC_Decision_ABC* pPion, MT_Vector2D& point );
+    static bool PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pPion, MT_Vector2D& point );
     //@}
 };
 

@@ -104,6 +104,9 @@ public:
     virtual void SetbOrdreTenir( bool value );
     virtual bool IsAutomateEngaged() const;
 
+    void AddReconnoiteredPointBy( DEC_Decision_ABC* pPion, MT_Vector2D& point );
+    bool PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pPion, MT_Vector2D& point ) const;
+
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
 
     virtual const std::string& GetDIAType() const;
@@ -133,6 +136,7 @@ private:
 
 private:
     // Etat décisionnel
+    std::map< MT_Vector2D, DEC_Decision_ABC* > listReconnoitringPoint_;
     const PHY_RoePopulation* pRoePopulation_;
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;

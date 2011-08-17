@@ -128,6 +128,8 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     //Calculs de positions
     brain[ "DEC_Geometrie_PionDevant" ] = &DEC_GeometryFunctions::GetFrontestPion;
     brain[ "DEC_Geometrie_PionDerriere" ] = &DEC_GeometryFunctions::ComputeBackestAgent;
+    brain[ "DEC_Perception_AjouterPointReconnuAutomateParPion" ] = &DEC_PerceptionFunctions::AddReconnoiteredPointBy;
+    brain[ "DEC_Perception_EstPointReconnuParPionOuPersonne" ] = &DEC_PerceptionFunctions::PointIsReconnoiteredByMeOrNoOne;
 
     // Logistique
     brain[ "DEC_DemandeDeRavitaillement" ] = &DEC_LogisticFunctions::PionRequestSupply;
