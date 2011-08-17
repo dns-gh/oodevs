@@ -243,12 +243,12 @@ void Population::Draw( const Point2f& where, const Viewport_ABC& viewport, const
     if( viewport.IsVisible( boundingBox_ ) )
     {
         {
-            tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
+            tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
             while( it.HasMoreElements() )
                 it.NextElement().Draw( where, viewport, tools );
         }
         {
-            tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
+            tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
             while( it.HasMoreElements() )
                 it.NextElement().Draw( where, viewport, tools );
         }
