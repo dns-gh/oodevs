@@ -18,6 +18,8 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "MT_Tools/MT_Logger.h"
+#include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -30,7 +32,13 @@
 MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::FragOrder& asn )
     : type_( type )
 {
-    MIL_MissionParameterFactory::Copy( type, asn.parameters(), parameters_, knowledgeResolver );
+    const sword::MissionParameters& parameters = asn.parameters();
+    if ( (int)type.GetParameters().size() != parameters.elem_size() )
+    {
+        MT_LOG_ERROR_MSG( std::string( "Frag Order " ) + type_.GetName() + " invalid parameters" );
+        throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    }
+    MIL_MissionParameterFactory::Copy( type, parameters, parameters_, knowledgeResolver );
 }
 
 // -----------------------------------------------------------------------------
@@ -543,6 +551,9 @@ void MIL_FragOrder::Serialize( sword::MissionParameters& message ) const
 {
     // $$$$ _RC_ PHC 2011-01-13: try to merge FragOrder with Mission_ABC
     if( !type_.Copy( parameters_, message, MIL_OrderContext() ) )
-        throw std::runtime_error( std::string( "Frag Order " ) + type_.GetName() + " impossible to serialize parameters" );
+    {
+        MT_LOG_ERROR_MSG( std::string( "Frag Order " ) + type_.GetName() + " impossible to serialize parameters" );
+        throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    }
 }
 

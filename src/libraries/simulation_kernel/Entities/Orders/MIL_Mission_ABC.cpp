@@ -16,6 +16,7 @@
 #include "MIL_MissionParameterVisitor_ABC.h"
 #include "MIL_NullParameter.h"
 #include "MIL_OrderTypeParameter.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
@@ -141,7 +142,10 @@ void MIL_Mission_ABC::Serialize( sword::MissionParameters& asn ) const
     if( type_.Copy( parameters_, asn, context_ ) )
         context_.Serialize( asn );
     else
-        throw std::runtime_error( std::string( "Mission " ) + GetName() + " impossible to serialize parameters" );
+    {
+        MT_LOG_ERROR_MSG( std::string( "Mission " ) + GetName() + " impossible to serialize parameters" );
+        throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    }
 }
 
 // -----------------------------------------------------------------------------
