@@ -2512,8 +2512,8 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="siteFranchissement" name="Site franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="typePontage" name="Type pontage" optional="false" type="Enumeration">
-        <value id="9" name="continu"/>
-        <value id="36" name="discontinu"/>
+        <value id="0" name="continu"/>
+        <value id="1" name="discontinu"/>
       </parameter>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Animer" dia-type="france.military.platoon.tasks.Animer" id="2077" name="Animer">
@@ -5279,4 +5279,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1338869650" -->
+<!-- signature="3048451542" -->
