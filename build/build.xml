@@ -1497,9 +1497,7 @@
             <include name="data/models/ada/physical/worldwide/**"/>
             <include name="data/models/ada/physical/security-fr/**"/>
             <include name="data/propagations/test/**"/>
-            <include name="exercises/bruxelles/**"/>
             <include name="exercises/CODAH_JANUS/**"/>
-            <include name="data/terrains/bruxelles/**"/>
             <include name="data/terrains/lehavre_4.2.0/**"/>
         </pack>
     </target>
@@ -1508,12 +1506,8 @@
         <pack name="security-masa" description="security-masa exercises package">
             <include name="data/models/ada/physical/security-fr/**"/>
             <include name="data/propagations/test/**"/>
-            <include name="exercises/bruxelles/**"/>
             <include name="exercises/CODAH_JANUS/**"/>
-            <include name="exercises/montereycross/**"/>
-            <include name="data/terrains/bruxelles/**"/>
             <include name="data/terrains/lehavre_4.2.0/**"/>
-            <include name="data/terrains/montereycross/**"/>
         </pack>
     </target>
 
