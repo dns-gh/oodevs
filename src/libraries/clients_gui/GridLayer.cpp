@@ -54,7 +54,7 @@ void GridLayer::Paint( const geometry::Rectangle2f& v )
 {
     if( !ShouldDrawPass() )
         return;
-    if( gridSize_ >= 0 )
+    if( gridSize_ > 0 )
     {
         geometry::Rectangle2f viewport = v.Intersect( extent_ );
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );

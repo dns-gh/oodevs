@@ -51,7 +51,7 @@ class GlSelector : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             GlSelector( QMainWindow* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy );
+             GlSelector( QStackedWidget* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy );
     virtual ~GlSelector();
     //@}
 
@@ -94,7 +94,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QMainWindow* parent_;
+    QStackedWidget* parent_;
     GlProxy& proxy_;
     kernel::Controllers& controllers_;
     const tools::ExerciseConfig& config_;

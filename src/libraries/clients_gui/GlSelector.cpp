@@ -29,7 +29,7 @@ using namespace kernel;
 // Name: GlSelector constructor
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
+GlSelector::GlSelector( QStackedWidget* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
     : QObject( parent )
     , parent_           ( parent )
     , proxy_            ( proxy )
@@ -47,7 +47,8 @@ GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& contro
     setObjectName( "GlSelector" );
     displayTimer_ = new QTimer( this );
     glPlaceHolder_ = new GlPlaceHolder( parent );
-    parent->setCentralWidget( glPlaceHolder_ );
+    parent->addWidget( glPlaceHolder_ );
+    parent->setCurrentWidget( glPlaceHolder_ );
 
     controllers_.options_.Register( *this );
 }
@@ -60,9 +61,6 @@ GlSelector::~GlSelector()
 {
     emit Widget2dChanged( 0 );
     controllers_.options_.Unregister( *this );
-    delete glPlaceHolder_;
-    delete widget2d_;
-    delete widget3d_;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,14 +72,14 @@ void GlSelector::Load()
     if( widget2d_ )
         return;
     widget2d_ = new GlWidget( parent_, controllers_, config_, *iconLayout_ );
+    parent_->addWidget( widget2d_ );
     InitializePasses();
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
     widget2d_->Configure( strategy_ );
     widget2d_->Configure( *moveLayer_ );
     proxy_.ChangeTo( widget2d_ );
     proxy_.RegisterTo( widget2d_ );
-    delete glPlaceHolder_; glPlaceHolder_ = 0;
-    parent_->setCentralWidget( widget2d_ );
+    parent_->setCurrentWidget( widget2d_ );
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
     controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel_ ));
@@ -98,9 +96,7 @@ void GlSelector::Load()
 // -----------------------------------------------------------------------------
 void GlSelector::Close()
 {
-    delete glPlaceHolder_;
-    glPlaceHolder_ = new GlPlaceHolder( parent_ );
-    parent_->setCentralWidget( glPlaceHolder_ );
+    parent_->setCurrentWidget( glPlaceHolder_ );
     glPlaceHolder_->show();
     Clean();
 }
@@ -134,31 +130,30 @@ void GlSelector::Clean()
 // -----------------------------------------------------------------------------
 void GlSelector::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "3D" && !glPlaceHolder_ )
+    if( name == "3D" && glPlaceHolder_ != parent_->currentWidget() )
     {
         bool new3d = value.To< bool >();
         if( new3d != b3d_ )
         {
-            parent_->centralWidget()->hide();
-            disconnect( displayTimer_, SIGNAL( timeout() ), parent_->centralWidget(), SLOT( updateGL() ) );
+            disconnect( displayTimer_, SIGNAL( timeout() ), parent_->currentWidget(), SLOT( updateGL() ) );
             if( new3d )
             {
                 if( ! widget3d_ )
                 {
                     widget3d_ = new Gl3dWidget( parent_, controllers_, config_, map_, strategy_ );
+                    parent_->addWidget( widget3d_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
                     proxy_.RegisterTo( widget3d_ );
                 }
                 proxy_.ChangeTo( widget3d_ );
-                parent_->setCentralWidget( widget3d_ );
+                parent_->setCurrentWidget( widget3d_ );
             }
             else
             {
                 proxy_.ChangeTo( widget2d_ );
-                parent_->setCentralWidget( widget2d_ );
+                parent_->setCurrentWidget( widget2d_ );
             }
-            parent_->centralWidget()->show();
-            connect( displayTimer_, SIGNAL( timeout()), parent_->centralWidget(), SLOT( updateGL() ) );
+            connect( displayTimer_, SIGNAL( timeout()), parent_->currentWidget(), SLOT( updateGL() ) );
             b3d_ = new3d;
         }
     }
