@@ -8269,7 +8269,22 @@
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
-      <fragorders/>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son LRU\Model.bms" masalife="false" name="Section LRU">
       <missions>
@@ -8300,7 +8315,22 @@
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
       </missions>
-      <fragorders/>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Energie et traitement des eaux">
       <missions>
@@ -14949,4 +14979,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2140023174" -->
+<!-- signature="0621299544" -->
