@@ -96,9 +96,9 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, const std::string userName )
 {
-    SaveCheckPoint( name, userName );
     client::ControlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
+    SaveCheckPoint( name, userName );
 }
 
 // -----------------------------------------------------------------------------
