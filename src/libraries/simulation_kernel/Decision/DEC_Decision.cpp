@@ -1345,7 +1345,10 @@ bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, 
             if( !reload )
                 brainTable[brainFile] = pArchetypeBrain;
         }
-        pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
+        if( reload )
+            pBrain = pArchetypeBrain; 
+        else
+            pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
         return true;
     }
     else
