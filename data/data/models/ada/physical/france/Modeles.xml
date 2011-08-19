@@ -6715,6 +6715,7 @@
         <mission name="ASA MISTRAL Defendre Zone"/>
         <mission name="ASA MISTRAL Defendre Zone A Partir Position"/>
         <mission name="ASA MISTRAL Surveiller"/>
+        <mission name="ASA Defendre Unites"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
@@ -14979,4 +14980,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0621299544" -->
+<!-- signature="0190004179" -->
