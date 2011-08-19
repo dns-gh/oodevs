@@ -134,3 +134,12 @@ bool MIL_DictionaryExtensions::HasChanged() const
 {
     return hasChanged_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DictionaryExtensions::IsEmpty
+// Created: LDC 2011-08-19
+// -----------------------------------------------------------------------------
+bool MIL_DictionaryExtensions::IsEmpty() const
+{
+    return extensions_.empty();
+}

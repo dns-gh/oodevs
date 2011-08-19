@@ -56,6 +56,7 @@ public:
     void UpdateNetwork( T& msg );
     void OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg );
     bool HasChanged() const;
+    bool IsEmpty() const;
     float GetAffinity( unsigned long teamID ) const;
     //@}
 

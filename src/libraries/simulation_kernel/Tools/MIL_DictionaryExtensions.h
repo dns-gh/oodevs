@@ -49,6 +49,7 @@ public:
     void UpdateNetwork( T& msg );
     void OnReceiveMsgChangeExtensions( const sword::UnitMagicAction& msg );
     bool HasChanged() const;
+    bool IsEmpty() const;
     //@}
 
     //! @name CheckPoints

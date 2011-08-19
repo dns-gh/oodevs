@@ -651,13 +651,17 @@ void MIL_AgentPion::SendCreation( unsigned int nCtx ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::SendFullState( unsigned int nCtx ) const
 {
-    client::UnitAttributes msg;
-    msg().mutable_unit()->set_id( GetID() );
-    if( !criticalIntelligence_.empty() )
-        msg().set_critical_intelligence( criticalIntelligence_ );
-    pAffinities_->SendFullState( msg );
-    pExtensions_->SendFullState( msg );
-    msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    bool critical = !criticalIntelligence_.empty();
+    if( critical || !pExtensions_->IsEmpty() || !pAffinities_->IsEmpty() )
+    {
+        client::UnitAttributes msg;
+        msg().mutable_unit()->set_id( GetID() );
+        if( critical )
+            msg().set_critical_intelligence( criticalIntelligence_ );
+        pAffinities_->SendFullState( msg );
+        pExtensions_->SendFullState( msg );
+        msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    }
     GetRole< network::NET_RolePion_Dotations >().SendFullState( nCtx );
 }
 
