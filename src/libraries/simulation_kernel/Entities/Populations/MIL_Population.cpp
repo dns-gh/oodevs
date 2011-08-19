@@ -1087,6 +1087,9 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
     case sword::UnitMagicAction::change_critical_intelligence:
         OnReceiveCriticalIntelligence( msg );
         break;
+    case sword::UnitMagicAction::reload_brain:
+        GetDecision().Reload();
+        break;
     default:
         assert( false );
     }

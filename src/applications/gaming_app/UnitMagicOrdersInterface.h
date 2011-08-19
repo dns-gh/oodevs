@@ -82,6 +82,7 @@ private slots:
     void Move();
     void RecoverHumanTransporters();
     void SurrenderTo( int );
+    void ReloadBrain();
     //@}
 
 private:

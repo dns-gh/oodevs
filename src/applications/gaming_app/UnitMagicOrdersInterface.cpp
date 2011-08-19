@@ -91,7 +91,8 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         AddSurrenderMenu( magicMenu, agent );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
-        AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );
+        AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );;
+        AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
         FillCommonOrders( magicMenu );
     }
 }
@@ -112,6 +113,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         bMoveAllowed = decisions->CanBeOrdered();
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
+    AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
     AddSurrenderMenu( magicMenu, agent );
     FillCommonOrders( magicMenu );
 }
@@ -319,6 +321,22 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Surrender" ), true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::ReloadBrain
+// Created: LDC 2011-08-18
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::ReloadBrain()
+{
+    if( selectedEntity_ )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Reload brain" ), true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );

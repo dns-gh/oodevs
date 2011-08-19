@@ -2521,6 +2521,10 @@ Motivo: %3
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation type="unfinished">Ingrese un valor y luego presione &apos;enter&apos;</translation>
     </message>
+    <message>
+        <source>Reload brain</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PopulationOptionChooser</name>
@@ -3068,6 +3072,10 @@ Motivo: %3
     <message>
         <source>Recover Transporters</source>
         <translation>Recuperar transportes</translation>
+    </message>
+    <message>
+        <source>Reload brain</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

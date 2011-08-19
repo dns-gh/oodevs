@@ -41,6 +41,7 @@ public:
     void SetModel( const DEC_Model_ABC& model );
     virtual void UpdateDecision( float duration );
     virtual void Reset( std::string groupName = "" );
+    virtual void Reload();
 
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
     virtual boost::shared_ptr< MIL_Mission_ABC > GetMission();
@@ -137,7 +138,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName, bool isMasalife );
+    void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName, bool isMasalife, bool reload );
     void CleanStateAfterCrash     ();
 
     void StartDefaultBehavior     ();
@@ -182,10 +183,8 @@ private:
     //!@name Data
     //@{
     boost::shared_ptr< directia::brain::Brain > pBrain_;
+    const DEC_Model_ABC*               model_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
-    std::string                        brainFile_;
-    std::string                        includePath_;
-    std::string                        modelName_;
     bool                               isMasalife_;
     //@}
 };

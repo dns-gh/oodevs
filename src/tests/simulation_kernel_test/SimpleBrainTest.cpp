@@ -89,7 +89,7 @@ public:
     }
     void SetModel( const DEC_Model_ABC& model )
     {
-        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation", false );
+        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation", false, false );
         diaType_ = model.GetDIAType();
     }
     void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )

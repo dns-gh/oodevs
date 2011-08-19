@@ -1313,9 +1313,11 @@ namespace
 }
 
 bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain,
-                  const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type )
+                  const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload )
 {
     pArchetypeBrain = isMasalife ? brainTable[type] : brainTable[brainFile];
+    if( reload )
+        pArchetypeBrain.reset();
     if( !pArchetypeBrain )
     {
         if( isMasalife )
@@ -1328,7 +1330,8 @@ bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, 
                 + PLUGIN46( "errorhandler" )
                 + "} cwd='" + includePath + "'" ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
-            brainTable[type] = pArchetypeBrain;
+            if( !reload )
+                brainTable[type] = pArchetypeBrain;
         }
         else
         {
@@ -1339,7 +1342,8 @@ bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, 
                 + PLUGIN46( "errorhandler" )
                 + "} cwd='" + includePath + "'" ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
-            brainTable[brainFile] = pArchetypeBrain;
+            if( !reload )
+                brainTable[brainFile] = pArchetypeBrain;
         }
         pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
         return true;

@@ -107,6 +107,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     selectedEntity_ = &entity;
     Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
+    AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
     AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );
     Q3PopupMenu* choiceMenu = new Q3PopupMenu( magicMenu );
@@ -162,6 +163,22 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_total_destruction" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Total Destruction" ), true );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationMagicOrdersInterface::ReloadBrain
+// Created: LDC 2011-08-18
+// -----------------------------------------------------------------------------
+void PopulationMagicOrdersInterface::ReloadBrain()
+{
+    if( selectedEntity_ )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Reload brain" ), true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );

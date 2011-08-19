@@ -26,6 +26,7 @@ DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int g
     : pEntity_ ( &entity )
     , gcPause_ ( gcPause)
     , gcMult_  ( gcMult )
+    , model_   ( 0 )
 {
     // NOTHING
 }
@@ -44,7 +45,7 @@ namespace DEC_DecisionImpl
 {
     void RegisterCommonUserFunctions( directia::brain::Brain& brain , bool isMasalife );
     void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
-    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type );
+    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload );
 }
 
 namespace directia
@@ -58,24 +59,22 @@ namespace directia
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName, bool isMasalife )
+void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName, bool isMasalife, bool reload )
 {
-    brainFile_ = brainFile;
-    modelName_ = type;
-    includePath_ = includePath;
+    std::string realIncludePath = includePath;
     isMasalife_ = isMasalife;
     std::size_t lookHere = 0;
     std::size_t foundHere;
-    while( ( foundHere = includePath_.find( "\\", lookHere ) ) != std::string::npos )
+    while( ( foundHere = realIncludePath.find( "\\", lookHere ) ) != std::string::npos )
     {
-        includePath_.replace( foundHere, 1, "/" );
+        realIncludePath.replace( foundHere, 1, "/" );
         lookHere = foundHere + 1;
     }
     
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< directia::brain::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, includePath_, brainFile, isMasalife_, type );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload );
 
     if( newBrain )
     {
@@ -91,7 +90,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
 
     RegisterSelf( *pBrain_, isMasalife_, groupName );
 
-    pRefs_.reset( new ScriptRefs( *pBrain_) );
+    pRefs_.reset( new ScriptRefs( *pBrain_ ) );
 
 //    float size = (*pBrain_)[ "collectgarbage" ].Call<float>( "count" );
 //    std::stringstream stream;
@@ -112,8 +111,8 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
 template< class T >
 void DEC_Decision< T >::SetModel( const DEC_Model_ABC& model )
 {
-    diaType_ = model.GetDIAType();
-    InitBrain( model.GetScriptFile(), diaType_, model.GetIncludePath(), GetAutomate().GetName(), model.IsMasalife() );
+    model_ = &model;
+    InitBrain( model.GetScriptFile(), model.GetDIAType(), model.GetIncludePath(), GetAutomate().GetName(), model.IsMasalife(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +122,7 @@ void DEC_Decision< T >::SetModel( const DEC_Model_ABC& model )
 template< class T >
 const std::string& DEC_Decision< T >::GetDIAType() const
 {
-    return diaType_;
+    return model_->GetDIAType();
 }   
 
 // -----------------------------------------------------------------------------
@@ -1017,4 +1016,14 @@ template< class T >
 bool DEC_Decision< T >::IsDead() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::Reload
+// Created: LDC 2011-08-18
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::Reload()
+{
+    InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetAutomate().GetName(), model_->IsMasalife(), true );
 }

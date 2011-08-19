@@ -2521,6 +2521,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
+    <message>
+        <source>Reload brain</source>
+        <translation>Recharger le decisionnel</translation>
+    </message>
 </context>
 <context>
     <name>PopulationOptionChooser</name>
@@ -3068,6 +3072,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Recover Transporters</source>
         <translation>Recompléter Transporteurs</translation>
+    </message>
+    <message>
+        <source>Reload brain</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

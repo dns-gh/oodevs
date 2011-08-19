@@ -112,6 +112,7 @@ message UnitMagicAction {
         change_equipment_human_size       = 40; //!< A change equipment human size magic action   
         create_breakdowns                 = 41; //!< A create breakdowns magic action   
         create_wounds                     = 42; //!< A create wounds magic action
+        reload_brain                      = 43; //!< A magic action forcing to reload the brain of the entity
     }
     required Tasker            tasker     = 1; //!< The tasker @todo Explain what is a "tasker"
     required Type              type       = 2; //!< The magic action typ

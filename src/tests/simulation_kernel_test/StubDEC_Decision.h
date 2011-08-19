@@ -21,7 +21,7 @@ public:
 
     void SetModel( const DEC_Model_ABC& model )
     {
-        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate", false );
+        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate", false, false );
         diaType_ = model.GetDIAType();
     }
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }

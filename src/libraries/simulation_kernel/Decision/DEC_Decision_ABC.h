@@ -72,6 +72,7 @@ public:
     virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const = 0;
 
     //virtual void GarbageCollect() = 0;
+    virtual void Reload() = 0;
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;

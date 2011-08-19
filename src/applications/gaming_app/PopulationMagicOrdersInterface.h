@@ -69,6 +69,7 @@ private slots:
     void KillAllPopulation();
     void ChangeArmedIndividuals();
     void ChangePopulationAttitude( int index );
+    void ReloadBrain();
     //@}
 
 private:

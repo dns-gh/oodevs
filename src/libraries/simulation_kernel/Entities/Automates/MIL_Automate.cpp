@@ -1055,6 +1055,9 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
     case sword::UnitMagicAction::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
+    case sword::UnitMagicAction::reload_brain:
+        GetDecision().Reload();
+        break;
     default:
         pPionPC_->OnReceiveUnitMagicAction( msg, armies );
         break;
