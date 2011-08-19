@@ -165,7 +165,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
 
-    selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
+    QStackedWidget* centralWidget = new QStackedWidget();
+    setCentralWidget( centralWidget );
+    selector_ = new GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
 
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
