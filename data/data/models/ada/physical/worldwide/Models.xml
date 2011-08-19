@@ -1730,6 +1730,7 @@
         <mission name="Engineer - breach (an area)"/>
         <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - open a route"/>
+        <mission name="Engineer - perform counter-mobility work"/>
         <mission name="Engineer - perform work"/>
         <mission name="Engineer - recon a route"/>
         <mission name="Engineer - recon a crossing site"/>
@@ -4231,4 +4232,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1846651677" -->
+<!-- signature="0148029760" -->
