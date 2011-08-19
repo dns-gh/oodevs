@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     bool HasDotations( const PHY_DotationCategory& category, unsigned int nNbr ) const;
-    void ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr );
+    void ConsumeDotations( const PHY_DotationCategory& category, double& nbr );
     void RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr );
 
     double ComputeDeltaPercentage();

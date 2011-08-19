@@ -455,11 +455,11 @@ void PHY_RolePion_Dotations::Clean()
 // Name: PHY_RolePion_Dotations::NotifyConsumeDotation
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::NotifyConsumeDotation( const PHY_DotationCategory& category, double rNbr )
+void PHY_RolePion_Dotations::NotifyConsumeDotation( const PHY_DotationCategory& category, double& rNbr )
 {
     assert( pDotations_ );
     double nConsumed = pDotations_->Consume( category, rNbr );
-    assert( nConsumed == rNbr );
+    rNbr -= nConsumed;
 }
 
 // -----------------------------------------------------------------------------

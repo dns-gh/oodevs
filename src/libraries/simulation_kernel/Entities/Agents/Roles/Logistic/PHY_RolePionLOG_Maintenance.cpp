@@ -403,7 +403,8 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
     {
 //        unsigned int nOut = (unsigned int)roleDotations.ConsumeDotation( *it->first, it->second );
 //        assert( nOut == it->second );
-        pion_.Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, *it->first, it->second );
+        double nDotation = it->second;
+        pion_.Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, *it->first, nDotation );
     }
     return true;
 }

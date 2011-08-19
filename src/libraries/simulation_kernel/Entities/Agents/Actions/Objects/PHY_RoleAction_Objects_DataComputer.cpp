@@ -118,11 +118,11 @@ bool PHY_RoleAction_Objects_DataComputer::HasDotations( const PHY_DotationCatego
 // Name: PHY_RoleAction_Objects_DataComputer::ConsumeDotations
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr )
+void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( const PHY_DotationCategory& category, double& nbr )
 {
-    for( RIT_PionDataVector it = pionsData_.rbegin(); it != pionsData_.rend(); ++it )
+    for( RIT_PionDataVector it = pionsData_.rbegin(); it != pionsData_.rend() && nbr > 0.; ++it )
     {
-        it->ConsumeDotations( category, nNbr );
+        it->ConsumeDotations( category, nbr );
     }
 }
 

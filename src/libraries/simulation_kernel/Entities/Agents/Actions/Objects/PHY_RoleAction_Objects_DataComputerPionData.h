@@ -43,7 +43,7 @@ public:
     void RollbackConsumptionsReservations();
 
     unsigned int GetDotationValue( const PHY_DotationCategory& category ) const;
-    void ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr );
+    void ConsumeDotations( const PHY_DotationCategory& category, double& nNbr );
     unsigned int RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr );
     void GetTotalOperationTime( double& rOperationTime, unsigned int& nNbrComposantes ) const;
     //@}

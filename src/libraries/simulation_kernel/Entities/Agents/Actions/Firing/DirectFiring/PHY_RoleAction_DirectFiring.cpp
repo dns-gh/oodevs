@@ -210,7 +210,7 @@ int  PHY_RoleAction_DirectFiring::IlluminatePion( boost::shared_ptr< DEC_Knowled
     if( munition  )
     {
         pTarget->GetRole< PHY_RoleInterface_Illumination >().NotifyDefinitelyIlluminated();
-        unsigned int consommation = 1;
+        double consommation = 1.;
         pion_.Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, *munition, consommation );
         return eFinished;
     }

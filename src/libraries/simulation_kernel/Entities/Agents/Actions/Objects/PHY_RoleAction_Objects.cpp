@@ -127,7 +127,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
     // $$$$ TODO: refactor to handle more than a single resource
     const ConstructionAttribute* pAttribute = object.RetrieveAttribute< ConstructionAttribute >();
     const PHY_DotationCategory* pDotationCategory = 0;
-    unsigned int nDotationNeeded = 0u;
+    double nDotationNeeded = 0.;
     if( pAttribute )
     {
         nDotationNeeded = pAttribute->GetDotationNeededForConstruction( rDeltaPercentage );
@@ -143,6 +143,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
     object().Construct( rDeltaPercentage );
     if( pDotationCategory )
         dataComputer.ConsumeDotations( *pDotationCategory, nDotationNeeded );
+    assert( 0. == nDotationNeeded );
     if( object().IsBuilt() )
         return eFinished;
     return eRunning;
@@ -234,7 +235,7 @@ int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
         return eNoCapacity;
 
     const MineAttribute& attribute = object.GetAttribute< MineAttribute >();
-    const unsigned int nDotationNeeded = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+    double nDotationNeeded = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
     const PHY_DotationCategory* pDotationCategory = 0;
     if( nDotationNeeded )
     {
@@ -351,7 +352,8 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
         return eNoMoreDotation;
 
     burnAttribute->Extinguish( object, *pExtinguisherAgent );
-    dataComputer.ConsumeDotations( *pExtinguisherAgent, 1  );
+    double nDotation = 1.;
+    dataComputer.ConsumeDotations( *pExtinguisherAgent, nDotation );
 
     if( burnAttribute->IsExtinguished() )
         return eFinished;

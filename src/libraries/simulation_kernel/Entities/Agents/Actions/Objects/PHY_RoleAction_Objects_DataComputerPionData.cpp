@@ -136,9 +136,9 @@ unsigned int PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( cons
 // Name: PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr )
+void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, double& nbr )
 {
-    pPion_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, category, nNbr );
+    pPion_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, category, nbr );
 }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ public:
              ConsumeDotationNotificationHandler_ABC() {}
     virtual ~ConsumeDotationNotificationHandler_ABC() {}
 
-    virtual void NotifyConsumeDotation( const PHY_DotationCategory& category, double rNbr ) = 0;
+    virtual void NotifyConsumeDotation( const PHY_DotationCategory& category, double& rNbr ) = 0;
 };
 
 } // namespace component
