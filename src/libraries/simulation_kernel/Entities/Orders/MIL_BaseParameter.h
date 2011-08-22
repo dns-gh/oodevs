@@ -13,6 +13,9 @@
 #include "MIL_MissionParameter_ABC.h"
 #include <boost/serialization/export.hpp>
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+
 // =============================================================================
 /** @class  MIL_BaseParameter
     @brief  MIL_BaseParameter
@@ -76,10 +79,9 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive& file, const unsigned int )
-    {
-        file & boost::serialization::base_object< MIL_MissionParameter_ABC >( *this );
-    }
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 };
 

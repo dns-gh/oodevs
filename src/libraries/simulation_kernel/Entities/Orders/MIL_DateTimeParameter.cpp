@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DateTimeParameter.h"
+#include "MIL.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 
@@ -71,12 +72,21 @@ bool MIL_DateTimeParameter::ToElement( sword::MissionParameter_Value& elem ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_DateTimeParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_DateTimeParameter::load
+// Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_DateTimeParameter::serialize( Archive& file, const unsigned int )
+void MIL_DateTimeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & dateTime_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> dateTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DateTimeParameter::save
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void MIL_DateTimeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << dateTime_;
 }

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_EnumerationParameter.h"
+#include "MIL.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EnumerationParameter )
@@ -71,12 +72,21 @@ bool MIL_EnumerationParameter::ToElement( sword::MissionParameter_Value& elem ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EnumerationParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_EnumerationParameter::load
+// Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_EnumerationParameter::serialize( Archive& file, const unsigned int )
+void MIL_EnumerationParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & value_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> value_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EnumerationParameter::save
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void MIL_EnumerationParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << value_;
 }

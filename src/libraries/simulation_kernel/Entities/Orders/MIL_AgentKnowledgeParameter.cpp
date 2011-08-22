@@ -93,12 +93,21 @@ bool MIL_AgentKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentKnowledgeParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_AgentKnowledgeParameter::load
+// Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_AgentKnowledgeParameter::serialize( Archive& file, const unsigned int )
+void MIL_AgentKnowledgeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pKnowledgeAgent_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> pKnowledgeAgent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentKnowledgeParameter::save
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void MIL_AgentKnowledgeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << pKnowledgeAgent_;
 }

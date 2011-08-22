@@ -93,12 +93,21 @@ bool MIL_AutomatParameter::ToElement( sword::MissionParameter_Value& elem ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomatParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_AutomatParameter::load
+// Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_AutomatParameter::serialize( Archive& file, const unsigned int )
+void MIL_AutomatParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pDecision_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> pDecision_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomatParameter::save
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void  MIL_AutomatParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << pDecision_;
 }

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_BaseParameter.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_BaseParameter )
 
@@ -399,3 +400,20 @@ bool MIL_BaseParameter::ToDotationTypeList( std::vector< const PHY_DotationCateg
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::load
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void MIL_BaseParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< MIL_MissionParameter_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::save
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void MIL_BaseParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_MissionParameter_ABC >( *this );
+}

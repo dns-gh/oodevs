@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AtlasNatureParameter.h"
+#include "MIL.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AtlasNatureParameter )
@@ -80,12 +81,21 @@ bool MIL_AtlasNatureParameter::ToElement( sword::MissionParameter_Value& elem ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AtlasNatureParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_AtlasNatureParameter::load
+// Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_AtlasNatureParameter::serialize( Archive& file, const unsigned int )
+void  MIL_AtlasNatureParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & nature_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> nature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AtlasNatureParameter::save
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void  MIL_AtlasNatureParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << nature_;
 }

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DirectionParameter.h"
+#include "MIL.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "protocol/Protocol.h"
 
@@ -85,12 +86,21 @@ bool MIL_DirectionParameter::ToElement( sword::MissionParameter_Value& elem ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_DirectionParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_DirectionParameter::load
+// Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_DirectionParameter::serialize( Archive& file, const unsigned int )
+void MIL_DirectionParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & heading_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> heading_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DirectionParameter::save
+// Created: LGY 2011-08-22
+// -----------------------------------------------------------------------------
+void MIL_DirectionParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << heading_;
 }
