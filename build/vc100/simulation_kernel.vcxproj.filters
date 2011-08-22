@@ -2460,6 +2460,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp">
       <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4807,6 +4810,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h">
       <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

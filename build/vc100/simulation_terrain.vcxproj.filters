@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Population\Flow">
       <UniqueIdentifier>{78e3ef1e-8acc-40c4-bebc-0765a9dcfbeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Analyzer">
+      <UniqueIdentifier>{61548f8b-0970-4f2c-b318-010675c327cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SpatialContainer">
+      <UniqueIdentifier>{6e8f66ea-00bc-4adb-a922-0bc0649c7b51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.cpp">
@@ -92,6 +98,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowTraits.cpp">
       <Filter>Source Files\Population\Flow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Analyzer.cpp">
+      <Filter>Source Files\Analyzer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AnalyzerManager.cpp">
+      <Filter>Source Files\Analyzer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.cpp">
+      <Filter>Source Files\SpatialContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_StaticData.cpp">
+      <Filter>Source Files\SpatialContainer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +184,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowVisitor_ABC.h">
       <Filter>Source Files\Population\Flow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Analyzer.h">
+      <Filter>Source Files\Analyzer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AnalyzerManager.h">
+      <Filter>Source Files\Analyzer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.h">
+      <Filter>Source Files\SpatialContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_StaticData.h">
+      <Filter>Source Files\SpatialContainer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

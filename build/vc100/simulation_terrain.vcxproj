@@ -100,6 +100,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Analyzer.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AnalyzerManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_StaticData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_World.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_DynamicData.cpp" />
@@ -123,6 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Analyzer.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AnalyzerManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_StaticData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_NodeFunctor_ABC.h" />

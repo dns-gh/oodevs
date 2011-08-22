@@ -120,6 +120,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -830,6 +831,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tristate.h" />
