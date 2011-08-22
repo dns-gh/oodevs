@@ -45,6 +45,10 @@ public:
     virtual void ProcessAgentInside( MIL_Agent_ABC& /*agent*/ ) {}
     virtual void ProcessPopulationInside( MIL_PopulationElement_ABC& /*population*/ ) {}
     virtual void PreprocessPopulation( MIL_PopulationElement_ABC& /*population*/ ) {};
+    virtual void ApplyIndirectFire( const TER_Localisation& /*attritionSurface*/, const PHY_DotationCategory& /*dotation*/ ) {};
+    virtual void ApplyDirectFire() const {};
+    virtual void ApplyDestruction( const TER_Localisation& /*attritionSurface*/, const PHY_UrbanAttritionData& /*attrition*/ ) {};
+    virtual bool IsUniversal() const { throw; };
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& /*team*/ ) { throw; }
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ ) { throw; }
     virtual const MIL_ObjectManipulator_ABC& operator()() const { throw; }

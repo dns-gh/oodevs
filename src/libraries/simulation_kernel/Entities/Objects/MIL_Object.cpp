@@ -22,6 +22,7 @@
 #include "SupplyRouteAttribute.h"
 #include "StructuralCapacity.h"
 #include "UndergroundAttribute.h"
+#include "UniversalCapacity.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -262,7 +263,20 @@ void MIL_Object::ApplyStructuralState( float structuralState ) const
 // -----------------------------------------------------------------------------
 void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation )
 {
-    MIL_Object_ABC::ApplyIndirectFire( attritionSurface, dotation );
+    if( StructuralCapacity* capacity = tools::Extendable< ObjectCapacity_ABC >::Retrieve< StructuralCapacity >() )
+        capacity->ApplyIndirectFire( *this, attritionSurface, dotation );
+    if( GetLocalisation().IsInside( attritionSurface.ComputeBarycenter() ) )
+        std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::MIL_Object::ApplyDestruction
+// Created: JCR 2011-08-12
+// -----------------------------------------------------------------------------
+void MIL_Object::ApplyDestruction( const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition )
+{
+    if( StructuralCapacity* capacity = tools::Extendable< ObjectCapacity_ABC >::Retrieve< StructuralCapacity >() )
+        capacity->ApplyDestruction( *this, attritionSurface, attrition );
     if( GetLocalisation().IsInside( attritionSurface.ComputeBarycenter() ) )
         std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
 }
@@ -274,6 +288,15 @@ void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, co
 void MIL_Object::ApplyDirectFire() const
 {
     std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::IsUniversal
+// Created: JSR 2011-01-07
+// -----------------------------------------------------------------------------
+bool MIL_Object::IsUniversal() const
+{
+    return tools::Extendable< ObjectCapacity_ABC >::Retrieve< UniversalCapacity >() != 0;
 }
 
 // -----------------------------------------------------------------------------

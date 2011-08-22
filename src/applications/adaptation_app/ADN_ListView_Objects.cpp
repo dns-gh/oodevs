@@ -143,6 +143,10 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Objects_GUI::eAttritionDotation ]->Connect( &attrition.ammoCategory_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eAttritionCapacityUseDotation ]->Connect( &attrition.useAmmo_, bConnect );
 
+    ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction& urbanDestruction = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction >( ADN_Objects_GUI::eUrbanDestructionCapacityPresent );
+    vItemConnectors_[ ADN_Objects_GUI::eUrbanDestructionCapacity_Data ]->Connect( &urbanDestruction.modifUrbanBlocks_, bConnect );
+    
+
     ADN_Objects_Data::ADN_CapacityInfos_Contamination& contamination = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Contamination >( ADN_Objects_GUI::eContaminationCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eContaminationCapacity_MaxToxic ]->Connect( &contamination.max_toxic_, bConnect );
 

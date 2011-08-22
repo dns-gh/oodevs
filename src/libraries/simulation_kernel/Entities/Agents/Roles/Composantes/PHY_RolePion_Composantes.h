@@ -52,6 +52,7 @@ class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
 class PHY_DotationStock;
 class PHY_RoleInterface_Supply;
+class PHY_MaterialCompositionType;
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -192,7 +193,7 @@ public:
     virtual void BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion* GetMajorComposante() const;
     virtual double GetMajorComponentWeight( bool ) const;
-    virtual double GetAttritionIndexComposante( int idMaterial ) const;
+    virtual double GetAttritionIndexComposante( const PHY_MaterialCompositionType& material ) const;
     //@}
 
     //! @name Load / unload / transport

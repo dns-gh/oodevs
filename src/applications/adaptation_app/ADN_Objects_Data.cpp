@@ -19,6 +19,7 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreLocationInfos::ScoreLocationInfos
@@ -398,6 +399,40 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream&
         xos << xml::attribute( "category", "" );
 }
 //@}
+
+
+//! @name ADN_CapacityInfos_UrbanDestruction
+//@{
+
+ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ADN_CapacityInfos_UrbanDestruction()
+    : modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
+{
+    // NOTHING
+}
+
+void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ReadArchive( xml::xistream& xis )
+{
+    struct UrbanDestructionScore
+    {
+        static void Read( xml::xistream& xis, helpers::T_UrbanAttritionInfos_Vector& urbanData )
+        {
+            std::string material( xis.attribute< std::string >( "material-type" ) );
+            helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( urbanData.begin(), urbanData.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
+            if( it == urbanData.end() )
+                throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Object - Invalid Urban Material type '%1'" ).arg( material.c_str() ).ascii() );
+            (*it)->ReadArchive( xis );
+        }
+    };
+    
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    xis >> xml::list( "urban-modifier", boost::bind( &UrbanDestructionScore::Read, _1, boost::ref( modifUrbanBlocks_ ) ) );
+}
+
+void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::WriteArchive( xml::xostream& xos )
+{
+    for( helpers::CIT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+        (*itUrbanAttrition)->WriteArchive( xos );
+}
 
 //! @name ADN_CapacityInfos_Contamination
 //@{
@@ -1224,6 +1259,7 @@ INIT_DATA( ADN_CapacityInfos_ResourceNetwork,         "ResourceNetwork",        
 INIT_DATA( ADN_CapacityInfos_Lodging,                 "Lodging",                 "lodging" );
 INIT_DATA( ADN_CapacityInfos_AltitudeModifier,        "AltitudeModifier",        "altitude-modifier" );
 INIT_DATA( ADN_CapacityInfos_UndergroundNetwork,      "UndergroundNetwork",      "underground-network" );
+INIT_DATA( ADN_CapacityInfos_UrbanDestruction,        "UrbanDestruction",        "urban-destruction" );
 
 #pragma warning( pop )
 
@@ -1276,6 +1312,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
 {
     capacities_[ ADN_CapacityInfos_Activable::TAG ].reset( new ADN_CapacityInfos_Activable() );
     capacities_[ ADN_CapacityInfos_Attrition::TAG ].reset( new ADN_CapacityInfos_Attrition() );
+    capacities_[ ADN_CapacityInfos_UrbanDestruction::TAG ].reset( new ADN_CapacityInfos_UrbanDestruction() );
     capacities_[ ADN_CapacityInfos_Avoidable::TAG ].reset( new ADN_CapacityInfos_Avoidable() );
     capacities_[ ADN_CapacityInfos_Bridging::TAG ].reset( new ADN_CapacityInfos_Bridging() );
     capacities_[ ADN_CapacityInfos_Bypassable::TAG ].reset( new ADN_CapacityInfos_Bypassable() );

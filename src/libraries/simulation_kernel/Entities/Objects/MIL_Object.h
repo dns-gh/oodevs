@@ -64,6 +64,7 @@ public:
     //! @name Fires
     //@{
     virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
+    virtual void ApplyDestruction( const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& dotation );
     virtual void ApplyDirectFire() const;
     //@}
 
@@ -97,6 +98,11 @@ public:
     //! @name Accessors
     //@{
     virtual const std::string& GetName() const = 0;
+    //@}
+
+    //! @name 
+    //@{
+    /*virtual*/ bool IsUniversal() const;
     //@}
 
 protected:

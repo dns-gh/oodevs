@@ -29,6 +29,10 @@ MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
     MOCK_METHOD( ProcessAgentInside, 1 );
     MOCK_METHOD( PreprocessPopulation, 1 );
     MOCK_METHOD( ProcessPopulationInside, 1 );
+    MOCK_METHOD( ApplyIndirectFire, 2 );
+    MOCK_METHOD( ApplyDirectFire, 0 );
+    MOCK_METHOD( ApplyDestruction, 2 );
+    MOCK_METHOD( IsUniversal, 0 );
     MOCK_METHOD_EXT( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_Army_ABC& ) , CreateKnowledgeArmy );
     MOCK_METHOD_EXT( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_KnowledgeGroup& ) , CreateKnowledgeKnowledgeGroup );
     MOCK_CONST_METHOD_EXT( operator(), 0, const MIL_ObjectManipulator_ABC&(), OperatorConst );

@@ -674,9 +674,9 @@ double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( UrbanObjectWra
         if( const MaterialAttribute* attribute = pUrbanBlock->RetrieveAttribute< MaterialAttribute >() )
         {
             if( GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                return GetAgentKnown().GetRole< PHY_RolePion_Composantes >().GetAttritionIndexComposante( attribute->GetMaterial().GetId() );
+                return GetAgentKnown().GetRole< PHY_RolePion_Composantes >().GetAttritionIndexComposante( attribute->GetMaterial() );
             else if( ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ ) || ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ ) )
-                return PHY_DotationCategory::FindUrbanProtection( attribute->GetMaterial().GetId() );
+                return PHY_DotationCategory::FindUrbanAttritionScore( attribute->GetMaterial() );
             else
                 return -1;
         }

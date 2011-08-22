@@ -11,11 +11,14 @@
 #include "BurnCapacity.h"
 #include "FireAttribute.h"
 #include "BurnAttribute.h"
+#include "MIL_FireClass.h"
+#include "UrbanDestructionCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "Entities\Agents\MIL_Agent_ABC.h"
 #include "Entities\Agents\Roles\Composantes\PHY_RoleInterface_Composantes.h"
 #include "Entities\Populations\MIL_PopulationElement_ABC.h"
 #include "Entities\Agents\Units\Humans\MIL_Injury_Fire.h"
+
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BurnCapacity )
@@ -86,6 +89,17 @@ void BurnCapacity::Finalize( MIL_Object_ABC& object )
 {
     BurnAttribute& burnAttribute = object.GetAttribute< BurnAttribute >();
     burnAttribute.StartBurn( object );
+
+    // Overwrite urban destruction capacity
+    const MIL_FireClass& fireClass = object.GetAttribute< FireAttribute >().GetClass();
+    UrbanDestructionCapacity* destructionCapacity = object.Retrieve< UrbanDestructionCapacity >();
+    if( !destructionCapacity )
+    {
+        destructionCapacity = new UrbanDestructionCapacity( fireClass.GetUrbanAttritionData() );
+        object.AddCapacity( destructionCapacity );
+    }
+    else
+        *destructionCapacity = UrbanDestructionCapacity( fireClass.GetUrbanAttritionData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +128,6 @@ void BurnCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_Populati
 {
     population.ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BurnCapacity::Update

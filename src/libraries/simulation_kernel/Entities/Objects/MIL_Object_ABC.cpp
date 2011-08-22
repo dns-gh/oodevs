@@ -258,34 +258,6 @@ void MIL_Object_ABC::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::ApplyIndirectFire
-// Created: JSR 2011-01-25
-// -----------------------------------------------------------------------------
-void MIL_Object_ABC::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation )
-{
-    if( StructuralCapacity* capacity = tools::Extendable< ObjectCapacity_ABC >::Retrieve< StructuralCapacity >() )
-        capacity->ApplyIndirectFire( *this, attritionSurface, dotation );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::ApplyDirectFire
-// Created: JSR 2011-01-25
-// -----------------------------------------------------------------------------
-void MIL_Object_ABC::ApplyDirectFire() const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::IsUniversal
-// Created: JSR 2011-01-07
-// -----------------------------------------------------------------------------
-bool MIL_Object_ABC::IsUniversal() const
-{
-    return tools::Extendable< ObjectCapacity_ABC >::Retrieve< UniversalCapacity >() != 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::UpdateState
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------

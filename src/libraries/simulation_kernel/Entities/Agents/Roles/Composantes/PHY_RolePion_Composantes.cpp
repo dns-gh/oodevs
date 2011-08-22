@@ -1725,12 +1725,11 @@ bool PHY_RolePion_Composantes::DestroyIndirectFire( const PHY_DotationCategory& 
 // Name: PHY_RolePion_Composantes::GetAttritionIndexComposante
 // Created: DDA 2010-04-22
 // -----------------------------------------------------------------------------
-
-double  PHY_RolePion_Composantes::GetAttritionIndexComposante ( int idMaterial ) const
+double  PHY_RolePion_Composantes::GetAttritionIndexComposante ( const PHY_MaterialCompositionType& material ) const
 {
     double result = 0.;
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        result = std::max( result, ( *itComposante )->GetType().GetAttritionIndexComposante( idMaterial ) );
+        result = std::max( result, ( *itComposante )->GetType().GetAttritionIndexComposante( material ) );
     return result;
 }
 

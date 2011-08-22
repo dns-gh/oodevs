@@ -134,7 +134,19 @@ public:
         ADN_Type_Bool useAmmo_;  // $$$$ LDC: Hack: No time to write a single category_ checkbox with all ammos available. Actually, the mines and explosives categories should vanish but no time to change the sim...
     };
 
-     class ADN_CapacityInfos_Avoidable
+    class ADN_CapacityInfos_UrbanDestruction
+        : public helpers::ADN_CapacityInfos_Default< helpers::eUrbanDestructionCapacity >
+    {
+    public:
+        ADN_CapacityInfos_UrbanDestruction();
+
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+    public:
+        helpers::T_UrbanAttritionInfos_Vector modifUrbanBlocks_;
+    };
+
+    class ADN_CapacityInfos_Avoidable
         : public helpers::ADN_CapacityInfos_Default< helpers::eAvoidableCapacity,
                             boost::tuples::tuple< NamedField< ADN_Type_Double > > >
     {

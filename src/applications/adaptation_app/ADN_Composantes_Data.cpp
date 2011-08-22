@@ -1903,8 +1903,16 @@ void ADN_Composantes_Data::ComposanteInfos::ReadSpeed( xml::xistream& input )
 {
     std::string strLocation;
     input >> xml::attribute( "terrain", strLocation );
-    E_Location nLocation = ADN_Tr::ConvertToLocation( strLocation );
-    vSpeeds_.at( nLocation )->ReadArchive( input );
+    
+    try
+    {
+        E_Location nLocation = ADN_Tr::ConvertToLocation( strLocation );
+        vSpeeds_.at( nLocation )->ReadArchive( input );
+    }
+    catch ( const std::exception& /*ex*/ )
+    {
+        throw ADN_DataException( tools::translate( "Composantes_Data", "Invalid data" ).ascii(), tools::translate( "Composantes_Data", "Equipment - Invalid terrain type '%1'" ).arg( strLocation.c_str() ).ascii() );
+    }
 }
 
 // -----------------------------------------------------------------------------

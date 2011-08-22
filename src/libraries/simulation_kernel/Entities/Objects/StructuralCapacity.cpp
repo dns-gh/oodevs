@@ -13,6 +13,7 @@
 #include "MaterialAttribute.h"
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
@@ -33,7 +34,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 StructuralCapacity::StructuralCapacity()
     : structuralState_    ( 1.f )
     , lastStructuralState_( -1.f )
-    , materialType_       ( 0 )
 {
     // NOTHING
 }
@@ -43,8 +43,8 @@ StructuralCapacity::StructuralCapacity()
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
-    : structuralState_    ( 0.01f * xis.attribute< unsigned int >( "value" ) )
-    , lastStructuralState_( -1.f )
+    : structuralState_     ( 0.01f * xis.attribute< unsigned int >( "value" ) )
+    , lastStructuralState_ ( -1.f )
 {
     // NOTHING
 }
@@ -120,24 +120,52 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation )
 {
-    const double objectArea = object.GetLocalisation().GetArea();
-    if( !objectArea )
-        return;
     if( const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >() )
-    {
-        const double ratio = MIL_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
-        const float oldStructuralState = structuralState_;
-        structuralState_ = std::max( 0., structuralState_ - ratio * dotation.GetAttrition(  materialAttribute->GetMaterial().GetId() ) );
-        if ( ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
-            for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
-                ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
-        object.ApplyStructuralState( structuralState_ );
-    }
+        ApplyDestruction( object, attritionSurface, dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) );
     else
         // $$$$ JSR 2011-02-17: temporary hack -> Do not destroy districts or cities (UrbanObject without material attribute)
         if( !dynamic_cast< UrbanObjectWrapper* >( &object ) )
         // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
             object().Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::ApplyDestruction
+// Created: JCR 2011-08-12
+// -----------------------------------------------------------------------------
+void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition )
+{
+    if( const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >() )
+        ApplyDestruction( object, attritionSurface, attrition.GetScore( materialAttribute->GetMaterial() ) );
+    else
+        // $$$$ JSR 2011-02-17: temporary hack -> Do not destroy districts or cities (UrbanObject without material attribute)
+        if( !dynamic_cast< UrbanObjectWrapper* >( &object ) )
+        // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
+            object().Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::ApplyDestruction
+// Created: JCR 2011-08-12
+// -----------------------------------------------------------------------------
+void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, double factor )
+{
+    const double objectArea = object.GetLocalisation().GetArea();
+    if( !objectArea )
+        return;
+    
+    double ratio = 0.;
+    if( attritionSurface.GetType() == TER_Localisation::ePoint || attritionSurface.GetType() == TER_Localisation::eLine )
+        ratio = 1.0;
+    else    
+        ratio = MIL_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
+    const float oldStructuralState = structuralState_;
+
+    structuralState_ = static_cast< float >( std::max( 0., (double)structuralState_ - ratio * factor ) );
+    if ( ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
+        for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
+            ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
+    object.ApplyStructuralState( structuralState_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +183,7 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
     if( !attrition )
         throw std::exception( "Error in searching protection" );
     // Tirage de l'état opérationnel
-    const double rRand = ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) );
+    const double rRand = ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) );
     const double destruction = attrition->destruction_;
     const double repairableWithEvac = attrition->repairableWithEvac_ + destruction;
     const double repairableNoEvac = attrition->repairableNoEvac_ + repairableWithEvac;
@@ -176,7 +204,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
     // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
     if( area == 0 || materialAttribute == 0 )
         return;
-    structuralState_ = std::max( 0., structuralState_ - dotation.GetAttrition( materialAttribute->GetMaterial().GetId() ) / area );
+    structuralState_ = (float)std::max( 0., (double)structuralState_ - dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) / area );
     object.ApplyStructuralState( structuralState_ );
 }
 
@@ -245,5 +273,5 @@ void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 // -----------------------------------------------------------------------------
 void StructuralCapacity::Build( double rDeltaPercentage )
 {
-    structuralState_ = std::max( 0., std::min( 1., structuralState_ + rDeltaPercentage ) );
+    structuralState_ = std::max( 0.f, std::min( 1.f, structuralState_ + (float)rDeltaPercentage ) );
 }

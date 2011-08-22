@@ -47,6 +47,7 @@ class PHY_Sensor;
 class PHY_SensorType;
 class PHY_Weapon;
 class PHY_WeaponType;
+class PHY_MaterialCompositionType;
 
 // =============================================================================
 // @class  PHY_ComposanteTypePion
@@ -136,7 +137,7 @@ public:
     virtual double GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
             double GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
             double GetMinRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-    virtual double GetAttritionIndexComposante   ( int idMaterial ) const;
+    virtual double GetAttritionIndexComposante   ( const PHY_MaterialCompositionType& material ) const;
     virtual double GetMaxRangeToFire             ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
     //@}
 

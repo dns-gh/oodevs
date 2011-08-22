@@ -18,10 +18,9 @@
 #include "PHY_DotationLogisticType.h"
 #include "PHY_DotationNature.h"
 #include "PHY_MaterialCompositionType.h"
+#include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include <xeumeuleu/xml.hpp>
-
-PHY_DotationCategory::T_UrbanMaterialAttritionMap PHY_DotationCategory::urbanBestValue_;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::PHY_DotationCategory
@@ -35,8 +34,6 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , strName_              ( strName )
     , nMosID_               ( 0 )
     , pIndirectFireData_    ( 0 )
-    , attritions_           ()
-    , urbanAttritionFactors_( PHY_MaterialCompositionType::Count(), 0.9 )
     , rWeight_              ( 0. )
     , rVolume_              ( 0. )
     , bIlluminating_        ( false )
@@ -150,42 +147,18 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
 {
-    xis >> xml::list( "urban-modifiers", *this, &PHY_DotationCategory::ListUrbanAttrition );
+    struct UrbanModifier
+    {
+        static void Read( xml::xistream& xis, std::auto_ptr< PHY_UrbanAttritionData >& data )
+        {
+            data.reset( new PHY_UrbanAttritionData( xis ) );
+            data->UpdateGlobalScore();
+        }
+    };
+
+    xis >> xml::list( "urban-modifiers", boost::bind( &UrbanModifier::Read, _1, boost::ref( urbanAttritionData_ ) ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::ListUrbanAttrition
-// Created: SLG 2010-04-14
-// -----------------------------------------------------------------------------
-void PHY_DotationCategory::ListUrbanAttrition( xml::xistream& xis )
-{
-    xis >> xml::list( "urban-modifier", *this, &PHY_DotationCategory::ReadUrbanAttritionModifier );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::ReadUrbanAttritionModifier
-// Created: SLG 2010-04-14
-// -----------------------------------------------------------------------------
-void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
-{
-    double rFactor;
-    std::string materialType;
-    xis >> xml::attribute( "material-type", materialType )
-        >> xml::attribute( "value", rFactor );
-    const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( materialType );
-    if( rFactor < 0 || rFactor > 1 )
-        xis.error( "urbanBlock-modifier: value not in [0..1]" );
-    if( !material || static_cast< int >( urbanAttritionFactors_.size() ) < material->GetId() )
-        throw std::runtime_error( "error in loading material type" );
-    urbanAttritionFactors_[ material->GetId() ] = rFactor;
-
-    CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( material->GetId() );
-    if( it == urbanBestValue_.end() )
-        urbanBestValue_[ material->GetId() ] = 0.;
-    urbanBestValue_[ material->GetId() ] = std::max( urbanBestValue_[ material->GetId() ], rFactor );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::InitializeIndirectFireData
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
@@ -226,10 +199,10 @@ void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializeIllumination( xml::xistream& xis )
 {
-    if( xis.has_child("illuminating") )
+    if( xis.has_child( "illuminating" ) )
     {
         bIlluminating_ = true;
-        xis >> xml::start("illuminating")
+        xis >> xml::start( "illuminating" )
                 >> xml::attribute( "range", fRange_ )
                 >> xml::attribute( "maintain", bMaintainIllumination_ )
             >> xml::end;
@@ -242,10 +215,10 @@ void PHY_DotationCategory::InitializeIllumination( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializeGuidance( xml::xistream& xis )
 {
-    if( xis.has_child("guided") )
+    if( xis.has_child( "guided" ) )
     {
         bGuided_ = true;
-        xis >> xml::start("guided")
+        xis >> xml::start( "guided" )
                 >> xml::attribute( "maintain", bMaintainGuidance_ )
                 >> xml::attribute( "range", rGuidanceRange_ )
             >> xml::end;
@@ -263,13 +236,12 @@ const PHY_AttritionData& PHY_DotationCategory::GetAttritionData( const PHY_Prote
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::GetUrbanAttritionModifer
-// Created: SLG 2010-04-14
+// Name: PHY_DotationCategory::PHY_DotationCategory::GetUrbanAttritionScore
+// Created: JCR 2011-08-12
 // -----------------------------------------------------------------------------
-const double PHY_DotationCategory::GetUrbanAttritionModifer( unsigned materialId ) const
+double PHY_DotationCategory::GetUrbanAttritionScore( const PHY_MaterialCompositionType& material ) const
 {
-    assert( urbanAttritionFactors_.size() > materialId );
-    return urbanAttritionFactors_[ materialId ];
+    return urbanAttritionData_.get() ? urbanAttritionData_->GetScore( material ) : 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -479,30 +451,10 @@ float PHY_DotationCategory::GetIlluminatingRange( ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::GetAttrition
-// Created: DDA 2010-04-22
-// -----------------------------------------------------------------------------
-double PHY_DotationCategory::GetAttrition( unsigned materialId ) const
-{
-    if( materialId < urbanAttritionFactors_.size() )
-        return urbanAttritionFactors_[ materialId ];
-    else
-        return 0.;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::FindUrbanProtection
 // Created: DDA 2010-04-26
 // -----------------------------------------------------------------------------
-double PHY_DotationCategory::FindUrbanProtection( unsigned materialId )
+double PHY_DotationCategory::FindUrbanAttritionScore( const PHY_MaterialCompositionType& material )
 {
-    if( materialId >= 0 )
-    {
-        CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( materialId );
-        if( it == urbanBestValue_.end() )
-            throw std::runtime_error( "Unknown material" );
-        return it->second;
-    }
-    else
-        return -1.0;
+    return PHY_UrbanAttritionData::GetGlobalScore( material );
 }

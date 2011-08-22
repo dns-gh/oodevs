@@ -15,6 +15,7 @@
 
 class PHY_ComposanteState;
 class PHY_DotationCategory;
+class PHY_UrbanAttritionData;
 class PHY_Protection;
 class TER_Localisation;
 
@@ -58,6 +59,8 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
     void ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
+    void ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition );
+    
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
     void Build( double rDeltaPercentage );
@@ -89,6 +92,11 @@ private:
     StructuralCapacity& operator=( const StructuralCapacity& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, double factor );
+    //@}
+
     //! @name types
     //@{
     typedef std::set< MIL_Agent_ABC* > T_Agents;
@@ -101,7 +109,6 @@ private:
     float structuralState_;
     mutable float lastStructuralState_;
     T_Agents agents_;
-    urban::MaterialCompositionType* materialType_;
     //@}
 };
 

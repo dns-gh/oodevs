@@ -1396,7 +1396,6 @@ bool PHY_ComposanteTypePion::CounterIndirectFire( const PHY_DotationCategory& ca
         if( (*it)->CounterIndirectFire( category, pion ) )
             return true;
     return false;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -1415,11 +1414,10 @@ bool PHY_ComposanteTypePion::DestroyIndirectFire( const PHY_DotationCategory& ca
 // Name: PHY_ComposanteTypePion::GetAttritionIndexComposante
 // Created: DDA 2010-04-22
 // -----------------------------------------------------------------------------
-double PHY_ComposanteTypePion::GetAttritionIndexComposante(int idMaterial) const
+double PHY_ComposanteTypePion::GetAttritionIndexComposante( const PHY_MaterialCompositionType& material ) const
 {
     double rRange = 0.;
     for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
-        rRange = std::max( rRange, it->first->GetDotationCategory().GetAttrition(idMaterial) );
-
+        rRange = std::max( rRange, it->first->GetDotationCategory().GetUrbanAttritionScore( material ) );
     return rRange;
 }

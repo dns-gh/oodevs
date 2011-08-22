@@ -12,6 +12,7 @@
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
+#include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Tools/MIL_Tools.h"
@@ -79,11 +80,9 @@ MIL_FireClass::MIL_FireClass( const std::string& name, xml::xistream& xis )
         >> xml::end
         >> xml::start( "injuries" )
             >> xml::list( "injury", *this, &MIL_FireClass::ReadInjury )
-        >> xml::end
-        >> xml::start( "urban-modifiers" )
-            >> xml::list( "urban-modifier", *this, &MIL_FireClass::ReadUrbanModifier )
-        >> xml::end
-        >> xml::optional >> xml::start( "surfaces" )
+        >> xml::end;
+        ReadUrbanModifiers( xis );
+        xis >> xml::optional >> xml::start( "surfaces" )
             >> xml::list( "surface", *this, &MIL_FireClass::ReadSurface )
         >> xml::end;
 
@@ -153,18 +152,10 @@ void MIL_FireClass::ReadInjury( xml::xistream& xis )
 // Name: MIL_FireClass::ReadUrbanModifier
 // Created: BCI 2010-12-08
 // -----------------------------------------------------------------------------
-void MIL_FireClass::ReadUrbanModifier( xml::xistream& xis )
+void MIL_FireClass::ReadUrbanModifiers( xml::xistream& xis )
 {
-    UrbanModifier urbanModifier;
-    std::string materialType;
-    xis >> xml::attribute( "material-type", materialType )
-        >> xml::attribute( "value", urbanModifier.factor_ );
-
-    const PHY_MaterialCompositionType* pMaterial = PHY_MaterialCompositionType::Find( materialType );
-    if( !pMaterial )
-        xis.error( "Unknow material type : " + materialType );
-
-    urbanModifiers_.insert( std::make_pair( pMaterial, urbanModifier ) );
+    xis >> xml::start( "urban-modifiers" );
+    urbanModifiers_.reset( new PHY_UrbanAttritionData( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,6 +278,15 @@ const MIL_FireClass* MIL_FireClass::GetDefaultFireClass()
         return classes_.begin()->second;
     else
         throw std::runtime_error( "No default MIL_FireClass available" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetUrbanAttritionData
+// Created: JCR 2011-08-12
+// -----------------------------------------------------------------------------
+const PHY_UrbanAttritionData& MIL_FireClass::GetUrbanAttritionData() const
+{
+    return *urbanModifiers_;
 }
 
 // -----------------------------------------------------------------------------

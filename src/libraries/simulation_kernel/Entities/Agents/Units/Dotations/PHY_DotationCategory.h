@@ -26,6 +26,8 @@ class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_AmmoDotationClass;
 class PHY_Protection;
 class PHY_DotationLogisticType;
+class PHY_MaterialCompositionType;
+class PHY_UrbanAttritionData;
 class PHY_FireResults_ABC;
 class MT_Vector2D;
 
@@ -51,7 +53,6 @@ public:
     float GetGuidanceRange() const;
     bool IsIlluminating( float range, bool permanent ) const;
     float GetIlluminatingRange() const;
-    double GetAttrition( unsigned materialId ) const;
     //@}
 
     //! @name Fire
@@ -62,7 +63,6 @@ public:
 
     const PHY_AttritionData& GetAttritionData( const PHY_Protection& protectionTarget ) const;
     double GetAttritionScore( const PHY_Protection& protectionTarget ) const;
-    const double GetUrbanAttritionModifer( unsigned materialId ) const;
     const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData() const;
 
     void ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
@@ -82,15 +82,19 @@ public:
     bool operator!=( const PHY_DotationCategory& rhs ) const;
     //@}
 
-    static double       FindUrbanProtection ( unsigned materialId );
+    //! @name 
+    //@{
+           double GetUrbanAttritionScore( const PHY_MaterialCompositionType& material ) const;
+    static double FindUrbanAttritionScore( const PHY_MaterialCompositionType& material ); // Get global score
+    //@}
+
+    
 
 private:
     //! @name Types
     //@{
     typedef std::vector< PHY_AttritionData > T_AttritionVector;
     typedef std::vector< double > T_UrbanAttritionVector;
-    typedef std::map< int, double >                       T_UrbanMaterialAttritionMap;
-    typedef T_UrbanMaterialAttritionMap::const_iterator CIT_UrbanMaterialAttritionMap;
     //@}
 
 private:
@@ -127,7 +131,7 @@ private:
     double rVolume_;
 
     T_AttritionVector attritions_;
-    T_UrbanAttritionVector urbanAttritionFactors_;
+    std::auto_ptr< PHY_UrbanAttritionData > urbanAttritionData_;
     PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;
 
     //Illumination capacity
@@ -140,9 +144,7 @@ private:
     float rGuidanceRange_;
 
 private:
-    static T_UrbanMaterialAttritionMap urbanBestValue_;
     static unsigned int nbComposantes;
-
 };
 
 #endif // __PHY_DotationCategory_h_

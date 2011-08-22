@@ -22,6 +22,7 @@ class PHY_Weapon;
 class PHY_DotationCategory;
 class PHY_HumanWound;
 class TerrainData;
+class PHY_UrbanAttritionData;
 class PHY_MaterialCompositionType;
 
 namespace weather
@@ -44,6 +45,8 @@ public:
 
     static const MIL_FireClass* Find( const std::string& strName );
     static const MIL_FireClass* GetDefaultFireClass();
+    
+    static int GetCellSize();
     //@}
 
     //! @name Accessors
@@ -55,15 +58,20 @@ public:
     int GetMaxHeat() const;
     int GetWeatherDecreateRate( const weather::PHY_Precipitation& ) const;
     void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
-    static int GetCellSize();
     const PHY_DotationCategory* FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const;
     int GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const;
+    //@}
+
+    //! @name 
+    //@{
+    const PHY_UrbanAttritionData& GetUrbanAttritionData() const;
     //@}
 
     //! @name Operations
     //@{
     const PHY_HumanWound* ChooseRandomWound() const;
     //@}
+
 private:
     //!@ Constructor and destructor
     //@{
@@ -96,12 +104,6 @@ private:
     };
     typedef std::map< const PHY_HumanWound*, Injury > T_InjuryMap;
 
-    struct UrbanModifier
-    {
-        double factor_;
-    };
-    typedef std::map< const PHY_MaterialCompositionType*, UrbanModifier > T_UrbanModifierMap;
-
     struct Surface
     {
         TerrainData terrainData_;
@@ -117,7 +119,7 @@ private:
     void ReadExtinguisherAgent( xml::xistream& xis );
     void ReadWeatherEffect( xml::xistream& xis );
     void ReadInjury( xml::xistream& xis );
-    void ReadUrbanModifier( xml::xistream& xis );
+    void ReadUrbanModifiers( xml::xistream& xis );
     void ReadSurface( xml::xistream& xis );
     //@}
 
@@ -125,7 +127,7 @@ private:
     T_ExtinguisherAgentEffectVector extinguisherAgentEffects_;
     T_WeatherEffectMap weatherEffects_;
     T_InjuryMap injuries_;
-    T_UrbanModifierMap urbanModifiers_;
+    std::auto_ptr< PHY_UrbanAttritionData > urbanModifiers_;
     T_Surfaces surfaces_;
     const std::string name_;
     int decreaseRate_;

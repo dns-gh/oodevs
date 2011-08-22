@@ -151,6 +151,18 @@
 					<!-- resource name -->
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="urban-destruction">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="urban-modifier" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="material-type" type="xs:string" use="required"/>
+								<xs:attribute name="value" type="xs:double" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="avoidable" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="distance" type="xs:double"/>

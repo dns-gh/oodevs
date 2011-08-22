@@ -23,6 +23,7 @@
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Composantes_Dotations_GUI.h"
+#include "ADN_UrbanModifiersTable.h"
 #include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
@@ -142,6 +143,7 @@ void ADN_Objects_GUI::Build()
         }
     }
 
+    // Heuristic
     ADN_GroupBox* heuristic = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Terrain Heuristic" ), hBox );
     {
         vInfosConnectors[ eTerrainHeuristicCapacityPresent ] = & heuristic->GetConnector();
@@ -201,12 +203,20 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( workable, tr( "Max Animator: " ), vInfosConnectors[ eWorkableCapacity_Size ], tr( "agents" ) );
     }
 
+    // Attrition
     ADN_GroupBox* attrition = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Attrition" ), hBox );
     {
         vInfosConnectors[ eAttritionCapacityPresent ] = & attrition->GetConnector();
         ADN_GroupBox* dotation = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Use ammunition" ), attrition );
         vInfosConnectors[ eAttritionCapacityUseDotation ] = & dotation->GetConnector();
         builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( dotation, tr( "Resource" ), vInfosConnectors[ eAttritionDotation ] );
+    }
+
+    // Urban Destruction
+    ADN_GroupBox* urbanDestruction = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Urban Destruction" ), hBox );
+    {
+        vInfosConnectors[ eUrbanDestructionCapacityPresent ] = & urbanDestruction->GetConnector();
+        new helpers::ADN_UrbanModifiersTable( urbanDestruction, vInfosConnectors[ eUrbanDestructionCapacity_Data ] );
     }
 
     // NBC

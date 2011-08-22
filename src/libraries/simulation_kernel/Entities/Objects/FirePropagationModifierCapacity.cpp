@@ -24,8 +24,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( FirePropagationModifierCapacity )
 // Created: BCI 2010-12-22
 // -----------------------------------------------------------------------------
 FirePropagationModifierCapacity::FirePropagationModifierCapacity( xml::xistream& xis )
-: burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
-, pObject_( 0 )
+    : burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
+    , pObject_( 0 )
 {
     xis >> xml::list( "modifier", *this, &FirePropagationModifierCapacity::ReadModifier );
 }
@@ -56,8 +56,8 @@ FirePropagationModifierCapacity::~FirePropagationModifierCapacity()
 // Created: BCI 2010-12-22
 // -----------------------------------------------------------------------------
 FirePropagationModifierCapacity::FirePropagationModifierCapacity( const FirePropagationModifierCapacity& other )
-: burningCells_( other.burningCells_ )
-, modifiers_( other.modifiers_ )
+    : burningCells_( other.burningCells_ )
+    , modifiers_( other.modifiers_ )
 {
     // NOTHING
 }

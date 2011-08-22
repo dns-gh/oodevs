@@ -46,6 +46,7 @@ class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
 class TER_Localisation;
 class PHY_DotationCategory;
+class PHY_UrbanAttritionData;
 
 //=============================================================================
 // Created: NLD 2002-12-12
@@ -108,8 +109,9 @@ public:
 
     //! @name Fires
     //@{
-    virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
-    virtual void ApplyDirectFire() const;
+    virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation ) = 0;
+    virtual void ApplyDirectFire() const = 0;
+    virtual void ApplyDestruction( const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition ) = 0;
     //@}
 
     //! @name InteractiveContainer
@@ -158,7 +160,7 @@ public:
     //@{
     bool IsMarkedForDestruction() const;
     bool IsReadyForDeletion() const;
-    virtual bool IsUniversal() const;
+    virtual bool IsUniversal() const = 0;
     //@}
 
     //! @name Network

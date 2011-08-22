@@ -79,6 +79,7 @@ public:
         std::string val_;
     };
 };
+
 TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< ADN_UrbanAttritionInfos >, UrbanAttritionInfos_Vector );
 
 } // end namespace helpers

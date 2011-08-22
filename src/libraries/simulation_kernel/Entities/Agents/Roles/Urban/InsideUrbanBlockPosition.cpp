@@ -147,6 +147,6 @@ double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
     if( const MaterialAttribute* materialAttribute = urbanObject_.RetrieveAttribute< MaterialAttribute >() )
-        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialAttribute->GetMaterial().GetId() ) ) * urbanObject_.GetOccupation();
+        return ( 1 - dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) * urbanObject_.GetOccupation();
     return 0.;
 }

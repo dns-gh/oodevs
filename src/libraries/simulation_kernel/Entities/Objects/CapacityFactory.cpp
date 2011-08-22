@@ -20,6 +20,7 @@
 #include "BurnCapacity.h"
 #include "BurnSurfaceCapacity.h"
 #include "BypassableCapacity.h"
+#include "CloudPropagationCapacity.h"
 #include "ConstructionCapacity.h"
 #include "ContaminationCapacity.h"
 #include "DecontaminationCapacity.h"
@@ -50,8 +51,8 @@
 #include "TimeLimitedCapacity.h"
 #include "UndergroundCapacity.h"
 #include "UniversalCapacity.h"
+#include "UrbanDestructionCapacity.h"
 #include "WorkableCapacity.h"
-#include "CloudPropagationCapacity.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -178,6 +179,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "underground-network", boost::bind( &AddBuilder< UndergroundCapacity >::Add, _1, _2 ) );
     DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
     DoRegister( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
+    DoRegister( "urban-destruction", boost::bind( &AddBuilder< UrbanDestructionCapacity >::Add, _1, _2 ) );
 
     // $$$$ BCI 2011-01-05: comment faire plus simple?
     boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
