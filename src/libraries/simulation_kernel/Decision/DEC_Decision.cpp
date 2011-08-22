@@ -169,6 +169,7 @@ void RegisterAgentKnowledgeFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] = &DEC_KnowledgeAgentFunctions::Unlock;
     brain[ "DEC_ConnaissanceAgent_GetMilPionType" ] = &DEC_KnowledgeAgentFunctions::GetMilPionType;
     brain[ "DEC_Agent_RapportDeForceLocal" ] = &DEC_AgentFunctions::GetRapForLocalAgent;
+    brain[ "DEC_HasMission" ] = &DEC_AgentFunctions::HasMission;
 }
 
 // -----------------------------------------------------------------------------
