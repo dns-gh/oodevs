@@ -42,7 +42,7 @@
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="polygon" name="NBC Area - External" symbol="G*MPNR----****X" type="nbc zone (external model)">
+  <object geometry="polygon" name="NBC Contaminated Area - External" symbol="G*MPNR----****X" type="nbc zone (external model)">
     <avoidable distance="100"/>
     <contamination max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -56,7 +56,7 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
   </object>
-  <object geometry="polygon" name="NBC Area" symbol="G*MPNR----****X" type="nbc zone">
+  <object geometry="polygon" name="NBC Contaminated Area" symbol="G*MPNR----****X" type="nbc zone">
     <avoidable distance="100"/>
     <contamination max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -75,7 +75,7 @@
     <extinguishable/>
     <universal/>
   </object>
-  <object geometry="polygon" name="Surface/Fire" symbol="O*VPA-----*****" type="surface fire">
+  <object geometry="polygon" name="Wild Surface Fire" symbol="O*VPA-----*****" type="surface fire">
     <burn/>
     <propagation model="fire"/>
   </object>
@@ -108,8 +108,7 @@
         </resources>
       </improvable>
     </constructor>
-    <interact-with-enemy/>
-    <population-filter density="0.5"/>
+    <population-filter density="0"/>
   </object>
   <object geometry="polygon" name="Anti-tank Ditch" symbol="G*MPOADC--****X" type="anti tank obstacle">
     <avoidable distance="250"/>
@@ -122,9 +121,8 @@
         </resources>
       </improvable>
     </constructor>
-    <interact-with-enemy/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <population-filter density="0.5"/>
+    <population-filter density="0"/>
   </object>
   <object geometry="point" name="Barricade" symbol="G*MPORC---****X" type="barricade">
     <avoidable distance="50"/>
@@ -140,8 +138,7 @@
         </resources>
       </improvable>
     </constructor>
-    <interact-with-enemy/>
-    <population-filter density="0.5"/>
+    <population-filter density="0"/>
   </object>
   <object geometry="polygon" name="Mined Area (linear)" symbol="G*MPOFA---****X" type="mined area (linear)">
     <activable/>
@@ -181,7 +178,7 @@
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
-  <object geometry="point" name="Landslide" symbol="G*MPORC---****X" type="landslide">
+  <object geometry="polygon" name="Landslide" symbol="G*MPORC---****X" type="landslide">
     <activable/>
     <avoidable distance="500"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -203,7 +200,7 @@
       <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <population-filter density="0.5"/>
+    <population-filter density="0"/>
   </object>
   <object geometry="point" name="Roadblock" symbol="G*MPORC---****X" type="road destruction">
     <activable/>
@@ -228,7 +225,7 @@
       <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <population-filter density="0.5"/>
+    <population-filter density="0"/>
   </object>
   <object geometry="point" name="Bridge destruction" symbol="G*MPORC---****X" type="bridge destruction">
     <activable/>
@@ -278,7 +275,9 @@
   <object geometry="polygon" name="Landing Zone" symbol="G*GPGAL---****X" type="landing area"/>
   <object geometry="polygon" name="Airfield Zone" symbol="G*GPGAZ---****X" type="trail"/>
   <object geometry="polygon" name="Platform" symbol="G*PLATFORM*****" type="platform"/>
-  <object geometry="polygon" name="Mobility enhanced area" symbol="G*MPSP----****X" type="mobility enhanced area"/>
+  <object geometry="polygon" name="Mobility enhanced area" symbol="G*MPSP----****X" type="mobility enhanced area">
+    <mobility default-speed="100" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
+  </object>
   <object geometry="polygon" name="Landing Zone (helicopter)" symbol="G*GPGAL---****X" type="landing area (helicopter)"/>
   <object geometry="polygon" name="Forward Arming and Refueling Point (FARP)" symbol="G*SPAR----****X" type="logistic area"/>
   <object geometry="polygon" name="Detainee Holding Area" symbol="G*SPAD----****X" type="prisoners camp">
@@ -348,6 +347,11 @@
     <spawn action-range="1000" object="sensorsDetectionZone"/>
     <structural value="1"/>
   </object>
+  <object geometry="point" name="Supply Point" symbol="G*SPPR----****X" type="supply point">
+    <resources/>
+    <stock/>
+    <universal/>
+  </object>
   <object geometry="polygon" name="Urban Block" symbol="" type="urban block">
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>
     <resources/>
@@ -368,7 +372,7 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <workable max-animator="3"/>
   </object>
-  <object geometry="" name="Weapons Cache" symbol="" type="weapon cache">
+  <object geometry="point" name="Weapons Cache" symbol="" type="weapon cache">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
@@ -382,8 +386,29 @@
       </improvable>
     </constructor>
   </object>
-  <object geometry="" name="Leaflet" symbol="" type="leaflet"/>
-  <object geometry="point" name="Flood" symbol="G*MPORC---****X" type="flood">
+  <object geometry="point" name="Leaflet" symbol="" type="leaflet"/>
+  <object geometry="polygon" name="Emergency Shelter" symbol="G*GPGAL---****X" type="emergency shelter">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable/>
+    </constructor>
+    <spawn action-range="500" object="Captage de victimes"/>
+    <workable max-animator="1"/>
+  </object>
+  <object geometry="polygon" name="Meeting Place for Victims (PRV)" symbol="G*GPGAL---****X" type="emergency meeting place"/>
+  <object geometry="polygon" name="Victims Discovery" symbol="G*GPGAL---****X" type="victim discovery zone">
+    <detection>
+      <acquisition-times>
+        <acquisition-time level="detection" time="1s"/>
+        <acquisition-time level="recognition" time="1s"/>
+        <acquisition-time level="identification" time="1s"/>
+      </acquisition-times>
+    </detection>
+  </object>
+  <object geometry="point" name="Stock" symbol="G*SPPR----****X" type="stock">
+    <stock/>
+    <universal/>
+  </object>
+  <object geometry="polygon" name="Flood" symbol="G*MPORC---****X" type="flood">
     <flood>
       <injuries>
         <injury percentage="0.1" type="u1"/>
@@ -393,10 +418,25 @@
         <injury percentage="0.05" type="dead"/>
       </injuries>
     </flood>
+    <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0"/>
     <universal/>
   </object>
   <object geometry="polygon" name="Moving Population" symbol="" type="populationMoving"/>
-  <object geometry="polygon" name="Mined Area (linear &amp; destructible)" symbol="G*MPOFA---****X" type="Mined Area (linear &amp; destructible)">
+  <object geometry="polygon" name="Secured Area" symbol="G*GPGAL---****X" type="secured area">
+    <attitude-modifier attitude="calme"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable/>
+    </constructor>
+  </object>
+  <object geometry="polygon" name="Firebreak" symbol="G*GPGAL---****X" type="firebreak area">
+    <fire-propagation-modifier>
+      <modifier fire-class="Wild Fire Class A" ignition-threshold="5000" max-combustion-energy="500"/>
+      <modifier fire-class="Class B" ignition-threshold="4000" max-combustion-energy="600"/>
+      <modifier fire-class="Class C" ignition-threshold="3000" max-combustion-energy="700"/>
+    </fire-propagation-modifier>
+  </object>
+  <object geometry="polygon" name="Mined Area (linear and destructible)" symbol="G*MPOFA---****X" type="mined area (linear and destructible)">
     <activable/>
     <attrition category="Standard Landmine"/>
     <avoidable distance="500"/>
@@ -418,6 +458,14 @@
   </object>
   <object geometry="polygon" name="Dyke" symbol="G*DYKE*********" type="dyke">
     <altitude-modifier/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="10" name="Standard Barbed Wire"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <population-filter density="0"/>
   </object>
   <object geometry="point" name="Underground Exit" symbol="G*EXIT*********" type="underground exit">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
@@ -438,4 +486,4 @@
     <bridging type="secondary road"/>
   </object>
 </objects>
-<!-- signature="4249087852" -->
+<!-- signature="3120431945" -->

@@ -9,6 +9,7 @@
       <attrition destruction="0.5" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.7" protection="Combatant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -29,6 +30,7 @@
       <attrition destruction="0.5" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.7" protection="Combatant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -49,6 +51,7 @@
       <attrition destruction="0.05" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.05" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0.4"/>
       <attrition destruction="0.2" protection="Combatant" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -69,6 +72,7 @@
       <attrition destruction="0.8" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -89,6 +93,7 @@
       <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.4" repairable-without-evacuation="0"/>
       <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -109,6 +114,7 @@
       <attrition destruction="0.25" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.25" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.8" protection="Combatant" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -129,6 +135,7 @@
       <attrition destruction="0.05" protection="Aircraft" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.1" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.15" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -149,6 +156,7 @@
       <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -178,6 +186,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.2" protection="UnarmouredVehicle" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -207,6 +216,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.2" protection="UnarmouredVehicle" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -236,6 +246,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.2" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -265,6 +276,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.6" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.3" protection="Combatant" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -294,6 +306,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.05" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -329,6 +342,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
       <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -358,6 +372,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
       <attrition destruction="0.01" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.2" protection="Combatant" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -378,6 +393,7 @@
       <attrition destruction="0.9" protection="Aircraft" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
       <attrition destruction="0.9" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -407,6 +423,7 @@
       <attrition destruction="0.4" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
       <attrition destruction="0.4" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="Combatant" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -427,6 +444,7 @@
       <attrition destruction="0.8" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -447,6 +465,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -482,6 +501,7 @@
       <attrition destruction="0.45" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0"/>
       <attrition destruction="0.45" protection="UnarmouredVehicle" repairable-with-evacuation="0.45" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -502,6 +522,7 @@
       <attrition destruction="0.4" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.4" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -522,6 +543,7 @@
       <attrition destruction="0.4" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.4" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -554,6 +576,7 @@
       <attrition destruction="0.9" protection="Aircraft" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
       <attrition destruction="0.9" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -583,6 +606,7 @@
       <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -612,6 +636,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.6" protection="Combatant" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -641,6 +666,7 @@
       <attrition destruction="1" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -671,6 +697,7 @@
       <attrition destruction="0.5" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.7" protection="Combatant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -692,6 +719,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.2" protection="UnarmouredVehicle" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -721,6 +749,7 @@
       <attrition destruction="0.25" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.25" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.8" protection="Combatant" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -741,6 +770,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
       <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -770,6 +800,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -799,6 +830,7 @@
       <attrition destruction="1" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -828,6 +860,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -857,6 +890,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
       <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -877,6 +911,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -897,6 +932,7 @@
       <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -926,6 +962,7 @@
       <attrition destruction="0.2" protection="Aircraft" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.2" protection="UnarmouredVehicle" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -955,6 +992,7 @@
       <attrition destruction="0.8" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -975,6 +1013,7 @@
       <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -995,10 +1034,107 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" id-nature="2" name="Diesel" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" id-nature="2" name="Gas" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="53" id-nature="1" name="Kerosene" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="54" id-nature="3" name="Standard Explosive" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" id-nature="3" name="Homemade bomb" nature="Solid" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+    <indirect-fire intervention-type="1" neutralization-ratio="50" type="explosif" x-dispersion="20" y-dispersion="20">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" id-nature="5" name="Fire extinguisher - Sprayed water" nature="Sprayed water" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="53" id-nature="6" name="Fire extinguisher - Foam" nature="Fire Retardant Foam" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="54" id-nature="7" name="Fire extinguisher - Powder" nature="Powder" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="55" id-nature="8" name="Fire extinguisher - CO2" nature="CO2" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="56" id-nature="9" name="Fire extinguisher - Sand" nature="Sand" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" id-nature="10" name="Fire extinguisher - Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="3" name="Electrode" nature="Solid" package-mass="1" package-size="0.001" package-volume="1" type="Mitraille">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.1" protection="Individual" repairable-with-evacuation="0.9" repairable-without-evacuation="0"/>
+    </attritions>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="3" name="Flashball Ammo" nature="Solid" package-mass="1" package-size="0.001" package-volume="1" type="Mitraille">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.1" protection="Individual" repairable-with-evacuation="0.9" repairable-without-evacuation="0"/>
+    </attritions>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="3" name="Teargas bomb" nature="Solid" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
+    <indirect-fire intervention-type="1" life-time="300s" object-type="" type="effect" x-dispersion="200" y-dispersion="200"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="61" id-nature="3" name="Antitank Air Bomb" nature="Solid" package-mass="0.5" package-size="1" package-volume="0.5" type="Obus">
+    <attritions>
+      <attrition destruction="0.5" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.5" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.4" protection="LightTank" repairable-with-evacuation="0.25" repairable-without-evacuation="0.35"/>
+      <attrition destruction="0.4" protection="ArmouredCarrier" repairable-with-evacuation="0.25" repairable-without-evacuation="0.35"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.6" protection="Combatant" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="1" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </resource>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="62" id-nature="15" name="Gasoil" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="63" id-nature="2" name="Diesel" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="64" id-nature="2" name="Gas" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="65" id-nature="1" name="Kerosene" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="66" id-nature="3" name="Standard Explosive" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -1007,6 +1143,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -1018,7 +1155,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="55" id-nature="3" name="Standard Landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" name="Standard Landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -1027,6 +1164,7 @@
       <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Wood" value="0.2"/>
@@ -1038,22 +1176,30 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="56" id-nature="3" name="Standard Barbed Wire" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" id-nature="3" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="3" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="3" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="3" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="61" id-nature="3" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="62" id-nature="3" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="63" id-nature="3" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="64" id-nature="3" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="65" id-nature="3" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="66" id-nature="3" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="68" id-nature="3" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="12" name="H2O" nature="Liquid" package-mass="1" package-size="0.001" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="70" id-nature="11" name="Electricity" nature="Electricity" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="12" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="72" id-nature="13" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="68" id-nature="3" name="Standard Barbed Wire" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="3" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="70" id-nature="3" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="3" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="72" id-nature="3" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="73" id-nature="3" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="74" id-nature="3" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="75" id-nature="3" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="76" id-nature="3" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="77" id-nature="3" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="78" id-nature="3" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" id-nature="3" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="80" id-nature="3" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="81" id-nature="3" name="Bottle of Distilled Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="82" id-nature="11" name="Electricity - other" nature="Electricity" package-mass="0.1" package-size="1" package-volume="0.1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" id-nature="3" name="Cover" nature="Solid" package-mass="0.05" package-size="50" package-volume="2"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" id-nature="6" name="Extinguisher Agent - Foam" nature="Fire Retardant Foam" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="85" id-nature="5" name="Extinguisher Agent - Sprayed water" nature="Sprayed water" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="86" id-nature="8" name="Extinguisher Agent - CO2" nature="CO2" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="87" id-nature="9" name="Extinguisher Agent - Sand" nature="Sand" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="7" name="Extinguisher Agent - Powder" nature="Powder" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="10" name="Extinguisher Agent - Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="90" id-nature="11" name="Electricity" nature="Electricity" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="91" id-nature="12" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="92" id-nature="13" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3006319240" -->
+<!-- signature="3272952279" -->

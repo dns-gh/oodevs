@@ -585,6 +585,71 @@
       <ph-modifier target-posture="PostePrepareGenie" value="0.45"/>
     </ph-modifiers>
   </launcher>
+  <launcher name="Sig-Sauer SP 2022">
+    <ph-modifiers posture="Mouvement">
+      <ph-modifier target-posture="Mouvement" value="0.4"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.1"/>
+      <ph-modifier target-posture="Arret" value="0.4"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.2"/>
+      <ph-modifier target-posture="Poste" value="0.1"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.1"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.1"/>
+    </ph-modifiers>
+    <ph-modifiers posture="MouvementDiscret">
+      <ph-modifier target-posture="Mouvement" value="0.4"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.1"/>
+      <ph-modifier target-posture="Arret" value="0.4"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.2"/>
+      <ph-modifier target-posture="Poste" value="0.1"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.1"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.1"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Arret">
+      <ph-modifier target-posture="Mouvement" value="0.5"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.45"/>
+      <ph-modifier target-posture="Arret" value="0.9"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.9"/>
+      <ph-modifier target-posture="Poste" value="0.45"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.45"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.45"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteReflexe">
+      <ph-modifier target-posture="Mouvement" value="0.7"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.35"/>
+      <ph-modifier target-posture="Arret" value="0.9"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
+      <ph-modifier target-posture="Poste" value="0.35"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.35"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.35"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Poste">
+      <ph-modifier target-posture="Mouvement" value="0.85"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.45"/>
+      <ph-modifier target-posture="Arret" value="1"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.9"/>
+      <ph-modifier target-posture="Poste" value="0.45"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.45"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.45"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteAmenage">
+      <ph-modifier target-posture="Mouvement" value="0.85"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.45"/>
+      <ph-modifier target-posture="Arret" value="1"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.9"/>
+      <ph-modifier target-posture="Poste" value="0.45"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.45"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.45"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PostePrepareGenie">
+      <ph-modifier target-posture="Mouvement" value="0.95"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0.45"/>
+      <ph-modifier target-posture="Arret" value="1"/>
+      <ph-modifier target-posture="PosteReflexe" value="0.9"/>
+      <ph-modifier target-posture="Poste" value="0.45"/>
+      <ph-modifier target-posture="PosteAmenage" value="0.45"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0.45"/>
+    </ph-modifiers>
+  </launcher>
   <launcher indirect-fire="true" name="7.62-mm Sniper Rifle">
     <ph-modifiers posture="Mouvement">
       <ph-modifier target-posture="Mouvement" value="0.2"/>
@@ -2092,5 +2157,137 @@
       <ph-modifier target-posture="PostePrepareGenie" value="0.5"/>
     </ph-modifiers>
   </launcher>
+  <launcher name="Taser X26">
+    <ph-modifiers posture="Mouvement">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="MouvementDiscret">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Arret">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteReflexe">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Poste">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteAmenage">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PostePrepareGenie">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+  </launcher>
+  <launcher name="Fire Hose"/>
+  <launcher name="Water-Release System">
+    <ph-modifiers posture="Mouvement">
+      <ph-modifier target-posture="Mouvement" value="1"/>
+      <ph-modifier target-posture="MouvementDiscret" value="1"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="MouvementDiscret">
+      <ph-modifier target-posture="Mouvement" value="1"/>
+      <ph-modifier target-posture="MouvementDiscret" value="1"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Arret">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteReflexe">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="Poste">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PosteAmenage">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+    <ph-modifiers posture="PostePrepareGenie">
+      <ph-modifier target-posture="Mouvement" value="0"/>
+      <ph-modifier target-posture="MouvementDiscret" value="0"/>
+      <ph-modifier target-posture="Arret" value="0"/>
+      <ph-modifier target-posture="PosteReflexe" value="0"/>
+      <ph-modifier target-posture="Poste" value="0"/>
+      <ph-modifier target-posture="PosteAmenage" value="0"/>
+      <ph-modifier target-posture="PostePrepareGenie" value="0"/>
+    </ph-modifiers>
+  </launcher>
+  <launcher indirect-fire="true" name="Hand"/>
 </launchers>
-<!-- signature="1070602419" -->
+<!-- signature="0853717916" -->

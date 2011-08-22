@@ -28,8 +28,8 @@
         <object-cost type="barricade" value="10000"/>
         <object-cost type="mines" value="10000"/>
         <object-cost type="mined area (linear)" value="10000"/>
-        <object-cost type="Mined Area (linear &amp; destructible)" value="10000"/>
         <object-cost type="mined area (scattered)" value="10000"/>
+        <object-cost type="mined area (linear and destructible)" value="10000"/>
         <object-cost type="landslide" value="10000"/>
         <object-cost type="road destruction" value="10000"/>
         <object-cost type="bridge destruction" value="10000"/>
@@ -201,8 +201,8 @@
         <object-cost type="barricade" value="10000"/>
         <object-cost type="mines" value="10000"/>
         <object-cost type="mined area (linear)" value="10000"/>
-        <object-cost type="Mined Area (linear &amp; destructible)" value="10000"/>
         <object-cost type="mined area (scattered)" value="10000"/>
+        <object-cost type="mined area (linear and destructible)" value="10000"/>
         <object-cost type="landslide" value="10000"/>
         <object-cost type="road destruction" value="10000"/>
         <object-cost type="bridge destruction" value="10000"/>
@@ -348,4 +348,4 @@
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2437471300" -->
+<!-- signature="2889848324" -->

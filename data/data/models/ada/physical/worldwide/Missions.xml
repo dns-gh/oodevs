@@ -8,46 +8,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="security.behaviors.tasks.MoveTo" dia-type="security.behaviors.tasks.MoveTo" id="3001" name="Security - Move To">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="elementToReach" name="Destination" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
-    </mission>
-    <mission dia-behavior="security.behaviors.tasks.Extinguish" dia-type="security.behaviors.tasks.Extinguish" id="3003" name="Security - Extinguish">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="elementToExtinguish" name="Target" optional="false" type="ObjectKnowledge">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
-      <parameter dia-name="garagePosition" name="Parking point" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-        </choice>
-      </parameter>
-    </mission>
     <mission dia-behavior="MIS_Pion_SoutenirSurPositionEnMesureDe" dia-type="T_Mission_Pion_SoutenirSurPositionEnMesureDe" id="2" name="Common - prepare to (take up position)">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -205,21 +165,6 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ASA_DefendreSite" dia-type="T_Mission_Pion_ASA_DefendreSite" id="20" name="AAA - defend site">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_DefendreSiteAPartirPosition" dia-type="T_Mission_Pion_ASA_DefendreSiteAPartirPosition" id="21" name="AAA - defend site (from a position)">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-      <parameter dia-name="pointDeDeploiement_" name="Deployment point" optional="false" type="Point"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreZone" dia-type="T_Mission_Pion_ASA_DefendreZone" id="22" name="AAA - defend area">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -256,29 +201,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreSite" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreSite" id="26" name="AAA - defend site (Short Range)">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-      <parameter dia-name="modeDeploiement_" name="Deployment mode" optional="false" type="Enumeration">
-        <value id="0" name="omnidirectional"/>
-        <value id="1" name="directional"/>
-      </parameter>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" id="27" name="AAA - defend site (from a position) (Short Range)">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-      <parameter dia-name="pointDeDeploiement_" name="Deployment point" optional="false" type="Point"/>
-      <parameter dia-name="modeDeploiement_" name="Deployment mode" optional="false" type="Enumeration">
-        <value id="0" name="omnidirectional"/>
-        <value id="1" name="directional"/>
-      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreZone" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreZone" id="28" name="AAA - defend area (Short Range)">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -335,7 +257,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneDeploiement_" name="Deployment position" optional="false" type="Polygon"/>
+      <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" id="34" name="FieldArtillery - collect enemy artillery intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -373,7 +295,7 @@
       <parameter dia-name="categories_" name="Categories" optional="false" type="NatureAtlas"/>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ABC_PC_SeDeployer" dia-type="T_Mission_Pion_ABC_PC_SeDeployer" id="38" name="Armor CP To Deploy">
+    <mission dia-behavior="MIS_Pion_ABC_PC_SeDeployer" dia-type="T_Mission_Pion_ABC_PC_SeDeployer" id="38" name="Armor - deploy">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -562,13 +484,6 @@ obstructions.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ABC_ContreAttaquer" dia-type="T_Mission_Pion_ABC_ContreAttaquer" id="54" name="Armor - counter-attack">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="itineraireAssaut_" name="Assault route" optional="false" type="Path"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_ABC_SemparerZone" dia-type="T_Mission_Pion_ABC_SemparerZone" id="55" name="Armor - seize">
       <description>
         <doctrine><![CDATA[A tactical mission task that involves taking possession of a designated area using
@@ -673,7 +588,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ABC_RASIT_RenseignerSur" dia-type="T_Mission_Pion_ABC_RASIT_RenseignerSur" id="65" name="Armor - (medium range radar) To report information">
+    <mission dia-behavior="MIS_Pion_ABC_RASIT_RenseignerSur" dia-type="T_Mission_Pion_ABC_RASIT_RenseignerSur" id="65" name="Armor - report information (medium range radar)">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1407,35 +1322,35 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_FiltrerPopulations" dia-type="T_Mission_Pion_FiltrerPopulations" id="142" name="OOTW - filtrate populations">
+    <mission dia-behavior="MIS_Pion_FiltrerPopulations" dia-type="T_Mission_Pion_FiltrerPopulations" id="142" name="OOTW - filtrate crowds">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_RenseignerSurPopulations" dia-type="T_Mission_Pion_RenseignerSurPopulations" id="143" name="OOTW - report information on populations">
+    <mission dia-behavior="MIS_Pion_RenseignerSurPopulations" dia-type="T_Mission_Pion_RenseignerSurPopulations" id="143" name="OOTW - report information on crowds">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_CanaliserPopulations" dia-type="T_Mission_Pion_CanaliserPopulations" id="144" name="Common - canalize populations">
+    <mission dia-behavior="MIS_Pion_CanaliserPopulations" dia-type="T_Mission_Pion_CanaliserPopulations" id="144" name="OOTW - canalize crowds">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ControlerPopulationsDansZone" dia-type="T_Mission_Pion_ControlerPopulationsDansZone" id="145" name="OOTW - control populations (in an area)">
+    <mission dia-behavior="MIS_Pion_ControlerPopulationsDansZone" dia-type="T_Mission_Pion_ControlerPopulationsDansZone" id="145" name="OOTW - control crowds (in an area)">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_SecuriserZoneContrePopulations" dia-type="T_Mission_Pion_SecuriserZoneContrePopulations" id="146" name="OOTW - secure area (against populations assault)">
+    <mission dia-behavior="MIS_Pion_SecuriserZoneContrePopulations" dia-type="T_Mission_Pion_SecuriserZoneContrePopulations" id="146" name="OOTW - secure area (against crowd assaults)">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1525,6 +1440,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="dotation_" name="Dotation" optional="false" type="ResourceType"/>
     </mission>
     <mission dia-behavior="MIS_Pion_NBC_AnimerUnPlotDeDecontamination" dia-type="T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination" id="152" name="NBC - operate a decontamination site">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -1961,7 +1877,234 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="uniteAEscorter_" name="Unit to escort" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ReconnaissanceInForce" dia-type="T_Mission_Pion_ReconnaissanceInForce" id="4431" name="Common - reconnaissance by force">
+    <mission dia-behavior="security.unit.tasks.MoveTo" dia-type="security.unit.tasks.MoveTo" id="3001" name="Security - Move To">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="elementToReach" name="Target location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.firefighter.tasks.Extinguish" dia-type="security.firefighter.tasks.Extinguish" id="3003" name="Security - Extinguish Fire">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="elementToExtinguish" name="Element to exinguish" optional="false" type="ObjectKnowledge">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.Alert" dia-type="security.unit.tasks.Alert" id="3004" name="Security - Alert">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Zone to alert" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Polygon"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.Supply" dia-type="security.unit.tasks.Supply" id="3006" name="Security - Supply">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="supplyPoint" name="Supply location" optional="false" type="ObjectKnowledge">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="resourceTypes" max-occurs="8" min-occurs="1" name="Resource types" optional="false" type="ResourceType"/>
+      <parameter dia-name="sourcePoints" max-occurs="8" min-occurs="1" name="Sources" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="waitForStockAvailable" name="Wait till stocks are available" optional="true" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.Distribute" dia-type="security.unit.tasks.Distribute" id="3007" name="Security - Distribute">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="supplyPoint" name="Supply point" optional="false" type="ObjectKnowledge">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="waitForStockAvailable" name="Wait for available stocks" optional="true" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.Confine" dia-type="security.unit.tasks.Confine" id="3008" name="Security - Confine">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Confinement area" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Polygon"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.thief.tasks.Pillage" dia-type="security.thief.tasks.Pillage" id="3009" name="Security - Loot">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Looting area" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Polygon"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.EvacuateZone" dia-type="security.unit.tasks.EvacuateZone" id="3010" name="Security - Evacuate Area">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Zone to evacuate" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Polygon"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.Build" dia-type="security.unit.tasks.Build" id="3012" name="Security - Build">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="1000" min-occurs="1" name="Objects to build" optional="false" type="PlannedWork">
+        <choice>
+          <parameter type="Polygon"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.police.tasks.SecureZone" dia-type="security.police.tasks.SecureZone" id="3013" name="Security - Secure Area">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Area to secure" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Polygon"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.InstallRoadBlock" dia-type="security.unit.tasks.InstallRoadBlock" id="3016" name="Security - Install RoadBlock">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="roadblockPositions" max-occurs="4" min-occurs="1" name="Roadblock locations" optional="false" type="Polygon">
+        <choice>
+          <parameter type="Path"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="garagePosition" name="Garage location" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.EscortCrowd" dia-type="security.unit.tasks.EscortCrowd" id="4431" name="Security - Escort Crowd">
+      <description>
+        <doctrine><![CDATA[Follow the head of a crowd]]></doctrine>
+        <usage><![CDATA[Follow the head of a crowd]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="crowd" name="Crowd" optional="false" type="CrowdKnowledge"/>
+      <parameter dia-name="destination" name="Target Destination" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_ReconnaissanceInForce" dia-type="T_Mission_Pion_ReconnaissanceInForce" id="4432" name="Common - reconnaissance by force">
       <description>
         <doctrine><![CDATA[A tactical mission task that reconnoiters an area by force.]]></doctrine>
         <usage><![CDATA[Unit moves towards its targeted area and patrols it randomly until it fires upon an enemy. It then retreats to its initial position.]]></usage>
@@ -1973,7 +2116,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="true" type="Polygon"/>
       <parameter dia-name="knowledge_" name="Predefined area" optional="true" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_Defend" dia-type="T_Mission_Defend" id="4432" name="Common - defend area">
+    <mission dia-behavior="MIS_Pion_Defend" dia-type="T_Mission_Defend" id="4433" name="Common - defend area">
       <description>
         <doctrine><![CDATA[A tactical mission task that defends an area]]></doctrine>
         <usage><![CDATA[Unit moves towards a random point in the area, and, for engineering units, builds ditches in the area]]></usage>
@@ -1985,10 +2128,10 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="true" type="Polygon"/>
       <parameter dia-name="knowledge_" name="Predefined area" optional="true" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_MELEE_Attack" dia-type="T_Mission_Pion_MELEE_Attack" id="4433" name="Melee - attack">
+    <mission dia-behavior="MIS_Pion_MELEE_Attack" dia-type="T_Mission_Pion_MELEE_Attack" id="4434" name="Melee - attack">
       <description>
         <doctrine><![CDATA[A tactical mission task that attacks an enemy or the nearest enemy]]></doctrine>
-        <usage><![CDATA[Unit moves towards its targett enemy and attacks it. It is possible to specify an ammunition which is to be used only once during the mission]]></usage>
+        <usage><![CDATA[Unit moves towards its target enemy and attacks it. It is possible to specify an ammunition which is to be used only once during the mission]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -1997,7 +2140,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ammunition_" name="Ammunition" optional="false" type="ResourceType"/>
       <parameter dia-name="enemy_" name="Enemy" optional="true" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_FireSupport" dia-type="T_Mission_Pion_FireSupport" id="4434" name="FieldArtillery - fire support">
+    <mission dia-behavior="MIS_Pion_FireSupport" dia-type="T_Mission_Pion_FireSupport" id="4435" name="FieldArtillery - fire support">
       <description>
         <doctrine><![CDATA[Fire support]]></doctrine>
         <usage><![CDATA[Targets enemy unit already targeted by friendly fire support, or enemy unit attacking a freindly unit, or enemy unit nearest a friendly unit, in this order]]></usage>
@@ -2007,6 +2150,33 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="ammunition_" name="Ammunition" optional="false" type="ResourceType"/>
+    </mission>
+    <mission dia-behavior="security.unit.tasks.EvacuateVictim" dia-type="security.unit.tasks.EvacuateVictim" id="4436" name="Security - Evacuate Victim">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="victim" name="Victim" optional="false" type="Agent">
+        <choice>
+          <parameter type="Path"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="hospitals" max-occurs="5" min-occurs="1" name="Hospitals" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="garage" name="Garage location" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="MIS_Pion_JOINT_AIR_EffectuerRaid" dia-type="T_Mission_Pion_JOINT_AIR_EffectuerRaid_total" id="4437" name="JointAir - Air strike (total)">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
+      <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
   </units>
   <automats>
@@ -2307,7 +2477,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zonesAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Positions to recon" optional="false" type="Polygon"/>
+      <parameter dia-name="positionsAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Positions to recon" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" id="218" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" name="FieldArtillery - collect intelligence on objectives">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3252,6 +3422,22 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
+    <mission cdt-dia-behavior="security.unit.tasks.MoveTo" dia-type="security.unit.tasks.MoveTo" id="3002" mrt-dia-behavior="security.unit.tasks.MoveTo" name="SECURITE Move To">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="elementToReach" name="Objectif a atteindre" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="342" name="Crowd - move">
@@ -3263,6 +3449,19 @@ overwhelming force.]]></doctrine>
     <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="344" name="Crowd - attack">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
+    <mission dia-behavior="security.unit.tasks.MoveTo" dia-type="security.unit.tasks.MoveTo" id="3011" name="DIA5 - Crowd - Move To">
+      <parameter dia-name="elementToReach" name="Objectif a atteindre" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="security.crowd.tasks.SeekSupply" dia-type="security.crowd.tasks.SeekSupply" id="3015" name="DIA5 - Crowd - Seek Supply"/>
   </populations>
   <fragorders>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="345" name="NBC suit on"/>
@@ -3272,9 +3471,9 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="349" name="Radar silence"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="350" name="Radar silence lifted"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="351" name="Get back carriers"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="352" name="Pause maneuver"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="353" name="Resume maneuver"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="354" name="Cancel maneuver"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_AttendreSePoster" id="352" name="Pause maneuver"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Poursuivre" id="353" name="Resume maneuver"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Interrompre" id="354" name="Cancel maneuver"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerAmbiance" id="355" name="Switch posture">
       <parameter dia-name="orderConduiteChangerAmbiance_" name="Ordre conduite changer ambiance" optional="false" type="Enumeration">
         <value id="0" name="safety"/>
@@ -3431,6 +3630,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Integer"/>
       <parameter dia-name="zoneCible_" name="Target" optional="false" type="Polygon"/>
     </fragorder>
+    <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2751157360" -->
+<!-- signature="1783710456" -->

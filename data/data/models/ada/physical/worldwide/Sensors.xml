@@ -97,6 +97,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.9"/>
             <distance-modifier type="Small" value="0.7"/>
@@ -460,6 +461,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.4"/>
@@ -763,6 +765,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.6"/>
@@ -837,6 +840,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.9"/>
             <distance-modifier type="Small" value="0.7"/>
@@ -911,6 +915,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.25"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.6"/>
@@ -1262,6 +1267,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.6"/>
@@ -1335,6 +1341,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.6"/>
@@ -1710,6 +1717,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.6"/>
@@ -2094,13 +2102,14 @@
     <sensor detection-delay="0h" name="Real Time Video Camera">
       <unit-detection angle="15" firer-detection-distance="0" scanning="false">
         <base-distances close-range="0">
-          <base-distance distance="1000" level="identification"/>
-          <base-distance distance="1000" level="recognition"/>
-          <base-distance distance="1000" level="detection"/>
+          <base-distance distance="3000" level="identification"/>
+          <base-distance distance="10000" level="recognition"/>
+          <base-distance distance="10000" level="detection"/>
         </base-distances>
         <distance-modifiers>
           <population-modifier density="0.5" modifier="1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.6"/>
@@ -2144,7 +2153,7 @@
             <distance-modifier type="PosteReflexe" value="0.95"/>
             <distance-modifier type="Poste" value="0.8"/>
             <distance-modifier type="PosteAmenage" value="0.7"/>
-            <distance-modifier type="PostePrepareGenie" value="0.4"/>
+            <distance-modifier type="PostePrepareGenie" value="0.6"/>
           </target-posture-modifiers>
           <terrain-modifiers>
             <distance-modifier type="Sol" value="1"/>
@@ -2416,6 +2425,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.9"/>
             <distance-modifier type="Small" value="0.7"/>
@@ -2755,6 +2765,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.25"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.6"/>
@@ -3130,6 +3141,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.8"/>
             <distance-modifier type="Small" value="0.4"/>
@@ -3267,7 +3279,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor detection-delay="0h" name="Engineers Sensor">
+    <sensor detection-delay="0h" name="Combat Engineer Sensor">
       <object-detection>
         <object detection-distance="1000" type="abattis">
           <population-modifier density="2" modifier="0.5"/>
@@ -3425,6 +3437,7 @@
         <distance-modifiers>
           <population-modifier density="0" modifier="0"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="1"/>
             <distance-modifier type="Small" value="1"/>
@@ -3498,6 +3511,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.9"/>
             <distance-modifier type="Small" value="0.7"/>
@@ -3572,6 +3586,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.9"/>
             <distance-modifier type="Small" value="0.7"/>
@@ -3646,6 +3661,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.1"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.9"/>
             <distance-modifier type="Small" value="0.7"/>
@@ -3719,6 +3735,7 @@
         <distance-modifiers>
           <population-modifier density="0.5" modifier="0.25"/>
           <size-modifiers>
+            <distance-modifier type="Stealth" value="0"/>
             <distance-modifier type="Heavy" value="1"/>
             <distance-modifier type="Medium" value="0.9"/>
             <distance-modifier type="Small" value="0.7"/>
@@ -4078,4 +4095,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="2939739833" -->
+<!-- signature="0699165078" -->

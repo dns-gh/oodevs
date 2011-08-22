@@ -2,12 +2,12 @@
 <health model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Medical.xsd">
   <times diagnosis-time="30m" sorting-time="30m"/>
   <injuries>
-    <injury caring-time="40m" category="UE" life-expectancy="2h" percentage="4" resting-time="10s"/>
-    <injury caring-time="2h" category="U1" life-expectancy="6h" percentage="30" resting-time="10s"/>
-    <injury caring-time="2h" category="U2" life-expectancy="18h" percentage="34" resting-time="10s"/>
-    <injury caring-time="2h" category="U3" life-expectancy="36h" percentage="32" resting-time="10s"/>
-    <injury caring-time="96h" category="mental" percentage="20" resting-time="10s"/>
-    <injury caring-time="30m" category="contaminated" resting-time="10s"/>
+    <injury caring-time="2h" category="UE" life-expectancy="2h" percentage="4" resting-time="48h"/>
+    <injury caring-time="1h" category="U1" life-expectancy="6h" percentage="30" resting-time="24h"/>
+    <injury caring-time="1h" category="U2" life-expectancy="24h" percentage="34" resting-time="12h"/>
+    <injury caring-time="1h" category="U3" life-expectancy="72h" percentage="32" resting-time="2h"/>
+    <injury caring-time="96h" category="mental" percentage="20" resting-time="20m"/>
+    <injury caring-time="30m" category="contaminated" resting-time="20m"/>
   </injuries>
   <resource-availability-alerts>
     <resource-availability-alert availability-threshold="0" resource="relieve"/>
@@ -16,4 +16,4 @@
     <resource-availability-alert availability-threshold="0" resource="doctor"/>
   </resource-availability-alerts>
 </health>
-<!-- signature="3966218718" -->
+<!-- signature="1009596261" -->

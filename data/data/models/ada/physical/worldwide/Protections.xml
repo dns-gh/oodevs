@@ -57,5 +57,8 @@
   <protection name="Combatant" type="humain">
     <neutralization average-time="300s" variance="420s"/>
   </protection>
+  <protection name="Individual" type="humain">
+    <neutralization average-time="300s" variance="420s"/>
+  </protection>
 </protections>
-<!-- signature="1430344472" -->
+<!-- signature="3038636507" -->

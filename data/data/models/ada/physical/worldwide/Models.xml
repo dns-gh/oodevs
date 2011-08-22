@@ -11,6 +11,7 @@
         </mission>
         <mission name="Common - adopt transportation posture"/>
         <mission name="JointAir - Bombing"/>
+        <mission name="JointAir - Air strike (total)"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -30,13 +31,6 @@
         <fragorder name="Munition - Authorize"/>
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
-    </unit>
-    <unit dia-type="security.firefighter.roles.FireFighter" file="BMPionSecurity.bms" masalife="true" name="FireFighter">
-      <missions>
-        <mission name="Security - Move To"/>
-        <mission name="Security - Extinguish"/>
-      </missions>
-      <fragorders/>
     </unit>
     <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" masalife="false" name="Landing Craft">
       <missions>
@@ -93,88 +87,168 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
+    <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" masalife="false" name="Circulation Patrol">
+      <missions>
+        <mission name="Common - move"/>
+        <mission name="Common - follow"/>
+        <mission name="Common - go through decontamination process"/>
+        <mission name="Common - withdraw"/>
+        <mission name="Logistics - recon a route"/>
+        <mission name="Logistics - monitor"/>
+        <mission name="Logistics - support mobility (in an area)"/>
+        <mission name="Logistics - support mobility"/>
+        <mission name="Logistics - operate parking area"/>
+        <mission name="Logistics - recon a contaminated area"/>
+        <mission name="Logistics - operate a checkpoint"/>
+        <mission name="Logistics - block an area"/>
+        <mission name="Logistics - support crossing maneuvers"/>
+        <mission name="Logistics - recon a deployment area"/>
+        <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - park"/>
+        <mission name="Engineer - reinforce"/>
+      </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Munition - Forbidden"/>
+        <fragorder name="Munition - Authorize"/>
+        <fragorder name="Munition - Authorize all"/>
+      </fragorders>
+    </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" masalife="false" name="Antitank Helicopter Patrol">
       <missions>
         <mission name="ArmyAviation - cover">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - destroy flying enemy">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - recon">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - escort">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - screen">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - recon enemy positions">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - recon in force">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - monitor">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - move">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - follow">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - park">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - adopt transportation posture">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="OOTW - deny population crossing">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
-        <mission name="OOTW - report information on populations">
+        <mission name="OOTW - report information on crowds">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - resupply">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="Common - withdraw">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - support (in contact)">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - assault">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - destroy (in a specific area)">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - delay">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
+        <mission name="Common - go through decontamination process"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -198,50 +272,73 @@
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Transport Helicopter Patrol">
       <missions>
         <mission name="ArmyAviation - helitransport">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Modify Disembarking point"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - helitransport replenishment sites">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - evacuate">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - move">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - follow">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - park">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - adopt transportation posture">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="OOTW - deny population crossing">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
-        <mission name="OOTW - report information on populations">
+        <mission name="OOTW - report information on crowds">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - resupply">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="Common - withdraw">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
+        <mission name="Common - go through decontamination process"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -365,12 +462,12 @@
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
         <mission name="Infantry - escort"/>
-        <mission name="OOTW - filtrate populations"/>
-        <mission name="OOTW - control populations (in an area)"/>
-        <mission name="OOTW - report information on populations"/>
-        <mission name="Common - canalize populations"/>
+        <mission name="OOTW - filtrate crowds"/>
+        <mission name="OOTW - control crowds (in an area)"/>
+        <mission name="OOTW - report information on crowds"/>
+        <mission name="OOTW - canalize crowds"/>
         <mission name="OOTW - deny population crossing"/>
-        <mission name="OOTW - secure area (against populations assault)"/>
+        <mission name="OOTW - secure area (against crowd assaults)"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
         <mission name="Common - reconnaissance by force"/>
@@ -533,11 +630,11 @@
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
         <mission name="OOTW - deny population crossing"/>
-        <mission name="Common - canalize populations"/>
-        <mission name="OOTW - control populations (in an area)"/>
-        <mission name="OOTW - filtrate populations"/>
-        <mission name="OOTW - report information on populations"/>
-        <mission name="OOTW - secure area (against populations assault)"/>
+        <mission name="OOTW - canalize crowds"/>
+        <mission name="OOTW - control crowds (in an area)"/>
+        <mission name="OOTW - filtrate crowds"/>
+        <mission name="OOTW - report information on crowds"/>
+        <mission name="OOTW - secure area (against crowd assaults)"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
         <mission name="Common - reconnaissance by force"/>
@@ -631,7 +728,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" masalife="false" name="Groupe Maintenance Evacuation">
+    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" masalife="false" name="Evacuation maintenance group">
       <missions>
         <mission name="Logistics - deploy">
           <fragorder name="Change work mode"/>
@@ -867,7 +964,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" masalife="false" name="Groupe Ramassage">
+    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" masalife="false" name="Collection group">
       <missions>
         <mission name="Logistics - deploy">
           <fragorder name="Send ambulances"/>
@@ -1080,6 +1177,35 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
+    <unit dia-type="HS_Safety" file="Emergency\Pions\Safety\Model.bms" masalife="false" name="HS - Safety">
+      <missions>
+        <mission name="Emergency - organise shelter"/>
+        <mission name="Emergency - provide first aid"/>
+        <mission name="Emergency - soothe"/>
+        <mission name="Emergency - supply"/>
+        <mission name="Common - move"/>
+        <mission name="Common - park"/>
+        <mission name="Emergency - follow population"/>
+      </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Munition - Forbidden"/>
+        <fragorder name="Munition - Authorize"/>
+        <fragorder name="Munition - Authorize all"/>
+      </fragorders>
+    </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" masalife="false" name="Firefinder radar">
       <missions>
         <mission name="FieldArtillery - collect enemy artillery intelligence"/>
@@ -1186,39 +1312,6 @@
         <mission name="Common - park"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Munition - Forbidden"/>
-        <fragorder name="Munition - Authorize"/>
-        <fragorder name="Munition - Authorize all"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="Transport Armored">
-      <missions>
-        <mission name="Common - move"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - park"/>
-        <mission name="Common - cross"/>
-        <mission name="Common - transport">
-          <fragorder name="Modify Disembarking point"/>
-        </mission>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1401,7 +1494,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="Terroriste">
+    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="Terrorist">
       <missions>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
@@ -1553,7 +1646,7 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
-        <mission name="Armor CP To Deploy"/>
+        <mission name="Armor - deploy"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1574,7 +1667,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="MBT platoon">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="Armored platoon">
       <missions>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -1608,12 +1701,12 @@
         <mission name="Armor - monitor"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - support (from a position)"/>
-        <mission name="Common - canalize populations"/>
-        <mission name="OOTW - control populations (in an area)"/>
-        <mission name="OOTW - filtrate populations"/>
+        <mission name="OOTW - canalize crowds"/>
+        <mission name="OOTW - control crowds (in an area)"/>
+        <mission name="OOTW - filtrate crowds"/>
         <mission name="OOTW - deny population crossing"/>
-        <mission name="OOTW - report information on populations"/>
-        <mission name="OOTW - secure area (against populations assault)"/>
+        <mission name="OOTW - report information on crowds"/>
+        <mission name="OOTW - secure area (against crowd assaults)"/>
         <mission name="Armor - recon"/>
         <mission name="Armor - escort"/>
         <mission name="Armor - protect"/>
@@ -1624,73 +1717,6 @@
         <mission name="Common - prepare to (take up position)"/>
         <mission name="Common - reconnaissance by force"/>
         <mission name="Melee - attack"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Munition - Forbidden"/>
-        <fragorder name="Munition - Authorize"/>
-        <fragorder name="Munition - Authorize all"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="Light armored platoon">
-      <missions>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - move"/>
-        <mission name="Common - reconnaissance area"/>
-        <mission name="Common - reconnaissance area hidden"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
-        <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Armor - support"/>
-        <mission name="Armor - attack">
-          <fragorder name="Cross departure line"/>
-        </mission>
-        <mission name="Armor - interdict"/>
-        <mission name="Armor - control"/>
-        <mission name="Armor - cover"/>
-        <mission name="Armor - escort"/>
-        <mission name="Armor - protect"/>
-        <mission name="Armor - fix"/>
-        <mission name="Armor - flank-guard"/>
-        <mission name="Armor - screen"/>
-        <mission name="Armor - recon in force (an axis)"/>
-        <mission name="Armor - recon in force"/>
-        <mission name="Armor - destroy"/>
-        <mission name="Melee - capture"/>
-        <mission name="Armor - relieve"/>
-        <mission name="Armor - seize"/>
-        <mission name="Armor - support (dynamic)"/>
-        <mission name="Armor - monitor"/>
-        <mission name="Armor - delay"/>
-        <mission name="Armor - escort units"/>
-        <mission name="Armor - support (from a position)"/>
-        <mission name="Common - canalize populations"/>
-        <mission name="OOTW - control populations (in an area)"/>
-        <mission name="OOTW - filtrate populations"/>
-        <mission name="OOTW - deny population crossing"/>
-        <mission name="OOTW - report information on populations"/>
-        <mission name="OOTW - secure area (against populations assault)"/>
-        <mission name="Armor - open a route"/>
-        <mission name="Armor - report information"/>
-        <mission name="Common - prepare to"/>
-        <mission name="Common - prepare to (take up position)"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2139,70 +2165,104 @@
     <unit dia-type="AirDefenseHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Air Defence Helicopter Patrol">
       <missions>
         <mission name="ArmyAviation - cover">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - destroy flying enemy">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - recon">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - escort">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - screen">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - recon enemy positions">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - recon in force">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - monitor">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - move">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - follow">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - go through decontamination process">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - park">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - adopt transportation posture">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="OOTW - deny population crossing">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
-        <mission name="OOTW - report information on populations">
+        <mission name="OOTW - report information on crowds">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - resupply">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="Common - withdraw">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
@@ -2229,30 +2289,44 @@
     <unit dia-type="AACCP" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="AAC CP">
       <missions>
         <mission name="Common - move">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - follow">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - go through decontamination process">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - park">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - adopt transportation posture">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - resupply">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="Common - withdraw">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
@@ -2279,9 +2353,13 @@
     <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" masalife="false" name="Air CP">
       <missions>
         <mission name="Common - move">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="Common - follow">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
       </missions>
@@ -2421,7 +2499,24 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
       </missions>
-      <fragorders/>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Munition - Forbidden"/>
+        <fragorder name="Munition - Authorize"/>
+        <fragorder name="Munition - Authorize all"/>
+      </fragorders>
     </unit>
     <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="UAV">
       <missions>
@@ -2445,12 +2540,27 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - follow"/>
         <mission name="Engineer - perform work"/>
       </missions>
-      <fragorders/>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Munition - Forbidden"/>
+        <fragorder name="Munition - Authorize"/>
+        <fragorder name="Munition - Authorize all"/>
+      </fragorders>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="Motorized Inf platoon">
       <missions>
@@ -2489,12 +2599,12 @@
         <mission name="Armor - delay"/>
         <mission name="Armor - escort units"/>
         <mission name="Armor - support (from a position)"/>
-        <mission name="Common - canalize populations"/>
-        <mission name="OOTW - control populations (in an area)"/>
-        <mission name="OOTW - filtrate populations"/>
+        <mission name="OOTW - canalize crowds"/>
+        <mission name="OOTW - control crowds (in an area)"/>
+        <mission name="OOTW - filtrate crowds"/>
         <mission name="OOTW - deny population crossing"/>
-        <mission name="OOTW - report information on populations"/>
-        <mission name="OOTW - secure area (against populations assault)"/>
+        <mission name="OOTW - report information on crowds"/>
+        <mission name="OOTW - secure area (against crowd assaults)"/>
         <mission name="Armor - open a route"/>
         <mission name="Armor - report information"/>
         <mission name="Common - prepare to"/>
@@ -2582,12 +2692,74 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
+    <unit dia-type="security.firefighter.roles.FireFighter" file="BMPionSecurity.bms" masalife="true" name="Security - FireFighter">
+      <missions>
+        <mission name="Security - Move To"/>
+        <mission name="Security - Extinguish Fire"/>
+        <mission name="Security - Evacuate Area"/>
+        <mission name="Security - Supply"/>
+        <mission name="Security - Evacuate Victim"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="security.police.roles.Police" file="BMPionSecurity.bms" masalife="true" name="Security - Police">
+      <missions>
+        <mission name="Security - Move To"/>
+        <mission name="Security - Alert">
+          <fragorder name="Security - Stop Mission"/>
+        </mission>
+        <mission name="Security - Supply">
+          <fragorder name="Security - Stop Mission"/>
+        </mission>
+        <mission name="Security - Distribute">
+          <fragorder name="Security - Stop Mission"/>
+        </mission>
+        <mission name="Security - Confine">
+          <fragorder name="Security - Stop Mission"/>
+        </mission>
+        <mission name="Security - Evacuate Area">
+          <fragorder name="Security - Stop Mission"/>
+        </mission>
+        <mission name="Security - Build"/>
+        <mission name="Security - Secure Area"/>
+        <mission name="Security - Install RoadBlock">
+          <fragorder name="Security - Stop Mission"/>
+        </mission>
+        <mission name="Security - Escort Crowd"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="security.police.roles.Police" file="BMPionSecurity.bms" masalife="true" name="Security - CityServices">
+      <missions>
+        <mission name="Security - Move To"/>
+        <mission name="Security - Distribute"/>
+        <mission name="Security - Supply"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="security.disturbance.roles.Disturbance" file="BMPionSecurity.bms" masalife="true" name="Security - Disturbance">
+      <missions>
+        <mission name="Security - Move To"/>
+        <mission name="Security - Loot"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="security.Medical.roles.Medical" file="BMPionSecurity.bms" masalife="true" name="Security - Medical">
+      <missions>
+        <mission name="Security - Move To"/>
+        <mission name="Security - Evacuate Victim"/>
+        <mission name="Security - Build"/>
+      </missions>
+      <fragorders/>
+    </unit>
   </units>
   <automats>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Strategic Bomber Squadron">
       <missions>
         <mission name="Common - move"/>
         <mission name="Common - move parallel"/>
+        <mission name="Common - follow"/>
+        <mission name="Common - withdraw"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2611,11 +2783,14 @@
         <mission name="Common - move"/>
         <mission name="Common - move parallel"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
+        <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
+        <mission name="Common - go through decontamination process"/>
+        <mission name="Common - resupply"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2642,11 +2817,10 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="AirDefenseArtillery(VeryShortRange) - defend area"/>
         <mission name="AirDefenseArtillery(VeryShortRange) - monitor"/>
         <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2675,10 +2849,9 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="AirDefenseArtillery - defend a route"/>
         <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2699,86 +2872,103 @@
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" masalife="false" name="Attack Helicopter Squadron">
       <missions>
         <mission name="ArmyAviation - recon">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - screen">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - monitor">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - move">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - move parallel">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - go through decontamination process">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - resupply">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - attack">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="ArmyAviation - destroy">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - delay">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - block">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - attack (flying enemy)">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="ArmyAviation - support">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="ArmyAviation - cover">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - destroy (in an area)">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="ArmyAviation - escort">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - assist flying unit in rearward maneuver">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - park">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - adopt transportation posture">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - resupply">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="Common - withdraw"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2799,44 +2989,39 @@
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Transport Helicopter Squadron">
       <missions>
         <mission name="ArmyAviation - heliport">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
           <fragorder name="Modify Disembarking point"/>
         </mission>
         <mission name="ArmyAviation - helitransport">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
           <fragorder name="Modify Disembarking point"/>
         </mission>
         <mission name="Common - move">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="Common - move parallel">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - go through decontamination process">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - resupply">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - park">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - adopt transportation posture">
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
         <mission name="ArmyAviation - resupply">
           <fragorder name="ArmyAviation - Change mission type"/>
+          <fragorder name="Pause maneuver"/>
+          <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
         <mission name="Common - withdraw"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2888,6 +3073,7 @@
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
         <mission name="Infantry - block"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2921,9 +3107,8 @@
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Infantry - support (dynamic)"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2956,6 +3141,9 @@
         <mission name="Common - follow"/>
         <mission name="Common - move"/>
         <mission name="Common - move parallel"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - park"/>
+        <mission name="Common - withdraw"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2979,6 +3167,12 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
+        <mission name="Common - move"/>
+        <mission name="Common - move parallel"/>
+        <mission name="Common - park"/>
+        <mission name="Common - withdraw"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2996,7 +3190,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" masalife="false" name="Escadron Transport Blindes">
+    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" masalife="false" name="Armored transport squadron">
       <missions>
         <mission name="Common - resupply"/>
         <mission name="Common - move"/>
@@ -3005,11 +3199,11 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3027,7 +3221,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" masalife="false" name="Peloton Circulation">
+    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" masalife="false" name="Circulation Platoon">
       <missions>
         <mission name="Common - resupply"/>
         <mission name="Common - move"/>
@@ -3046,8 +3240,8 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3075,8 +3269,8 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3104,8 +3298,8 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3133,9 +3327,8 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3153,7 +3346,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" masalife="false" name="FIST">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" masalife="false" name="Artillery FIST">
       <missions>
         <mission name="FieldArtillery - deploy"/>
         <mission name="Common - move"/>
@@ -3163,9 +3356,9 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="FieldArtillery - collect intelligence for battalion"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3191,8 +3384,9 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
+        <mission name="Common - withdraw"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3217,6 +3411,10 @@
         <mission name="Common - resupply"/>
         <mission name="Common - move"/>
         <mission name="Common - move parallel"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
+        <mission name="Common - park"/>
+        <mission name="Common - withdraw"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3247,6 +3445,7 @@
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
         <mission name="Asymetric - attack populations(in an area)"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3273,9 +3472,8 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - withdraw"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3302,11 +3500,10 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="AirDefenseArtillery(LongRange) - defend area"/>
         <mission name="AirDefenseArtillery(LongRange) - monitor"/>
         <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3324,7 +3521,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" masalife="false" name="Terroristes">
+    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" masalife="false" name="Terrorists">
       <missions>
         <mission name="Common - move"/>
         <mission name="Common - move parallel"/>
@@ -3346,7 +3543,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="MBT squadron">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="Armored squadron">
       <missions>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -3400,59 +3597,6 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="Light armored squadron">
-      <missions>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - cross"/>
-        <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Common - resupply"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Armor - attack">
-          <fragorder name="Cross departure line"/>
-        </mission>
-        <mission name="Armor - control"/>
-        <mission name="Armor - cover"/>
-        <mission name="Armor - block"/>
-        <mission name="Armor - recon"/>
-        <mission name="Armor - flank-guard"/>
-        <mission name="Armor - delay">
-          <fragorder name="Withdraw"/>
-        </mission>
-        <mission name="Armor - movement to contact"/>
-        <mission name="Armor - recon in force"/>
-        <mission name="Armor - destroy"/>
-        <mission name="Armor - seize"/>
-        <mission name="Armor - hold"/>
-        <mission name="Armor - monitor"/>
-        <mission name="Armor - escort"/>
-        <mission name="Armor - escort units"/>
-        <mission name="Armor - screen"/>
-        <mission name="Armor - recon in force (a position)"/>
-        <mission name="Common - prepare to"/>
-        <mission name="Common - prepare to (take up position)"/>
-        <mission name="Armor - support"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
     <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\PEL EEI\model.bms" masalife="false" name="Scout platoon">
       <missions>
         <mission name="Common - withdraw"/>
@@ -3475,6 +3619,7 @@
         <mission name="Armor - cover"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3492,7 +3637,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Deployment support company">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Combat engineer company">
       <missions>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -3502,8 +3647,6 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Engineer - breach (an area)"/>
         <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - bypass (an area)"/>
@@ -3511,114 +3654,7 @@
         <mission name="Engineer - perform work"/>
         <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Mobility support company">
-      <missions>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - cross"/>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - resupply"/>
-        <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
-        <mission name="Engineer - breach (an area)"/>
-        <mission name="Engineer - support a crossing site"/>
-        <mission name="Engineer - bypass (an area)"/>
-        <mission name="Engineer - open routes"/>
-        <mission name="Engineer - perform work"/>
-        <mission name="Engineer - recon (an area)"/>
-        <mission name="Engineer - restore routes"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Countermobility company">
-      <missions>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - cross"/>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - resupply"/>
-        <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
-        <mission name="Engineer - breach (an area)"/>
-        <mission name="Engineer - support a crossing site"/>
-        <mission name="Engineer - bypass (an area)"/>
-        <mission name="Engineer - open routes"/>
-        <mission name="Engineer - perform work"/>
-        <mission name="Engineer - recon (an area)"/>
-        <mission name="Engineer - restore routes"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Bridging company">
-      <missions>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - cross"/>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - resupply"/>
-        <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
-        <mission name="Engineer - breach (an area)"/>
-        <mission name="Engineer - support a crossing site"/>
-        <mission name="Engineer - bypass (an area)"/>
-        <mission name="Engineer - open routes"/>
-        <mission name="Engineer - perform work"/>
-        <mission name="Engineer - recon (an area)"/>
-        <mission name="Engineer - restore routes"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3638,16 +3674,10 @@
     </automat>
     <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" masalife="false" name="Drone station">
       <missions>
-        <mission name="Common - adopt transportation posture"/>
         <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
         <mission name="Common - withdraw"/>
         <mission name="Imagery Intelligence (real time UAV) - report information"/>
-        <mission name="Common - go through decontamination process"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
-        <mission name="Common - resupply"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3674,6 +3704,9 @@
         <mission name="ElectronicIntelligence - report information"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
+        <mission name="Common - park"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3701,8 +3734,8 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3730,8 +3763,8 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3758,9 +3791,9 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="HumanIntelligence - report information"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3790,8 +3823,8 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3816,13 +3849,12 @@
         <mission name="Common - move parallel"/>
         <mission name="Common - cross"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="NBC - recon an axis"/>
         <mission name="NBC - recon an area"/>
         <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3847,13 +3879,12 @@
         <mission name="Common - move parallel"/>
         <mission name="Common - cross"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="NBC - operate a decontamination site"/>
         <mission name="NBC - decontaminate an area"/>
         <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3878,11 +3909,11 @@
         <mission name="Common - move parallel"/>
         <mission name="Common - cross"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - resupply"/>
         <mission name="NBC - recon ROTA sites"/>
+        <mission name="Common - adopt transportation posture"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3910,11 +3941,11 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
         <mission name="FieldArtillery - defend area">
           <fragorder name="Fire in area"/>
         </mission>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3942,8 +3973,8 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="OOTW - manage refugees"/>
-        <mission name="OOTW - manage prisoners"/>
+        <mission name="Common - cross"/>
+        <mission name="Common - follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4076,139 +4107,27 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" masalife="false" name="Attack Helicopter Company">
+    <automat dia-type="security.company.roles.FireFighterCompany" file="BMAutomatSecurity.bms" masalife="true" name="Security - FireFighterCompany">
       <missions>
-        <mission name="ArmyAviation - recon">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - screen">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - monitor">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - move">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - move parallel">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - go through decontamination process">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - resupply">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - attack">
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Cancel maneuver"/>
-        </mission>
-        <mission name="ArmyAviation - destroy">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - delay">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - block">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - attack (flying enemy)">
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Cancel maneuver"/>
-        </mission>
-        <mission name="ArmyAviation - support">
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Cancel maneuver"/>
-        </mission>
-        <mission name="ArmyAviation - cover">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - destroy (in an area)">
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Cancel maneuver"/>
-        </mission>
-        <mission name="ArmyAviation - escort">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - assist flying unit in rearward maneuver">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - park">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - adopt transportation posture">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - resupply">
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Cancel maneuver"/>
-        </mission>
-        <mission name="Common - withdraw"/>
+        <mission name="SECURITE Move To"/>
       </missions>
       <fragorders/>
     </automat>
-    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Transport Helicopter Company">
+    <automat dia-type="security.company.roles.PoliceCompany" file="BMAutomatSecurity.bms" masalife="true" name="Security - PoliceCompany">
       <missions>
-        <mission name="ArmyAviation - heliport">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Modify Disembarking point"/>
-        </mission>
-        <mission name="ArmyAviation - helitransport">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Modify Disembarking point"/>
-        </mission>
-        <mission name="Common - move">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - move parallel">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - go through decontamination process">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - resupply">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - park">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="Common - adopt transportation posture">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="ArmyAviation - Change mission type"/>
-        </mission>
-        <mission name="ArmyAviation - resupply">
-          <fragorder name="ArmyAviation - Change mission type"/>
-          <fragorder name="Cancel maneuver"/>
-        </mission>
-        <mission name="Common - withdraw"/>
+        <mission name="SECURITE Move To"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="security.company.roles.PoliceCompany" file="BMAutomatSecurity.bms" masalife="true" name="Security - Company">
+      <missions>
+        <mission name="SECURITE Move To"/>
       </missions>
       <fragorders/>
     </automat>
   </automats>
   <crowd>
-    <crowd dia-type="T_Population" file="Population\Populations\Model.bms" masalife="false" name="Population">
+    <crowd dia-type="T_Population" file="Population\Populations\Model.bms" masalife="false" name="Crowd">
       <missions>
         <mission name="Crowd - move">
           <fragorder name="Population - Change attitude"/>
@@ -4230,6 +4149,13 @@
         <fragorder name="Population - Change attitude"/>
       </fragorders>
     </crowd>
+    <crowd dia-type="security.crowd.roles.Crowd" file="BMCrowdSecurity.bms" masalife="true" name="security.crowd.roles.Crowd">
+      <missions>
+        <mission name="DIA5 - Crowd - Move To"/>
+        <mission name="DIA5 - Crowd - Seek Supply"/>
+      </missions>
+      <fragorders/>
+    </crowd>
   </crowd>
 </models>
-<!-- signature="0148029760" -->
+<!-- signature="2687118094" -->
