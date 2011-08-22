@@ -118,7 +118,7 @@
       <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;analysis.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
       <SubSystem>Windows</SubSystem>
@@ -142,7 +142,7 @@
       <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;analysis_d.lib;geodata_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
       <SubSystem>Windows</SubSystem>
