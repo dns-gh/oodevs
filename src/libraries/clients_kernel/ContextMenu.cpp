@@ -147,7 +147,11 @@ int ContextMenu::InsertItem( const std::string& category, const QString& text, i
 // -----------------------------------------------------------------------------
 int ContextMenu::InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int id /* = -1*/ )
 {
-    return menu_->insertItem( text, popup, id, InsertCategory( category ) );
+    InsertCategory( category );
+    popup->setTitle( text );
+    menu_->insertMenu( 0, popup );
+    return -1;
+    //return menu_->insertItem( text, popup, id, InsertCategory( category ) );
 }
 
 // -----------------------------------------------------------------------------

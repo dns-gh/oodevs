@@ -158,7 +158,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     if( pointAllowed_ )
     {
         popupPoint_ = point;
-        Q3PopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
+        Q3PopupMenu* subMenu = menu.SubMenu( menu_.ascii(), menu_ );
         subMenu->insertItem( tools::translate( "gui::LocationCreator", "Point" ), this, SLOT( StartPoint() ) );
     }
 }
