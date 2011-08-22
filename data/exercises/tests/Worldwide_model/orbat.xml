@@ -3,6 +3,51 @@
   <parties>
     <party id="1" name="Blue" type="friend">
       <objects>
+        <object id="124" name="Rearm, Refuel and Resupply Point (R3P) [124]" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>30UXU2336138885</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="125" name="Decontamination Point [125]" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>30UXU2525139365</point>
+              <point>30UXU2582239386</point>
+              <point>30UXU2593738851</point>
+              <point>30UXU2511538726</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="151" name="Refugee Holding Area [151]" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>30UXU2740639353</point>
+              <point>30UXU2868039563</point>
+              <point>30UXU2910038260</point>
+              <point>30UXU2750738285</point>
+            </points>
+          </shape>
+          <attributes>
+            <tc2 id="89"/>
+          </attributes>
+        </object>
+        <object id="152" name="Detainee Holding Area [152]" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>30UXU2970239889</point>
+              <point>30UXU3138540217</point>
+              <point>30UXU3142938426</point>
+              <point>30UXU3022038135</point>
+            </points>
+          </shape>
+          <attributes>
+            <tc2 id="89"/>
+          </attributes>
+        </object>
         <object id="154" name="Bridge (continuous) [154]" type="continuous pontoon bridge">
           <shape type="point">
             <points>
@@ -17,6 +62,113 @@
               <construction-needed>false</construction-needed>
             </crossing-site>
           </attributes>
+        </object>
+        <object id="158" name="gun artillery deployment area [158]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>30UXU3201242568</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="165" name="Abatis [165]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3153652973</point>
+              <point>30UXU3209853062</point>
+              <point>30UXU3219752613</point>
+              <point>30UXU3160852523</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="170" name="Crossing Site [170]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>30UXU3250753075</point>
+              <point>30UXU3336053726</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="171" name="Abatis [171]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3962953210</point>
+              <point>30UXU4040253278</point>
+              <point>30UXU4028952701</point>
+              <point>30UXU3945952738</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="172" name="Abatis [172]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3789753081</point>
+              <point>30UXU3856453092</point>
+              <point>30UXU3862452548</point>
+              <point>30UXU3825052548</point>
+              <point>30UXU3807152701</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="173" name="Abatis [173]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3560952799</point>
+              <point>30UXU3601052800</point>
+              <point>30UXU3601152400</point>
+              <point>30UXU3582752314</point>
+              <point>30UXU3542352406</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="189" name="mrls deployment area [189]" type="mrls deployment area">
+          <shape type="point">
+            <points>
+              <point>30UXU4564754004</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="482" name="Decontamination Point [482]" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>30TXU9139014472</point>
+              <point>30TXU9519415102</point>
+              <point>30TXU9528512582</point>
+              <point>30TXU9215212161</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="490" name="Crossing Site [490]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>30UXU8699023826</point>
+              <point>30UXU8699725312</point>
+            </points>
+          </shape>
+          <attributes/>
         </object>
       </objects>
       <tactical>
@@ -37,7 +189,6 @@
               <unit command-post="false" id="27" name="Decontamination NBC (Logistic decontamination section)" position="30UXU3781350902" type="Logistic decontamination section"/>
               <unit command-post="false" id="37" name="Groupe Maintenance Evacuation (Maintenance evacuation group)" position="30UXU5151954478" type="Maintenance evacuation group"/>
               <unit command-post="false" id="38" name="Groupe Ramassage (Medical group VAB)" position="30UXU5307653167" type="Medical group VAB"/>
-              <unit command-post="false" id="66" name="PC Appui Mob (Transportation platoon (transportation squadron))" position="30UXU1760544382" type="Transportation platoon (transportation squadron)"/>
               <unit command-post="true" id="68" name="PC TC2 (Logistic CT)" position="30UXU2169744605" type="Logistic CT"/>
               <unit command-post="false" id="69" name="Peloton Transport (Supply group 60m3)" position="30UXU2388744911" type="Supply group 60m3"/>
               <unit command-post="false" id="71" name="Pion stock (Ammo supply group)" position="30UXU2683645244" type="Ammo supply group"/>
@@ -65,6 +216,7 @@
             </automat>
             <automat engaged="false" id="230" knowledge-group="6" name="AppuiMob [230]" type="Transportation squadron">
               <unit command-post="true" id="70" name="Heavy transportation platoon" position="30UXU2562845049" type="Heavy transportation platoon"/>
+              <unit command-post="false" id="441" name="Transportation platoon" position="30UXU2564745764" type="Transportation platoon"/>
             </automat>
             <automat engaged="false" id="234" knowledge-group="6" name="ArtDsa [234]" type="Artillery firing battery">
               <unit command-post="true" id="219" name="Surface To Air Battery CP" position="30UXU3314041292" type="Surface To Air Battery CP"/>
@@ -121,6 +273,236 @@
             </automat>
           </formation>
         </formation>
+        <formation id="270" level="xxxx" name="Automates">
+          <formation id="271" level="x" name="Melee">
+            <formation id="272" level="iii" name="Abc">
+              <automat engaged="true" id="292" knowledge-group="6" name="MBT squadron (Armored squadron) [292]" type="MBT squadron">
+                <unit command-post="true" id="293" name="Armored squadron CP" position="30UXU9710429168" type="Armored squadron CP"/>
+                <unit command-post="false" id="294" name="MBT platoon" position="30UXU9762328687" type="MBT platoon"/>
+                <unit command-post="false" id="295" name="MBT platoon" position="30UXU9714028170" type="MBT platoon"/>
+                <unit command-post="false" id="296" name="MBT platoon" position="30UXU9662228651" type="MBT platoon"/>
+                <unit command-post="false" id="297" name="MBT platoon" position="30UXU9760529186" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="307" knowledge-group="6" name="Teeth Arms Battalion (Battalion) [307]" type="Teeth Arms Battalion">
+                <unit command-post="true" id="308" name="Armored squadron CP" position="30UXU9885927983" type="Armored squadron CP"/>
+              </automat>
+              <automat engaged="true" id="450" knowledge-group="6" name="Scout platoon [450]" type="Scout platoon">
+                <unit command-post="false" id="451" name="Antitank patrol" position="30UYU0324741718" type="Antitank patrol"/>
+                <unit command-post="true" id="452" name="Scout patrol" position="30UYU0376541237" type="Scout patrol"/>
+                <unit command-post="false" id="453" name="Scout patrol" position="30UYU0328340719" type="Scout patrol"/>
+              </automat>
+            </formation>
+            <formation id="277" level="iii" name="Inf">
+              <automat engaged="true" id="313" knowledge-group="6" name="Commandos platoon [313]" type="Commandos platoon">
+                <unit command-post="true" id="314" name="Commando troop" position="30UXU9251028045" type="Commando troop"/>
+                <unit command-post="false" id="315" name="Commando troop" position="30UXU9302927563" type="Commando troop"/>
+                <unit command-post="false" id="316" name="Commando troop" position="30UXU9254627046" type="Commando troop"/>
+              </automat>
+              <automat engaged="true" id="383" knowledge-group="6" name="Infantry company [383]" type="Infantry company">
+                <unit command-post="true" id="384" name="Infantry company CP" position="31UBP7878135042" type="Infantry company CP"/>
+                <unit command-post="false" id="385" name="Infantry platoon" position="31UBP7926134521" type="Infantry platoon"/>
+                <unit command-post="false" id="386" name="MRA troop" position="31UBP7873934043" type="MRA troop"/>
+                <unit command-post="false" id="387" name="Mortar troop" position="31UBP7826034563" type="Mortar troop"/>
+                <unit command-post="false" id="388" name="Light armored platoon" position="31UBP7928235021" type="Light armored platoon"/>
+              </automat>
+              <automat engaged="true" id="399" knowledge-group="6" name="LRA infantry company [399]" type="LRA infantry company">
+                <unit command-post="true" id="400" name="LRA infantry platoon" position="30TYU2060011078" type="LRA infantry platoon"/>
+                <unit command-post="false" id="401" name="LRA infantry platoon" position="30TYU2111810596" type="LRA infantry platoon"/>
+                <unit command-post="false" id="402" name="LRA infantry platoon" position="30TYU2063610079" type="LRA infantry platoon"/>
+              </automat>
+            </formation>
+          </formation>
+          <formation id="273" level="x" name="Appui">
+            <formation id="274" level="iii" name="ArtFdp">
+              <automat engaged="true" id="298" knowledge-group="6" name="Artillery locating radar platoon [298]" type="Artillery locating radar platoon">
+                <unit command-post="true" id="299" name="Artillery locating radar group" position="30UYU0171727461" type="Artillery locating radar group"/>
+              </automat>
+              <automat engaged="true" id="334" knowledge-group="6" name="Artillery firing battery (Field Battery) [334]" type="Artillery firing battery">
+                <unit command-post="true" id="335" name="Battery CP" position="30UXU9860039134" type="Battery CP"/>
+                <unit command-post="false" id="336" name="Artillery firing platoon" position="30UXU9911938652" type="Artillery firing platoon"/>
+                <unit command-post="false" id="337" name="Artillery firing platoon" position="30UXU9863738135" type="Artillery firing platoon"/>
+              </automat>
+              <automat engaged="true" id="342" knowledge-group="6" name="Firefinder radar battery [342]" type="Firefinder radar battery">
+                <unit command-post="true" id="343" name="Firefinder radar" position="30UYU0459035695" type="Firefinder radar"/>
+                <unit command-post="false" id="344" name="Firefinder radar" position="30UYU0510935214" type="Firefinder radar"/>
+                <unit command-post="false" id="345" name="Firefinder radar" position="30UYU0462634697" type="Firefinder radar"/>
+              </automat>
+              <automat engaged="true" id="346" knowledge-group="6" name="Firefinder reconnaissance battery [346]" type="Firefinder reconnaissance battery">
+                <unit command-post="true" id="347" name="Firefinder reconnaissance platoon" position="30UYU0767336051" type="Firefinder reconnaissance platoon"/>
+                <unit command-post="false" id="348" name="Firefinder reconnaissance platoon" position="30UYU0819135570" type="Firefinder reconnaissance platoon"/>
+                <unit command-post="false" id="349" name="Firefinder reconnaissance platoon" position="30UYU0770935052" type="Firefinder reconnaissance platoon"/>
+              </automat>
+              <automat engaged="true" id="350" knowledge-group="6" name="Artillery FIST [350]" type="Artillery FIST">
+                <unit command-post="true" id="351" name="Artillery SD" position="30UYU0307037184" type="Artillery SD"/>
+                <unit command-post="false" id="352" name="Artillery SD" position="30UYU0358936703" type="Artillery SD"/>
+                <unit command-post="false" id="353" name="Artillery SD" position="30UYU0310636185" type="Artillery SD"/>
+              </automat>
+            </formation>
+            <formation id="275" level="iii" name="Alat">
+              <automat engaged="true" id="300" knowledge-group="6" name="Attack Helicopter squadron [300]" type="Attack Helicopter squadron">
+                <unit command-post="true" id="301" name="AAC CP" position="30UYU0536024887" type="AAC CP"/>
+                <unit command-post="false" id="302" name="Antitank Helicopter Patrol" position="30UYU0587924406" type="Antitank Helicopter Patrol"/>
+                <unit command-post="false" id="303" name="Light Escort and Close Support Helicopter Patrol" position="30UYU0539623888" type="Light Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="304" name="Heavy Escort and Close Support Helicopter Patrol" position="30UYU0487724370" type="Heavy Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="305" name="General Purpose Helicopter Patrol" position="30UYU0586124905" type="General Purpose Helicopter Patrol"/>
+                <unit command-post="false" id="306" name="Air Defence Helicopter Patrol" position="30UYU0608624413" type="Air Defence Helicopter Patrol"/>
+              </automat>
+              <automat engaged="true" id="473" knowledge-group="6" name="Transport helicopter squadron [473]" type="Transport helicopter squadron">
+                <unit command-post="true" id="474" name="AAC CP" position="30UXU8484944199" type="AAC CP"/>
+                <unit command-post="false" id="475" name="Antitank Helicopter Patrol" position="30UXU8536843718" type="Antitank Helicopter Patrol"/>
+                <unit command-post="false" id="476" name="Light Escort and Close Support Helicopter Patrol" position="30UXU8488543200" type="Light Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="477" name="Transport Helicopter Patrol" position="30UXU8436743681" type="Transport Helicopter Patrol"/>
+                <unit command-post="false" id="478" name="Heavy Escort and Close Support Helicopter Patrol" position="30UXU8535044217" type="Heavy Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="479" name="General Purpose Helicopter Patrol" position="30UXU8557543725" type="General Purpose Helicopter Patrol"/>
+              </automat>
+            </formation>
+            <formation id="276" level="iii" name="Genie">
+              <automat engaged="true" id="309" knowledge-group="6" name="Countermobility company [309]" type="Countermobility company">
+                <unit command-post="true" id="310" name="Countermobility platoon" position="30UXU9266540223" type="Countermobility platoon"/>
+                <unit command-post="false" id="312" name="Countermobility platoon" position="30UXU9334040157" type="Countermobility platoon"/>
+                <unit command-post="false" id="489" name="Bridging troop" position="30UXU9291640830" type="Bridging troop"/>
+              </automat>
+              <automat engaged="true" id="492" knowledge-group="6" name="Object detector [492]" type="Countermobility company">
+                <unit command-post="true" id="493" name="Countermobility platoon" position="30UXU9487043338" type="Countermobility platoon"/>
+                <unit command-post="false" id="494" name="Countermobility platoon" position="30UXU9664947350" type="Countermobility platoon"/>
+                <unit command-post="false" id="495" name="Countermobility platoon" position="30UXU9567345885" type="Countermobility platoon"/>
+                <unit command-post="false" id="496" name="Countermobility platoon" position="30UXU9801848315" type="Countermobility platoon"/>
+                <unit command-post="false" id="497" name="Countermobility platoon" position="30UXU9918149510" type="Countermobility platoon"/>
+              </automat>
+            </formation>
+            <formation id="278" level="iii" name="Rens">
+              <automat engaged="true" id="317" knowledge-group="6" name="Drones station [317]" type="Drones station">
+                <unit command-post="true" id="318" name="Drones station" position="30UXU9042433756" type="Drones station"/>
+                <unit command-post="false" id="319" name="Drone (real time)" position="30UXU9094333275" type="Drone (real time)"/>
+                <unit command-post="false" id="320" name="Drone (real time)" position="30UXU9046032758" type="Drone (real time)"/>
+                <unit command-post="false" id="321" name="Drone (real time)" position="30UXU8994233239" type="Drone (real time)"/>
+                <unit command-post="false" id="322" name="Drone (real time)" position="30UXU9092533774" type="Drone (real time)"/>
+                <unit command-post="false" id="323" name="Drone (real time)" position="30UXU9115033283" type="Drone (real time)"/>
+              </automat>
+              <automat engaged="true" id="354" knowledge-group="6" name="Ground suveillance radar [354]" type="Ground suveillance radar">
+                <unit command-post="true" id="355" name="Ground surveillance radar" position="30UYU0351629362" type="Ground surveillance radar"/>
+              </automat>
+              <automat engaged="true" id="389" knowledge-group="6" name="Jamming station [389]" type="Jamming station">
+                <unit command-post="true" id="390" name="Jamming station" position="31UBP7917723812" type="Jamming station"/>
+              </automat>
+              <automat engaged="true" id="391" knowledge-group="6" name="Listening station [391]" type="Listening station">
+                <unit command-post="true" id="392" name="Listening Station" position="31UBP8039024097" type="Listening Station"/>
+              </automat>
+              <automat engaged="true" id="403" knowledge-group="6" name="LRS units [403]" type="LRS units">
+                <unit command-post="true" id="404" name="LRS troop" position="30TYU2395811199" type="LRS troop"/>
+                <unit command-post="false" id="405" name="LRS troop" position="31TBP7615110693" type="LRS troop"/>
+                <unit command-post="false" id="406" name="LRS troop" position="30TYU2399410200" type="LRS troop"/>
+                <unit command-post="false" id="407" name="LRS troop" position="30TYU2347610682" type="LRS troop"/>
+                <unit command-post="false" id="408" name="LRS troop" position="31TBP7617211192" type="LRS troop"/>
+                <unit command-post="false" id="409" name="LRS troop" position="31TBP7635810685" type="LRS troop"/>
+                <unit command-post="false" id="410" name="LRS troop" position="31TBP7613010194" type="LRS troop"/>
+              </automat>
+            </formation>
+            <formation id="279" level="iii" name="AppuiMob">
+              <automat engaged="true" id="338" knowledge-group="6" name="Transportation squadron (Armored transport squadron) [338]" type="Transportation squadron">
+                <unit command-post="true" id="340" name="Medium transportation platoon" position="30UXU9985135308" type="Medium transportation platoon"/>
+                <unit command-post="false" id="341" name="Heavy transportation platoon" position="30UXU9936934791" type="Heavy transportation platoon"/>
+                <unit command-post="false" id="442" name="Transportation platoon" position="30UXU9939535810" type="Transportation platoon"/>
+              </automat>
+            </formation>
+            <formation id="281" level="iii" name="Log">
+              <automat engaged="true" id="393" knowledge-group="6" name="Maintenance logistic area (corps) [393]" type="Maintenance logistic area (corps)">
+                <unit command-post="true" id="394" name="Maintenance CP  (division)" position="31UBP8018539870" type="Maintenance CP  (division)"/>
+                <unit command-post="false" id="395" name="Maintenance evacuation group" position="31UBP8066539350" type="Maintenance evacuation group"/>
+                <unit command-post="false" id="396" name="Repairs section (corps)" position="31UBP8014338872" type="Repairs section (corps)"/>
+                <unit command-post="false" id="397" name="Mobility repairs section (corps)" position="31UBP7966339392" type="Mobility repairs section (corps)"/>
+                <unit command-post="false" id="398" name="Firing mobility repairs section (corps)" position="31UBP8068539849" type="Firing mobility repairs section (corps)"/>
+              </automat>
+              <automat engaged="true" id="465" knowledge-group="6" name="Logistic combat train [465]" type="Logistic combat train">
+                <unit command-post="true" id="466" name="Logistic CT" position="30UXU8565541365" type="Logistic CT"/>
+              </automat>
+            </formation>
+            <formation id="282" level="iii" name="Trans">
+              <automat engaged="true" id="411" knowledge-group="6" name="Battle group CP [411]" type="Battle group CP">
+                <unit command-post="true" id="412" name="Battle group command post" position="30UYU1857941712" type="Battle group command post"/>
+              </automat>
+            </formation>
+            <formation id="286" level="iii" name="Nbc">
+              <automat engaged="true" id="426" knowledge-group="6" name="NBC decontamination platoon [426]" type="NBC decontamination platoon">
+                <unit command-post="true" id="427" name="NBC decontamination troop" position="30UYU2220340624" type="NBC decontamination troop"/>
+                <unit command-post="false" id="428" name="NBC decontamination troop" position="30UYU2272240143" type="NBC decontamination troop"/>
+              </automat>
+              <automat engaged="true" id="429" knowledge-group="6" name="NBC reconaissance platoon [429]" type="NBC reconaissance platoon">
+                <unit command-post="true" id="430" name="NBC reconnaissance troop" position="31UBP7912842564" type="NBC reconnaissance troop"/>
+                <unit command-post="false" id="431" name="NBC reconnaissance troop" position="31UBP7960842044" type="NBC reconnaissance troop"/>
+                <unit command-post="false" id="432" name="NBC reconnaissance troop" position="31UBP7908641566" type="NBC reconnaissance troop"/>
+              </automat>
+              <automat engaged="true" id="433" knowledge-group="6" name="NBC ROTA platoon [433]" type="NBC ROTA platoon">
+                <unit command-post="true" id="434" name="NBC ROTA troop" position="31UBP8219542192" type="NBC ROTA troop"/>
+                <unit command-post="false" id="435" name="NBC ROTA troop" position="31UBP8267441672" type="NBC ROTA troop"/>
+                <unit command-post="false" id="436" name="NBC ROTA troop" position="31UBP8215341194" type="NBC ROTA troop"/>
+                <unit command-post="false" id="437" name="NBC ROTA troop" position="31UBP8167341714" type="NBC ROTA troop"/>
+                <unit command-post="false" id="438" name="NBC ROTA troop" position="31UBP8269542171" type="NBC ROTA troop"/>
+              </automat>
+            </formation>
+            <formation id="289" level="iii" name="ArtDsa">
+              <automat engaged="true" id="459" knowledge-group="6" name="Surface To Air Battery [459]" type="Surface To Air Battery">
+                <unit command-post="true" id="460" name="Surface To Air Battery CP" position="30UXU8894538870" type="Surface To Air Battery CP"/>
+                <unit command-post="false" id="461" name="Surface To Air Defense Troop" position="30UXU8946438389" type="Surface To Air Defense Troop"/>
+                <unit command-post="false" id="462" name="Surface To Air Defense Troop" position="30UXU8898137871" type="Surface To Air Defense Troop"/>
+                <unit command-post="false" id="463" name="Surface To Air Defense Troop" position="30UXU8846338352" type="Surface To Air Defense Troop"/>
+                <unit command-post="false" id="464" name="Surface To Air Defense Troop" position="30UXU8944638888" type="Surface To Air Defense Troop"/>
+              </automat>
+              <automat engaged="true" id="470" knowledge-group="6" name="Patriot Fire Unit BTY [470]" type="Patriot Fire Unit BTY">
+                <unit command-post="true" id="471" name="Patriot BTY CP" position="30UXU8419447639" type="Patriot BTY CP"/>
+                <unit command-post="false" id="472" name="Patriot Launcher PLT" position="30UXU8471347158" type="Patriot Launcher PLT"/>
+              </automat>
+            </formation>
+          </formation>
+          <formation id="283" level="x" name="Marine">
+            <automat engaged="true" id="413" knowledge-group="6" name="Aircraft Carrier [413]" type="Aircraft Carrier">
+              <unit command-post="false" id="414" name="Aircraft Carrier" position="30UXU9855723301" type="Aircraft Carrier"/>
+              <unit command-post="false" id="415" name="Strategic Bomber Patrol" position="30UXU9857823313" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="416" name="Strategic Bomber Patrol" position="30UXU9857823297" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="417" name="Strategic Bomber Patrol" position="30UXU9867323320" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="418" name="Strategic Bomber Patrol" position="30UXU9865823368" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="419" name="Strategic Bomber Patrol" position="30UXU9862823322" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="420" name="Strategic Bomber Patrol" position="30UXU9863123332" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="421" name="Strategic Bomber Patrol" position="30UXU9858923303" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="422" name="Strategic Bomber Patrol" position="30UXU9862723335" type="Strategic Bomber Patrol"/>
+              <unit command-post="true" id="423" name="Marine CP" position="30UXU9856723312" type="Marine CP"/>
+            </automat>
+          </formation>
+          <formation id="284" level="x" name="Population">
+            <formation id="285" level="iii" name="Milices">
+              <automat engaged="true" id="424" knowledge-group="6" name="Militias [424]" type="Militias">
+                <unit command-post="true" id="425" name="Militia" position="30UYU2082123407" type="Militia"/>
+              </automat>
+            </formation>
+            <formation id="288" level="iii" name="Refugies">
+              <automat engaged="true" id="448" knowledge-group="6" name="Refugees [448]" type="Refugees">
+                <unit command-post="true" id="449" name="Refugee" position="30UYU0123531983" type="Refugee"/>
+              </automat>
+            </formation>
+            <formation id="291" level="iii" name="Asymetriques">
+              <automat engaged="true" id="467" knowledge-group="6" name="Terrorists [467]" type="Terrorists">
+                <unit command-post="true" id="468" name="Terrorist" position="30UXU8659247541" type="Terrorist"/>
+                <unit command-post="false" id="469" name="Terrorist Bombmaker" position="30UXU8711147060" type="Terrorist Bombmaker"/>
+              </automat>
+            </formation>
+          </formation>
+          <formation id="290" level="x" name="Air">
+            <automat engaged="true" id="454" knowledge-group="6" name="Strategic Bomber Squadron [454]" type="Strategic Bomber Squadron">
+              <unit command-post="true" id="455" name="Air CP" position="30UYU0154928744" type="Air CP"/>
+              <unit command-post="false" id="456" name="Strategic Bomber Patrol" position="30UYU0206828262" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="457" name="Strategic Bomber Patrol" position="30UYU0158527745" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="458" name="Strategic Bomber Patrol" position="30UYU0106628226" type="Strategic Bomber Patrol"/>
+            </automat>
+          </formation>
+          <limit name="Limit 324">
+            <point>30UXU7908555359</point>
+            <point>30TXT8278592042</point>
+          </limit>
+          <limit name="Limit 325">
+            <point>31UBP8448856474</point>
+            <point>31TBN8131693853</point>
+          </limit>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
@@ -146,6 +528,352 @@
     </party>
     <party id="126" name="Rouge" type="enemy">
       <objects>
+        <object id="169" name="Bridge (continuous) [169]" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>30UXU3255250999</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="174" name="Mine Cluster [174]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3839550768</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="175" name="Mine Cluster [175]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3693650835</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="176" name="Mine Cluster [176]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3589451197</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="177" name="Mine Cluster [177]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3535351737</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="178" name="Mine Cluster [178]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3916650889</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="179" name="Mine Cluster [179]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3975951830</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="180" name="Bridge (continuous) [180]" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>30UXU3194853771</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="181" name="Mine Cluster [181]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3594350010</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="182" name="Mine Cluster [182]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3701550198</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="183" name="Mine Cluster [183]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3779950375</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="184" name="Mine Cluster [184]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3495750134</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="185" name="Mine Cluster [185]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3411650348</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="186" name="Mine Cluster [186]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3847550282</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="187" name="Mine Cluster [187]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3877449963</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="188" name="Mine Cluster [188]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3609949260</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="210" name="Arson/Fire [210]" type="fire">
+          <shape type="point">
+            <points>
+              <point>30UXU2997929669</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="1000000000"/>
+          </attributes>
+        </object>
+        <object id="211" name="Arson/Fire [211]" type="fire">
+          <shape type="point">
+            <points>
+              <point>30UXU2707829983</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="1000000000"/>
+          </attributes>
+        </object>
+        <object id="213" name="Arson/Fire [213]" type="fire">
+          <shape type="point">
+            <points>
+              <point>30UXU2863930458</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="1000000000"/>
+          </attributes>
+        </object>
+        <object id="268" name="Arson/Fire [268]" type="fire">
+          <shape type="point">
+            <points>
+              <point>30UXU2620528201</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="100"/>
+          </attributes>
+        </object>
+        <object id="269" name="Arson/Fire [269]" type="fire">
+          <shape type="point">
+            <points>
+              <point>30UXU3114728601</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="5000"/>
+          </attributes>
+        </object>
+        <object id="483" name="Mine Cluster [483]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU9285141530</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="484" name="Mine Cluster [484]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU9402243453</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="485" name="Mine Cluster [485]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU9513446121</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="486" name="Mine Cluster [486]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU9606547429</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="487" name="Mine Cluster [487]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU9748848720</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="488" name="Mine Cluster [488]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU9885949973</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="127" level="x" name="Formation [127]">
@@ -254,5 +982,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3627818553" -->
-<!-- signature="1270498251" -->
+<!-- signature="1496013570" -->
