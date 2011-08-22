@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="140" name="Common - adopt transportation posture" target="70" time="2010-08-19T18:02:01" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2532146806"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="137" name="Common - cross" target="70" time="2010-08-19T19:23:11" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Bridge" type="objectknowledge" value="170"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3433953104"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="134" name="Common - follow" target="70" time="2010-08-19T19:29:51" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Unit to follow" type="agent" value="71"/>
+  </action>
+  <action id="136" name="Common - go through decontamination process" target="70" time="2010-08-19T19:39:21" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2298846284"/>
+      </location>
+    </parameter>
+    <parameter name="Decontamination site" type="objectknowledge" value="165"/>
+  </action>
+  <action id="133" name="Common - move" target="70" time="2010-08-19T19:46:01" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2255546319"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="139" name="Common - park" target="70" time="2010-08-19T19:50:11" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2700446544"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="135" name="Common - transport" target="70" time="2010-08-19T19:58:51" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Units to transport" type="list">
+      <parameter name="Units to transport (item 1)" type="agent" value="69"/>
+    </parameter>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2562147267"/>
+      </location>
+    </parameter>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2397246434"/>
+      </location>
+    </parameter>
+    <parameter name="With equipments" type="bool" value="false"/>
+  </action>
+  <action id="138" name="Common - withdraw" target="70" time="2010-08-19T20:04:01" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2491646243"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="507" name="Common - withdraw to initial position" target="70" time="2010-08-19T20:07:31" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+  </action>
+</actions>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="31" name="Field Artillery - operate" target="57" time="2010-08-19T18:05:01" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="ObjectKnowledge" value="158"/>
+    <parameter name="Counter battery" type="Bool" value="false"/>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position)" target="57" time="2010-08-19T18:06:11" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment position" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3156643091"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="Bool" value="false"/>
+  </action>
+</actions>

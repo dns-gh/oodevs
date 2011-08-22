@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="262" name="Engineer - open routes" target="309" time="2010-08-19T18:13:11" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30UXU7908555359"/>
+        <point coordinates="30TXT8278592042"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UBP8448856474"/>
+        <point coordinates="31TBN8131693853"/>
+      </location>
+    </parameter>
+    <parameter name="Routes" type="list">
+      <parameter name="Routes (item 1)" type="path">
+        <parameter name="Way point 1" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU9226840816"/>
+          </location>
+        </parameter>
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU9329441917"/>
+          </location>
+        </parameter>
+      </parameter>
+      <parameter name="Routes (item 2)" type="path">
+        <parameter name="Way point 1" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU9350242172"/>
+          </location>
+        </parameter>
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU9453144575"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

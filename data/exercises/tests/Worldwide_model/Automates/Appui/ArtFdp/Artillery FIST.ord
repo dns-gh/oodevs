@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="216" name="FieldArtillery - deploy" target="350" time="2010-08-19T19:02:11" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30UXU7908555359"/>
+        <point coordinates="30TXT8278592042"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UBP8448856474"/>
+        <point coordinates="31TBN8131693853"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UYU0234539128"/>
+        <point coordinates="30UYU0449238199"/>
+        <point coordinates="30UYU0482239475"/>
+        <point coordinates="30UYU0292240062"/>
+        <point coordinates="30UYU0234539128"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="219" name="FieldArtillery - collect intelligence for battalion" target="350" time="2010-08-19T19:16:41" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30UXU7908555359"/>
+        <point coordinates="30TXT8278592042"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UBP8448856474"/>
+        <point coordinates="31TBN8131693853"/>
+      </location>
+    </parameter>
+    <parameter name="Areas to observe" type="list">
+      <parameter name="Areas to observe (item 1)" type="location">
+        <location type="polygon">
+          <point coordinates="30UYU0399847708"/>
+          <point coordinates="30UYU0773645722"/>
+          <point coordinates="30UYU0933648658"/>
+          <point coordinates="30UYU0441450160"/>
+          <point coordinates="30UYU0399847708"/>
+        </location>
+      </parameter>
+      <parameter name="Areas to observe (item 2)" type="location">
+        <location type="polygon">
+          <point coordinates="30UXU9777647294"/>
+          <point coordinates="30UYU0169048003"/>
+          <point coordinates="30UYU0081350114"/>
+          <point coordinates="30UXU9597149413"/>
+          <point coordinates="30UXU9777647294"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Companies to support" type="list">
+      <parameter name="Companies to support (item 1)" type="automat" value="334"/>
+    </parameter>
+    <parameter name="defensive mission" type="bool" value="false"/>
+  </action>
+</actions>

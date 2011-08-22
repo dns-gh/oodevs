@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="315" name="Transport - transport" target="413" time="2010-08-19T18:05:41" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30UXU7908555359"/>
+        <point coordinates="30TXT8278592042"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UBP8448856474"/>
+        <point coordinates="31TBN8131693853"/>
+      </location>
+    </parameter>
+    <parameter name="Units to transport" type="list">
+      <parameter name="Units to transport (item 1)" type="agent" value="449"/>
+    </parameter>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU9005625053"/>
+      </location>
+    </parameter>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU9373124760"/>
+      </location>
+    </parameter>
+    <parameter name="With equipments" type="bool" value="false"/>
+  </action>
+</actions>

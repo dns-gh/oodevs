@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="28" name="Air Defense Artillery (Very Short Range) - defend area" target="88" time="2010-08-19T18:26:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2972844715"/>
+        <point coordinates="30UXU3057744942"/>
+        <point coordinates="30UXU3099044404"/>
+        <point coordinates="30UXU3059943855"/>
+        <point coordinates="30UXU2961743820"/>
+        <point coordinates="30UXU2943343956"/>
+        <point coordinates="30UXU2972844715"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment mode" type="enumeration" value="0"/>
+  </action>
+  <action id="29" name="Air Defense Artillery (Very Short Range) - defend area (from a position)" target="88" time="2010-08-19T18:28:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3062442680"/>
+        <point coordinates="30UXU3126242810"/>
+        <point coordinates="30UXU3169441756"/>
+        <point coordinates="30UXU3125341580"/>
+        <point coordinates="30UXU3094541694"/>
+        <point coordinates="30UXU3085441762"/>
+        <point coordinates="30UXU3022741792"/>
+        <point coordinates="30UXU3062442680"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2961642857"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment mode" type="enumeration" value="1"/>
+  </action>
+  <action id="30" name="Air Defense Artillery (Very Short Range) - monitor" target="88" time="2010-08-19T18:29:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3278444219"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment mode" type="enumeration" value="1"/>
+  </action>
+  <action id="37" name="Field Artillery - (Short Range Radar) - collect intelligence on objectives" target="21" time="2010-08-19T18:04:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to observe" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3247953672"/>
+        <point coordinates="30UXU3403654058"/>
+        <point coordinates="30UXU3535252731"/>
+        <point coordinates="30UXU3308852073"/>
+        <point coordinates="30UXU3247953672"/>
+      </location>
+    </parameter>
+    <parameter name="Categories" type="natureatlas" value="1"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3585251843"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="33" name="Field Artillery - recon deployment area" target="32" time="2010-08-19T18:08:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3497852388"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="31" name="Field Artillery - operate" target="34" time="2010-08-19T18:00:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="objectknowledge" value="158"/>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position)" target="34" time="2010-08-19T18:02:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3114643546"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="36" name="Field Artillery - (Long Range Surveillance Detachment) - collect intelligence on objectives" target="53" time="2010-08-19T18:04:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to observe" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3188342298"/>
+        <point coordinates="30UXU3382343091"/>
+        <point coordinates="30UXU3392042337"/>
+        <point coordinates="30UXU3211841514"/>
+        <point coordinates="30UXU3188342298"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3133043243"/>
+      </location>
+    </parameter>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3015843166"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="31" name="Field Artillery - operate" target="57" time="2010-08-19T18:05:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="objectknowledge" value="158"/>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position)" target="57" time="2010-08-19T18:06:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3156643091"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="87" name="Infantry - support" target="59" time="2010-08-19T18:06:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="106"/>
+  </action>
+  <action id="91" name="Infantry - bar" target="60" time="2010-08-19T18:06:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to bar" type="point">
+      <location type="point">
+        <point coordinates="30UXU3236841297"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="90" name="Infantry - monitor" target="60" time="2010-08-19T18:07:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3213742592"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="87" name="Infantry - support" target="60" time="2010-08-19T18:08:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="106"/>
+  </action>
+  <action id="91" name="Infantry - bar" target="60" time="2010-08-19T18:06:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to bar" type="point">
+      <location type="point">
+        <point coordinates="30UXU3236841297"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="90" name="Infantry - monitor" target="60" time="2010-08-19T18:07:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3213742592"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="87" name="Infantry - support" target="60" time="2010-08-19T18:08:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="106"/>
+  </action>
+  <action id="35" name="Field Artillery - (Surveillance Detachment) - collect intelligence on objectives" target="75" time="2010-08-19T18:13:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to observe" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3221941080"/>
+        <point coordinates="30UXU3351641287"/>
+        <point coordinates="30UXU3372940333"/>
+        <point coordinates="30UXU3206140023"/>
+        <point coordinates="30UXU3221941080"/>
+      </location>
+    </parameter>
+    <parameter name="Unit to support" type="automate" value="90"/>
+    <parameter name="Categories" type="natureatlas" value="1"/>
+  </action>
+  <action id="22" name="Air Defense Artillery - defend area" target="79" time="2010-08-19T18:18:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3421742168"/>
+        <point coordinates="30UXU3496742195"/>
+        <point coordinates="30UXU3512141880"/>
+        <point coordinates="30UXU3467041507"/>
+        <point coordinates="30UXU3408341432"/>
+        <point coordinates="30UXU3421742168"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="23" name="Air Defense Artillery - defend area (from a position)" target="79" time="2010-08-19T18:20:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3442143441"/>
+        <point coordinates="30UXU3506043553"/>
+        <point coordinates="30UXU3508742823"/>
+        <point coordinates="30UXU3455842608"/>
+        <point coordinates="30UXU3415342932"/>
+        <point coordinates="30UXU3409343108"/>
+        <point coordinates="30UXU3442143441"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3502942447"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="24" name="Air Defense Artillery - monitor" target="79" time="2010-08-19T18:21:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3449841822"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="22" name="Air Defense Artillery - defend area" target="83" time="2010-08-19T18:21:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3379241066"/>
+        <point coordinates="30UXU3433041014"/>
+        <point coordinates="30UXU3431940354"/>
+        <point coordinates="30UXU3391040286"/>
+        <point coordinates="30UXU3381740371"/>
+        <point coordinates="30UXU3379241066"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="23" name="Air Defense Artillery - defend area (from a position)" target="83" time="2010-08-19T18:23:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3419143379"/>
+        <point coordinates="30UXU3480643187"/>
+        <point coordinates="30UXU3466942523"/>
+        <point coordinates="30UXU3426042455"/>
+        <point coordinates="30UXU3411242610"/>
+        <point coordinates="30UXU3419143379"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3505042358"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="24" name="Air Defense Artillery - monitor" target="83" time="2010-08-19T18:24:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3408641343"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position)" target="34" time="2010-08-19T19:06:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3310541838"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="133" name="move" target="34" time="2010-08-19T19:25:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3301741595"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position)" target="34" time="2010-08-19T19:31:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3329042286"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="368" name="Fire" target="34" time="2010-08-19T19:59:51" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="13"/>
+    <parameter name="Shells number" type="numeric" value="1"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="30UXU4254439612"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire" target="34" time="2010-08-19T20:16:51" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="13"/>
+    <parameter name="Shells number" type="numeric" value="20"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="30UXU4245039485"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire" target="34" time="2010-08-19T20:33:51" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="20"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="30UXU4164138417"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

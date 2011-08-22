@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="182" name="Emergency - evacuate area" target="205" time="2010-08-19T18:10:17" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2697028644"/>
+        <point coordinates="30UXU2759228965"/>
+        <point coordinates="30UXU2779328572"/>
+        <point coordinates="30UXU2710228108"/>
+        <point coordinates="30UXU2697028644"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="181" name="Emergency - extinguish fire" target="205" time="2010-08-19T18:16:07" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="On Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2767728168"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="184" name="Emergency - provide first aid" target="205" time="2010-08-19T18:22:27" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2713428176"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="179" name="Emergency - soothe" target="205" time="2010-08-19T18:27:37" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2749128629"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

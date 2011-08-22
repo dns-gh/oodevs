@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="216" name="FieldArtillery - deploy" target="334" time="2010-08-19T18:13:21" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30UXU7908555359"/>
+        <point coordinates="30TXT8278592042"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UBP8448856474"/>
+        <point coordinates="31TBN8131693853"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU9737141865"/>
+        <point coordinates="30UXU9883741869"/>
+        <point coordinates="30UXU9883242443"/>
+        <point coordinates="30UXU9742442687"/>
+        <point coordinates="30UXU9737141865"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="409" name="FieldArtillery - defend area" target="334" time="2010-08-19T18:33:01" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30UXU7908555359"/>
+        <point coordinates="30TXT8278592042"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UBP8448856474"/>
+        <point coordinates="31TBN8131693853"/>
+      </location>
+    </parameter>
+    <parameter name="deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU9649443597"/>
+        <point coordinates="30UXU9987743750"/>
+        <point coordinates="30UXU9912045005"/>
+        <point coordinates="30UXU9658344898"/>
+        <point coordinates="30UXU9649443597"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="412" name="Fire in area" target="334" time="2010-08-19T18:57:11" type="fragorder">
+    <parameter name="Ammunitions" type="resourcetype" value="13"/>
+    <parameter name="Shells number" type="numeric" value="4"/>
+    <parameter name="Target" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU9515052225"/>
+        <point coordinates="30UXU9523050911"/>
+        <point coordinates="30UYU0037151226"/>
+        <point coordinates="30UXU9989552782"/>
+        <point coordinates="30UXU9515052225"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

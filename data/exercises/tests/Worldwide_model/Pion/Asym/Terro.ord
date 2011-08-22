@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="170" name="Asymetric - carry out a bombing (against population)" target="81" time="2010-08-19T18:07:31" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3309043230"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Meeting point" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3382941989"/>
+      </location>
+    </parameter>
+    <parameter name="Suicide" type="Bool" value="false"/>
+    <parameter name="Ammunition" type="DotationType" value="34"/>
+    <parameter name="Population Target" type="PopulationKnowledge" value="155"/>
+  </action>
+  <action id="171" name="Asymetric - carry out an attack (against armed forces)" target="81" time="2010-08-19T18:05:21" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2832243423"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Meeting point" type="Point">
+      <location type="point">
+        <point coordinates="30UXU2899443118"/>
+      </location>
+    </parameter>
+    <parameter name="Terrorist attack type" type="Enumeration" value="1"/>
+    <parameter name="Suicide" type="Bool" value="false"/>
+    <parameter name="Unit Target" type="AgentKnowledge" value="134"/>
+  </action>
+  <action id="172" name="Asymetric - destroy (against critical infrastructure)" target="81" time="2010-08-19T18:08:11" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3059041664"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Meeting point" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3052741140"/>
+      </location>
+    </parameter>
+    <parameter name="Suicide" type="Bool" value="false"/>
+    <parameter name="Ammunition" type="DotationType" value="34"/>
+    <parameter name="Critical infrastructure Target" type="ObjectKnowledge" value="151"/>
+  </action>
+  <action id="169" name="Asymetric - infiltrate" target="81" time="2010-08-19T18:09:41" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2959940117"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2959440254"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3017940852"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="174" name="Asymetric - report information" target="81" time="2010-08-19T18:11:11" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Beneficiary" type="Automate" value="121"/>
+  </action>
+</actions>

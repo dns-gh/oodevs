@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="33" name="Field Artillery - recon deployment area" target="32" time="2010-08-19T18:08:11" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment position" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3497852388"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

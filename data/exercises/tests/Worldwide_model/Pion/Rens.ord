@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="34" name="Field Artillery - collect enemy artillery intelligence" target="33" time="2010-08-19T18:00:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Areas to observe" type="polygon">
+      <parameter name="Areas to observe (item 1)" type="location">
+        <location type="polygon">
+          <point coordinates="30UXU4647052913"/>
+          <point coordinates="30UXU4749452678"/>
+          <point coordinates="30UXU4740552132"/>
+          <point coordinates="30UXU4701351937"/>
+          <point coordinates="30UXU4655152174"/>
+          <point coordinates="30UXU4647052913"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Deployment area" type="objectknowledge" value="189"/>
+    <parameter name="Electronic Intelligence" type="bool" value="true"/>
+  </action>
+  <action id="158" name="Human Intelligence - exfiltrate" target="123" time="2010-08-19T18:31:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2767644626"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="157" name="Human Intelligence - report information" target="123" time="2010-08-19T18:42:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to observe" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2500945486"/>
+        <point coordinates="30UXU2674245635"/>
+        <point coordinates="30UXU2689844166"/>
+        <point coordinates="30UXU2573643677"/>
+        <point coordinates="30UXU2461543770"/>
+        <point coordinates="30UXU2500945486"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="160" name="Electronic Intelligence - support" target="47" time="2010-08-19T18:57:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2596247987"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2650847566"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="161" name="Electronic Intelligence - report information" target="72" time="2010-08-19T20:23:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2824946674"/>
+        <point coordinates="30UXU2969346559"/>
+        <point coordinates="30UXU3001645135"/>
+        <point coordinates="30UXU2894144868"/>
+        <point coordinates="30UXU2737146143"/>
+        <point coordinates="30UXU2824946674"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="161" name="Electronic Intelligence - report information" target="50" time="2010-08-19T20:37:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2798552550"/>
+        <point coordinates="30UXU2940452281"/>
+        <point coordinates="30UXU2923549880"/>
+        <point coordinates="30UXU2789449768"/>
+        <point coordinates="30UXU2517851331"/>
+        <point coordinates="30UXU2798552550"/>
+      </location>
+    </parameter>
+  </action>
+</actions>
