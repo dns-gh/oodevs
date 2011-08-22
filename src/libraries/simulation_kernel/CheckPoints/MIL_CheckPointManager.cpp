@@ -258,8 +258,13 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
     {
         try
         {
-            const boost::filesystem::path oldPath( currentCheckPoints_.front(), boost::filesystem::native );
+            std::string oldName = currentCheckPoints_.front();
+            std::string oldFile = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", oldName );
+            const boost::filesystem::path oldPath( oldFile, boost::filesystem::native );
             boost::filesystem::remove_all( oldPath );
+            client::ControlCheckPointSaveDelete message;
+            message().set_name( oldName );
+            message.Send( NET_Publisher_ABC::Publisher() );
         }
         catch( std::exception& exception )
         {
@@ -267,7 +272,7 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
         }
         currentCheckPoints_.pop();
     }
-    currentCheckPoints_.push( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", newName ) );
+    currentCheckPoints_.push( newName );
 }
 
 // -----------------------------------------------------------------------------

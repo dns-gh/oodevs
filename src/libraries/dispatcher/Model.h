@@ -140,6 +140,8 @@ private:
     }
     template< typename T >
     void AddExtensions( T& , void* ) {}
+
+    void DeleteCheckpoint( const std::string& name );
     //@}
 
 private:
@@ -150,6 +152,7 @@ private:
     std::auto_ptr< CompositeFactory >        compositeFactory_;
     std::auto_ptr< FolkModel >               folk_;
     std::auto_ptr< MeteoModel >              meteoModel_;
+    const Config&                            config_;
     tools::Resolver< Team_ABC >              sides_;
     tools::Resolver< KnowledgeGroup_ABC >    knowledgeGroups_;
     tools::Resolver< Formation_ABC >         formations_;

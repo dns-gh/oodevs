@@ -46,6 +46,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4503 4355 )
 
@@ -71,6 +72,7 @@ Model::Model( const Config& config, const kernel::StaticModel& staticModel )
     , compositeFactory_( new CompositeFactory() )
     , folk_            ( new FolkModel() )
     , meteoModel_      ( new MeteoModel( staticModel.coordinateConverter_, config, *this ) )
+    , config_          ( config )
 {
     // NOTHING
 }
@@ -201,7 +203,8 @@ void Model::Update( const sword::SimToClient& wrapper )
         wrapper.message().has_control_send_current_state_end() )
         { // NOTHING // $$$$ AGE 2007-04-18: messages vides...
         }
-
+    else if( wrapper.message().has_control_checkpoint_save_delete() )
+        DeleteCheckpoint( wrapper.message().control_checkpoint_save_delete().name() );
     else if( wrapper.message().has_unit_knowledge_creation() )
         CreateUpdate< AgentKnowledge >( agentKnowledges_, wrapper.message().unit_knowledge_creation().knowledge().id(), wrapper.message().unit_knowledge_creation() );
     else if( wrapper.message().has_unit_knowledge_update() )
@@ -605,4 +608,15 @@ unsigned int Model::TaskerToId( const sword::Tasker& tasker ) const
 const kernel::ExtensionTypes& Model::GetExtensionTypes() const
 {
     return staticModel_.extensionTypes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::DeleteCheckpoint
+// Created: LDC 2011-08-22
+// -----------------------------------------------------------------------------
+void Model::DeleteCheckpoint( const std::string& name )
+{
+    std::string oldName = config_.GetCheckpointDirectory( name );
+    const boost::filesystem::path oldPath( oldName, boost::filesystem::native );
+    boost::filesystem::remove_all( oldPath );
 }

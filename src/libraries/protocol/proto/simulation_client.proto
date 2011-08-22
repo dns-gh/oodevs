@@ -2003,6 +2003,13 @@ message ControlCheckPointSaveEnd {
     optional string name = 1; //!< The checkpoint name
 }
 
+/** @struct ControlCheckPointSaveDelete
+    @brief Notify that a checkpoint directory has been deleted on the simulation (due to max number of checkpoints attained)
+*/
+message ControlCheckPointSaveDelete {
+    required string name = 1; //!< The checkpoint directory name
+}
+
 message ControlCheckPointListAck {
 }
 
@@ -2482,6 +2489,7 @@ message SimToClient {
         optional FragOrder                              frag_order                                = 139; //!< @copybrief FragOrder
         optional BurningCellRequestAck                  burning_cell_request_ack                  = 140; //!< @copybrief BurningCellRequestAck
         optional FormationUpdate                        formation_update                          = 141; //!< @copybrief FormationUpdate
+        optional ControlCheckPointSaveDelete            control_checkpoint_save_delete            = 142; //!< @copybrief ControlCheckPointSaveDelete
     }
     /** @property context
         @brief Identifies the request matching the response
