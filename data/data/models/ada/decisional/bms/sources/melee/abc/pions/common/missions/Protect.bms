@@ -54,6 +54,7 @@ include "bit.lua"
             if( F_Pion_GeteEtatDestruction( self._namedParams.pionAmi ) ~= eEtatDestruction_None ) or
               ( distance > self.maxStartDistance ) then
                 DEC_Trace( "Protected unit is not operational or out of range" )
+                DEC_RC( eRC_MissionImpossible )
                 self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
