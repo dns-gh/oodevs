@@ -945,10 +945,6 @@
         <mission name="Reparer point du reseau"/>
         <mission name="Activer reseau souterrain"/>
         <mission name="Desactiver reseau souterrain"/>
-        <mission name="Entrer dans un reseau souterrain"/>
-        <mission name="Sortir du reseau souterrain"/>
-        <mission name="Faire mouvement dans reseau souterrain"/>
-        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="Produire"/>
       </missions>
       <fragorders>
@@ -1028,6 +1024,10 @@
         <mission name="ASYMETRIQUE Renseigner"/>
         <mission name="ASYMETRIQUE Se Dissimuler"/>
         <mission name="ASYMETRIQUE S'Infiltrer"/>
+        <mission name="Entrer dans un reseau souterrain"/>
+        <mission name="Sortir du reseau souterrain"/>
+        <mission name="Faire mouvement dans reseau souterrain"/>
+        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
       </missions>
@@ -1065,6 +1065,10 @@
         <mission name="COMMUNES Interroger"/>
         <mission name="ASYMETRIQUE Renseigner"/>
         <mission name="ASYMETRIQUE S'Infiltrer"/>
+        <mission name="Entrer dans un reseau souterrain"/>
+        <mission name="Sortir du reseau souterrain"/>
+        <mission name="Faire mouvement dans reseau souterrain"/>
+        <mission name="Faire mouvement via reseau souterrain"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -8360,10 +8364,6 @@
         <mission name="Reparer point du reseau"/>
         <mission name="Activer reseau souterrain"/>
         <mission name="Desactiver reseau souterrain"/>
-        <mission name="Entrer dans un reseau souterrain"/>
-        <mission name="Sortir du reseau souterrain"/>
-        <mission name="Faire mouvement dans reseau souterrain"/>
-        <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="Produire"/>
         <mission name="COMMUNES Renforcer"/>
       </missions>
@@ -14994,4 +14994,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4000179315" -->
+<!-- signature="0183901675" -->
