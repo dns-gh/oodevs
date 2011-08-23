@@ -139,6 +139,7 @@ void PushFlowParameters::Serialize( xml::xostream& xos ) const
             xos << xml::start( "resource" );
             xos << xml::attribute( "id", resource.first->GetId() );
             xos << xml::attribute( "quantity", resource.second );
+            xos << xml::end;
         }
         xos << xml::end;
     }
