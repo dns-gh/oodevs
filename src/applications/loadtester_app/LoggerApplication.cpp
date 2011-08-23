@@ -146,7 +146,7 @@ void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /
 // -----------------------------------------------------------------------------
 void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const sword::DispatcherToClient& /*wrapper*/ )
 {
-    DumpTime();a
+    DumpTime();
     file_ << "Dispatcher message received" << std::endl;
 }
 
