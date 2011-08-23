@@ -9252,6 +9252,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -9288,6 +9290,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -14994,4 +14998,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0183901675" -->
+<!-- signature="1331872394" -->
