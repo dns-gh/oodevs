@@ -123,17 +123,17 @@ public:
 
     //! @name Pret de composantes
     //@{
-    template < typename T > unsigned int LendComposantes             ( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate );
-    template < typename T > unsigned int GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate );
-    template < typename T > unsigned int RetrieveLentComposantes     ( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate );
+    template < typename T > unsigned int LendComposantes             ( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
+    template < typename T > unsigned int GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
+    template < typename T > unsigned int RetrieveLentComposantes     ( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
 
     // Actions on the composante owner
-    virtual void LendComposante        ( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante );
-    virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante );
+    virtual void LendComposante        ( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante );
+    virtual void RetrieveLentComposante( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante );
 
     // Notification for the beneficary
-    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante );
-    virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante );
+    virtual void NotifyLentComposanteReceived( MIL_Agent_ABC& lender, PHY_ComposantePion& composante );
+    virtual void NotifyLentComposanteReturned( MIL_Agent_ABC& lender, PHY_ComposantePion& composante );
     //@}
 
     //! @name Transfert de composantes
@@ -267,14 +267,6 @@ private:
 public:
     //! @name Types
     //@{
-    typedef std::set< PHY_MaintenanceComposanteState* >       T_MaintenanceComposanteStateSet;
-    typedef T_MaintenanceComposanteStateSet::iterator        IT_MaintenanceComposanteStateSet;
-    typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
-
-    typedef std::map< const PHY_RoleInterface_Composantes*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
-    typedef T_LoanMap::iterator                                                                         IT_LoanMap;
-    typedef T_LoanMap::const_iterator                                                                  CIT_LoanMap;
-
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::iterator                                        IT_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::const_iterator                                 CIT_ComposanteTypeMap;

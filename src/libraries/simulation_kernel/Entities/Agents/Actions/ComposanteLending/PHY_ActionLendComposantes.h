@@ -14,7 +14,6 @@
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
-class PHY_RolePion_Composantes;
 class PHY_ComposantePion;
 class MIL_AgentPion;
 class DEC_Decision_ABC;
@@ -61,9 +60,8 @@ private:
 private:
     //! @name Member data
     //@{
-    PHY_RolePion_Composantes& role_;
-
-    PHY_RolePion_Composantes* pTarget_;
+    MIL_AgentPion&            pion_;
+    MIL_AgentPion&            target_;
     T_ComposantePredicate     predicate_;
     const unsigned int        nNbrToLend_;
     unsigned int              nTimer_;

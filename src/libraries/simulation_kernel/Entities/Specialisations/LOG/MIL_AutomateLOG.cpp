@@ -26,6 +26,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_AsnException.h"

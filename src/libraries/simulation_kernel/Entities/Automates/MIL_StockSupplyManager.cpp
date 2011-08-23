@@ -72,16 +72,29 @@ MIL_StockSupplyManager::~MIL_StockSupplyManager()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::serialize
-// Created: JVT 2005-04-14
+// Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-template < typename Archive >
-void MIL_StockSupplyManager::serialize( Archive& file, const unsigned int )
+void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & pAutomate_
-         & bStockSupplyNeeded_
-//         & pExplicitStockSupplyState_
-//         & manualSupplyStates_
-         & nTickRcStockSupplyQuerySent_;
+    file >> pAutomate_
+         >> bStockSupplyNeeded_
+         >> nTickRcStockSupplyQuerySent_;
+
+    // $$ TMP
+    assert( pAutomate_ );
+    supplyRequestBuilder_.reset( new logistic::SupplyStockRequestBuilder( *pAutomate_, *this ) );
+    autoSupplyRequest_.reset( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::serialize
+// Created: JVT 2005-03-24
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << pAutomate_
+         << bStockSupplyNeeded_
+         << nTickRcStockSupplyQuerySent_;
 }
 
 // =============================================================================

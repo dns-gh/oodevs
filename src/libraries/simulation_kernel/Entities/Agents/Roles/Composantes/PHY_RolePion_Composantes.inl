@@ -42,7 +42,7 @@ inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 // Created: NLD 2006-04-03
 // -----------------------------------------------------------------------------
 template < typename T >
-unsigned int PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate )
+unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
@@ -65,7 +65,7 @@ unsigned int PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
 template < typename T > 
-unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate )
+unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;
     while( nNbrDone < nNbr )
@@ -94,12 +94,12 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Com
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
 template < typename T > 
-unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate )
+unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;
     unsigned int nTime = 0;
     const MT_Vector2D& srcPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Vector2D& destPos = borrower.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
+    const MT_Vector2D& destPos = borrower.GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {
         PHY_ComposantePion& composante = **it;

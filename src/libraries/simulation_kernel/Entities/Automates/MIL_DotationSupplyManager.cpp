@@ -110,13 +110,29 @@ namespace boost
 // Name: MIL_DotationSupplyManager::serialize
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-template < typename Archive >
-void MIL_DotationSupplyManager::serialize( Archive& file, const unsigned int )
+void MIL_DotationSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & pAutomate_
-         & bDotationSupplyNeeded_
-         & bDotationSupplyExplicitlyRequested_
-         & nTickRcDotationSupplyQuerySent_;
+    file >> pAutomate_
+         >> bDotationSupplyNeeded_
+         >> bDotationSupplyExplicitlyRequested_
+         >> nTickRcDotationSupplyQuerySent_;
+
+    // $$ TMP
+    assert( pAutomate_ );
+    supplyRequestBuilder_.reset( new logistic::SupplyDotationRequestBuilder( *pAutomate_, *this ) );
+    supplyRequests_.reset( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::serialize
+// Created: JVT 2005-03-24
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << pAutomate_
+         << bDotationSupplyNeeded_
+         << bDotationSupplyExplicitlyRequested_
+         << nTickRcDotationSupplyQuerySent_;
 }
 
 // =============================================================================

@@ -59,9 +59,9 @@ public:
     typedef T_MaintenanceComposanteStateSet::iterator        IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
 
-    typedef std::map< const PHY_RoleInterface_Composantes*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
-    typedef T_LoanMap::iterator                                                                         IT_LoanMap;
-    typedef T_LoanMap::const_iterator                                                                  CIT_LoanMap;
+    typedef std::map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
+    typedef T_LoanMap::iterator                                                          IT_LoanMap;
+    typedef T_LoanMap::const_iterator                                                    CIT_LoanMap;
     //@}
 
 public:
@@ -86,12 +86,12 @@ public:
     //@}
 
     // Actions on the composante owner
-    virtual void LendComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) = 0;
-    virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) = 0;
+    virtual void LendComposante( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante ) = 0;
+    virtual void RetrieveLentComposante( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante ) = 0;
 
     // Notification for the beneficary
-    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ) = 0;
-    virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ) = 0;
+    virtual void NotifyLentComposanteReceived( MIL_Agent_ABC& lender, PHY_ComposantePion& composante ) = 0;
+    virtual void NotifyLentComposanteReturned( MIL_Agent_ABC& lender, PHY_ComposantePion& composante ) = 0;
     //@}
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée

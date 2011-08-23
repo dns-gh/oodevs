@@ -551,7 +551,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGet
 void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate )
 {
     assert( pTarget );
-    const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
+    const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
     if( nNbrGotBack == 0 )
         MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingImpossible );
     else
