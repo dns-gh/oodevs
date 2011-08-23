@@ -230,7 +230,7 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return "polygon";
     if( type == "integer" && type_ == "numeric" )
         return "numeric";
-    if( type == "list" )
+    if( type == "list" || type == "string" )
         return type_;
     return "";
 }
