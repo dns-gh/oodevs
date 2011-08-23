@@ -1618,7 +1618,7 @@ message LogSupplyHandlingCreation {
     @brief Notifies of the update of a log supply handling
 */
 message LogSupplyHandlingUpdate {
-    /** @enum EnumConvoyState
+    /** @enum EnumLogSupplyHandlingStatus
         @brief List of states a supply request can go through
     */
     enum EnumLogSupplyHandlingStatus {
