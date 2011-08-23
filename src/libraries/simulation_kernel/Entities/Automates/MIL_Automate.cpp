@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Automate.h"
 #include "MIL_AutomateType.h"
+#include "DEC_AutomateDecision.h"
 #include "Decision/DEC_Representations.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_Formation.h"

@@ -3075,7 +3075,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Reload brain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Recharger le decisionnel</translation>
     </message>
 </context>
 <context>

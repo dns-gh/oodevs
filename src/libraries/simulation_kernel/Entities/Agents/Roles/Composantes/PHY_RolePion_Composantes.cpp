@@ -13,6 +13,7 @@
 #include "PHY_RolePion_Composantes.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Humans/HumanStateHelper.h"
@@ -24,9 +25,9 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-#include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "TransportCapacityComputer_ABC.h"
@@ -41,6 +42,7 @@
 #include "VisionConeNotificationHandler_ABC.h"
 #include "DotationsActionsNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/set.hpp>

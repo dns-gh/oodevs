@@ -14,6 +14,7 @@
 #include "HumansComposante_ABC.h"
 #include "PHY_HumanRank.h"
 #include "PHY_HumanWound.h"
+#include "MIL_Singletons.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"

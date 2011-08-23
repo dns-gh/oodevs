@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "MIL_MissionParameterFactory.h"

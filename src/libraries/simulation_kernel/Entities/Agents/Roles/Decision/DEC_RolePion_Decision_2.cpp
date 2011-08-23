@@ -759,9 +759,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Logistique
     brain[ "DEC_StartPreterVSRAM" ] =
-        boost::function< unsigned int( DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
+        boost::function< unsigned int( DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartPreterRemorqueurs" ] =
-        boost::function< unsigned int( DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_RolePion_Decision*, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
+        boost::function< unsigned int( DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_RecupererVSRAM" ] =
         boost::function< void( const DEC_Decision_ABC*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendCollectionComposantes, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_RecupererRemorqueurs" ] =
