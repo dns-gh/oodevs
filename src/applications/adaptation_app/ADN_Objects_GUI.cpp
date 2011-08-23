@@ -197,6 +197,13 @@ void ADN_Objects_GUI::Build()
         connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
     }
 
+    // Trafficability
+    ADN_GroupBox* trafficability = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Trafficability" ), hBox );
+    {
+        vInfosConnectors[ eTrafficabilityCapacityPresent ] = & trafficability->GetConnector();
+        builder.AddField< ADN_CheckBox >( trafficability, tr( "Default limited trafficability" ), vInfosConnectors[ eLimitedTrafficability ] );
+    }
+
     ADN_GroupBox* workable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Workable" ), hBox );
     {
         vInfosConnectors[ eWorkableCapacityPresent ] = & workable->GetConnector();

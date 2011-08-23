@@ -125,6 +125,8 @@ public:
         eWorkableCapacityPresent,
         eSpawnObjectCapacityPresent,
         eSpawnObjectType,
+        eTrafficabilityCapacityPresent,
+        eLimitedTrafficability,
         eNbrGuiElements
     };
 

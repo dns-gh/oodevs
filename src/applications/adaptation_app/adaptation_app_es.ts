@@ -3202,6 +3202,14 @@ tirador</translation>
         <source>Can spawn a cloud</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default limited trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
@@ -5985,6 +5993,17 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Composantes_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

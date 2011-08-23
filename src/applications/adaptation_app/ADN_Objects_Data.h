@@ -346,6 +346,18 @@ public:
         ADN_Type_Double rMaxAgentSpeed_; // percentage
     };
 
+    class ADN_CapacityInfos_Trafficability
+        : public helpers::ADN_CapacityInfos_Default< helpers::eTrafficabilityCapacity >
+    {
+    public:
+        ADN_CapacityInfos_Trafficability();
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+
+    public:
+        ADN_Type_Bool limited_;
+    };
+
     class ADN_CapacityInfos_Occupable
         : public helpers::ADN_TypeCapacity_Infos
     {

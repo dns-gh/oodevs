@@ -3204,6 +3204,14 @@ du tireur</translation>
         <source>Can spawn a cloud</source>
         <translation>Peut générer un nuage</translation>
     </message>
+    <message>
+        <source>Trafficability</source>
+        <translation>Traficabilité</translation>
+    </message>
+    <message>
+        <source>Default limited trafficability</source>
+        <translation>Traficabilité limitée par défaut</translation>
+    </message>>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
@@ -5997,6 +6005,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
         <translation>Equipement - Type de capteur invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Composantes_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

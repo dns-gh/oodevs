@@ -359,6 +359,35 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::WriteArchive( xml::xostream& 
         << xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeed_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Trafficability
+// Created: LGY 2011-08-23
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Trafficability::ADN_CapacityInfos_Trafficability()
+    : limited_( false )
+{
+    limited_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadArchive
+// Created: LGY 2011-08-23
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::ReadArchive( xml::xistream& xis )
+{
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    limited_ = xis.attribute< bool >( "default" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::WriteArchive
+// Created: LGY 2011-08-23
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::WriteArchive( xml::xostream& xos )
+{
+    xos << xml::attribute( "default", limited_.GetData() );
+}
+
 //! @name ADN_CapacityInfos_Attrition
 //@{
 
@@ -1235,6 +1264,7 @@ INIT_DATA( ADN_CapacityInfos_Improvable,              "Improvable",             
 INIT_DATA( ADN_CapacityInfos_Intoxication,            "Intoxication",            "intoxication" );
 INIT_DATA( ADN_CapacityInfos_Logistic,                "Logistic",                "logistic" );
 INIT_DATA( ADN_CapacityInfos_Mobility,                "Mobility",                "mobility" );
+INIT_DATA( ADN_CapacityInfos_Trafficability,          "Trafficability",          "trafficability" );
 INIT_DATA( ADN_CapacityInfos_Occupable,               "Occupable",               "occupable" );
 INIT_DATA( ADN_CapacityInfos_Population,              "Population",              "population-filter" );
 INIT_DATA( ADN_CapacityInfos_Propagation,             "Propagation",             "propagation" );
@@ -1329,6 +1359,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Intoxication::TAG ].reset( new ADN_CapacityInfos_Intoxication() );
     capacities_[ ADN_CapacityInfos_Logistic::TAG ].reset( new ADN_CapacityInfos_Logistic() );
     capacities_[ ADN_CapacityInfos_Mobility::TAG ].reset( new ADN_CapacityInfos_Mobility() );
+    capacities_[ ADN_CapacityInfos_Trafficability::TAG ].reset( new ADN_CapacityInfos_Trafficability() );
     capacities_[ ADN_CapacityInfos_Occupable::TAG ].reset( new ADN_CapacityInfos_Occupable() );
     capacities_[ ADN_CapacityInfos_Population::TAG ].reset( new ADN_CapacityInfos_Population() );
     capacities_[ ADN_CapacityInfos_Propagation::TAG ].reset( new ADN_CapacityInfos_Propagation() );

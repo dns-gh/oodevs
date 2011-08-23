@@ -76,6 +76,7 @@ enum E_Capacities
     eSupplyRouteCapacity,
     eTerrainHeuristicCapacity,
     eTimeLimitedCapacity,
+    eTrafficabilityCapacity,
     eUndergroundNetworkCapacity,
     eUniversalCapacity,
     eUrbanDestructionCapacity,
