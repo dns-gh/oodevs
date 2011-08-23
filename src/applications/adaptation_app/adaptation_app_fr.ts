@@ -3211,7 +3211,7 @@ du tireur</translation>
     <message>
         <source>Default limited trafficability</source>
         <translation>Traficabilité limitée par défaut</translation>
-    </message>>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
