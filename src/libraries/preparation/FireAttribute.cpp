@@ -34,10 +34,12 @@ FireAttribute::FireAttribute( kernel::PropertiesDictionary& dico )
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico )
 {
-    std::string type;
-    xis >> xml::attribute( "class", type )
+    std::string className;
+    xis >> xml::attribute( "class", className )
         >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
-    fireClass_ = FireClasses.Find( type );
+    fireClass_ = FireClasses.Find( className );
+    if( !fireClass_ )
+        xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
     CreateDictionary( dico );
 }
 
