@@ -107,7 +107,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_            ( 0 )
-    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this ) )
+    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
     , pBrainLogistic_                ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
@@ -139,7 +139,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( 0 )
     , pArmySurrenderedTo_            ( 0 )
-    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this ) )
+    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
     , pBrainLogistic_                ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
@@ -168,7 +168,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , recycledPions_                 ()
     , automates_                     ()
     , bAutomateModeChanged_          ( true )
-    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this ) )
+    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
     , pBrainLogistic_                ( 0 )
     , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
@@ -385,7 +385,7 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
         RegisterAction( pLogisticAction_ );
 
         // Automat having logistic brain are always there own tc2
-        pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, xis ) );
+        pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, false /* no quotas*/, xis ) );
     }
 
     pKnowledgeGroup_->RegisterAutomate( *this );
@@ -494,7 +494,7 @@ void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& x
 {
     if( pBrainLogistic_.get() )
         xis.error( "The logistic link of a logistic automat (usually a TC2) must not be overwritten: it should always be itself" );
-    pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, superior, xis ) );
+    pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, superior, false /* no quotas*/, xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1172,27 +1172,6 @@ void MIL_Automate::OnReceiveOrder( const sword::AutomatOrder& msg )
 void MIL_Automate::OnReceiveFragOrder( const sword::FragOrder& msg )
 {
     pOrderManager_->OnReceiveFragOrder( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetQuota
-// Created: AHC 2010-09-27
-// -----------------------------------------------------------------------------
-double MIL_Automate::GetQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const
-{
-    const MIL_AutomateLOG* pLog = FindLogisticManager();
-    return pLog ? pLog->GetQuota( supplier, dotationCategory ) : 0.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::ConsumeQuota
-// Created: AHC 2010-09-27
-// -----------------------------------------------------------------------------
-void MIL_Automate::ConsumeQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed )
-{
-    MIL_AutomateLOG* pLog = FindLogisticManager();
-    if( pLog )
-        pLog->ConsumeQuota( supplier, dotationCategory, rQuotaConsumed );
 }
 
 // -----------------------------------------------------------------------------

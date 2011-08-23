@@ -226,10 +226,7 @@ public:
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
     void RequestDotationSupply     ();
 
-    void     NotifyStockSupplyNeeded   ( const PHY_DotationCategory& dotationCategory );
-
-    double   GetQuota                  ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const;
-    void     ConsumeQuota              ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );
+    void NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory );
     //@}
 
     //! @name Tools

@@ -34,6 +34,7 @@ public:
     //@{
     virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, double quantity );
     virtual bool   AffectSupplier( SupplySupplier_ABC& supplier );
+    virtual bool   AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier );
 
     virtual double Supply          ();
     virtual double Convoy          ( double quantity ); // Return the quantity convoyed
@@ -69,7 +70,9 @@ private:
     double requestedQuantity_;
     double grantedQuantity_;
     double convoyedQuantity_;
+    double suppliedQuantity_;
     bool complementarySupply_;
+    boost::shared_ptr< LogisticLink_ABC > supplierQuotas_;
 };
 
 } // end namespace logistic

@@ -19,6 +19,7 @@ namespace sword {
 namespace logistic {
     class SupplyResource_ABC;
     class SupplySupplier_ABC;
+    class LogisticLink_ABC;
 
 // =============================================================================
 /** @class  SupplyRequest_ABC
@@ -39,6 +40,7 @@ public:
     //@{
     virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, double quantity ) = 0;
     virtual bool   AffectSupplier( SupplySupplier_ABC& supplier ) = 0;
+    virtual bool   AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier ) = 0;
     
     virtual double Supply          () = 0; // Return the quantity supplied;
     virtual double Convoy          ( double quantity ) = 0; // Return the quantity convoyed

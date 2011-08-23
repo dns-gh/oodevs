@@ -27,15 +27,17 @@ BOOST_CLASS_EXPORT_IMPLEMENT( LogisticHierarchy )
 template< typename Archive >
 void logistic::save_construct_data( Archive& archive, const logistic::LogisticHierarchy* logisticHierarchy, const unsigned int )
 {
-    archive << logisticHierarchy->owner_;
+    archive << logisticHierarchy->owner_
+            << logisticHierarchy->useQuotas_;
 }
 
 template< typename Archive >
 void logistic::load_construct_data( Archive& archive, logistic::LogisticHierarchy* logisticHierarchy, const unsigned int )
 {
     LogisticHierarchyOwner_ABC* owner;
-    archive >> owner;
-    ::new(logisticHierarchy)LogisticHierarchy( *owner );
+    bool useQuotas;
+    archive >> owner >> useQuotas;
+    ::new(logisticHierarchy)LogisticHierarchy( *owner, useQuotas );
 }
 
 // =============================================================================
@@ -105,7 +107,7 @@ public:
     }
     virtual Item NextElement()
     {
-        return **current_++;
+        return *current_++;
     }
 private:
     SimpleReverseIterator( const SimpleReverseIterator& );
@@ -114,7 +116,6 @@ private:
     typename Container::const_reverse_iterator current_;
     typename Container::const_reverse_iterator end_;
 };
-
 
 }
 
@@ -126,8 +127,9 @@ private:
 // Name: LogisticHierarchy constructor
 // Created: NLD 2011-01-05
 // -----------------------------------------------------------------------------
-LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner )
+LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, bool useQuotas )
     : owner_       ( &owner )
+    , useQuotas_   ( useQuotas )
     , linksUpdated_( true )
 {
     // NOTHING
@@ -137,22 +139,24 @@ LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner )
 // Name: LogisticHierarchy constructor
 // Created: NLD 2011-01-05
 // -----------------------------------------------------------------------------
-LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior )
+LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior, bool useQuotas )
     : owner_       ( &owner )
+    , useQuotas_   ( useQuotas )
     , linksUpdated_( true )
 {
-    superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( owner, nominalSuperior ) ) );
+    superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( owner, nominalSuperior, useQuotas ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchy constructor
 // Created: NLD 2011-01-05
 // -----------------------------------------------------------------------------
-LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior, xml::xistream& xis )
+LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior, bool useQuotas, xml::xistream& xis )
     : owner_       ( &owner )
+    , useQuotas_   ( useQuotas )
     , linksUpdated_( true )
 {
-    superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( owner, nominalSuperior, xis ) ) );
+    superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( owner, nominalSuperior, useQuotas, xis ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,9 +176,9 @@ LogisticHierarchy::~LogisticHierarchy()
 // Name: LogisticHierarchy::CreateSuperiorLinksIterator
 // Created: NLD 2011-01-12
 // -----------------------------------------------------------------------------
-tools::Iterator< const LogisticLink_ABC& > LogisticHierarchy::CreateSuperiorLinksIterator() const
+tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > LogisticHierarchy::CreateSuperiorLinksIterator() const
 {
-    return new SimpleReverseIterator< const LogisticLink_ABC&, T_SuperiorLinks >( superiorLinks_ );
+    return new SimpleReverseIterator< boost::shared_ptr< LogisticLink_ABC >, T_SuperiorLinks >( superiorLinks_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +242,7 @@ void LogisticHierarchy::SwitchToHierarchy( const LogisticHierarchy_ABC& newHiera
     superiorLinks_.clear();
     tools::Iterator< MIL_AutomateLOG& > it = newHierarchy.CreateSuperiorsIterator();
     while( it.HasMoreElements() )
-        superiorLinks_.push_front( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, it.NextElement() ) ) );
+        superiorLinks_.push_front( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, it.NextElement(), useQuotas_ ) ) );
     linksUpdated_ = true;
 }
 
@@ -276,7 +280,7 @@ void LogisticHierarchy::ChangeLinks( const std::vector< MIL_AutomateLOG* >& supe
     BOOST_FOREACH( MIL_AutomateLOG* superior, superiors )
     {
         if( superiorLinks_.empty() || &superiorLinks_.back()->GetSuperior() != superior )
-            superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, *superior ) ) );
+            superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, *superior, useQuotas_ ) ) );
     }
     linksUpdated_ = true;
 }

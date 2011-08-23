@@ -105,9 +105,9 @@ ObjectLogisticHierarchy::~ObjectLogisticHierarchy()
 // Name: tools::Iterator_ABC< LogisticLink_ABC > ObjectLogisticHierarchy::CreateSuperiorLinksIterator
 // Created: NLD 2011-01-12
 // -----------------------------------------------------------------------------
-tools::Iterator< const LogisticLink_ABC& > ObjectLogisticHierarchy::CreateSuperiorLinksIterator() const
+tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > ObjectLogisticHierarchy::CreateSuperiorLinksIterator() const
 {
-    return new tools::SingleElementIterator< const LogisticLink_ABC& >( *superiorLink_ );
+    return new tools::SingleElementIterator< boost::shared_ptr< LogisticLink_ABC > >( superiorLink_ );
 }
 
 // -----------------------------------------------------------------------------

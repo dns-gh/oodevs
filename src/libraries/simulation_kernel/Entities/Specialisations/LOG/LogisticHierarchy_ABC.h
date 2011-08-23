@@ -44,8 +44,8 @@ public:
     virtual MIL_AutomateLOG* GetPrimarySuperior() const = 0;
 
     // Returns the superior by priority : first has highest priority
-    virtual tools::Iterator< const LogisticLink_ABC& > CreateSuperiorLinksIterator() const = 0;
-    virtual tools::Iterator< MIL_AutomateLOG& >        CreateSuperiorsIterator    () const = 0;
+    virtual tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > CreateSuperiorLinksIterator() const = 0;
+    virtual tools::Iterator< MIL_AutomateLOG& >                      CreateSuperiorsIterator    () const = 0;
 
     virtual const boost::shared_ptr< LogisticLink_ABC > FindSuperiorLink( const MIL_AutomateLOG& superior ) const = 0;
 

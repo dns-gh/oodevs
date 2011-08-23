@@ -57,18 +57,19 @@ ObjectLogisticLink::~ObjectLogisticLink()
 // Name: ObjectLogisticLink::ConsumeQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-void ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory&, double )
+double ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory&, double quantity )
 {
-    // NOTHING
+    return quantity;
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: ObjectLogisticLink::GetQuota
+// Name: ObjectLogisticLink::ReturnQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-double ObjectLogisticLink::GetQuota( const PHY_DotationCategory& ) const
+void ObjectLogisticLink::ReturnQuota( const PHY_DotationCategory&, double )
 {
-    return 0.;
+    // NOTHING
 }
 
 // =============================================================================

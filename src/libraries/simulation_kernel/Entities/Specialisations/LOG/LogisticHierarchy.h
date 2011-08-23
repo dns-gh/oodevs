@@ -32,9 +32,9 @@ class LogisticHierarchy : public network::NetworkMessageSender_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner );
-             LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior );
-             LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior, xml::xistream& xis );
+    explicit LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, bool useQuotas );
+             LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior, bool useQuotas );
+             LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& nominalSuperior, bool useQuotas, xml::xistream& xis );
     virtual ~LogisticHierarchy();
     //@}
 
@@ -47,8 +47,8 @@ public:
     virtual bool             HasSuperior() const;
     virtual MIL_AutomateLOG* GetPrimarySuperior() const;
 
-    virtual tools::Iterator< const LogisticLink_ABC& > CreateSuperiorLinksIterator() const;
-    virtual tools::Iterator< MIL_AutomateLOG&  >       CreateSuperiorsIterator    () const;
+    virtual tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > CreateSuperiorLinksIterator() const;
+    virtual tools::Iterator< MIL_AutomateLOG&  >                     CreateSuperiorsIterator    () const;
 
     virtual const boost::shared_ptr< LogisticLink_ABC > FindSuperiorLink( const MIL_AutomateLOG& superior ) const;
 
@@ -90,6 +90,7 @@ private:
 
     T_SuperiorLinks superiorLinks_;
     T_SuperiorLinks backupSuperiorLinks_; //$$$ TMP, remplacer par un proxy à terme
+    const bool useQuotas_;
 
     // Network
     mutable bool linksUpdated_;

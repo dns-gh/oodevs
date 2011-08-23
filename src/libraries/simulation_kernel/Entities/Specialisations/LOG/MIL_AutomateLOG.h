@@ -133,9 +133,6 @@ public:
 
     //! @name Quotas
     //@{
-    double   GetQuota    ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const;
-    void     ConsumeQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );
-
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 

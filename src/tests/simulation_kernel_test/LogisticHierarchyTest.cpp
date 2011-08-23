@@ -21,6 +21,7 @@
 #include "protocol/ClientSenders.h"
 #include <tools/iterator.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/assign/list_of.hpp>
 
 using namespace logistic;
 
@@ -52,45 +53,23 @@ namespace {
         }
     };
 
-    template< typename T >
-    void testIteratorContent( tools::Iterator< T& > inputIterator, const std::vector< T* >& wantedOutput )
+    void testSuperiors( tools::Iterator< MIL_AutomateLOG& > inputIterator, std::vector< MIL_AutomateLOG* > wantedOutput = std::vector< MIL_AutomateLOG* >() )
     {
-        std::vector< T* > output;
+        std::vector< MIL_AutomateLOG* > output;
         while( inputIterator.HasMoreElements() )
             output.push_back( &inputIterator.NextElement() );
         BOOST_CHECK_EQUAL_COLLECTIONS( wantedOutput.begin(), wantedOutput.end(), output.begin(), output.end() );
     }
 
-    /*template< typename T >
-    void testIteratorContent( tools::Iterator< T > inputIterator, const T tmp[] )
+    void testLinks( tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > inputIterator, std::vector< boost::shared_ptr< LogisticLink_ABC > > wantedOutput = std::vector< boost::shared_ptr< LogisticLink_ABC > >() )
     {
-        std::vector< T > wantedOutput( tmp, tmp + sizeof( tmp ) / sizeof( T ) );
-        testIteratorContent( inputIterator, wantedOutput );
-    }*/
-
-    template< typename T >
-    void testIteratorContent( tools::Iterator< T& > inputIterator )
-    {
-        std::vector< T* > wantedOutput;
-        testIteratorContent( inputIterator, wantedOutput );
+        std::vector< boost::shared_ptr< LogisticLink_ABC > > output;
+        while( inputIterator.HasMoreElements() )
+            output.push_back( inputIterator.NextElement() );
+        BOOST_CHECK_EQUAL_COLLECTIONS( wantedOutput.begin(), wantedOutput.end(), output.begin(), output.end() );
     }
 
-    template< typename T >
-    void testIteratorContent( tools::Iterator< T& > inputIterator, T& elt1 )
-    {
-        std::vector< T* > wantedOutput;
-        wantedOutput.push_back( &elt1 );
-        testIteratorContent( inputIterator, wantedOutput );
-    }
 
-    template< typename T >
-    void testIteratorContent( tools::Iterator< T& > inputIterator, T& elt1, T& elt2 )
-    {
-        std::vector< T* > wantedOutput;
-        wantedOutput.push_back( &elt1 );
-        wantedOutput.push_back( &elt2 );
-        testIteratorContent( inputIterator, wantedOutput );
-    }
 }
 
 BOOST_FIXTURE_TEST_SUITE( LogisticHierarchyTestSuite, DotationsFixture )
@@ -103,13 +82,13 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
 {
     {
         MockLogisticHierarchyOwner_ABC owner;
-        LogisticHierarchy logHierarchy( owner );
+        LogisticHierarchy logHierarchy( owner, true );
 
         BOOST_CHECK_EQUAL( false, logHierarchy.HasSuperior() );
         BOOST_CHECK_EQUAL( (MIL_AutomateLOG*)0, logHierarchy.GetPrimarySuperior() );
 
-        testIteratorContent( logHierarchy.CreateSuperiorsIterator() );
-        testIteratorContent( logHierarchy.CreateSuperiorLinksIterator() );
+        testSuperiors( logHierarchy.CreateSuperiorsIterator() );
+        testLinks( logHierarchy.CreateSuperiorLinksIterator() );
     }
 
     {
@@ -117,7 +96,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         MockMIL_AutomateLOG brainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
         MockMIL_AutomateLOG brainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
 
-        LogisticHierarchy logHierarchy( owner, brainLog1 );
+        LogisticHierarchy logHierarchy( owner, brainLog1, true );
 
         BOOST_CHECK_EQUAL( true, logHierarchy.HasSuperior() );
         BOOST_CHECK_EQUAL( &brainLog1, logHierarchy.GetPrimarySuperior() );
@@ -126,8 +105,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         BOOST_CHECK_NE( (LogisticLink_ABC*)0, linkBrainLog1.get() );
         BOOST_CHECK_EQUAL( &brainLog1, &linkBrainLog1->GetSuperior() );
 
-        testIteratorContent< MIL_AutomateLOG >( logHierarchy.CreateSuperiorsIterator(), brainLog1 );
-        testIteratorContent< const LogisticLink_ABC >( logHierarchy.CreateSuperiorLinksIterator(), *linkBrainLog1 );
+        testSuperiors( logHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &brainLog1 ) );
+        testLinks( logHierarchy.CreateSuperiorLinksIterator(), boost::assign::list_of( linkBrainLog1 ) );
 
         // Change links
         std::vector< MIL_AutomateLOG* > newLinks;
@@ -144,8 +123,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         BOOST_CHECK_NE( (LogisticLink_ABC*)0, linkBrainLog2.get() );
         BOOST_CHECK_EQUAL( &brainLog2, &linkBrainLog2->GetSuperior() );
 
-        testIteratorContent< MIL_AutomateLOG >( logHierarchy.CreateSuperiorsIterator(), brainLog2, brainLog1 );
-        testIteratorContent< const LogisticLink_ABC >( logHierarchy.CreateSuperiorLinksIterator(), *linkBrainLog2, *linkBrainLog1 );
+        testSuperiors( logHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &brainLog2 )( &brainLog1 ) );
+        testLinks( logHierarchy.CreateSuperiorLinksIterator(), boost::assign::list_of( linkBrainLog2 ) ( linkBrainLog1 ) );
 
         // Change links : nominal and current are the same
         newLinks.clear();
@@ -157,13 +136,13 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         BOOST_CHECK_NE( (LogisticLink_ABC*)0, linkBrainLog2.get() );
         BOOST_CHECK_EQUAL( &brainLog2, &linkBrainLog2->GetSuperior() );
 
-        testIteratorContent< MIL_AutomateLOG >( logHierarchy.CreateSuperiorsIterator(), brainLog2 );
-        testIteratorContent< const LogisticLink_ABC >( logHierarchy.CreateSuperiorLinksIterator(), *linkBrainLog2 );
+        testSuperiors( logHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &brainLog2 ) );
+        testLinks( logHierarchy.CreateSuperiorLinksIterator(), boost::assign::list_of( linkBrainLog2 ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: TestLogisticHierarchyQuota
+// Name: TestLogisticHierarchyXml
 // Created: NLD 2011-01-19
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestLogisticHierarchyXml )
@@ -176,9 +155,10 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyXml )
         "   <resource name=\"Bidule\" quantity=\"6666\"/>"
         "</quotas>" );
 
-    LogisticHierarchy logHierarchy( owner, brainLog, xis );
+    LogisticHierarchy logHierarchy( owner, brainLog, true, xis );
     boost::shared_ptr< LogisticLink_ABC > linkBrainLog = logHierarchy.FindSuperiorLink( brainLog );
-    BOOST_CHECK_EQUAL( linkBrainLog->GetQuota( *PHY_DotationType::FindDotationCategory( 43 ) ), 6666 );
+    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    BOOST_CHECK_EQUAL( linkBrainLog->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 43 ), 10000 ), 6666 );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +172,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
     MockMIL_AutomateLOG brainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG brainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
 
-    LogisticHierarchy logHierarchy( owner, brainLog1 );
+    LogisticHierarchy logHierarchy( owner, brainLog1, true );
     boost::shared_ptr< LogisticLink_ABC > linkBrainLog1 = logHierarchy.FindSuperiorLink( brainLog1 );
 
     sword::MissionParameter quotaParameter;
@@ -205,12 +185,46 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
 
     linkBrainLog1->OnReceiveChangeQuotas( quotaParameter );
 
-    BOOST_CHECK_EQUAL( linkBrainLog1->GetQuota( *PHY_DotationType::FindDotationCategory( 42 ) ), 4 );
-    BOOST_CHECK_EQUAL( linkBrainLog1->GetQuota( *PHY_DotationType::FindDotationCategory( 43 ) ), 5 );
+    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 43 ), 10 ), 5 );
+    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 4 );
+    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 0 );
+    linkBrainLog1->ReturnQuota( *PHY_DotationType::FindDotationCategory( 42 ), 1.1 );
+    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 1.1 );
+}
 
-    linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 1.1 );
+// -----------------------------------------------------------------------------
+// Name: TestLogisticHierarchyQuota
+// Created: NLD 2011-01-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( TestLogisticHierarchyNoQuota )
+{
+    MockLogisticHierarchyOwner_ABC owner;
 
-    BOOST_CHECK_EQUAL( linkBrainLog1->GetQuota( *PHY_DotationType::FindDotationCategory( 42 ) ), 2.9 );
+    MockMIL_AutomateLOG brainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
+    MockMIL_AutomateLOG brainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
+
+    LogisticHierarchy logHierarchy( owner, brainLog1, false );
+    boost::shared_ptr< LogisticLink_ABC > linkBrainLog1 = logHierarchy.FindSuperiorLink( brainLog1 );
+
+    sword::MissionParameter quotaParameter;
+    sword::MissionParameter_Value* parameterValue = quotaParameter.add_value();
+    parameterValue->add_list()->set_identifier( 42 );
+    parameterValue->add_list()->set_quantity( 4 );
+    parameterValue = quotaParameter.add_value();
+    parameterValue->add_list()->set_identifier( 43 );
+    parameterValue->add_list()->set_quantity( 5 );
+
+    linkBrainLog1->OnReceiveChangeQuotas( quotaParameter );
+
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 43 ), 10 ), 10 );
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 10 );
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 10 );
+    linkBrainLog1->ReturnQuota( *PHY_DotationType::FindDotationCategory( 42 ), 1.1 );
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 10 );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +236,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchySwitchHierarchy )
     MockLogisticHierarchyOwner_ABC mainOwner;
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
-    LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1);
+    LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1, true );
     std::vector< MIL_AutomateLOG* > newLinks;
     newLinks.push_back( &mainBrainLog1 );
     newLinks.push_back( &mainBrainLog2 );
@@ -231,50 +245,50 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchySwitchHierarchy )
     MockLogisticHierarchyOwner_ABC newOwner;
     MockMIL_AutomateLOG newBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG newBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
-    LogisticHierarchy newLogHierarchy( mainOwner, newBrainLog1);
+    LogisticHierarchy newLogHierarchy( mainOwner, newBrainLog1, true );
 
     newLinks.clear();
     newLinks.push_back( &newBrainLog1 );
     newLinks.push_back( &newBrainLog2 );
     newLogHierarchy.ChangeLinks( newLinks );
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
     mainLogHierarchy.SwitchToHierarchy( newLogHierarchy );
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
 
     mainLogHierarchy.SwitchBackToNominalHierarchy();
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
     mainLogHierarchy.DisconnectFromHierarchy();
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator() );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator() );
 
     mainLogHierarchy.SwitchBackToNominalHierarchy();
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
     mainLogHierarchy.SwitchToHierarchy( newLogHierarchy );
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
 
     mainLogHierarchy.DisconnectFromHierarchy();
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator() );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator() );
 
     mainLogHierarchy.SwitchBackToNominalHierarchy();
 
-    testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
+    testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,24 +299,24 @@ BOOST_AUTO_TEST_CASE( TestObjectLogisticHierarchy )
 {
     MockMIL_AutomateLOG objectBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     ObjectLogisticHierarchy objectLogHierarchy( objectBrainLog1 );
-    testIteratorContent< MIL_AutomateLOG >( objectLogHierarchy.CreateSuperiorsIterator(), objectBrainLog1 );
+    testSuperiors( objectLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &objectBrainLog1 ) );
 
     MockLogisticHierarchyOwner_ABC mainOwner;
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
-    LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1);
+    LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1, true );
     std::vector< MIL_AutomateLOG* > newLinks;
     newLinks.push_back( &mainBrainLog1 );
     newLinks.push_back( &mainBrainLog2 );
     mainLogHierarchy.ChangeLinks( newLinks );
 
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
     mainLogHierarchy.SwitchToHierarchy( objectLogHierarchy );
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), objectBrainLog1 );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &objectBrainLog1 ) );
 
     mainLogHierarchy.SwitchBackToNominalHierarchy();
-    testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
+    testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

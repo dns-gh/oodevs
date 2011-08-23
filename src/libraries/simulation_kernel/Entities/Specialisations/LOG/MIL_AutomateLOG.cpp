@@ -64,7 +64,7 @@ void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsi
 MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& logLevel )
     : pAssociatedAutomate_        ( 0 )
     , pAssociatedFormation_       ( &formation )
-    , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this ) )
+    , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
     , pLogLevel_                  ( &logLevel )
     , supplyConsigns_             ()
  //   , pExplicitStockSupplyState_  ( 0 )
@@ -79,7 +79,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLeve
     : pAssociatedAutomate_        ( &automate )
     , pAssociatedFormation_       ( 0 )
     , pLogLevel_                  ( &logLevel )
-    , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this  ) )
+    , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
     , supplyConsigns_             ()
 //    , pExplicitStockSupplyState_  ( 0 )
 {
@@ -148,7 +148,7 @@ void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
-    pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, superior, xis ) );
+    pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, superior, true /*use quotas*/, xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,29 +287,6 @@ void MIL_AutomateLOG::NotifyQuotaThresholdReached( const PHY_DotationCategory& d
 {
     if( pAssociatedAutomate_ )
         MIL_Report::PostEvent( *pAssociatedAutomate_, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::ConsumeQuota
-// Created: NLD 2005-02-01
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ConsumeQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double quotaConsumed )
-{
-    const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pLogisticHierarchy_->FindSuperiorLink( supplier );
-    if( superiorLink.get() )
-        superiorLink->ConsumeQuota( dotationCategory, quotaConsumed );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::GetQuota
-// Created: NLD 2005-02-01
-// -----------------------------------------------------------------------------
-double MIL_AutomateLOG::GetQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const
-{
-    const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pLogisticHierarchy_->FindSuperiorLink( supplier );
-    if( superiorLink.get() )
-        return superiorLink->GetQuota( dotationCategory );
-    return 0;
 }
 
 // =============================================================================

@@ -25,7 +25,8 @@ template< typename Archive >
 void logistic::save_construct_data( Archive& archive, const logistic::LogisticLink* link, const unsigned int )
 {
     archive << link->owner_
-            << link->superior_;
+            << link->superior_
+            << link->useQuotas_;
 }
 
 template< typename Archive >
@@ -33,33 +34,40 @@ void logistic::load_construct_data( Archive& archive, logistic::LogisticLink* li
 {
     LogisticHierarchyOwner_ABC* owner;
     MIL_AutomateLOG* superior;
+    bool useQuotas;
     archive >> owner
-            >> superior;
-    ::new(link)LogisticLink( *owner, *superior );
+            >> superior
+            >> useQuotas;
+    ::new(link)LogisticLink( *owner, *superior, useQuotas );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLink constructor
 // Created: NLD 2011-01-05
 // -----------------------------------------------------------------------------
-LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, xml::xistream& xis )
+LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, bool useQuotas, xml::xistream& xis )
     : owner_        ( &owner )
     , superior_     ( &superior )
-    , quotasUpdated_( true )
+    , useQuotas_    ( useQuotas )
+    , quotasUpdated_( useQuotas )
 {
-    xis >> xml::optional >> xml::start( "quotas" )
-            >> xml::list( "resource", *this, &LogisticLink::ReadQuota )
-        >> xml::end;
+    if( useQuotas_ )
+    {
+        xis >> xml::optional >> xml::start( "quotas" )
+                >> xml::list( "resource", *this, &LogisticLink::ReadQuota )
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLink constructor
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior )
+LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, bool useQuotas )
     : owner_        ( &owner )
     , superior_     ( &superior )
-    , quotasUpdated_( false ) // No quotas
+    , useQuotas_    ( useQuotas )
+    , quotasUpdated_( useQuotas ) 
 {
     // NOTHING
 }
@@ -92,7 +100,7 @@ void LogisticLink::ReadQuota( xml::xistream& xis )
     unsigned int quantity;
     xis >> xml::attribute( "quantity", quantity );
     if( quantity < 0 )
-        xis.error( "nQuantity is not greater or equal to 0" );
+        xis.error( "quantity is not greater or equal to 0" );
 
     sDotationQuota quota;
     quota.quota_          = quantity;
@@ -126,38 +134,48 @@ void LogisticLink::WriteQuotas( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool LogisticLink::operator==( const LogisticLink& rhs ) const
 {
-    return &superior_ == &rhs.superior_ && quotas_ == rhs.quotas_;
+    return &superior_ == &rhs.superior_ && quotas_ == rhs.quotas_ && useQuotas_ == rhs.useQuotas_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLink::ConsumeQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-void LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quotaConsumed )
+double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity )
 {
-    T_DotationQuotas::iterator it = quotas_.find( &dotationCategory );
-    assert( it != quotas_.end() );
-
-    sDotationQuota& quota = it->second;
-
-    quotaConsumed = std::min( quotaConsumed, quota.quota_ );
-
-    quota.quota_ -= quotaConsumed;
-    if( quota.quota_ <= quota.quotaThreshold_ )
-        owner_->NotifyQuotaThresholdReached( dotationCategory );
-    quotasUpdated_ = true;
+    if( useQuotas_ )
+    {
+        T_DotationQuotas::iterator it = quotas_.find( &dotationCategory );
+        if( it == quotas_.end() )
+            quantity = 0;
+        else
+        {
+            sDotationQuota& quota = it->second;
+            quantity = std::min( quantity, quota.quota_ );
+            if( quantity > 0 )
+            {
+                quota.quota_ -= quantity;
+                quotasUpdated_ = true;
+            }
+            if( quota.quota_ <= quota.quotaThreshold_ )
+                owner_->NotifyQuotaThresholdReached( dotationCategory );
+        }
+    }
+    return quantity;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLink::GetQuota
+// Name: LogisticLink::ConsumeQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-double LogisticLink::GetQuota( const PHY_DotationCategory& dotationCategory ) const
+void LogisticLink::ReturnQuota( const PHY_DotationCategory& dotationCategory, double quantity )
 {
-    T_DotationQuotas::const_iterator it = quotas_.find( &dotationCategory );
-    if( it == quotas_.end() )
-        return 0.;
-    return it->second.quota_;
+    if( useQuotas_ )
+    {
+        T_DotationQuotas::iterator it = quotas_.find( &dotationCategory );
+        if( it != quotas_.end() )
+            it->second.quota_ += quantity;
+    }
 }
 
 // -----------------------------------------------------------------------------

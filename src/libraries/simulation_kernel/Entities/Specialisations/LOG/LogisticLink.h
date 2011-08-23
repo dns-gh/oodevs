@@ -35,8 +35,8 @@ class LogisticLink : public LogisticLink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, xml::xistream& xis );
-             LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior );
+             LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, bool useQuotas, xml::xistream& xis );
+             LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, bool useQuotas );
     virtual ~LogisticLink();
     //@}
 
@@ -45,8 +45,8 @@ public:
     virtual MIL_AutomateLOG& GetSuperior() const { return *superior_; }
     bool operator==( const LogisticLink& rhs ) const;
 
-    virtual void   ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quotaConsumed );
-    virtual double GetQuota    ( const PHY_DotationCategory& dotationCategory ) const;
+    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity ); // Return quantity consumed
+    virtual void   ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity );
     //@}
 
     //! @name Serialization
@@ -91,6 +91,7 @@ public:
 
 private:
     const LogisticHierarchyOwner_ABC* owner_;
+    const bool useQuotas_;
     MIL_AutomateLOG* superior_;
     T_DotationQuotas quotas_;
 

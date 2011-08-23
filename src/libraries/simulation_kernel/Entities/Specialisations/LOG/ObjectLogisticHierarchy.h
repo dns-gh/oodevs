@@ -39,8 +39,8 @@ public:
     virtual bool             HasSuperior() const;
     virtual MIL_AutomateLOG* GetPrimarySuperior() const;
 
-    virtual tools::Iterator< const LogisticLink_ABC& > CreateSuperiorLinksIterator() const;
-    virtual tools::Iterator< MIL_AutomateLOG& >        CreateSuperiorsIterator() const;
+    virtual tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > CreateSuperiorLinksIterator() const;
+    virtual tools::Iterator< MIL_AutomateLOG& >                      CreateSuperiorsIterator() const;
 
     virtual const boost::shared_ptr< LogisticLink_ABC > FindSuperiorLink( const MIL_AutomateLOG& superior ) const;
 

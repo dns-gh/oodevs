@@ -48,7 +48,7 @@ SupplyRequestHierarchyDispatcher::~SupplyRequestHierarchyDispatcher()
 // -----------------------------------------------------------------------------
 void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRequest_ABC& request )
 {
-    tools::Iterator< MIL_AutomateLOG& > it = logisticHierarchy_.CreateSuperiorsIterator();
+    tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > it = logisticHierarchy_.CreateSuperiorLinksIterator();
     while( it.HasMoreElements() )
     {
         if( request.IsComplementary() )

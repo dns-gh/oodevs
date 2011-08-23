@@ -11,6 +11,7 @@
 #include "SupplyRequest.h"
 #include "SupplyResource_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
@@ -27,7 +28,9 @@ SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory )
     , requestedQuantity_  ( 0 )
     , grantedQuantity_    ( 0 )
     , convoyedQuantity_   ( 0 )
+    , suppliedQuantity_   ( 0 )
     , complementarySupply_( true )
+    , supplierQuotas_     ()
 {
 }
 
@@ -41,12 +44,8 @@ SupplyRequest::~SupplyRequest()
     if( supplier_ && convoyedQuantity_ > 0 )
         supplier_->SupplyReturnStock( dotationCategory_, convoyedQuantity_ );
 
-    /*
-    if( logisticLink )
-    {
-        logisticLink->ReturnQuota( dotationCategory_, requestedQuantity_ - suppliedQuantity_ );
-    }
-    */
+    if( supplierQuotas_ && requestedQuantity_ > suppliedQuantity_ )
+        supplierQuotas_->ReturnQuota( dotationCategory_, requestedQuantity_ - suppliedQuantity_ );
 }
 
 // =============================================================================
@@ -78,17 +77,27 @@ bool SupplyRequest::AffectSupplier( SupplySupplier_ABC& supplier )
         return true;
     if( supplier.SupplyHasStock( dotationCategory_ ) )
     {
-        ///$$$ Quotas ?
-        /*
-        double tmp = logisticLink.ConsumeQuota( dotationCategory_, reservedQuantity_ )
-        if( tmp <= 0 )
-            return false;
-        requestedQuantity_ = tmp;
-        */
         supplier_ = &supplier;
         return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequest::AffectSupplier
+// Created: NLD 2005-01-24
+// -----------------------------------------------------------------------------
+bool SupplyRequest::AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier )
+{
+    if( !AffectSupplier( supplier->GetSuperior() ) )
+        return false;
+
+    double tmp = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_ );
+    if( tmp <= 0 )
+        return false;
+    supplierQuotas_ = supplier;
+    requestedQuantity_ = tmp;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +114,7 @@ double SupplyRequest::Supply()
         suppliedQuantity += data.first->Supply( value );
     }
     convoyedQuantity_ -= suppliedQuantity;
+    suppliedQuantity_ += suppliedQuantity;
     return suppliedQuantity;
 }
 

@@ -43,8 +43,8 @@ public:
     //! @name Operations
     //@{
     virtual MIL_AutomateLOG& GetSuperior () const = 0;
-    virtual void             ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quotaConsumed ) = 0;
-    virtual double           GetQuota    ( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual double           ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity ) = 0; // Return quantity consumed
+    virtual void             ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
     //@}
 
     //! @name Serialization
