@@ -409,6 +409,7 @@
         <mission name="Faire mouvement dans reseau souterrain"/>
         <mission name="Faire mouvement via reseau souterrain"/>
         <mission name="Produire"/>
+        <mission name="GENIE Equiper Exploiter Site Franchissement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1344,6 +1345,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hah\model.bms" masalife="false" name="Patrouille HAH">
@@ -1389,6 +1391,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" masalife="false" name="Patrouille HAC">
@@ -1434,6 +1437,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HAM">
@@ -1477,6 +1481,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
@@ -1519,6 +1524,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
@@ -1560,6 +1566,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\model.bms" masalife="false" name="Patrouille Tigre">
@@ -1606,6 +1613,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="SACP CAROL">
@@ -5943,6 +5951,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\Model.bms" masalife="false" name="GLAISE ABC section char lourd">
@@ -7205,6 +7214,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Tigre\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
@@ -7249,6 +7259,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
@@ -7288,6 +7299,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="AACCP" file="glaise\glaise_appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
@@ -7319,6 +7331,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son ProTerre\Model.bms" masalife="false" name="Section PROTERRE">
@@ -11275,6 +11288,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" masalife="false" name="Sgpt Tigre">
@@ -11318,6 +11332,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Sgpt Hm">
@@ -11354,6 +11369,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Compagnie GEN">
@@ -14254,6 +14270,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\Model.bms" masalife="false" name="GLAISE ALFT Esc A et Reco">
@@ -14296,6 +14313,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie ProTerre\Model.bms" masalife="false" name="Compagnie PROTERRE">
@@ -14998,4 +15016,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1331872394" -->
+<!-- signature="3396911686" -->
