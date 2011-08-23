@@ -4107,6 +4107,7 @@
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -4120,6 +4121,7 @@
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -4187,6 +4189,7 @@
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -4199,6 +4202,7 @@
         <mission name="Stationner"/>
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -4266,6 +4270,7 @@
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -4279,6 +4284,7 @@
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
       </missions>
       <fragorders>
@@ -6195,6 +6201,7 @@
         <mission name="Stationner"/>
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -6365,8 +6372,11 @@
         <mission name="Prendre En Compte Prisonniers"/>
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
-        <mission name="ASS Assurer Mise En Oeuvre"/>
+        <mission name="ASS Assurer Mise En Oeuvre">
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6405,8 +6415,11 @@
         <mission name="Prendre En Compte Prisonniers"/>
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
-        <mission name="ASS Assurer Mise En Oeuvre"/>
+        <mission name="ASS Assurer Mise En Oeuvre">
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6443,6 +6456,7 @@
         <mission name="Stationner"/>
         <mission name="ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
+          <fragorder name="Effectuer Mouvement De Sauvegarde"/>
         </mission>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -14980,4 +14994,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0190004179" -->
+<!-- signature="4000179315" -->
