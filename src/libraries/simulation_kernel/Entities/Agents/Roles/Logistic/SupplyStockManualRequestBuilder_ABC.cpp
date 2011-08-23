@@ -91,7 +91,7 @@ void SupplyStockManualRequestBuilder_ABC::CreateRequest( MIL_Automate& recipient
     }
 
     // Overhead
-    if( rTotalValue > 0. )
+    if( rTotalValue > 0. && !pionStocks.empty() )
     {
         const double rAffectedValue = rTotalValue / pionStocks.size();
         for( T_PionStockVector::iterator it = pionStocks.begin(); it != pionStocks.end(); ++it )
