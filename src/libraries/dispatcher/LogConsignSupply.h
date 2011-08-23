@@ -16,7 +16,6 @@
 
 namespace kernel
 {
-    class Automat_ABC;
     class Entity_ABC;
     class Agent_ABC;
     class ModelVisitor_ABC;
@@ -25,10 +24,10 @@ namespace kernel
 namespace dispatcher
 {
     class Agent;
-    class Automat;
     class Model;
     class LogSupplyDotation;
     class ClientPublisher_ABC;
+    class LogSupplyRecipientResourcesRequest;
 
 // =============================================================================
 /** @class  LogConsignSupply
@@ -69,14 +68,14 @@ private:
 
 private:
     const Model&               model_;
-    const kernel::Automat_ABC& automat_;
     const unsigned long        nTickCreation_;
 
     const kernel::Entity_ABC*        pTreatingEntity_;
     const kernel::Entity_ABC*        pConvoyingEntity_;
-    const kernel::Agent_ABC*          pConvoy_;
-    sword::LogSupplyHandlingUpdate::EnumConvoyState nState_;
-    tools::Resolver< LogSupplyDotation > dotations_;
+    const kernel::Agent_ABC*         pConvoy_;
+    sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus nState_;
+    unsigned long currentStateEndTick_;
+    tools::Resolver< LogSupplyRecipientResourcesRequest > requests_;
 };
 
 }

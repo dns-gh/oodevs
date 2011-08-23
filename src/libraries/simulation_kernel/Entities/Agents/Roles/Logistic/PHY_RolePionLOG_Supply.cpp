@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOG_Supply.h"
-#include "PHY_SupplyDotationRequest.h"
 #include "PHY_SupplyResourcesAlarms.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStockContainer.h"
@@ -162,6 +161,39 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
     return functor.pSelectedConvoy_;
 }
 
+class AvailableConvoyTypeFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    AvailableConvoyTypeFunctor( const PHY_ComposanteTypePion& type )
+        : type_           ( type )
+        , pSelectedConvoy_( 0 )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( &composante.GetType() == &type_ && composante.CanBePartOfConvoy() )
+            pSelectedConvoy_ = &composante;
+    }
+
+    const PHY_ComposanteTypePion& type_;
+    PHY_ComposantePion* pSelectedConvoy_;
+};
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter
+// Created: NLD 2005-02-07
+// -----------------------------------------------------------------------------
+PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const PHY_ComposanteTypePion& type ) const
+{
+    if( !bSystemEnabled_ )
+        return 0;
+
+    AvailableConvoyTypeFunctor functor( type );
+    std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *computer );
+    return functor.pSelectedConvoy_;
+}
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetStockAvailablity
 // Created: NLD 2005-02-01
@@ -187,7 +219,7 @@ double PHY_RolePionLOG_Supply::AddStockReservation( const PHY_DotationCategory& 
 // Name: PHY_RolePionLOG_Supply::RemoveStockReservation
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
+double PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
 {
     assert( pStocks_ );
     return pStocks_->RemoveReservation( dotationCategory, rRequestedValue );
@@ -318,13 +350,13 @@ void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dot
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Supply::FillSupplyRequest
+// Name: PHY_RolePionLOG_Supply::Apply
 // Created: NLD 2005-01-31
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::FillSupplyRequest( PHY_SupplyStockRequestContainer& supplyRequest ) const
+void PHY_RolePionLOG_Supply::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
     assert( pStocks_ );
-    pStocks_->FillSupplyRequest( supplyRequest );
+    pStocks_->Apply( visitor );
 }
 
 // -----------------------------------------------------------------------------

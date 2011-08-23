@@ -14,6 +14,7 @@
 
 #include "MT_Tools/Role_ABC.h"
 #include <boost/serialization/access.hpp>
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace xml
 {
@@ -21,16 +22,22 @@ namespace xml
     class xistream;
 }
 
+namespace logistic
+{
+    class SupplyConvoyReal_ABC;
+    class SupplyRecipient_ABC;
+    class SupplySupplier_ABC;
+}
+
 class PHY_DotationStock;
 class MIL_Automate;
 class PHY_DotationCategory;
 class PHY_ComposantePion;
-class PHY_SupplyStockRequestContainer;
-class PHY_StockConvoy;
 class MIL_AutomateLOG;
 class MIL_AgentPionLOG_ABC;
 class MIL_AgentPion;
 class PHY_DotationNature;
+class PHY_ComposanteTypePion;
 
 //@TODO make multiple interface/role with specifics methods for convoy and for stockage
 // =============================================================================
@@ -76,6 +83,11 @@ public:
     virtual void ReadOverloading( xml::xistream& xis );
     //@}
 
+    //! @name Events
+    //@{
+    virtual void NotifyComposanteChanged( PHY_ComposantePion& ) {};
+    //@}
+
     //! @name Main
     //@{
     virtual void EnableSystem ();
@@ -85,10 +97,11 @@ public:
     virtual PHY_DotationStock* AddStock( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock* AddEmptyStock( const PHY_DotationCategory& dotationCategory, double capacity ) const;
     virtual PHY_DotationStock* GetStock( const PHY_DotationCategory& dotationCategory ) const;
-    virtual double GetStockAvailablity( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
-    virtual double AddStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
-    virtual void RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
+    virtual double GetStockAvailablity   ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    virtual double AddStockReservation   ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
+    virtual double RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
     virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
+    virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_ComposanteTypePion& type ) const;
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
     virtual void StopUsingForLogistic( PHY_ComposantePion& composante );
@@ -99,26 +112,26 @@ public:
     //! @name Stock supply
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const =0;
-    virtual void FillSupplyRequest( PHY_SupplyStockRequestContainer& supplyRequest ) const;
+    virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     virtual void ResupplyStocks();
     virtual void ResupplyStocks( const PHY_DotationCategory& category, double rNbr );
     //@}
 
     //! @name Convoy
     //@{
-    virtual void AssignConvoy( PHY_StockConvoy& convoy );
-    virtual void UnassignConvoy( PHY_StockConvoy& convoy );
+    virtual void AssignConvoy( boost::shared_ptr< logistic::SupplyConvoyReal_ABC > ) {};
+    virtual void UnassignConvoy() {};
 
-    virtual bool ConvoyLoad() const;
-    virtual bool ConvoyUnload() const;
-    virtual bool ConvoyIsLoadingDone() const;
-    virtual bool ConvoyIsUnloadingDone() const;
-    virtual const MIL_AgentPion* ConvoyGetSupplier    () const;
-    virtual const MIL_AgentPion* ConvoyGetConvoyer    () const;
-    virtual const MIL_AgentPion* ConvoyGetSupplied    () const;
-    virtual const MIL_AgentPion* ConvoyGetStockSupplier() const;
-    virtual void ConvoyEndMission();
+    virtual void ConvoyNotifyMovedToSupplier() {};
+    virtual void ConvoyNotifyMovedToTransportersProvider() {};
+    virtual void ConvoyNotifyMovedToSupplyRecipient() {};
+    virtual void ConvoyEndMission() {};
 
+    virtual int                            ConvoyGetCurrentAction() const { return 0; };
+    virtual logistic::SupplyRecipient_ABC* ConvoyGetCurrentSupplyRecipient() const { return 0; };
+    virtual logistic::SupplySupplier_ABC*  ConvoyGetSupplier              () const { return 0; };
+    virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider  () const { return 0; };
+    virtual const T_PointVector*           ConvoyGetPathToNextDestination() const { return 0; };
     //@}
 
 private:

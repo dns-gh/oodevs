@@ -44,7 +44,7 @@ public:
     //! @name Operations
     //@{
     void AddRequest( const PHY_SupplyDotationRequest& request );
-    const MIL_Automate& GetSuppliedAutomate() const;
+    MIL_Automate& GetSupplied() const;
     MIL_AutomateLOG& GetConvoyer() const;
     bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
 
@@ -84,7 +84,7 @@ public:
     //@}
 
 private:
-    MIL_Automate* pSuppliedAutomate_;
+    MIL_Automate* pSupplied_;
     MIL_AutomateLOG*     pConvoyer_;
     PHY_SupplyConsign_ABC* pConsign_;
     bool bConsignChanged_;

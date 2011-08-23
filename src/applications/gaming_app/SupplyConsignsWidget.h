@@ -13,7 +13,8 @@
 #include "gaming/LogSupplyConsign.h"
 #include "LogisticConsignsWidget_ABC.h"
 
-class DotationRequest;
+class SupplyRecipientResourcesRequest;
+class SupplyResourceRequest;
 
 // =============================================================================
 /** @class  SupplyConsignsWidget
@@ -33,7 +34,8 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const LogSupplyConsign* consign, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    void Display( const DotationRequest& request, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const SupplyRecipientResourcesRequest& request, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const SupplyResourceRequest& request, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:

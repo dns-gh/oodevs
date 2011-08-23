@@ -20,17 +20,21 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockConsign )
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyRepairConsign::PHY_SupplyStockConsign
+// Name: PHY_SupplyStockConsign::PHY_SupplyStockConsign
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyStockConsign::PHY_SupplyStockConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyStockState& supplyState, MIL_Automate& stockSupplier )
-    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyState.GetSuppliedAutomate(), supplyState.GetConvoyer(), stockSupplier )
+PHY_SupplyStockConsign::PHY_SupplyStockConsign( MIL_AutomateLOG& supplier, PHY_SupplyStockState& supplyState, MIL_Automate& stockSupplier )
+    : PHY_SupplyConsign_ABC( supplier, supplyState.GetConvoyer(), stockSupplier )
     , pSupplyState_        ( &supplyState )
     , pConvoy_             ( 0 )
+    , pSupplied_           ( pSupplyState_->GetNextSupplied() )
 {
     pConvoy_ = new PHY_StockConvoy( *this );
     pSupplyState_->SetConsign( this );
-    EnterStateConvoyWaitingForTransporters();
+    if( pSupplied_ )
+        EnterStateConvoyWaitingForTransporters();
+    else
+        EnterStateFinished();
 }
 
 // -----------------------------------------------------------------------------
@@ -66,19 +70,6 @@ void PHY_SupplyStockConsign::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< PHY_SupplyConsign_ABC >( *this )
          & pSupplyState_
          & pConvoy_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyConsign_ABC::DoSupply
-// Created: NLD 2005-01-28
-// -----------------------------------------------------------------------------
-void PHY_SupplyStockConsign::DoSupply()
-{
-    assert( pSupplyState_ );
-    pSupplyState_->Supply();
-    delete pSupplyState_;
-    pSupplyState_ = 0;
-    pConvoy_->EmptyOut();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,6 +110,38 @@ void PHY_SupplyStockConsign::CancelMerchandiseOverheadReservation()
 {
     assert( pSupplyState_ );
     pSupplyState_->CancelMerchandiseOverheadReservation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockConsign::EnterStateConvoyWaitingForTransporters
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+MIL_Automate* PHY_SupplyStockConsign::GetNextSupplied() const
+{
+    return pSupplied_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockConsign::GetWayPointsToGoBack
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+const T_PointVector* PHY_SupplyStockConsign::GetWayPointsToGoBack() const
+{
+    assert( pSupplyState_ );
+    return pSupplyState_->GetWayPointsToGoBack();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockConsign::GetWayPointsToGoToNextSupplied
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+const T_PointVector* PHY_SupplyStockConsign::GetWayPointsToGoToNextSupplied() const
+{
+    assert( pSupplyState_ );
+    if( pSupplied_ )
+        return pSupplyState_->GetWayPointsToGoToSupplied( *pSupplied_ );
+    else 
+        return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -215,6 +238,33 @@ void PHY_SupplyStockConsign::EnterStateConvoyUnloading()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockConsign::ChooseStateAfterConvoyUnloading
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockConsign::ChooseStateAfterConvoyUnloading()
+{
+    assert( pSupplyState_ );
+
+    // Supply
+    if( pSupplied_ )
+    {
+        T_MerchandiseToConvoyMap supplyDone;
+        pSupplyState_->Supply( *pSupplied_, supplyDone );
+    }
+    pSupplied_ = pSupplyState_->GetNextSupplied();
+    /*
+    delete pSupplyState_;
+    pSupplyState_ = 0;
+    pConvoy_->EmptyOut();
+    */
+
+    if( pSupplied_ )
+        EnterStateConvoyGoingToUnloadingPoint();
+    else
+        EnterStateConvoyGoingBackToFormingPoint();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::EnterStateConvoyGoingBackToFormingPoint
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
@@ -222,7 +272,6 @@ void PHY_SupplyStockConsign::EnterStateConvoyGoingBackToFormingPoint()
 {
     nTimer_ = 0;
     SetState( eConvoyGoingBackToFormingPoint );
-    DoSupply();
 }
 
 // -----------------------------------------------------------------------------
@@ -274,7 +323,7 @@ bool PHY_SupplyStockConsign::Update()
         case eConvoyGoingToLoadingPoint     :                                                                                   break; // Transition gérée par scripts
         case eConvoyLoading                 :                                        EnterStateConvoyGoingToUnloadingPoint  (); break;
         case eConvoyGoingToUnloadingPoint   :                                                                                   break; // Transition gérée par scripts
-        case eConvoyUnloading               :                                        EnterStateConvoyGoingBackToFormingPoint(); break;
+        case eConvoyUnloading               :                                        ChooseStateAfterConvoyUnloading();         break;
         case eConvoyGoingBackToFormingPoint :                                                                                   break; // Transition gérée par scripts
         case eFinished                      :                                                                                   break;
         default:

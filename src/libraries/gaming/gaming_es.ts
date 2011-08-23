@@ -839,6 +839,26 @@
         <source>Logistic links/Superiors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Transporters provider:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current state end in:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceStates</name>

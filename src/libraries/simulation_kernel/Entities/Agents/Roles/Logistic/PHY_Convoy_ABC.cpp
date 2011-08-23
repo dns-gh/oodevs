@@ -41,8 +41,8 @@ struct PHY_Convoy_ABC::LoadingWrapper
       MT_InterpolatedFunction< double > PHY_Convoy_ABC::loadingTime_;
       MT_InterpolatedFunction< double > PHY_Convoy_ABC::unloadingTime_;
       MT_InterpolatedFunction< double > PHY_Convoy_ABC::coefSpeedModificator_;
-const MIL_AgentTypePion*                  PHY_Convoy_ABC::pConvoyAgentType_   = 0;
-const MIL_MissionType_ABC*                PHY_Convoy_ABC::pConvoyMissionType_ = 0;
+const MIL_AgentTypePion*                PHY_Convoy_ABC::pConvoyAgentType_   = 0;
+const MIL_MissionType_ABC*              PHY_Convoy_ABC::pConvoyMissionType_ = 0;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Convoy_ABC )
 
@@ -244,13 +244,33 @@ MIL_AutomateLOG& PHY_Convoy_ABC::GetConvoyer() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetSupplied
+// Name: PHY_Convoy_ABC::GetNextSupplied
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-const MIL_Automate& PHY_Convoy_ABC::GetSupplied() const
+const MIL_Automate* PHY_Convoy_ABC::GetNextSupplied() const
 {
     assert( pConsign_ );
-    return pConsign_->GetSupplied();
+    return pConsign_->GetNextSupplied();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetWayPointsToGoToNextSupplied
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+const T_PointVector* PHY_Convoy_ABC::GetWayPointsToGoToNextSupplied() const
+{
+    assert( pConsign_ );
+    return pConsign_->GetWayPointsToGoToNextSupplied();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetWayPointsToGoBack
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+const T_PointVector* PHY_Convoy_ABC::GetWayPointsToGoBack() const
+{
+    assert( pConsign_ );
+    return pConsign_->GetWayPointsToGoBack();
 }
 
 // -----------------------------------------------------------------------------
@@ -285,6 +305,12 @@ bool PHY_Convoy_ABC::ReserveTransporters()
     T_MerchandiseToConvoyMap merchandise;
     pConsign_->GetMerchandiseToConvoy( merchandise );
     assert( !merchandise.empty() );
+
+    /*
+    $$$$
+    Si consign.GetTransporters()x xxx
+
+    */
 
     for( IT_MerchandiseToConvoyMap itMerchandise = merchandise.begin(); itMerchandise != merchandise.end(); ++itMerchandise )
     {

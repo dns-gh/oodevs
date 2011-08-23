@@ -15,6 +15,8 @@
 #include "MIL.h"
 #include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
+#include "Entities/Agents/Roles/Logistic/SupplySupplier_ABC.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -27,12 +29,14 @@ namespace sword
     class ParentEntity;
     class MissionParameters;
     class UnitMagicAction;
+    class PushFlowParameters;
 }
 
 namespace logistic
 {
     class LogisticHierarchy;
     class LogisticHierarchy_ABC;
+    class SupplyRequestContainer;
 }
 
 class MIL_Agent_ABC;
@@ -46,11 +50,6 @@ class PHY_Dotation;
 class PHY_RoleInterface_Supply;
 class PHY_DotationCategory;
 class PHY_DotationType;
-class PHY_SupplyDotationState;
-class PHY_SupplyStockState;
-class PHY_SupplyStockRequestContainer;
-class PHY_SupplyDotationRequestContainer;
-class PHY_SupplyConsign_ABC;
 class PHY_ComposantePion;
 class MIL_Automate;
 class MIL_Formation;
@@ -66,6 +65,7 @@ template < typename T > class PHY_ActionLogistic;
 // =============================================================================
 class MIL_AutomateLOG : public PHY_Actor
                       , public logistic::LogisticHierarchyOwner_ABC
+                      , public logistic::SupplySupplier_ABC
 {
 public:
              MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& level);
@@ -94,7 +94,7 @@ public:
     unsigned int                      GetID() const;
     logistic::LogisticHierarchy_ABC&  GetLogisticHierarchy() const;
     MIL_Army_ABC&                     GetArmy     () const;
-    const MIL_AgentPion*              GetPC      () const;
+    virtual const MIL_AgentPion*      GetPC      () const;
     const PHY_LogisticLevel&          GetLogisticLevel() const;
     //@}
 
@@ -117,13 +117,18 @@ public:
 
     //! @name Supply
     //@{
-    void           SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState, MIL_Automate& stockSupplier );
-    void           SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState, MIL_Automate& stockSupplier );
-    MIL_AgentPion* SupplyGetStockPion                 ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
-    bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
-    double         SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
-    bool           SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double rReturnedValue ) const;
-    MIL_AgentPion* SupplyCreatePionConvoy             ( const MIL_AgentTypePion& type );
+    virtual void           SupplyHandleRequest                ( boost::shared_ptr < logistic::SupplyConsign_ABC > consign );
+    virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
+    virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_ComposanteTypePion& transporterType ) const;
+    virtual bool           SupplyHasStock                     ( const PHY_DotationCategory& dotationCategory ) const;
+    virtual double         SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
+    virtual bool           SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
+    virtual MIL_AgentPion* SupplyCreateConvoyPion             ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy );
+    virtual void           SupplyDestroyConvoyPion            ( MIL_AgentPion& convoyPion );    
+    
+    virtual const MT_Vector2D& GetPosition() const;
+    
+    void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const tools::Resolver_ABC< MIL_Automate >& automateResolver );
     //@}
 
     //! @name Quotas
@@ -140,7 +145,7 @@ public:
     void SendChangedState() const;
 
     virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
-            void Serialize( sword::ParentEntity& message ) const;
+    virtual void Serialize( sword::ParentEntity& message ) const;
     //@}
 
 protected:
@@ -149,13 +154,8 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::list< PHY_SupplyConsign_ABC* >  T_SupplyConsignList;
-    typedef T_SupplyConsignList::iterator        IT_SupplyConsignList;
-    typedef T_SupplyConsignList::const_iterator  CIT_SupplyConsignList;
-
-    typedef std::set< PHY_SupplyStockState* >     T_SupplyStockStateSet;
-    typedef T_SupplyStockStateSet::iterator       IT_SupplyStockStateSet;
-    typedef T_SupplyStockStateSet::const_iterator CIT_SupplyStockStateSet;
+    typedef std::list< boost::shared_ptr < logistic::SupplyConsign_ABC > >  T_SupplyConsigns;
+    typedef std::list< boost::shared_ptr < logistic::SupplyRequestContainer > >  T_SupplyRequests;
     //@}
 
 private:
@@ -172,9 +172,8 @@ private:
     std::auto_ptr< logistic::LogisticHierarchy > pLogisticHierarchy_;
 
     // Supply
-    T_SupplyConsignList supplyConsigns_;
-
-    PHY_SupplyStockState* pExplicitStockSupplyState_;
+    T_SupplyConsigns supplyConsigns_;
+    T_SupplyRequests supplyRequests_; // Pushed flows
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );

@@ -59,7 +59,7 @@
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
-#include "Agents/Roles/Logistic/PHY_Convoy_ABC.h"
+#include "Agents/Roles/Logistic/SupplyConvoyConfig.h"
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_MedicalResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_SupplyResourcesAlarms.h"
@@ -267,7 +267,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_NatureAtlas               ::Terminate();
     PHY_RoePopulation             ::Terminate();
     PHY_MaintenanceWorkRate       ::Terminate();
-    PHY_Convoy_ABC                ::Terminate();
+    logistic::SupplyConvoyConfig  ::Terminate();
     PHY_RadarType                 ::Terminate();
     MIL_PopulationType            ::Terminate();
     MIL_InhabitantType            ::Terminate();
@@ -1471,13 +1471,10 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
         if( !pBrainLog )
             throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_supplier );
 
-        if( message.parameters().elem_size() < 1 || !message.parameters().elem( 0 ).value().Get(0).has_automat() )
+        if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_push_flow_parameters() )
             throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_receiver );
 
-        if( MIL_Automate* pAutomate = FindAutomate( message.parameters().elem( 0 ).value().Get(0).automat().id() ) )
-            pAutomate->OnReceiveLogSupplyPushFlow( message.parameters(), *pBrainLog );
-        else
-            throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_receiver );
+        pBrainLog->OnReceiveLogSupplyPushFlow( message.parameters().elem( 0 ).value().Get( 0 ).push_flow_parameters(), *automateFactory_ );
     }
     catch( NET_AsnException< LogSupplyPushFlowAck::ErrorCode >& e )
     {
@@ -1497,10 +1494,18 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-        if( pAutomate )
-            pAutomate->OnReceiveLogSupplyPullFlow( message.parameters() );
-        else
+        if( !pAutomate )
             throw NET_AsnException< LogSupplyPullFlowAck::ErrorCode >( LogSupplyPullFlowAck::error_invalid_receiver );
+
+        if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_pull_flow_parameters() )
+            throw NET_AsnException< LogSupplyPullFlowAck::ErrorCode >( LogSupplyPullFlowAck::error_invalid_receiver );
+
+        const sword::PullFlowParameters& parameters = message.parameters().elem( 0 ).value().Get( 0 ).pull_flow_parameters();
+        MIL_AutomateLOG* supplier = FindBrainLogistic( parameters.supplier() );
+        if( !supplier )
+            throw NET_AsnException< LogSupplyPullFlowAck::ErrorCode >( LogSupplyPullFlowAck::error_invalid_supplier );
+
+        pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier );
     }
     catch( NET_AsnException< LogSupplyPullFlowAck::ErrorCode >& e )
     {
@@ -1901,6 +1906,19 @@ MIL_AutomateLOG* MIL_EntityManager::FindBrainLogistic( unsigned int nID ) const
 // Name: MIL_EntityManager::FindBrainLogistic
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_EntityManager::FindBrainLogistic( const sword::ParentEntity& parameter ) const
+{
+    if( parameter.has_automat() )
+        return FindBrainLogistic( parameter.automat().id() );
+    else if( parameter.has_formation() )
+        return FindBrainLogistic( parameter.formation().id() );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindBrainLogistic
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
 MIL_AutomateLOG* MIL_EntityManager::FindBrainLogistic( const sword::MissionParameter_Value& parameter ) const
 {
     if( parameter.has_identifier() )
@@ -2112,7 +2130,7 @@ void MIL_EntityManager::SetToTasker( Tasker& tasker, unsigned int id ) const
     else throw( std::exception( "Misformed tasker in protocol message" ) );
 }
 
-// -----------------------------------------------------------------------------
+// -----------------------------------------------5------------------------------
 // Name: MIL_EntityManager::CreateCrowd
 // Created: BCI 2011-03-16
 // -----------------------------------------------------------------------------

@@ -542,14 +542,15 @@ float PHY_RolePion_Dotations::GetIlluminatingRange( ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::FillSupplyRequest
+// Name: PHY_RolePion_Dotations::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::FillSupplyRequest( PHY_SupplyDotationRequestContainer& supplyRequestContainer ) const
+void PHY_RolePion_Dotations::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
 {
     assert( pDotations_ );
-    pDotations_->FillSupplyRequest( supplyRequestContainer );
+    pDotations_->Apply( visitor );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::SendChangedState

@@ -16,6 +16,7 @@
 #include "actions/Formation.h"
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
+#include "actions/PullFlowParameters.h"
 #include "gaming/Dotation.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
@@ -174,35 +175,32 @@ void LogisticSupplyPullFlowDialog::Validate()
     accept();
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-    bool IsAutomat = dynamic_cast< const Automat_ABC* >( target ) != 0;
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( IsAutomat ) ? "automat_log_supply_pull_flow" : "formation_log_supply_pull_flow" );
+    bool isAutomat = dynamic_cast< const Automat_ABC* >( target ) != 0;
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( isAutomat ) ? "automat_log_supply_pull_flow" : "formation_log_supply_pull_flow" );
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Pull Flow" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( ( IsAutomat )
-        ? ( Parameter_ABC& ) *new parameters::Automat( it.NextElement(), *dynamic_cast< const Automat_ABC* >( target ), controllers_.controller_ )
-        : ( Parameter_ABC& ) *new parameters::Formation( it.NextElement(), *dynamic_cast< const Formation_ABC* >( target ), controllers_.controller_ ) );
 
-    parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
-    action->AddParameter( *dotations );
+    parameters::PullFlowParameters* pullFlowParameters = new parameters::PullFlowParameters( it.NextElement() );
+    if( isAutomat )
+        pullFlowParameters->SetSupplier( *dynamic_cast< const Automat_ABC* >( target ) );
+    else
+        pullFlowParameters->SetSupplier( *dynamic_cast< const Formation_ABC* >( target ) );
 
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
             ++rows;
-
     if( rows > 0 )
     {
-        int index = 1;
         for( int i = 0; i < table_->numRows(); ++i )
         {
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-            ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", index ) );
-            dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
-            dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
+            pullFlowParameters->AddResource( *supplies_[ text ].type_, table_->text( i, 1 ).toInt() );
         }
     }
+    action->AddParameter( *pullFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );

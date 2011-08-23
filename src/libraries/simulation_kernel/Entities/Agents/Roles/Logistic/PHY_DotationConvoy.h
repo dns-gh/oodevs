@@ -12,6 +12,7 @@
 #ifndef __PHY_DotationConvoy_h_
 #define __PHY_DotationConvoy_h_
 
+#include "MIL.h"
 #include "PHY_Convoy_ABC.h"
 
 namespace xml
@@ -40,9 +41,12 @@ public:
              PHY_DotationConvoy();
     virtual ~PHY_DotationConvoy();
 
-    //! @name CheckPoints
+     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -57,18 +61,11 @@ private:
     //@{
     unsigned int GetTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
     //@}
+
+private:
+    PHY_SupplyDotationConsign* pConsign_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_DotationConvoy )
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationConvoy::serialize
-// Created: JVT 2005-04-11
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_DotationConvoy::serialize( Archive& file, const unsigned int )
-{
-    file & boost::serialization::base_object< PHY_Convoy_ABC >( *this );
-}
 
 #endif // __PHY_DotationConvoy_h_

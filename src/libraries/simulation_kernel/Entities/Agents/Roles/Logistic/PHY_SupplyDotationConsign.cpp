@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyDotationConsign )
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_SupplyDotationConsign::PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState, MIL_Automate& stockSupplier )
-    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyState.GetSuppliedAutomate(), supplyingAutomate, stockSupplier )
+    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyingAutomate, stockSupplier )
     , pSupplyState_        ( &supplyState )
     , pConvoy_             ( 0 )
 {
@@ -233,4 +233,13 @@ bool PHY_SupplyDotationConsign::Update()
             assert( false );
     }
     return GetState() == eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationConsign::Update
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+MIL_Automate* PHY_SupplyDotationConsign::GetNextSupplied() const
+{
+    return &pSupplyState_->GetSupplied();
 }

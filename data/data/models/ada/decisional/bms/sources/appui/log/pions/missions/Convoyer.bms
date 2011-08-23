@@ -24,10 +24,8 @@ include "bit.lua"
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
         { "ACT_RC", { "done_ACT_RC" } },
         { "BEH_Dep_LOG_Suivre", { "done_BEH_Dep_LOG_Suivre" } },
-        { "ACT_Misc_Pion_LOG_Charger", { "done_ACT_Misc_Pion_LOG_Charger" } },
         { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
         { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
-        { "ACT_Misc_Pion_LOG_Decharger", { "done_ACT_Misc_Pion_LOG_Decharger" } },
     },
 
     create = function( self )
@@ -37,27 +35,8 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        self.ePhase = self.ePhase or eTestConvoyerStep_DeplacementVersPointChargement
-        self.eEtat = self.eEtat or eActionEnCours
-        self.pionPCRavitaillant = self.pionPCRavitaillant or DEC_Ravitaillement_Convoi_Ravitailleur()
-        self.pionPCRavitaille = self.pionPCRavitaille or DEC_Ravitaillement_Convoi_Ravitaille()
-        self.pionPCConvoyant = self.pionPCConvoyant or DEC_Ravitaillement_Convoi_Convoyeur()
-        self.position = self.position or 0--[[//Variable permettant de connaître l'état d'avancement du convoi en vue de le poster
-]]--[[//3 états :
-]]--[[//   -  1 : Attente du déplacement vers le point de déchargement une fois le chargement effectué
-]]--[[//   -  2 = Attente du déplacement retour suite au déchargement effectué
-]]--[[//   -  3 = Attente de déplacement vers le point de chargement
-]]
-        if( self.pionPCRavitaillant == nil or self.pionPCRavitaille == nil or self.pionPCConvoyant == nil ) then
-            do
-                DEC_RC( eRC_MissionImpossible )
-                DEC_Ravitaillement_Convoi_FinMission()
-                                Halt( self )
-                do return end
-
-            end
-        end
-
+        self.ePhase = DEC_Ravitaillement_Convoi_ActionCourante()
+        self.eEtat = self.eEtat or eActionEnCours        
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
@@ -69,179 +48,31 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             end
         end
 
-        if( ModuleBegins() ) then
-            do
-                if( DEC_Ravitaillement_Convoi_DechargementEffectue() ) then
-                    do
-                        self.ePhase = eTestConvoyerStep_SePoster
-                        self.position = 2
-                    end
-                else
-if( DEC_Ravitaillement_Convoi_ChargementEffectue() ) then
-                        do
-                            self.ePhase = eTestConvoyerStep_SePoster
-                            self.position = 1
-                        end
-                    else
-do
-                            self.ePhase = eTestConvoyerStep_SePoster
-                            self.position = 3
-                        end
-                    end
-                end
-
+        if self.ePhase == eConvoyerAction_None then
+        elseif self.ePhase == eConvoyerAction_Setup then
+        elseif self.ePhase == eConvoyerAction_Load then
+            Activate( self.activations.ACT_RC, 1, { eRC_Convoi_ChargementEnCours, } )
+        elseif self.ePhase == eConvoyerAction_Unload then
+            Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DechargementEnCours, } )
+        elseif self.ePhase == eConvoyerAction_MoveToSupplier then
+            Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointChargement, } )
+            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_Ravitailleur(), 500, 900, DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination() } )
+            if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_Ravitailleur():DEC_Agent_Position() ) < 500 ) then
+                DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue();
+            end
+        elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient then
+            Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointDechargement, } )
+            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_DestinataireCourant(), 500, 900, DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination() } )
+            if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_DestinataireCourant():DEC_Agent_Position() ) < 500 ) then
+                DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue();
+            end
+        elseif self.ePhase == eConvoyerAction_MoveToTransportersProvider then
+            Activate( self.activations.ACT_RC, 1, { eRC_Convoi_Retour, } )
+            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_Transporteur(), 500, 900, DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination() } )
+            if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_Transporteur():DEC_Agent_Position() ) < 500 ) then
+                DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue();
             end
         end
-
-         do
-            local _continue = true
---[[// Déplacement
-]]--[[// Chargement
-]]--[[// Se poster et attendre l'ordre de conduite 'Poursuivre'
-]]--[[//Attente du déplacement vers le point de déchargement une fois le chargement effectué
-]]--[[//Attente du déplacement retour suite au déchargement effectué
-]]--[[//Attente de déplacement vers le point de chargement
-]]--[[//Fin de la posture : Se Poster
-]]--[[// Aller
-]]--[[// Déchargement
-]]--[[// Retour
-]]            local switch_1 = self.ePhase
-                if switch_1 == eTestConvoyerStep_DeplacementVersPointChargement then
-                    Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointChargement, } )
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                    Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCRavitaillant, 500, 900, } )
-                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCRavitaillant:DEC_Agent_Position() ) < 500 ) then
-                        self.ePhase = eTestConvoyerStep_Chargement
-                    end
-
-                    _continue = false
-                elseif switch_1 == eTestConvoyerStep_Chargement then
-                    if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhase = eTestConvoyerStep_SePoster
-                                self.position = 1
-                                                                do return end
-
-                            end
-
-                        end
-                    end
-
-                    Activate( self.activations.ACT_Misc_Pion_LOG_Charger, 1, emptyTable )
-self.done_ACT_Misc_Pion_LOG_Charger = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
-                elseif switch_1 == eTestConvoyerStep_SePoster then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_AttentePoursuivre, } )
-                    if( self.position == 1 ) then
-if( self.eEtat == eActionEffectuee ) then
-                            do
-                                self.eEtat = eActionEnCours
-                                                                do
-                                    self.ePhase = eTestConvoyerStep_DeplacementVersPointDechargement
-                                                                        do return end
-
-                                end
-
-                            end
-                        end
-                    end
-
-                    if( self.position == 2 ) then
-if( self.eEtat == eActionEffectuee ) then
-                            do
-                                self.eEtat = eActionEnCours
-                                                                do
-                                    self.ePhase = eTestConvoyerStep_DeplacementRetour
-                                                                        do return end
-
-                                end
-
-                            end
-                        end
-                    end
-
-                    if( self.position == 3 ) then
-if( self.eEtat == eActionEffectuee ) then
-                            do
-                                self.eEtat = eActionEnCours
-                                                                do
-                                    self.ePhase = eTestConvoyerStep_DeplacementVersPointChargement
-                                                                        do return end
-
-                                end
-
-                            end
-                        end
-                    end
-
-                    Activate( self.activations.ACT_Dep_SePoster, 1.5, emptyTable )
-                    local ordres_recus = DEC_GetCategory( "ordres_recus" )
-                    for _,ordreRecus in pairs( ordres_recus or emptyTable ) do
-                    local _continue = true
-do
-                            local repOrdre = ordreRecus
-                            Activate( self.activations.ACT_Info_Trace, 1, { "$$ Ordre de conduite : " .. EnumToString( repOrdre:GeteOrdre_(), E_TypeOrdreConduite ), } )
-                             do
-                                local _continue = true
-                                local switch_2 = repOrdre:Get__type__()
-                                local cases_switch_2 = {}
-                                    if switch_2 == Rep_OrderConduite_Poursuivre then
-                                        DEC_Trace( "======= Ordre --> POURSUIVRE =====" )
-                                        SetStateVariable( "VE_SePoster", 0 )
-                                        self.eEtat = eActionEffectuee
-                                                                        cases_switch_2[1] = true
-                                    end
-                                end
-
-                        end
-
-                    end
-
-                    _continue = false
-                elseif switch_1 == eTestConvoyerStep_DeplacementVersPointDechargement then
-                    Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointDechargement, } )
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                    Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCRavitaille, 500, 900, } )
-                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCRavitaille:DEC_Agent_Position() ) < 500 ) then
-                        self.ePhase = eTestConvoyerStep_Dechargement
-                    end
-
-                    _continue = false
-                elseif switch_1 == eTestConvoyerStep_Dechargement then
-                    Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DechargementEnCours, } )
-                    if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhase = eTestConvoyerStep_SePoster
-                                self.position = 2
-                                                                do return end
-
-                            end
-
-                        end
-                    end
-
-                    Activate( self.activations.ACT_Misc_Pion_LOG_Decharger, 1, emptyTable )
-self.done_ACT_Misc_Pion_LOG_Decharger = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
-                elseif switch_1 == eTestConvoyerStep_DeplacementRetour then
-                    Activate( self.activations.ACT_RC, 1, { eRC_Convoi_Retour, } )
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                    Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCConvoyant, 500, 900, } )
-                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCConvoyant:DEC_Agent_Position() ) < 500 ) then
-                        do
-                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                            DEC_Ravitaillement_Convoi_FinMission()
-                        end
-                    end
-
-                    _continue = false
-                                end
-            end
-
     end,
 
 --[[// *****************************************************************************
@@ -269,6 +100,7 @@ node "BEH_Dep_LOG_Suivre"
         self._namedParams.ami = self.params[1]
         self._namedParams.rDistanceMin = self.params[2]
         self._namedParams.rDistanceMax = self.params[3]
+        self._namedParams.wayPoints = self.params[4]
     end,
 
     activate = function( self )
@@ -319,9 +151,9 @@ node "BEH_Dep_LOG_Suivre"
                     if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
                         do return end
                     end
-
-                    DEC_ListePoints_Clear( self.itVersAmi )
-                    DEC_ListePoints_PushBack( self.itVersAmi, self._namedParams.ami:DEC_Agent_Position() )
+                    
+                    DEC_Copie_PointDansListePoints( DEC_Agent_PositionPtr( self._namedParams.ami ), self._namedParams.wayPoints )
+                    self.itVersAmi = self._namedParams.wayPoints;
                     self.eComportement = eRejoindre
                                 cases_switch_1[1] = true
                 end
@@ -374,7 +206,5 @@ connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "BEH_Ordre_Inop
 connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "BEH_Dep_LOG_Suivre", nodes.BEH_Dep_LOG_Suivre }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "ACT_Misc_Pion_LOG_Charger", nodes.ACT_Misc_Pion_LOG_Charger }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "ACT_Info_Trace", nodes.ACT_Info_Trace }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Convoyer, "ACT_Misc_Pion_LOG_Decharger", nodes.ACT_Misc_Pion_LOG_Decharger }

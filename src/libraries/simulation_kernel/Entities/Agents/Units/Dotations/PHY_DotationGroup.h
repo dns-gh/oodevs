@@ -25,7 +25,6 @@ class PHY_Dotation;
 class PHY_DotationType;
 class PHY_DotationGroupContainer;
 class PHY_DotationCapacity;
-class PHY_SupplyDotationRequestContainer;
 class PHY_AmmoDotationClass;
 class MIL_AutomateLOG;
 
@@ -102,7 +101,7 @@ public:
     //! @name Logistic - supply
     //@{
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
-    void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const;
+    void Apply                       ( boost::function< void( PHY_Dotation& ) > visitor ) const;
     void ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
     //@}
 

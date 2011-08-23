@@ -105,9 +105,7 @@ LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::LogisticCon
     pConsignHandledListView_->setResizeMode( Q3ListView::AllColumns );
 
     logDisplay_ = new gui::SubItemDisplayer( tools::translate( "LogisticConsignsWidget_ABC", "Consign:" ), factory );
-    logDisplay_->AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Instruction:" ) )
-                .AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Consumer:" ) )
-                .AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Handler:" ) );
+    logDisplay_->AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Instruction:" ) );
     controllers_.Register( *this );
 }
 

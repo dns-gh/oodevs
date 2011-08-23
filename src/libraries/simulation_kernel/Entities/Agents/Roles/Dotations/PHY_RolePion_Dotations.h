@@ -121,8 +121,9 @@ public:
 
     //! @name Logistic - Supply
     //@{
+    virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const;
+
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const; // Logistic
-    void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const;
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const;
     //@}
 
@@ -130,7 +131,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_Dotation*, double /*rValueReserved*/ > T_DotationReservedMap;
-    typedef T_DotationReservedMap::const_iterator                        CIT_DotationReservedMap;
+    typedef T_DotationReservedMap::const_iterator                      CIT_DotationReservedMap;
     //@}
 
 private:

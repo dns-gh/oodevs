@@ -26,7 +26,7 @@ class PHY_SupplyStockConsign : public PHY_SupplyConsign_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_SupplyStockConsign( MIL_AutomateLOG& supplyAutomate, PHY_SupplyStockState& supplyState, MIL_Automate& stockSupplier );
+             PHY_SupplyStockConsign( MIL_AutomateLOG& supplier, PHY_SupplyStockState& supplyState, MIL_Automate& stockSupplier );
              PHY_SupplyStockConsign();
     virtual ~PHY_SupplyStockConsign();
     //@}
@@ -46,6 +46,10 @@ public:
     bool ConvoyLoad();
     bool ConvoyUnload();
     void ConvoyEndMission();
+
+    virtual MIL_Automate* GetNextSupplied() const;
+    virtual const T_PointVector* GetWayPointsToGoBack() const;
+    virtual const T_PointVector* GetWayPointsToGoToNextSupplied() const;
 
     virtual void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
     virtual void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
@@ -67,9 +71,9 @@ private:
     void EnterStateConvoyLoading();
     void EnterStateConvoyGoingToUnloadingPoint();
     void EnterStateConvoyUnloading();
+    void ChooseStateAfterConvoyUnloading();
     void EnterStateConvoyGoingBackToFormingPoint();
     void EnterStateFinished();
-    void DoSupply();
     //@}
 
 private:
@@ -77,6 +81,7 @@ private:
     //@{
     PHY_SupplyStockState* pSupplyState_;
     PHY_StockConvoy* pConvoy_;
+    MIL_Automate* pSupplied_;
     //@}
 };
 

@@ -40,6 +40,9 @@ public:
     virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
     virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
     virtual void CancelMerchandiseOverheadReservation();
+    virtual MIL_Automate* GetNextSupplied() const;
+    virtual const T_PointVector* GetWayPointsToGoBack() const;
+    virtual const T_PointVector* GetWayPointsToGoToNextSupplied() const;
     //@}
 
 private:

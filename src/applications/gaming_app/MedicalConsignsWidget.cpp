@@ -20,6 +20,8 @@
 MedicalConsignsWidget::MedicalConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, LogMedicalConsigns >( parent, controllers, factory )
 {
+    AddConsignColumn( tools::translate( "LogisticConsignsWidget_ABC", "Consumer:" ) );
+    AddConsignColumn( tools::translate( "LogisticConsignsWidget_ABC", "Handler:" ) );
     AddConsignColumn( tools::translate( "MedicalConsignsWidget", "Injury:" ) );
     AddConsignColumn( tools::translate( "MedicalConsignsWidget", "Mentally injured:" ) );
     AddConsignColumn( tools::translate( "MedicalConsignsWidget", "NBC contaminated:" ) );

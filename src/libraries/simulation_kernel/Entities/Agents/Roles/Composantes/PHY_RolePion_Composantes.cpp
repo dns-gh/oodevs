@@ -645,6 +645,9 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     else if( newState.IsUsable() && !oldState.IsUsable() )
         pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
     pion_.Apply( &transport::TransportNotificationHandler_ABC::NotifyComposanteChanged, composante );
+    PHY_RoleInterface_Supply* role = pion_.Retrieve< PHY_RoleInterface_Supply >();
+    if( role )
+        role->NotifyComposanteChanged( composante );
     pion_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
 }
 

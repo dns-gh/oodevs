@@ -14,7 +14,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver.h"
 
-class DotationRequest;
+class SupplyRecipientResourcesRequest;
 
 namespace kernel
 {
@@ -34,6 +34,8 @@ namespace sword
     class LogSupplyHandlingUpdate;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  LogSupplyConsign
     @brief  LogSupplyConsign
@@ -41,7 +43,7 @@ namespace sword
 // Created: AGE 2006-02-21
 // $$$$ AGE 2006-04-21: factorisations entre types de consignes
 // =============================================================================
-class LogSupplyConsign : public tools::Resolver< DotationRequest >
+class LogSupplyConsign : public tools::Resolver< SupplyRecipientResourcesRequest >
                        , public kernel::Drawable_ABC
 {
 public:
@@ -49,7 +51,7 @@ public:
     //@{
              LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver,
                                const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >&   formationResolver,
-                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const sword::LogSupplyHandlingCreation& message );
+                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const Simulation& simulation, const sword::LogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();
     //@}
 
@@ -81,12 +83,13 @@ private:
     const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
+    const Simulation& simulation_;
     unsigned int nID_;
-    kernel::Automat_ABC& consumer_;
     kernel::Entity_ABC*   pLogHandlingEntity_;
-    kernel::Agent_ABC*   pPionLogConvoying_;
+    kernel::Agent_ABC*    pPionLogConvoying_;
     kernel::Entity_ABC*   pLogProvidingConvoyResourcesEntity_;
     E_LogSupplyHandlingStatus nState_;
+    unsigned int currentStateEndTick_;
     //@}
 };
 

@@ -13,6 +13,7 @@
 #define __PHY_Convoy_ABC_h_
 
 #include "MT_Tools/MT_InterpolatedFunction.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -60,13 +61,15 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_AutomateLOG& GetSupplier() const;
-    MIL_AutomateLOG& GetConvoyer() const;
-    const MIL_Automate& GetSupplied () const;
-    MIL_Automate& GetStockSupplier() const;
-    unsigned int GetFormingTime() const;
-    unsigned int GetLoadingTime() const;
-    unsigned int GetUnloadingTime() const;
+    MIL_AutomateLOG&     GetSupplier() const;
+    MIL_AutomateLOG&     GetConvoyer() const;
+    const MIL_Automate*  GetNextSupplied() const;
+    MIL_Automate&        GetStockSupplier() const;
+    unsigned int         GetFormingTime() const;
+    unsigned int         GetLoadingTime() const;
+    unsigned int         GetUnloadingTime() const;
+    const T_PointVector* GetWayPointsToGoToNextSupplied() const;
+    const T_PointVector* GetWayPointsToGoBack        () const;
     //@}
 
     //! @name Events

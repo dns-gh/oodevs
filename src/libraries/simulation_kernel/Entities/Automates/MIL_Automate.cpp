@@ -23,19 +23,16 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationState.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationState.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
@@ -239,7 +236,7 @@ DEC_AutomateDecision& MIL_Automate::GetDecision()
 
 namespace boost
 {
-    namespace serialization
+   /* namespace serialization
     {
         template< typename Archive >
         inline
@@ -274,7 +271,7 @@ namespace boost
                 file >> map[ pLogAutomata ];
             }
         }
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -635,39 +632,12 @@ void MIL_Automate::RequestDotationSupply()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyDotationSupplied
-// Created: NLD 2005-01-28
-// -----------------------------------------------------------------------------
-void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supplyState )
-{
-    pDotationSupplyManager_->NotifyDotationSupplied( supplyState );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::NotifyStockSupplyNeeded
 // Created: AHC 2010-09-27
 // -----------------------------------------------------------------------------
 void MIL_Automate::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
     pStockSupplyManager_->NotifyStockSupplyNeeded( dotationCategory );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyDotationSupplied
-// Created: AHC 2010-09-27
-// -----------------------------------------------------------------------------
-void MIL_Automate::NotifyStockSupplied( const PHY_SupplyStockState& supplyState )
-{
-    pStockSupplyManager_->NotifyStockSupplied( supplyState );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::NotifyStockSupplyCanceled
-// Created: AHC 2010-09-278
-// -----------------------------------------------------------------------------
-void MIL_Automate::NotifyStockSupplyCanceled ( const PHY_SupplyStockState& supplyState )
-{
-    pStockSupplyManager_->NotifyStockSupplyCanceled( supplyState );
 }
 
 //-----------------------------------------------------------------------------
@@ -1178,23 +1148,12 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::OnReceiveLogSupplyPushFlow
-// Created: NLD 2005-02-04
-// -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg, MIL_AutomateLOG& automatLog )
-{
-    assert( pStockSupplyManager_.get() );
-    pStockSupplyManager_->OnReceiveLogSupplyPushFlow( msg, automatLog );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveLogSupplyPullFlow
 // Created: AHC 2010-09-28
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::MissionParameters& msg )
+void MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, MIL_AutomateLOG& supplier )
 {
-    assert( pStockSupplyManager_.get() );
-    pStockSupplyManager_->OnReceiveLogSupplyPullFlow( msg );
+    pStockSupplyManager_->OnReceiveLogSupplyPullFlow( parameters, supplier );
 }
 
 // -----------------------------------------------------------------------------
@@ -1259,6 +1218,26 @@ void MIL_Automate::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::Apply2
+// Created: NLD 2011-08-03
+// -----------------------------------------------------------------------------
+void MIL_Automate::Apply2( boost::function< void( PHY_Dotation& ) > visitor ) const
+{
+    BOOST_FOREACH( MIL_AgentPion* pion, pions_ )
+        pion->Apply2( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::Apply2
+// Created: NLD 2011-08-03
+// -----------------------------------------------------------------------------
+void MIL_Automate::Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const
+{
+    BOOST_FOREACH( MIL_AgentPion* pion, pions_ )
+        pion->Apply2( visitor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetKnowledge
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
@@ -1275,6 +1254,15 @@ DEC_KnowledgeBlackBoard_Automate& MIL_Automate::GetKnowledge() const
 logistic::LogisticHierarchy_ABC& MIL_Automate::GetLogisticHierarchy() const
 {
     return *pLogisticHierarchy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetLogisticHierarchy
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+MIL_StockSupplyManager& MIL_Automate::GetStockSupplyManager() const
+{
+    return *pStockSupplyManager_;
 }
 
 // -----------------------------------------------------------------------------

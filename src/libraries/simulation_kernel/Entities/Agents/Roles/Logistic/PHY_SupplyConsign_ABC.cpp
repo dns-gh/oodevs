@@ -17,9 +17,8 @@
 // Name: PHY_SupplyConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate, MIL_Automate& stockSupplier )
+PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, MIL_AutomateLOG& convoyingAutomate, MIL_Automate& stockSupplier )
     : pSupplyingAutomate_( &supplyingAutomate )
-    , pSuppliedAutomate_ ( &suppliedAutomate  )
     , pConvoyingAutomate_( &convoyingAutomate )
     , nTimer_            ( 0 )
     , bHasChanged_       ( true )
@@ -34,7 +33,6 @@ PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate
 // -----------------------------------------------------------------------------
 PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC()
     : pSupplyingAutomate_( 0 )
-    , pSuppliedAutomate_ ( 0 )
     , pConvoyingAutomate_( 0 )
     , nTimer_            ( 0 )
     , bHasChanged_       ( true )
@@ -59,7 +57,6 @@ void PHY_SupplyConsign_ABC::SendFullState( client::LogSupplyHandlingUpdate& asn 
 {
     assert( pSupplyingAutomate_ );
     assert( pConvoyingAutomate_ );
-    assert( pSuppliedAutomate_ );
 
     asn().set_state( (sword::LogSupplyHandlingUpdate::EnumConvoyState ) nState_  );
     pSupplyingAutomate_->Serialize(*asn().mutable_supplier());
@@ -134,16 +131,6 @@ MIL_AutomateLOG& PHY_SupplyConsign_ABC::GetSupplier() const
 {
     assert( pSupplyingAutomate_ );
     return *pSupplyingAutomate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyConsign_ABC::GetSupplied
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-const MIL_Automate& PHY_SupplyConsign_ABC::GetSupplied() const
-{
-    assert( pSuppliedAutomate_ );
-    return *pSuppliedAutomate_;
 }
 
 // -----------------------------------------------------------------------------

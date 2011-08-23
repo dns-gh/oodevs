@@ -1481,12 +1481,19 @@ void SimulationToClient::Convert( const sword::LogMaintenanceState& from, MsgsSi
 namespace
 {
     template< typename From, typename To >
-    void ConvertDotationQuery( const From& from, To* to )
+    void ConvertSupplyResourceRequest( const From& from, To* to )
     {
         CONVERT_ID( resource );
-        CONVERT_TO( requested, quantite_demandee );
-        CONVERT_TO( granted, quantite_accordee );
-        CONVERT_TO( convoyed, quantite_en_transit );
+        CONVERT( requested );
+        CONVERT( granted );
+        CONVERT( convoyed );
+    }
+
+    template< typename From, typename To >
+    void ConvertSupplyRecipientResourceRequest( const From& from, To* to )
+    {
+        CONVERT_ID( recipient );
+        CONVERT_SIMPLE_LIST( resources, ConvertSupplyResourceRequest );
     }
 }
 
@@ -1497,9 +1504,9 @@ namespace
 void SimulationToClient::Convert( const sword::LogSupplyHandlingCreation& from, MsgsSimToClient::MsgLogSupplyHandlingCreation* to )
 {
     CONVERT_ID( request );
-    CONVERT_ID( consumer );
     CONVERT_TO( tick, tick_creation );
-    CONVERT_LIST( dotations, elem, ConvertDotationQuery );
+    CONVERT_CB( supplier, ConvertParentEntity );
+    CONVERT_CB( transporters_provider, ConvertParentEntity );
 }
 
 // -----------------------------------------------------------------------------
@@ -1509,19 +1516,17 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingCreation& from, 
 void SimulationToClient::Convert( const sword::LogSupplyHandlingUpdate& from, MsgsSimToClient::MsgLogSupplyHandlingUpdate* to )
 {
     CONVERT_ID( request );
-    CONVERT_ID( consumer );
-    CONVERT_CB( supplier, ConvertParentEntity );
-    CONVERT_CB( convoy_provider, ConvertParentEntity );
-    CONVERT_ID( convoying_unit );
-    CONVERT_ENUM_TO( state, etat, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
-                                  ( sword::LogSupplyHandlingUpdate::convoy_forming, MsgsSimToClient::convoi_constitution )
-                                  ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point, MsgsSimToClient::convoi_deplacement_vers_point_chargement )
-                                  ( sword::LogSupplyHandlingUpdate::convoy_loading, MsgsSimToClient::convoi_chargement )
-                                  ( sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point, MsgsSimToClient::convoi_deplacement_vers_point_dechargement )
-                                  ( sword::LogSupplyHandlingUpdate::convoy_unloading, MsgsSimToClient::convoi_dechargement )
-                                  ( sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point, MsgsSimToClient::convoi_deplacement_retour )
-                                  ( sword::LogSupplyHandlingUpdate::convoy_finished, MsgsSimToClient::termine ) );
-    CONVERT_LIST( dotations, elem, ConvertDotationQuery );
+    CONVERT_ID( convoyer );
+    CONVERT_ENUM( state, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
+                         ( sword::LogSupplyHandlingUpdate::convoy_setup, MsgsSimToClient::convoi_constitution )
+                         ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point, MsgsSimToClient::convoi_deplacement_vers_point_chargement )
+                         ( sword::LogSupplyHandlingUpdate::convoy_loading, MsgsSimToClient::convoi_chargement )
+                         ( sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point, MsgsSimToClient::convoi_deplacement_vers_point_dechargement )
+                         ( sword::LogSupplyHandlingUpdate::convoy_unloading, MsgsSimToClient::convoi_dechargement )
+                         ( sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point, MsgsSimToClient::convoi_deplacement_retour )
+                         ( sword::LogSupplyHandlingUpdate::convoy_finished, MsgsSimToClient::termine ) );
+    CONVERT( current_state_end_tick );
+    CONVERT_LIST( requests, requests, ConvertSupplyRecipientResourceRequest );
 }
 
 // -----------------------------------------------------------------------------
@@ -1531,7 +1536,6 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingUpdate& from, Ms
 void SimulationToClient::Convert( const sword::LogSupplyHandlingDestruction& from, MsgsSimToClient::MsgLogSupplyHandlingDestruction* to )
 {
     CONVERT_ID( request );
-    CONVERT_ID( consumer );
 }
 
 namespace

@@ -10,17 +10,18 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_DotationSupplyManager.h"
-
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationState.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
+#include "Entities/Agents/Roles/Logistic/SupplyDotationRequestBuilder.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequestHierarchyDispatcher.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "MIL_AgentServer.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
 
@@ -32,8 +33,9 @@ MIL_DotationSupplyManager::MIL_DotationSupplyManager( MIL_Automate& automate )
     : pAutomate_                         ( &automate )
     , bDotationSupplyNeeded_             ( false )
     , bDotationSupplyExplicitlyRequested_( false )
-    , dotationSupplyStates_              ( )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
+    , supplyRequestBuilder_              ( new logistic::SupplyDotationRequestBuilder( automate, *this ) )
+    , supplyRequests_                    ( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) )
 {
     // NOTHING
 }
@@ -46,7 +48,6 @@ MIL_DotationSupplyManager::MIL_DotationSupplyManager()
     : pAutomate_                         ( 0 )
     , bDotationSupplyNeeded_             ( false )
     , bDotationSupplyExplicitlyRequested_( false )
-    , dotationSupplyStates_              ( )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
 {
     // NOTHING
@@ -67,7 +68,7 @@ MIL_DotationSupplyManager::~MIL_DotationSupplyManager()
 // =============================================================================
 namespace boost
 {
-    namespace serialization
+    /*namespace serialization
     {
         template< typename Archive >
         inline
@@ -102,7 +103,7 @@ namespace boost
                 file >> map[ pBrainLogistic ];
             }
         }
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +116,6 @@ void MIL_DotationSupplyManager::serialize( Archive& file, const unsigned int )
     file & pAutomate_
          & bDotationSupplyNeeded_
          & bDotationSupplyExplicitlyRequested_
-         & dotationSupplyStates_
          & nTickRcDotationSupplyQuerySent_;
 }
 
@@ -129,11 +129,12 @@ void MIL_DotationSupplyManager::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::Update()
 {
-    if( !bDotationSupplyNeeded_ || !dotationSupplyStates_.empty() || !pAutomate_->GetLogisticHierarchy().HasSuperior() )
-        return;
-
-    PHY_SupplyDotationRequestContainer supplyRequests( *pAutomate_, bDotationSupplyExplicitlyRequested_ );
-    bDotationSupplyNeeded_ = !supplyRequests.Execute( pAutomate_->GetLogisticHierarchy(), dotationSupplyStates_ );
+    supplyRequests_->Update();
+    if( bDotationSupplyNeeded_ && pAutomate_->GetLogisticHierarchy().HasSuperior() )
+    {
+        logistic::SupplyRequestHierarchyDispatcher dispatcher( pAutomate_->GetLogisticHierarchy() );
+        bDotationSupplyNeeded_ = !supplyRequests_->Execute( dispatcher );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -143,8 +144,7 @@ void MIL_DotationSupplyManager::Update()
 void MIL_DotationSupplyManager::Clean()
 {
     bDotationSupplyExplicitlyRequested_ = false;
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-        it->second->Clean();
+    supplyRequests_->Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,14 +153,8 @@ void MIL_DotationSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( bDotationSupplyNeeded_ )
+    if( bDotationSupplyNeeded_ || supplyRequests_->IsSupplying( dotationCategory ) )
         return;
-
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-    {
-        if( it->second->IsSupplying( dotationCategory ) )
-            return;
-    }
     bDotationSupplyNeeded_ = true;
 
     // Pas de RC si RC envoyé au tick précédent
@@ -180,26 +174,58 @@ void MIL_DotationSupplyManager::RequestDotationSupply()
     bDotationSupplyExplicitlyRequested_ = true;
 }
 
+// =============================================================================
+// SupplyRecipient_ABC
+// =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: MIL_DotationSupplyManager::NotifyDotationSupplied
-// Created: NLD 2005-01-28
+// Name: MIL_DotationSupplyManager::GetPosition
+// Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::NotifyDotationSupplied( const PHY_SupplyDotationState& supplyState )
+const MT_Vector2D& MIL_DotationSupplyManager::GetPosition() const
+{
+    return pAutomate_->GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::GetPC
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+const MIL_AgentPion& MIL_DotationSupplyManager::GetPC() const
+{
+    return pAutomate_->GetPionPC();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::OnSupplyCanceled
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::OnSupplyCanceled()
+{
+    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyCanceled );
+    bDotationSupplyNeeded_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::OnSupplyDone
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::OnSupplyDone()
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyDone );
-    for( IT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-    {
-        if( it->second == &supplyState )
-        {
-            dotationSupplyStates_.erase( it );
-            return;
-        }
-    }
-    assert( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::Serialize
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::Serialize( sword::AutomatId& msg ) const
+{
+    msg.set_id( pAutomate_->GetID() );
 }
 
 // =============================================================================
-// NETWORK
+// Network
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -208,8 +234,7 @@ void MIL_DotationSupplyManager::NotifyDotationSupplied( const PHY_SupplyDotation
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::SendChangedState() const
 {
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-        it->second->SendChangedState();
+    supplyRequests_->SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -218,6 +243,5 @@ void MIL_DotationSupplyManager::SendChangedState() const
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::SendFullState() const
 {
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-        it->second->SendFullState();
+    supplyRequests_->SendFullState();
 }

@@ -20,6 +20,8 @@
 MaintenanceConsignsWidget::MaintenanceConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticConsignsWidget_ABC< MaintenanceConsignsWidget, LogMaintenanceConsign, LogMaintenanceConsigns >( parent, controllers, factory )
 {
+    AddConsignColumn( tools::translate( "LogisticConsignsWidget_ABC", "Consumer:" ) );
+    AddConsignColumn( tools::translate( "LogisticConsignsWidget_ABC", "Handler:" ) );
     AddConsignColumn( tools::translate( "MaintenanceConsignsWidget", "Equipment:" ) );
     AddConsignColumn( tools::translate( "MaintenanceConsignsWidget", "Breakdown:" ) );
     AddConsignColumn( tools::translate( "MaintenanceConsignsWidget", "State:" ) );

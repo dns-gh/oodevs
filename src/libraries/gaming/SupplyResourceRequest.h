@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DotationRequest_h_
-#define __DotationRequest_h_
+#ifndef __SupplyResourceRequest_h_
+#define __SupplyResourceRequest_h_
 
 namespace kernel
 {
@@ -16,18 +16,18 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  DotationRequest
-    @brief  DotationRequest
+/** @class  SupplyResourceRequest
+    @brief  SupplyResourceRequest
 */
 // Created: AGE 2006-02-28
 // =============================================================================
-class DotationRequest
+class SupplyResourceRequest
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationRequest( const kernel::DotationType& type, unsigned int requested, unsigned int granted, unsigned int convoyed );
-    virtual ~DotationRequest();
+             SupplyResourceRequest( const kernel::DotationType& type, unsigned int requested, unsigned int granted, unsigned int convoyed );
+    virtual ~SupplyResourceRequest();
     //@}
 
 public:

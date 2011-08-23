@@ -9,9 +9,10 @@
 
 #include "gaming_pch.h"
 #include "LogSupplyConsign.h"
-#include "DotationRequest.h"
 #include "LogisticConsigns.h"
 #include "Tools.h"
+#include "Simulation.h"
+#include "SupplyRecipientResourcesRequest.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -23,6 +24,7 @@
 #include "protocol/Protocol.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "PcAttributes.h"
+#include <boost/foreach.hpp>
 
 using namespace geometry;
 using namespace kernel;
@@ -35,26 +37,23 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
                                   , const tools::Resolver_ABC< Agent_ABC >& agentResolver
                                   , const tools::Resolver_ABC< Formation_ABC >&   formationResolver
                                   , const tools::Resolver_ABC< DotationType >& dotationResolver
+                                  , const Simulation& simulation
                                   , const sword::LogSupplyHandlingCreation& message )
-    : controller_           ( controller )
-    , resolver_             ( resolver )
-    , agentResolver_        ( agentResolver )
-    , formationResolver_    ( formationResolver )
-    , dotationResolver_     ( dotationResolver )
-    , nID_                  ( message.request().id() )
-    , consumer_             ( resolver.Get( message.consumer().id() ) )
-    , pLogHandlingEntity_ ( 0 )
-    , pPionLogConvoying_    ( 0 )
-    , pLogProvidingConvoyResourcesEntity_( 0 )
-    , nState_( eLogSupplyHandlingStatus_Termine )
+    : controller_                        ( controller )
+    , resolver_                          ( resolver )
+    , agentResolver_                     ( agentResolver )
+    , formationResolver_                 ( formationResolver )
+    , dotationResolver_                  ( dotationResolver )
+    , nID_                               ( message.request().id() )
+    , pLogHandlingEntity_                ( FindLogEntity( message.supplier() ) )
+    , pPionLogConvoying_                 ( 0 )
+    , pLogProvidingConvoyResourcesEntity_( FindLogEntity( message.transporters_provider() ) )
+    , nState_                            ( eLogSupplyHandlingStatus_Termine )
+    , currentStateEndTick_               ( std::numeric_limits< unsigned int >::max() )
+    , simulation_                        ( simulation )
 {
-    for( int i = 0; i < message.dotations().elem_size(); ++i )
-        Register( message.dotations().elem( i ).resource().id(),
-                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).resource().id() ),
-                                         message.dotations().elem( i ).requested(),
-                                         message.dotations().elem( i ).granted(),
-                                         message.dotations().elem( i ).convoyed() ) );
-    consumer_.Get< LogSupplyConsigns >().AddConsign( *this );
+    if( pLogHandlingEntity_ )
+        pLogHandlingEntity_->Get< LogSupplyConsigns >().HandleConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +62,8 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
 // -----------------------------------------------------------------------------
 LogSupplyConsign::~LogSupplyConsign()
 {
-    consumer_.Get< LogSupplyConsigns >().RemoveConsign( *this );
+    for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
+        it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *this );
     if( pLogHandlingEntity_ )
         pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     if( pPionLogConvoying_ )
@@ -77,42 +77,30 @@ LogSupplyConsign::~LogSupplyConsign()
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
 {
-    if( message.has_supplier() && ( !pLogHandlingEntity_ || FindLogEntityID( message.supplier() ) != int( pLogHandlingEntity_ ->GetId() ) ) )
-    {
-        if( pLogHandlingEntity_ )
-            pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pLogHandlingEntity_ = FindLogEntity( message.supplier() );
-        if( pLogHandlingEntity_ )
-            pLogHandlingEntity_->Get< LogSupplyConsigns >().HandleConsign( *this );
-    }
-    if( message.has_convoying_unit() && ( !pPionLogConvoying_ || message.convoying_unit().id() != int( pPionLogConvoying_->GetId() ) ) )
+    if( message.has_convoyer() && ( !pPionLogConvoying_ || message.convoyer().id() != int( pPionLogConvoying_->GetId() ) ) )
     {
         if( pPionLogConvoying_ )
             pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pPionLogConvoying_ = agentResolver_.Find( message.convoying_unit().id() );
-        if( message.convoying_unit().id() )
+        pPionLogConvoying_ = agentResolver_.Find( message.convoyer().id() );
+        if( pPionLogConvoying_ )
             pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
-    if( message.has_convoy_provider()  )
-        pLogProvidingConvoyResourcesEntity_ = FindLogEntity( message.convoy_provider() );
     if( message.has_state()  )
         nState_ = E_LogSupplyHandlingStatus( message.state() );
-    if( message.has_dotations()  )
-        for( int i = 0; i < message.dotations().elem_size(); ++i )
+    if( message.has_current_state_end_tick() )
+        currentStateEndTick_ = message.current_state_end_tick();
+    if( message.has_requests() )
+    {
+        for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
+            it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *this );
+        DeleteAll();
+        BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, message.requests().requests() )
         {
-            if( DotationRequest* request = Find( message.dotations().elem( i ).resource().id() ) )
-            {
-                request->requested_ = message.dotations().elem( i ).requested();
-                request->granted_   = message.dotations().elem( i ).granted();
-                request->convoyed_  = message.dotations().elem( i ).convoyed();
-            }
-            else
-                Register( message.dotations().elem( i ).resource().id(),
-                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).resource().id() ),
-                                         message.dotations().elem( i ).requested(),
-                                         message.dotations().elem( i ).granted(),
-                                         message.dotations().elem( i ).convoyed() ) );
+            SupplyRecipientResourcesRequest* tmp = new SupplyRecipientResourcesRequest( dotationResolver_, resolver_, data );
+            Register( data.recipient().id(), *tmp );
+            tmp->recipient_.Get< LogSupplyConsigns >().AddConsign( *this );
         }
+    }
     controller_.Update( *this );
 }
 
@@ -122,13 +110,28 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( consumer_ ).Display( nState_ );
-    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-                 .Display( tools::translate( "Logistic", "Consumer:" ), consumer_ )
-                 .Display( tools::translate( "Logistic", "Handler:" ), pLogHandlingEntity_ )
-                 .Display( tools::translate( "Logistic", "Supplier:" ), pLogProvidingConvoyResourcesEntity_ )
-                 .Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ )
-                 .Display( tools::translate( "Logistic", "State:" ), nState_ );
+    unsigned nbRequests = Count();
+    if( nbRequests == 0 )
+        displayer.Display( tools::translate( "Logistic", "No recipients" ) ).Display( nState_ );
+    else if( nbRequests == 1 )
+        displayer.Display( CreateIterator().NextElement().recipient_ ).Display( nState_ );
+    else
+        displayer.Display( tools::translate( "Logistic", "Multiple recipients" ) ).Display( nState_ );
+
+    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ );
+    itemDisplayer.Display( tools::translate( "Logistic", "Transporters provider:" ), pLogProvidingConvoyResourcesEntity_ );
+    itemDisplayer.Display( tools::translate( "Logistic", "Supplier:" ), pLogHandlingEntity_ );
+    itemDisplayer.Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ );
+    itemDisplayer.Display( tools::translate( "Logistic", "State:" ), nState_ );
+
+    if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end in:" ), tools::translate( "Logistic", "Unknown" ) );
+    else
+    {
+//        QTime time;
+//        time.addSecs( simulation_.GetTickDuration() * ( currentStateEndTick_ - simulation_.GetCurrentTick() ) );
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end in:" ), currentStateEndTick_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -137,26 +140,32 @@ void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displa
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( ! pLogHandlingEntity_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( !pLogHandlingEntity_ || !tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
-    const Point2f from = pLogHandlingEntity_->Get< Positions >().GetPosition();
-    const Point2f to   = consumer_.Get< Positions >().GetPosition();
-    if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
-        return;
-    glColor4f( COLOR_ORANGE );
-    switch( nState_ )
+
+    Point2f from = pLogHandlingEntity_->Get< Positions >().GetPosition();
+    for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
     {
-    case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement:
-    case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement:
-        glLineStipple( 1, tools.StipplePattern() );
-        break;
-    case eLogSupplyHandlingStatus_ConvoiDeplacementRetour:
-        glLineStipple( 1, tools.StipplePattern(-1) );
-        break;
-    default:
-        glLineStipple( 1, tools.StipplePattern(0) );
+        const Point2f to   = it.NextElement().recipient_.Get< Positions >().GetPosition();
+        if( viewport.IsVisible( Rectangle2f( from, to ) ) )
+        {
+            glColor4f( COLOR_ORANGE );
+            switch( nState_ )
+            {
+                case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement:
+                case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement:
+                    glLineStipple( 1, tools.StipplePattern() );
+                    break;
+                case eLogSupplyHandlingStatus_ConvoiDeplacementRetour:
+                    glLineStipple( 1, tools.StipplePattern(-1) );
+                    break;
+                default:
+                    glLineStipple( 1, tools.StipplePattern(0) );
+            }
+            tools.DrawCurvedArrow( from, to, 0.6f );
+        }
+        from = to;
     }
-    tools.DrawCurvedArrow( from, to, 0.6f );
 }
 
 // -----------------------------------------------------------------------------

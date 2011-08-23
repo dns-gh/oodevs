@@ -8,15 +8,15 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "DotationRequest.h"
+#include "SupplyResourceRequest.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: DotationRequest constructor
+// Name: SupplyResourceRequest constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-DotationRequest::DotationRequest( const DotationType& type, unsigned int requested, unsigned int granted, unsigned int convoyed )
+SupplyResourceRequest::SupplyResourceRequest( const DotationType& type, unsigned int requested, unsigned int granted, unsigned int convoyed )
     : type_( &type )
     , requested_( requested )
     , granted_( granted )
@@ -26,10 +26,10 @@ DotationRequest::DotationRequest( const DotationType& type, unsigned int request
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationRequest destructor
+// Name: SupplyResourceRequest destructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-DotationRequest::~DotationRequest()
+SupplyResourceRequest::~SupplyResourceRequest()
 {
     // NOTHING
 }

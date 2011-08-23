@@ -15,8 +15,6 @@
 #include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyLoad.h"
-#include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyUnload.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <directia/brain/Brain.h>
@@ -79,21 +77,23 @@ void MIL_AgentTypePionLOG_ABC::RegisterFunctions( directia::brain::Brain& brain,
     brain[ "DEC_Ravitaillement_DesactiverChaine" ] =
         boost::bind( &DEC_LogisticFunctions::PionSupplyDisableSystem, boost::ref( agent ) );
 
-    brain[ "DEC_Ravitaillement_Convoi_ChargementEffectue" ] =
-        boost::bind( &DEC_LogisticFunctions::ConvoyIsLoadingDone, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_DechargementEffectue" ] =
-        boost::bind( &DEC_LogisticFunctions::ConvoyIsUnloadingDone, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_Ravitailleur" ] =
-        boost::bind( &DEC_LogisticFunctions::ConvoyGetSupplyingAutomate, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_Convoyeur" ] =
-        boost::bind( &DEC_LogisticFunctions::ConvoyGetConvoyingAutomate, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_Ravitaille" ] =
-        boost::bind( &DEC_LogisticFunctions::ConvoyGetSuppliedAutomate, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_FinMission" ] =
-        boost::bind( &DEC_LogisticFunctions::ConvoyEndMission, boost::ref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_StartCharger" ] =
-        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionConvoyLoad >, boost::ref( agent ) ) );
-    brain[ "DEC_Ravitaillement_Convoi_StartDecharger" ] =
-        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionConvoyUnload >, boost::ref( agent ) ) );
-}
 
+    brain[ "DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier, boost::ref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider, boost::ref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient, boost::ref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_FinMission" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyEndMission, boost::ref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_ActionCourante" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetCurrentAction, boost::cref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_DestinataireCourant" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient, boost::cref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_Ravitailleur" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetSupplier, boost::cref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_Transporteur" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetTransportersProvider, boost::cref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyGetPathToNextDestination, boost::cref( agent ) );
+}

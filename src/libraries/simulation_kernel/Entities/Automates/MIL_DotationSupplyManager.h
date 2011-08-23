@@ -13,29 +13,26 @@
 #define __MIL_DotationSupplyManager_h_
 
 #include "MIL.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRecipient_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 class MIL_Automate;
-class MIL_AutomateLOG;
-class PHY_SupplyDotationState;
 class PHY_DotationCategory;
+
+namespace logistic 
+{
+    class SupplyRequestBuilder_ABC;
+    class SupplyRequestContainer;
+}
 
 // =============================================================================
 // @class  MIL_Automate
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_DotationSupplyManager : private boost::noncopyable
+class MIL_DotationSupplyManager : public logistic::SupplyRecipient_ABC
+                                , private boost::noncopyable
 {
-
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_AutomateLOG*, PHY_SupplyDotationState* > T_SupplyDotationStateMap;
-    typedef T_SupplyDotationStateMap::iterator                             IT_SupplyDotationStateMap;
-    typedef T_SupplyDotationStateMap::const_iterator                       CIT_SupplyDotationStateMap;
-    //@}
-
 public:
              MIL_DotationSupplyManager( MIL_Automate& automate );
              MIL_DotationSupplyManager();
@@ -58,10 +55,18 @@ public:
     void SendFullState   () const;
     //@}
 
-    //! @name Logistic : supply
+    //! @name SupplyRecipient_ABC
+    //@{
+    virtual const MT_Vector2D&   GetPosition() const;
+    virtual const MIL_AgentPion& GetPC      () const;
+    virtual void OnSupplyCanceled();
+    virtual void OnSupplyDone    ();
+    virtual void Serialize( sword::AutomatId& msg ) const;
+    //@}
+
+    //! @name Notifications
     //@{
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    void NotifyDotationSupplied    ( const PHY_SupplyDotationState& supplyState );
     void RequestDotationSupply     ();
     //@}
 
@@ -70,8 +75,8 @@ private:
 
     bool                     bDotationSupplyNeeded_;
     bool                     bDotationSupplyExplicitlyRequested_;
-    T_SupplyDotationStateMap dotationSupplyStates_;
-
+    boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
+    std::auto_ptr< logistic::SupplyRequestContainer > supplyRequests_;
     unsigned int                     nTickRcDotationSupplyQuerySent_;
 };
 

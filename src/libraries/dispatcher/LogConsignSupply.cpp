@@ -13,9 +13,10 @@
 #include "Automat.h"
 #include "Formation.h"
 #include "Agent.h"
+#include "LogSupplyRecipientResourcesRequest.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "LogSupplyDotation.h"
+#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -24,16 +25,16 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignSupply::LogConsignSupply( const Model& model, const sword::LogSupplyHandlingCreation& msg )
-    : SimpleEntity< >   ( msg.request().id() )
-    , model_            ( model )
-    , automat_          ( model.Automats().Get( msg.consumer().id() ) )
-    , nTickCreation_    ( msg.tick() )
-    , pTreatingEntity_  ( 0 )
-    , pConvoyingEntity_ ( 0 )
-    , pConvoy_          ( 0 )
-    , nState_           ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point )
+    : SimpleEntity< >     ( msg.request().id() )
+    , model_              ( model )
+    , nTickCreation_      ( msg.tick() )
+    , pTreatingEntity_    ( FindLogEntity( msg.supplier() ) )
+    , pConvoyingEntity_   ( FindLogEntity( msg.transporters_provider() ) )
+    , pConvoy_            ( 0 )
+    , nState_             ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point )
+    , currentStateEndTick_( std::numeric_limits< unsigned long >::max() )
+    , requests_           ()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ LogConsignSupply::LogConsignSupply( const Model& model, const sword::LogSupplyHa
 // -----------------------------------------------------------------------------
 LogConsignSupply::~LogConsignSupply()
 {
-    dotations_.DeleteAll();
+    requests_.DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,26 +52,27 @@ LogConsignSupply::~LogConsignSupply()
 // -----------------------------------------------------------------------------
 void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
 {
-    if( msg.has_supplier() )
-        pTreatingEntity_ = FindLogEntity( msg.supplier() );
-    if( msg.has_convoy_provider() )
-        pConvoyingEntity_ = FindLogEntity( msg.convoy_provider() );
-    if( msg.has_convoying_unit() )
-        pConvoy_ = ( msg.convoying_unit().id() == 0 ) ? 0 : &model_.Agents().Get( msg.convoying_unit().id() );
+    if( msg.has_convoyer() )
+        pConvoy_ = ( msg.convoyer().id() == 0 ) ? 0 : &model_.Agents().Get( msg.convoyer().id() );
     if( msg.has_state() )
         nState_ = msg.state();
-    if( msg.has_dotations() )
-        for( int i = 0; i < msg.dotations().elem_size(); ++i )
+    if( msg.has_current_state_end_tick() )
+        currentStateEndTick_ = msg.current_state_end_tick();
+    if( msg.has_requests() )
+    {
+        requests_.DeleteAll();
+        BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& req, msg.requests().requests() )
         {
-            LogSupplyDotation* pDotation = dotations_.Find( msg.dotations().elem( i ).resource().id() );
-            if( pDotation )
-                pDotation->Update( msg.dotations().elem( i ) );
+            LogSupplyRecipientResourcesRequest* request = requests_.Find( req.recipient().id() );
+            if( request )
+                request->Update( req ); //$$ useless
             else
             {
-                pDotation = new LogSupplyDotation( model_, msg.dotations().elem( i ) );
-                dotations_.Register( msg.dotations().elem( i ).resource().id(), *pDotation );
+                request = new LogSupplyRecipientResourcesRequest( model_, req );
+                requests_.Register( req.recipient().id(), *request );
             }
         }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -79,19 +81,12 @@ void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::LogSupplyHandlingCreation asn;
-
-    asn().mutable_request()->set_id( GetId() );
-    asn().mutable_consumer()->set_id( automat_.GetId() );
-    asn().set_tick( nTickCreation_ );
-    {
-        for( tools::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
-            it.NextElement().Send( *asn().mutable_dotations()->add_elem() );
-    }
-    asn.Send( publisher );
-
-    if( asn().dotations().elem_size() > 0 )
-        asn().mutable_dotations()->Clear();
+    client::LogSupplyHandlingCreation msg;
+    msg().mutable_request()->set_id( GetId() );
+    msg().set_tick( nTickCreation_ );
+    FillLogEntityID( *msg().mutable_supplier(), pTreatingEntity_ );
+    FillLogEntityID( *msg().mutable_transporters_provider(), pConvoyingEntity_ );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,28 +95,15 @@ void LogConsignSupply::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::LogSupplyHandlingUpdate asn;
+    client::LogSupplyHandlingUpdate msg;
 
-    asn().mutable_request()->set_id( GetId() );
-    asn().mutable_consumer()->set_id( automat_.GetId() );
-
-//    asn().set_oid_automate_log_traitantPresent( 1 );
-//    asn().set_oid_automate_log_fournissant_moyens_convoiPresent( 1 );
-//    asn().set_oid_pion_convoyantPresent( 1 );
-//    asn().set_etatPresent( 1 );
-//    asn().set_dotationsPresent( 1 );
-
-    FillLogEntityID( *asn().mutable_supplier(), pTreatingEntity_ );
-    FillLogEntityID( *asn().mutable_convoy_provider(), pConvoyingEntity_ );
-    asn().mutable_convoying_unit()->set_id( pConvoy_ ? pConvoy_->GetId() : 0 );
-    asn().set_state( nState_ );
-    {
-        for( tools::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
-            it.NextElement().Send( *asn().mutable_dotations()->add_elem() );
-    }
-    asn.Send( publisher );
-    if( asn().dotations().elem_size() > 0 )
-        asn().mutable_dotations()->Clear();
+    msg().mutable_request()->set_id( GetId() );
+    msg().mutable_convoyer()->set_id( pConvoy_ ? pConvoy_->GetId() : 0 );
+    msg().set_state( nState_ );
+    msg().set_current_state_end_tick( currentStateEndTick_ );
+    for( tools::Iterator< const LogSupplyRecipientResourcesRequest& > it = requests_.CreateIterator(); it.HasMoreElements(); )
+        it.NextElement().Send( *msg().mutable_requests()->add_requests() );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,10 +112,9 @@ void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignSupply::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::LogSupplyHandlingDestruction asn;
-    asn().mutable_request()->set_id( GetId() );
-    asn().mutable_consumer()->set_id( automat_.GetId() );
-    asn.Send( publisher );
+    client::LogSupplyHandlingDestruction msg;
+    msg().mutable_request()->set_id( GetId() );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

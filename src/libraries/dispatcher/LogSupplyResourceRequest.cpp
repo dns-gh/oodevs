@@ -8,16 +8,16 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "LogSupplyDotation.h"
+#include "LogSupplyResourceRequest.h"
 #include "protocol/Protocol.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyDotation constructor
+// Name: LogSupplyResourceRequest constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const sword::DotationQuery& msg )
+LogSupplyResourceRequest::LogSupplyResourceRequest( const Model& /*model*/, const sword::SupplyResourceRequest& msg )
     : nDotationType_( msg.resource().id() )
     , nNbrRequested_( msg.requested() )
     , nNbrGranted_  ( msg.granted() )
@@ -27,19 +27,19 @@ LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const sword::Dotat
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyDotation destructor
+// Name: LogSupplyResourceRequest destructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogSupplyDotation::~LogSupplyDotation()
+LogSupplyResourceRequest::~LogSupplyResourceRequest()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyDotation::Update
+// Name: LogSupplyResourceRequest::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Update( const sword::DotationQuery& msg )
+void LogSupplyResourceRequest::Update( const sword::SupplyResourceRequest& msg )
 {
     nNbrRequested_ = msg.requested();
     nNbrGranted_ = msg.granted();
@@ -47,10 +47,10 @@ void LogSupplyDotation::Update( const sword::DotationQuery& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyDotation::Send
+// Name: LogSupplyResourceRequest::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Send( sword::DotationQuery& msg ) const
+void LogSupplyResourceRequest::Send( sword::SupplyResourceRequest& msg ) const
 {
     msg.mutable_resource()->set_id( nDotationType_ );
     msg.set_requested( nNbrRequested_ );

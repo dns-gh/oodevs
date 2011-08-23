@@ -21,11 +21,15 @@ namespace client
     class UnitAttributes;
 }
 
+namespace logistic
+{
+    class SupplyRequestContainer_ABC;
+}
+
 class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_Dotation;
 class PHY_ConsumptionType;
-class PHY_SupplyDotationRequestContainer;
 class PHY_AmmoDotationClass;
 
 namespace dotation
@@ -98,7 +102,7 @@ public:
     //! @name Logistic - Supply
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const = 0; // Logistic
-    virtual void FillSupplyRequest( PHY_SupplyDotationRequestContainer& supplyRequest ) const = 0;
+    virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const = 0;
     virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const = 0;
     //@}
 private:

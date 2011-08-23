@@ -16,7 +16,6 @@
 #include "PHY_DotationType.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyStockRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -200,7 +199,8 @@ void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 double PHY_DotationStockContainer::AddReservation( const PHY_DotationCategory& category, double rNbr )
 {
     CIT_StockMap it = stocks_.find( &category );
-    assert( it != stocks_.end() );
+    if( it == stocks_.end() )
+        return 0;
     return it->second->AddReservation( rNbr );
 }
 
@@ -208,11 +208,13 @@ double PHY_DotationStockContainer::AddReservation( const PHY_DotationCategory& c
 // Name: PHY_DotationStockContainer::RemoveReservation
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory& category, double rNbr )
+double PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory& category, double rNbr )
 {
     CIT_StockMap it = stocks_.find( &category );
-    assert( it != stocks_.end() );
+    if( it == stocks_.end() )
+        return 0;
     it->second->RemoveReservation( rNbr );
+    return rNbr;
 }
 
 // -----------------------------------------------------------------------------
@@ -393,13 +395,13 @@ void PHY_DotationStockContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationStockContainer::FillSupplyRequest
+// Name: PHY_DotationStockContainer::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::FillSupplyRequest( PHY_SupplyStockRequestContainer& supplyRequest ) const
+void PHY_DotationStockContainer::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
     for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
-        supplyRequest.AddStock( *it->second );
+        visitor( *it->second );
 }
 
 //------------------------------------------------------------------------------

@@ -21,6 +21,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "protocol/Protocol.h"
+#include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequestContainer constructor
@@ -45,7 +46,7 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& 
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MissionParameter& asnStocks, E_RequestDirection requestDirection )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const ::google::protobuf::RepeatedPtrField< ::sword::SupplyFlowResource >& resources, E_RequestDirection requestDirection )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )
@@ -54,59 +55,43 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& 
     , bManual_                           ( true )
     , requestDirection_                  ( requestDirection )
 {
-    if( asnStocks.null_value() || asnStocks.value_size() == 0 )
-        return;
-
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
-    for( int i = 0; i < asnStocks.value_size(); ++i )
+    BOOST_FOREACH( const sword::SupplyFlowResource& resource, resources )
     {
-        unsigned int type = asnStocks.value().Get( i ).list( 0 ).identifier();
-        int number = asnStocks.value().Get( i ).list( 1 ).quantity();
-
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( resource.resourcetype().id() );
         if( !pDotationCategory )
             continue;
 
-        double rTotalValue = number;
+        double rTotalValue = resource.quantity();
 
         typedef std::vector< std::pair< PHY_DotationStock*, double > > T_PionStockVector;
-        typedef T_PionStockVector::iterator                              IT_PionStockVector;
-        typedef T_PionStockVector::const_iterator                        CIT_PionStockVector;
 
         T_PionStockVector pionStocks;
-        for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+        BOOST_FOREACH( MIL_AgentPion* pion, pions )
         {
-            PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
+            PHY_RoleInterface_Supply* stockPion = pion->RetrieveRole< PHY_RoleInterface_Supply >();
             if( stockPion )
             {
                 PHY_DotationStock* pStock = stockPion->GetStock( *pDotationCategory );
                 if( pStock )
                     pionStocks.push_back( std::make_pair( pStock, 0. ) );
             }
-
         }
-
         if( pionStocks.empty() )
         {
             PHY_DotationStock* pNewStock = 0;
-            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end() && !pNewStock; ++itPion )
+            BOOST_FOREACH( MIL_AgentPion* pion, pions )
             {
-                PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
+                PHY_RoleInterface_Supply* stockPion = pion->RetrieveRole< PHY_RoleInterface_Supply >();
                 if( stockPion )
-                {
                     pNewStock = stockPion->AddStock( *pDotationCategory );
-                }
             }
-
-
-            if( !pNewStock )
-                continue;
-
-            pionStocks.push_back( std::make_pair( pNewStock, 0. ) );
+            if( pNewStock )
+                pionStocks.push_back( std::make_pair( pNewStock, 0. ) );
         }
 
         // Priority for pions needing supply
-        for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end() && rTotalValue > 0.; ++it )
+        for( T_PionStockVector::iterator it = pionStocks.begin(); it != pionStocks.end() && rTotalValue > 0.; ++it )
         {
             const PHY_DotationStock& stock = *it->first;
             const double rAffectedValue = std::min( rTotalValue, std::max( 0., stock.GetCapacity() - stock.GetValue() ) );
@@ -118,13 +103,13 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& 
         if( rTotalValue > 0. )
         {
             const double rAffectedValue = rTotalValue / pionStocks.size();
-            for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end(); ++it )
+            for( T_PionStockVector::iterator it = pionStocks.begin(); it != pionStocks.end(); ++it )
                 it->second += rAffectedValue;
         }
 
         // Request creation
         PHY_SupplyStockRequest& request = requests_[ pDotationCategory ];
-        for( CIT_PionStockVector it = pionStocks.begin(); it != pionStocks.end(); ++it )
+        for( T_PionStockVector::const_iterator it = pionStocks.begin(); it != pionStocks.end(); ++it )
             request.AddStock( *it->first, it->second );
     }
 }
@@ -150,7 +135,7 @@ bool PHY_SupplyStockRequestContainer::Execute( MIL_AutomateLOG& supplier, PHY_Su
     if( !ApplyQuotas(supplier) )
         return false;
 
-    AffectRequestsToAutomate();
+    AffectRequestsToSupplier();
 
     if( ( bManual_ && bAtLeastOneSupplySatisfied_ ) || ( !bManual_ && bAtLeastOneExplicitSupplySatisfied_ ) )
         ActivateSupply( pStockSupplyState );
@@ -169,17 +154,10 @@ bool PHY_SupplyStockRequestContainer::Execute( const logistic::LogisticHierarchy
 
     //$$ A REFACTORER / unifier avec PHY_DotationStockRequestContainer
     bool quotaPassed = ApplyQuotas( logisticHierarchy );
-
-    //$$ A refactorer
-/*    bool quotaPassed = true;
-    if (&supplier == &secondSupplier)
-        quotaPassed = ApplyQuotas(supplier);
-    else
-        quotaPassed = ApplyQuotas(supplier, secondSupplier);*/
     if( !bManual_ &&  !quotaPassed )
         return false;
 
-    AffectRequestsToAutomate();
+    AffectRequestsToSupplier();
 
     if( ( bManual_ && bAtLeastOneSupplySatisfied_ ) || ( !bManual_ && bAtLeastOneExplicitSupplySatisfied_ ) )
         ActivateSupply( pStockSupplyState );
@@ -201,10 +179,10 @@ void PHY_SupplyStockRequestContainer::AddStock( PHY_DotationStock& stock )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockRequestContainer::AffectRequestsToAutomate
+// Name: PHY_SupplyStockRequestContainer::AffectRequestsToSupplier
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate()
+void PHY_SupplyStockRequestContainer::AffectRequestsToSupplier()
 {
     bExplicitSupplyFullSatisfied_ = false;
 
@@ -212,7 +190,7 @@ void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate()
     {
         PHY_SupplyStockRequest& request = it->second;
         MIL_AutomateLOG& supplier = *(requestAffectations_[&request]);
-        if( request.AffectAutomate( supplier ) )
+        if( request.AffectSupplier( supplier ) )
         {
             bAtLeastOneSupplySatisfied_ = true;
             if( request.HasReachedSupplyThreshold() )
@@ -302,23 +280,21 @@ void PHY_SupplyStockRequestContainer::ActivateSupply( PHY_SupplyStockState*& pSt
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
         PHY_SupplyStockRequest& request = it->second;
-        if( !request.GetSupplyingAutomate() )
+        if( !request.GetSupplier() )
             continue;
-
         if( !pStockSupplyState )
         {
             MIL_AutomateLOG* pConvoyer = 0;
             if( requestDirection_ == eUpward )
                 pConvoyer = suppliedAutomate_.FindLogisticManager();
             if( !pConvoyer )
-                pConvoyer = request.GetSupplyingAutomate();
+                pConvoyer = request.GetSupplier();
             assert( pConvoyer );
-            pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_, *pConvoyer, !bManual_ );
-            request.GetSupplyingAutomate()->SupplyHandleRequest( *pStockSupplyState, request.GetStockPion() );
+            pStockSupplyState = new PHY_SupplyStockState( *pConvoyer, !bManual_ );
+            request.GetSupplier()->SupplyHandleRequest( *pStockSupplyState, request.GetStockPion() );
         }
-
         request.ReserveStocks();
-        pStockSupplyState->AddRequest( request );
+        pStockSupplyState->AddRequest( suppliedAutomate_, request );
     }
 
     if( pStockSupplyState )

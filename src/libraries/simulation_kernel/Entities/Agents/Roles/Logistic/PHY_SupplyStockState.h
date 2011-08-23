@@ -14,6 +14,7 @@
 
 #include "PHY_SupplyState_ABC.h"
 #include "PHY_SupplyStockRequest.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 class MIL_AutomateLOG;
 class PHY_SupplyConsign_ABC;
@@ -27,7 +28,7 @@ class PHY_SupplyStockState : public PHY_SupplyState_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_SupplyStockState( MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyer, bool bConsumeQuota );
+             PHY_SupplyStockState( MIL_AutomateLOG& convoyer, bool bConsumeQuota );
              PHY_SupplyStockState();
     virtual ~PHY_SupplyStockState();
     //@}
@@ -39,30 +40,34 @@ public:
 
     //! @name Accessors
     //@{
-    bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
-    MIL_Automate& GetSuppliedAutomate() const;
+    bool IsSupplying( const MIL_Automate& supplied, const PHY_DotationCategory& dotationCategory ) const;
     MIL_AutomateLOG& GetConvoyer() const;
+    MIL_Automate* GetNextSupplied() const;
+    const T_PointVector* GetWayPointsToGoToSupplied( const MIL_Automate& supplied ) const;
+    const T_PointVector* GetWayPointsToGoBack      () const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, PHY_SupplyStockRequest > T_RequestMap;
-    typedef T_RequestMap::iterator                                         IT_RequestMap;
-    typedef T_RequestMap::const_iterator                                  CIT_RequestMap;
-
+    typedef std::map< const PHY_DotationCategory*, PHY_SupplyStockRequest > T_Requests;
+    typedef std::map< MIL_Automate*, T_Requests > T_AutomatRequests;
     typedef std::map< const PHY_DotationCategory*, double > T_MerchandiseToConvoyMap;
     //@}
 
     //! @name Operations
     //@{
-    void AddRequest( const PHY_SupplyStockRequest& request );
+    void AddRequest( MIL_Automate& supplied, const PHY_SupplyStockRequest& request );
+    /*void SetWayPointsToGoToSupplied( const MIL_Automate& supplied, const T_PointVector& wayPoints ) const;
+    void SetWayPointsToGoBacl      ( const T_PointVector& wayPoints ) const;*/
+    // void AddTransporters( liste of SupplyFlowTransporter )
+
 
     void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
     void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
     void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
     void CancelMerchandiseOverheadReservation();
 
-    void Supply() const;
+    void Supply( MIL_Automate& supplied, T_MerchandiseToConvoyMap& stockSupplied );
     void CancelSupply();
     //@}
 
@@ -88,13 +93,13 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Automate* pSuppliedAutomate_;
     MIL_AutomateLOG*     pConvoyer_;
     const bool           bConsumeQuota_;
     PHY_SupplyConsign_ABC* pConsign_;
     bool bConsignChanged_;
     bool bRequestsChanged_;
-    T_RequestMap requests_;
+    T_AutomatRequests requestsQueued_;
+    T_AutomatRequests requestsDone_;
     //@}
 };
 

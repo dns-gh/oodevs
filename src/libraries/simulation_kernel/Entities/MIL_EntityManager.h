@@ -34,6 +34,7 @@ namespace sword
     class MagicAction;
     class MissionParameter_Value;
     class BurningCellRequest;
+    class ParentEntity;
 }
 
 namespace urban
@@ -112,6 +113,7 @@ public:
     //@{
             MIL_AutomateLOG*    FindBrainLogistic( unsigned int nID ) const;
             MIL_AutomateLOG*    FindBrainLogistic( const sword::MissionParameter_Value& parameter ) const;
+            MIL_AutomateLOG*    FindBrainLogistic( const sword::ParentEntity& parameter ) const;
     virtual MIL_Automate*       FindAutomate      ( unsigned int nID ) const;
     virtual MIL_Population*     FindPopulation    ( unsigned int nID ) const;
     virtual MIL_Inhabitant*     FindInhabitant    ( unsigned int nID ) const;

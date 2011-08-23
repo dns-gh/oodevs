@@ -143,9 +143,9 @@ double PHY_RoleInterface_Supply::AddStockReservation( const PHY_DotationCategory
 // Name: PHY_RoleInterface_Supply::RemoveStockReservation
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::RemoveStockReservation( const PHY_DotationCategory& /*dotationCategory*/, double /*rRequestedValue*/ )
+double PHY_RoleInterface_Supply::RemoveStockReservation( const PHY_DotationCategory& /*dotationCategory*/, double /*rRequestedValue*/ )
 {
-    // NOTHING
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +153,15 @@ void PHY_RoleInterface_Supply::RemoveStockReservation( const PHY_DotationCategor
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RoleInterface_Supply::GetAvailableConvoyTransporter( const PHY_DotationCategory& /*dotationCategory*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::GetAvailableConvoyTransporter
+// Created: NLD 2005-02-07
+// -----------------------------------------------------------------------------
+PHY_ComposantePion* PHY_RoleInterface_Supply::GetAvailableConvoyTransporter( const PHY_ComposanteTypePion& /*type*/ ) const
 {
     return 0;
 }
@@ -176,15 +185,6 @@ void PHY_RoleInterface_Supply::StopUsingForLogistic( PHY_ComposantePion& /*compo
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::FillSupplyRequest
-// Created: NLD 2005-01-31
-// -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::FillSupplyRequest( PHY_SupplyStockRequestContainer& /*supplyRequest*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::ResupplyStocks
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
@@ -202,68 +202,6 @@ void PHY_RoleInterface_Supply::ResupplyStocks( const PHY_DotationCategory& /*cat
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::AssignConvoy
-// Created: NLD 2005-02-09
-// -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::AssignConvoy( PHY_StockConvoy& /*convoy*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::UnassignConvoy
-// Created: NLD 2005-02-09
-// -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::UnassignConvoy( PHY_StockConvoy& /*convoy*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyLoad
-// Created: NLD 2005-02-10
-// -----------------------------------------------------------------------------
-bool PHY_RoleInterface_Supply::ConvoyLoad() const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyUnload
-// Created: NLD 2005-02-10
-// -----------------------------------------------------------------------------
-bool PHY_RoleInterface_Supply::ConvoyUnload() const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyIsLoadingDone
-// Created: NLD 2005-12-16
-// -----------------------------------------------------------------------------
-bool PHY_RoleInterface_Supply::ConvoyIsLoadingDone() const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyIsUnloadingDone
-// Created: NLD 2005-12-16
-// -----------------------------------------------------------------------------
-bool PHY_RoleInterface_Supply::ConvoyIsUnloadingDone() const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyEndMission
-// Created: NLD 2005-02-10
-// -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::ConvoyEndMission()
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::Clean
@@ -275,37 +213,9 @@ void PHY_RoleInterface_Supply::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
-// Created: AHC 2010-10-13
+// Name: PHY_RoleInterface_Supply::Apply
+// Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetSupplier    () const
+void PHY_RoleInterface_Supply::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
-// Created: AHC 2010-10-13
-// -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetConvoyer    () const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
-// Created: AHC 2010-10-13
-// -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetSupplied    () const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
-// Created: AHC 2010-10-13
-// -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetStockSupplier() const
-{
-    return 0;
 }

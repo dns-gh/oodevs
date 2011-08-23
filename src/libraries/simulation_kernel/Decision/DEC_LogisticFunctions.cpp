@@ -21,11 +21,14 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRecipient_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include <boost/foreach.hpp>
 
 using namespace human;
 
@@ -412,83 +415,133 @@ void DEC_LogisticFunctions::PionRequestSupply( MIL_Agent_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyIsLoadingDone
+// Name: DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-bool DEC_LogisticFunctions::ConvoyIsLoadingDone( const MIL_Agent_ABC& callerAgent )
+void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier( MIL_Agent_ABC& callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
-        return role->ConvoyIsLoadingDone();
-    return false;
+        role->ConvoyNotifyMovedToSupplier();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyIsUnloadingDone
+// Name: DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-bool DEC_LogisticFunctions::ConvoyIsUnloadingDone( const MIL_Agent_ABC& callerAgent )
+void DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider( MIL_Agent_ABC& callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
-        role->ConvoyIsUnloadingDone();
-    return false;
+        role->ConvoyNotifyMovedToTransportersProvider();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyGetSupplyingAutomate
-// Created: NLD 2006-07-31
+// Name: DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent )
+void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient( MIL_Agent_ABC& callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
-    {
-        if( const MIL_AgentPion* pSuplier = role->ConvoyGetSupplier() )
-            return ( const_cast< DEC_Decision_ABC* >( &pSuplier->GetDecision() ) );
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyGetConvoyingAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent )
-{
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role )
-    {
-        if( const MIL_AgentPion* pConvoyer = role->ConvoyGetConvoyer() )
-            return ( const_cast< DEC_Decision_ABC* > ( &pConvoyer->GetDecision() ) );
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyGetSuppliedAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( const MIL_Agent_ABC& callerAgent )
-{
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role )
-    {
-        if( const MIL_AgentPion* pSupplied = role->ConvoyGetSupplied() )
-            return ( const_cast< DEC_Decision_ABC* >( &pSupplied->GetDecision() ) );
-    }
-    return 0;
+        role->ConvoyNotifyMovedToSupplyRecipient();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyEndMission
-// Created: NLD 2005-02-10
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::ConvoyEndMission( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ConvoyEndMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ConvoyGetCurrentAction
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+int DEC_LogisticFunctions::ConvoyGetCurrentAction( const MIL_Agent_ABC& callerAgent )
+{
+    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    return role ? role->ConvoyGetCurrentAction() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient( const MIL_Agent_ABC& callerAgent )
+{
+    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+    {
+        logistic::SupplyRecipient_ABC* recipient = role->ConvoyGetCurrentSupplyRecipient();
+        if( recipient )
+            return ( const_cast< DEC_Decision_ABC* >( &recipient->GetPC().GetDecision() ) );
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ConvoyGetTransportersProvider
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetTransportersProvider( const MIL_Agent_ABC& callerAgent )
+{
+    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+    {
+        logistic::SupplySupplier_ABC* recipient = role->ConvoyGetTransportersProvider();
+        if( recipient )
+        {
+            const MIL_AgentPion* pc = recipient->GetPC();
+            if( pc )
+                return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
+        }
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ConvoyGetSupplier
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplier( const MIL_Agent_ABC& callerAgent )
+{
+    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+    {
+        logistic::SupplySupplier_ABC* recipient = role->ConvoyGetSupplier();
+        if( recipient )
+        {
+            const MIL_AgentPion* pc = recipient->GetPC();
+            if( pc )
+                return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
+        }
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ConvoyGetPathToNextDestination
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGetPathToNextDestination( const MIL_Agent_ABC& callerAgent )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+    {
+        const T_PointVector* wayPoints = role->ConvoyGetPathToNextDestination();
+        if( wayPoints )
+        {
+            BOOST_FOREACH( const MT_Vector2D& wayPoint, *wayPoints )
+                result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( wayPoint ) ) );
+        }
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

@@ -13,25 +13,32 @@
 #define __MIL_StockSupplyManager_h_
 
 #include "MIL.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRecipient_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;
-class PHY_SupplyStockState;
 class MIL_Automate;
-class MIL_AutomateLOG;
 template < typename T > class PHY_ActionLogistic;
+
+namespace logistic 
+{
+    class SupplyRequestBuilder_ABC;
+    class SupplyRequestContainer;
+    class SupplySupplier_ABC;
+}
 
 namespace sword
 {
-    class MissionParameters;
+    class PullFlowParameters;
 }
 
 // =============================================================================
 // @class  MIL_StockSupplyManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_StockSupplyManager : private boost::noncopyable
+class MIL_StockSupplyManager : public logistic::SupplyRecipient_ABC
+                             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -54,32 +61,35 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg, MIL_AutomateLOG& automatLog );
-    void OnReceiveLogSupplyPullFlow( const sword::MissionParameters& msg );
+    void OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, logistic::SupplySupplier_ABC& supplier );
 
     void SendChangedState() const;
     void SendFullState   () const;
     //@}
 
-    //! @name Logistic : supply
-    void NotifyStockSupplyNeeded  ( const PHY_DotationCategory& dotationCategory );
-    void NotifyStockSupplied      ( const PHY_SupplyStockState& supplyState );
-    void NotifyStockSupplyCanceled( const PHY_SupplyStockState& supplyState );
+    //! @name SupplyRecipient_ABC
+    //@{
+    virtual const MT_Vector2D&   GetPosition() const;
+    virtual const MIL_AgentPion& GetPC      () const;
+    virtual void OnSupplyCanceled();
+    virtual void OnSupplyDone    ();
+    virtual void Serialize( sword::AutomatId& msg ) const;
     //@}
 
-private:
-    //! @name Types
-    //@{
-    typedef std::set< PHY_SupplyStockState* >     T_SupplyStockStateSet;
-    typedef T_SupplyStockStateSet::iterator       IT_SupplyStockStateSet;
-    typedef T_SupplyStockStateSet::const_iterator CIT_SupplyStockStateSet;
+    //! @name Logistic
+    void NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    bool IsSupplyInProgress    ( const PHY_DotationCategory& dotationCategory ) const;
-    void RemoveSupplyStockState( const PHY_SupplyStockState& supplyState );
+    bool IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::list< boost::shared_ptr< logistic::SupplyRequestContainer > > T_SupplyRequests;
     //@}
 
 private:
@@ -87,8 +97,9 @@ private:
     //@{
     MIL_Automate*         pAutomate_;
     bool                  bStockSupplyNeeded_;
-    PHY_SupplyStockState* pExplicitStockSupplyState_;
-    T_SupplyStockStateSet manualSupplyStates_;
+    boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
+    std::auto_ptr< logistic::SupplyRequestContainer > autoSupplyRequest_;
+    T_SupplyRequests manualSupplyRequests_;
     unsigned int          nTickRcStockSupplyQuerySent_;
     //@}
 };

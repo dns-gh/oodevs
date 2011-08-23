@@ -45,6 +45,8 @@
 #include "KnowledgeGroup.h"
 #include "ResourceNetwork.h"
 #include "ExtensionList.h"
+#include "PushFlowParameters.h"
+#include "PullFlowParameters.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -180,6 +182,10 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return new parameters::ParameterList( parameter );
     if( message.has_extensionlist() )
         return new parameters::ExtensionList( parameter, message.extensionlist() );
+    if( message.has_push_flow_parameters() )
+        return new parameters::PushFlowParameters( parameter );
+    if( message.has_pull_flow_parameters() )
+        return new parameters::PullFlowParameters( parameter );
     return 0;
 }
 
@@ -321,6 +327,10 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( extensionList );
         xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *extensionList );
     }
+    else if( type == "pushflowparameters" )
+        param.reset( new parameters::PushFlowParameters( parameter, entities_, staticModel_.objectTypes_, xis ) );
+    else if( type == "pullflowparameters" )
+        param.reset( new parameters::PullFlowParameters( parameter, entities_, staticModel_.objectTypes_, xis ) );
     else
         return false;
     return true;

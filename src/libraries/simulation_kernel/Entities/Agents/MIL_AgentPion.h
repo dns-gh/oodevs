@@ -44,6 +44,8 @@ class MIL_Automate;
 class MIL_DictionaryExtensions;
 class MIL_Color;
 class MIL_EntityManager;
+class PHY_Dotation;
+class PHY_DotationStock;
 
 // =============================================================================
 /** @class  MIL_AgentPion
@@ -102,8 +104,13 @@ public:
     virtual float GetAffinity( unsigned long teamID ) const;
 
     bool IsAutonomous() const; // Drones
+    //@}
 
+    //! @name logistic
+    //@{
     virtual logistic::LogisticHierarchy_ABC& GetLogisticHierarchy() const;
+            void Apply2( boost::function< void( PHY_Dotation& ) > visitor ) const;
+            void Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     //@}
 
     //! @name Operations
@@ -153,6 +160,7 @@ public:
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
     virtual void NotifyAttackedBy( MIL_Population& population );
     void ChangeSuperior( MIL_Automate& newAutomate );
+
     //@}
 
 private:

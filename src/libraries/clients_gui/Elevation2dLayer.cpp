@@ -291,6 +291,7 @@ void Elevation2dLayer::CreateTextures()
     glGenTextures( 1, &gradientTexture_ );
     extrema_.reset( new ElevationExtrema( elevation_.GetMap() ) );
     CreateShader();
+    return;
     if( !ignore_ )
         layer_.reset( new ElevationTextureSet( elevation_.GetMap() ) );
     else

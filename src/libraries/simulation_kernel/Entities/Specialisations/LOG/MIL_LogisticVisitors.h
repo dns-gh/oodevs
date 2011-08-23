@@ -271,6 +271,70 @@ class SupplyStockAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPi
               MIL_AgentPion*         pSelected_;
 };
 
+class SupplyStockReservationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+{
+    public:
+        SupplyStockReservationVisitor( const PHY_DotationCategory& dotationCategory, double requestedQuantity )
+            : dotationCategory_ ( dotationCategory )
+            , requestedQuantity_( requestedQuantity )
+            , remainingQuantity_( requestedQuantity )
+         {
+        }
+
+        void Visit( const MIL_AgentPion& tmp )
+        {
+            // NLD 2011-04-07 : Totally bugged ...
+            // We must not use BL internal TC2 for external use
+            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+            //if( bExternalTransfert_ && testBrain )
+            //    return;
+
+            if( remainingQuantity_ <= 0 )
+                return;
+
+            PHY_RoleInterface_Supply* candidate = const_cast< PHY_RoleInterface_Supply* >( tmp.RetrieveRole< PHY_RoleInterface_Supply >() );
+            if( candidate )
+                remainingQuantity_ -= candidate->AddStockReservation( dotationCategory_, remainingQuantity_ );
+        }
+
+    public:
+        const PHY_DotationCategory&  dotationCategory_;
+        const double requestedQuantity_;
+        double remainingQuantity_;;
+
+};
+
+class SupplyStockReturnVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+{
+    public:
+        SupplyStockReturnVisitor( const PHY_DotationCategory& dotationCategory, double quantity )
+            : dotationCategory_( dotationCategory )
+            , quantity_        ( quantity )
+        {
+        }
+
+        void Visit( const MIL_AgentPion& tmp )
+        {
+            // NLD 2011-04-07 : Totally bugged ...
+            // We must not use BL internal TC2 for external use
+            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+            //if( bExternalTransfert_ && testBrain )
+            //    return;
+
+            if( quantity_ <= 0 )
+                return;
+
+            //$$ TODO
+            PHY_RoleInterface_Supply* candidate = const_cast< PHY_RoleInterface_Supply* >( tmp.RetrieveRole< PHY_RoleInterface_Supply >() );
+            if( candidate )
+                quantity_-= candidate->RemoveStockReservation( dotationCategory_, quantity_ );
+        }
+
+    public:
+        const PHY_DotationCategory&  dotationCategory_;
+        double quantity_;
+};
+
 class SupplyStockContainerVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
     public:
@@ -331,6 +395,41 @@ class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
               MIL_AgentPion*         pSelected_;
 };
 
+class SupplyConvoyTransporterVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+{
+    public:
+        SupplyConvoyTransporterVisitor( const PHY_ComposanteTypePion& type )
+            : type_            ( type )
+            , pConvoySelected_ ( 0 )
+            , pSelected_       ( 0 )
+        {
+        }
+
+        void Visit( const MIL_AgentPion& tmp )
+        {
+            // NLD 2011-04-07 : Totally bugged ...
+            // We must not use BL internal TC2 for external use
+            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+            //if( bExternalTransfert_ && testBrain )
+                //return;
+
+            if( pSelected_ )
+                return;
+
+            const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
+            PHY_ComposantePion* pTmpConvoySelected = candidate!=0 ? candidate->GetAvailableConvoyTransporter( type_ ) : 0;
+            if( pTmpConvoySelected )
+            {
+                pConvoySelected_ = pTmpConvoySelected;
+                pSelected_       = const_cast<MIL_AgentPion*>(&tmp);
+            }
+        }
+
+    public:
+        const PHY_ComposanteTypePion& type_;
+              PHY_ComposantePion*     pConvoySelected_;
+              MIL_AgentPion*          pSelected_;
+};
 
 class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {

@@ -29,7 +29,7 @@
 #include "Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Agents/Roles/Communications/PHY_RolePion_Communications.h"
-#include "Agents/Roles/Logistic/PHY_Convoy_ABC.h"
+#include "Agents/Roles/Logistic/SupplyConvoyConfig.h"
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_MedicalResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_SupplyResourcesAlarms.h"
@@ -177,7 +177,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_NbcAgentType               >( config, "nbc"                );
     InitializeMedicalTreatment( config, time );
     InitializeType< PHY_SupplyResourcesAlarms      >( config, "supply"             );
-    InitializeType< PHY_Convoy_ABC                 >( config, "supply"             );
+    InitializeType< logistic::SupplyConvoyConfig   >( config, "supply"             );
     InitializeType< PHY_MedicalResourcesAlarms     >( config, "health"             );
     InitializeType< PHY_RolePion_Communications    >( config, "communications"     );
     InitializeType< MIL_PopulationType             >( config, "populations"        );

@@ -87,7 +87,7 @@ void PHY_SupplyDotationRequestContainer::AffectRequestsToAutomate( MIL_AutomateL
     {
         PHY_SupplyDotationRequest& request = it->second;
 
-        if( request.AffectAutomate( supplyingAutomate ) )
+        if( request.AffectSupplier( supplyingAutomate ) )
         {
             bAtLeastOneSupplySatisfied_ = true;
             if( request.HasReachedSupplyThreshold() )
@@ -107,14 +107,14 @@ void PHY_SupplyDotationRequestContainer::ActivateSupply( MIL_DotationSupplyManag
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
         PHY_SupplyDotationRequest& request = it->second;
-        if( !request.GetSupplyingAutomate() )
+        if( !request.GetSupplier() )
             continue;
 
-        PHY_SupplyDotationState*& pSupplyState = dotationSupplies[ request.GetSupplyingAutomate() ];
+        PHY_SupplyDotationState*& pSupplyState = dotationSupplies[ request.GetSupplier() ];
         if( !pSupplyState )
         {
-            pSupplyState = new PHY_SupplyDotationState( suppliedAutomate_, *request.GetSupplyingAutomate() );
-            request.GetSupplyingAutomate()->SupplyHandleRequest( *pSupplyState, request.GetStockPion() );
+            pSupplyState = new PHY_SupplyDotationState( suppliedAutomate_, *request.GetSupplier() );
+            request.GetSupplier()->SupplyHandleRequest( *pSupplyState, request.GetStockPion() );
         }
         request.ReserveStocks();
         pSupplyState->AddRequest( request );

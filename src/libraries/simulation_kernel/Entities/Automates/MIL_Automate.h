@@ -15,7 +15,6 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
-#include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include <tools/Resolver.h>
 #include <map>
@@ -34,6 +33,7 @@ namespace sword
     class SetAutomatMode;
     class UnitCreationRequest;
     class UnitMagicAction;
+    class PullFlowParameters;
 }
 
 namespace xml
@@ -56,14 +56,14 @@ class MIL_AutomateLOG;
 class MIL_Object_ABC;
 class MIL_AgentTypePion;
 class MIL_AutomateOrderManager;
-class PHY_SupplyDotationState;
-class PHY_SupplyStockState;
 class PHY_DotationCategory;
 class MIL_DotationSupplyManager;
 class MIL_StockSupplyManager;
 class MIL_DotationSupplyManager;
 class MIL_StockSupplyManager;
 class MIL_Color;
+class PHY_Dotation;
+class PHY_DotationStock;
 template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
@@ -85,10 +85,6 @@ public:
     typedef std::vector< MIL_Automate* >     T_AutomateVector;
     typedef T_AutomateVector::iterator       IT_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
-
-    typedef std::map< const MIL_AutomateLOG*, PHY_SupplyDotationState* > T_SupplyDotationStateMap;
-    typedef T_SupplyDotationStateMap::iterator                           IT_SupplyDotationStateMap;
-    typedef T_SupplyDotationStateMap::const_iterator                     CIT_SupplyDotationStateMap;
     //@}
 
 public:
@@ -133,6 +129,8 @@ public:
 
           logistic::LogisticHierarchy_ABC&  GetLogisticHierarchy() const;
 
+          MIL_StockSupplyManager& GetStockSupplyManager() const;
+
     // logistics
     MIL_AutomateLOG*                        GetBrainLogistic () const;
     MIL_AutomateLOG*                        FindLogisticManager() const; // Returns logistic chief
@@ -142,6 +140,8 @@ public:
     //! @name Visitor
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const;
+            void Apply2( boost::function< void( PHY_Dotation& ) > visitor ) const;
+            void Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     //@}
 
     //! @name Operations
@@ -202,8 +202,7 @@ public:
             void OnReceiveMagicActionMoveTo    ( const sword::UnitMagicAction&     msg );
             void OnReceiveChangeKnowledgeGroup ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveChangeSuperior       ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveLogSupplyPushFlow    ( const sword::MissionParameters&   msg, MIL_AutomateLOG& automatLog );
-    virtual void OnReceiveLogSupplyPullFlow    ( const sword::MissionParameters&   msg );
+    virtual void OnReceiveLogSupplyPullFlow    ( const sword::PullFlowParameters& msg, MIL_AutomateLOG& supplier );
 
     virtual void Serialize( sword::ParentEntity& message ) const;
     //@}
@@ -225,12 +224,9 @@ public:
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
 
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    void NotifyDotationSupplied    ( const PHY_SupplyDotationState& supplyState );
     void RequestDotationSupply     ();
 
     void     NotifyStockSupplyNeeded   ( const PHY_DotationCategory& dotationCategory );
-    void     NotifyStockSupplied       ( const PHY_SupplyStockState& supplyState );
-    void     NotifyStockSupplyCanceled ( const PHY_SupplyStockState& supplyState );
 
     double   GetQuota                  ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const;
     void     ConsumeQuota              ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );

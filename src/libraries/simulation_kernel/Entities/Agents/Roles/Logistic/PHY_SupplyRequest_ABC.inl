@@ -19,7 +19,7 @@ template< typename T >
 PHY_SupplyRequest_ABC< T >::PHY_SupplyRequest_ABC()
     : requests_            ()
     , rTotalRequestedValue_( 0. )
-    , pSupplyingAutomate_  ( 0 )
+    , pSupplier_           ( 0 )
     , pStockPion_          ( 0 )
     , rTotalReservedValue_ ( 0. )
     , rTotalConvoyedValue_ ( 0. )
@@ -61,7 +61,7 @@ void PHY_SupplyRequest_ABC< T >::serialize( Archive& file, const unsigned int )
 {
     file & requests_
          & rTotalRequestedValue_
-         & pSupplyingAutomate_
+         & pSupplier_
          & pStockPion_
          & rTotalReservedValue_ 
          & rTotalConvoyedValue_;
@@ -99,7 +99,7 @@ double PHY_SupplyRequest_ABC< T >::Supply() const
 
         const double rValue = request.rRequestedValue_ * rTmp;
         rRemainingValue -= request.pRequest_->Supply( rValue );
-    }        
+    }
     return rRemainingValue;
 }
 
@@ -116,23 +116,23 @@ void PHY_SupplyRequest_ABC< T >::Cancel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyRequest_ABC< T >::AffectAutomate
+// Name: PHY_SupplyRequest_ABC< T >::AffectSupplier
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutomate )
+bool PHY_SupplyRequest_ABC< T >::AffectSupplier( MIL_AutomateLOG& supplier )
 {
-    if( pSupplyingAutomate_ )
+    if( pSupplier_ )
     {
         assert( pStockPion_ );
         return true;
     }
 
-    MIL_AgentPion* pStockPion = supplyingAutomate.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_ );
+    MIL_AgentPion* pStockPion = supplier.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_ );
     if( !pStockPion )
         return false;
 
-    pSupplyingAutomate_   = &supplyingAutomate;
+    pSupplier_   = &supplier;
     pStockPion_  = pStockPion;
     return true;
 }
@@ -159,7 +159,7 @@ bool PHY_SupplyRequest_ABC< T >::HasReachedSupplyThreshold() const
 template< typename T > 
 void PHY_SupplyRequest_ABC< T >::RemoveConvoyedMerchandise( double rNbr )
 {
-    const double rTmp = std::min( rTotalConvoyedValue_, rNbr );   
+    const double rTmp = std::min( rTotalConvoyedValue_, rNbr );
     rTotalConvoyedValue_ -= rTmp;
 }
 
@@ -181,7 +181,7 @@ void PHY_SupplyRequest_ABC< T >::AddConvoyedMerchandise( double rNbr )
 template< typename T > 
 void PHY_SupplyRequest_ABC< T >::ReserveStocks()
 {
-    assert( pSupplyingAutomate_ );
+    assert( pSupplier_ );
     assert( pStockPion_ );
     assert( rTotalReservedValue_ == 0. );
     rTotalReservedValue_ = pStockPion_->GetRole< PHY_RoleInterface_Supply >().AddStockReservation( GetDotationCategory(), rTotalRequestedValue_ );
@@ -225,13 +225,13 @@ void PHY_SupplyRequest_ABC< T >::Serialize( sword::DotationQuery& asn ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyRequest_ABC< T >::GetSupplyingAutomate
+// Name: PHY_SupplyRequest_ABC< T >::GetSupplier
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-MIL_AutomateLOG* PHY_SupplyRequest_ABC< T >::GetSupplyingAutomate() const
+MIL_AutomateLOG* PHY_SupplyRequest_ABC< T >::GetSupplier() const
 {
-    return pSupplyingAutomate_;
+    return pSupplier_;
 }
 
 // -----------------------------------------------------------------------------

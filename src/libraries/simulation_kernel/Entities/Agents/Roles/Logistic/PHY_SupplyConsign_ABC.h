@@ -13,6 +13,7 @@
 #define __PHY_SupplyConsign_ABC_h_
 
 #include "Entities/Automates/MIL_Automate.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace client
 {
@@ -32,7 +33,7 @@ class PHY_SupplyConsign_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate, MIL_Automate& stockSupplier );
+             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, MIL_AutomateLOG& convoyingAutomate, MIL_Automate& stockSupplier );
              PHY_SupplyConsign_ABC();
     virtual ~PHY_SupplyConsign_ABC();
     //@}
@@ -54,14 +55,14 @@ public:
     typedef std::map< const PHY_DotationCategory*, double > T_MerchandiseToConvoyMap;
     //@}
 
-
     //! @name Accessors
     //@{
     MIL_AutomateLOG& GetSupplier() const;
     MIL_AutomateLOG& GetConvoyer() const;
-    const MIL_Automate& GetSupplied() const;
     MIL_Automate& GetStockSupplier() const;
-
+    virtual const MIL_Automate* GetNextSupplied() const = 0;
+    virtual const T_PointVector* GetWayPointsToGoBack() const = 0;
+    virtual const T_PointVector* GetWayPointsToGoToNextSupplied() const = 0;
 
     virtual void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const = 0;
     virtual void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations ) = 0;

@@ -76,7 +76,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , teamFactory_( *new TeamFactory( controllers, *this, staticModel ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, workers ) )
     , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
-    , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel ) )
+    , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel, simulation ) )
     , fireFactory_( *new FireFactory( *this ) )
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_( *new FireResultFactory( *this, simulation ) )

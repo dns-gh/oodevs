@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    bool AffectAutomate( MIL_AutomateLOG& supplyingAutomate );
+    bool AffectSupplier( MIL_AutomateLOG& supplyingAutomate );
     bool HasReachedSupplyThreshold() const;
     void ReserveStocks();
 
@@ -53,11 +53,11 @@ public:
     //! @name Accessors
     //@{
     const PHY_DotationCategory& GetDotationCategory   () const;
-          MIL_AutomateLOG*      GetSupplyingAutomate  () const;
+          MIL_AutomateLOG*      GetSupplier           () const;
           MIL_Automate&         GetStockPion          () const;
-          double              GetTotalRequestedValue() const;
-          double              GetTotalReservedValue () const;
-          double              GetTotalConvoyedValue () const;
+          double                GetTotalRequestedValue() const;
+          double                GetTotalReservedValue () const;
+          double                GetTotalConvoyedValue () const;
     //@}
 
     //! @name Network
@@ -81,10 +81,10 @@ protected:
     //@}
 
 protected:
-    T_RequestVector      requests_;
-    MIL_AgentPion*       pStockPion_;
+    T_RequestVector    requests_;
+    MIL_AgentPion*     pStockPion_;
     double             rTotalRequestedValue_;
-    MIL_AutomateLOG*     pSupplyingAutomate_;
+    MIL_AutomateLOG*   pSupplier_;
     double             rTotalReservedValue_;
     double             rTotalConvoyedValue_;
 };

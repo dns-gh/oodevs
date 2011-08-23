@@ -22,13 +22,9 @@
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-
-//#include "Entities/Objects/LogisticCapacity.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
-
-
 #include <boost/foreach.hpp>
 
 namespace

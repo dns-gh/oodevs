@@ -28,7 +28,6 @@ namespace xml
 class PHY_DotationCategory;
 class PHY_DotationStock;
 class PHY_RoleInterface_Supply;
-class PHY_SupplyStockRequestContainer;
 class PHY_DotationNature;
 
 // =============================================================================
@@ -64,8 +63,8 @@ public:
 
     //! @name Operations
     //@{
-    double AddReservation( const PHY_DotationCategory& category, double rNbr );
-    void RemoveReservation( const PHY_DotationCategory& category, double rNbr );
+    double AddReservation   ( const PHY_DotationCategory& category, double rNbr ); // Return the quantity reserved
+    double RemoveReservation( const PHY_DotationCategory& category, double rNbr ); // Return the quantity returned
     void Resupply();
     void Resupply( const PHY_DotationCategory& category, double rNbr );
     void ComputeStockWeightAndVolume( const PHY_DotationNature&, double& rWeight, double& rVolume ) const;
@@ -90,7 +89,7 @@ public:
     //! @name Supply
     //@{
     void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
-    void FillSupplyRequest ( PHY_SupplyStockRequestContainer& supplyRequest ) const;
+    void Apply             ( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     //@}
 
     //! @name Helpers

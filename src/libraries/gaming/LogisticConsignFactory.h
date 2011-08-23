@@ -19,6 +19,7 @@ namespace kernel
 
 class Model;
 class StaticModel;
+class Simulation;
 
 // =============================================================================
 /** @class  LogisticConsignFactory
@@ -31,7 +32,7 @@ class LogisticConsignFactory : public LogisticConsignFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsignFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             LogisticConsignFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const Simulation& simulation );
     virtual ~LogisticConsignFactory();
     //@}
 
@@ -55,6 +56,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
+    const Simulation& simulation_;
     //@}
 };
 

@@ -20,6 +20,7 @@
 #include "protocol/ClientSenders.h"
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockState )
 
@@ -27,15 +28,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockState )
 // Name: PHY_SupplyStockState::PHY_SupplyStockState
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyStockState::PHY_SupplyStockState( MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyer, bool bConsumeQuota )
+PHY_SupplyStockState::PHY_SupplyStockState( MIL_AutomateLOG& convoyer, bool bConsumeQuota )
     : PHY_SupplyState_ABC()
-    , pSuppliedAutomate_ ( &suppliedAutomate )
     , pConvoyer_         ( &convoyer )
     , bConsumeQuota_     ( bConsumeQuota )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
-    , requests_          ()
 {
     // NOTHING
 }
@@ -46,13 +45,11 @@ PHY_SupplyStockState::PHY_SupplyStockState( MIL_Automate& suppliedAutomate, MIL_
 // -----------------------------------------------------------------------------
 PHY_SupplyStockState::PHY_SupplyStockState()
     : PHY_SupplyState_ABC()
-    , pSuppliedAutomate_ ( 0 )
     , pConvoyer_         ( 0 )
     , bConsumeQuota_     ( false )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
-    , requests_          ()
 {
     // NOTHING
 }
@@ -63,7 +60,7 @@ PHY_SupplyStockState::PHY_SupplyStockState()
 // -----------------------------------------------------------------------------
 PHY_SupplyStockState::~PHY_SupplyStockState()
 {
-    if( !requests_.empty() )
+    if( !requestsQueued_.empty() )
         SendMsgDestruction();
 }
 
@@ -84,7 +81,7 @@ void PHY_SupplyStockState::Clean()
 // =============================================================================
 namespace boost
 {
-    namespace serialization
+  /*  namespace serialization
     {
         template< typename Archive >
         inline
@@ -119,7 +116,7 @@ namespace boost
                 file >> map[ PHY_DotationType::FindDotationCategory( nCategoryID ) ];
             }
         }
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -129,11 +126,11 @@ namespace boost
 template< typename Archive >
 void PHY_SupplyStockState::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
+    /*file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
          & pSuppliedAutomate_
          & const_cast< bool& >( bConsumeQuota_ )
          & pConsign_
-         & requests_;
+         & requests_;*/
 }
 
 // -----------------------------------------------------------------------------
@@ -143,8 +140,11 @@ void PHY_SupplyStockState::serialize( Archive& file, const unsigned int )
 void PHY_SupplyStockState::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const
 {
     container.clear();
-    for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
-        container[ it->first ] += it->second.GetTotalReservedValue();
+    BOOST_FOREACH( const T_AutomatRequests::value_type& automatRequest, requestsQueued_ )
+    {
+        BOOST_FOREACH( const T_Requests::value_type& request, automatRequest.second )
+            container[ request.first ] += request.second.GetTotalReservedValue();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -153,12 +153,12 @@ void PHY_SupplyStockState::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& con
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations )
 {
-    IT_RequestMap it = requests_.find( &dotationCategory );
+    /*IT_RequestMap it = requests_.find( &dotationCategory );
     if( it == requests_.end() )
         return;
 
     it->second.RemoveConvoyedMerchandise( rNbrDotations );
-    bRequestsChanged_ = true;
+    bRequestsChanged_ = true;*/
 }
 
 // -----------------------------------------------------------------------------
@@ -167,12 +167,12 @@ void PHY_SupplyStockState::RemoveConvoyedMerchandise( const PHY_DotationCategory
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations )
 {
-    IT_RequestMap it = requests_.find( &dotationCategory );
+    /*IT_RequestMap it = requests_.find( &dotationCategory );
     if( it == requests_.end() )
         return;
 
     it->second.AddConvoyedMerchandise( rNbrDotations );
-    bRequestsChanged_ = true;
+    bRequestsChanged_ = true;*/
 }
 
 // -----------------------------------------------------------------------------
@@ -181,24 +181,32 @@ void PHY_SupplyStockState::AddConvoyedMerchandise( const PHY_DotationCategory& d
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::CancelMerchandiseOverheadReservation()
 {
-    for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
-        it->second.CancelMerchandiseOverheadReservation();
+    /*for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
+        it->second.CancelMerchandiseOverheadReservation();*/
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockState::Supply
 // Created: NLD 2005-01-28
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockState::Supply() const
+void PHY_SupplyStockState::Supply( MIL_Automate& supplied, T_MerchandiseToConvoyMap& stockSupplied )
 {
-    assert( pSuppliedAutomate_ );
-    pSuppliedAutomate_->NotifyStockSupplied( *this );
-    for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
+    T_AutomatRequests::iterator it = requestsQueued_.find( &supplied );
+    if( it == requestsQueued_.end() )
+        return;
+
+    supplied.NotifyStockSupplied( *this ); //$$$$$ A REMPLACER ??
+    T_Requests& requests = it->second;
+    BOOST_FOREACH( T_Requests::value_type& data, requests )
     {
-        it->second.Supply();
+        PHY_SupplyStockRequest& stockRequest = data.second;
+        stockRequest.Supply();
+        stockSupplied[ &stockRequest.GetDotationCategory() ] += stockRequest.GetTotalConvoyedValue();
         if( bConsumeQuota_ )
-            pSuppliedAutomate_->ConsumeQuota( pConsign_->GetSupplier(), it->second.GetDotationCategory(), it->second.GetTotalConvoyedValue() );
+            supplied.ConsumeQuota( pConsign_->GetSupplier(), stockRequest.GetDotationCategory(), stockRequest.GetTotalConvoyedValue() );
     }
+    requestsDone_.insert( *it );
+    requestsQueued_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,10 +215,82 @@ void PHY_SupplyStockState::Supply() const
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::CancelSupply()
 {
-    assert( pSuppliedAutomate_ );
+    /*assert( pSuppliedAutomate_ );
     pSuppliedAutomate_->NotifyStockSupplyCanceled( *this );
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
-        it->second.Cancel();
+        it->second.Cancel();*/
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::SetConsign
+// Created: NLD 2004-12-24
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
+{
+    if( pConsign == pConsign_ )
+        return;
+
+    pConsign_        = pConsign;
+    bConsignChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::IsSupplying
+// Created: NLD 2005-02-02
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockState::IsSupplying( const MIL_Automate& supplied, const PHY_DotationCategory& dotationCategory ) const
+{
+    T_AutomatRequests::const_iterator it = requestsQueued_.find( const_cast< MIL_Automate* >( &supplied ) );
+    if( it == requestsQueued_.end() )
+        return false;
+    return it->second.find( &dotationCategory ) != it->second.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::AddRequest
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockState::AddRequest( MIL_Automate& supplied, const PHY_SupplyStockRequest& request )
+{
+    requestsQueued_[ &supplied ][ &request.GetDotationCategory() ] = request;
+    bRequestsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::GetConvoyer
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& PHY_SupplyStockState::GetConvoyer() const
+{
+    assert( pConvoyer_ );
+    return *pConvoyer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::GetNextSupplied
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+MIL_Automate* PHY_SupplyStockState::GetNextSupplied() const
+{
+    return requestsQueued_.empty() ? 0 : requestsQueued_.begin()->first;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::GetWayPointsToGoToSupplied
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+const T_PointVector* PHY_SupplyStockState::GetWayPointsToGoToSupplied( const MIL_Automate& supplied ) const
+{
+    return 0; //$$ TMP
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::GetWayPointsToGoBack
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+const T_PointVector* PHY_SupplyStockState::GetWayPointsToGoBack() const
+{
+    return 0; //$$ TMP
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +299,7 @@ void PHY_SupplyStockState::CancelSupply()
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::SendMsgCreation() const
 {
-    assert( !requests_.empty() );
+/*    assert( !requests_.empty() );
     assert( pSuppliedAutomate_ );
 
     client::LogSupplyHandlingCreation asn;
@@ -234,7 +314,7 @@ void PHY_SupplyStockState::SendMsgCreation() const
     }
 
     asn.Send( NET_Publisher_ABC::Publisher() );
-    asn().mutable_dotations()->Clear();
+    asn().mutable_dotations()->Clear();*/
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +323,7 @@ void PHY_SupplyStockState::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::SendFullState() const
 {
-    assert( pSuppliedAutomate_ );
+    /*assert( pSuppliedAutomate_ );
 
     SendMsgCreation();
     client::LogSupplyHandlingUpdate asn;
@@ -253,7 +333,7 @@ void PHY_SupplyStockState::SendFullState() const
         pConsign_->SendFullState( asn );
     else
         PHY_SupplyConsign_ABC::SendDefaultState( asn );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher() );*/
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +342,7 @@ void PHY_SupplyStockState::SendFullState() const
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::SendChangedState() const
 {
-    if( !( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) || bRequestsChanged_ ) )
+    /*if( !( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) || bRequestsChanged_ ) )
         return;
 
     assert( pSuppliedAutomate_ );
@@ -290,7 +370,7 @@ void PHY_SupplyStockState::SendChangedState() const
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
     if( asn().has_dotations() && asn().dotations().elem_size() > 0 )
-        asn().mutable_dotations()->Clear();
+        asn().mutable_dotations()->Clear();*/
 }
 
 // -----------------------------------------------------------------------------
@@ -299,62 +379,12 @@ void PHY_SupplyStockState::SendChangedState() const
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockState::SendMsgDestruction() const
 {
-    assert( pSuppliedAutomate_ );
+    /*assert( pSuppliedAutomate_ );
 
     client::LogSupplyHandlingDestruction asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher() );*/
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::SetConsign
-// Created: NLD 2004-12-24
-// -----------------------------------------------------------------------------
-void PHY_SupplyStockState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
-{
-    if( pConsign == pConsign_ )
-        return;
 
-    pConsign_        = pConsign;
-    bConsignChanged_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::GetSuppliedAutomate
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-MIL_Automate& PHY_SupplyStockState::GetSuppliedAutomate() const
-{
-    assert( pSuppliedAutomate_ );
-    return *pSuppliedAutomate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::IsSupplying
-// Created: NLD 2005-02-02
-// -----------------------------------------------------------------------------
-bool PHY_SupplyStockState::IsSupplying( const PHY_DotationCategory& dotationCategory ) const
-{
-    return requests_.find( &dotationCategory ) != requests_.end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::AddRequest
-// Created: NLD 2005-01-26
-// -----------------------------------------------------------------------------
-void PHY_SupplyStockState::AddRequest( const PHY_SupplyStockRequest& request )
-{
-    requests_[ &request.GetDotationCategory() ] = request;
-    bRequestsChanged_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::GetConvoyer
-// Created: AHC 2010-09-28
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_SupplyStockState::GetConvoyer() const
-{
-    assert( pConvoyer_ );
-    return *pConvoyer_;
-}

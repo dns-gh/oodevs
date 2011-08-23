@@ -27,9 +27,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyDotationState )
 // Name: PHY_SupplyDotationState::PHY_SupplyDotationState
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyDotationState::PHY_SupplyDotationState( MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyer  )
+PHY_SupplyDotationState::PHY_SupplyDotationState( MIL_Automate& supplied, MIL_AutomateLOG& convoyer  )
     : PHY_SupplyState_ABC()
-    , pSuppliedAutomate_ ( &suppliedAutomate )
+    , pSupplied_         ( &supplied )
     , pConvoyer_         ( &convoyer )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
@@ -45,7 +45,7 @@ PHY_SupplyDotationState::PHY_SupplyDotationState( MIL_Automate& suppliedAutomate
 // -----------------------------------------------------------------------------
 PHY_SupplyDotationState::PHY_SupplyDotationState()
     : PHY_SupplyState_ABC()
-    , pSuppliedAutomate_ ( 0 )
+    , pSupplied_         ( 0 )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
@@ -124,7 +124,7 @@ template< typename Archive >
 void PHY_SupplyDotationState::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
-         & pSuppliedAutomate_
+         & pSupplied_
          & pConvoyer_
          & pConsign_
          & requests_;
@@ -185,8 +185,8 @@ void PHY_SupplyDotationState::CancelMerchandiseOverheadReservation()
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationState::Supply() const
 {
-    assert( pSuppliedAutomate_ );
-    pSuppliedAutomate_->NotifyDotationSupplied( *this );
+    assert( pSupplied_ );
+    pSupplied_->NotifyDotationSupplied( *this );
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         it->second.Supply();
 }
@@ -198,11 +198,11 @@ void PHY_SupplyDotationState::Supply() const
 void PHY_SupplyDotationState::SendMsgCreation() const
 {
     assert( !requests_.empty() );
-    assert( pSuppliedAutomate_ );
+    assert( pSupplied_ );
 
     client::LogSupplyHandlingCreation asn;
     asn().mutable_request()->set_id( nID_ );
-    asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
+    asn().mutable_consumer()->set_id( pSupplied_->GetID() );
     asn().set_tick( nCreationTick_ );
 
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
@@ -222,11 +222,11 @@ void PHY_SupplyDotationState::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationState::SendFullState() const
 {
-    assert( pSuppliedAutomate_ );
+    assert( pSupplied_ );
     SendMsgCreation();
     client::LogSupplyHandlingUpdate asn;
     asn().mutable_request()->set_id( nID_ );
-    asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
+    asn().mutable_consumer()->set_id( pSupplied_->GetID() );
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
@@ -242,10 +242,10 @@ void PHY_SupplyDotationState::SendChangedState() const
 {
     if( !( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) || bRequestsChanged_ ) )
         return;
-    assert( pSuppliedAutomate_ );
+    assert( pSupplied_ );
     client::LogSupplyHandlingUpdate asn;
     asn().mutable_request()->set_id(nID_ );
-    asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
+    asn().mutable_consumer()->set_id( pSupplied_->GetID() );
     if( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) )
     {
         if( pConsign_ )
@@ -265,10 +265,10 @@ void PHY_SupplyDotationState::SendChangedState() const
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationState::SendMsgDestruction() const
 {
-    assert( pSuppliedAutomate_ );
+    assert( pSupplied_ );
     client::LogSupplyHandlingDestruction asn;
     asn().mutable_request()->set_id( nID_ );
-    asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
+    asn().mutable_consumer()->set_id( pSupplied_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -286,13 +286,13 @@ void PHY_SupplyDotationState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationState::GetSuppliedAutomate
+// Name: PHY_SupplyDotationState::GetSupplied
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-const MIL_Automate& PHY_SupplyDotationState::GetSuppliedAutomate() const
+MIL_Automate& PHY_SupplyDotationState::GetSupplied() const
 {
-    assert( pSuppliedAutomate_ );
-    return *pSuppliedAutomate_;
+    assert( pSupplied_ );
+    return *pSupplied_;
 }
 
 // -----------------------------------------------------------------------------

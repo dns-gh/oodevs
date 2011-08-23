@@ -17,7 +17,6 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_AmmoDotationClass.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/split_free.hpp>
 
@@ -243,7 +242,7 @@ const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float r
 // Name: PHY_DotationGroup::GetilluminatingRange
 // Created: GGE 2010-06-23
 // -----------------------------------------------------------------------------
-float PHY_DotationGroup::GetIlluminatingRange( ) const
+float PHY_DotationGroup::GetIlluminatingRange() const
 {
     float rangeMax = 0.0;
     for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); it++ )
@@ -346,13 +345,13 @@ void PHY_DotationGroup::ConsumeFireReservations()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationGroup::FillSupplyRequest
+// Name: PHY_DotationGroup::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::FillSupplyRequest( PHY_SupplyDotationRequestContainer& supplyRequest ) const
+void PHY_DotationGroup::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
 {
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
-        supplyRequest.AddDotation( *it->second );
+        visitor( *it->second );
 }
 
 // -----------------------------------------------------------------------------

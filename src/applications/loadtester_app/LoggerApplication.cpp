@@ -122,7 +122,12 @@ void LoggerApplication::OnReceiveSimToClient( const std::string& /*from*/, const
     if( wrapper.message().has_control_begin_tick() )
         OnReceiveControlBeginTick( wrapper.message().control_begin_tick().current_tick() );
     else
+    {
+        if(     wrapper.message().has_log_supply_handling_creation()
+            ||  wrapper.message().has_log_supply_handling_destruction()
+            ||  wrapper.message().has_log_supply_handling_update() )
         LogMessage( wrapper );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -141,11 +146,11 @@ void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /
 // -----------------------------------------------------------------------------
 void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const sword::DispatcherToClient& /*wrapper*/ )
 {
-    DumpTime();
+    DumpTime();a
     file_ << "Dispatcher message received" << std::endl;
 }
 
-// -----------------------------------------------------------------------------
+// ----------------------------------   -------------------------------------------
 // Name: LoggerApplication::OnReceiveMsgMessengerToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------

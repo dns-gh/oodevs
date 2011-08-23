@@ -11,14 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOGConvoy_Supply.h"
-#include "PHY_StockConvoy.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConvoyReal_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-
-#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
-#include "simulation_kernel/SpeedComputer_ABC.h"
+#include "LocationActionNotificationHandler_ABC.h"
+#include "SpeedComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOGConvoy_Supply )
 
@@ -44,7 +42,6 @@ void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, 
 // -----------------------------------------------------------------------------
 PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion )
     : pion_   ( pion )
-    , pConvoy_( 0 )
 {
     // NOTHING
 }
@@ -66,8 +63,8 @@ PHY_RolePionLOGConvoy_Supply::~PHY_RolePionLOGConvoy_Supply()
 template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this )
-         & pConvoy_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this );
+//         & pConvoy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,64 +90,50 @@ void PHY_RolePionLOGConvoy_Supply::Clean()
 // Name: PHY_RolePionLOGConvoy_Supply::AssignConvoy
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOGConvoy_Supply::AssignConvoy( PHY_StockConvoy& convoy )
+void PHY_RolePionLOGConvoy_Supply::AssignConvoy( boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy )
 {
-    assert( !pConvoy_ );
-    pConvoy_ = &convoy;
+    assert( !convoy_.get() );
+    convoy_ = convoy;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::UnassignConvoy
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOGConvoy_Supply::UnassignConvoy( PHY_StockConvoy& convoy )
+void PHY_RolePionLOGConvoy_Supply::UnassignConvoy()
 {
-    assert( pConvoy_ == &convoy );
-    pConvoy_ = 0;
+    assert( convoy_.get() );
+    convoy_.reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyLoad
-// Created: NLD 2005-02-10
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyNotifyMovedToSupplier
+// Created: NLD 2011-08-02
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOGConvoy_Supply::ConvoyLoad() const
+void PHY_RolePionLOGConvoy_Supply::ConvoyNotifyMovedToSupplier()
 {
-    if( !pConvoy_ )
-        return true;
-    return pConvoy_->Load();
+    if( convoy_ )
+        convoy_->NotifyMovedToSupplier();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyUnload
-// Created: NLD 2005-02-10
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyNotifyMovedToTransportersProvider
+// Created: NLD 2011-08-02
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOGConvoy_Supply::ConvoyUnload() const
+void PHY_RolePionLOGConvoy_Supply::ConvoyNotifyMovedToTransportersProvider()
 {
-    if( !pConvoy_ )
-        return true;
-    return pConvoy_->Unload();
+    if( convoy_ )
+        convoy_->NotifyMovedToTransportersProvider();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyIsLoadingDone
-// Created: NLD 2005-12-16
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyNotifyMovedToSupplyRecipient
+// Created: NLD 2011-08-02
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOGConvoy_Supply::ConvoyIsLoadingDone() const
+void PHY_RolePionLOGConvoy_Supply::ConvoyNotifyMovedToSupplyRecipient()
 {
-    if( !pConvoy_ )
-        return true;
-    return pConvoy_->IsLoadingDone();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyIsUnloadingDone
-// Created: NLD 2005-12-16
-// -----------------------------------------------------------------------------
-bool PHY_RolePionLOGConvoy_Supply::ConvoyIsUnloadingDone() const
-{
-    if( !pConvoy_ )
-        return true;
-    return pConvoy_->IsUnloadingDone();
+    if( convoy_ )
+        convoy_->NotifyMovedToSupplyRecipient();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,18 +142,63 @@ bool PHY_RolePionLOGConvoy_Supply::ConvoyIsUnloadingDone() const
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOGConvoy_Supply::ConvoyEndMission()
 {
-    if( pConvoy_ )
-        pConvoy_->EndMission();
+    if( convoy_ )
+        convoy_->NotifyConvoyEndMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetCurrentAction
+// Created: NLD 2011-08-02
+// -----------------------------------------------------------------------------
+int PHY_RolePionLOGConvoy_Supply::ConvoyGetCurrentAction() const
+{
+    return convoy_ ? convoy_->GetCurrentAction() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier
+// Created: NLD 2011-08-02
+// -----------------------------------------------------------------------------
+logistic::SupplySupplier_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier() const
+{
+    return convoy_ ? &convoy_->GetSupplier() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetTransportersProvider
+// Created: NLD 2011-08-02
+// -----------------------------------------------------------------------------
+logistic::SupplySupplier_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetTransportersProvider() const
+{
+    return convoy_ ? &convoy_->GetTransportersProvider() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetCurrentSupplyRecipient
+// Created: NLD 2011-08-02
+// -----------------------------------------------------------------------------
+logistic::SupplyRecipient_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetCurrentSupplyRecipient() const
+{
+    return convoy_ ? convoy_->GetCurrentSupplyRecipient() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetPathToNextDestination
+// Created: NLD 2011-08-02
+// -----------------------------------------------------------------------------
+const T_PointVector* PHY_RolePionLOGConvoy_Supply::ConvoyGetPathToNextDestination() const
+{
+    return convoy_ ? convoy_->GetPathToNextDestination() : 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::ModifySpeed
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOGConvoy_Supply::Execute(moving::SpeedComputer_ABC& algorithm) const
+void PHY_RolePionLOGConvoy_Supply::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    if( pConvoy_ )
-        algorithm.AddModifier(pConvoy_->ModifySpeed( 1 ), false); // TODO change SpeedComputer_ABC interface
+    if( convoy_ )
+        convoy_->Execute( algorithm );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,54 +207,8 @@ void PHY_RolePionLOGConvoy_Supply::Execute(moving::SpeedComputer_ABC& algorithm)
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOGConvoy_Supply::NotifyComposanteChanged( PHY_ComposantePion& composante )
 {
-    if( !pConvoy_ || composante.GetState() != PHY_ComposanteState::dead_ )
+    if( !convoy_ || composante.GetState() != PHY_ComposanteState::dead_ )
         return;
 
-    pConvoy_->NotifyConveyorDestroyed( composante );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier
-// Created: NLD 2006-07-31
-// Deprecated by MGD : Give the first PC in the brainlogistic and not the exact supplier
-// -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier() const
-{
-    if( !pConvoy_ )
-        return 0;
-    return pConvoy_->GetSupplier().GetPC();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetStockSupplier
-// Created: MGD 2009-02-11
-// Give the PC corresponding to sector supplier automata s
-// -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetStockSupplier() const
-{
-    if( !pConvoy_ )
-        return 0;
-    return &pConvoy_->GetStockSupplier().GetPionPC();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetConvoyer
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetConvoyer() const
-{
-    if( !pConvoy_ )
-        return 0;
-    return &pion_.GetAutomate().GetPionPC(); // Pion PC de l'automate fournissant les moyens au convoi (= l'automate de ce pion)
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplied
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplied() const
-{
-    if( !pConvoy_ )
-        return 0;
-    return &pConvoy_->GetSupplied().GetPionPC();
+    convoy_->NotifyTransporterDestroyed( composante );
 }

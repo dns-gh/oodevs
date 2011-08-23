@@ -14,6 +14,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
 #include "actions/Formation.h"
+#include "actions/PushFlowParameters.h"
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
 #include "gaming/Dotation.h"
@@ -180,10 +181,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
-    action->AddParameter( *new parameters::Automat( it.NextElement(), *target, controllers_.controller_ ) );
-    parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
-    action->AddParameter( *dotations );
-
+    parameters::PushFlowParameters* pushFlowParameters = new parameters::PushFlowParameters( it.NextElement() );
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
@@ -191,17 +189,15 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     if( rows > 0 )
     {
-        int index = 1;
         for( int i = 0; i < table_->numRows(); ++i )
         {
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-            ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", index ) );
-            dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
-            dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
+            pushFlowParameters->AddResource( *supplies_[ text ].type_, table_->text( i, 1 ).toInt(), *target );
         }
     }
+    action->AddParameter( *pushFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );

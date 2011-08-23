@@ -79,12 +79,15 @@ public:
     static void AutomateSupplyEnableSystem( MIL_Automate& callerAutomate );
     static void AutomateSupplyDisableSystem( MIL_Automate& callerAutomate );
 
-    static bool ConvoyIsLoadingDone( const MIL_Agent_ABC& callerAgent );
-    static bool ConvoyIsUnloadingDone( const MIL_Agent_ABC& callerAgent );
-    static DEC_Decision_ABC* ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent );
-    static DEC_Decision_ABC* ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent );
-    static DEC_Decision_ABC* ConvoyGetSuppliedAutomate( const MIL_Agent_ABC& callerAgent );
+    static void ConvoyNotifyMovedToSupplier( MIL_Agent_ABC& callerAgent );
+    static void ConvoyNotifyMovedToTransportersProvider( MIL_Agent_ABC& callerAgent );
+    static void ConvoyNotifyMovedToSupplyRecipient( MIL_Agent_ABC& callerAgent );
     static void ConvoyEndMission( MIL_Agent_ABC& callerAgent );
+    static int  ConvoyGetCurrentAction( const MIL_Agent_ABC& callerAgent );
+    static DEC_Decision_ABC* ConvoyGetCurrentSupplyRecipient( const MIL_Agent_ABC& callerAgent );
+    static DEC_Decision_ABC* ConvoyGetTransportersProvider  ( const MIL_Agent_ABC& callerAgent );
+    static DEC_Decision_ABC* ConvoyGetSupplier              ( const MIL_Agent_ABC& callerAgent );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ConvoyGetPathToNextDestination( const MIL_Agent_ABC& callerAgent );
 
     static void AutomateRequestSupply( MIL_Automate&  callerAutomate );
     static void PionRequestSupply( MIL_Agent_ABC& callerAgent );

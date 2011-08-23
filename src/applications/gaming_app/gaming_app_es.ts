@@ -2848,8 +2848,20 @@ Motivo: %3
         <translation>Estado:</translation>
     </message>
     <message>
+        <source>Recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipient %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Resources requested/granted/convoyed</source>
-        <translation>Dotación requerida/concedida/embaracada</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current state end in:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    class MissionParameter;
+    class SupplyFlowResource;
 }
 
 namespace logistic
@@ -48,7 +48,7 @@ public:
 
 public:
     explicit PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate );
-             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MissionParameter& asnStocks, E_RequestDirection  requestDirection );
+             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const ::google::protobuf::RepeatedPtrField< ::sword::SupplyFlowResource >& resources, E_RequestDirection  requestDirection );
     virtual  ~PHY_SupplyStockRequestContainer();
 
     //! @name Accessors
@@ -75,7 +75,7 @@ private:
 private:
     //! @name Tools
     //@{
-    void AffectRequestsToAutomate( );
+    void AffectRequestsToSupplier( );
     bool ApplyQuotas             ( MIL_AutomateLOG& supplier );
     bool ApplyQuotas             ( const logistic::LogisticHierarchy_ABC& logisticHierarchy );
     void ActivateSupply          ( PHY_SupplyStockState*& pStockSupplyState );

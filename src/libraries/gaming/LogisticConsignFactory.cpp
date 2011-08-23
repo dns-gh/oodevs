@@ -24,10 +24,11 @@
 // Name: LogisticConsignFactory constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogisticConsignFactory::LogisticConsignFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
+LogisticConsignFactory::LogisticConsignFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const Simulation& simulation )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
+    , simulation_( simulation )
 {
     // NOTHING
 }
@@ -56,7 +57,7 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const s
 // -----------------------------------------------------------------------------
 LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message )
 {
-    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, message );
+    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, simulation_, message );
 }
 
 // -----------------------------------------------------------------------------

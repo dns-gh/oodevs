@@ -15,7 +15,11 @@
 #include "PHY_RoleInterface_Supply.h"
 
 class MIL_AgentPion;
-class PHY_StockConvoy;
+
+namespace logistic
+{
+    class SupplyConvoyReal_ABC;
+}
 
 namespace moving
 {
@@ -45,34 +49,35 @@ public:
 
     //! @name Convoy
     //@{
-    virtual       void             AssignConvoy              ( PHY_StockConvoy& convoy );
-    virtual       void             UnassignConvoy            ( PHY_StockConvoy& convoy );
+    virtual void AssignConvoy( boost::shared_ptr< logistic::SupplyConvoyReal_ABC > );
+    virtual void UnassignConvoy();
 
-    virtual       bool             ConvoyLoad                () const;
-    virtual       bool             ConvoyUnload              () const;
-    virtual       bool             ConvoyIsLoadingDone       () const;
-    virtual       bool             ConvoyIsUnloadingDone     () const;
-    virtual const MIL_AgentPion*   ConvoyGetSupplier    () const;
-    virtual const MIL_AgentPion*   ConvoyGetConvoyer    () const;
-    virtual const MIL_AgentPion*   ConvoyGetSupplied    () const;
-    virtual const MIL_AgentPion*   ConvoyGetStockSupplier() const;
-    virtual       void             ConvoyEndMission          ();
+    virtual void ConvoyNotifyMovedToSupplier();
+    virtual void ConvoyNotifyMovedToTransportersProvider();
+    virtual void ConvoyNotifyMovedToSupplyRecipient();
+    virtual void ConvoyEndMission();
 
-    virtual void Execute(moving::SpeedComputer_ABC& algorithm) const;
+    virtual int                            ConvoyGetCurrentAction         () const;
+    virtual logistic::SupplyRecipient_ABC* ConvoyGetCurrentSupplyRecipient() const;
+    virtual logistic::SupplySupplier_ABC*  ConvoyGetSupplier              () const;
+    virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider  () const;
+    virtual const T_PointVector*           ConvoyGetPathToNextDestination () const;
+  
+    virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Events
     //@{
     virtual void NotifyComposanteChanged( PHY_ComposantePion& composante );
-    virtual void NotifySupplyNeeded( const PHY_DotationCategory& /*dotationCategory*/, bool /*bNewNeed*/ ) const {};
+    virtual void NotifySupplyNeeded     ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bNewNeed*/ ) const {};
     //@}
 
 private:
-    MIL_AgentPion&   pion_;
-    PHY_StockConvoy* pConvoy_;
+    MIL_AgentPion& pion_;
+    boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
-      template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
 
 };
 

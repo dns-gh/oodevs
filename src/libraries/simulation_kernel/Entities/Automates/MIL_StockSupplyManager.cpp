@@ -14,15 +14,21 @@
 #include "MIL_StockSupplyManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyStockRequestContainer.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyStockState.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
+#include "Entities/Agents/Roles/Logistic/SupplyStockRequestBuilder.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequestHierarchyDispatcher.h"
+#include "Entities/Agents/Roles/Logistic/SupplyStockPullFlowRequestBuilder.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Formation.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 #include "Network/NET_AsnException.h"
 #include <boost/serialization/set.hpp>
+#include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StockSupplyManager )
 using namespace sword;
@@ -35,8 +41,8 @@ using namespace sword;
 MIL_StockSupplyManager::MIL_StockSupplyManager( MIL_Automate& automate )
     : pAutomate_                  ( &automate )
     , bStockSupplyNeeded_         ( false )
-    , pExplicitStockSupplyState_  ( 0 )
-    , manualSupplyStates_         ()
+    , supplyRequestBuilder_       ( new logistic::SupplyStockRequestBuilder( automate, *this ) )
+    , autoSupplyRequest_          ( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) )
     , nTickRcStockSupplyQuerySent_( 0 )
 {
 }
@@ -48,8 +54,6 @@ MIL_StockSupplyManager::MIL_StockSupplyManager( MIL_Automate& automate )
 MIL_StockSupplyManager::MIL_StockSupplyManager()
     : pAutomate_                  ( 0 )
     , bStockSupplyNeeded_         ( false )
-    , pExplicitStockSupplyState_  ( 0 )
-    , manualSupplyStates_         ()
     , nTickRcStockSupplyQuerySent_( 0 )
 {
 }
@@ -75,8 +79,8 @@ void MIL_StockSupplyManager::serialize( Archive& file, const unsigned int )
 {
     file & pAutomate_
          & bStockSupplyNeeded_
-         & pExplicitStockSupplyState_
-         & manualSupplyStates_
+//         & pExplicitStockSupplyState_
+//         & manualSupplyStates_
          & nTickRcStockSupplyQuerySent_;
 }
 
@@ -90,15 +94,19 @@ void MIL_StockSupplyManager::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::Update()
 {
-    if( !bStockSupplyNeeded_ || pExplicitStockSupplyState_ )
+    autoSupplyRequest_->Update();
+    for( T_SupplyRequests::iterator it = manualSupplyRequests_.begin(); it != manualSupplyRequests_.end(); )
+        (*it)->Update() ? it = manualSupplyRequests_.erase( it ) : ++it;
+
+    if( !bStockSupplyNeeded_ )
         return;
 
-    MIL_AutomateLOG* pLogisticManager = pAutomate_->FindLogisticManager();
-    if( !pLogisticManager || !pLogisticManager->GetLogisticHierarchy().HasSuperior() )
-        return;
-
-    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_ );
-    bStockSupplyNeeded_ = !supplyRequests.Execute( pLogisticManager->GetLogisticHierarchy(), pExplicitStockSupplyState_ );
+    MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
+    if( logisticManager && logisticManager->GetLogisticHierarchy().HasSuperior() )
+    {
+        logistic::SupplyRequestHierarchyDispatcher dispatcher( logisticManager->GetLogisticHierarchy() );
+        bStockSupplyNeeded_ = !autoSupplyRequest_->Execute( dispatcher );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -107,10 +115,9 @@ void MIL_StockSupplyManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::Clean()
 {
-    if( pExplicitStockSupplyState_ )
-        pExplicitStockSupplyState_->Clean();
-    for( CIT_SupplyStockStateSet it = manualSupplyStates_.begin(); it != manualSupplyStates_.end(); ++it )
-        (**it).Clean();
+    autoSupplyRequest_->Clean();
+    BOOST_FOREACH( T_SupplyRequests::value_type& data, manualSupplyRequests_ )
+        data->Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,14 +126,11 @@ void MIL_StockSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
 {
-    if( pExplicitStockSupplyState_ && pExplicitStockSupplyState_->IsSupplying( dotationCategory ) )
+    if( autoSupplyRequest_->IsSupplying( dotationCategory ) )
         return true;
-
-    for( CIT_SupplyStockStateSet it = manualSupplyStates_.begin(); it != manualSupplyStates_.end(); ++it )
-    {
-        if( (**it).IsSupplying( dotationCategory ) )
+    BOOST_FOREACH( const T_SupplyRequests::value_type& data, manualSupplyRequests_ )
+        if( data->IsSupplying( dotationCategory ) )
             return true;
-    }
     return false;
 }
 
@@ -151,97 +155,71 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
     nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::RemoveSupplyStockState
-// Created: NLD 2005-12-14
-// -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::RemoveSupplyStockState( const PHY_SupplyStockState& supplyState )
-{
-    if( &supplyState == pExplicitStockSupplyState_ )
-    {
-        pExplicitStockSupplyState_ = 0;
-        return;
-    }
+// =============================================================================
+// SupplyRecipient_ABC
+// =============================================================================
 
-    IT_SupplyStockStateSet it = manualSupplyStates_.find( const_cast< PHY_SupplyStockState* >( &supplyState ) );
-    assert( it != manualSupplyStates_.end() );
-    manualSupplyStates_.erase( it );
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::GetPosition
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_StockSupplyManager::GetPosition() const
+{
+    return pAutomate_->GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::NotifyStockSupplied
-// Created: NLD 2005-01-28
+// Name: MIL_StockSupplyManager::GetPC
+// Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::NotifyStockSupplied( const PHY_SupplyStockState& supplyState )
+const MIL_AgentPion& MIL_StockSupplyManager::GetPC() const
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyDone );
-    RemoveSupplyStockState( supplyState );
+    return pAutomate_->GetPionPC();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::NotifyStockSupplyCanceled
-// Created: NLD 2005-02-11
+// Name: MIL_StockSupplyManager::OnSupplyCanceled
+// Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::NotifyStockSupplyCanceled( const PHY_SupplyStockState& supplyState )
+void MIL_StockSupplyManager::OnSupplyCanceled()
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyCanceled );
-    RemoveSupplyStockState( supplyState );
-    bStockSupplyNeeded_ = true;
+    bStockSupplyNeeded_ = true; //$$ ..
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::OnSupplyDone
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::OnSupplyDone()
+{
+    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyDone );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::Serialize
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::Serialize( sword::AutomatId& msg ) const
+{
+    msg.set_id( pAutomate_->GetID() );
 }
 
 // =============================================================================
-// NETWORK
+// Network
 // =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MissionParameters& msg )
+void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, logistic::SupplySupplier_ABC& supplier )
 {
-    //$$$$ MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( asn.oid_donneur ) pour simplifier ça ... comme dans Scipio ???
-    //$$$$ Et belle horreur, ce truc, au passage
-    unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
-                msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
-    MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
-    MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
-    if( !candidateAutomate && !candidateFormation)
-        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
-
-    MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
-            candidateFormation->GetBrainLogistic();
-
-    if( !pSupplier )
-        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
-
-    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eUpward );
-    if(!supplyRequests.HasRequests())
-        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
-
-    PHY_SupplyStockState* pSupplyState = 0;
-    supplyRequests.Execute( *pSupplier, pSupplyState );
-    if( pSupplyState )
-        manualSupplyStates_.insert( pSupplyState );
-    else
-        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow
-// Created: NLD 2005-02-04
-// -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg, MIL_AutomateLOG& automatLog )
-{
-    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eDownward );
-    if(!supplyRequests.HasRequests())
-        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
-
-    PHY_SupplyStockState* pSupplyState = 0;
-    supplyRequests.Execute( automatLog, pSupplyState );
-    if( pSupplyState )
-        manualSupplyStates_.insert( pSupplyState );
-    else
-        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
+    boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder( new logistic::SupplyStockPullFlowRequestBuilder( parameters, *pAutomate_, supplier ) );
+    boost::shared_ptr< logistic::SupplyRequestContainer > requestContainer( new logistic::SupplyRequestContainer( builder ) );
+    logistic::SupplyRequestManualDispatcher dispatcher( supplier );
+    requestContainer->Execute( dispatcher );
+    manualSupplyRequests_.push_back( requestContainer );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,10 +228,9 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MissionPar
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::SendChangedState() const
 {
-    if( pExplicitStockSupplyState_ )
-        pExplicitStockSupplyState_->SendChangedState();
-    for( CIT_SupplyStockStateSet it = manualSupplyStates_.begin(); it != manualSupplyStates_.end(); ++it )
-        (**it).SendChangedState();
+    autoSupplyRequest_->SendChangedState();
+    BOOST_FOREACH( const T_SupplyRequests::value_type& data, manualSupplyRequests_ )
+        data->SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -262,10 +239,7 @@ void MIL_StockSupplyManager::SendChangedState() const
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::SendFullState() const
 {
-    if( pExplicitStockSupplyState_ )
-        pExplicitStockSupplyState_->SendFullState();
-    for( CIT_SupplyStockStateSet it = manualSupplyStates_.begin(); it != manualSupplyStates_.end(); ++it )
-        (**it).SendFullState();
+    autoSupplyRequest_->SendFullState();
+    BOOST_FOREACH( const T_SupplyRequests::value_type& data, manualSupplyRequests_ )
+        data->SendFullState();
 }
-
-

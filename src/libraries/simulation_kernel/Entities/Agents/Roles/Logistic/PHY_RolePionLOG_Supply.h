@@ -68,10 +68,11 @@ public:
     virtual PHY_DotationStock*  AddStock                     ( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock*  AddEmptyStock                     ( const PHY_DotationCategory& dotationCategory, double capacity ) const;
     virtual PHY_DotationStock*  GetStock                     ( const PHY_DotationCategory& dotationCategory ) const;
-    virtual double            GetStockAvailablity          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
-    virtual double            AddStockReservation          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
-    virtual void                RemoveStockReservation       ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
+    virtual double              GetStockAvailablity          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    virtual double              AddStockReservation          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
+    virtual double              RemoveStockReservation       ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
     virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
+    virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_ComposanteTypePion& type ) const;
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
     virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
@@ -84,7 +85,7 @@ public:
     //! @name Stock supply
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
-    virtual void FillSupplyRequest ( PHY_SupplyStockRequestContainer& supplyRequest ) const;
+    virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     virtual void ResupplyStocks    ();
     virtual void ResupplyStocks    ( const PHY_DotationCategory& category, double rNbr );
     //@}

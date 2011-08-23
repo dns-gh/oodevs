@@ -1440,7 +1440,8 @@ message LogMedicalHandlingUpdate {
     optional bool                         mental_wound     = 5; //!< Whether the unit is mentally wounded or not
     optional bool                         nbc_contaminated = 6; //!< Whether the unit is NBC contaminated or not
     optional EnumLogMedicalHandlingStatus state            = 7; //!< The current state
-    optional bool                         diagnosed        = 8; //!< Whether a diagnostic has been established or not
+    optional int32                        current_state_end_tick = 8; //!< When set, the tick when the current state will be finished
+    optional bool                         diagnosed        = 9; //!< Whether a diagnostic has been established or not
 }
 
 /** @struct LogMedicalHandlingDestruction
@@ -1518,11 +1519,12 @@ message LogMaintenanceHandlingUpdate {
        moving_back                  = 11; //!< Moving back
        finished                     = 12; //!< Finished
     }
-    required MaintenanceRequestId             request   = 1; //!< The request identifier
-    required UnitId                           unit      = 2; //!< The unit identifier
-    required UnitId                           provider  = 3; //!< The maintenance provider identifier
-    optional EnumLogMaintenanceHandlingStatus state     = 4; //!< The maintenance state
-    optional bool                             diagnosed = 5; //!< Whether a diagnostic has been established or not
+    required MaintenanceRequestId             request                = 1; //!< The request identifier
+    required UnitId                           unit                   = 2; //!< The unit identifier
+    required UnitId                           provider               = 3; //!< The maintenance provider identifier
+    optional EnumLogMaintenanceHandlingStatus state                  = 4; //!< The maintenance state
+    optional int32                            current_state_end_tick = 5; //!< When set, the tick when the current state will be finished
+    optional bool                             diagnosed              = 6; //!< Whether a diagnostic has been established or not
 }
 
 /** @struct LogMaintenanceHandlingDestruction
@@ -1578,32 +1580,38 @@ message LogMaintenanceState {
     optional SeqOfLogMaintenanceEquipmentAvailability repairers           = 7; //!< The repairers availabilities
 }
 
-/** @struct DotationQuery
+/** @struct SupplyResourceRequest
     @brief Queries a dotation
-    @todo What's this ?
 */
-message DotationQuery {
-    optional ResourceType resource  = 1; //!< The type of the resource @see ResourceType
-    optional int32        requested = 2; //!< The amount requested
-    optional int32        granted   = 3; //!< The amount granted
-    optional int32        convoyed  = 4; //!< The amount being convoyed
+message SupplyResourceRequest {
+    required ResourceType resource  = 1; //!< The type of the resource @see ResourceType
+    required int32        requested = 2; //!< The amount requested
+    required int32        granted   = 3; //!< The amount granted
+    required int32        convoyed  = 4; //!< The amount being convoyed
 }
 
-/** @struct SeqOfDotationQuery
-    @brief Lists several dotation queries
+/** @struct SupplyFlowRecipient
+    @brief The recipient(receiver) of a supply flow
+    @todo What's this ?
 */
-message SeqOfDotationQuery {
-    repeated DotationQuery elem = 1; //!< the queries
+message SupplyRecipientResourcesRequest
+{
+    required AutomatId             recipient = 1; //!< The recipient of the supply flow
+    repeated SupplyResourceRequest resources = 2; //!< The resources requested/granted/convoyed
+}
+message SupplyRecipientResourceRequests
+{
+    repeated SupplyRecipientResourcesRequest requests = 1;
 }
 
 /** @struct LogSupplyHandlingCreation
     @brief Notifies of the creation of a supply handling
 */
 message LogSupplyHandlingCreation {
-    optional SupplyRequestId    request   = 1; //!< The request identifier
-    optional AutomatId          consumer  = 2; //!< The consumer identifier
-    optional int32              tick      = 3; //!< The creation tick number
-    optional SeqOfDotationQuery dotations = 4; //!< The dotations @todo What's this ?
+    required SupplyRequestId request               = 1; //!< The request identifier
+    required int32           tick                  = 2; //!< The creation tick number
+    required ParentEntity    supplier              = 3; //!< The supplier
+    required ParentEntity    transporters_provider = 4; //!< The logistic base which provides the transporters for the convoy
 }
 
 /** @struct LogSupplyHandlingUpdate
@@ -1613,9 +1621,9 @@ message LogSupplyHandlingUpdate {
     /** @enum EnumConvoyState
         @brief List of states a supply request can go through
     */
-    enum EnumConvoyState {
+    enum EnumLogSupplyHandlingStatus {
         convoy_waiting_for_transporters     = 0; //!< Convoy is waiting for transporters
-        convoy_forming                      = 1; //!< Convoy is forming
+        convoy_setup                        = 1; //!< Convoy setup
         convoy_moving_to_loading_point      = 2; //!< Convoy is moving to loading point
         convoy_loading                      = 3; //!< Convoy is loading
         convoy_moving_to_unloading_point    = 4; //!< Convoy is moving to unloading point
@@ -1623,13 +1631,11 @@ message LogSupplyHandlingUpdate {
         convoy_moving_back_to_loading_point = 6; //!< Convoy is returning to forming point
         convoy_finished                     = 7; //!< Convoying operation is finished
     }
-    optional SupplyRequestId    request         = 1; //!< The request identifier
-    optional AutomatId          consumer        = 2; //!< The consumer identifier
-    optional ParentEntity       supplier        = 3; //!< The supplier
-    optional ParentEntity       convoy_provider = 4; //!< The provider @todo rename to provider
-    optional UnitId             convoying_unit  = 5; //!< The convoyer @todo rename to convoyer
-    optional EnumConvoyState    state           = 6; //!< The current state of the handling
-    optional SeqOfDotationQuery dotations       = 7; //!< The dotations @todo What's this ?
+    optional SupplyRequestId                 request                = 1; //!< The request identifier    
+    optional UnitId                          convoyer               = 2; //!< The convoyer
+    optional EnumLogSupplyHandlingStatus     state                  = 3; //!< The current state of the handling
+    optional int32                           current_state_end_tick = 4; //!< When set, the tick when the current state will be finished
+    optional SupplyRecipientResourceRequests requests               = 5; //!< The resources requested
 }
 
 /** @struct LogSupplyHandlingDestruction
@@ -1637,7 +1643,6 @@ message LogSupplyHandlingUpdate {
 */
 message LogSupplyHandlingDestruction {
     required SupplyRequestId request  = 1; //!< The request identifier
-    required AutomatId       consumer = 2; //!< The consumer identifier
 }
 
 /** @struct LogSupplyEquimentAvailability

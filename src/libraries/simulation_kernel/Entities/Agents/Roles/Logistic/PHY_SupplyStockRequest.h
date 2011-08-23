@@ -32,9 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    void     ApplyQuota               ( double rQuota );
-    void     AddStock                 ( PHY_DotationStock& stock );
-    void     AddStock                 ( PHY_DotationStock& stock, double rValue );
+    void     ApplyQuota( double rQuota );
+    void     AddStock  ( PHY_DotationStock& stock );
+    void     AddStock  ( PHY_DotationStock& stock, double rValue );
     //@}
 };
 

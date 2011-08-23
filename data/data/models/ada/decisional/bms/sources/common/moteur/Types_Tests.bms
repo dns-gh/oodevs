@@ -30,3 +30,11 @@ eTestConvoyerStep_Dechargement = 3
 eTestConvoyerStep_DeplacementRetour = 4
 eTestConvoyerStep_SePoster = 5
 
+eConvoyerAction_None = 0
+eConvoyerAction_Setup = 1
+eConvoyerAction_Load = 2
+eConvoyerAction_Unload = 3
+eConvoyerAction_MoveToSupplier = 4
+eConvoyerAction_MoveToSupplyRecipient = 5
+eConvoyerAction_MoveToTransportersProvider = 6
+

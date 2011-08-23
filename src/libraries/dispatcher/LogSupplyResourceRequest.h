@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __LogSupplyDotation_h_
-#define __LogSupplyDotation_h_
+#ifndef __LogSupplyResourceRequest_h_
+#define __LogSupplyResourceRequest_h_
 
 #include <boost/noncopyable.hpp>
 
 namespace sword
 {
-    class DotationQuery;
+    class SupplyResourceRequest;
 }
 
 namespace dispatcher
@@ -22,24 +22,24 @@ namespace dispatcher
     class Model;
 
 // =============================================================================
-/** @class  LogSupplyDotation
-    @brief  LogSupplyDotation
+/** @class  LogSupplyResourceRequest
+    @brief  LogSupplyResourceRequest
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogSupplyDotation : private boost::noncopyable
+class LogSupplyResourceRequest : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogSupplyDotation( const Model& model, const sword::DotationQuery& asnMsg );
-    virtual ~LogSupplyDotation();
+             LogSupplyResourceRequest( const Model& model, const sword::SupplyResourceRequest& asnMsg );
+    virtual ~LogSupplyResourceRequest();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::DotationQuery& asnMsg );
-    void Send  ( sword::DotationQuery& asnMsg ) const ;
+    void Update( const sword::SupplyResourceRequest& msg );
+    void Send  ( sword::SupplyResourceRequest& msg ) const ;
     //@}
 
 private:
@@ -51,4 +51,4 @@ private:
 
 }
 
-#endif // __LogSupplyDotation_h_
+#endif // __LogSupplyResourceRequest_h_

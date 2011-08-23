@@ -18,15 +18,13 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalCollectionAmbulance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationState.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationConsign.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyStockState.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyStockRequestContainer.h"
-#include "Entities/Agents/Roles/Logistic/PHY_SupplyStockConsign.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConsign_ABC.h"
+#include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
+#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -38,6 +36,7 @@
 #include "LogisticLink_ABC.h"
 #include "Entities/MIL_Formation.h"
 #include "Checkpoints/SerializationTools.h"
+#include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
@@ -67,7 +66,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLe
     , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this ) )
     , pLogLevel_                  ( &logLevel )
     , supplyConsigns_             ()
-    , pExplicitStockSupplyState_  ( 0 )
+ //   , pExplicitStockSupplyState_  ( 0 )
 {
 }
 
@@ -81,7 +80,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLeve
     , pLogLevel_                  ( &logLevel )
     , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this  ) )
     , supplyConsigns_             ()
-    , pExplicitStockSupplyState_  ( 0 )
+//    , pExplicitStockSupplyState_  ( 0 )
 {
 }
 // -----------------------------------------------------------------------------
@@ -94,7 +93,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const PHY_LogisticLevel& level )
     , pLogLevel_                  ( &level )
     , pLogisticHierarchy_         ( 0 )
     , supplyConsigns_             ()
-    , pExplicitStockSupplyState_  ( 0 )
+//  , pExplicitStockSupplyState_  ( 0 )
 {
 }
 // -----------------------------------------------------------------------------
@@ -134,8 +133,8 @@ void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
          & pAssociatedAutomate_
          & pAssociatedFormation_
          & pLogisticHierarchy_
-         & pExplicitStockSupplyState_;
-         & supplyConsigns_;
+    ;/*     & pExplicitStockSupplyState_;
+         & supplyConsigns_;*/
 }
 
 // =============================================================================
@@ -320,54 +319,75 @@ double MIL_AutomateLOG::GetQuota( const MIL_AutomateLOG& supplier, const PHY_Dot
 // Name: MIL_AutomateLOG::SupplyHandleRequest
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::SupplyHandleRequest( PHY_SupplyDotationState& supplyDotationState, MIL_Automate& stockSupplier  )
+void MIL_AutomateLOG::SupplyHandleRequest( boost::shared_ptr < logistic::SupplyConsign_ABC > consign )
 {
-    supplyConsigns_.push_back( new PHY_SupplyDotationConsign( *this, supplyDotationState, stockSupplier ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::SupplyHandleRequest
-// Created: NLD 2005-02-02
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::SupplyHandleRequest( PHY_SupplyStockState& supplyStockState, MIL_Automate& stockSupplier  )
-{
-    supplyConsigns_.push_back( new PHY_SupplyStockConsign( *this, supplyStockState, stockSupplier ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::SupplyGetStockPion
-// Created: NLD 2005-02-01
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AutomateLOG::SupplyGetStockPion( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
-{
-    SupplyStockAvailabilityVisitor visitor( dotationCategory, rRequestedValue );
-    Visit( visitor );
-    return visitor.pSelected_;
+    supplyConsigns_.push_back( consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyGetStock
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-double MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, double rRequestedValue  ) const
+bool MIL_AutomateLOG::SupplyHasStock( const PHY_DotationCategory& dotationCategory ) const
 {
-    SupplyStockAvailabilityVisitor visitor( dotationCategory, rRequestedValue );
+    SupplyStockContainerVisitor visitor( dotationCategory );
     Visit( visitor );
-    return visitor.pSelected_ ? visitor.pSelected_->GetRole< PHY_RoleInterface_Supply >().AddStockReservation( dotationCategory, rRequestedValue ) : 0.;
+    return visitor.pSelected_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::SupplyGetStock
+// Created: NLD 2005-02-01
+// -----------------------------------------------------------------------------
+double MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, double quantity ) const
+{
+    SupplyStockReservationVisitor visitor( dotationCategory, quantity );
+    Visit( visitor );
+    return quantity - visitor.remainingQuantity_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyReturnStock
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCategory, double rReturnedValue ) const
+bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCategory, double quantity ) const
 {
-    SupplyStockContainerVisitor visitor( dotationCategory );
+    SupplyStockReturnVisitor visitor( dotationCategory, quantity );
     Visit( visitor );
-    if( !visitor.pSelected_ )
-        return false;
-    visitor.pSelected_->RemoveStockReservation( dotationCategory, rReturnedValue );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::SupplyCreateConvoyPion
+// Created: NLD 2005-03-17
+// -----------------------------------------------------------------------------
+MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy )
+{
+    // Search for the 'chief' automat
+    MIL_Automate* pConvoyAutomate = pAssociatedAutomate_;
+    if( pAssociatedFormation_ )
+    {
+        SupplyConvoyCapacityVisitor visitor;
+        Visit( visitor );
+        if( visitor.pSelected_ )
+            pConvoyAutomate = &visitor.pSelected_->GetAutomate();
+    }
+    if( !pConvoyAutomate )
+        return 0;
+    const MT_Vector2D& location = pConvoyAutomate->GetPionPC().GetRole<PHY_RoleInterface_Location>().GetPosition();
+    MIL_AgentPion* convoyPion = &pConvoyAutomate->CreatePion( type, location );
+    convoyPion->GetRole< PHY_RoleInterface_Supply >().AssignConvoy( convoy );
+    return convoyPion;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::SupplyCreateConvoyPion
+// Created: NLD 2005-03-17
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::SupplyDestroyConvoyPion( MIL_AgentPion& convoyPion )
+{
+    convoyPion.GetRole< PHY_RoleInterface_Supply >().UnassignConvoy();
+    convoyPion.GetAutomate().DestroyPion( convoyPion );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,6 +404,33 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
     return pConvoyTransporter != 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_ComposanteTypePion& transporterType ) const
+{
+    SupplyConvoyTransporterVisitor visitor( transporterType );
+    Visit( visitor );
+
+    pConvoyTransporter     = visitor.pConvoySelected_;
+    pConvoyTransporterPion = visitor.pSelected_;
+    return pConvoyTransporter != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const tools::Resolver_ABC< MIL_Automate >& automateResolver )
+{
+    boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder( new logistic::SupplyStockPushFlowRequestBuilder( parameters, *this, automateResolver ) );
+    boost::shared_ptr< logistic::SupplyRequestContainer > requestContainer( new logistic::SupplyRequestContainer( builder ) );
+    logistic::SupplyRequestManualDispatcher dispatcher( *this );
+    requestContainer->Execute( dispatcher );
+    supplyRequests_.push_back( requestContainer );
+}
+
 // =============================================================================
 // UPDATE
 // =============================================================================
@@ -394,13 +441,18 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::UpdateLogistic()
 {
-    for( IT_SupplyConsignList it = supplyConsigns_.begin(); it != supplyConsigns_.end(); )
+    for( T_SupplyConsigns::iterator it = supplyConsigns_.begin(); it != supplyConsigns_.end(); )
     {
-        if( (**it).Update() )
-        {
-            delete *it;
+        if( (*it)->Update() )
             it = supplyConsigns_.erase( it );
-        }
+        else
+            ++it;
+    }
+
+    for( T_SupplyRequests::iterator it = supplyRequests_.begin(); it != supplyRequests_.end(); )
+    {
+        if( (*it)->Update() )
+            it = supplyRequests_.erase( it );
         else
             ++it;
     }
@@ -412,7 +464,6 @@ void MIL_AutomateLOG::UpdateLogistic()
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::UpdateState()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -421,7 +472,8 @@ void MIL_AutomateLOG::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::Clean()
 {
-    // NOTHING
+    BOOST_FOREACH( T_SupplyRequests::value_type& data, supplyRequests_ )
+        data->Clean();
 }
 
 
@@ -436,6 +488,8 @@ void MIL_AutomateLOG::Clean()
 void MIL_AutomateLOG::SendFullState() const
 {
     pLogisticHierarchy_->SendFullState();
+    BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
+        data->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -445,6 +499,8 @@ void MIL_AutomateLOG::SendFullState() const
 void MIL_AutomateLOG::SendChangedState() const
 {
     pLogisticHierarchy_->SendChangedState();
+    BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
+        data->SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -494,33 +550,22 @@ logistic::LogisticHierarchy_ABC& MIL_AutomateLOG::GetLogisticHierarchy() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::SupplyCreatePionConvoy
-// Created: AHC 2010-09-27
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AutomateLOG::SupplyCreatePionConvoy( const MIL_AgentTypePion& type )
-{
-    // Search for the 'chief' automat
-    MIL_Automate* pConvoyAutomate = pAssociatedAutomate_;
-    if( pAssociatedFormation_ )
-    {
-        SupplyConvoyCapacityVisitor visitor;
-        Visit( visitor );
-        if( visitor.pSelected_ )
-            pConvoyAutomate = &visitor.pSelected_->GetAutomate();
-    }
-    if( !pConvoyAutomate )
-        return 0;
-    const MT_Vector2D& location = pConvoyAutomate->GetPionPC().GetRole<PHY_RoleInterface_Location>().GetPosition();
-    return &pConvoyAutomate->CreatePion( type, location );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::GetLogisticLevel
 // Created: AHC 2010-10-13
 // -----------------------------------------------------------------------------
 const PHY_LogisticLevel& MIL_AutomateLOG::GetLogisticLevel() const
 {
     return *pLogLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetLogisticLevel
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_AutomateLOG::GetPosition() const
+{
+    static MT_Vector2D none;
+    return GetPC() ? GetPC()->GetRole< PHY_RoleInterface_Location >().GetPosition() : none;
 }
 
 // -----------------------------------------------------------------------------

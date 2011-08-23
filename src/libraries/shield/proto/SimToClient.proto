@@ -879,37 +879,41 @@ message MsgLogMaintenanceState {
    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
 }
 
+message SupplyResourceRequest {
+    required Common.ResourceType resource  = 1; //!< The type of the resource @see ResourceType
+    required int32               requested = 2; //!< The amount requested
+    required int32               granted   = 3; //!< The amount granted
+    required int32               convoyed  = 4; //!< The amount being convoyed
+}
+
+message SupplyRecipientResourcesRequest
+{
+    required Common.AutomatId      recipient = 1; //!< The recipient of the supply flow
+    repeated SupplyResourceRequest resources = 2; //!< The resources requested/granted/convoyed
+}
+
+message SupplyRecipientResourceRequests
+{
+    repeated SupplyRecipientResourcesRequest requests = 1;
+}
+
 message MsgLogSupplyHandlingCreation {
-   optional Common.SupplyRequestId request       = 1;
-   optional Common.AutomatId       consumer      = 2;
-   optional int32                  tick_creation = 3;
-   optional SeqOfDotationQuery     dotations     = 4;
+    required Common.SupplyRequestId request               = 1; //!< The request identifier
+    required int32                  tick_creation         = 2; //!< The creation tick number
+    required Common.ParentEntity    supplier              = 3; //!< The supplier
+    required Common.ParentEntity    transporters_provider = 4; //!< The logistic base which provides the transporters for the convoy
 }
 
-message MsgDotationQuery {
-   optional Common.ResourceType resource            = 1;
-   optional int32               quantite_demandee   = 2;
-   optional int32               quantite_accordee   = 3;
-   optional int32               quantite_en_transit = 4;
-}
-
-message SeqOfDotationQuery {
-   repeated MsgDotationQuery elem = 1;
-}
- 
 message MsgLogSupplyHandlingUpdate {
-   optional Common.SupplyRequestId      request         = 1;
-   optional Common.AutomatId            consumer        = 2;
-   optional Common.ParentEntity         supplier        = 3;
-   optional Common.ParentEntity         convoy_provider = 4;
-   optional Common.UnitId               convoying_unit  = 5;
-   optional EnumLogSupplyHandlingStatus etat            = 6;
-   optional SeqOfDotationQuery          dotations       = 7;
+    optional Common.SupplyRequestId          request                = 1; //!< The request identifier    
+    optional Common.UnitId                   convoyer               = 2; //!< The convoyer
+    optional EnumLogSupplyHandlingStatus     state                  = 3; //!< The current state of the handling
+    optional int32                           current_state_end_tick = 4; //!< When set, the tick when the current state will be finished
+    optional SupplyRecipientResourceRequests requests               = 5; //!< The resources requested
 }
 
 message MsgLogSupplyHandlingDestruction {
-   required Common.SupplyRequestId request  = 1;
-   required Common.AutomatId       consumer = 2;
+    required Common.SupplyRequestId request  = 1;
 }
 
 message MsgLogSupplyEquimentAvailability {

@@ -27,6 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationConvoy )
 // -----------------------------------------------------------------------------
 PHY_DotationConvoy::PHY_DotationConvoy( PHY_SupplyDotationConsign& consign )
     : PHY_Convoy_ABC( consign )
+    , pConsign_     ( &consign )
 {
     // NOTHING
 }
@@ -37,6 +38,7 @@ PHY_DotationConvoy::PHY_DotationConvoy( PHY_SupplyDotationConsign& consign )
 // -----------------------------------------------------------------------------
 PHY_DotationConvoy::PHY_DotationConvoy()
     : PHY_Convoy_ABC()
+    , pConsign_     ( 0 )
 {
     // NOTHING
 }
@@ -87,9 +89,10 @@ unsigned int PHY_DotationConvoy::GetTravelTimeToUnloadingPoint() const
 {
     assert( pConsign_ );
     assert( pConsign_->GetSupplier().GetPC() );
+    if( !pConsign_->GetNextSupplied() )
+        return 0;
     const MT_Vector2D& loadingPoint   = pConsign_->GetSupplier().GetPC()->GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Vector2D& unloadingPoint = pConsign_->GetSupplied ().GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition();
-
+    const MT_Vector2D& unloadingPoint = pConsign_->GetNextSupplied()->GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition();
     return GetTravelTime( loadingPoint, unloadingPoint );
 }
 
@@ -101,8 +104,30 @@ unsigned int PHY_DotationConvoy::GetTravelTimeToFormingPoint() const
 {
     assert( pConsign_ );
     assert( pConsign_->GetConvoyer().GetPC() );
+    if( !pConsign_->GetNextSupplied() )
+        return 0;
     const MT_Vector2D& formingPoint   = pConsign_->GetConvoyer().GetPC()->GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Vector2D& unloadingPoint = pConsign_->GetSupplied ().GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition();
-
+    const MT_Vector2D& unloadingPoint = pConsign_->GetNextSupplied()->GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition();
     return GetTravelTime( unloadingPoint, formingPoint );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationConvoy::load
+// Created: JVT 2005-03-24
+// -----------------------------------------------------------------------------
+void PHY_DotationConvoy::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< PHY_Convoy_ABC >( *this )
+         >> pConsign_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationConvoy::save
+// Created: JVT 2005-03-24
+// -----------------------------------------------------------------------------
+void PHY_DotationConvoy::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< PHY_Convoy_ABC >( *this )
+         << pConsign_;
 }

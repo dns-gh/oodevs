@@ -385,13 +385,13 @@ void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationGroupContainer::FillSupplyRequest
+// Name: PHY_DotationGroupContainer::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::FillSupplyRequest( PHY_SupplyDotationRequestContainer& supplyRequest ) const
+void PHY_DotationGroupContainer::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
 {
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
-        it->second->FillSupplyRequest( supplyRequest );
+        it->second->Apply( visitor );
 }
 
 // -----------------------------------------------------------------------------

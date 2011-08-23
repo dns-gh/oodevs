@@ -1158,15 +1158,6 @@ const MIL_AgentType_ABC& MIL_AgentPion::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetLogisticHierarchy
-// Created: NLD 2011-01-10
-// -----------------------------------------------------------------------------
-logistic::LogisticHierarchy_ABC& MIL_AgentPion::GetLogisticHierarchy() const
-{
-    return GetAutomate().GetLogisticHierarchy();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsPC
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
@@ -1287,4 +1278,35 @@ void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::UnitMagicAction&
 void MIL_AgentPion::Register( MissionController_ABC& pController )
 {
     pOrderManager_->Register( pController );
+}
+
+// =============================================================================
+// Logistic
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetLogisticHierarchy
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+logistic::LogisticHierarchy_ABC& MIL_AgentPion::GetLogisticHierarchy() const
+{
+    return GetAutomate().GetLogisticHierarchy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::Apply2
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::Apply2( boost::function< void( PHY_Dotation& ) > visitor ) const
+{
+    GetRole< dotation::PHY_RoleInterface_Dotations >().Apply( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::Apply2
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const
+{
+    GetRole< PHY_RoleInterface_Supply >().Apply( visitor );
 }
