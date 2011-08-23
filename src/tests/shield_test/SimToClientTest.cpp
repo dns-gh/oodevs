@@ -1150,48 +1150,49 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_state_to_client_is_converted, ContextFi
 namespace
 {
     template< typename Q >
-    void FillDotationQuery( Q* q )
+    void FillDotationQuery( Q& q )
     {
-        q->mutable_resource()->set_id( 10 );
-        q->set_requested( 11 );
-        q->set_granted( 12 );
-        q->set_convoyed( 13 );
+        q.mutable_resource()->set_id( 10 );
+        q.set_requested( 11 );
+        q.set_granted( 12 );
+        q.set_convoyed( 13 );
+    }
+
+    template< typename Q >
+    void FillSupplyRequest( Q& req )
+    {
+        req.mutable_recipient()->set_id( 34 );
+        FillDotationQuery( *req.add_resources() );
+        FillDotationQuery( *req.add_resources() );
     }
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_handling_creation_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-   /* content.mutable_log_supply_handling_creation()->mutable_request()->set_id( 7 );
-    content.mutable_log_supply_handling_creation()->mutable_consumer()->set_id( 8 );
+    content.mutable_log_supply_handling_creation()->mutable_request()->set_id( 7 );
     content.mutable_log_supply_handling_creation()->set_tick( 9 );
-    FillDotationQuery( content.mutable_log_supply_handling_creation()->mutable_dotations()->add_elem() );
-    FillDotationQuery( content.mutable_log_supply_handling_creation()->mutable_dotations()->add_elem() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_creation { request { id: 7 } consumer { id: 8 } tick_creation: 9 dotations { elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } } } }" ) );
-    converter.ReceiveSimToClient( msg );*/
+    content.mutable_log_supply_handling_creation()->mutable_supplier()->mutable_automat()->set_id( 7 );
+    content.mutable_log_supply_handling_creation()->mutable_transporters_provider()->mutable_formation()->set_id( 8 );    
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_creation { request { id: 7 } tick_creation: 9 supplier { automat { id: 7 } } transporters_provider { formation { id: 8 } } } }" ) );
+    converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_handling_update_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-/*    content.mutable_log_supply_handling_update()->mutable_request()->set_id( 7 );
-    content.mutable_log_supply_handling_update()->mutable_consumer()->set_id( 8 );
-    content.mutable_log_supply_handling_update()->mutable_supplier()->mutable_automat()->set_id( 9 );
-    content.mutable_log_supply_handling_update()->mutable_supplier()->mutable_formation()->set_id( 10 );
-    content.mutable_log_supply_handling_update()->mutable_convoy_provider()->mutable_automat()->set_id( 11 );
-    content.mutable_log_supply_handling_update()->mutable_convoy_provider()->mutable_formation()->set_id( 12 );
-    content.mutable_log_supply_handling_update()->mutable_convoying_unit()->set_id( 13 );
+    content.mutable_log_supply_handling_update()->mutable_request()->set_id( 7 );
+    content.mutable_log_supply_handling_update()->mutable_convoyer()->set_id( 13 );
+    FillSupplyRequest( *content.mutable_log_supply_handling_update()->mutable_requests()->add_requests() );
     content.mutable_log_supply_handling_update()->set_state( sword::LogSupplyHandlingUpdate::convoy_loading );
-    FillDotationQuery( content.mutable_log_supply_handling_update()->mutable_dotations()->add_elem() );
-    FillDotationQuery( content.mutable_log_supply_handling_update()->mutable_dotations()->add_elem() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_update { request { id: 7 } consumer { id: 8 } supplier { automat { id: 9 } formation { id: 10 } } convoy_provider { automat { id: 11 } formation { id: 12 } } convoying_unit { id: 13 } etat: convoi_chargement dotations { elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } } } }" ) );
-    converter.ReceiveSimToClient( msg );*/
+    content.mutable_log_supply_handling_update()->set_current_state_end_tick( 666 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_update { request { id: 7 } convoyer { id: 13 } state: convoi_chargement current_state_end_tick: 666 requests { requests { recipient { id: 34 } resources { resource { id: 10 } requested: 11 granted: 12 convoyed: 13 } resources { resource { id: 10 } requested: 11 granted: 12 convoyed: 13 } } } } }" ) );
+    converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_handling_destruction_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    /*content.mutable_log_supply_handling_destruction()->mutable_request()->set_id( 7 );
-    content.mutable_log_supply_handling_destruction()->mutable_consumer()->set_id( 8 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_destruction { request { id: 7 } consumer { id: 8 } } }" ) );
-    converter.ReceiveSimToClient( msg );*/
+    content.mutable_log_supply_handling_destruction()->mutable_request()->set_id( 7 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_destruction { request { id: 7 } } }" ) );
+    converter.ReceiveSimToClient( msg );
 }
 
 namespace
