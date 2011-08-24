@@ -47,6 +47,8 @@ public:
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
 
+    virtual std::string GetToolTipFor( Q3ListViewItem& item );
+
 public slots:
     void SetCurrentItem( void* pData );
 
@@ -58,8 +60,6 @@ protected:
     virtual void OnContextMenu( const QPoint& pt );
     void FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator );
 
-    virtual std::string GetToolTipFor( Q3ListViewItem& item );
-
 private slots:
     virtual void ContextMenuNew();
     virtual void ContextMenuDelete();
@@ -67,8 +67,6 @@ private slots:
     void SetCurrentItem( Q3ListViewItem* pItem );
     void OnContextMenuRequested( Q3ListViewItem* pItem, const QPoint& pt, int nCol );
     void UpdateEnableState();
-
-    void OnOnItem( Q3ListViewItem* pItem );
 
 signals:
     void ItemSelected( void* pData );

@@ -35,8 +35,6 @@ ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent, const char* szName
     pConnector_ = new ADN_Connector_ListView<SensorInfos>( *this );
 
     this->SetDeletionEnabled( true );
-
-    connect( this, SIGNAL( onItem( Q3ListViewItem* ) ), this, SLOT( OnOnItem( Q3ListViewItem* ) ) );
 }
 
 

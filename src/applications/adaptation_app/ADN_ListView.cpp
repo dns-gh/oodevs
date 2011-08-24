@@ -20,6 +20,7 @@
 #include "ADN_Tools.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Wizard_ABC.h"
+#include "ADN_ListViewToolTip.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView constructor
@@ -34,7 +35,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
     , bDeletionWarning_ ( true )
     , bPrinting_        ( false )
 {
-    connect( this, SIGNAL( onItem( Q3ListViewItem* ) ), this, SLOT( OnOnItem( Q3ListViewItem* ) ) );
+    viewport()->installEventFilter( new ADN_ListViewToolTip( viewport(), *this ) );
 
     connect( this, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( SetCurrentItem( Q3ListViewItem* ) ) );
     connect( this, SIGNAL( currentChanged( Q3ListViewItem* ) ), this, SLOT( SetCurrentItem( Q3ListViewItem * ) ) );
@@ -276,25 +277,6 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
         // Remove the item from the list.
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ListView::OnOnItem
-// Created: APE 2005-04-25
-// -----------------------------------------------------------------------------
-void ADN_ListView::OnOnItem( Q3ListViewItem* pItem )
-{
-    if( pItem == 0 )
-        return;
-
-    std::string strToolTip = this->GetToolTipFor( *pItem );
-    if( strToolTip == "" )
-        return;
-
-    QToolTip::remove(this);
-    QRect itemRect = this->itemRect( pItem );
-    QToolTip::add( this->viewport() , itemRect, strToolTip.c_str() );
-    toolTipRect_ = itemRect;
 }
 
 // -----------------------------------------------------------------------------

@@ -3,21 +3,20 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
-#include "ListItemToolTip.h"
-#include "ValuedListItem.h"
-
-using namespace gui;
+#include "adaptation_app_pch.h"
+#include "ADN_ListViewToolTip.h"
+#include "ADN_ListViewItem.h"
+#include "ADN_ListView.h"
 
 // -----------------------------------------------------------------------------
-// Name: ListItemToolTip constructor
-// Created: FPT 2011-03-25
+// Name: ADN_ListViewToolTip constructor
+// Created: RBA 2011-08-24
 // -----------------------------------------------------------------------------
-ListItemToolTip::ListItemToolTip( QWidget* parent, Q3ListView& list )
+ADN_ListViewToolTip::ADN_ListViewToolTip( QWidget* parent, ADN_ListView& list )
     : QObject( parent )
     , listView_( list )
 {
@@ -25,31 +24,32 @@ ListItemToolTip::ListItemToolTip( QWidget* parent, Q3ListView& list )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemToolTip destructor
-// Created: SBO 2007-01-08
+// Name: ADN_ListViewToolTip destructor
+// Created: RBA 2011-08-24
 // -----------------------------------------------------------------------------
-ListItemToolTip::~ListItemToolTip()
+ADN_ListViewToolTip::~ADN_ListViewToolTip()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemToolTip::eventFilter
+// Name: ADN_ListViewToolTip::eventFilter
 // Created: RBA 2011-08-24
 // -----------------------------------------------------------------------------
-bool ListItemToolTip::eventFilter( QObject *obj, QEvent *event )
+bool ADN_ListViewToolTip::eventFilter( QObject *obj, QEvent *event )
 {
-    if (event->type() == QEvent::ToolTip)
+    if ( event->type() == QEvent::ToolTip )
     {
         QHelpEvent *helpEvent = static_cast< QHelpEvent * >( event );
         QPoint pos = helpEvent->pos();
         if( !parent() || !listView_.showToolTips() )
             return false;
-        ValuedListItem* item = static_cast< ValuedListItem* >( listView_.itemAt( pos ) );
+        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( listView_.itemAt( pos ) );
         if( !item )
             return false;
+        QString text = listView_.GetToolTipFor( *item ).c_str();
         QRect rect = listView_.itemRect( item );
-        QToolTip::showText(helpEvent->globalPos(), item->GetToolTip(), static_cast< QWidget* >( parent() ), rect );
+        QToolTip::showText( helpEvent->globalPos(), text, static_cast< QWidget* >( parent() ), rect );
         return true;
     }
     return false;
