@@ -151,7 +151,7 @@
 					<!-- resource name -->
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="urban-destruction">
+			<xs:element name="urban-destruction" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="urban-modifier" minOccurs="0" maxOccurs="unbounded">
