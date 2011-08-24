@@ -63,10 +63,14 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
     for( InitialState::CIT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it )
+    {
+        if( it->breakdowns_.empty() )
+            continue;
         if( it->state_ == eEquipmentState_RepairableWithEvacuation )
             AddLines( it->name_, 1, it->state_, it->breakdowns_, std::vector< unsigned int >( 1, it->currentBreakdown_ ) );
         else
             AddLines( it->name_, 1, it->state_, it->breakdowns_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
