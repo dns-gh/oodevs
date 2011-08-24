@@ -21,6 +21,7 @@ namespace xml
     class xostream;
 }
 
+class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
@@ -195,6 +196,7 @@ private:
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
     boost::shared_ptr< DEC_Knowledge_Object > GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown );
+    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
     //@}
 
 private:

@@ -57,6 +57,7 @@ public:
     //@{
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& objectKnown ) const;
+    DEC_Knowledge_Object* RetrieveKnowledgeObject( const MIL_Object_ABC& objectKnown ) const;
     void GetKnowledgesObject( T_KnowledgeObjectVector& outContainer ) const;
     bool HasKnowledgeObject( const MIL_Object_ABC& objectKnown ) const;
 

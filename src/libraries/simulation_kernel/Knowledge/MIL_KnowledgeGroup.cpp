@@ -315,7 +315,7 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 // Name: MIL_KnowledgeGroup::UpdateObjectKnowledges
 // Created: LDC 2011-08-12
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::UpdateObjectKnowledges(int currentTimeStep)
+void MIL_KnowledgeGroup::UpdateObjectKnowledges(int /*currentTimeStep*/)
 {
     knowledgeBlackBoard_->SendObjectChangedState();
 }
@@ -384,23 +384,11 @@ bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown )
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Object_ABC& objectKnown ) const
 {
-    DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer = GetKnowledge().GetKnowledgeObjectContainer();
-    if ( pKnowledgeObjectContainer )
-    {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject;
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pKnowledgeObjectContainer->GetKnowledgeObject( objectKnown );
-        if( !pKnowledge.get() )
-            return false;
-
-        return pKnowledge->IsPerceptionDistanceHacked();
-    }
-
-    DEC_BlackBoard_CanContainKnowledgeObject& armyKnowledgeContainer = army_->GetKnowledge().GetKnowledgeObjectContainer();
-    boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = armyKnowledgeContainer.GetKnowledgeObject( objectKnown );
-    if ( !knowledgeObject.get() )
+    DEC_BlackBoard_CanContainKnowledgeObject& knowledgeObjectContainer = GetKnowledgeObjectContainer();
+    DEC_Knowledge_Object* pKnowledge = knowledgeObjectContainer.RetrieveKnowledgeObject( objectKnown );
+    if( !pKnowledge )
         return false;
-
-    return knowledgeObject->IsPerceptionDistanceHacked();
+    return pKnowledge->IsPerceptionDistanceHacked();
 }
 
 // -----------------------------------------------------------------------------
@@ -435,23 +423,12 @@ const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Agent_ABC
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Object_ABC& objectKnown ) const
 {
-    DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer = GetKnowledge().GetKnowledgeObjectContainer();
-    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
-    if ( pKnowledgeObjectContainer )
-    {
-        pKnowledge = pKnowledgeObjectContainer->GetKnowledgeObject( objectKnown );
-        if( pKnowledge.get() )
-            return PHY_PerceptionLevel::notSeen_;
-
-        return pKnowledge->GetCurrentPerceptionLevel();
-    }
-
-    DEC_BlackBoard_CanContainKnowledgeObject& armyKnowledgeContainer = army_->GetKnowledge().GetKnowledgeObjectContainer();
-    boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = armyKnowledgeContainer.GetKnowledgeObject( objectKnown );
-    if ( !knowledgeObject.get() )
+    DEC_BlackBoard_CanContainKnowledgeObject& knowledgeObjectContainer = GetKnowledgeObjectContainer();
+    DEC_Knowledge_Object* pKnowledge = knowledgeObjectContainer.RetrieveKnowledgeObject( objectKnown );
+    if( !pKnowledge )
         return PHY_PerceptionLevel::notSeen_;
 
-    return knowledgeObject->GetCurrentPerceptionLevel();
+    return pKnowledge->GetCurrentPerceptionLevel();
 }
 
 // -----------------------------------------------------------------------------
@@ -961,8 +938,8 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& object, unsigned int perception )
 {
     DEC_BlackBoard_CanContainKnowledgeObject& armyKnowledgeContainer = army_->GetKnowledge().GetKnowledgeObjectContainer();
-    boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = armyKnowledgeContainer.GetKnowledgeObject( object );
-    if ( knowledgeObject.get() )
+    DEC_Knowledge_Object* knowledgeObject = armyKnowledgeContainer.RetrieveKnowledgeObject( object );
+    if ( knowledgeObject )
         knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
     else 
         for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
@@ -1212,23 +1189,23 @@ DEC_Knowledge_Population& MIL_KnowledgeGroup::CreateKnowledgePopulation( MIL_Pop
 // Name: MIL_KnowledgeGroup::GetObjectKnowledgeToUpdate
 // Created: MMC 2011-06-15
 // -----------------------------------------------------------------------------
-inline
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown )
+{
+    DEC_BlackBoard_CanContainKnowledgeObject& knowledgeObjectContainer = GetKnowledgeObjectContainer();
+    boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = knowledgeObjectContainer.GetKnowledgeObject( objectKnown );
+    if( knowledgeObject.get() )
+        return knowledgeObject;
+    return CreateKnowledgeObject( *army_, objectKnown );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetKnowledgeObjectContainer
+// Created: LDC 2011-08-24
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeObject& MIL_KnowledgeGroup::GetKnowledgeObjectContainer() const
 {
     DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer = GetKnowledge().GetKnowledgeObjectContainer();
     if ( pKnowledgeObjectContainer )
-    {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = pKnowledgeObjectContainer->GetKnowledgeObject( objectKnown );
-        if( knowledgeObject.get() )
-            return knowledgeObject;
-        return CreateKnowledgeObject( *army_, objectKnown );
-    }
-    else
-    {
-        DEC_BlackBoard_CanContainKnowledgeObject& armyKnowledgeContainer = army_->GetKnowledge().GetKnowledgeObjectContainer();
-        boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = armyKnowledgeContainer.GetKnowledgeObject( objectKnown );
-        if ( knowledgeObject.get() )
-            return knowledgeObject;
-        return armyKnowledgeContainer.CreateKnowledgeObject( *army_, objectKnown );
-    }
+        return *pKnowledgeObjectContainer;
+    return army_->GetKnowledge().GetKnowledgeObjectContainer();
 }

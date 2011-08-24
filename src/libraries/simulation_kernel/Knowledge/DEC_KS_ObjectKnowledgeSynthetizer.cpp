@@ -174,7 +174,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget()
 
     for( CIT_ObjectVector itObject = objectsToForget_.begin(); itObject != objectsToForget_.end(); ++itObject )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObject( **itObject );
+        DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().RetrieveKnowledgeObject( **itObject );
         if( pKnowledge && pKnowledge->IsValid() )
             pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( *pKnowledge );
     }

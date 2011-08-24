@@ -184,6 +184,18 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::RetrieveKnowledgeObject
+// Created: LDC 2011-08-24
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::RetrieveKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
+{
+    CIT_KnowledgeObjectMap itKnowledge = objectMap_.find( &objectKnown );
+    if( itKnowledge != objectMap_.end() )
+        return itKnowledge->second.get();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
