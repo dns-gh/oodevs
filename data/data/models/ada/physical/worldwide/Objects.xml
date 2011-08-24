@@ -201,6 +201,15 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
+    <urban-destruction>
+      <urban-modifier material-type="Wood" value="0.8"/>
+      <urban-modifier material-type="Concrete" value="0.4"/>
+      <urban-modifier material-type="Brick" value="0.3"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.8"/>
+      <urban-modifier material-type="Prefab" value="1"/>
+      <urban-modifier material-type="Vegetation" value="1"/>
+    </urban-destruction>
   </object>
   <object geometry="point" name="Roadblock" symbol="G*MPORC---****X" type="road destruction">
     <activable/>
@@ -505,4 +514,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="3708726978" -->
+<!-- signature="1846777946" -->
