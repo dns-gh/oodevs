@@ -216,10 +216,11 @@ void ADN_Weapons_GUI::Build()
     builder.SetEnabled( false );
 
     builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterEqualZero );
-    builder.AddField<ADN_TimeField>( pParamHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration] );
+    ADN_TimeField* burst = builder.AddField<ADN_TimeField>( pParamHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration], 0, eGreaterZero );
+    burst->SetMinimumValueInSecond( 1 );
     builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per reload" ), vInfosConnectors[eRoundsPerReload], 0, eGreaterZero );
-    builder.AddField<ADN_TimeField>( pParamHolder, tr( "Reload duration" ), vInfosConnectors[eReloadDuration] );
-
+    ADN_TimeField* reload = builder.AddField<ADN_TimeField>( pParamHolder, tr( "Reload duration" ), vInfosConnectors[eReloadDuration], 0, eGreaterZero );
+    reload->SetMinimumValueInSecond( 1 );
 
     // Direct group
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Direct fire" ), pGroup );
