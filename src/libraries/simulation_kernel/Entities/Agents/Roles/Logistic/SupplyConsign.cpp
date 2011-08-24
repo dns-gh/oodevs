@@ -1,4 +1,4 @@
-requestsQueued_*****************************************************************************
+// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -30,7 +30,7 @@ MIL_IDManager SupplyConsign::idManager_;
 // -----------------------------------------------------------------------------
 SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
     : id_                       ( idManager_.GetFreeId() )
-    , creationTick_              ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) //$$$ Huge shit
+    , creationTick_             ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) //$$$ Huge shit
     , supplier_                 ( supplier )
     , state_                    ( eConvoyWaitingForTransporters )
     , currentStateEndTimeStep_  ( std::numeric_limits< unsigned >::max() )
