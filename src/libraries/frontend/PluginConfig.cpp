@@ -86,7 +86,6 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     box_ = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" )
                                                                     .arg( reader.name_.c_str() )
                                                                     .arg( version_.c_str() ), view_->viewport() ) );
-    view_->addChild( box_ );
     label_ = reader.name_.c_str();
     QToolTip::add( box_, reader.description_.c_str() );
     box_->setCheckable( true );
@@ -94,6 +93,7 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     xis >> xml::start( "settings" )
             >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
                 >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
+    view_->addChild( box_ );
 }
 
 // -----------------------------------------------------------------------------
