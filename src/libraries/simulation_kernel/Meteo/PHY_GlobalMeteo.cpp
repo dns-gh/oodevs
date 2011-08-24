@@ -49,7 +49,7 @@ void PHY_GlobalMeteo::SendCreation() const
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( cloud_.nDensityPercentage_ );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
-    att->set_temperature( 0 );
+    att->set_temperature( temperature_ );
     att->set_lighting( GetLighting().GetAsnID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }

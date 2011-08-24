@@ -69,7 +69,7 @@ MeteoLocal::MeteoLocal( const kernel::CoordinateConverter_ABC& converter, const 
 MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const std::string& name /*= ""*/ )
     : Meteo( localCounter_, xis, 0, 0, name + QString::number( localCounter_ ).ascii() )
     , converter_( &converter )
-    , created_( false )
+    , created_  ( false )
 {
     std::string topLeft, bottomRight, startTime, endTime ;
     xis >> xml::attribute( "start-time", startTime )
@@ -90,7 +90,7 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
 MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const kernel::CoordinateConverter_ABC& converter, unsigned int timeStep, const std::string& name /*= ""*/ )
     : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + QString::number( msg.weather().id() ).ascii() )
     , converter_( &converter )
-    , created_( false )
+    , created_  ( false )
 {
     topLeft_     = converter_->ConvertFromGeo( geometry::Point2d( msg.top_left().longitude(), msg.top_left().latitude() ) );
     bottomRight_ = converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) );
@@ -267,7 +267,7 @@ void MeteoLocal::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) cons
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( static_cast< int >( cloud_.rDensity_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
-    att->set_temperature( 0 );
+    att->set_temperature( temperature_ );
     att->set_lighting( pLighting_->GetAsnID() );
     msg().mutable_top_left()->set_longitude( topLeft_.X() );
     msg().mutable_top_left()->set_latitude( topLeft_.Y() );

@@ -164,6 +164,9 @@ void Meteo::Update( const sword::WeatherAttributes& msg )
     wind_.eAngle_ = msg.wind_direction().heading();
     wind_.vDirection_ = weather::ReadDirection( wind_.eAngle_ );
 
+    // Temperature
+    temperature_ = msg.temperature();
+
     // Précipitation
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
     if( !pPrecipitation_ )
@@ -210,8 +213,7 @@ void Meteo::Update( const sword::MissionParameters& msg )
     const sword::MissionParameter& temperature = msg.elem( 0 );
     if( temperature.null_value() || !temperature.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for temperature" );
-    // TODO
-    // temperature_ = parametre.value().areal();
+    temperature_ = static_cast< int >( temperature.value().Get(0).areal() );
 
     // Vitesse du vent
     const sword::MissionParameter& windSpeed = msg.elem( 1 );
@@ -317,7 +319,7 @@ void Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( cloud_.nDensityPercentage_ );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
-    att->set_temperature( 0 );
+    att->set_temperature( temperature_ );
     att->set_lighting( pLighting_->GetAsnID() );
     msg.Send( publisher );
 }

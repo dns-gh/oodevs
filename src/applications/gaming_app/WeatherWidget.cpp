@@ -40,11 +40,11 @@ WeatherWidget::~WeatherWidget()
 // -----------------------------------------------------------------------------
 void WeatherWidget::CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it )
 {
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), 0 ) ); // TODO temperature
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), ( float) windSpeed_->value() ) );
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( temperature_->value() ) ) );
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( windSpeed_->value() ) ) );
     action.AddParameter( *new actions::parameters::Direction( it.NextElement(), windDirection_->value() ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), ( float) cloudFloor_->value() ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), ( float) cloudCeiling_->value() ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), ( float) cloudDensity_->value() ) );
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudFloor_->value() ) ) );
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudCeiling_->value() ) ) );
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudDensity_->value() ) ) );
     action.AddParameter( *new actions::parameters::Enumeration( it.NextElement(), type_->GetValue() ) );
 }
