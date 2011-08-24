@@ -475,15 +475,19 @@
   </object>
   <object geometry="line" name="Country road" symbol="Road" type="Country road">
     <bridging type="country road"/>
+    <universal/>
   </object>
   <object geometry="line" name="Highway" symbol="Road" type="Highway">
     <bridging type="highway"/>
+    <universal/>
   </object>
   <object geometry="line" name="Main road" symbol="Road" type="Main road">
     <bridging type="main road"/>
+    <universal/>
   </object>
   <object geometry="line" name="Secondary road" symbol="Road" type="Secondary road">
     <bridging type="secondary road"/>
+    <universal/>
   </object>
 </objects>
-<!-- signature="3120431945" -->
+<!-- signature="3333016663" -->
