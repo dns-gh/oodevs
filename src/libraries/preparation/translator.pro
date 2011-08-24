@@ -46,6 +46,7 @@ SupplyRouteAttribute.cpp \
 TacticalLine_ABC.cpp \
 Team.cpp \
 TeamsModel.cpp \
+TrafficabilityAttribute.cpp \
 UndergroundAttribute.cpp \
 
 TRANSLATIONS = preparation_fr.ts preparation_es.ts

@@ -48,6 +48,7 @@ namespace kernel
     class LodgingAttribute_ABC : public ObjectExtension {};
     class LogisticAttribute_ABC : public ObjectExtension {};
     class CrossingSiteAttribute_ABC : public ObjectExtension {};
+    class TrafficabilityAttribute_ABC : public ObjectExtension {};
     class SupplyRouteAttribute_ABC : public ObjectExtension {};
     class ToxicCloudAttribute_ABC : public ObjectExtension {};
     class FireAttribute_ABC : public ObjectExtension {};

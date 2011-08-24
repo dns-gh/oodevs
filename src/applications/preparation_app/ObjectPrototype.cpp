@@ -22,6 +22,7 @@
 #include "LogisticPrototype.h"
 #include "MedicalTreatmentPrototype.h"
 #include "NBCPrototype.h"
+#include "TrafficabilityPrototype.h"
 #include "ObstaclePrototype.h"
 #include "ResourceNetworkPrototype.h"
 #include "StockPrototype.h"
@@ -63,6 +64,12 @@ namespace
     void UndergroundAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
     {
         container.push_back( new UndergroundPrototype( parent, controllers.controller_, object ) );
+    }
+
+    void TrafficabilityAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
+    {
+        if( xis.attribute< bool >( "default") )
+            container.push_back( new TrafficabilityPrototype( parent, object ) );
     }
 
     void FloodAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const DetectionMap& detection, Object_ABC*& object )
@@ -199,6 +206,7 @@ namespace
 
         factory->Register( "flood"                     , boost::bind( &::FloodAttribute, _2, _3, boost::ref( controllers ), boost::cref( detection ), boost::ref( object ) ) );
         factory->Register( "logistic"                  , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
+        factory->Register( "trafficability"            , boost::bind( &::TrafficabilityAttribute, _1, _2, _3, boost::ref( object ) ) );
         factory->Register( "underground-network"       , boost::bind( &::UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "interact-with-enemy"       , boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"              , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );

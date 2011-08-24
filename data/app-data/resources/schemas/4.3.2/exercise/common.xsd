@@ -215,6 +215,11 @@
           <xs:attribute name="completion" type="xs:decimal" use="required"/>
         </xs:complexType>
       </xs:element>
+      <xs:element name="trafficability" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="max" type="xs:double" use="required"/>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="crossing-site" minOccurs="0">
         <xs:complexType>
           <xs:sequence>

@@ -608,6 +608,14 @@
         <source>Object &apos;%1&apos; : &apos;%2&apos; is not a logistic base</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
@@ -788,6 +796,13 @@ Detallado: %1.</translation>
     <message>
         <source>Info/Cloud parameters/Data export</source>
         <translation>Info/Parámetros de nubes/Expoortación de datos</translation>
+    </message>
+</context>
+<context>
+    <name>TrafficabilityAttribute</name>
+    <message>
+        <source>Info/Trafficability/Max:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -32,6 +32,7 @@
 #include "InputToxicCloudAttribute.h"
 #include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
+#include "TrafficabilityAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "MineAttribute.h"
 #include "NBCAttribute.h"
@@ -230,6 +231,7 @@ void ObjectFactory::Initialize()
     factory->Register( "lodging"            , BIND_ATTACH_ATTRIBUTE( LodgingAttribute, _1, _2, _3 ) );
     factory->Register( "medical-treatment"  , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( MedicalTreatmentAttribute, MedicalTreatmentType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "mine"               , BIND_ATTACH_ATTRIBUTE( MineAttribute, _1, _2, _3 ) );
+    factory->Register( "trafficability"     , BIND_ATTACH_ATTRIBUTE( TrafficabilityAttribute, _1, _2, _3 ) );
     factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( NBCAttribute, NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "obstacle"           , BIND_ATTACH_ATTRIBUTE( ObstacleAttribute, _1, _2, _3 ) );
     factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
