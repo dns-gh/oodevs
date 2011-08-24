@@ -37,6 +37,7 @@ Meteo::Meteo( unsigned int id, unsigned int timeStep, const std::string& name /*
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
+    , temperature_     ( 0 )
 {
     // NOTHING
 }
@@ -46,11 +47,12 @@ Meteo::Meteo( unsigned int id, unsigned int timeStep, const std::string& name /*
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, unsigned int timeStep, const std::string& name /*= ""*/ )
-    : pLighting_( ( light ) ? light : &PHY_Lighting::jourSansNuage_ )
-    , id_       ( id )
-    , name_     ( name )
+    : pLighting_       ( ( light ) ? light : &PHY_Lighting::jourSansNuage_ )
+    , id_              ( id )
+    , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
+    , temperature_     ( 0 )
 {
     xis >> xml::start( "cloud-cover" )
             >> xml::attribute( "floor", cloud_.nFloor_ )
@@ -69,7 +71,10 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
     if( wind_.eAngle_ < 0 || wind_.eAngle_ > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
     wind_.vDirection_ = ReadDirection( wind_.eAngle_ );
-
+    xis >> xml::optional
+        >> xml::start( "temperature" )
+            >> xml::attribute( "value", temperature_ )
+        >> xml::end;
     std::string strVal;
     xis >> xml::start( "precipitation" )
             >> xml::attribute( "value", strVal )
@@ -91,6 +96,7 @@ Meteo::Meteo( unsigned int id, const sword::WeatherAttributes& msg, unsigned int
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
+    , temperature_     ( 0 )
 {
     Update( msg );
 }
@@ -104,6 +110,7 @@ Meteo::Meteo( unsigned int id, const sword::MissionParameters& msg, const PHY_Li
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
+    , temperature_     ( 0 )
 {
     Update( msg );
     Update( light );
@@ -113,13 +120,15 @@ Meteo::Meteo( unsigned int id, const sword::MissionParameters& msg, const PHY_Li
 // Name: Meteo constructor
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
-Meteo::Meteo( unsigned int id, const PHY_Lighting& light, const PHY_Precipitation& precipitation, unsigned int timeStep, const std::string& name /*= ""*/ )
+Meteo::Meteo( unsigned int id, const PHY_Lighting& light, const PHY_Precipitation& precipitation,
+              unsigned int timeStep, unsigned int temperature, const std::string& name /*= ""*/ )
     : pLighting_       ( &light )
     , pPrecipitation_  ( &precipitation )
     , id_              ( id )
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
+    , temperature_     ( temperature )
 {
     // NOTHING
 }
@@ -180,6 +189,9 @@ void Meteo::Serialize( xml::xostream& xos ) const
             << xml::attribute( "floor", cloud_.nFloor_ )
             << xml::attribute( "ceiling", cloud_.nCeiling_ )
             << xml::attribute( "density", cloud_.nDensityPercentage_ )
+        << xml::end
+        << xml::start( "temperature" )
+            << xml::attribute( "value", temperature_ )
         << xml::end
         << xml::start( "precipitation" )
             << xml::attribute( "value", tools::GetXmlSection( pPrecipitation_->GetID() ) )
@@ -270,6 +282,7 @@ void Meteo::Update( const Meteo& other )
 {
     wind_             = other.GetWind();
     cloud_            = other.GetCloud();
+    temperature_      = other.temperature_;
     pLighting_        = &other.GetLighting();
     pPrecipitation_   = &other.GetPrecipitation();
     conversionFactor_ = other.GetConversionFactor();
@@ -371,5 +384,22 @@ void Meteo::ContextMenu( kernel::ActionController& /*controller*/, const QPoint&
 void Meteo::Activate( kernel::ActionController& /*controller*/ ) const
 {
     // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: Meteo::GetTemperature
+// Created: LGY 2011-08-24
+// -----------------------------------------------------------------------------
+int Meteo::GetTemperature() const
+{
+    return temperature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::SetTemperature
+// Created: LGY 2011-08-24
+// -----------------------------------------------------------------------------
+void Meteo::SetTemperature( int temperature )
+{
+    temperature_ = temperature;
 }

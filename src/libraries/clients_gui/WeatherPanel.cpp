@@ -166,4 +166,3 @@ void WeatherPanel::hide()
     QWidget::hide();
     layer_.Clear();
 }
-

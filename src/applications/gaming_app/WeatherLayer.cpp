@@ -25,7 +25,7 @@ WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrat
     : gui::WeatherLayer( tools, eventStrategy )
     , controllers_ ( controllers )
     , meteoModel_  ( meteoModel )
-    , currentMeteo_( new weather::Meteo( 0 , weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, 0 ) )
+    , currentMeteo_( new weather::Meteo( 0 , weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, 0, 0 ) )
 {
     controllers_.Register( *this );
     picker.RegisterLayer( *this );

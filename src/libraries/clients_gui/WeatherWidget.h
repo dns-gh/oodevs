@@ -51,6 +51,7 @@ protected:
     //@{
     QSpinBox* windDirection_;
     QSpinBox* windSpeed_;
+    QSpinBox* temperature_;
     QSpinBox* cloudFloor_;
     QSpinBox* cloudCeiling_;
     QSpinBox* cloudDensity_;

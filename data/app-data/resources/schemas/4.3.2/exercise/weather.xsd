@@ -33,6 +33,12 @@
       <xs:enumeration value="Fumigene"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="T_Temperature">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="-20"/>
+      <xs:maxInclusive value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="T_SimulationTime">
     <xs:annotation>
       <xs:documentation xml:lang="en">Defines a specific hour format used for specifying sunset and sunrise times.</xs:documentation>
@@ -167,6 +173,18 @@
           <xs:attribute name="value" type="T_PrecipitationKind" use="required">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the kind of precipitation.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="temperature">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the temperature.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="value" type="T_Temperature" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the temperature.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:complexType>

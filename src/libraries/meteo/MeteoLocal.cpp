@@ -36,13 +36,14 @@ namespace
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const MeteoLocal& meteo )
-    : Meteo( meteo.GetId(), meteo.GetLighting(), meteo.GetPrecipitation(), 0, meteo.GetName().ascii() )
+    : Meteo( meteo.GetId(), meteo.GetLighting(), meteo.GetPrecipitation(), 0, meteo.GetTemperature(), meteo.GetName().ascii() )
     , converter_( &meteo.GetCoordinateConverter() )
     , created_( false )
 {
     conversionFactor_ = meteo.GetConversionFactor();
     wind_ = meteo.GetWind();
     cloud_ = meteo.GetCloud();
+    temperature_ = meteo.GetTemperature();
     topLeft_ = meteo.GetTopLeft();
     bottomRight_ = meteo.GetBottomRight();
     startTime_ = meteo.GetStartTime();
