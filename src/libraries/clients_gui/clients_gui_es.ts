@@ -1514,6 +1514,17 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::TrafficabilityPrototype_ABC</name>
+    <message>
+        <source>Trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::UndergroundPrototype_ABC</name>
     <message>
         <source>Underground</source>
@@ -1834,6 +1845,10 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Weather type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
