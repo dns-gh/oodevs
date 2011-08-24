@@ -61,7 +61,7 @@ void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, double 
     while( view.HasMoreElements() )
     {
         TER_Object_ABC* pObject = view.NextElement();
-        if( pObject && pObject->GetLocalisation().GetArea() && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
+        if( pObject && const_cast<const TER_Object_ABC*>(pObject)->GetLocalisation().GetArea() && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
             objects.push_back( pObject );
     }
 }
