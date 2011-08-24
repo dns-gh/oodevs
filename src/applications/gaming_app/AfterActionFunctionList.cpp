@@ -50,7 +50,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
 {
     functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
     functions_->AddColumn( tr( "Name" ) );
-    new ListItemToolTip( *functions_ );
+    functions_->viewport()->installEventFilter( new ListItemToolTip( functions_->viewport(), *functions_ ) );
     parameters_ = new Q3VGroupBox( tr( "Parameters" ), this );
     timeGroup_ = new Q3VGroupBox( tr( "Time range" ), this );
     timeGroup_->setCheckable( true );

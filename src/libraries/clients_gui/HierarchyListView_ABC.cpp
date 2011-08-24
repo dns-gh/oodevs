@@ -43,7 +43,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     , symbols_    ( symbols )
     , selected_   ( controllers_ )
 {
-    new ListItemToolTip(*this);
+    viewport()->installEventFilter( new ListItemToolTip( viewport(), *this ) );
 
     timer_ = new QTimer( this );
 

@@ -17,8 +17,9 @@ using namespace gui;
 // Name: ListItemToolTip constructor
 // Created: FPT 2011-03-25
 // -----------------------------------------------------------------------------
-ListItemToolTip::ListItemToolTip( Q3ListView& list )
-    : listView_( list )
+ListItemToolTip::ListItemToolTip( QWidget* parent, Q3ListView& list )
+    : QObject( parent )
+    , listView_( list )
 {
     // NOTHING
 }
@@ -33,12 +34,23 @@ ListItemToolTip::~ListItemToolTip()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemToolTip::maybeTip
-// Created: SBO 2007-01-08
+// Name: ListItemToolTip::eventFilter
+// Created: RBA 2011-08-24
 // -----------------------------------------------------------------------------
-void ListItemToolTip::maybeTip( const QPoint& pos )
+bool ListItemToolTip::eventFilter( QObject *obj, QEvent *event )
 {
-    if( listView_.showToolTips() )
-        if( ValuedListItem* item = static_cast< ValuedListItem* >( listView_.itemAt( pos ) ) )
-            listView_.setToolTip( item->GetToolTip() );
+    if (event->type() == QEvent::ToolTip)
+    {
+        QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
+        QPoint pos = helpEvent->pos();
+        if( !parent() || !listView_.showToolTips() )
+            return false;
+        ValuedListItem* item = static_cast< ValuedListItem* >( listView_.itemAt( pos ) );
+        if( !item )
+            return false;
+        QRect rect = listView_.itemRect( item );
+        QToolTip::showText(helpEvent->globalPos(), item->GetToolTip(), (QWidget*) parent(), rect );
+        return true;
+    }
+    return false;
 }

@@ -16,25 +16,26 @@
 */
 // Created: SBO 2007-01-08
 // =============================================================================
-class ListItemToolTip
+class ListItemToolTip : public QObject
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ListItemToolTip( Q3ListView& list );
+             ListItemToolTip( QWidget* parent, Q3ListView& list );
     virtual ~ListItemToolTip();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ListItemToolTip(ListItemToolTip& );            //!< Copy constructor
+    ListItemToolTip( const ListItemToolTip& );            //!< Copy constructor
     ListItemToolTip& operator=( const ListItemToolTip& ); //!< Assignment operator
     //@}
 
+protected:
     //! @name Helpers
     //@{
-    virtual void maybeTip( const QPoint& pos );
+    bool eventFilter( QObject *obj, QEvent *event );
     //@}
 
 private:
