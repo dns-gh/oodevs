@@ -489,5 +489,20 @@
     <bridging type="secondary road"/>
     <universal/>
   </object>
+  <object geometry="polygon" name="Wet terrain" symbol="" type="Wet terrain">
+    <mobility default-speed="80" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <universal/>
+  </object>
+  <object geometry="polygon" name="Snowed terrain" symbol="" type="Snowed terrain">
+    <mobility default-speed="50" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <universal/>
+  </object>
+  <object geometry="polygon" name="Iced terrain" symbol="" type="Iced terrain">
+    <mobility default-speed="30" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <universal/>
+  </object>
+  <object geometry="line" name="Border" symbol="Road" type="Border">
+    <universal/>
+  </object>
 </objects>
-<!-- signature="3333016663" -->
+<!-- signature="3708726978" -->
