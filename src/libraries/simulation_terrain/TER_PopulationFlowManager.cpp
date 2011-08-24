@@ -108,11 +108,5 @@ void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisatio
 // -----------------------------------------------------------------------------
 void TER_PopulationFlowManager::Accept( TER_PopulationFlowVisitor_ABC& visitor ) const
 {
-    T_PopulationFlows::View view = flows_.CreateView();
-    while( view.HasMoreElements() )
-    {
-        TER_PopulationFlow_ABC* pObject = view.NextElement();
-        if( pObject )
-            visitor.Visit( *pObject );
-    }
+    flows_.Accept( visitor );
 }

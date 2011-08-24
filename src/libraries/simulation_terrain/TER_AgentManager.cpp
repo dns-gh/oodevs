@@ -200,11 +200,5 @@ bool TER_AgentManager::Remove( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint
 // -----------------------------------------------------------------------------
 void TER_AgentManager::Accept( TER_AgentVisitor_ABC& visitor ) const
 {
-    T_Agents::View view = agents_.CreateView();
-    while( view.HasMoreElements() )
-    {
-        TER_Agent_ABC* pAgent = view.NextElement();
-        if( pAgent )
-            visitor.Visit( *pAgent );
-    }
+    agents_.Accept( visitor );
 }
