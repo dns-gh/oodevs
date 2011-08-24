@@ -70,8 +70,10 @@ void ADN_MultiPercentage::PercentageChanged()
         for( IT_EditLines it2 = lines_.begin(); it2 != lines_.end(); ++it2 )
             if( it != it2 )
                 otherSum += ( *it2 )->text().toDouble();
-        ( *it )->GetValidator().setTop( 100 - otherSum );
+//        ( *it )->GetValidator().setTop( 100 - otherSum );
+        // $$$ LDC: Just does not work when the change is created by a signal:
+        // It wrecks all the other values and switching from one element to the next results in nearly random values...
         sum += ( *it )->text().toDouble();
     }
-    warning_->setText( ( sum < 100 ) ? "<font color=\"#FF0000\">" + tr( "Warning: only %1\% set, need 100\% or you won't be able to save." ).arg( sum ) + "</font>" : "" );
+    warning_->setText( ( sum != 100 ) ? "<font color=\"#FF0000\">" + tr( "Warning: only %1\% set, need 100\% or you won't be able to save." ).arg( sum ) + "</font>" : "" );
 }
