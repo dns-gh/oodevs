@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <supply model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Supply.xsd">
-  <convoys mission="LOGISTIQUE Convoyer" unit-type="LOG . Convoi">
+  <convoys mission="LOG Convoyer" unit-type="Convoi">
     <constitution-times>
       <unit-time time="10m" truck-count="1"/>
       <unit-time time="10m" truck-count="10"/>
@@ -26,4 +26,4 @@
     <resource-availability-alert availability-threshold="0"/>
   </resource-availability-alerts>
 </supply>
-<!-- signature="2505679588" -->
+<!-- signature="0316641273" -->
