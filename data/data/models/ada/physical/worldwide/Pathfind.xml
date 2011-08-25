@@ -34,11 +34,6 @@
         <object-cost type="road destruction" value="10000"/>
         <object-cost type="bridge destruction" value="10000"/>
         <object-cost type="continuous pontoon bridge" value="0"/>
-        <object-cost type="Main road" value="0"/>
-        <object-cost type="Highway" value="0"/>
-        <object-cost type="Country road" value="0"/>
-        <object-cost type="Secondary road" value="0"/>
-        <object-cost type="highway" value="0"/>
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
         <object-cost type="safe zone" value="0"/>
@@ -207,11 +202,6 @@
         <object-cost type="road destruction" value="10000"/>
         <object-cost type="bridge destruction" value="10000"/>
         <object-cost type="continuous pontoon bridge" value="0"/>
-        <object-cost type="Main road" value="0"/>
-        <object-cost type="Highway" value="0"/>
-        <object-cost type="Country road" value="0"/>
-        <object-cost type="Secondary road" value="0"/>
-        <object-cost type="highway" value="0"/>
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
         <object-cost type="safe zone" value="0"/>
@@ -348,4 +338,4 @@
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2889848324" -->
+<!-- signature="2806579764" -->
