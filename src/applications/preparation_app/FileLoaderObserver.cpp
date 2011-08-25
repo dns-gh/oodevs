@@ -78,21 +78,21 @@ void FileLoaderObserver::NotifyFileMigrated( const std::string& /*file*/ , const
 // -----------------------------------------------------------------------------
 void FileLoaderObserver::DisplayErrors() const
 {
-    if( !invalidSignatureFiles_.empty() || !missingSignatureFiles_.empty() )
+    QSettings settings;
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
+        if( !invalidSignatureFiles_.empty() || !missingSignatureFiles_.empty() )
         {
             //QMessageBox::warning( 0, tools::translate( "Application", "SWORD" )
             //    , tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ) + "\n" + invalidSignatureFiles_.c_str() + "\n" + missingSignatureFiles_.c_str() );
         }
-    }
 
-    if( !malformedFiles_.empty() )
-    {
-        //QMessageBox::warning( 0, tools::translate( "Application", "SWORD" )
-        //        , tools::translate( "Application", "The following files do not match their xsd : " ) + "\n" + malformedFiles_.c_str() );
+        if( !malformedFiles_.empty() )
+        {
+            //QMessageBox::warning( 0, tools::translate( "Application", "SWORD" )
+            //        , tools::translate( "Application", "The following files do not match their xsd : " ) + "\n" + malformedFiles_.c_str() );
+        }
     }
     // missingSchemaFiles_ ??
 }
