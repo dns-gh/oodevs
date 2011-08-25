@@ -298,12 +298,7 @@ void ADN_Weapons_GUI::Build()
     pGroupLayout->addWidget( pIndirectGroup);
 
     { // $$$$ LDC Ciode review: Should be extracted in its own method
-        Q3VBoxLayout* pModifiersLayout = new Q3VBoxLayout( pModifiersHolder->layout(), 2 );
-        pModifiersLayout->setAlignment( Qt::AlignTop );
-        pModifiersLayout->addWidget( pFirePostureCombo );
-        pModifiersLayout->addWidget( pTargetPostureCombo );
-        pModifiersLayout->addWidget( pExperienceCombo );
-        pModifiersLayout->addWidget( pTirednessCombo );
+        pModifiersHolder->layout()->setAlignment( Qt::AlignTop );
 
         Q3HBoxLayout* pSimulationLayout = new Q3HBoxLayout( pSimulation->layout(), 2 );
         pSimulationLayout->addWidget( pModifiersHolder );
