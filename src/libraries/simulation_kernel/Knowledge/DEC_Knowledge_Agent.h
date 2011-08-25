@@ -208,9 +208,9 @@ private:
     bool bCurrentPerceptionLevelUpdated_;
     bool bMaxPerceptionLevelUpdated_;
     bool bCriticalIntelligenceUpdated_;
+    bool bPerceptionDistanceHacked_;
     double rLastRelevanceSent_;
     static MIL_IDManager idManager_;
-    bool bPerceptionDistanceHacked_;
     //@}
 };
 

@@ -219,7 +219,7 @@ private:
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
     double GetMaxObjectPerceptionDistance() const;
     void EnsurePerceptionRecoLocalisation();
-    void AppendUniversalAndHackedObjects( std::vector< TER_Object_ABC* >& objects ) const;
+    void AppendUniversalObjects( std::vector< TER_Object_ABC* >& objects ) const;
     void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
     void AppendHackedPopulationConcentrations( std::vector< TER_PopulationConcentration_ABC* >& perceivableAgents ) const;
     void AppendHackedPopulationFlows( std::vector< TER_PopulationFlow_ABC* >& perceivableAgents ) const;

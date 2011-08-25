@@ -205,9 +205,10 @@ private:
     unsigned int nTimeLastUpdate_;
     double rRelevance_;
     bool bValid_;
+    bool bPerceptionDistanceHacked_;
+    bool bHackedPrepared_;
     T_AgentTypeSet reconByAgentTypes_;
     static MIL_IDManager idManager_;
-    bool bPerceptionDistanceHacked_;
     //@}
 };
 

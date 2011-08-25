@@ -63,6 +63,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , rRelevance_              ( 1. )
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
+    , bHackedPrepared_         ( false )
 {
     if( sendCreation )
         SendMsgCreation();
@@ -89,6 +90,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowi
     , rRelevance_              ( 1. )
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
+    , bHackedPrepared_         ( false )
 {
     SendMsgCreation();
 }
@@ -114,6 +116,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , rRelevance_              ( 0. )
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
+    , bHackedPrepared_         ( false )
 {
     // NOTHING
 }
@@ -143,6 +146,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , rRelevance_                      ( copy.rRelevance_ )
     , bValid_                          ( copy.bValid_ )
     , bPerceptionDistanceHacked_       ( copy.bPerceptionDistanceHacked_ )
+    , bHackedPrepared_                 ( false )
 {
     SendMsgCreation();
 }
@@ -186,7 +190,10 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> perceptionPerAutomateSet_
          >> previousPerceptionPerAutomateSet_
          >> nTimeLastUpdate_
-         >> rRelevance_;
+         >> rRelevance_
+         >> bValid_
+         >> bPerceptionDistanceHacked_
+         >> bHackedPrepared_;
 
     // récupération des noms des types
     std::size_t nSize;
@@ -232,7 +239,10 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << perceptionPerAutomateSet_
          << previousPerceptionPerAutomateSet_
          << nTimeLastUpdate_
-         << rRelevance_;
+         << rRelevance_
+         << bValid_
+         << bPerceptionDistanceHacked_
+         << bHackedPrepared_;
     // On stocke les types selon leur nom
     std::size_t size = reconByAgentTypes_.size();
     file << size;
@@ -256,6 +266,11 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Prepare()
 {
+    if( bPerceptionDistanceHacked_ && !bHackedPrepared_ )
+    {
+        bHackedPrepared_ = true;
+        return;
+    }
     nAttributesUpdated_ = eAttr_Nothing;
     pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
@@ -267,7 +282,6 @@ void DEC_Knowledge_Object::Prepare()
 // Name: DEC_Knowledge_Object::UpdateLocalisations
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-inline
 void DEC_Knowledge_Object::UpdateLocalisations()
 {
     if( !pObjectKnown_ )
@@ -291,7 +305,6 @@ void DEC_Knowledge_Object::UpdateLocalisations()
 // Name: DEC_Knowledge_Object::UpdatePerceptionSources
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-inline
 void DEC_Knowledge_Object::UpdatePerceptionSources( const DEC_Knowledge_ObjectPerception& perception )
 {
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
@@ -430,7 +443,7 @@ void DEC_Knowledge_Object::UpdateRelevance()
     // L'objet réel va être détruit
     if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
     {
-        if( pObjectKnown_->Retrieve< CrowdCapacity >() ) // $$$$ _RC_ LDC 2011:08:10 Should be pObjectKnown_->IsUniversal() and ADN modified accordingly.
+        if( bPerceptionDistanceHacked_ || pObjectKnown_->Retrieve< CrowdCapacity >() ) // $$$$ _RC_ LDC 2011:08:10 Should be pObjectKnown_->IsUniversal() and ADN modified accordingly.
             rRelevance_ = 0.;
         pObjectKnown_ = 0;
         NotifyAttributeUpdated( eAttr_RealObject );
@@ -443,6 +456,8 @@ void DEC_Knowledge_Object::UpdateRelevance()
         NotifyAttributeUpdated( eAttr_Relevance );
         return;
     }
+    if( bPerceptionDistanceHacked_ )
+        UpdateLocalisations();
     nTimeLastUpdate_ = GetCurrentTimeStep();
 }
 
@@ -908,7 +923,9 @@ void DEC_Knowledge_Object::HackPerceptionLevel( const PHY_PerceptionLevel* pPerc
     {
         rRelevance_ = 1.0;
         bPerceptionDistanceHacked_ = true;
+        bHackedPrepared_ = false;
         pCurrentPerceptionLevel_ = pPerceptionLevel;
+        UpdateLocalisations();
         nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     }
 }

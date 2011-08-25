@@ -912,7 +912,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, GetMaxObjectPerceptionDistance(), perceivableObjects );
-        AppendUniversalAndHackedObjects( perceivableObjects );
+        AppendUniversalObjects( perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
@@ -1459,28 +1459,26 @@ void PHY_RolePion_Perceiver::NotifyIsUnLoadedInVab()
 namespace
 {
 // -----------------------------------------------------------------------------
-class UniversalAndHackedObjectsVisitor : public TER_ObjectVisitor_ABC
+class UniversalObjectsVisitor : public TER_ObjectVisitor_ABC
 {
 public:
-    UniversalAndHackedObjectsVisitor( TER_Object_ABC::T_ObjectVector& perceivableObjects, const MIL_KnowledgeGroup& knowledgeGroup )
+    UniversalObjectsVisitor( TER_Object_ABC::T_ObjectVector& perceivableObjects )
         : perceivableObjects_( perceivableObjects )
-        , knowledgeGroup_( knowledgeGroup )
     {
         // NOTHING
     }
-    virtual ~UniversalAndHackedObjectsVisitor()
+    virtual ~UniversalObjectsVisitor()
     {
         // NOTHING
     }
     virtual void Visit( TER_Object_ABC& object )
     {
-        MIL_Object_ABC* pObjectKnown = dynamic_cast< MIL_Object_ABC* >( &object );
-        if( ( object.IsUniversal() || ( pObjectKnown && knowledgeGroup_.IsPerceptionDistanceHacked( *pObjectKnown ) ) )
+        //MIL_Object_ABC* pObjectKnown = dynamic_cast< MIL_Object_ABC* >( &object );
+        if( object.IsUniversal()
             && std::find( perceivableObjects_.begin(), perceivableObjects_.end(), &object ) == perceivableObjects_.end() )
             perceivableObjects_.push_back( &object );
     }
 private:
-    const MIL_KnowledgeGroup& knowledgeGroup_;
     TER_Object_ABC::T_ObjectVector& perceivableObjects_;
 };
 // -----------------------------------------------------------------------------
@@ -1563,12 +1561,12 @@ private:
 
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::AppendUniversalAndHackedObjects
+// Name: PHY_RolePion_Perceiver::AppendUniversalObjects
 // Created: JSR 2011-01-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::AppendUniversalAndHackedObjects( TER_Object_ABC::T_ObjectVector& perceivableObjects ) const
+void PHY_RolePion_Perceiver::AppendUniversalObjects( TER_Object_ABC::T_ObjectVector& perceivableObjects ) const
 {
-    UniversalAndHackedObjectsVisitor visitor( perceivableObjects, GetKnowledgeGroup() );
+    UniversalObjectsVisitor visitor( perceivableObjects );
     TER_World::GetWorld().GetObjectManager().Accept( visitor );
 }
 

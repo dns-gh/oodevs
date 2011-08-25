@@ -895,9 +895,8 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
     else if ( pObject )
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = GetObjectKnowledgeToUpdate( *pObject );
-        if ( !knowledgeObject.get() )
-            return false;
-
+        if( !knowledgeObject.get() )
+            throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_unit );
         knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
         HackPerceptionLevelFromParentKnowledgeGroup( *pObject, perception );
     }
@@ -1195,7 +1194,7 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::GetObjectKnowledge
     boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = knowledgeObjectContainer.GetKnowledgeObject( objectKnown );
     if( knowledgeObject.get() )
         return knowledgeObject;
-    return CreateKnowledgeObject( *army_, objectKnown );
+    return knowledgeObjectContainer.CreateKnowledgeObject( *army_, objectKnown );
 }
 
 // -----------------------------------------------------------------------------

@@ -190,10 +190,10 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Object_ABC& ta
     if( !bIsEnabled_ || !target().CanBePerceived() )
         return PHY_PerceptionLevel::notSeen_;
 
-    if( perceiver_.IsIdentified( target ) )
+    if( target.IsUniversal() )
         return PHY_PerceptionLevel::identified_;
 
-    if( target.IsUniversal() )
+    if( perceiver_.IsIdentified( target ) )
         return PHY_PerceptionLevel::identified_;
 
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;

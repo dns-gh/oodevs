@@ -67,9 +67,8 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     , bCurrentPerceptionLevelUpdated_( false )
     , bMaxPerceptionLevelUpdated_    ( false )
     , bCriticalIntelligenceUpdated_  ( false )
-    , rLastRelevanceSent_            ( 0. )
-    , criticalIntelligence_          ( "" )
     , bPerceptionDistanceHacked_     ( false )
+    , rLastRelevanceSent_            ( 0. )
 {
     if( bCreatedOnNetwork_ )
         SendMsgCreation();
@@ -102,9 +101,8 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , bCurrentPerceptionLevelUpdated_( true )
     , bMaxPerceptionLevelUpdated_    ( true )
     , bCriticalIntelligenceUpdated_  ( false )
-    , rLastRelevanceSent_            ( 0. )
-    , criticalIntelligence_          ( "" )
     , bPerceptionDistanceHacked_     ( false )
+    , rLastRelevanceSent_            ( 0. )
 {
     // NOTHING
 }
