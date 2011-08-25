@@ -379,6 +379,8 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->bDirect_ = bDirect_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
 
+    pCopy->ptrResourceNature_ = ptrResourceNature_.GetData();
+
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
