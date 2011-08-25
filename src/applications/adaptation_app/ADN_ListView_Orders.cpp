@@ -63,8 +63,8 @@ private:
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
 ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget * parent, const char * name , Qt::WFlags f)
-:   ADN_ListView(parent,name,f)
-, usedWithMission_ ( usedWithMission )
+    : ADN_ListView( parent, name, f )
+    , usedWithMission_ ( usedWithMission )
 {
     // add one column
     addColumn( tr( "Frag orders"));
@@ -93,7 +93,7 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 {
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
         return;
-
+    fragOrders_.clear();
     std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu(this) );
 
     bool bDisplayAdd = false;
@@ -111,6 +111,7 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
             pTargetMenu->setItemEnabled( id, !added );
             pTargetMenu->setItemChecked( id, added );
             bDisplayAdd |= !added;
+            fragOrders_[ n ] = strOrderName;
             ++n;
         }
     }
@@ -163,20 +164,21 @@ void ADN_ListView_Orders::ConnectItem( bool /*bConnect*/ )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Orders::CreateNewItem( int n )
 {
-    OrderInfos* pNewInfo = new OrderInfos();
-    if( ADN_Missions_Data::FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders().at( n ) )
+    CIT_FragOrders cit = fragOrders_.find( n );
+    if( cit != fragOrders_.end() )
     {
-        pNewInfo->strName_   = fragOrder->strName_.GetData();
-        pNewInfo->fragOrder_ = fragOrder;
+        OrderInfos* pNewInfo = new OrderInfos();
+        ADN_Missions_Data::T_FragOrder_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
+        for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
+            if( cit->second == (*it)->strName_.GetData() )
+            {
+                pNewInfo->strName_   = (*it)->strName_.GetData();
+                pNewInfo->fragOrder_ = (*it);
+            }
+        ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
+        pCList->AddItem( pNewInfo );
+        setCurrentItem( FindItem( pNewInfo ) );
     }
-    else
-    {
-        // $$$$ SBO 2006-12-04: commit suicide
-    }
-
-    ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCList->AddItem( pNewInfo );
-    setCurrentItem(FindItem(pNewInfo));
 }
 
 // -----------------------------------------------------------------------------
