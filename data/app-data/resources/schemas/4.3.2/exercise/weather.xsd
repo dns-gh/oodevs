@@ -177,12 +177,12 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
-      <xs:element name="temperature">
+      <xs:element name="temperature" minOccurs="0">
         <xs:annotation>
           <xs:documentation xml:lang="en">Defines the temperature.</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="value" type="T_Temperature" use="optional">
+          <xs:attribute name="value" type="T_Temperature" use="required">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the temperature.</xs:documentation>
             </xs:annotation>
