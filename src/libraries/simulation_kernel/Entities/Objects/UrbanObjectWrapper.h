@@ -23,7 +23,6 @@ namespace sword
 
 namespace urban
 {
-    class Architecture;
     class TerrainObject_ABC;
     class MotivationsVisitor_ABC;
 }
@@ -49,7 +48,6 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -131,11 +129,11 @@ private:
     const urban::TerrainObject_ABC* object_;
     T_Inhabitants inhabitants_;
     T_LivingAreas livingAreas_;
-	std::vector< boost::shared_ptr< MT_Vector2D > > strechedArea_;
-	static const float stretchOffset_;
-	//@}
+    std::vector< boost::shared_ptr< MT_Vector2D > > strechedArea_;
+    static const float stretchOffset_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( UrbanObjectWrapper )
 
-#endif
+#endif // __UrbanObjectWrapper_h_

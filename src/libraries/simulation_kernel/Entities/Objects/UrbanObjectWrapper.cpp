@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "UrbanObjectWrapper.h"
 #include "MIL_AgentServer.h"
-#include "Entities/Inhabitants/MIL_LivingArea.h"
 #include "ResourceNetworkCapacity.h"
 #include "MaterialAttribute.h"
 #include "MedicalCapacity.h"
@@ -19,6 +18,7 @@
 #include "PHY_InfrastructureType.h"
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
+#include "Entities/Inhabitants/MIL_LivingArea.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -331,15 +331,15 @@ float UrbanObjectWrapper::GetLivingSpace() const
 // -----------------------------------------------------------------------------
 const std::vector< boost::shared_ptr< MT_Vector2D > >& UrbanObjectWrapper::ComputeLocalisationsInsideBlock()
 {
-	if( strechedArea_.size() == 0 )
-	{
-		const UrbanObjectWrapper& constThis = *this;
-		const T_PointVector& points = constThis.GetLocalisation().GetPoints();
-		const MT_Vector2D barycenter = constThis.GetLocalisation().ComputeBarycenter();
-		for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-			strechedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
-	}
-	return strechedArea_;
+    if( strechedArea_.size() == 0 )
+    {
+        const UrbanObjectWrapper& constThis = *this;
+        const T_PointVector& points = constThis.GetLocalisation().GetPoints();
+        const MT_Vector2D barycenter = constThis.GetLocalisation().ComputeBarycenter();
+        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+            strechedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
+    }
+    return strechedArea_;
 }
 
 // -----------------------------------------------------------------------------
