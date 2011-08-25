@@ -9199,6 +9199,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Convoyer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -15016,4 +15017,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3396911686" -->
+<!-- signature="0537259909" -->
