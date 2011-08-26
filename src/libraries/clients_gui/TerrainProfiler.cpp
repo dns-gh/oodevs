@@ -54,6 +54,7 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     parent->addDockWidget( Qt::RightDockWidgetArea, this );
     hide();
     setFloating( true );
+    setProperty( "notAppropriate", QVariant( true ) );
     controllers_.Register( *this );
 }
 

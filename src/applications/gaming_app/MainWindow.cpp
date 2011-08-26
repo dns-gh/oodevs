@@ -290,6 +290,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
      // Mission panel
     pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
     addDockWidget( Qt::LeftDockWidgetArea, pMissionPanel_ );
+    pMissionPanel_->setProperty( "notAppropriate", QVariant( true ) );
     pMissionPanel_->hide();
 
     // Chat
@@ -316,6 +317,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     ProfilingPanel* profilingPanel_ = new ProfilingPanel( pProfilerDockWnd_, controllers_, network_, simulation );
     pProfilerDockWnd_->setWidget( profilingPanel_ );
     pProfilerDockWnd_->setWindowTitle( tr( "Profiling" ) );
+    pProfilerDockWnd_->setProperty( "notAppropriate", QVariant( true ) );
     pProfilerDockWnd_->hide();
 
     // Layers
@@ -361,6 +363,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Message panel
     {
         QDockWidget* messageDock = new MessagePanel( this, controllers_, publisher, network.GetCommands() );
+        messageDock->setProperty( "notAppropriate", QVariant( true ) );
         addDockWidget( Qt::TopDockWidgetArea, messageDock );
     }
     // ResourceNetwork panel
@@ -737,4 +740,28 @@ void MainWindow::ToggleDocks()
         if ( restoreState( toolbars_ ) )
             toolbars_ = 0;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::createPopupMenu
+// Created: LDC 2011-08-26
+// -----------------------------------------------------------------------------
+QMenu* MainWindow::createPopupMenu()
+{
+    QMenu* menu = new QMenu( this );
+    QList<QDockWidget *> dockwidgets = qFindChildren<QDockWidget *>( this );
+    for( QList<QDockWidget *>::iterator it = dockwidgets.begin(); it != dockwidgets.end(); ++it )
+    {
+        QDockWidget* dockWidget = *it;
+        if( !dockWidget->property( "notAppropriate" ).isValid() )
+            menu->addAction( dockWidget->toggleViewAction() );
+    }
+    menu->addSeparator();
+    QList<QToolBar *> toolbars = qFindChildren<QToolBar *>(this);
+    for( QList<QToolBar *>::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
+    {
+        QToolBar* toolbar = *it;
+        menu->addAction( toolbar->toggleViewAction() );
+    }
+    return menu;
 }

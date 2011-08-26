@@ -52,6 +52,7 @@ IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request
     dock->setWidget( vbox );
     dock->setFeatures( QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable );
     vbox->show();
+    dock->setProperty( "notAppropriate", QVariant( true ) );
     return plot;
 }
 

@@ -34,6 +34,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     QLabel* label = new QLabel( this );
     addWidget( label );
     label->setPixmap( MAKE_PIXMAP( replayer ) );
+    setProperty( "notAppropriate", QVariant( true ) );
     controllers_.Register( *this );
 }
 
@@ -85,7 +86,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         if( ! isVisible() )
         {
             show();
-           // mainWindow()->setAppropriate( this, true );
+            setProperty( "notAppropriate", QVariant() );
         }
     }
     else if( isVisible() )

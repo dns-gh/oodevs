@@ -90,6 +90,7 @@ public:
     //@{
     void Load();
     kernel::Options& GetOptions() const;
+    virtual QMenu* createPopupMenu();
     //@}
 
 public slots:

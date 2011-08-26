@@ -67,6 +67,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     aarDock_->setWidget( box );
     aarDock_->setCaption( tools::translate( "AfterAction", "After action review" ) );
     aarDock_->hide();
+    setProperty( "notAppropriate", QVariant() );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +90,10 @@ void AfterAction::NotifyUpdated( const Services& services )
     firstUpdate_ = false;
     const bool isAar = services.HasService< aar::Service >() && services.HasService< replay::Service >();
     aarDock_->setShown( aar_ && isAar );
+    if( isAar )
+        setProperty( "notAppropriate", QVariant() );
+    else
+        setProperty( "notAppropriate", QVariant( true ) );
 }
 
 // -----------------------------------------------------------------------------

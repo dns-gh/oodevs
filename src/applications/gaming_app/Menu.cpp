@@ -244,13 +244,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     addMenu( menu );
     insertItem( tools::translate( "Menu", "&Exercise" ), menu );
 
-    QMenu* pMenu = pParent->createPopupMenu(); 
-    pMenu->removeItemAt( 1 ); // $$$$ FPT 2011-08-03 Removing items automatically added in "Windows" menu that dont belong there
-    pMenu->removeItemAt( 5 );
-    pMenu->removeItemAt( 8 );
-    pMenu->removeItemAt( 12 );
-    pMenu->removeItemAt( 14 );
-    pMenu->removeItemAt( 20 );
+    QMenu* pMenu = pParent->createPopupMenu();
     addMenu( pMenu );
     insertItem( tools::translate( "Menu", "&Windows" ), pMenu );
 
