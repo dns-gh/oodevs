@@ -36,11 +36,11 @@ ADN_ListViewToolTip::~ADN_ListViewToolTip()
 // Name: ADN_ListViewToolTip::eventFilter
 // Created: RBA 2011-08-24
 // -----------------------------------------------------------------------------
-bool ADN_ListViewToolTip::eventFilter( QObject *obj, QEvent *event )
+bool ADN_ListViewToolTip::eventFilter( QObject*, QEvent* event )
 {
     if ( event->type() == QEvent::ToolTip )
     {
-        QHelpEvent *helpEvent = static_cast< QHelpEvent * >( event );
+        QHelpEvent* helpEvent = static_cast< QHelpEvent* >( event );
         QPoint pos = helpEvent->pos();
         if( !parent() || !listView_.showToolTips() )
             return false;

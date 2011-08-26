@@ -266,7 +266,7 @@ QString ADN_Equipement_AttritionGraph::GetTextTooltip( const QPoint& point, QRec
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::paintEvent
+// Name: ADN_Equipement_AttritionGraph::event
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
 bool ADN_Equipement_AttritionGraph::event( QEvent* e )
@@ -278,11 +278,11 @@ bool ADN_Equipement_AttritionGraph::event( QEvent* e )
         const QString s = this->GetTextTooltip( help->pos(), rc );
         if( !s.isEmpty() )
         {
-            setToolTip( s );
+            QToolTip::showText( help->globalPos(), s, this, rc );
             return true;
         }
     }
-    return false;
+    return QWidget::event( e );
 }
 
 // -----------------------------------------------------------------------------

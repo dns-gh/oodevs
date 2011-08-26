@@ -37,11 +37,11 @@ ListItemToolTip::~ListItemToolTip()
 // Name: ListItemToolTip::eventFilter
 // Created: RBA 2011-08-24
 // -----------------------------------------------------------------------------
-bool ListItemToolTip::eventFilter( QObject *obj, QEvent *event )
+bool ListItemToolTip::eventFilter( QObject*, QEvent* event )
 {
     if (event->type() == QEvent::ToolTip)
     {
-        QHelpEvent *helpEvent = static_cast< QHelpEvent * >( event );
+        QHelpEvent* helpEvent = static_cast< QHelpEvent* >( event );
         QPoint pos = helpEvent->pos();
         if( !parent() || !listView_.showToolTips() )
             return false;
