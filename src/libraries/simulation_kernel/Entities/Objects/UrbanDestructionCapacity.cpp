@@ -134,7 +134,7 @@ void UrbanDestructionCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: UrbanDestructionCapacity::Update
 // Created: JCR 2011-08-12
 // -----------------------------------------------------------------------------
-void UrbanDestructionCapacity::Update( MIL_Object_ABC& object, unsigned int time )
+void UrbanDestructionCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
     typedef std::vector< TER_Object_ABC* >::iterator iterator;
 
