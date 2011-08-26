@@ -1551,7 +1551,8 @@
             <include name="data/models/training/physical/worldwide/**"/>
             <include name="data/models/training/decisional/**"/>            
             <include name="exercises/Training/**"/>
-            <include name="exercises/Training Porto/**"/>         
+            <include name="exercises/Training Porto/**"/>
+            <include name="exercises/MLTraining/**"/>          
             <include name="data/terrains/PortoV3Lite - worldwide/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
