@@ -71,7 +71,8 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
     if( wind_.eAngle_ < 0 || wind_.eAngle_ > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
     wind_.vDirection_ = ReadDirection( wind_.eAngle_ );
-    xis >> xml::start( "temperature" )
+    xis >> xml::optional
+        >> xml::start( "temperature" )
             >> xml::attribute( "value", temperature_ )
         >> xml::end;
     std::string strVal;
