@@ -165,18 +165,6 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
-      <xs:element name="precipitation">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Defines the precipitation conditions.</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="value" type="T_PrecipitationKind" use="required">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines the kind of precipitation.</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-        </xs:complexType>
-      </xs:element>
       <xs:element name="temperature">
         <xs:annotation>
           <xs:documentation xml:lang="en">Defines the temperature.</xs:documentation>
@@ -185,6 +173,18 @@
           <xs:attribute name="value" type="T_Temperature" use="required">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the temperature.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="precipitation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the precipitation conditions.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="value" type="T_PrecipitationKind" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the kind of precipitation.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:complexType>
