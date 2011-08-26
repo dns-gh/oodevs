@@ -53,6 +53,7 @@ void MemoryLogger::Update()
     if( current > next_ )
     {
         next_ = static_cast< int >( current ) + 60;
+        monitor_->MonitorProcess();
         MT_LOG_INFO_MSG( "Memory: " << ToMb( monitor_->GetMemory() ) << " MB / " << ToMb( monitor_->GetVirtualMemory() ) << " MB (VM)" );
     }
 }
