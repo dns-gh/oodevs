@@ -20,6 +20,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <pathfind/TerrainPathfinder.h>
+#include <pathfind/TerrainRetractationHandle.h>
 #include <pathfind/TerrainRule_ABC.h>
 #include <pathfind/TerrainHeuristic.h>
 #include <spatialcontainer/Node.h>
