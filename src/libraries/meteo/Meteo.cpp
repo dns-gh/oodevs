@@ -37,7 +37,7 @@ Meteo::Meteo( unsigned int id, unsigned int timeStep, const std::string& name /*
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
-    , temperature_     ( 0 )
+    , temperature_     ( 20 )
 {
     // NOTHING
 }
@@ -52,7 +52,7 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
-    , temperature_     ( 0 )
+    , temperature_     ( 20 )
 {
     xis >> xml::start( "cloud-cover" )
             >> xml::attribute( "floor", cloud_.nFloor_ )
@@ -71,8 +71,7 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
     if( wind_.eAngle_ < 0 || wind_.eAngle_ > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
     wind_.vDirection_ = ReadDirection( wind_.eAngle_ );
-    xis >> xml::optional
-        >> xml::start( "temperature" )
+    xis >> xml::start( "temperature" )
             >> xml::attribute( "value", temperature_ )
         >> xml::end;
     std::string strVal;
@@ -96,7 +95,7 @@ Meteo::Meteo( unsigned int id, const sword::WeatherAttributes& msg, unsigned int
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
-    , temperature_     ( 0 )
+    , temperature_     ( 20 )
 {
     Update( msg );
 }
@@ -110,7 +109,7 @@ Meteo::Meteo( unsigned int id, const sword::MissionParameters& msg, const PHY_Li
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
-    , temperature_     ( 0 )
+    , temperature_     ( 20 )
 {
     Update( msg );
     Update( light );
