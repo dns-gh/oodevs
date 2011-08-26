@@ -461,6 +461,16 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignerDirectionAMissionAutomate_Mission" ] =
             boost::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) );
     brain[ "DEC_AssignMissionListParameter" ] = &MIL_MissionParameterFactory::AssignMissionListParameter;
+
+	// Objet
+	brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarque" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded;
+    brain[ "DEC_Agent_AgentADotationPourConstruireObjet" ] = &DEC_AgentFunctions::AgentHasDotationForBuilding;
+	brain[ "DEC_Agent_AgentPeutDetruireObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObject;
+	brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
+    
+	
+    brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
+    
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterReportFunctions

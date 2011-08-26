@@ -990,3 +990,39 @@ double DEC_AgentFunctions::GetCurrentSpeed( const DEC_Decision_ABC* agent )
     const PHY_RoleInterface_Location& roleLocation = agent->GetPion().GetRole< PHY_RoleInterface_Location >();
     return roleLocation.GetCurrentSpeed();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanConstructObjectWithLoaded
+// Created: LMT 2011-08-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentHasDotationForBuilding
+// Created: LMT 2011-08-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentHasDotationForBuilding( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanDestroyObject
+// Created: LMT 2011-08-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    return objectKnowledge && objectKnowledge->IsValid() &&  agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanBypassObject
+// Created: LMT 2011-08-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
+}
