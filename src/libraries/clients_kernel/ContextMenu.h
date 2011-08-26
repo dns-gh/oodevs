@@ -13,12 +13,13 @@
 #include <boost/noncopyable.hpp>
 
 class Q3PopupMenu;
+class QAction;
+class QKeySequence;
 class QObject;
-class QWidget;
+class QPixmap;
 class QPoint;
 class QString;
-class QKeySequence;
-class QPixmap;
+class QWidget;
 
 namespace kernel
 {
@@ -45,13 +46,12 @@ public:
     void Clear();
     void SetItemEnabled( int id, bool enable );
     void SetItemParameter( int id, int parameter );
-    void SetChecked( int id, bool checked );
     void SetPixmap( int id, const QPixmap& pixmap );
 
-    int InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member );
-    int InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel, int id = -1 );
-    int InsertItem( const std::string& category, const QString& text, int id = -1 );
-    int InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int id = -1 );
+    QAction* InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member );
+    QAction* InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel, int id = -1 );
+    QAction* InsertItem( const std::string& category, const QString& text, int id = -1 );
+    QAction* InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int id = -1 );
 
     Q3PopupMenu* SubMenu( const std::string& category, const QString& text );
 
@@ -68,11 +68,12 @@ private:
     //@{
     typedef std::vector< std::string > T_OrderedCategories;
     typedef std::map< std::string, Q3PopupMenu* > T_CategoryMenus;
+    typedef std::map< std::string, QAction* > T_Categories;
     //@}
 
     //! @name Helpers
     //@{
-    int InsertCategory( const std::string& category );
+    QAction* InsertCategory( const std::string& category );
     //@}
 
 private:
@@ -80,6 +81,7 @@ private:
     //@{
     Q3PopupMenu* menu_;
     T_OrderedCategories categories_;
+    T_Categories separators_;
     T_CategoryMenus menus_;
     //@}
 };

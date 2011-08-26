@@ -206,10 +206,9 @@ void MissionPanel::AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, co
      }
     else
     {
-        if ( menu.count() )  // $$$$ FPT 2011-08-12 : Can't have a separator without an item before
+        if ( !menu.count() )  // $$$$ FPT 2011-08-12 : Can't have a separator without an item before
            menu.insertItem( "", this, "" );
-        else
-           menu.addSeparator()->setText( prefix );
+        menu.addSeparator()->setText( prefix );
      }
     for( T::const_iterator it = list.begin(); it != list.end(); ++it )
     {
@@ -224,7 +223,7 @@ void MissionPanel::AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, co
 // Name: MissionPanel::AddMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot, int current )
+QAction* MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot, int current )
 {
     Q3PopupMenu& missions = *new Q3PopupMenu( menu );
     QString lastPrefix;
@@ -245,7 +244,7 @@ int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu
 // Name: MissionPanel::AddFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& menu, const QString& name, const char* slot )
+QAction* MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
     Q3PopupMenu& orders = *new Q3PopupMenu( menu );
     typedef std::map< QString, std::set< const FragOrder*, MissionComparator >, MissionComparator > T_FragOrders;
@@ -290,11 +289,14 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
         return;
 
     const kernel::Mission* current = decisions.GetCurrentMission();
-    int id = AddMissions( decisions.GetMissions(), menu, name, slot, current ? current->GetId() : -1 );
+    QAction* action = AddMissions( decisions.GetMissions(), menu, name, slot, current ? current->GetId() : -1 );
     if( !pixmap.isNull() )
-        menu.SetPixmap( id, pixmap );
+    {
+        QIcon icon( pixmap );
+        action->setIcon( icon );
+    }
 
-    id = AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
+    AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
