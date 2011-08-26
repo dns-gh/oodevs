@@ -106,7 +106,7 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
 {
     try
     {
-        //ProcessDynamicData();
+        ProcessDynamicData();
         if( pRequest.get() )
         {
             pRequest->Execute( *pPathfinder_ );
