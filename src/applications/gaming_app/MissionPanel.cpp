@@ -406,6 +406,16 @@ void MissionPanel::Disengage()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::Close
+// Created: LDC 2011-08-29
+// -----------------------------------------------------------------------------
+void MissionPanel::Close()
+{
+    SetInterface( 0 );
+    hide();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::SetInterface
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
@@ -422,6 +432,7 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
         pMissionInterface_ = missionInterface;
         pMissionInterface_->ChangeOkValueButton( isPlanifMode_ );
         NotifyMission();
+        connect( pMissionInterface_, SIGNAL( OkClicked() ), SLOT( Close() ) );
         if( pMissionInterface_->IsEmpty() )
             pMissionInterface_->OnOk();
         else

@@ -67,6 +67,9 @@ public slots:
     virtual void OnOk();
     //@}
 
+signals:
+    void OkClicked();    
+
 protected:
     //! @name Helpers
     //@{

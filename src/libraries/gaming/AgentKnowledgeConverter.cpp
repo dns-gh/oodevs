@@ -158,7 +158,11 @@ void AgentKnowledgeConverter::NotifyCreated( const AgentKnowledge_ABC& knowledge
 // -----------------------------------------------------------------------------
 void AgentKnowledgeConverter::NotifyDeleted( const AgentKnowledge_ABC& knowledge )
 {
-    agents_[ & knowledge.GetOwner() ].erase( knowledge.GetEntity() );
+    const kernel::Entity_ABC* owner = & knowledge.GetOwner();
+    T_KnowledgeMap& map = agents_[ owner ];
+    map.erase( knowledge.GetEntity() );
+    if( map.empty() )
+        agents_.erase( owner );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,5 +180,9 @@ void AgentKnowledgeConverter::NotifyCreated( const PopulationKnowledge_ABC& know
 // -----------------------------------------------------------------------------
 void AgentKnowledgeConverter::NotifyDeleted( const PopulationKnowledge_ABC& knowledge )
 {
-    populations_[ & knowledge.GetOwner() ].erase( knowledge.GetEntity() );
+    const kernel::Entity_ABC* owner = & knowledge.GetOwner();
+    T_PopulationKnowledgeMap& map = populations_[ owner ];
+    map.erase( knowledge.GetEntity() );
+    if( map.empty() )
+        populations_.erase( owner );
 }

@@ -101,6 +101,7 @@ private slots:
     void ActivatePopulationMission( int );
     void Engage();
     void Disengage();
+    void Close();
     //@}
 
 private:

@@ -199,7 +199,7 @@ void MissionInterface_ABC::OnOk()
     if( !CheckValidity() )
         return;
     Publish();
-    parentWidget()->hide();
+    emit( OkClicked() );
 }
 
 // -----------------------------------------------------------------------------
