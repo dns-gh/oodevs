@@ -1027,6 +1027,5 @@ template< class T >
 void DEC_Decision< T >::Reload()
 {
     InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetAutomate().GetName(), model_->IsMasalife(), true );
-    (*pBrain_)["DEC_Trace"]( "Reloaded" );
     StartDefaultBehavior();
 }
