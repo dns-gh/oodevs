@@ -95,7 +95,7 @@ do
                 end
 
                 self.listePIA = DEC_Geometrie_CalculerPositionsParRapportALima( LIA, 10, #( self.selPions ) )
-                if( self.listePIA == nil ) then
+                if( DIA_IsListEmpty( self.listePIA ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                                                 self:SendFeedback( eActionImpossible )
