@@ -421,7 +421,7 @@ void RegisterTypeFunctions( directia::brain::Brain& brain )
 // Name: DEC_Decision::RegisterMissionParametersFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isMasalife )
+void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isMasalife, DEC_Decision_ABC* decision )
 {
     brain[ "DEC_AssignMissionPionParameter" ] = &MIL_MissionParameterFactory::SetPawnParameter;
     brain[ "DEC_AssignMissionAutomatParameter" ] = &MIL_MissionParameterFactory::SetAutomatParameter;
@@ -461,6 +461,8 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignerDirectionAMissionAutomate_Mission" ] =
             boost::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) );
     brain[ "DEC_AssignMissionListParameter" ] = &MIL_MissionParameterFactory::AssignMissionListParameter;
+    brain[ "DEC_AssignMissionCrowdParameter" ] = 
+            boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, decision, _1, _2, _3 ) );
 
 	// Objet
 	brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarque" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded;
@@ -571,7 +573,7 @@ void RegisterItineraryFunctions( directia::brain::Brain& brain )
 // Name: DEC_Decision::RegisterCommonUserFunctions
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife )
+void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife, DEC_Decision_ABC* decision )
 {
     RegisterUnitFunctions( brain );
     RegisterPopulationFunctions( brain );
@@ -590,7 +592,7 @@ void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife
     RegisterObjectivesFunctions( brain );
     RegisterSpecificPointsFunctions( brain );
     RegisterTypeFunctions( brain );
-    RegisterMissionParametersFunctions( brain, isMasalife );
+    RegisterMissionParametersFunctions( brain, isMasalife, decision );
     RegisterReportFunctions( brain );
     RegisterTelepathyFunctions( brain );
     RegisterItineraryFunctions( brain );

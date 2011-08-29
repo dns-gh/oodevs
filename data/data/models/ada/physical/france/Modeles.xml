@@ -10907,6 +10907,7 @@
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
         <mission name="LOGISTIQUE Transporter"/>
+        <mission name="LOGISTIQUE Transporter Foule"/>
         <mission name="GENIE Realiser Camps"/>
       </missions>
       <fragorders>
@@ -15017,4 +15018,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0537259909" -->
+<!-- signature="3450925946" -->

@@ -28,6 +28,7 @@ class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 class DEC_ResourceNetwork;
 class DEC_RolePion_Decision;
+class MIL_Automate;
 class MIL_Mission_ABC;
 class MIL_MissionParameter_ABC;
 class MIL_OrderType_ABC;
@@ -92,8 +93,9 @@ public:
     static void SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type );
     static void SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value );
     static void SetResourceNetworkParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork );
+    static void SetCrowdKnowledgeParameter( DEC_Decision_ABC* caller, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int knowledgeId );
 
-    static void AssignMissionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params );
+    static void AssignMissionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ); 
 
     static void Copy( const MIL_OrderType_ABC& orderType, const sword::MissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 

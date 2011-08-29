@@ -12,6 +12,8 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Mission_ABC.h"
@@ -512,8 +514,19 @@ void MIL_MissionParameterFactory::SetResourceNetworkParameter( boost::shared_ptr
     pMission->SetParameter( parameter, CreateResourceNetwork( resourceNetwork ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetCrowdKnowledgeParameter
+// Created: DDA 2011-08-29
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetCrowdKnowledgeParameter( DEC_Decision_ABC* caller, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = caller->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    pMission->SetParameter( parameter, CreatePopulationKnowledge( pKnowledge ) ); 
+}
+
 void MIL_MissionParameterFactory::AssignMissionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params )
 {
     boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( params ) );
     pMission->SetParameter( parameter, listParam );
 }
+
