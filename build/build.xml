@@ -8,7 +8,9 @@
         <format property="flex.expiration" pattern="d-MMM-yyyy" offset="3" unit="month" locale="en,US"/>
     </tstamp>
 
-    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
+    <property environment="env"/>
+    <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
@@ -146,8 +148,7 @@
     
     <target name="library.crossbow_plugin_dll" depends="library.crossbow_plugin" description="build crossbow_plugin dynamic library">
         <build-lib name="crossbow_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd"
-            libs="gdal_i,
-                  Qt3Support4,
+            libs="gdal_i,Qt3Support4,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -800,7 +801,7 @@
     <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
         <build-test name="plugins" depends="xerces,terrain,boost,openssl,protobuf,qt4"
             libs="directia-${platform}-mt-4_6,gdal_i,
-			      Qt3Support4,
+                  Qt3Support4,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -819,7 +820,7 @@
     <target name="hla_plugin_test" depends="library.hla_plugin" if="is-vc80">
         <build-test name="hla_plugin" depends="boost,qt4,terrain,xerces,protobuf"
             libs="HLA,
-				  Qt3Support4,
+                  Qt3Support4,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -839,8 +840,7 @@
 
     <target name="clients_test" depends="library.indicators,library.preparation">
         <build-test name="clients" depends="terrain,boost,qt4,xerces,xalan,protobuf"
-            libs="svgl,zipstream,zlib1,
-				  Qt3Support4,
+            libs="svgl,zipstream,zlib1,Qt3Support4,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_indicators-${platform}-mt,
@@ -859,7 +859,7 @@
     <target name="actions_test" depends="library.actions">
         <build-test name="actions" depends="terrain,boost,qt4,xerces,xalan,protobuf"
             libs="Qt3Support4,
-			      lib${ant.project.name}_tools-${platform}-mt,
+                  lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_actions-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
@@ -872,7 +872,7 @@
     <target name="dispatcher_test" depends="library.dispatcher,library.messenger_plugin">
         <build-test name="dispatcher" depends="boost,qt4,xerces,xalan,terrain,protobuf"
             libs="Qt3Support4,
-				  lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_clients_kernel-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -890,7 +890,7 @@
     <target name="launcher_test" depends="application.launcher_dll,library.frontend">
         <build-test name="launcher" depends="boost,qt4,xerces,protobuf"
             libs="Qt3Support4,
-			      launcher-${platform}-mt@{suffix},tools,
+                  launcher-${platform}-mt@{suffix},tools,
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
@@ -905,7 +905,7 @@
     <target name="mission_tester_test" depends="library.mission_tester">
         <build-test name="mission_tester" depends="boost,protobuf,qt4,terrain,xalan,xerces"
             libs="Qt3Support4,
-				  lib${ant.project.name}_mission_tester-${platform}-mt,
+                  lib${ant.project.name}_mission_tester-${platform}-mt,
                   lib${ant.project.name}_client_proxy-${platform}-mt,
                   lib${ant.project.name}_actions-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
