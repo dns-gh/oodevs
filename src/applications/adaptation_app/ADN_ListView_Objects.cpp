@@ -124,8 +124,8 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     ADN_Objects_Data::ADN_CapacityInfos_Mobility& mobility = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Mobility >( ADN_Objects_GUI::eMobilityCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eMobilityCapacity_DefaultSpeed ]->Connect( &mobility.rDefaultSpeed_, bConnect );
-    vItemConnectors_[ ADN_Objects_GUI::eMobilityCapacity_SpeedModifier ]->Connect( &mobility.nSpeedModifier_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eMobilityCapacity_MaxAgentSpeed ]->Connect( &mobility.rMaxAgentSpeed_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eMobilityCapacity_SpeedModifier ]->Connect( &mobility.nSpeedModifier_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Trafficability& trafficability = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Trafficability >( ADN_Objects_GUI::eTrafficabilityCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eLimitedTrafficability ]->Connect( &trafficability.limited_, bConnect );
