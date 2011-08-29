@@ -989,7 +989,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveCriticalIntelligence( msg );
         break;
     case sword::UnitMagicAction::reload_brain:
-        GetDecision().Reload();
+        CancelAllActions();
+        GetDecision().Reload(); 
+        pOrderManager_->CancelMission();
         break;
     default:
         assert( false );

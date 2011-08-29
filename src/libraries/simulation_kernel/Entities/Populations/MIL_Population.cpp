@@ -1089,7 +1089,9 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         OnReceiveCriticalIntelligence( msg );
         break;
     case sword::UnitMagicAction::reload_brain:
-        GetDecision().Reload();
+        CancelAllActions();
+        GetDecision().Reload(); 
+        orderManager_.CancelMission();
         break;
     default:
         assert( false );
