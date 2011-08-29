@@ -130,9 +130,6 @@
     <Filter Include="Source Files\Entities\Agents\Actions\Transport">
       <UniqueIdentifier>{1c12dc30-407d-4340-adea-34973fbf15a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Agents\Actions\ConvoySupply">
-      <UniqueIdentifier>{dc38632a-4596-4b9f-bf69-08b64f22b2e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Entities\Agents\Actions\ComposanteLending">
       <UniqueIdentifier>{10979086-f420-437b-b8a6-c431c274383f}</UniqueIdentifier>
     </Filter>
@@ -498,6 +495,30 @@
     </Filter>
     <Filter Include="Source Files\Entities\Agents\Actions\CrowdTransport">
       <UniqueIdentifier>{4894cd33-7e3d-4b09-bcd1-17b557c9d938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Consign">
+      <UniqueIdentifier>{3e5ed091-709e-442f-90f5-e19ec116a90a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy">
+      <UniqueIdentifier>{94c239ec-2f09-4fac-9f0e-6e8c15b16784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Conveyor">
+      <UniqueIdentifier>{44e53d60-0b23-41c6-8dab-c9356bd58af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Factory">
+      <UniqueIdentifier>{95299fe5-284d-41ff-862d-2cb924b112a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Request">
+      <UniqueIdentifier>{171e0f7f-381e-447a-b9d0-d576910e0bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders">
+      <UniqueIdentifier>{f927c329-fc17-4fea-b975-c3ce91b977ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Request dispatchers">
+      <UniqueIdentifier>{4c59d69a-c27b-4f1d-9116-85a2f5c38e6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Resource">
+      <UniqueIdentifier>{04c855a0-0bd0-4f42-aa3b-cc9a8b4ad0ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -927,12 +948,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_RoleAction_Transport.cpp">
       <Filter>Source Files\Entities\Agents\Actions\Transport</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyLoad.cpp">
-      <Filter>Source Files\Entities\Agents\Actions\ConvoySupply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyUnload.cpp">
-      <Filter>Source Files\Entities\Agents\Actions\ConvoySupply</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendCollectionComposantes.cpp">
       <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
     </ClCompile>
@@ -1059,15 +1074,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RolePion_Reinforcement.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Surrender\Reinforcement</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Conveyor.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Convoy_ABC.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_DotationConvoy.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Supply.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClCompile>
@@ -1077,40 +1083,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOGConvoy_Supply.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_StockConvoy.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyConsign_ABC.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationConsign.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequest.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequestContainer.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationState.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyResourcesAlarms.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyState_ABC.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockConsign.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequest.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequestContainer.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockState.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceComposanteState.cpp">
@@ -2463,6 +2436,69 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Consign</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoy.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyConfig.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyReal.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyVirtual.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConveyor.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Conveyor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyRealFactory.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyVirtualFactory.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.cpp">
+      <Filter>Source Files\Entities\Agents\Units\Weapons\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyResourceDotation.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyResourceStock.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestHierarchyDispatcher.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestManualDispatcher.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyDotationRequestBuilder.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockManualRequestBuilder_ABC.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPullFlowRequestBuilder.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPushFlowRequestBuilder.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequest.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestContainer.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -3005,12 +3041,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\transport\PHY_RoleAction_Transport.h">
       <Filter>Source Files\Entities\Agents\Actions\Transport</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyLoad.h">
-      <Filter>Source Files\Entities\Agents\Actions\ConvoySupply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ConvoySupply\PHY_ActionConvoyUnload.h">
-      <Filter>Source Files\Entities\Agents\Actions\ConvoySupply</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendCollectionComposantes.h">
       <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
     </ClInclude>
@@ -3185,15 +3215,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RolePion_Reinforcement.h">
       <Filter>Source Files\Entities\Agents\Roles\Surrender\Reinforcement</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Conveyor.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_Convoy_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_DotationConvoy.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Supply.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClInclude>
@@ -3203,43 +3224,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RolePionLOGConvoy_Supply.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_StockConvoy.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyConsign_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationConsign.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequest.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationRequestContainer.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyDotationState.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyRequest_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyResourcesAlarms.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyState_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockConsign.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequest.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockRequestContainer.h">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyStockState.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_MaintenanceComposanteState.h">
@@ -4814,6 +4799,102 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Consign</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Consign</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoy.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoy_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyConfig.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyEventsObserver_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyReal.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyReal_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyVirtual.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConveyor.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Conveyor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConveyor_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Conveyor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyFactory_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyRealFactory.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoyVirtualFactory.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Convoy\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.h">
+      <Filter>Source Files\Entities\Agents\Units\Weapons\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyResource_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyResourceDotation.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyResourceStock.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestDispatcher_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestHierarchyDispatcher.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestManualDispatcher.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyDotationRequestBuilder.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestBuilder_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockManualRequestBuilder_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPullFlowRequestBuilder.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPushFlowRequestBuilder.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequest.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequest_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestContainer.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestContainer_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl">
@@ -4827,9 +4908,6 @@
     </None>
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentTypePion.inl">
       <Filter>Source Files\Entities\Agents\Types</Filter>
-    </None>
-    <None Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_SupplyRequest_ABC.inl">
-      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </None>
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RolePion_Composantes.inl">
       <Filter>Source Files\Entities\Agents\Roles\Composantes</Filter>

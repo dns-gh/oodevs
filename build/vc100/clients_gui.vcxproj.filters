@@ -850,6 +850,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableResource.cpp">
       <Filter>Source Files\Dialogs\Unit state</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1364,6 +1367,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

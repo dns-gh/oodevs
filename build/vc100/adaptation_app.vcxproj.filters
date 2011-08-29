@@ -1255,6 +1255,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\XmlResources.cpp">
       <Filter>Resources\xml</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.cpp">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1910,6 +1913,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

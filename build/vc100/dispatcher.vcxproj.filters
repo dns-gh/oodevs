@@ -432,9 +432,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignSupply.cpp">
       <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyDotation.cpp">
-      <Filter>Source Files\Model\Logistic\Consigns</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\Frames.cpp">
       <Filter>Source Files\Replay</Filter>
     </ClCompile>
@@ -476,6 +473,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\RotatingLog.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.cpp">
+      <Filter>Source Files\Model\Logistic\Consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.cpp">
+      <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -881,9 +884,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignSupply.h">
       <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyDotation.h">
-      <Filter>Source Files\Model\Logistic\Consigns</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\Frames.h">
       <Filter>Source Files\Replay</Filter>
     </ClInclude>
@@ -967,6 +967,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\RotatingLog.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.h">
+      <Filter>Source Files\Model\Logistic\Consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.h">
+      <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

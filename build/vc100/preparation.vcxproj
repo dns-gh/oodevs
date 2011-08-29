@@ -152,6 +152,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\Population.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\PopulationHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\PopulationPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\WeatherModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileSelection.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="..\..\src\libraries\preparation\Symbol.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TacticalHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Tools.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Types.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Team.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TeamFactory.h" />

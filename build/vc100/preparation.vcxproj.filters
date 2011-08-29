@@ -520,6 +520,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\Symbol.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\TrafficabilityAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -965,6 +968,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\Symbol.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\TrafficabilityAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

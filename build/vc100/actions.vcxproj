@@ -141,6 +141,8 @@
     <ClCompile Include="..\..\src\libraries\actions\Polygon.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\PopulationKnowledge.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\PopulationKnowledgeOrder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\PullFlowParameters.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\PushFlowParameters.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\Quantity.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ResourceNetwork.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\String.cpp" />
@@ -216,6 +218,8 @@
     <ClInclude Include="..\..\src\libraries\actions\Polygon.h" />
     <ClInclude Include="..\..\src\libraries\actions\PopulationKnowledge.h" />
     <ClInclude Include="..\..\src\libraries\actions\PopulationKnowledgeOrder.h" />
+    <ClInclude Include="..\..\src\libraries\actions\PullFlowParameters.h" />
+    <ClInclude Include="..\..\src\libraries\actions\PushFlowParameters.h" />
     <ClInclude Include="..\..\src\libraries\actions\Quantity.h" />
     <ClInclude Include="..\..\src\libraries\actions\ResourceNetwork.h" />
     <ClInclude Include="..\..\src\libraries\actions\String.h" />

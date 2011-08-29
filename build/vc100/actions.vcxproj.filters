@@ -220,6 +220,12 @@
     <ClCompile Include="..\..\src\libraries\actions\ActionTiming.cpp">
       <Filter>Source Files\Action types\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\PullFlowParameters.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\PushFlowParameters.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\actions\Action_ABC.h">
@@ -443,6 +449,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\ActionTiming.h">
       <Filter>Source Files\Action types\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\PullFlowParameters.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\PushFlowParameters.h">
+      <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -97,13 +97,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Borrowings.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Casualties.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Dotation.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\DotationRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Equipment.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Loan.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LocationPositions.cpp" />
@@ -317,6 +318,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Symbol.h" />
     <ClInclude Include="..\..\src\libraries\gaming\VisionConesToggler.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h" />
@@ -324,7 +327,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\Borrowings.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Casualties.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Dotation.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\DotationRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Equipment.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Loan.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LocationPositions.h" />

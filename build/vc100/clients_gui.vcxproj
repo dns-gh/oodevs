@@ -136,6 +136,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.cpp" />
@@ -699,6 +700,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SpinTableItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Types.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ValuedComboBox.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>

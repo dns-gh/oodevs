@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\StockPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SupplyRoutePrototype.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UndergroundPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableCrew.cpp" />
@@ -398,6 +399,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\UndergroundPrototype.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UnitStateDialog.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

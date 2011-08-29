@@ -123,6 +123,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\PluginFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Services.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Simulation.cpp" />
@@ -225,7 +227,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMedical.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignSupply.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyDotation.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Frames.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Loader.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\MessageLoader.cpp" />
@@ -245,6 +246,8 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Dispatcher.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\dispatcher_pch.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Services.h" />
@@ -376,7 +379,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMedical.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignSupply.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyDotation.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Frames.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Loader.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\MessageLoader.h" />
