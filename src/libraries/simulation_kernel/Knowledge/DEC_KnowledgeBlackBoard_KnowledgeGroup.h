@@ -37,6 +37,7 @@ class MIL_Object_ABC;
 class MIL_Population;
 class TER_Localisation;
 class TER_Polygon;
+class KnowledgesVisitor_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_KnowledgeGroup
@@ -67,6 +68,7 @@ public:
     DEC_BlackBoard_CanContainKnowledgePopulation& GetKnowledgePopulationContainer() const;
     DEC_BlackBoard_CanContainKnowledgeObject* GetKnowledgeObjectContainer() const;
     void UpdateKnowledgeObjectContainer();
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Operations

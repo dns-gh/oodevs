@@ -20,6 +20,7 @@ class DEC_Knowledge_Object;
 class MIL_Object_ABC;
 class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
+class KnowledgesVisitor_ABC;
 
 // =============================================================================
 /** @class  DEC_BlackBoard_CanContainKnowledgeObject
@@ -47,10 +48,9 @@ public:
     //! @name Operations
     //@{
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
-
     void DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
-
     void NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Queries

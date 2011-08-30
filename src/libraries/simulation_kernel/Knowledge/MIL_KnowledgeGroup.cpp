@@ -1208,3 +1208,12 @@ DEC_BlackBoard_CanContainKnowledgeObject& MIL_KnowledgeGroup::GetKnowledgeObject
         return *pKnowledgeObjectContainer;
     return army_->GetKnowledge().GetKnowledgeObjectContainer();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::Accept
+// Created: LGY 2011-08-29
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    knowledgeBlackBoard_->Accept( visitor );
+}

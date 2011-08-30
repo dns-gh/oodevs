@@ -128,6 +128,15 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::Count
+// Created: LGY 2011-08-29
+// -----------------------------------------------------------------------------
+unsigned long MIL_ObjectManager::Count() const
+{
+    return objects_.size();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::GetType
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------

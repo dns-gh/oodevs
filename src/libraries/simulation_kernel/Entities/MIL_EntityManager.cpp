@@ -301,6 +301,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -1822,6 +1823,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1990,7 +1992,7 @@ MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned i
     MIL_KnowledgeGroup* pCurKG = knowledgeGroupFactory_->Find( nID );
     if ( pCurKG )
         return pCurKG;
-    knowledgeGroupFactory_->Apply( boost::bind( &FindKnowledgeGroupFromParent, &pCurKG, nID, _1 ) );       
+    knowledgeGroupFactory_->Apply( boost::bind( &FindKnowledgeGroupFromParent, &pCurKG, nID, _1 ) );
     return pCurKG;
 }
 
@@ -2112,6 +2114,15 @@ double MIL_EntityManager::GetStatesTime() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetObjectsCount
+// Created: LGY 2011-08-29
+// -----------------------------------------------------------------------------
+unsigned long MIL_EntityManager::GetObjectsCount() const
+{
+    return pObjectManager_->Count();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::setToTasker
 // Created: PHC 2010-07-07
 // -----------------------------------------------------------------------------
@@ -2146,4 +2157,13 @@ MIL_Population* MIL_EntityManager::CreateCrowd( const std::string& type, const M
 MIL_Population* MIL_EntityManager::FindPopulation( UrbanObjectWrapper* urbanObject ) const
 {
     return populationFactory_->FindByUrbanObject( urbanObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::Accept
+// Created: LGY 2011-08-29
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
 }

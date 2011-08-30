@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_Knowledge_Population.h"
+#include "KnowledgesVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MT_Tools/MT_ScipioException.h"
 
@@ -114,4 +115,13 @@ DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowl
     if( itKnowledge != knowledgePopulationMap_.end() )
         return itKnowledge->second;
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulation::Accept
+// Created: LOIC 2011-08-29
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgePopulation::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    visitor.VisitKnowledgesPopulation( knowledgePopulationMap_.size() );
 }

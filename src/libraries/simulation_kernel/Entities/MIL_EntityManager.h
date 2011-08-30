@@ -80,6 +80,7 @@ class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
 class UrbanObjectWrapper;
+class KnowledgesVisitor_ABC;
 
 // =============================================================================
 // @class  MIL_EntityManager
@@ -130,6 +131,8 @@ public:
     const bool HasInfiniteDotations() const;
     UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
+
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Stats
@@ -142,6 +145,7 @@ public:
     double GetActionsTime            () const;
     double GetEffectsTime            () const;
     double GetStatesTime             () const;
+    unsigned long GetObjectsCount    () const;
     //@}
 
     //! @name Operations

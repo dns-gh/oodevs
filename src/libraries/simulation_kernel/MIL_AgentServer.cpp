@@ -24,6 +24,7 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
+#include "KnowledgesVisitor_ABC.h"
 #include "tools/WorldParameters.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
@@ -230,6 +231,41 @@ void MIL_AgentServer::OnTimer()
         Pause();
 }
 
+namespace
+{
+    class KnowledgesVisitor : public KnowledgesVisitor_ABC
+    {
+    public:
+        explicit KnowledgesVisitor()
+            : agents_     ( 0 )
+            , objects_    ( 0 )
+            , populations_( 0 )
+        {
+            // NOTHING
+        }
+        virtual void VisitKnowledgesAgent( unsigned long knowledges )
+        {
+            agents_ += knowledges;
+        }
+        virtual void VisitKnowledgesObject( unsigned long knowledges )
+        {
+            objects_ += knowledges;
+        }
+        virtual void VisitKnowledgesPopulation( unsigned long knowledges )
+        {
+            populations_ += knowledges;
+        }
+        unsigned long Count()
+        {
+            return agents_ + objects_ + populations_;
+        }
+    public:
+        unsigned long agents_;
+        unsigned long objects_;
+        unsigned long populations_;
+    };
+}
+
 //-----------------------------------------------------------------------------
 // Name:  MIL_AgentServer::mainSimLoop
 // Created: JVT 02-06-21
@@ -257,6 +293,11 @@ void MIL_AgentServer::MainSimLoop()
         pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
         pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests() ) );
     }
+
+    KnowledgesVisitor visitor;
+    pEntityManager_->Accept( visitor );
+    MT_LOG_INFO_MSG( MT_FormatString( "%d Objects - %d Knowledges ( %d Knowledge agents, %d Knowledge objects, %d Knowledge populations )" , pEntityManager_->GetObjectsCount(),
+                     visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();
     pEntityManager_->Clean();

@@ -18,6 +18,7 @@
 class DEC_Knowledge_Agent;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
+class KnowledgesVisitor_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -53,6 +54,7 @@ public:
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown );
     void                 DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
     void                 SaveAllCurrentKnowledgeAgent();
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Queries

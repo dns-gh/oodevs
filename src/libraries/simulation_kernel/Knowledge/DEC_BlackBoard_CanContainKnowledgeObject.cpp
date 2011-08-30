@@ -14,6 +14,7 @@
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Object.h"
+#include "KnowledgesVisitor_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -223,4 +224,13 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 bool DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
     return objectMap_.find( &objectKnown ) != objectMap_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::Accept
+// Created: LGY 2011-08-29
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    visitor.VisitKnowledgesObject( objectMap_.size() );
 }

@@ -17,6 +17,7 @@
 class DEC_Knowledge_Population;
 class MIL_KnowledgeGroup;
 class MIL_Population;
+class KnowledgesVisitor_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -51,6 +52,7 @@ public:
     //@{
     DEC_Knowledge_Population& CreateKnowledgePopulation ( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationPerceived );
     void DestroyKnowledgePopulation( DEC_Knowledge_Population& knowledge );
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Queries

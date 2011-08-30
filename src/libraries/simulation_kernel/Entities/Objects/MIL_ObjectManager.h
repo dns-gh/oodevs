@@ -64,6 +64,7 @@ public:
     //@{
     void ProcessEvents();
     void UpdateStates ();
+    unsigned long Count() const;
 
     //@TODO MGD return reference
     MIL_Object_ABC& CreateObject( xml::xistream& xis, MIL_Army_ABC& army );

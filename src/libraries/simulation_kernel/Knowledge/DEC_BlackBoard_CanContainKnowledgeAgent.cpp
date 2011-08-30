@@ -14,6 +14,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Agent.h"
 #include "MIL_AgentServer.h"
+#include "KnowledgesVisitor_ABC.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"
@@ -339,3 +340,11 @@ const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetSurren
     return surrenderedAgentsContainer_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::Accept
+// Created: LGY 2011-08-29
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeAgent::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    visitor.VisitKnowledgesAgent( realAgentMap_.size() );
+}

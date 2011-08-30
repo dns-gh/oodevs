@@ -712,3 +712,15 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer()
         pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( visitor );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::Accept
+// Created: LGY 2011-08-29
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    pKnowledgeAgentContainer_->Accept( visitor );
+    pKnowledgePopulationContainer_->Accept( visitor );
+    if( pKnowledgeObjectContainer_ )
+        pKnowledgeObjectContainer_->Accept( visitor );
+}

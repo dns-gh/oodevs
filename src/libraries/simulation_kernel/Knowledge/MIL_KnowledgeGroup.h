@@ -37,6 +37,7 @@ class MIL_Object;
 class MIL_Object_ABC;
 class MIL_Population;
 class PHY_PerceptionLevel;
+class KnowledgesVisitor_ABC;
 
 // LTO begin
 class KnowledgeGroupFactory_ABC;
@@ -143,6 +144,7 @@ public:
           void                                    SetParent( MIL_KnowledgeGroup* parent );
     // LTO end
           bool IsJammed() const;
+          void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Network
