@@ -84,7 +84,6 @@ void BurnAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
        << combustionEnergy_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BurnAttribute::Instanciate
 // Created: BCI 2010-12-09

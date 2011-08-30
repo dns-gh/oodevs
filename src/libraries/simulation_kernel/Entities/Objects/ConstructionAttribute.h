@@ -110,7 +110,6 @@ private:
     typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > > StockDotations;
     //@}
 
-
 private:
     //! @name Member data
     //@{

@@ -155,7 +155,7 @@ double MIL_NbcAgentType::GetGasPropagationAngle() const
 inline
 double MIL_NbcAgentType::GetCoefMaxSpeedModificator()
 {
-    return rCoefMaxSpeedModificator_;    
+    return rCoefMaxSpeedModificator_;
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ double MIL_NbcAgentType::GetCoefMaxSpeedModificator()
 inline
 double MIL_NbcAgentType::GetCoefReloadingTimeModificator()
 {
-    return rCoefReloadingTimeModificator_;    
+    return rCoefReloadingTimeModificator_;
 }
 
 // -----------------------------------------------------------------------------

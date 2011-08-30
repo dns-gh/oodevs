@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 //------------------------------------------------------------------------------
 // Name: MIL_FireFunctor.cpp
 // Created: RFT 22/04/2008
@@ -20,7 +19,6 @@
 #include "MIL_FireFunctor.h"
 #include "MIL_FireClass.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FireFunctor constructor
@@ -69,7 +67,6 @@ void MIL_FireFunctor::operator()( const PHY_ComposantePion& composantePion, cons
         bestExtinguisherAgentandFireHoseRange_.range_ = result.range_;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GetExtinguisherAgentNumber

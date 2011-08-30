@@ -52,7 +52,6 @@ public:
     template < typename Archive > void serialize( Archive& file, const unsigned int );
     //@}
 
-
     //! @name Operations
     //@{
     void SetType( sword::ObstacleType_DemolitionTargetType obstacleType );

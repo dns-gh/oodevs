@@ -70,5 +70,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( PopulationAttribute )
 
-
 #endif //__PopulationAttribute_h_

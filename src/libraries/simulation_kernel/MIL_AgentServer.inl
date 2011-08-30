@@ -215,8 +215,8 @@ resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
 inline
 MIL_BurningCells& MIL_AgentServer::GetBurningCells() const
 {
-	assert( pBurningCells_ );
-	return *pBurningCells_;
+    assert( pBurningCells_ );
+    return *pBurningCells_;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,8 +226,8 @@ MIL_BurningCells& MIL_AgentServer::GetBurningCells() const
 inline
 MIL_PropagationManager& MIL_AgentServer::GetPropagationManager() const
 {
-	assert( pPropagationManager_ );
-	return *pPropagationManager_;
+    assert( pPropagationManager_ );
+    return *pPropagationManager_;
 }
 
 //-----------------------------------------------------------------------------

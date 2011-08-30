@@ -194,7 +194,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 
     MIL_Army_ABC* pArmy = 0;
     if ( message.elem( 3 ).value().Get( 0 ).has_identifier() )
-        pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).identifier() );        
+        pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).identifier() );
     else if ( message.elem( 3 ).value().Get( 0 ).has_party() )
         pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
     if( !pArmy )

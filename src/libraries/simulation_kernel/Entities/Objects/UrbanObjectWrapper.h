@@ -85,7 +85,7 @@ public:
     const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     void Accept( urban::MotivationsVisitor_ABC& visitor ) const;
     float GetLivingSpace() const;
-	const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock();
+    const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock();
     //@}
 
     //! @name Inhabitants

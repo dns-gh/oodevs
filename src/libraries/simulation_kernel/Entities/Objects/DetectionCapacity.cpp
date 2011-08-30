@@ -33,7 +33,6 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DetectionCapacity )
 
-
 namespace
 {
     template< typename T >

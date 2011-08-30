@@ -25,7 +25,6 @@ namespace xml
     class xistream;
 }
 
-
 // =============================================================================
 /** @class  CrossingSiteAttribute
     @brief  CrossingSiteAttribute

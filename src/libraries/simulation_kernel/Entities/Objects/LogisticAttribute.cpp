@@ -65,7 +65,6 @@ LogisticAttribute::LogisticAttribute()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute destructor
 // Created: JCR 2008-05-22

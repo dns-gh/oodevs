@@ -47,7 +47,6 @@ public:
     virtual void Update( MIL_Object_ABC& object, unsigned int time );
     void Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ );
 
-
     //! @name Decisional functions
     //@{
     void TransferPatient();

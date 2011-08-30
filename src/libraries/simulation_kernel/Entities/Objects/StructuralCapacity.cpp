@@ -160,11 +160,11 @@ bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
     const double objectArea = object.GetLocalisation().GetArea();
     if( !objectArea )
         return false;
-    
+
     double ratio = 0.;
     if( attritionSurface.GetType() == TER_Localisation::ePoint || attritionSurface.GetType() == TER_Localisation::eLine )
         ratio = 1.0;
-    else    
+    else
         ratio = MIL_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
     const float oldStructuralState = structuralState_;
 

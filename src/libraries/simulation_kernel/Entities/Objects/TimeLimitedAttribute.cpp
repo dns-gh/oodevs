@@ -65,7 +65,6 @@ TimeLimitedAttribute::TimeLimitedAttribute( const sword::MissionParameter_Value&
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttributeconstructor
 // Created: JCR 2008-05-22

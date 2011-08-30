@@ -125,5 +125,4 @@ private:
 
 #include "MIL_NbcAgentType.inl"
 
-
 #endif // __MIL_NbcAgentType_h_

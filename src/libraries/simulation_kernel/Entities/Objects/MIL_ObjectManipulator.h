@@ -98,5 +98,4 @@ private:
     //@}
 };
 
-
 #endif // __MIL_ObjectManipulator_h_

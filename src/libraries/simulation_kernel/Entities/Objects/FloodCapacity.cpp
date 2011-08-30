@@ -62,7 +62,6 @@ FloodCapacity::~FloodCapacity()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: FloodCapacity::load
 // Created: JSR 2011-01-11

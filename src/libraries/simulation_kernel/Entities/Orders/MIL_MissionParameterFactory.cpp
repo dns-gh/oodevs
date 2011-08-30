@@ -520,12 +520,15 @@ void MIL_MissionParameterFactory::SetResourceNetworkParameter( boost::shared_ptr
 void MIL_MissionParameterFactory::SetCrowdKnowledgeParameter( DEC_Decision_ABC* caller, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int knowledgeId )
 {
     DEC_Knowledge_Population* pKnowledge = caller->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
-    pMission->SetParameter( parameter, CreatePopulationKnowledge( pKnowledge ) ); 
+    pMission->SetParameter( parameter, CreatePopulationKnowledge( pKnowledge ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::AssignMissionListParameter
+// Created: GGE 2011-06-27
+// -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::AssignMissionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params )
 {
     boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( params ) );
     pMission->SetParameter( parameter, listParam );
 }
-

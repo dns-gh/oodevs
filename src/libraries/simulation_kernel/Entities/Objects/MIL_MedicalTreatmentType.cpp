@@ -120,7 +120,6 @@ void MIL_MedicalTreatmentType::ReadInjury( xml::xistream& xis, InjuryTreatment& 
     injury.hospitalisationTime_ = GetSimTimeValue( xis, "hospitalisation-time", time_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_MedicalTreatmentType::Terminate
 // Created: RFT 19/05/2008

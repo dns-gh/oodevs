@@ -86,7 +86,7 @@ template< typename T, typename I > T& MIL_Object_ABC::GetAttribute()
 // Name: MIL_Object_ABC::RetrieveAttribute
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 T* MIL_Object_ABC::RetrieveAttribute()
 {
     return tools::Extendable< ObjectAttribute_ABC >::Retrieve< T >();
@@ -96,7 +96,7 @@ T* MIL_Object_ABC::RetrieveAttribute()
 // Name: MIL_Object_ABC::RetrieveAttribute
 // Created: LDC 2009-03-25
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 const T* MIL_Object_ABC::RetrieveAttribute() const
 {
     return tools::Extendable< ObjectAttribute_ABC >::Retrieve< T >();
@@ -106,7 +106,7 @@ const T* MIL_Object_ABC::RetrieveAttribute() const
 // Name: MIL_Object_ABC::AddCapacity
 // Created: JCR 2008-05-26
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 void MIL_Object_ABC::AddCapacity( T* capacity )
 {
     tools::Extendable< ObjectCapacity_ABC >::Attach( *capacity );
@@ -117,7 +117,7 @@ void MIL_Object_ABC::AddCapacity( T* capacity )
 // Name: MIL_Object_ABC::ProcessAgentsInside
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
-template< typename Functor > 
+template< typename Functor >
 void MIL_Object_ABC::ProcessAgentsInside( Functor functor ) const
 {
     interaction_.ProcessInteraction( functor );

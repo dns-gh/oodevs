@@ -45,7 +45,7 @@ public:
 
     static const MIL_FireClass* Find( const std::string& strName );
     static const MIL_FireClass* GetDefaultFireClass();
-    
+
     static int GetCellSize();
     //@}
 
@@ -60,10 +60,6 @@ public:
     void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
     const PHY_DotationCategory* FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const;
     int GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const;
-    //@}
-
-    //! @name 
-    //@{
     const PHY_UrbanAttritionData& GetUrbanAttritionData() const;
     //@}
 

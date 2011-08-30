@@ -88,7 +88,6 @@ public:
     bool bRequested_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells constructor
 // Created: BCI 2010-12-20

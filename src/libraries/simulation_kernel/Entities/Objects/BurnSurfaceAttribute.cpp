@@ -24,7 +24,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BurnSurfaceAttribute )
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > )
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > )
 
-
 // -----------------------------------------------------------------------------
 // Name: BurnSurfaceAttribute constructor
 // Created: BCI 2010-12-09
@@ -93,7 +92,6 @@ void BurnSurfaceAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned in
     ar << objectId;
     burningCells_.save( ar, *pObject_, version );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: BurnSurfaceAttribute::Instanciate

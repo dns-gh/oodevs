@@ -52,7 +52,6 @@ AttitudeModifierCapacity::AttitudeModifierCapacity( const AttitudeModifierCapaci
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AttitudeModifierCapacity destructor
 // Created: MGD 2010-03-12

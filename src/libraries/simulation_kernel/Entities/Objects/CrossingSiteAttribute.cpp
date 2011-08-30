@@ -106,7 +106,6 @@ void CrossingSiteAttribute::WriteODB( xml::xostream& xos ) const
         << xml::end; // specific-attributes
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::Instanciate
 // Created: JCR 2008-06-05

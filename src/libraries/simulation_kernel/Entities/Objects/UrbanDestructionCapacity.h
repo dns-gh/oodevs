@@ -50,21 +50,17 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    virtual void Update( MIL_Object_ABC& object, unsigned int time );
     //@}
 
-    //! @name 
+    //! @name Copy/Assignment
     //@{
     UrbanDestructionCapacity( const UrbanDestructionCapacity& from );
     UrbanDestructionCapacity& operator=( const UrbanDestructionCapacity& from );
     //@}
 
-    //! @name 
-    //@{
-    virtual void Update( MIL_Object_ABC& object, unsigned int time );
-    //@}
-
 private:
-    //! @name 
+    //! @name Member data
     //@{
     std::auto_ptr< PHY_UrbanAttritionData > data_;
     bool appliedOnce_;
@@ -73,4 +69,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( UrbanDestructionCapacity )
 
-#endif
+#endif // __UrbanDestructionCapacity_h_

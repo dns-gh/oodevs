@@ -65,7 +65,6 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
     miningPercentage_.Set( attributes.list( 4 ).quantity() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::Load
 // Created: JCR 2008-08-26

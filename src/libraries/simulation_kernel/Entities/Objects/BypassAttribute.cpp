@@ -38,7 +38,6 @@ BypassAttribute::BypassAttribute( const sword::MissionParameter_Value& attribute
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute destructor
 // Created: JCR 2008-05-30

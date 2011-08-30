@@ -97,7 +97,6 @@ void UrbanDestructionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned
 {
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     // TODO ar >> category_;
-    
 
 }
 
@@ -143,7 +142,7 @@ void UrbanDestructionCapacity::Update( MIL_Object_ABC& object, unsigned int /*ti
         std::vector< TER_Object_ABC* > objects;
         TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( object.GetLocalisation(), objects );
 
-        for( iterator it = objects.begin(); it != objects.end(); ++it ) 
+        for( iterator it = objects.begin(); it != objects.end(); ++it )
         {
             MIL_Object_ABC* pObject = static_cast< MIL_Object_ABC* >( *it );
             const TER_Localisation& location = object.GetLocalisation();

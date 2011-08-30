@@ -14,7 +14,6 @@
 #include <map>
 #include <set>
 
-
 namespace xml
 {
     class xistream;
@@ -110,7 +109,6 @@ private:
     const MIL_Time_ABC& time_;
     T_InjuryTreatments  treatments_;
     //@}
-
 
     //! @name Static data
     //@{

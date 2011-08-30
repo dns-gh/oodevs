@@ -33,7 +33,6 @@ ExtinguishableCapacity::ExtinguishableCapacity()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ExtinguishableCapacity constructor
 // Created: JCR 2008-05-22

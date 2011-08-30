@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectInteraction.h"
 #include "MIL_Object_ABC.h"
