@@ -43,7 +43,7 @@ namespace
         SpinBox( const SpinBox& );
         SpinBox& operator=( const SpinBox& );
 
-        virtual bool eventFilter( QObject*, QEvent* event )
+        virtual bool event( QEvent* event )
         {
             if( event->type() == QEvent::KeyPress )
             {
@@ -51,7 +51,7 @@ namespace
                 if( key == Qt::Key_Enter || key == Qt::Key_Return )
                     toolBar_.SlotSpeedChange();
             }
-            return false;
+            return QSpinBox::event( event );
         }
 
     private:
