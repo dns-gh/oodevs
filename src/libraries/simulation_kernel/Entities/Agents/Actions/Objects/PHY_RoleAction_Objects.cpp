@@ -205,12 +205,17 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
         // $$$$ TODO: refactor to handle more than a single resource
         const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
         const unsigned int nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
-        const PHY_DotationCategory* pDotationCategory  = object.Get< BuildableCapacity >().GetDotationCategory();
-
         object().Destroy( rDeltaPercentage );
 
-        if( pDotationCategory && pion_.GetArmy() == *pObject->GetArmy() )
-            dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
+        if( nDotationRecovered && pion_.GetArmy() == *pObject->GetArmy() )
+        {
+            BuildableCapacity* pCapacity = object.Retrieve< BuildableCapacity >();
+            if( pCapacity )
+            {
+                const PHY_DotationCategory* pDotationCategory  = pCapacity->GetDotationCategory();
+                dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
+            }
+        }
         if( attribute.GetState() == 0. )
         {
             pion_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
