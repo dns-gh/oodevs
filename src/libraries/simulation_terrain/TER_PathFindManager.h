@@ -21,7 +21,6 @@
 
 #include "TER_PathFinderThread.h"
 
-class TerrainData;
 class TER_DynamicData;
 class TER_StaticData;
 class TER_PathFindRequest_ABC;
@@ -53,8 +52,6 @@ public:
 
     void AddDynamicData   ( TER_DynamicData& data );
     void RemoveDynamicData( TER_DynamicData& data );
-
-    TerrainData Pick( const MT_Vector2D& pos );
     //@}
 
 private:

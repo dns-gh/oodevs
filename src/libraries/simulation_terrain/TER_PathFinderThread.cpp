@@ -9,7 +9,6 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PathFinderThread.h"
-#include "TER_NodeFunctor_ABC.h"
 #include "TER_PathFindRequest_ABC.h"
 #include "TER_DynamicData.h"
 #include "TER_StaticData.h"
@@ -21,10 +20,6 @@
 #include "MT_Tools/MT_FormatString.h"
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/TerrainRetractationHandle.h>
-#include <pathfind/TerrainRule_ABC.h>
-#include <pathfind/TerrainHeuristic.h>
-#include <spatialcontainer/Node.h>
-#include <spatialcontainer/SpatialContainerTraits.h>
 #include <boost/filesystem/convenience.hpp>
 
 using namespace spatialcontainer;
@@ -146,18 +141,6 @@ TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVe
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         geometryPoints.push_back( MakePoint( *it ) );
     return pPathfinder_->CreateDynamicData( geometryPoints.begin(), geometryPoints.end(), terrainData );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::Pick
-// Created: BCI 2011-03-04
-// -----------------------------------------------------------------------------
-TerrainData TER_PathFinderThread::Pick( const MT_Vector2D& pos )
-{
-    TerrainRetractationHandle& handle = pPathfinder_->CreateRetractationHandle();
-    TerrainData data = pPathfinder_->Pick( MakePoint( pos ), handle );
-    delete &handle;
-    return data;
 }
 
 // -----------------------------------------------------------------------------

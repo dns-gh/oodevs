@@ -65,5 +65,4 @@ private:
     boost::mutex mutex_;
 };
 
-
 #endif // __TER_DynamicData_h_

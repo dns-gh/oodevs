@@ -95,5 +95,4 @@ void TER_DynamicData::UnregisterDynamicData( TER_PathFinderThread& thread )
     }
     if( bMustBeDeleted )
         delete this;
- }
-
+}

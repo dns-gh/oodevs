@@ -85,3 +85,12 @@ TerrainData TER_AnalyzerManager::FindTerrainDataWithinCircle( const MT_Vector2D&
 {
     return pAnalyzer_->FindTerrainDataWithinCircle( center, radius );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_AnalyzerManager::Pick
+// Created: CMA 2011-08-29
+// -----------------------------------------------------------------------------
+TerrainData TER_AnalyzerManager::Pick( const MT_Vector2D& pos )
+{
+    return pAnalyzer_->Pick( pos );
+}

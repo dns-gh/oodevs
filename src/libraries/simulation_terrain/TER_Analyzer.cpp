@@ -21,6 +21,7 @@
 TER_Analyzer::TER_Analyzer( const TER_StaticData& staticData )
 {
     pAnalyzer_ = new TerrainAnalyzer( staticData );
+    pAnalyzer_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +63,10 @@ namespace
     {
         return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
     };
+    inline boost::shared_ptr< MT_Vector2D > MakeVectorPointer( const geometry::Point2f& p )
+    {
+        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( p.X() ), static_cast< double >( p.Y() ) ) );
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -80,11 +85,11 @@ void TER_Analyzer::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double 
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius )
 {
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
     std::vector< spatialcontainer::Node< TerrainData >* > result = pAnalyzer_->FindCrossroadNodesWithinCircle( MakePoint( center ), radius );
-    std::vector< boost::shared_ptr< MT_Vector2D > > points;
     for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
-        points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( (*it)->X() ), static_cast< double >( (*it)->Y() ) ) ) );
-    return points;
+        result.push_back( MakeVectorPointer( **it ) );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,11 +98,11 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindCrossroadsWith
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )
 {
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
     std::vector< geometry::Point2f > result = pAnalyzer_->FindSafetyPositionsWithinCircle( MakePoint( center ), radius, safetyDistance );
-    std::vector< boost::shared_ptr< MT_Vector2D > > points;
     for( std::vector< geometry::Point2f >::const_iterator it = result.begin(); it != result.end(); ++it )
-        points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( it->X() ), static_cast< double >( it->Y() ) ) ) );
-    return points;
+        result.push_back( MakeVectorPointer( *it ) );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,10 +113,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindAllPositions( 
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindNodesWithinCircle( MakePoint( center ), radius );
-    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
-    {
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( (**iterator).X(), (**iterator).Y() ) ) );
-    }
+    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator it = nodes.begin(); it != nodes.end(); ++it )
+        result.push_back( MakeVectorPointer( **it ) );
     return result;
 }
 
@@ -124,8 +127,17 @@ TerrainData TER_Analyzer::FindTerrainDataWithinCircle( const MT_Vector2D& center
     TerrainData result;
     std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindNodesWithinCircle( MakePoint( center ), radius );
     for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
-    {
         result.Merge( TerrainData::BuildData( **iterator ) );
-    }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Analyzer::Pick
+// Created: BCI 2011-03-04
+// -----------------------------------------------------------------------------
+TerrainData TER_Analyzer::Pick( const MT_Vector2D& pos )
+{
+    return pAnalyzer_->Pick( MakePoint( pos ), 100000.f );
+}
+
 }

@@ -45,11 +45,6 @@ public:
     TerrainRetractationHandle& CreateLineTree( const T_PointVector& points, const TerrainData& terrainData );
     //@}
 
-    //! @name Terrain analysis
-    //@{
-    TerrainData Pick( const MT_Vector2D& pos );
-    //@}
-
     //! @name Operations
     //@{
     void ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );

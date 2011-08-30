@@ -47,7 +47,9 @@ public:
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );
     std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance );
     std::vector< boost::shared_ptr< MT_Vector2D > > FindAllPositions( const MT_Vector2D& center, float radius );
+
     TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
+    TerrainData Pick( const MT_Vector2D& pos );
     //@}
 
 private:

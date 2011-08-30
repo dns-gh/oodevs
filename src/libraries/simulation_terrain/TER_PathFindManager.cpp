@@ -81,12 +81,3 @@ void TER_PathFindManager::RemoveDynamicData( TER_DynamicData& data )
     for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
         data.AddForUnregistration( **it );
 }
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::Pick
-// Created: BCI 2011-03-04
-// -----------------------------------------------------------------------------
-TerrainData TER_PathFindManager::Pick( const MT_Vector2D& pos )
-{
-    return threads_.back()->Pick( pos );
-}
