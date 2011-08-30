@@ -17,6 +17,7 @@ class PHY_ComposanteState;
 class PHY_DotationCategory;
 class PHY_UrbanAttritionData;
 class PHY_Protection;
+class MIL_Army_ABC;
 class TER_Localisation;
 
 namespace xml
@@ -28,11 +29,6 @@ namespace sword
 {
     class UrbanAttributes;
     class MissionParameter_Value;
-}
-
-namespace urban
-{
-    class MaterialCompositionType;
 }
 
 // =============================================================================
@@ -58,9 +54,10 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
-    void ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
-    void ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition );
-    
+    void ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface,
+                            const PHY_UrbanAttritionData& attrition );
+    void ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface,
+                            const PHY_DotationCategory& dotation, MIL_Army_ABC* army );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
     void Build( double rDeltaPercentage );
@@ -72,17 +69,14 @@ public:
 
     //! @name From MIL_InteractiveContainer_ABC
     //@{
-    virtual void CanInteractWith( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
-    virtual void ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );
-    virtual void ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );
-    virtual void ProcessAgentMovingInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
-    virtual void ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
-    virtual void ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {};
+    virtual void ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     //@}
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive& file, const unsigned int );
+    template< typename Archive >
+    void serialize( Archive& file, const unsigned int );
     //@}
 
 private:
@@ -94,13 +88,14 @@ private:
 
     //! @name Helpers
     //@{
-    void ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, double factor );
+    bool ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, double factor );
+    void CreateCrumbling( MIL_Object_ABC& object, const TER_Localisation& surface, MIL_Army_ABC& army ) const;
     //@}
 
     //! @name types
     //@{
     typedef std::set< MIL_Agent_ABC* > T_Agents;
-    typedef T_Agents::iterator         IT_Agents;
+    typedef T_Agents::iterator        IT_Agents;
     //@}
 
 private:

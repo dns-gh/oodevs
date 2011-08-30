@@ -181,10 +181,10 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, U
         {
             const PHY_RoleInterface_Location& location = callerAgent.Get< PHY_RoleInterface_Location >();
             TER_Localisation localisation( location.GetPosition(), firedata->GetRadius() );
-            capacity->ApplyIndirectFire( *pUrbanObject, localisation, *category );
+            capacity->ApplyIndirectFire( *pUrbanObject, localisation, *category, &callerAgent.GetArmy() );
         }
         else
-            capacity->ApplyIndirectFire( *pUrbanObject, pUrbanObject->GetLocalisation(), *category );
+            capacity->ApplyIndirectFire( *pUrbanObject, pUrbanObject->GetLocalisation(), *category, &callerAgent.GetArmy() );
         callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *category, 1 );
     }
 }

@@ -161,7 +161,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
 
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
-            static_cast< MIL_Object_ABC* >( *it )->ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_ );
+            static_cast< MIL_Object_ABC* >( *it )->ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_, pFirer->GetArmy() );
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {

@@ -11,6 +11,7 @@
 #include "StructuralCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "MaterialAttribute.h"
+#include "MIL_AgentServer.h"
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
@@ -19,11 +20,12 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "MT_Tools/MT_Ellipse.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
 #include <geometry/Types.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/assign/list_of.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 
@@ -118,10 +120,14 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: StructuralCapacity::ApplyIndirectFire
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation )
+void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface,
+                                            const PHY_DotationCategory& dotation, MIL_Army_ABC* army )
 {
     if( const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >() )
-        ApplyDestruction( object, attritionSurface, dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) );
+    {
+        if( ApplyDestruction( object, attritionSurface, dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) && army )
+            CreateCrumbling( object, attritionSurface, *army );
+    }
     else
         // $$$$ JSR 2011-02-17: temporary hack -> Do not destroy districts or cities (UrbanObject without material attribute)
         if( !dynamic_cast< UrbanObjectWrapper* >( &object ) )
@@ -133,7 +139,8 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Lo
 // Name: StructuralCapacity::ApplyDestruction
 // Created: JCR 2011-08-12
 // -----------------------------------------------------------------------------
-void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition )
+void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface,
+                                           const PHY_UrbanAttritionData& attrition )
 {
     if( const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >() )
         ApplyDestruction( object, attritionSurface, attrition.GetScore( materialAttribute->GetMaterial() ) );
@@ -148,11 +155,11 @@ void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
 // Name: StructuralCapacity::ApplyDestruction
 // Created: JCR 2011-08-12
 // -----------------------------------------------------------------------------
-void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, double factor )
+bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, double factor )
 {
     const double objectArea = object.GetLocalisation().GetArea();
     if( !objectArea )
-        return;
+        return false;
     
     double ratio = 0.;
     if( attritionSurface.GetType() == TER_Localisation::ePoint || attritionSurface.GetType() == TER_Localisation::eLine )
@@ -166,6 +173,7 @@ void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
         for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
             ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
     object.ApplyStructuralState( structuralState_ );
+    return oldStructuralState != structuralState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +235,7 @@ void StructuralCapacity::SendState( sword::UrbanAttributes& message ) const
 // -----------------------------------------------------------------------------
 void StructuralCapacity::SendFullState( sword::UrbanAttributes& message ) const
 {
-    message.mutable_structure()->set_state( static_cast< unsigned int>( 100.f * structuralState_ + 0.5f ) );
+    message.mutable_structure()->set_state( static_cast< unsigned int >( 100.f * structuralState_ + 0.5f ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,5 +281,58 @@ void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 // -----------------------------------------------------------------------------
 void StructuralCapacity::Build( double rDeltaPercentage )
 {
-    structuralState_ = std::max( 0.f, std::min( 1.f, structuralState_ + (float)rDeltaPercentage ) );
+    structuralState_ = std::max( 0.f, std::min( 1.f, structuralState_ + static_cast< float >( rDeltaPercentage ) ) );
+}
+
+namespace
+{
+    MT_Vector2D CreateRandomVector( MT_Line& line )
+    {
+        double distance = line.GetPosStart().Distance( line.GetPosEnd() ) / 2.;
+        const MT_Vector2D point( line.GetCenter() + ( line.GetPosStart() - line.GetCenter() ).Normalize() * MIL_Random::rand_ii( -distance, distance ) );
+        return point;
+    }
+
+    T_PointVector CreatePolygon( MT_Line& line )
+    {
+        double distance = 20.;  // $$$$ _RC_ LGY 2011-08-29: distance hardcoded
+        MT_Vector2D vector = CreateRandomVector( line );
+        MT_Vector2D vDirection( line.GetPosStart() - vector );
+        vDirection.Normalize() *= distance;
+        MT_Vector2D rDirection( line.GetPosStart() - vector );
+        rDirection.Normalize() *= distance;
+        rDirection.Rotate( MT_PI / 2 );
+        return boost::assign::list_of< MT_Vector2D >( vector + vDirection )( vector - rDirection )( vector - vDirection )( vector + rDirection );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::CreateCrumbling
+// Created: LGY 2011-08-25
+// -----------------------------------------------------------------------------
+void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Localisation& surface, MIL_Army_ABC& army ) const
+{
+    T_PointVector points = object.GetLocalisation().GetPoints();
+    if( !points.empty() )
+    {
+        std::vector< MT_Line > lines;
+        T_PointVector landslide;
+        CIT_PointVector start = points.begin();
+        CIT_PointVector end = points.begin();
+        ++end;
+        for( ; start != points.end(); ++start, ++end )
+        {
+            if( end == points.end() )
+                end =points.begin();
+            MT_Line line( *start, *end );
+            if( surface.Intersect2D( line ) )
+                lines.push_back( line );
+        }
+        if( !lines.empty() )
+        {
+            MIL_Random::random_shuffle( lines );
+            TER_Localisation localisation( TER_Localisation::ePolygon, CreatePolygon( lines.front() ) );
+            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "landslide", army, localisation );
+        }
+    }
 }
