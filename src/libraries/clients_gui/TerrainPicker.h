@@ -45,7 +45,7 @@ signals:
     //! @name Signals
     //@{
     void TerrainPicked( const QString& type );
-    void WeatherPicked( const QString& precipitation, const QString& lighting, const QString& windInfos );
+    void WeatherPicked( const QString& precipitation, const QString& lighting, const QString& windInfos, const QString& temperature );
     void ObjectPicked( const QStringList& infos );
     //@}
 
