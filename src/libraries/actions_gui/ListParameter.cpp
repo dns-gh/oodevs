@@ -71,6 +71,7 @@ QWidget* ListParameter::BuildInterface( QWidget* parent )
 {
     Q3VBox* box = new Q3VBox( parent );
     list_ = new Q3ListView( box );
+    list_->setSorting( -1 );
     list_->setMaximumHeight( 100 );
     list_->addColumn( GetName() );
     list_->setResizeMode( Q3ListView::LastColumn );
