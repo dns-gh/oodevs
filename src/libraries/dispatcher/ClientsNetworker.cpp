@@ -62,6 +62,7 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& link  )
     ServerNetworker::ConnectionSucceeded( link  );
     Client* newClient = clients_[link] = new Client( *this, link );
     services_.Send( *newClient );
+    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +91,7 @@ void ClientsNetworker::ConnectionError( const std::string& link , const std::str
         clients_.erase( it );
         delete client;
     }
+    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
 
 // -----------------------------------------------------------------------------
