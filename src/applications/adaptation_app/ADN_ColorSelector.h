@@ -44,7 +44,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void drawButton( QPainter* painter );
+    virtual void paintEvent( QPaintEvent *e );
     //@}
 
 private slots:

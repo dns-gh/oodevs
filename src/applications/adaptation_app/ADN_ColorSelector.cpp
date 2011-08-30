@@ -73,14 +73,17 @@ void ADN_ColorSelector::UpdateEnableState()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ColorSelector::drawButton
+// Name: ADN_ColorSelector::paintEvent
 // Created: JSR 2010-09-14
 // -----------------------------------------------------------------------------
-void ADN_ColorSelector::drawButton( QPainter* painter )
+void ADN_ColorSelector::paintEvent( QPaintEvent *e )
 {
-    this->drawButton(painter);
-    painter->fillRect( 4, 4, width() - 8, height() - 8, QBrush( QColor( color_ ) ) );
-    painter->drawRect( 4, 4, width() - 8, height() - 8 );
+    QPushButton::paintEvent( e );
+    QPainter painter( this );
+    QRect rc( 6, 6, painter.window().width() - 12, painter.window().height() - 12 );
+    painter.setPen( Qt::darkBlue );
+    painter.fillRect( rc, QBrush( QColor( color_ ) ) );
+    painter.drawRect( rc );
 }
 
 // -----------------------------------------------------------------------------
