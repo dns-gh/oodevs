@@ -368,16 +368,12 @@ GQ_PlotData& GQ_Plot::GetPlotData( T_DataIndex dataIndex ) const
 void GQ_Plot::paintEvent( QPaintEvent* )
 {
     QPainter painter( this );
-
-    const QColorGroup* pColors = 0;
     if( !isEnabled() )
-        pColors = &palette().disabled();
+        Draw( painter, palette().disabled() );
     else if( hasFocus() )
-        pColors = &palette().active();
+        Draw( painter, palette().active() );
     else
-        pColors = &palette().inactive();
-
-    Draw( painter, *pColors );
+        Draw( painter, palette().inactive() );
 }
 
 // -----------------------------------------------------------------------------
