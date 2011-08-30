@@ -15,8 +15,6 @@
 #include "MT_Tools/MT_Vector2DTypes.h"
 
 class DEC_Decision_ABC;
-class DEC_RolePion_Decision;
-class DEC_AutomateDecision;
 class MIL_Agent_ABC;
 class MIL_Automate;
 class PHY_ComposanteTypePion;

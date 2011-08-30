@@ -108,7 +108,7 @@ void MIL_AutomateMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     assert( !bDIAMrtBehaviorActivated_ );
 
-    automate_.GetDecision().StartMissionMrtBehavior( self );
+    static_cast< DEC_AutomateDecision& >( automate_.GetDecision() ).StartMissionMrtBehavior( self );
     bDIAMrtBehaviorActivated_ = true;
     Send();
 }
@@ -120,9 +120,9 @@ void MIL_AutomateMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
 void MIL_AutomateMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     if( bDIAMrtBehaviorActivated_ )
-        automate_.GetDecision().StopMissionMrtBehavior( self );
+        static_cast< DEC_AutomateDecision& >( automate_.GetDecision() ).StopMissionMrtBehavior( self );
     if( bDIACdtBehaviorActivated_ )
-        automate_.GetDecision().StopMissionConduiteBehavior( self );
+        static_cast< DEC_AutomateDecision& >( automate_.GetDecision() ).StopMissionConduiteBehavior( self );
 
     SendNoMission( automate_ );
 
@@ -139,10 +139,10 @@ void MIL_AutomateMission::GoToCdt( boost::shared_ptr< MIL_Mission_ABC > self )
     assert(  bDIAMrtBehaviorActivated_ );
     assert( !bDIACdtBehaviorActivated_ );
 
-    automate_.GetDecision().StopMissionMrtBehavior( self );
+    static_cast< DEC_AutomateDecision& >( automate_.GetDecision() ).StopMissionMrtBehavior( self );
     bDIAMrtBehaviorActivated_ = false;
 
-    automate_.GetDecision().StartMissionConduiteBehavior( self );
+    static_cast< DEC_AutomateDecision& >( automate_.GetDecision() ).StartMissionConduiteBehavior( self );
     bDIACdtBehaviorActivated_ = true;
 }
 

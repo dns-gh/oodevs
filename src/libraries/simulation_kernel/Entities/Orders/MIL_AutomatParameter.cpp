@@ -9,8 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomatParameter.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
@@ -31,7 +32,7 @@ MIL_AutomatParameter::MIL_AutomatParameter()
 // Name: MIL_AutomatParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-MIL_AutomatParameter::MIL_AutomatParameter( DEC_AutomateDecision* pDecision )
+MIL_AutomatParameter::MIL_AutomatParameter( DEC_Decision_ABC* pDecision )
     : pDecision_( pDecision )
 {
     // NOTHING

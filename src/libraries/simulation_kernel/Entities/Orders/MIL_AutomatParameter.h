@@ -12,7 +12,7 @@
 
 #include "MIL_BaseParameter.h"
 
-class DEC_AutomateDecision;
+class DEC_Decision_ABC;
 class MIL_EntityManager_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AutomatParameter();
-    explicit MIL_AutomatParameter( DEC_AutomateDecision* pDecision );
+    explicit MIL_AutomatParameter( DEC_Decision_ABC* pDecision );
              MIL_AutomatParameter( const sword::AutomatId&, const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AutomatParameter();
     //@}
@@ -55,7 +55,7 @@ public:
 private:
     //! @name Member data
     //@{
-    DEC_AutomateDecision* pDecision_;
+    DEC_Decision_ABC* pDecision_;
     //@}
 };
 

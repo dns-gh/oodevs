@@ -9,8 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentParameter.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
@@ -31,7 +32,7 @@ MIL_AgentParameter::MIL_AgentParameter()
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-MIL_AgentParameter::MIL_AgentParameter( DEC_RolePion_Decision* pAgent )
+MIL_AgentParameter::MIL_AgentParameter( DEC_Decision_ABC* pAgent )
     : pDecision_( pAgent )
 {
     // NOTHING
@@ -46,7 +47,7 @@ MIL_AgentParameter::MIL_AgentParameter( const sword::UnitId& asn, const MIL_Enti
 {
     MIL_AgentPion* pPion = entityManager.FindAgentPion( asn.id() );
     if( pPion )
-        pDecision_ = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
+        pDecision_ = &pPion->GetDecision();
     if( !pDecision_ )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }

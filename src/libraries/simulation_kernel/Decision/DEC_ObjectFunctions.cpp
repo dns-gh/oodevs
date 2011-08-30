@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Decision/DEC_Gen_Object.h"
 #include <xeumeuleu/xml.hpp>
@@ -40,7 +40,7 @@ bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* ob
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_ObjectFunctions::GetGenObjectTC2( const DEC_Gen_Object* object )
 {
-    DEC_AutomateDecision* dec = object->GetTC2() ? const_cast< DEC_AutomateDecision* >( &object->GetTC2()->GetDecision() ) : (DEC_AutomateDecision*)0;
+    DEC_Decision_ABC* dec = object->GetTC2() ? const_cast< DEC_Decision_ABC* >( &object->GetTC2()->GetDecision() ) : (DEC_Decision_ABC*)0;
     return dec;
 }
 

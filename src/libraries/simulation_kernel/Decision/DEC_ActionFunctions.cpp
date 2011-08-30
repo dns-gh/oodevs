@@ -11,8 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_ActionFunctions.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"

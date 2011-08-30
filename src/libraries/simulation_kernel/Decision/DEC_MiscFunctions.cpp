@@ -370,10 +370,8 @@ void DEC_MiscFunctions::ReportPionAutomate( DEC_Decision_ABC& caller, int type, 
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam1( MIL_MissionParameterFactory::CreatePion( pionDec ) );
-        DEC_AutomateDecision* automateDec = static_cast< DEC_AutomateDecision* >( automate ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam2( MIL_MissionParameterFactory::CreateAutomat( automateDec ) );
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam1( MIL_MissionParameterFactory::CreatePion( pion ) );
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam2( MIL_MissionParameterFactory::CreateAutomat( automate ) );
         params.push_back( missionParam1 );
         params.push_back( missionParam2 );
         pReport->Send( caller, MIL_Report::E_Type( type ), params );

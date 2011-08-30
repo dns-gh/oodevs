@@ -1084,7 +1084,7 @@ std::string DEC_RolePion_Decision::GetName() const
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision* DEC_RolePion_Decision::GetDecAutomate() const
 {
-    return &pion_.GetAutomate().GetDecision();
+    return dynamic_cast< DEC_AutomateDecision* >( &pion_.GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------

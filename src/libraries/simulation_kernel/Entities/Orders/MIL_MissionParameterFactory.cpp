@@ -8,12 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Entities/Orders/MIL_OrderTypeParameter.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Mission_ABC.h"
@@ -47,6 +41,11 @@
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
 #include "MIL_ExternalIdentifierWrapper.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/Orders/MIL_OrderTypeParameter.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
@@ -239,7 +238,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateO
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePion( DEC_Decision_ABC* pion )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AgentParameter( dynamic_cast<DEC_RolePion_Decision*>( pion ) ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AgentParameter( pion ) );
     return result;
 }
 
@@ -382,7 +381,7 @@ void MIL_MissionParameterFactory::SetPawnParameter( boost::shared_ptr< MIL_Missi
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAutomat( DEC_Decision_ABC* automat )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AutomatParameter( dynamic_cast<DEC_AutomateDecision*>( automat ) ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AutomatParameter( automat ) );
     return result;
 }
 

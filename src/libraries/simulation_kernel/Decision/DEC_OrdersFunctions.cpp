@@ -11,8 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_OrdersFunctions.h"
+#include "Decision/DEC_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"

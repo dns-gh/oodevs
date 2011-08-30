@@ -42,7 +42,7 @@ namespace xml
     class xistream;
 }
 
-class DEC_AutomateDecision;
+class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_Automate;
 class DEC_Knowledge_Object;
@@ -122,8 +122,8 @@ public:
     const T_PionVector&                     GetPions         () const; // Including pion PC
     const T_AutomateVector&                 GetAutomates     () const;
           MIL_Automate*                     GetParentAutomate() const;
-    const DEC_AutomateDecision&             GetDecision      () const;
-          DEC_AutomateDecision&             GetDecision      () ;
+    const DEC_Decision_ABC&                 GetDecision      () const;
+          DEC_Decision_ABC&                 GetDecision      () ;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
           bool                              IsEngaged        () const;
 

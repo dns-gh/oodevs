@@ -11,7 +11,6 @@
 #include "AutomateFactory.h"
 #include "Decision/DEC_Representations.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>

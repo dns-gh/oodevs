@@ -12,7 +12,7 @@
 
 #include "MIL_BaseParameter.h"
 
-class DEC_RolePion_Decision;
+class DEC_Decision_ABC;
 class MIL_EntityManager_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AgentParameter();
-    explicit MIL_AgentParameter( DEC_RolePion_Decision* pAgent );
+    explicit MIL_AgentParameter( DEC_Decision_ABC* pAgent );
              MIL_AgentParameter( const sword::UnitId&, const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AgentParameter();
     //@}
@@ -55,7 +55,7 @@ public:
 private:
     //! @name Member data
     //@{
-    DEC_RolePion_Decision* pDecision_;
+    DEC_Decision_ABC* pDecision_;
     //@}
 };
 

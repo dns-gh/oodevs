@@ -19,7 +19,6 @@ namespace sword
     class MissionParameters;
 }
 
-class DEC_AutomateDecision;
 class DEC_Decision_ABC;
 class DEC_Gen_Object;
 class DEC_KnowledgeResolver_ABC;
@@ -27,7 +26,6 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 class DEC_ResourceNetwork;
-class DEC_RolePion_Decision;
 class MIL_Automate;
 class MIL_Mission_ABC;
 class MIL_MissionParameter_ABC;

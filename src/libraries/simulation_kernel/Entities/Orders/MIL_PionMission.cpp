@@ -9,10 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PionMission.h"
-#include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
+#include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"

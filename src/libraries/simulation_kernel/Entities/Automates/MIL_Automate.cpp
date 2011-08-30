@@ -220,7 +220,7 @@ MIL_Automate::~MIL_Automate()
 // Name: MIL_Automate::GetDecision
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-const DEC_AutomateDecision& MIL_Automate::GetDecision() const
+const DEC_Decision_ABC& MIL_Automate::GetDecision() const
 {
     return GetRole< DEC_AutomateDecision >();
 }
@@ -229,7 +229,7 @@ const DEC_AutomateDecision& MIL_Automate::GetDecision() const
 // Name: MIL_Automate::GetDecision
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision& MIL_Automate::GetDecision()
+DEC_Decision_ABC& MIL_Automate::GetDecision()
 {
     return GetRole< DEC_AutomateDecision >();
 }

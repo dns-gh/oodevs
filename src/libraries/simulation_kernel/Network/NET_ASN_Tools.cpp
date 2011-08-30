@@ -11,11 +11,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "NET_ASN_Tools.h"
-#include "Tools/MIL_Tools.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "MIL_AgentServer.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
