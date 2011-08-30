@@ -88,10 +88,11 @@ namespace
 // Name: ADN_Drawings_Data::SymbolInfo::SymbolInfo
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
-ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools )
+ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category )
     : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ ABR 2011-04-18: hard coded
     , tools_   ( tools )
     , strName_ ( template_->GetName().ascii() )
+    , category_( category )
 {
     Initialize();
     Draw();
@@ -154,6 +155,15 @@ const std::string ADN_Drawings_Data::DrawingInfo::GetCode() const
 const std::string ADN_Drawings_Data::DrawingInfo::GetGeometry() const
 {
     return template_->GetType().ascii();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Drawings_Data::GetCategory
+// Created: LGY 2011-08-30
+// -----------------------------------------------------------------------------
+const std::string& ADN_Drawings_Data::DrawingInfo::GetCategory() const
+{
+    return category_;
 }
 
 // -----------------------------------------------------------------------------
@@ -316,9 +326,12 @@ ADN_Drawings_Data::ADN_Drawings_Data()
 ADN_Drawings_Data::~ADN_Drawings_Data()
 {
     delete tools_;
-    for( IT_DrawingsMap it = drawingsMap_.begin(); it != drawingsMap_.end(); ++it )
+    for( IT_DrawingsMap it = geometryMap_.begin(); it != geometryMap_.end(); ++it )
         it->second.clear();
-    drawingsMap_.clear();
+    geometryMap_.clear();
+    for( IT_DrawingsMap it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
+        it->second.clear();
+    categoryMap_.clear();
     for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
         delete *it;
 }
@@ -349,7 +362,8 @@ void ADN_Drawings_Data::Load( const tools::Loader_ABC& fileLoader )
 void ADN_Drawings_Data::Reset()
 {
     drawings_.Reset();
-    drawingsMap_.clear();
+    geometryMap_.clear();
+    categoryMap_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -360,6 +374,10 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
 {
     xis >> xml::start( "templates" )
             >> xml::list( "category", *this, &ADN_Drawings_Data::ReadCategory );
+    xml::xistringstream xss( "<template name=' - ' type='default'>"
+                             "    <segment/>"
+                             "</template>" );
+    drawings_.AddItem( new DrawingInfo( xss >> xml::start( "template" ), renderer_, *tools_, "tasks" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,18 +386,18 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::ReadCategory( xml::xistream& xis )
 {
-    bool hidden = xis.attribute< bool >( "hidden", false );
-    if( hidden ) // $$$$ ABR 2011-04-22: check for hidden to display only tactical graphics category
-        xis >> xml::list( "template", *this, &ADN_Drawings_Data::ReadTemplate );
+    const std::string id = xis.attribute< std::string >( "id", "" );
+    if( id != "" ) // $$$$ ABR 2011-04-22: check for hidden to display only tactical graphics category
+        xis >> xml::list( "template", *this, &ADN_Drawings_Data::ReadTemplate, id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Drawings_Data::ReadTemplate
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
-void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis )
+void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& name )
 {
-    drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_ ) );
+    drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,12 +413,12 @@ ADN_Drawings_Data::DrawingInfo* const ADN_Drawings_Data::GetDrawing( const std::
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::GetSymbols
+// Name: ADN_Drawings_Data::GetGeometryDrawings
 // Created: ABR 2011-04-21
 // -----------------------------------------------------------------------------
-ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetDrawings( const std::string geometries )
+ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( const std::string geometries )
 {
-    T_DrawingInfoVector& currentVector = drawingsMap_[ geometries ];
+    T_DrawingInfoVector& currentVector = geometryMap_[ geometries ];
     if( currentVector.empty() )
     {
         QStringList qlist = QStringList::split( ',', geometries.c_str() );
@@ -409,5 +427,19 @@ ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetDrawings( const st
             if( (*it)->GetGeometry() == geometries )
                 currentVector.AddItem( *it );
     }
+    return currentVector;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Drawings_Data::GetCategoryDrawings
+// Created: LGY 2011-08-30
+// -----------------------------------------------------------------------------
+ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetCategoryDrawings( const std::string& category )
+{
+    T_DrawingInfoVector& currentVector = categoryMap_[ category ];
+    if( currentVector.empty() )
+        for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
+            if( (*it)->GetCategory() == category )
+                currentVector.AddItem( *it );
     return currentVector;
 }

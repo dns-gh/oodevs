@@ -277,7 +277,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
 ADN_Missions_Data::Mission::Mission()
     : id_( ADN_Missions_Data::idFactory_.Create() )
 {
-    // NOTHING
+    symbol_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,6 +288,7 @@ ADN_Missions_Data::Mission::Mission( unsigned int id )
     : id_( id )
 {
     ADN_Missions_Data::idFactory_.Reserve( id );
+    symbol_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,14 +315,15 @@ std::string ADN_Missions_Data::Mission::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 {
-    Mission* newMission         = new Mission( ADN_Missions_Data::idFactory_.Create() );
-    newMission->strName_        = strName_.GetData();
-    newMission->diaType_        = diaType_.GetData();
-    newMission->diaBehavior_    = diaBehavior_.GetData();
-    newMission->cdtDiaBehavior_ = cdtDiaBehavior_.GetData();
-    newMission->mrtDiaBehavior_ = mrtDiaBehavior_.GetData();
+    Mission* newMission              = new Mission( ADN_Missions_Data::idFactory_.Create() );
+    newMission->strName_             = strName_.GetData();
+    newMission->diaType_             = diaType_.GetData();
+    newMission->diaBehavior_         = diaBehavior_.GetData();
+    newMission->cdtDiaBehavior_      = cdtDiaBehavior_.GetData();
+    newMission->mrtDiaBehavior_      = mrtDiaBehavior_.GetData();
     newMission->doctrineDescription_ = doctrineDescription_.GetData();
     newMission->usageDescription_    = usageDescription_.GetData();
+    newMission->symbol_              = symbol_.GetData();
     newMission->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -337,10 +339,11 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t contextLength )
 {
-    std::string doctrineDesc, usageDesc;
+    std::string doctrineDesc, usageDesc, symbol;
     std::size_t index = 0;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
+        >> xml::optional >> xml::attribute( "symbol", symbol )
         >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
         >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
@@ -352,6 +355,10 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t 
         >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
     doctrineDescription_ = doctrineDesc;
     usageDescription_ = usageDesc;
+    const std::string code = symbol.empty() ? " - " : symbol;
+    ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
+    symbol_.SetVector( drawingsData.GetCategoryDrawings( "tasks" ) );
+    symbol_.SetData( drawingsData.GetDrawing( code ), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -397,6 +404,10 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     output << xml::attribute( "name", strName_ )
            << xml::attribute( "dia-type", diaType_ )
            << xml::attribute( "id", id_ );
+
+    const std::string code = ( symbol_.GetData() ) ? symbol_.GetData()->GetCode() : "";
+    if( code != "" && code != " - " )
+        output << xml::attribute( "symbol", code );
 
     if ( ! strPackage_.GetData().empty() )
         output << xml::attribute( "package", strPackage_);

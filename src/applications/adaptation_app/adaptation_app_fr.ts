@@ -2637,6 +2637,10 @@ du tireur</translation>
         <source>Behavior</source>
         <translation>Comportement</translation>
     </message>
+    <message>
+        <source>Symbol</source>
+        <translation type="unfinished">Symbole</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
@@ -2844,6 +2848,17 @@ du tireur</translation>
     <message>
         <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
         <translation>Modification propagation feu - classe de feu non valide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3211,6 +3226,10 @@ du tireur</translation>
     <message>
         <source>Default limited trafficability</source>
         <translation>Traficabilité limitée par défaut</translation>
+    </message>
+    <message>
+        <source>Urban Destruction</source>
+        <translation>Destruction urbaine</translation>
     </message>
 </context>
 <context>

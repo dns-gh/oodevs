@@ -36,6 +36,7 @@ public:
         eMRTBehavior,
         eCDTBehavior,
         eBehavior,
+        eSymbol,
         eNbrGuiElements
     };
 

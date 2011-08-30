@@ -55,7 +55,7 @@ public:
     public:
         //! @name Constructors/Destructor
         //@{
-                 DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools );
+                 DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category );
         virtual ~DrawingInfo();
         //@}
 
@@ -66,6 +66,7 @@ public:
         const QPixmap& GetPixmap() const;
         const std::string GetCode() const;
         const std::string GetGeometry() const;
+        const std::string& GetCategory() const;
         //@}
 
     private:
@@ -85,6 +86,7 @@ public:
         gui::DrawingTemplate* template_;
         kernel::GlTools_ABC& tools_;
         QPixmap* pixmap_;
+        std::string category_;
         //@}
 
     public:
@@ -116,7 +118,8 @@ public:
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Reset();
     DrawingInfo* const GetDrawing( const std::string& code ) const;
-    T_DrawingInfoVector& GetDrawings( const std::string geometries );
+    T_DrawingInfoVector& GetGeometryDrawings( const std::string geometries );
+    T_DrawingInfoVector& GetCategoryDrawings( const std::string& category );
     //@}
 
 private:
@@ -124,16 +127,17 @@ private:
     //@{
     void ReadArchive( xml::xistream& xis );
     void ReadCategory( xml::xistream& xis );
-    void ReadTemplate( xml::xistream& xis );
+    void ReadTemplate( xml::xistream& xis, const std::string& name );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_DrawingsMap drawingsMap_;
+    T_DrawingsMap geometryMap_;
+    T_DrawingsMap categoryMap_;
     T_DrawingInfoVector drawings_;
-    svg::TextRenderer  renderer_;
-    ::GlToolsSymbols*  tools_;
+    svg::TextRenderer renderer_;
+    ::GlToolsSymbols* tools_;
     //@}
 };
 

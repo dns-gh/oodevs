@@ -14,6 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "IdentifierFactory.h"
+#include "ADN_Drawings_Data.h"
 
 namespace xml { class xistream; }
 
@@ -123,17 +124,17 @@ public:
         void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
 
     public:
-        ADN_Type_Int              id_;
-        ADN_Type_String           strName_;
+        ADN_Type_Int id_;
+        ADN_Type_String strName_;
         T_MissionParameter_Vector parameters_;
-
-        ADN_Type_String           diaType_;
-        ADN_Type_String           diaBehavior_;
-        ADN_Type_String           cdtDiaBehavior_;
-        ADN_Type_String           mrtDiaBehavior_;
-        ADN_Type_String           doctrineDescription_;
-        ADN_Type_String           usageDescription_;
-        ADN_Type_String           strPackage_;
+        ADN_Type_String diaType_;
+        ADN_Type_String diaBehavior_;
+        ADN_Type_String cdtDiaBehavior_;
+        ADN_Type_String mrtDiaBehavior_;
+        ADN_Type_String doctrineDescription_;
+        ADN_Type_String usageDescription_;
+        ADN_Type_String strPackage_;
+        ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
     };
 
     typedef ADN_Type_Vector_ABC<Mission>  T_Mission_Vector;

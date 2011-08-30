@@ -92,7 +92,7 @@
             </marker-mid>
         </template>
     </category>
-    <category name='Tasks'>
+    <category name='Tasks' id="tasks">
         <template name='Reckon' type="line">
             <segment unit='%'>
                 <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
@@ -243,7 +243,7 @@
             </marker-end>
         </template>
     </category>
-    <category name="Tactical graphics" hidden="true">
+    <category name="Tactical graphics" id="graphics">
         <description>Objects and obstacles</description>
         <template code="G*MPOS----****X" name="Abatis" type="polygon">
             <marker-start unit='%'>
@@ -783,4 +783,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="2629291926" -->
+<!-- signature="0623460885" -->

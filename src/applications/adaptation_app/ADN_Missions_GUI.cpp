@@ -17,6 +17,8 @@
 #include "ADN_MissionParameters_Table.h"
 #include "ADN_MissionParameterValues_Table.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_ComboBox_Drawings.h"
+#include "ADN_Drawings_Data.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
@@ -29,7 +31,6 @@ ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI destructor
 // Created: APE 2005-03-21
@@ -38,7 +39,6 @@ ADN_Missions_GUI::~ADN_Missions_GUI()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::Build
@@ -91,6 +91,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, 
     }
     else
         builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Behavior" ), vInfosConnectors[eBehavior] );
+
+    QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pParamHolder, tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
+    combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
     Q3GroupBox* pParameters = new Q3GroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );

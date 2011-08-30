@@ -2635,6 +2635,10 @@ tirador</translation>
         <source>Behavior</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Symbol</source>
+        <translation type="unfinished">Simbolo</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
@@ -2841,6 +2845,17 @@ tirador</translation>
     </message>
     <message>
         <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3208,6 +3223,10 @@ tirador</translation>
     </message>
     <message>
         <source>Default limited trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban Destruction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
