@@ -79,11 +79,11 @@ void ADN_ListView_Launchers::ConnectItem( bool bConnect )
 
     // Connect those at the end so that the items in the associated group boxes
     // are correctly enabled / disabled according to those values.
-    static ADN_WeaponFilter direct( boost::bind( &Matches, true, _1, pInfos ) );
-    direct.SetData( &pInfos->bDirect_ );
+    static ADN_WeaponFilter direct;
+    direct.Initialize( &pInfos->bDirect_, boost::bind( &Matches, true, _1, pInfos ) );
     vItemConnectors_[ADN_Launchers_GUI::eDirect]->Connect( &direct, bConnect );
-    static ADN_WeaponFilter indirect( boost::bind( &Matches, false, _1, pInfos ) );
-    indirect.SetData( &pInfos->bIndirect_ );
+    static ADN_WeaponFilter indirect;
+    indirect.Initialize( &pInfos->bIndirect_, boost::bind( &Matches, false, _1, pInfos ) );
     vItemConnectors_[ADN_Launchers_GUI::eIndirect]->Connect( &indirect, bConnect );
 }
 

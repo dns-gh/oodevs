@@ -35,12 +35,12 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_WeaponFilter( T_Validate validate );
+    ADN_WeaponFilter();
     //@}
 
     //! @name Modifiers
     //@{
-    void SetData( ADN_Type_Bool* pData );
+    void Initialize( ADN_Type_Bool* pData, T_Validate validate );
     //@}
 
 protected:

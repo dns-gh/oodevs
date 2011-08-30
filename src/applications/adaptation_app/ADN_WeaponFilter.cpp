@@ -15,20 +15,20 @@
 // Name: ADN_WeaponFilter constructor
 // Created: MCO 2011-07-05
 // -----------------------------------------------------------------------------
-ADN_WeaponFilter::ADN_WeaponFilter( T_Validate validate )
-    : validate_  ( validate )
-    , pData_     ( 0 )
+ADN_WeaponFilter::ADN_WeaponFilter()
+    : pData_     ( 0 )
     , pConnector_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_WeaponFilter::SetData
+// Name: ADN_WeaponFilter::Initialize
 // Created: MCO 2011-07-05
 // -----------------------------------------------------------------------------
-void ADN_WeaponFilter::SetData( ADN_Type_Bool* pData )
+void ADN_WeaponFilter::Initialize( ADN_Type_Bool* pData, T_Validate validate )
 {
+    validate_ = validate;
     pData_ = pData;
 }
 
