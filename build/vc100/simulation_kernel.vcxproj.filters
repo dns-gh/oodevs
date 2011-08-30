@@ -4895,6 +4895,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestContainer_ABC.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl">
