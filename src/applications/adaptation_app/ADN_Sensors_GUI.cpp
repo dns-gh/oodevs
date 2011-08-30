@@ -81,7 +81,7 @@ void ADN_Sensors_GUI::Build()
 void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 {
     ADN_GuiBuilder builder;
-    QWidget* pPage = new QWidget( pParent );
+    QWidget* pPage = new QWidget();
     pParent->addTab( pPage, tr( "Sensors" ) );
 
     // Sensor listview.
@@ -91,19 +91,18 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Sensor parameters
-    Q3GroupBox* pSensorGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Sensor" ), pPage );
+    QGroupBox* pSensorGroupBox = new QGroupBox( tr( "Sensor" ) );
 
-    QWidget* pNameHolder = builder.AddFieldHolder( pSensorGroupBox );
+    QWidget* pNameDelayHolder = builder.AddFieldHolder( pSensorGroupBox );
 
     // Name
-    builder.AddField<ADN_EditLine_String>( pNameHolder, tr( "Name" ), vConnectors[eName] );
+    builder.AddField<ADN_EditLine_String>( pNameDelayHolder, tr( "Name" ), vConnectors[eName] );
 
     // Detection delay
-    QWidget* pDelayHolder = builder.AddFieldHolder( pSensorGroupBox );
-    builder.AddField<ADN_TimeField>( pDelayHolder, tr( "Delay" ), vConnectors[eDetectionDelay] );
+    builder.AddField<ADN_TimeField>( pNameDelayHolder, tr( "Delay" ), vConnectors[eDetectionDelay] );
 
     // Agent detection parameters
-    ADN_GroupBox* pAgentParamGroupBox = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Can detect units" ), pSensorGroupBox );
+    ADN_GroupBox* pAgentParamGroupBox = new ADN_GroupBox( tr( "Can detect units" ) );
     vConnectors[eCanDetectAgents] = &pAgentParamGroupBox->GetConnector();
 
     // Angle & scanning
@@ -112,91 +111,112 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     builder.AddField<ADN_CheckBox>( pParamHolder, tr( "Can perform scanning" ), vConnectors[eCanScan] );
     builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Firer Detection range" ), vConnectors[eDistFirerReco], tr( "m" ), eGreaterEqualZero );
 
-
     // Detection distances
-    Q3GroupBox* pDistancesGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Ranges" ), pAgentParamGroupBox );
-
+    Q3GroupBox* pDistancesGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Ranges" ) );
     builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Proximity range" ), vConnectors[eDistProximity], tr( "m" ), eGreaterEqualZero );
     QLineEdit*  detection = builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Detection range" ), vConnectors[eDistDetection], tr( "m" ), eGreaterEqualZero );
     QLineEdit*  recognition = builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Recognition range" ), vConnectors[eDistReco], tr( "m" ), eGreaterEqualZero );
     QLineEdit*  identification = builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Identification range" ), vConnectors[eDistIdent], tr( "m" ), eGreaterEqualZero );
 
     // Modificators (group 1)
-    Q3GroupBox* pAgentDetectionModifiersGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Terrain modifiers" ), pAgentParamGroupBox );
+    QGroupBox* pAgentDetectionModifiersGroup = new QGroupBox( tr( "Terrain modifiers" ) );
 
     ADN_Sensors_Sizes_GUI* pComposantes = new ADN_Sensors_Sizes_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifSizes] = &pComposantes->GetConnector();
     pComposantes->setSelectionMode( Q3Table::SingleRow );
+    pComposantes->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
 
     ADN_Sensors_Meteos_GUI* pMeteos = new ADN_Sensors_Meteos_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifWeather] = &pMeteos->GetConnector();
     pMeteos->setSelectionMode( Q3Table::SingleRow );
+    pMeteos->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
 
     ADN_Sensors_Illumination_GUI* pIllu = new ADN_Sensors_Illumination_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifIllumination] = &pIllu->GetConnector();
     pIllu->setSelectionMode( Q3Table::SingleRow );
+    pIllu->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
 
     ADN_Sensors_Environments_GUI* pEnv = new ADN_Sensors_Environments_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifEnvironement] = &pEnv->GetConnector();
     pEnv->setSelectionMode( Q3Table::SingleRow );
-
+    pEnv->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
 
     ADN_Sensors_UrbanBlockMaterial_GUI* pMaterial = new ADN_Sensors_UrbanBlockMaterial_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifUrbanBlockMaterial] = &pMaterial->GetConnector();
     pMaterial->setSelectionMode( Q3Table::SingleRow );
+    pMaterial->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
+
+    QHBoxLayout* pAgentDetectionModifiersLayout = new QHBoxLayout();
+    pAgentDetectionModifiersLayout->setSpacing( 5 );
+    pAgentDetectionModifiersLayout->addWidget( pComposantes, 1 );
+    pAgentDetectionModifiersLayout->addWidget( pMeteos, 1 );
+    pAgentDetectionModifiersLayout->addWidget( pIllu, 1 );
+    pAgentDetectionModifiersLayout->addWidget( pEnv, 1 );
+    pAgentDetectionModifiersLayout->addWidget( pMaterial, 1 );
+    pAgentDetectionModifiersLayout->addStrut( 200 ); // $$$$ RBA 2011-08-30: Added because since QT4 port, ADN_Table does not resize automatically when content changes
+    pAgentDetectionModifiersGroup->setLayout( pAgentDetectionModifiersLayout );
 
     // Modificators (group 2)
-    Q3GroupBox* pAgentDetectionModifiersGroup2 = new Q3GroupBox( 0, Qt::Horizontal, tr( "Stance modifiers" ), pAgentParamGroupBox );
+    QGroupBox* pAgentDetectionModifiersGroup2 = new QGroupBox( tr( "Stance modifiers" ) );
 
-    ADN_Sensors_Postures_GUI* pStance = new ADN_Sensors_Postures_GUI( tr( "Stance" ), pAgentDetectionModifiersGroup2 );
+    ADN_Sensors_Postures_GUI* pStance = new ADN_Sensors_Postures_GUI( tr( "Stance" ) );
     vConnectors[eModifStances] = &pStance->GetConnector();
     pStance->setSelectionMode( Q3Table::SingleRow );
 
-    ADN_Sensors_Postures_GUI* pTargetStance = new ADN_Sensors_Postures_GUI( tr( "Target stance" ), pAgentDetectionModifiersGroup2 );
+    ADN_Sensors_Postures_GUI* pTargetStance = new ADN_Sensors_Postures_GUI( tr( "Target stance" ) );
     vConnectors[eModifTargetStances] = &pTargetStance->GetConnector();
     pTargetStance->setSelectionMode( Q3Table::SingleRow );
 
-    // Population modifiers
-    Q3GroupBox* pPopulationModifiersGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd modifiers" ), pAgentParamGroupBox );
+    QVBoxLayout* pAgentDetectionModifiersLayout2 = new QVBoxLayout();
+    pAgentDetectionModifiersLayout2->setSpacing( 5 );
+    pAgentDetectionModifiersLayout2->addWidget( pStance, 1 );
+    pAgentDetectionModifiersLayout2->addWidget( pTargetStance, 1 );
+    pAgentDetectionModifiersGroup2->setLayout( pAgentDetectionModifiersLayout2 );
 
+    // Population modifiers
+    Q3GroupBox* pPopulationModifiersGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd modifiers" ) );
     QLineEdit* populationDensity = builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Density" ) , vConnectors[ePopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
     QLineEdit* populationModifier = builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Modifier" ), vConnectors[ePopulationModifier], 0, eGreaterEqualZero );
 
-    // LTO begin
-    // Group for last line layout (Limited to sensors and targets)
-    Q3GroupBox* pLimitedAndObjectsGroup = new Q3GroupBox( 0, Qt::Horizontal, pSensorGroupBox );
-    pLimitedAndObjectsGroup->setFlat( true );
-
     // Limited to sensors parameters
-    ADN_GroupBox* pLimitedToSensorsGroupBox = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Limited To Sensors" ), pLimitedAndObjectsGroup );
+    ADN_GroupBox* pLimitedToSensorsGroupBox = new ADN_GroupBox( tr( "Limited To Sensors" ) );
     vConnectors[eLimitedToSensors] = &pLimitedToSensorsGroupBox->GetConnector();
 
-    ADN_Sensors_LimitedToSensorsListView* pLimitedToSensorsListView = new ADN_Sensors_LimitedToSensorsListView( pLimitedToSensorsGroupBox );
+    ADN_Sensors_LimitedToSensorsListView* pLimitedToSensorsListView = new ADN_Sensors_LimitedToSensorsListView();
     vConnectors[eLimitedSensorsList] = &pLimitedToSensorsListView->GetConnector();
-    // LTO end
+
+    QHBoxLayout* pLimitedToSensorsGroupLayout = new QHBoxLayout();
+    pLimitedToSensorsGroupLayout->addWidget( pLimitedToSensorsListView );
+    pLimitedToSensorsGroupBox->setLayout( pLimitedToSensorsGroupLayout );
 
     // Object detection parameters
-    ADN_GroupBox* pObjectParamGroupBox = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Can detect objects" ), pLimitedAndObjectsGroup );
+    ADN_GroupBox* pObjectParamGroupBox = new ADN_GroupBox( tr( "Can detect objects" ) );
     vConnectors[eCanDetectObjects] = &pObjectParamGroupBox->GetConnector();
 
     ADN_Sensors_TargetsListView* pTargetListView = new ADN_Sensors_TargetsListView( pObjectParamGroupBox );
     vConnectors[eTargets] = &pTargetListView->GetConnector();
     T_ConnectorVector vTargetConnectors( eNbrObjGuiElements, (ADN_Connector_ABC*)0 );
 
-    Q3GroupBox* pTargetParamsGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Parameters" ), pObjectParamGroupBox );
+    QGroupBox* pTargetParamsGroupBox = new QGroupBox( tr( "Parameters" ), pObjectParamGroupBox );
 
     // Detection
-    QWidget* pHolder = builder.AddFieldHolder( pTargetParamsGroupBox );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Detection range" ), vTargetConnectors[eObjDistDetect], tr( "m" ), eGreaterEqualZero );
+    QWidget* pObjDetectionRangeHolder = builder.AddFieldHolder( pTargetParamsGroupBox );
+    builder.AddField<ADN_EditLine_Double>( pObjDetectionRangeHolder, tr( "Detection range" ), vTargetConnectors[eObjDistDetect], tr( "m" ), eGreaterEqualZero );
 
     // Population modifiers
-    Q3GroupBox* pObjPopulationModifiersGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd modifiers" ), pTargetParamsGroupBox );
-
+    Q3GroupBox* pObjPopulationModifiersGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd modifiers" ) );
     builder.AddField<ADN_EditLine_Double>( pObjPopulationModifiersGroup, tr( "Density" ) , vTargetConnectors[eObjPopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pObjPopulationModifiersGroup, tr( "Modifier" ), vTargetConnectors[eObjPopulationModifier], 0, eGreaterEqualZero );
 
-    ADN_Sensors_Postures_GUI* pObjPostures = new ADN_Sensors_Postures_GUI( tr( "Stance" ), pTargetParamsGroupBox );
+    ADN_Sensors_Postures_GUI* pObjPostures = new ADN_Sensors_Postures_GUI( tr( "Stance" ) );
     vTargetConnectors[eObjModifStances] = &pObjPostures->GetConnector();
+
+    QVBoxLayout* pTargetParamsGroupLayout = new QVBoxLayout();
+    pTargetParamsGroupLayout->setSpacing( 5 );
+    pTargetParamsGroupLayout->addWidget( pObjDetectionRangeHolder );
+    pTargetParamsGroupLayout->addWidget( pObjPopulationModifiersGroup );
+    pTargetParamsGroupLayout->addWidget( pObjPostures );
+    pTargetParamsGroupBox->setLayout( pTargetParamsGroupLayout );
 
     // Preview Algorithm
     ADN_Sensors_DetectionAlgorithmPrevision* algorithmPreview = new ADN_Sensors_DetectionAlgorithmPrevision( pAgentParamGroupBox );
@@ -216,50 +236,50 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     connect( pAgentParamGroupBox, SIGNAL( toggled( bool ) ), pLimitedToSensorsGroupBox, SLOT( setEnabled( bool ) ) ); // LTO
 
     // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pPage, 10, 10 );
+    QHBoxLayout* pMainLayout = new QHBoxLayout();
+    pMainLayout->setSpacing( 10 );
+    pMainLayout->setContentsMargins( 10, 10, 10, 10 );
     pMainLayout->addWidget( pListView );
     pMainLayout->addWidget( pSensorGroupBox );
+    pPage->setLayout( pMainLayout );
 
-    Q3HBoxLayout* pModificatorsLayout1 = new Q3HBoxLayout( pAgentDetectionModifiersGroup->layout(), 5 );
-    pModificatorsLayout1->addWidget( pComposantes, 1 );
-    pModificatorsLayout1->addWidget( pMeteos, 1 );
-    pModificatorsLayout1->addWidget( pIllu, 1 );
-    pModificatorsLayout1->addWidget( pEnv, 1 );
-    pModificatorsLayout1->addWidget( pMaterial, 1 );
+    QGridLayout* pAgentParamGroupLayout = new QGridLayout();
+    pAgentParamGroupLayout->setSpacing( 5 );
+    pAgentParamGroupLayout->setAlignment( Qt::AlignTop );
+    pAgentParamGroupLayout->setColumnStretch( 1, 1 );
+    pAgentParamGroupLayout->setColumnStretch( 2, 1 );
+    pAgentParamGroupLayout->addWidget( pParamHolder, 0, 0 );
+    pAgentParamGroupLayout->addWidget( pDistancesGroupBox, 1, 0 );
+    pAgentParamGroupLayout->addWidget( pPopulationModifiersGroup, 2, 0 );
+    pAgentParamGroupLayout->addWidget( algorithmPreview, 0, 1, 3, 1 );
+    pAgentParamGroupLayout->addWidget( pAgentDetectionModifiersGroup2, 0, 2, 3, 1 );
+    pAgentParamGroupLayout->addWidget( pAgentDetectionModifiersGroup, 4, 0, 1, 3 );
+    pAgentParamGroupBox->setLayout( pAgentParamGroupLayout );
 
-    Q3HBoxLayout* pModificatorsLayout2 = new Q3HBoxLayout( pAgentDetectionModifiersGroup2->layout(), 5 );
-    pModificatorsLayout2->addWidget( pStance, 1 );
-    pModificatorsLayout2->addWidget( pTargetStance, 1 );
+    QHBoxLayout* pObjectParamGroupLayout = new QHBoxLayout();
+    pObjectParamGroupLayout->setSpacing( 5 );
+    pObjectParamGroupLayout->addWidget( pTargetListView );
+    pObjectParamGroupLayout->addWidget( pTargetParamsGroupBox );
+    pObjectParamGroupBox->setLayout( pObjectParamGroupLayout );
 
-    Q3GridLayout* pAGroupLayout = new Q3GridLayout( pAgentParamGroupBox->layout(), 1, 4, 5 );
-    pAGroupLayout->setAlignment( Qt::AlignTop );
-    pAGroupLayout->addWidget( pParamHolder, 0, 0 );
-    pAGroupLayout->addWidget( pDistancesGroupBox, 1, 0 );
-    pAGroupLayout->addMultiCellWidget( algorithmPreview, 0, 1, 1, 1 );
-    pAGroupLayout->addMultiCellWidget( pPopulationModifiersGroup     , 0, 1, 3, 3 );
-    pAGroupLayout->addMultiCellWidget( pAgentDetectionModifiersGroup2, 0, 1, 2, 2 );
-    pAGroupLayout->addMultiCellWidget( pAgentDetectionModifiersGroup , 2, 2, 0, 3 );
-//    pAGroupLayout->setColStretch( 0, 1 );
-//    pAGroupLayout->setColStretch( 1, 2 );
-//    pAGroupLayout->setColStretch( 2, 1 );
-
-    Q3HBoxLayout* pOGroupLayout = new Q3HBoxLayout( pObjectParamGroupBox->layout(), 5 );
-    pOGroupLayout->setAlignment( Qt::AlignTop );
-    pOGroupLayout->addWidget( pTargetListView );
-    pOGroupLayout->addWidget( pTargetParamsGroupBox );
-
-    // LTO begin
-    Q3HBoxLayout* pLimitedAndObjectsGroupLayout = new Q3HBoxLayout( pLimitedAndObjectsGroup->layout(), 5 );
+    QHBoxLayout* pLimitedAndObjectsGroupLayout = new QHBoxLayout();
+    pLimitedAndObjectsGroupLayout->setSpacing( 5 );
     pLimitedAndObjectsGroupLayout->setAlignment( Qt::AlignTop );
     pLimitedAndObjectsGroupLayout->addWidget( pLimitedToSensorsGroupBox );
     pLimitedAndObjectsGroupLayout->addWidget( pObjectParamGroupBox );
     pLimitedAndObjectsGroupLayout->setStretchFactor( pLimitedToSensorsGroupBox, 1 );
     pLimitedAndObjectsGroupLayout->setStretchFactor( pObjectParamGroupBox, 2 );
-    // LTO end
 
-    connect (detection, SIGNAL(textChanged( const QString& )), algorithmPreview, SLOT( OnDetectionChanged( const QString& ) ) );
-    connect (recognition, SIGNAL(textChanged( const QString& )), algorithmPreview, SLOT( OnRecognitionChanged( const QString& ) ) );
-    connect (identification, SIGNAL(textChanged( const QString& )), algorithmPreview, SLOT( OnIdentificationChanged( const QString& ) ) );
+    QVBoxLayout* pSensorGroupLayout = new QVBoxLayout();
+    pSensorGroupLayout->setSpacing( 5 );
+    pSensorGroupLayout->addWidget( pNameDelayHolder );
+    pSensorGroupLayout->addWidget( pAgentParamGroupBox );
+    pSensorGroupLayout->addLayout( pLimitedAndObjectsGroupLayout );
+    pSensorGroupBox->setLayout( pSensorGroupLayout );
+
+    connect( detection, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnDetectionChanged( const QString& ) ) );
+    connect( recognition, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnRecognitionChanged( const QString& ) ) );
+    connect( identification, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnIdentificationChanged( const QString& ) ) );
     connect( pStance, SIGNAL( PostureChanged( std::string , double ) ), algorithmPreview, SLOT( OnPerceiverStanceChanged( std::string , double ) ) );
     connect( pTargetStance, SIGNAL( PostureChanged( std::string , double ) ), algorithmPreview, SLOT( OnTargetStanceChanged( std::string , double ) ) );
     connect( pComposantes, SIGNAL( SizeChanged( std::string , double ) ), algorithmPreview, SLOT( OnSizeChanged( std::string , double ) ) );
@@ -267,8 +287,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     connect( pIllu, SIGNAL( IlluminationChanged( std::string , double ) ), algorithmPreview, SLOT( IlluminationChanged( std::string , double ) ) );
     connect( pEnv, SIGNAL( EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos*, double ) ), algorithmPreview, SLOT( EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* , double ) ) );
     connect( pMaterial, SIGNAL( UrbanBlockChanged( std::string , double ) ), algorithmPreview, SLOT( UrbanBlockChanged( std::string , double ) ) );
-    connect (populationModifier, SIGNAL(textChanged( const QString& )), algorithmPreview, SLOT( OnPopulationModifierChanged( const QString& ) ) );
-    connect (populationDensity, SIGNAL(textChanged( const QString& )), algorithmPreview, SLOT( OnPopulationDensityChanged( const QString& ) ) );
+    connect( populationModifier, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnPopulationModifierChanged( const QString& ) ) );
+    connect( populationDensity, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnPopulationDensityChanged( const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------

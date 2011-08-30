@@ -19,19 +19,29 @@
 ADN_FragOrder_WizardSecondPage::ADN_FragOrder_WizardSecondPage( Q3Wizard* pParent, const char* szName /* = 0*/, const char* szImageName /* = "adn_wizard.bmp"*/ )
   : ADN_WizardPage_ABC( pParent, szName, szImageName )
 {
-    Q3VBox* groupbox = new Q3VBox( pRightSide_ );
-    Q3HBox* box1 = new Q3HBox( groupbox );
-    addForAllUnits_ = new QCheckBox( box1 );
-    QLabel* label1 = new QLabel( box1 );
-    label1->setText(  qApp->translate( "ADN_FragOrder_WizardSecondPage",  "Add for all Units" ) );
-    Q3HBox* box2 = new Q3HBox( groupbox );
-    addForAllAutomata_ = new QCheckBox( box2 );
-    QLabel* label2 = new QLabel( box2,qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Automata") );
-    label2->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage",  "Add for all Automata" ) );
-    Q3HBox* box3 = new Q3HBox( groupbox );
-    addForAllPops_ = new QCheckBox( box3 );
-    QLabel* label3 = new QLabel( box3, qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds") );
-    label3->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds" ) );
+    QWidget* pGroupBox = new QWidget( pRightSide_ );
+    
+    addForAllUnits_ = new QCheckBox();
+    QLabel* pLabel1 = new QLabel();
+    pLabel1->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Units" ) );
+    
+    addForAllAutomata_ = new QCheckBox();
+    QLabel* pLabel2 = new QLabel();
+    pLabel2->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Automata" ) );
+    
+    addForAllPops_ = new QCheckBox();
+    QLabel* pLabel3 = new QLabel();
+    pLabel3->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds" ) );
+
+    QGridLayout* pGroupBoxLayout = new QGridLayout();
+    pGroupBoxLayout->setColumnStretch( 1, 1 );
+    pGroupBoxLayout->addWidget( addForAllUnits_, 0, 0 );
+    pGroupBoxLayout->addWidget( pLabel1, 0, 1 );
+    pGroupBoxLayout->addWidget( addForAllAutomata_, 1, 0 );
+    pGroupBoxLayout->addWidget( pLabel2, 1, 1 );
+    pGroupBoxLayout->addWidget( addForAllPops_, 2, 0 );
+    pGroupBoxLayout->addWidget( pLabel3, 2, 1 );
+    pGroupBox->setLayout( pGroupBoxLayout );
 }
 
 // -----------------------------------------------------------------------------
