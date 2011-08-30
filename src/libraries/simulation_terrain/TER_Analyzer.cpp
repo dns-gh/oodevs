@@ -86,8 +86,8 @@ void TER_Analyzer::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double 
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    std::vector< spatialcontainer::Node< TerrainData >* > result = pAnalyzer_->FindCrossroadNodesWithinCircle( MakePoint( center ), radius );
-    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
+    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindCrossroadNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator it = nodes.begin(); it != nodes.end(); ++it )
         result.push_back( MakeVectorPointer( **it ) );
     return result;
 }
@@ -99,8 +99,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindCrossroadsWith
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    std::vector< geometry::Point2f > result = pAnalyzer_->FindSafetyPositionsWithinCircle( MakePoint( center ), radius, safetyDistance );
-    for( std::vector< geometry::Point2f >::const_iterator it = result.begin(); it != result.end(); ++it )
+    std::vector< geometry::Point2f > points = pAnalyzer_->FindSafetyPositionsWithinCircle( MakePoint( center ), radius, safetyDistance );
+    for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
         result.push_back( MakeVectorPointer( *it ) );
     return result;
 }
@@ -138,6 +138,4 @@ TerrainData TER_Analyzer::FindTerrainDataWithinCircle( const MT_Vector2D& center
 TerrainData TER_Analyzer::Pick( const MT_Vector2D& pos )
 {
     return pAnalyzer_->Pick( MakePoint( pos ), 100000.f );
-}
-
 }
