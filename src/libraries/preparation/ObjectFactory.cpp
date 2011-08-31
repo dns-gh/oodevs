@@ -22,7 +22,7 @@
 #include "FormationModel.h"
 #include "Team.h"
 #include "UrbanModel.h"
-#include "ActivityTimeAttribute.h"
+#include "TimeLimitedAttribute.h"
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
@@ -218,7 +218,7 @@ void ObjectFactory::Initialize()
 {
     AttributeFactory* factory = new AttributeFactory();
     // Register capacity
-    factory->Register( "activity-time"      , BIND_ATTACH_ATTRIBUTE( ActivityTimeAttribute, _1, _2, _3 ) );
+    factory->Register( "activity-time"      , BIND_ATTACH_ATTRIBUTE( TimeLimitedAttribute, _1, _2, _3 ) );
     factory->Register( "bypass"             , BIND_ATTACH_ATTRIBUTE( BypassAttribute, _1, _2, _3 ) );
     factory->Register( "construction"       , BIND_ATTACH_ATTRIBUTE( ConstructionAttribute, _1, _2, _3 ) );
     factory->Register( "crossing-site"      , BIND_ATTACH_ATTRIBUTE( CrossingSiteAttribute, _1, _2, _3 ) );

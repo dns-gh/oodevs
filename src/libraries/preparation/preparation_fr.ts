@@ -2,13 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>ActivityTimeAttribute</name>
-    <message>
-        <source>Info/Mine parameters/Activity time</source>
-        <translation>Info/Paramètres des mines/Durée d&apos;activité</translation>
-    </message>
-</context>
-<context>
     <name>Affinities</name>
     <message>
         <source>Affinities</source>
@@ -785,6 +778,13 @@ Détail: %1.</translation>
     <message>
         <source>Info/Karma</source>
         <translation>Info/Karma</translation>
+    </message>
+</context>
+<context>
+    <name>TimeLimitedAttribute</name>
+    <message>
+        <source>Info/Mine parameters/Activity time</source>
+        <translation>Info/Paramètres des mines/Durée d&apos;activité</translation>
     </message>
 </context>
 <context>

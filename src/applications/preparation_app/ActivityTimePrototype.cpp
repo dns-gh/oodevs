@@ -12,7 +12,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/LoadableTimeEdit.h"
-#include "preparation/ActivityTimeAttribute.h"
+#include "preparation/TimeLimitedAttribute.h"
 
 using namespace kernel;
 
@@ -45,7 +45,7 @@ void ActivityTimePrototype::Commit()
     if( creation_ )
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        ActivityTimeAttribute* attribute = new ActivityTimeAttribute( dico );
+        TimeLimitedAttribute* attribute = new TimeLimitedAttribute( dico );
         QTime t = activityTime_->time();
         attribute->SetActivityTime( 3600 * t.hour() +
                                       60 * t.minute() +

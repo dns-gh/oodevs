@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActivityTimeAttribute_h_
-#define __ActivityTimeAttribute_h_
+#ifndef __TimeLimitedAttribute_h_
+#define __TimeLimitedAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -26,20 +26,20 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  ActivityTimeAttribute
-    @brief  ActivityTimeAttribute
+/** @class  TimeLimitedAttribute
+    @brief  TimeLimitedAttribute
 */
 // Created: SBO 2007-02-08
 // =============================================================================
-class ActivityTimeAttribute : public kernel::TimeLimitedAttribute_ABC
+class TimeLimitedAttribute : public kernel::TimeLimitedAttribute_ABC
                             , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActivityTimeAttribute( kernel::PropertiesDictionary& dico );
-             ActivityTimeAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
-    virtual ~ActivityTimeAttribute();
+    explicit TimeLimitedAttribute( kernel::PropertiesDictionary& dico );
+             TimeLimitedAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    virtual ~TimeLimitedAttribute();
     //@}
 
     //! @name Operations
@@ -56,8 +56,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    ActivityTimeAttribute( const ActivityTimeAttribute& );            //!< Copy constructor
-    ActivityTimeAttribute& operator=( const ActivityTimeAttribute& ); //!< Assignment operator
+    TimeLimitedAttribute( const TimeLimitedAttribute& );            //!< Copy constructor
+    TimeLimitedAttribute& operator=( const TimeLimitedAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -72,4 +72,4 @@ private:
     //@}
 };
 
-#endif // __ActivityTimeAttribute_h_
+#endif // __TimeLimitedAttribute_h_

@@ -1,7 +1,6 @@
 HEADERS = 
 
-SOURCES = ActivityTimeAttribute.cpp \
-Agent.cpp \
+SOURCES = Agent.cpp \
 AgentFactory.cpp \
 AgentPositions.cpp \
 AgentsModelChecker.cpp \
@@ -46,6 +45,7 @@ SupplyRouteAttribute.cpp \
 TacticalLine_ABC.cpp \
 Team.cpp \
 TeamsModel.cpp \
+TimeLimitedAttribute.cpp \
 TrafficabilityAttribute.cpp \
 UndergroundAttribute.cpp \
 
