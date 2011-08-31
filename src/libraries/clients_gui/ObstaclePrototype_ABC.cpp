@@ -37,18 +37,21 @@ namespace
 ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle" ) )
 {
+    Q3VBox* vbox = new Q3VBox( this );
     {
-        new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle type:" ), this );
-        types_ = new ValuedComboBox< E_DemolitionTargetType >( this );
+        Q3HBox* hBox = new Q3HBox( vbox );
+        new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle type:" ), hBox );
+        types_ = new ValuedComboBox< E_DemolitionTargetType >( hBox );
     }
     {
-        activation_ = new LoadableCheckBox( tools::translate( "gui::ObstaclePrototype_ABC", "Reserved obstacle activated:" ), this );
+        activation_ = new LoadableCheckBox( tools::translate( "gui::ObstaclePrototype_ABC", "Reserved obstacle activated:" ), vbox );
         activation_->hide();
         connect( this, SIGNAL( ToggleActivable( bool ) ), activation_, SLOT( setShown( bool ) ) );
     }
     {
-        QLabel* label = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), this );
-        activationTime_ = new LoadableTimeEdit( this );
+        Q3HBox* hBox = new Q3HBox( vbox );
+        QLabel* label = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), hBox );
+        activationTime_ = new LoadableTimeEdit( hBox );
         label->hide();
         activationTime_->hide();
         connect( this, SIGNAL( ToggleActivable( bool ) ), label, SLOT( setShown( bool ) ) );
@@ -120,9 +123,7 @@ int ObstaclePrototype_ABC::GetActivationTime() const
         return 0;
 
     QTime t = activationTime_->time();
-    return 3600 * t.hour() +
-           60 *  t.minute() +
-                 t.second();
+    return 3600 * t.hour() + 60 * t.minute() + t.second();
 }
 
 // -----------------------------------------------------------------------------
