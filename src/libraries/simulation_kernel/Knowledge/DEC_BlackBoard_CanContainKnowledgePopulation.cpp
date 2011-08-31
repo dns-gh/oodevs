@@ -119,7 +119,7 @@ DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowl
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::Accept
-// Created: LOIC 2011-08-29
+// Created: LGY 2011-08-29
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
