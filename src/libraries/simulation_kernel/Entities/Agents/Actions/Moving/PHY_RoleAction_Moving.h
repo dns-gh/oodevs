@@ -80,6 +80,7 @@ public:
     virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
     virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     virtual double GetMaxSpeed() const;
+    double GetMaxSpeed( const TerrainData& environment ) const;
     double GetMaxSlope() const;
     double GetMaxSpeedWithReinforcement() const;
     double GetTheoricMaxSpeed( bool loaded ) const;
@@ -126,7 +127,6 @@ private:
 
     //! @name Speed management
     //@{
-    double GetMaxSpeed( const TerrainData& environment ) const;
     double GetMaxSpeed( const MIL_Object_ABC& object ) const;
     double ApplyMaxSpeedModificators( double rSpeed ) const;
     double ApplySpeedModificators( double rSpeed ) const;

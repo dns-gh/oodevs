@@ -26,6 +26,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/FloodAttribute.h"
@@ -609,25 +610,8 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 // -----------------------------------------------------------------------------
 bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
-    if( !pathClass_.IsFlying() )
-    {
-        float weight = static_cast< float >( GetUnitMajorWeight() );
-        for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
-        {
-            if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
-                return false;
-            if( it != pathPoints_.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *( it - 1 ), *it ) )
-                return false;
-        }
-    }
-
-    T_KnowledgeObjectVector knowledgesObject;
-    queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
-    for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
-    {
-        const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-        if( knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( pathPoints_, queryMaker_ ) )
-            return false;
-    }
-    return true;
+    const PHY_RoleInterface_TerrainAnalysis& analysis = queryMaker_.GetRole< PHY_RoleInterface_TerrainAnalysis >();
+    return analysis.CanMoveOnUrbanBlock( pathPoints_ ) &&
+           analysis.CanMoveOnBurningCells( pathPoints_ ) &&
+           analysis.CanMoveOnKnowledgeObject( pathPoints_ );
 }

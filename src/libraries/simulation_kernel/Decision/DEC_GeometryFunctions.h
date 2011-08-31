@@ -24,21 +24,6 @@ class MT_Vector2D;
 class TER_Localisation;
 class UrbanObjectWrapper;
 
-namespace directia
-{
-namespace brain
-{
-    class Brain;
-}
-namespace tools
-{
-namespace binders
-{
-    class ScriptRef;
-}
-}
-}
-
 // =============================================================================
 // Created: NLD 2003-08-20
 // =============================================================================
@@ -160,11 +145,6 @@ public:
 
     static bool GetInterceptionPoint( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, double rInterceptingSpeed, MT_Vector2D& result );
 
-    // Terrain keypoint
-    static void GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
-    static std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance );
-    static std::vector< boost::shared_ptr< MT_Vector2D > > GetRoadIntersectionsWithZone( const TER_Localisation* zone );
-    
     // BMArea
     static boost::shared_ptr< MT_Vector2D > ComputeBarycenter( const TER_Localisation* localisation );
 

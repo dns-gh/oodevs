@@ -9,11 +9,24 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_TerrainAnalysis.h"
+#include "Decision/DEC_GeometryFunctions.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentTypePion.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Objects/FloodAttribute.h"
+#include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_kernel/MIL_AgentServer.h"
+#include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis constructor
@@ -167,4 +180,86 @@ void PHY_RolePion_TerrainAnalysis::FindSafetyPositionsWithinCircle( std::vector<
         UpdateSafety( radius, safetyDistance );
     for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::const_iterator it = safetyBuffer_.begin(); it != safetyBuffer_.end(); it++ )
         points.push_back( it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain
+// Created: CMA 2011-08-30
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vector2D >& points ) const
+{
+    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    {
+        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+        {
+            const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
+            double maxSpeed = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
+            if( maxSpeed <= 0. )
+                return false;
+        }
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock
+// Created: CMA 2011-08-30
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Vector2D >& points ) const
+{
+    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    {
+        double weight = pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+        {
+            if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
+                return false;
+        }
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells
+// Created: CMA 2011-08-30
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_Vector2D >& points ) const
+{
+    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    {
+        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+        {
+            if( it != points.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *( it - 1 ), *it ) )
+                return false;
+        }
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject
+// Created: CMA 2011-08-30
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< MT_Vector2D >& points ) const
+{
+    T_KnowledgeObjectVector knowledgesObject;
+    pion_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+    for( CIT_KnowledgeObjectVector it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
+    {
+        const DEC_Knowledge_Object& knowledge = **it;
+        if( knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( points, pion_ ) )
+            return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_TerrainAnalysis::CanMoveOn
+// Created: CMA 2011-08-30
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_TerrainAnalysis::CanMoveOn( boost::shared_ptr< MT_Vector2D > position ) const
+{
+    std::vector< MT_Vector2D > points;
+    points.push_back( *position );
+    return CanMoveOnTerrain( points ) && CanMoveOnUrbanBlock( points ) && CanMoveOnBurningCells( points ) && CanMoveOnKnowledgeObject( points );
 }

@@ -37,8 +37,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void GetCrossroads( std::vector< boost::shared_ptr< MT_Vector2D > >& points ) = 0;
+    virtual void GetCrossroads                  ( std::vector< boost::shared_ptr< MT_Vector2D > >& points ) = 0;
     virtual void FindSafetyPositionsWithinCircle( std::vector< boost::shared_ptr< MT_Vector2D > >& points, float radius, float safetyDistance ) = 0;
+    virtual bool CanMoveOnUrbanBlock            ( const std::vector< MT_Vector2D >& points ) const = 0;
+    virtual bool CanMoveOnBurningCells          ( const std::vector< MT_Vector2D >& points ) const = 0;
+    virtual bool CanMoveOnKnowledgeObject       ( const std::vector< MT_Vector2D >& points ) const = 0;
+    virtual bool CanMoveOn                      ( boost::shared_ptr< MT_Vector2D > position ) const = 0;
     //@}
 
 private:

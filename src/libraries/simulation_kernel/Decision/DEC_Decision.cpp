@@ -30,6 +30,7 @@
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
+#include "Decision/DEC_TerrainFunctions.h"
 #include "DEC_ResourceNetwork.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
@@ -106,6 +107,8 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
     brain[ "DEC_Pion_GetMilPionType" ] = &DEC_AgentFunctions::GetMilPionType;
     brain[ "DEC_Agent_EstImmobilise" ] = &DEC_AgentFunctions::IsImmobilized;
+    brain[ "DEC_Agent_CanMoveOn" ] =
+        boost::function< bool( const DEC_Decision_ABC*, boost::shared_ptr< MT_Vector2D > )>( boost::bind( &DEC_TerrainFunctions::CanMoveOn, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +217,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_DecouperLocalisation" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisation, _1, _2 ) );
     brain[ "DEC_IsPointInCity" ] = &DEC_GeometryFunctions::IsPointInCity;
     brain[ "DEC_Geometrie_ComputeNearestBorder" ] = &DEC_GeometryFunctions::ComputeNearestBorder;
-    brain[ "DEC_Geometrie_FindRoadIntersectionWithZone" ] = &DEC_GeometryFunctions::GetRoadIntersectionsWithZone;
+    brain[ "DEC_Geometrie_FindRoadIntersectionWithZone" ] = &DEC_TerrainFunctions::GetRoadIntersectionsWithZone;
     brain[ "DEC_Geometrie_CalculerTrafficablePointPourPoint" ] =
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) );
     brain[ "DEC_Geometrie_PositionsParRapportALocalisation" ] =

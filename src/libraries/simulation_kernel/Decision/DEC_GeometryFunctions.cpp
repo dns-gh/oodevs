@@ -18,7 +18,6 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -1862,43 +1861,6 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
         return static_cast< float >( 1.f - std::min( 1., rDelay / rTimeLeeway ) );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::GetCrossroads
-// Created: MGD 2009-08-19
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
-{
-    std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );
-
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.point" ], points, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::FindSafetyPositionsWithinCircle
-// Created: LDC 2010-10-27
-// -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance )
-{
-    std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().FindSafetyPositionsWithinCircle( points, radius, safetyDistance );
-    return points;
-}
-
-// -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetRoadIntersectionsWithZone
-// Created: LDC 2011-06-22
-// -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetRoadIntersectionsWithZone( const TER_Localisation* /*zone*/ )
-{
-    std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    // $$$$ LDC TODO: Needs a function to retrieve all intersections of objects of type road with the polygon.
-    // create a functor who can add points to the list and call something like
-    // const MT_Vector2D& centre = zone->GetBoundingBox().GetCenter();
-    // TER_World::GetWorld().GetPathFindManager().ApplyOnLinksWithinCircle( centre, zone->GetLength() / 2, functor );
-    return points;    
-}    
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeBarycenter

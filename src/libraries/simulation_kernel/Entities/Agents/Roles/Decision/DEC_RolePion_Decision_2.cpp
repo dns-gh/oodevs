@@ -30,6 +30,7 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_MedicalTreatmentFunctions.h"
+#include "Decision/DEC_TerrainFunctions.h"
 #include "Entities/Actions/PHY_ActionInterrogate.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
@@ -697,9 +698,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     //Keypoint
     brain[ "DEC_Crossroads" ] =
-        boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) ;
+        boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_TerrainFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) ;
     brain[ "DEC_FindSafetyPositions" ] =
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( float, float ) >( boost::bind( &DEC_GeometryFunctions::FindSafetyPositionsWithinCircle, boost::ref( GetPion() ), _1, _2 ) ) ;
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( float, float ) >( boost::bind( &DEC_TerrainFunctions::FindSafetyPositionsWithinCircle, boost::ref( GetPion() ), _1, _2 ) ) ;
 
     // Fire
     brain[ "DEC_Tir_PorteeMaxPourTirerSurUnite" ] =
