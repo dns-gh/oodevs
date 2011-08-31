@@ -31,7 +31,7 @@ namespace xml
 */
 // Created: SBO 2007-02-08
 // =============================================================================
-class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC
+class ActivityTimeAttribute : public kernel::TimeLimitedAttribute_ABC
                             , public kernel::Serializable_ABC
 {
 public:
