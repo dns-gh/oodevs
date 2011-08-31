@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 
 #include "ObjectAttributeContainer.h"
-#include "ActivityTimeAttribute.h"
 #include "AltitudeModifierAttribute.h"
 #include "BurnAttribute.h"
 #include "BurnSurfaceAttribute.h"
@@ -34,6 +33,7 @@
 #include "ToxicCloudAttribute.h"
 #include "UndergroundAttribute.h"
 #include "protocol/ClientSenders.h"
+#include "TimeLimitedAttribute.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -123,8 +123,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< MedicalTreatmentAttribute >( message );
     if( message.has_effect_delay() )
         CreateOrUpdate< DelayAttribute >( message );
-    if( message.has_activity_time() )
-        CreateOrUpdate< ActivityTimeAttribute >( message );
+    if( message.has_life_time() )
+        CreateOrUpdate< TimeLimitedAttribute >( message );
     if( message.has_toxic_cloud() )
         CreateOrUpdate< ToxicCloudAttribute >( message );
     if( message.has_interaction_height() )

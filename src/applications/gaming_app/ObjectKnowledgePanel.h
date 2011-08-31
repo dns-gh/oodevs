@@ -32,7 +32,7 @@ namespace kernel
     class LogisticAttribute_ABC;
     class CrossingSiteAttribute_ABC;
     class SupplyRouteAttribute_ABC;
-    class ActivityTimeAttribute_ABC;
+    class TimeLimitedAttribute_ABC;
 }
 
 namespace gui
@@ -65,7 +65,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::NBCAttribute_ABC >
-                           , public tools::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::TimeLimitedAttribute_ABC >
                            , public kernel::TeamSelectionObserver
                            , public KnowledgeGroupSelectionObserver
 {
@@ -112,7 +112,7 @@ private:
     virtual void NotifyUpdated( const kernel::CrossingSiteAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::SupplyRouteAttribute_ABC& element );
     virtual void NotifyUpdated( const kernel::NBCAttribute_ABC& element );
-    virtual void NotifyUpdated( const kernel::ActivityTimeAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::TimeLimitedAttribute_ABC& element );
     template< typename T >
     void DisplayExtension( const T& extension );
     template< typename T >

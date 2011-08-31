@@ -7,27 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __ActivityTimeAttribute_h_
-#define __ActivityTimeAttribute_h_
+#ifndef __TimeLimitedAttribute_h_
+#define __TimeLimitedAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-
 // =============================================================================
-/** @class  ActivityTimeAttribute
-    @brief  ActivityTimeAttribute
+/** @class  TimeLimitedAttribute
+    @brief  TimeLimitedAttribute
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ActivityTimeAttribute : public ObjectAttribute_ABC
+class TimeLimitedAttribute : public ObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActivityTimeAttribute( const sword::ObjectAttributes& asnMsg );
-    virtual ~ActivityTimeAttribute();
+    explicit TimeLimitedAttribute( const sword::ObjectAttributes& asnMsg );
+    virtual ~TimeLimitedAttribute();
     //@}
 
     //! @name Operations
@@ -39,11 +38,10 @@ public:
 private:
     //! @name Member data
     //@{
-    int nActivityTime_;
+    int lifeTime_;
     //@}
-
 };
 
 }
 
-#endif // __ActivityTimeAttribute_h_
+#endif // __TimeLimitedAttribute_h_

@@ -1204,8 +1204,6 @@ namespace
         CONVERT_CB( construction, ConvertObjectAttributeConstruction );
         CONVERT_CB( obstacle, ConvertObjectAttributeObstacle );
         CONVERT_CB_TO( mine, valorisation, ConvertObjectAttributeMine );
-        if( from.has_activity_time() )
-            to->mutable_activity_time()->set_activity_time( from.activity_time().value() );
         if( from.has_bypass() )
             to->mutable_bypass()->set_percentage( from.bypass().percentage() );
         CONVERT_CB( logistic, ConvertObjectAttributeLogistic );

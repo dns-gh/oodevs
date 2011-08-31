@@ -1134,11 +1134,11 @@ message ObjectAttributeObstacle {
    optional int32                             activation_time = 3; //!< The activation time @todo unit ?
 }
 
-/** @struct ObjectAttributeActivityTime
-    @brief Defines an object attribute activity time
+/** @struct ObjectAttributeLifeTime
+    @brief Defines an object attribute life time
 */
-message ObjectAttributeActivityTime {
-   required int32 value = 1; //!< The activity time @todo unit ?
+message ObjectAttributeLifeTime {
+   required int32 value = 1; //!< The life time @todo unit ?
 }
 
 /** @struct ObjectAttributeBypass
@@ -1359,7 +1359,7 @@ message ObjectAttributes {
    optional ObjectAttributeConstruction      construction       = 1;  //!< @copybrief ObjectAttributeConstruction
    optional ObjectAttributeObstacle          obstacle           = 2;  //!< @copybrief ObjectAttributeObstacle
    optional ObjectAttributeMine              mine               = 3;  //!< @copybrief ObjectAttributeMine
-   optional ObjectAttributeActivityTime      activity_time      = 4;  //!< @copybrief ObjectAttributeActivityTime
+   optional ObjectAttributeLifeTime          life_time          = 4;  //!< @copybrief ObjectAttributeLifeTime
    optional ObjectAttributeBypass            bypass             = 5;  //!< @copybrief ObjectAttributeBypass
    optional ObjectAttributeLogistic          logistic           = 6;  //!< @copybrief ObjectAttributeLogistic
    optional ObjectAttributeNBC               nbc                = 7;  //!< @copybrief ObjectAttributeNBC

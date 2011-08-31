@@ -78,7 +78,7 @@ private:
 private:
     //! @name
     //@{
-    unsigned int nActivityTime_;
+    unsigned int nLifeTime_;
     mutable unsigned int nDeathTimeStep_;
     //@}
 };

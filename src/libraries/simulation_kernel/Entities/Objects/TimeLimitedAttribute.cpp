@@ -23,12 +23,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( TimeLimitedAttribute )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis )
-    : nActivityTime_ ( 0 )
+    : nLifeTime_     ( 0 )
     , nDeathTimeStep_( 0 )
 {
-    xis >> xml::attribute( "value", nActivityTime_ ) // s
+    xis >> xml::attribute( "value", nLifeTime_ ) // s
         >> xml::optional >> xml::attribute( "initial", nDeathTimeStep_ );
-    if( nActivityTime_ < 0 )
+    if( nLifeTime_ < 0 )
         xis.error( "nMinesActivityTime_ is not greater than or equal to 0" );
 }
 
@@ -37,7 +37,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( unsigned int nActivityTime )
-    : nActivityTime_ ( nActivityTime )
+    : nLifeTime_     ( nActivityTime )
     , nDeathTimeStep_( 0 )
 {
     // NOTHING
@@ -48,7 +48,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( unsigned int nActivityTime )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute()
-    : nActivityTime_ ( 0 )
+    : nLifeTime_     ( 0 )
     , nDeathTimeStep_( 0 )
 {
     // NOTHING
@@ -59,7 +59,7 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( const sword::MissionParameter_Value& attributes )
-    : nActivityTime_ ( attributes.list( 1 ).quantity() )
+    : nLifeTime_     ( attributes.list( 1 ).quantity() )
     , nDeathTimeStep_( 0 )
 {
     // NOTHING
@@ -70,8 +70,8 @@ TimeLimitedAttribute::TimeLimitedAttribute( const sword::MissionParameter_Value&
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( const TimeLimitedAttribute& from )
-    : nActivityTime_ ( from.nActivityTime_ )
-    , nDeathTimeStep_ ( from.nDeathTimeStep_ )
+    : nLifeTime_     ( from.nLifeTime_ )
+    , nDeathTimeStep_( from.nDeathTimeStep_ )
 {
     // NOTHING
 }
@@ -82,7 +82,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( const TimeLimitedAttribute& from )
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute& TimeLimitedAttribute::operator=( const TimeLimitedAttribute& from )
 {
-    nActivityTime_ = from.nActivityTime_;
+    nLifeTime_ = from.nLifeTime_;
     nDeathTimeStep_ = from.nDeathTimeStep_;
     return *this;
 }
@@ -104,7 +104,7 @@ template< typename Archive >
 void TimeLimitedAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & nActivityTime_
+         & nLifeTime_
          & nDeathTimeStep_;
 }
 
@@ -124,7 +124,7 @@ void TimeLimitedAttribute::Register( MIL_Object_ABC& object ) const
 void TimeLimitedAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "activity-time" )
-        << xml::attribute( "value", nActivityTime_ );
+        << xml::attribute( "value", nLifeTime_ );
     if( nDeathTimeStep_ > 0 )
         xos << xml::attribute( "initial", nDeathTimeStep_ );
     xos << xml::end;
@@ -136,10 +136,10 @@ void TimeLimitedAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool TimeLimitedAttribute::IsTimeOver( unsigned int time ) const
 {
-    if( nActivityTime_ == 0 )
+    if( nLifeTime_ == 0 )
         return false;
     if( nDeathTimeStep_ == 0 )
-        nDeathTimeStep_ = unsigned int( time + MIL_Tools::ConvertSecondsToSim( nActivityTime_ ) );
+        nDeathTimeStep_ = unsigned int( time + MIL_Tools::ConvertSecondsToSim( nLifeTime_ ) );
     return nDeathTimeStep_ <= time;
 }
 
@@ -149,7 +149,7 @@ bool TimeLimitedAttribute::IsTimeOver( unsigned int time ) const
 // -----------------------------------------------------------------------------
 void TimeLimitedAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_activity_time()->set_value( nActivityTime_ );
+    asn.mutable_life_time()->set_value( nLifeTime_ );
 }
 
 // -----------------------------------------------------------------------------

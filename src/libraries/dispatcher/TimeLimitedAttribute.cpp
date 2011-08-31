@@ -8,46 +8,45 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
-#include "ActivityTimeAttribute.h"
+#include "TimeLimitedAttribute.h"
 #include "protocol/Protocol.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute constructor
+// Name: TimeLimitedAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( const sword::ObjectAttributes& asnMsg )
-    : nActivityTime_( 0 )
+TimeLimitedAttribute::TimeLimitedAttribute( const sword::ObjectAttributes& asnMsg )
+    : lifeTime_( 0 )
 {
     Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute destructor
+// Name: TimeLimitedAttribute destructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::~ActivityTimeAttribute()
+TimeLimitedAttribute::~TimeLimitedAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::Update
+// Name: TimeLimitedAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Update( const sword::ObjectAttributes& asnMsg )
+void TimeLimitedAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
-    if( asnMsg.has_activity_time()  )
-        nActivityTime_ = asnMsg.activity_time().value();
+    if( asnMsg.has_life_time() )
+        lifeTime_ = asnMsg.life_time().value();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::Send
+// Name: TimeLimitedAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Send( sword::ObjectAttributes& asnMsg ) const
+void TimeLimitedAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_activity_time()->set_value( nActivityTime_ );
+    asnMsg.mutable_life_time()->set_value( lifeTime_ );
 }

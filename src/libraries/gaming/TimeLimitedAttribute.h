@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ActivityTimeAttribute_h_
-#define __ActivityTimeAttribute_h_
+#ifndef __TimeLimitedAttribute_h_
+#define __TimeLimitedAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
 
@@ -19,18 +19,18 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  ActivityTimeAttribute
-    @brief  ActivityTimeAttribute
+/** @class  TimeLimitedAttribute
+    @brief  TimeLimitedAttribute
 */
 // Created: SBO 2007-02-08
 // =============================================================================
-class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC
+class TimeLimitedAttribute : public kernel::TimeLimitedAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActivityTimeAttribute( kernel::Controller& controller );
-    virtual ~ActivityTimeAttribute();
+    explicit TimeLimitedAttribute( kernel::Controller& controller );
+    virtual ~TimeLimitedAttribute();
     //@}
 
     //! @name Operations
@@ -43,8 +43,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    ActivityTimeAttribute( const ActivityTimeAttribute& );            //!< Copy constructor
-    ActivityTimeAttribute& operator=( const ActivityTimeAttribute& ); //!< Assignment operator
+    TimeLimitedAttribute( const TimeLimitedAttribute& );            //!< Copy constructor
+    TimeLimitedAttribute& operator=( const TimeLimitedAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Updatable_ABC
@@ -64,4 +64,4 @@ private:
     //@}
 };
 
-#endif // __ActivityTimeAttribute_h_
+#endif // __TimeLimitedAttribute_h_

@@ -251,7 +251,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const NBCAttribute_ABC& element )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const ActivityTimeAttribute_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const TimeLimitedAttribute_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -342,7 +342,7 @@ void ObjectKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
             UpdateExtension< CrossingSiteAttribute_ABC >( *subSelected_ );
             UpdateExtension< SupplyRouteAttribute_ABC >( *subSelected_ );
             UpdateExtension< NBCAttribute_ABC >( *subSelected_ );
-            UpdateExtension< ActivityTimeAttribute_ABC >( *subSelected_ );
+            UpdateExtension< TimeLimitedAttribute_ABC >( *subSelected_ );
             UpdateExtension< MineAttribute_ABC >( *subSelected_ );
 
             const ObjectPerceptions* perceptions = subSelected_->Retrieve< ObjectPerceptions >();

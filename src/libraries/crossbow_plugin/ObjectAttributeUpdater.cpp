@@ -141,7 +141,7 @@ ObjectAttributeUpdater::~ObjectAttributeUpdater()
 
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributes& msg )
 {
-    CHECK_ATTRIBUTE_UPDATE( activity_time );
+    CHECK_ATTRIBUTE_UPDATE( life_time );
     CHECK_ATTRIBUTE_UPDATE( bypass );
     CHECK_ATTRIBUTE_UPDATE( construction );
     CHECK_ATTRIBUTE_UPDATE( crossing_site );
@@ -261,12 +261,12 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMine& mine )
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const sword::ObjectAttributeActivityTime& activity_time )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeLifeTime& life_time )
 {
     RowManipulator row( *updater_, *inserter_, "ActivityTime" );
 
-    if( activity_time.has_value() )
-        row.SetProperty( "Quantity", "activity_time", ToString( activity_time.value() ) ); // DateTime
+    if( life_time.has_value() )
+        row.SetProperty( "Quantity", "activity_time", ToString( life_time.value() ) ); // DateTime
 }
 
 // -----------------------------------------------------------------------------

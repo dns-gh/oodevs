@@ -1,7 +1,6 @@
 HEADERS = 
 
-SOURCES = ActivityTimeAttribute.cpp \
-Affinities.cpp \
+SOURCES = Affinities.cpp \
 AfterActionFunction.cpp \
 Agent.cpp \
 AgentKnowledge.cpp \
@@ -59,6 +58,7 @@ StructuralStateAttribute.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
+TimeLimitedAttribute.cpp \
 Transports.cpp \
 UndergroundAttribute.cpp \
 UrbanKnowledge.cpp \

@@ -388,7 +388,7 @@ void MIL_Object::UpdateState()
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     if( asn().has_location() || attr.has_construction() || attr.has_obstacle() || attr.has_mine()
-        || attr.has_activity_time() || attr.has_bypass() || attr.has_logistic() || attr.has_nbc()
+        || attr.has_life_time() || attr.has_bypass() || attr.has_logistic() || attr.has_nbc()
         || attr.has_crossing_site() || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
         || attr.has_burn() || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
         || attr.has_nbc_agent() || attr.has_effect_delay() || attr.has_resource_networks() || attr.has_flood()

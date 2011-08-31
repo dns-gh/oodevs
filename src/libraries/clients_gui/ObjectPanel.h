@@ -21,7 +21,7 @@ namespace kernel
     class Controllers;
     class MineAttribute_ABC;
     class ConstructionAttribute_ABC;
-    class ActivityTimeAttribute_ABC;
+    class TimeLimitedAttribute_ABC;
     class ObstacleAttribute_ABC;
     class BypassAttribute_ABC;
     class NBCAttribute_ABC;
@@ -51,7 +51,7 @@ class ObjectPanel : public InfoPanel_ABC
                   , public tools::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::MineAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >
-                  , public tools::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >
+                  , public tools::ElementObserver_ABC< kernel::TimeLimitedAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::BypassAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::LogisticAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::LodgingAttribute_ABC >
@@ -109,7 +109,7 @@ private:
     virtual void NotifyUpdated( const kernel::NBCAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::FireAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::MedicalTreatmentAttribute_ABC& attributes );
-    virtual void NotifyUpdated( const kernel::ActivityTimeAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::TimeLimitedAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::StockAttribute_ABC& attributes );
 
     template< typename Extension >

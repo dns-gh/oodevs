@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "ActivityTimeAttribute.h"
+#include "TimeLimitedAttribute.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -17,10 +17,10 @@
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute constructor
+// Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( Controller& controller )
+TimeLimitedAttribute::TimeLimitedAttribute( Controller& controller )
     : controller_  ( controller )
     , activityTime_( 0 )
 {
@@ -28,70 +28,70 @@ ActivityTimeAttribute::ActivityTimeAttribute( Controller& controller )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute destructor
+// Name: TimeLimitedAttribute destructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::~ActivityTimeAttribute()
+TimeLimitedAttribute::~TimeLimitedAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::Display
+// Name: TimeLimitedAttribute::Display
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Display( Displayer_ABC& displayer ) const
+void TimeLimitedAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
              .Display( tools::translate( "Object", "Activity time:" ), activityTime_ / 3600. * Units::hours );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DisplayInTooltip
+// Name: TimeLimitedAttribute::DisplayInTooltip
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
+void TimeLimitedAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DisplayInSummary
+// Name: TimeLimitedAttribute::DisplayInSummary
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
+void TimeLimitedAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T >     void ActivityTimeAttribute::UpdateData
+// Name: template< typename T >     void TimeLimitedAttribute::UpdateData
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
 template< typename T >
-void ActivityTimeAttribute::UpdateData( const T& message )
+void TimeLimitedAttribute::UpdateData( const T& message )
 {
-    if( message.has_activity_time() )
+    if( message.has_life_time() )
     {
-        activityTime_ = static_cast< unsigned int >( message.activity_time().value() );
-        controller_.Update( *static_cast< ActivityTimeAttribute_ABC* >( this ) );
+        activityTime_ = static_cast< unsigned int >( message.life_time().value() );
+        controller_.Update( *static_cast< TimeLimitedAttribute_ABC* >( this ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DoUpdate
+// Name: TimeLimitedAttribute::DoUpdate
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const sword::ObjectUpdate& message )
+void TimeLimitedAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DoUpdate
+// Name: TimeLimitedAttribute::DoUpdate
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
+void TimeLimitedAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }

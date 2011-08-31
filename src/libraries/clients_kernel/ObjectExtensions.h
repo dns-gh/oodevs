@@ -36,7 +36,7 @@ namespace kernel
     };
     class ConstructionAttribute_ABC : public ObjectExtension {};
     class MineAttribute_ABC : public ObjectExtension {};
-    class ActivityTimeAttribute_ABC : public ObjectExtension {};
+    class TimeLimitedAttribute_ABC : public ObjectExtension {};
     class NBCAttribute_ABC : public ObjectExtension {};
     class BypassAttribute_ABC : public ObjectExtension {};
     class ObstacleAttribute_ABC : public ObjectExtension

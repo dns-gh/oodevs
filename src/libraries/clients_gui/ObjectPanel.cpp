@@ -107,7 +107,7 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             UpdateExtension< LodgingAttribute_ABC >( *selected_ );
             UpdateExtension< CrossingSiteAttribute_ABC >( *selected_ );
             UpdateExtension< SupplyRouteAttribute_ABC >( *selected_ );
-            UpdateExtension< ActivityTimeAttribute_ABC >( *selected_ );
+            UpdateExtension< TimeLimitedAttribute_ABC >( *selected_ );
             UpdateExtension< StockAttribute_ABC >( *selected_ );
         }
         else
@@ -274,7 +274,7 @@ void ObjectPanel::NotifyUpdated( const MedicalTreatmentAttribute_ABC& attributes
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const ActivityTimeAttribute_ABC& attributes )
+void ObjectPanel::NotifyUpdated( const TimeLimitedAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }

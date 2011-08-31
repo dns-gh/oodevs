@@ -19,7 +19,7 @@
 #include "CrossingSiteAttribute.h"
 #include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
-#include "ActivityTimeAttribute.h"
+#include "TimeLimitedAttribute.h"
 #include "DelayAttribute.h"
 #include "NBCAttribute.h"
 #include "FireAttribute.h"
@@ -86,8 +86,8 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
     if( attributes.has_obstacle() && entity.Retrieve< kernel::ObstacleAttribute_ABC >() == 0 )
         entity.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
 
-    if( attributes.has_activity_time() && entity.Retrieve< kernel::ActivityTimeAttribute_ABC >() == 0 )
-        entity.Attach< kernel::ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
+    if( attributes.has_life_time() && entity.Retrieve< kernel::TimeLimitedAttribute_ABC >() == 0 )
+        entity.Attach< kernel::TimeLimitedAttribute_ABC >( *new TimeLimitedAttribute( controllers_.controller_ ) );
 
     if( attributes.has_crossing_site() && entity.Retrieve< kernel::CrossingSiteAttribute_ABC >() == 0 )
         entity.Attach< kernel::CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );

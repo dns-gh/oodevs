@@ -39,7 +39,7 @@ class InfoSummariesWidget : public Q3VBox
                           , public tools::ElementObserver_ABC< kernel::Positions >
                           , public tools::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::MineAttribute_ABC >
-                          , public tools::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >
+                          , public tools::ElementObserver_ABC< kernel::TimeLimitedAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::NBCAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::BypassAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >
@@ -82,7 +82,7 @@ private:
 
     virtual void NotifyUpdated( const kernel::ConstructionAttribute_ABC& extension )     { UpdateDisplayIfNeeded< kernel::ConstructionAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::MineAttribute_ABC& extension )             { UpdateDisplayIfNeeded< kernel::MineAttribute_ABC >( extension ); }
-    virtual void NotifyUpdated( const kernel::ActivityTimeAttribute_ABC& extension )     { UpdateDisplayIfNeeded< kernel::ActivityTimeAttribute_ABC >( extension ); }
+    virtual void NotifyUpdated( const kernel::TimeLimitedAttribute_ABC& extension )      { UpdateDisplayIfNeeded< kernel::TimeLimitedAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::NBCAttribute_ABC& extension )              { UpdateDisplayIfNeeded< kernel::NBCAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::BypassAttribute_ABC& extension )           { UpdateDisplayIfNeeded< kernel::BypassAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::ObstacleAttribute_ABC& extension )         { UpdateDisplayIfNeeded< kernel::ObstacleAttribute_ABC >( extension ); }

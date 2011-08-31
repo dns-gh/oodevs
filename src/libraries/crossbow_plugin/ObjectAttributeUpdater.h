@@ -16,7 +16,7 @@ namespace sword
     class ObjectAttributeConstruction;
     class ObjectAttributeObstacle;
     class ObjectAttributeMine;
-    class ObjectAttributeActivityTime;
+    class ObjectAttributeLifeTime;
     class ObjectAttributeBypass;
     class ObjectAttributeLogistic;
     class ObjectAttributeNBC;
@@ -71,7 +71,7 @@ private:
     void Update( const sword::ObjectAttributeConstruction& construction );
     void Update( const sword::ObjectAttributeObstacle& obstacle );
     void Update( const sword::ObjectAttributeMine& mine );
-    void Update( const sword::ObjectAttributeActivityTime& activity_time );
+    void Update( const sword::ObjectAttributeLifeTime& life_time );
     void Update( const sword::ObjectAttributeBypass& bypass );
     void Update( const sword::ObjectAttributeLogistic& logistic );
     void Update( const sword::ObjectAttributeNBC& nbc );
