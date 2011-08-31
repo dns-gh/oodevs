@@ -408,7 +408,7 @@
         <mission name="Sortir du reseau souterrain"/>
         <mission name="Faire mouvement dans reseau souterrain"/>
         <mission name="Faire mouvement via reseau souterrain"/>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
         <mission name="GENIE Equiper Exploiter Site Franchissement"/>
       </missions>
       <fragorders>
@@ -510,7 +510,7 @@
         <mission name="GENIE Retablir Itineraire">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -946,7 +946,7 @@
         <mission name="Reparer point du reseau"/>
         <mission name="Activer reseau souterrain"/>
         <mission name="Desactiver reseau souterrain"/>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1119,7 +1119,7 @@
         </mission>
         <mission name="LOGISTIQUE Transporter"/>
         <mission name="LOGISTIQUE Transporter Foule"/>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -8377,7 +8377,7 @@
         <mission name="Reparer point du reseau"/>
         <mission name="Activer reseau souterrain"/>
         <mission name="Desactiver reseau souterrain"/>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
         <mission name="COMMUNES Renforcer"/>
       </missions>
       <fragorders>
@@ -9686,7 +9686,7 @@
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -10827,7 +10827,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Franchir de vive force"/>
         <mission name="GENIE Reconnaitre"/>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
         <mission name="GENIE Degager Obstacles"/>
         <mission name="GENIE Ouvrir Itineraire"/>
         <mission name="GENIE Realiser Travaux"/>
@@ -10865,7 +10865,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Reconnaitre"/>
         <mission name="Reparer point du reseau"/>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
         <mission name="GENIE Se Deployer"/>
       </missions>
       <fragorders>
@@ -10899,7 +10899,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="GENIE Reparer"/>
-        <mission name="Produire"/>
+        <mission name="Produire et alimenter"/>
         <mission name="Reparer point du reseau"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
@@ -15018,4 +15018,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3450925946" -->
+<!-- signature="2034857915" -->
