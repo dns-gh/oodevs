@@ -10,10 +10,16 @@
 #ifndef __InfoWidget_h_
 #define __InfoWidget_h_
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace gui
@@ -21,6 +27,8 @@ namespace gui
     class EntitySymbols;
     class ItemFactory_ABC;
 }
+
+class StaticModel;
 
 // =============================================================================
 /** @class  InfoWidget
@@ -35,7 +43,8 @@ class InfoWidget : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory );
+             InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
+                         gui::ItemFactory_ABC& itemFactory, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
     virtual ~InfoWidget();
     //@}
 

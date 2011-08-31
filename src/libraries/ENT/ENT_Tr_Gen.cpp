@@ -363,7 +363,7 @@ ENT_Tr::T_ConverterEquipmentState ENT_Tr::EquipmentStateConverter_ [] =
     T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP( "ENT_Tr", "Maintenance support needed" ), eEquipmentState_RepairableWithEvacuation ),
     T_ConverterEquipmentState( "ReparableSurPlace",       QT_TRANSLATE_NOOP( "ENT_Tr", "On site fixable" ), eEquipmentState_OnSiteFixable ),
     T_ConverterEquipmentState( "EnMaintenance",           QT_TRANSLATE_NOOP( "ENT_Tr", "In maintenance" ), eEquipmentState_InMaintenance ),
-    T_ConverterEquipmentState( "Prisonnier",               QT_TRANSLATE_NOOP( "ENT_Tr", "Prisoner" ), eEquipmentState_Prisonner ),
+    T_ConverterEquipmentState( "Prisonnier",              QT_TRANSLATE_NOOP( "ENT_Tr", "Prisoner" ), eEquipmentState_Prisonner ),
     T_ConverterEquipmentState( "", "", ( E_EquipmentState ) - 1 )
 };
 
@@ -411,6 +411,7 @@ void ENT_Tr::InitTranslations()
     InitTr( HumanWoundConverter_, "ENT_Tr" );
     InitTr( HumanRankConverter_, "ENT_Tr" );
     InitTr( HumanStateConverter_, "ENT_Tr" );
+    InitTr( HumanLocationConverter_, "ENT_Tr" );
     InitTr( EquipmentStateConverter_, "ENT_Tr" );
     InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
 }

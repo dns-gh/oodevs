@@ -62,7 +62,7 @@ public:
     virtual sword::EnumOperationalStatus GetOperationalState() const = 0;
     virtual unsigned short GetOperationalStateValue() const = 0;
     virtual const tools::Resolver< dispatcher::Equipment >& Equipments() const = 0;
-    virtual const tools::Resolver< dispatcher::Humans >& Troops() const = 0;
+    virtual const std::vector< Humans >& Troops() const = 0;
     virtual unsigned short GetAltitude() const = 0;
     virtual unsigned short GetSpeed() const = 0;
     virtual unsigned short GetDirection() const = 0;

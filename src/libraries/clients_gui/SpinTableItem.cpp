@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "SpinTableItem.h"
-#include "DecimalSpinBox.h"
 
 using namespace gui;
 
@@ -58,8 +57,11 @@ void SpinTableItem< int >::setContentFromEditor( QWidget* widget )
 template<>
 QWidget* SpinTableItem< double >::createEditor() const
 {
-    DecimalSpinBox* spinBox = new DecimalSpinBox( table()->viewport(), 0.0, 2, minValue_, maxValue_, step_ );
-    QObject::connect( spinBox, SIGNAL( valueChanged( int ) ), table(), SLOT( doValueChanged() ) );
+    QDoubleSpinBox* spinBox = new QDoubleSpinBox( table()->viewport() );
+    spinBox->setRange( minValue_, maxValue_ );
+    spinBox->setSingleStep( step_ );
+    spinBox->setDecimals( 2 );
+    QObject::connect( spinBox, SIGNAL( valueChanged( double ) ), table(), SLOT( doValueChanged() ) );
 
     if( !text().isNull() )
         spinBox->setValue( text().toDouble() );
@@ -75,8 +77,8 @@ QWidget* SpinTableItem< double >::createEditor() const
 template<>
 void SpinTableItem< double >::setContentFromEditor( QWidget* widget )
 {
-    if( widget->inherits( "QSpinBox" ) )
-        setText( static_cast< QSpinBox* >( widget )->text() );
+    if( widget->inherits( "QDoubleSpinBox" ) )
+        setText( static_cast< QDoubleSpinBox* >( widget )->text() );
     else
         Q3TableItem::setContentFromEditor( widget );
 }

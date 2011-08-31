@@ -20,7 +20,6 @@ class AttritionCapacity;
 class DEC_Knowledge_AgentComposante;
 class Human_ABC;
 class HumansComposante_ABC;
-class HumanStateHelper;
 class MIL_Agent_ABC;
 class MIL_AutomateLOG;
 class MIL_Injury_ABC;
@@ -46,6 +45,11 @@ class PHY_HumanWound;
 namespace firing
 {
     class WeaponAvailabilityComputer_ABC;
+}
+
+namespace sword
+{
+    class MissionParameters;
 }
 
 // =============================================================================
@@ -85,7 +89,7 @@ public:
 
     template< typename T > void ApplyOnWeapons( T& t ) const;
     template< typename T > void ApplyOnHumanProtection( T& t ) const;
-    //@}v
+    //@}
 
     //! @name Logistic - Maintenance
     //@{
@@ -118,6 +122,7 @@ public:
     bool CanHealHuman( const Human_ABC& human ) const;
     unsigned int GetHealingTime( const Human_ABC& human ) const;
     unsigned int Heal( Human_ABC& human ) const;
+    void ChangeHumanState( sword::MissionParameters& msg );
     //@}
 
     //! @name Logistic - Supply
@@ -136,7 +141,6 @@ public:
     unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound, bool psyop = false, bool contaminated = false );
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound );
     bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank&  newRank , const PHY_HumanWound& wound );
-    void FillHumanStateHelper( HumanStateHelper& helper ) const;
     //@}
 
     //! @name Fire / Dangerosity

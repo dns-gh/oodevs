@@ -142,10 +142,10 @@ namespace
         }
         void AddHuman( const dispatcher::Humans& humans )
         {
-            available_ += humans.nNbrOperational_;
-            count_ += humans.nNbrTotal_;
+            count_ += humans.number_;
+            if( humans.state_ == sword::healthy && humans.location_ != sword::medical && !humans.psyop_ && !humans.contaminated_ )
+                available_ += humans.number_;
         }
-
         unsigned int Percentage()
         {
             return available_ < 0 ? 0 : available_ * 100 / count_;
@@ -173,7 +173,7 @@ void Who::SendEquipmentStatus( xml::xostream& xos ) const
     if( attributes_->has_human_dotations() )
     {
         AvailabilityComputer computer;
-        agent_->Troops().Apply( boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );
+        std::for_each( agent_->Troops().begin(), agent_->Troops().end(), boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );
         SerializeAvailability( "PERSVC", xos, computer.Percentage() );
     }
     xos << xml::end;

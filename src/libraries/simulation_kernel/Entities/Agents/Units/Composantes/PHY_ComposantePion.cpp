@@ -1465,16 +1465,6 @@ bool PHY_ComposantePion::ChangeHumanRank( const PHY_HumanRank& oldRank, const PH
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::FillHumanStateHelper
-// Created: ABR 2011-03-08
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::FillHumanStateHelper( HumanStateHelper& helper ) const
-{
-    assert( pHumans_ );
-    pHumans_->FillHumanStateHelper( helper );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApproximateTravelTime
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------
@@ -1543,3 +1533,15 @@ bool PHY_ComposantePion::DestroyIndirectFire( const PHY_DotationCategory& catego
 {
     return pType_->DestroyIndirectFire( category, pion );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ChangeHumanState
+// Created: ABR 2011-08-12
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ChangeHumanState( sword::MissionParameters& msg )
+{
+    assert( pHumans_ );
+    if( *pState_ != PHY_ComposanteState::dead_ )
+        pHumans_->ChangeHumanState( msg );
+}
+

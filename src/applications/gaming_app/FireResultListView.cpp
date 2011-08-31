@@ -119,7 +119,7 @@ void FireResultListView::Display( const Equipment& equipment, Displayer_ABC& dis
     displayer.Display( tools::translate( "FireResultListView", "Target" ), equipment.type_ );
     displayer.Item( tools::translate( "FireResultListView", "Attrition" ) ).Start( equipment.available_ )
                     .Add( " / " ).Add( equipment.unavailable_ )
-                    .Add( " / " ).Add( equipment.repairable_ ).End();
+                    .Add( " / " ).Add( equipment.repairable_ + equipment.onSiteFixable_ ).End();
 }
 
 // -----------------------------------------------------------------------------

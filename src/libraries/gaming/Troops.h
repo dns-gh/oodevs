@@ -10,17 +10,14 @@
 #ifndef __Troops_h_
 #define __Troops_h_
 
+#include <boost/noncopyable.hpp>
 #include "HierarchicExtension_ABC.h"
-#include "Humans.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
-#include "protocol/Protocol.h"
+#include "HumanState.h"
 
 namespace kernel
 {
     class Controller;
-    class Entity_ABC;
-    class Automat_ABC;
 }
 
 namespace sword
@@ -37,6 +34,7 @@ namespace sword
 class Troops : public kernel::Extension_ABC
              , public HierarchicExtension_ABC
              , public kernel::Updatable_ABC< sword::UnitAttributes >
+             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -47,35 +45,33 @@ public:
 
     //! @name Operators
     //@{
-    int Troops::GetTotalHumans() const;
+    unsigned int GetTotalHumans() const;
+    unsigned int GetTotalByRank( E_HumanRank rank ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Troops( const Troops& );            //!< Copy constructor
-    Troops& operator=( const Troops& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
-    typedef std::pair< kernel::E_TroopHealthState, sword::EnumHumanRank > T_HumanState;
-    typedef std::map< T_HumanState, int > T_Differences;
+    typedef std::vector< HumanState >            T_HumanStateVector;
+    typedef T_HumanStateVector::iterator        IT_HumanStateVector;
+    typedef T_HumanStateVector::const_iterator CIT_HumanStateVector;
     //@}
 
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
-    void Update( const T_Differences& differences );
-    void AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, sword::EnumHumanRank rank, int value );
+    void Update( const T_HumanStateVector& differences );
+
+    void RemoveHumanStates();
+    HumanState* FindHumanState( T_HumanStateVector& container, const HumanState& state ) const;
     //@}
 
-public: // $$$$ AGE 2006-04-28:
+public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    Humans humans_[kernel::eTroopHealthStateNbrStates];
+    T_HumanStateVector  elements_;
     //@}
 };
 

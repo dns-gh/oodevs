@@ -141,7 +141,8 @@ void PHY_DotationGroup::WriteODB( xml::xostream& xos ) const
         xos << xml::start( "resource" )
                 << xml::attribute( "name", it->first->GetName() )
                 << xml::attribute( "quantity", it->second->GetValue() )
-            << xml::end; // dotation
+                << xml::attribute( "logistic-threshold", it->second->GetSupplyThresholdPercentage() );
+        xos << xml::end; // dotation
     }
 }
 

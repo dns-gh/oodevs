@@ -17,8 +17,9 @@ using namespace kernel;
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 Dotation::Dotation()
-    : type_( 0 )
-    , quantity_( 0 )
+    : type_               ( 0 )
+    , quantity_           ( 0 )
+    , thresholdPercentage_( 0.f )
 {
     // NOTHING
 }
@@ -27,9 +28,10 @@ Dotation::Dotation()
 // Name: Dotation constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const DotationType& type, unsigned int quantity /* =0 */ )
-    : type_( & type )
-    , quantity_( quantity )
+Dotation::Dotation( const DotationType& type, unsigned int quantity /* =0 */, float thresholdPercentage /*= 0.f*/ )
+    : type_               ( &type )
+    , quantity_           ( quantity )
+    , thresholdPercentage_( thresholdPercentage )
 {
     // NOTHING
 }
@@ -52,6 +54,7 @@ Dotation Dotation::operator+( const Dotation& rhs ) const
     Dotation dotation( *this );
     if( dotation.quantity_ < std::numeric_limits< int >::max() )
         dotation.quantity_ += rhs.quantity_;
+    dotation.thresholdPercentage_ += rhs.thresholdPercentage_;
     return dotation;
 }
 
@@ -64,6 +67,7 @@ Dotation Dotation::operator-( const Dotation& rhs ) const
     Dotation dotation( *this );
     if( dotation.quantity_ < std::numeric_limits< int >::max() )
         dotation.quantity_ -= rhs.quantity_;
+    dotation.thresholdPercentage_ -= rhs.thresholdPercentage_;
     return dotation;
 }
 
@@ -75,5 +79,6 @@ Dotation Dotation::operator-() const
 {
     Dotation dotation( *this );
     dotation.quantity_ = -dotation.quantity_;
+    dotation.thresholdPercentage_ = -dotation.thresholdPercentage_;
     return dotation;
 }

@@ -193,6 +193,10 @@
     <ClCompile Include="..\..\src\applications\gaming_app\ResourceLinksDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\TabWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\TimeTableRequestDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableCrew.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfileDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfileList.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfilePopulationRights.cpp" />
@@ -231,7 +235,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\InfoReportsTab.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoCompositionDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoDialog.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\InfoDotationsDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoLendingsDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoMedicalDialog.cpp" />
@@ -969,6 +972,23 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UnitStateDialog.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableCrew.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableResource.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UserProfileRights_ABC.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileUnitRights.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
@@ -1260,7 +1280,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\gaming_app\InfoDotationsDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoLendingsDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoMedicalDialog.h" />

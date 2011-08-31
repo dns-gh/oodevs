@@ -65,6 +65,7 @@ public:
     static unsigned int GetMentalDiseaseRestingTime();
     static bool ChooseMentalDisease();
     static const PHY_HumanWound& ChooseRandomWound();
+    static const PHY_HumanWound* GetRandomWoundSeriousness();
     //@}
 
     //! @name Accessors

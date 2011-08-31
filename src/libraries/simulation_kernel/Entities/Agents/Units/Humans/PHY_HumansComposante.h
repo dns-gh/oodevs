@@ -27,6 +27,11 @@ class MIL_AutomateLOG;
 class MIL_Time_ABC;
 class MIL_Injury_ABC;
 
+namespace sword
+{
+    class MissionParameters;
+}
+
 // =============================================================================
 // @class  PHY_HumansComposante
 // Created: JVT 2004-08-03
@@ -61,7 +66,7 @@ public:
     unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false );
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
-    virtual void FillHumanStateHelper( HumanStateHelper& helper ) const;
+    void ChangeHumanState( sword::MissionParameters& msg );
 
     double GetOperationalState() const;
     bool IsViable () const;

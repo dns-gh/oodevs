@@ -56,6 +56,7 @@ public:
     void ApplyMentalDisease();
     void ForceMentalDisease();
     void CancelLogisticRequest();
+    void SetState( const PHY_HumanWound& newWound, bool mentalDisease, bool contaminated );
     //@}
 
     //! @name Accessors

@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_Humans.h"
 #include "HumansActionsNotificationHandler_ABC.h"
+#include "simulation_kernel/Entities/Agents/Units/Humans/Human_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 
@@ -23,6 +24,10 @@ namespace xml
 }
 
 class MIL_AgentPion;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+class PHY_HumanRank;
+class PHY_HumanWound;
 
 namespace human
 {
@@ -43,14 +48,12 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    //void WriteODB( xml::xostream& xos ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Accessors
     //@{
     virtual unsigned int GetNbrUsableHumans() const;
-    virtual unsigned int GetNbrAliveHumans ( const PHY_HumanRank& rank ) const;
-    virtual unsigned int GetNbrHumans( const PHY_HumanRank& rank ) const;
     //@}
 
     //! @name Notifications
@@ -74,7 +77,6 @@ public:
     //@{
     virtual void Update( bool bIsDead );
     virtual void Clean();
-    virtual bool HasChanged() const;
 
     virtual void HealAllHumans();
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable );
@@ -91,57 +93,73 @@ public:
 private:
     //! @name Tools
     //@{
+    unsigned int GetNbrTotal( const PHY_HumanRank& rank ) const;
+    unsigned int GetNbrOperational( const PHY_HumanRank& rank ) const;
+
     void UpdateDataWhenHumanRemoved( const Human_ABC& human );
     void UpdateDataWhenHumanAdded( const Human_ABC& human );
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );
     //@}
 
 private:
     //! @name Types
     //@{
-    struct T_HumanData
+    class HumanState
     {
-        T_HumanData();
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        explicit HumanState();
+                 HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, Human_ABC::E_Location location = Human_ABC::eBattleField, bool contaminated = false, bool psyop = false );
+        virtual ~HumanState();
+        //@}
 
-        template< typename Archive > void serialize( Archive&, const unsigned int );
-        unsigned int nNbrTotal_;
-        unsigned int nNbrOperational_;
-        unsigned int nNbrDead_;
-        unsigned int nNbrWounded_;
-        unsigned int nNbrMentalDiseased_;
-        unsigned int nNbrNBC_;
-        unsigned int nNbrInLogisticMedical_;
-        unsigned int nNbrInLogisticMaintenance_;
-        bool bHasChanged_;
+        //! @name Serialization
+        //@{
+        BOOST_SERIALIZATION_SPLIT_MEMBER();
+        void load( MIL_CheckPointInArchive&, const unsigned int );
+        void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+        //@}
+
+        //! @name Member data
+        //@{
+        unsigned int          number_;
+        const PHY_HumanRank*  rank_;
+        const PHY_HumanWound* state_;
+        Human_ABC::E_Location location_;
+        bool                  contaminated_;
+        bool                  psyop_;
+        //@}
     };
 
-    typedef std::vector< T_HumanData >          T_HumanDataVector;
-    typedef T_HumanDataVector::iterator        IT_HumanDataVector;
-    typedef T_HumanDataVector::const_iterator CIT_HumanDataVector;
+    typedef std::vector< HumanState* >                T_HumanStateVector;
+    typedef T_HumanStateVector::iterator             IT_HumanStateVector;
+    typedef T_HumanStateVector::const_iterator      CIT_HumanStateVector;
 
-    typedef std::set< Human_ABC* >       T_HumanSet;
-    typedef T_HumanSet::iterator        IT_HumanSet;
-    typedef T_HumanSet::const_iterator CIT_HumanSet;
+    typedef std::set< Human_ABC* >                    T_HumanSet;
+    typedef T_HumanSet::const_iterator              CIT_HumanSet;
 
-    typedef std::set< PHY_MedicalHumanState* >       T_MedicalHumanStateSet;
-    typedef T_MedicalHumanStateSet::const_iterator CIT_MedicalHumanStateSet;
+    typedef std::set< PHY_MedicalHumanState* >        T_MedicalHumanStateSet;
+    typedef T_MedicalHumanStateSet::const_iterator  CIT_MedicalHumanStateSet;
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& pion_;
-    T_HumanDataVector humansData_;
-    unsigned int nNbrUsableHumans_;
-    unsigned int nNbrHumans_;
-    std::size_t nNbrHumansDataChanged_;
-    T_HumanSet humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
+    MIL_AgentPion&      pion_;
+    T_HumanStateVector  humansStates_;
+    T_HumanSet          humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
+    bool                hasChanged_;
+    unsigned int        nNbrUsableHumans_;
     // Medical
     T_MedicalHumanStateSet medicalHumanStates_;
-    unsigned int nTickRcMedicalQuerySent_;
-    E_EvacuationMode nEvacuationMode_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );
+    unsigned int           nTickRcMedicalQuerySent_;
+    E_EvacuationMode       nEvacuationMode_;
     //@}
 };
 

@@ -16,7 +16,6 @@
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
-#include "Entities/Agents/Units/Humans/HumanStateHelper.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -30,6 +29,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
+#include "Network/NET_AsnException.h"
 #include "TransportCapacityComputer_ABC.h"
 #include "TransportWeightComputer_ABC.h"
 #include "HumanLoadingTimeComputer_ABC.h"
@@ -256,16 +256,6 @@ void PHY_RolePion_Composantes::DistributeCommanders()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
 {
-    WriteComposantesODB( xos );
-    WriteHumansODB( xos );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::WriteComposantesODB
-// Created: ABR 2011-03-08
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WriteComposantesODB( xml::xostream& xos ) const
-{
     xos.start( "equipments" );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
@@ -283,29 +273,6 @@ void PHY_RolePion_Composantes::WriteComposantesODB( xml::xostream& xos ) const
         xos.end(); // equipment
     }
     xos.end(); // equipments
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::WriteHumansODB
-// Created: ABR 2011-03-08
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WriteHumansODB( xml::xostream& xos ) const
-{
-    HumanStateHelper helper;
-
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( *it )->FillHumanStateHelper( helper );
-
-    xos.start( "humans" );
-    for( HumanStateHelper::CIT_HumansStateVector it = helper.GetHumans().begin(); it != helper.GetHumans().end(); ++it )
-        xos << xml::start( "human" )
-                << xml::attribute( "rank", ( *it )->rank_.GetName() )
-                << xml::attribute( "state", ( *it )->state_.GetName() )
-                << xml::attribute( "contaminated", ( *it )->contaminated_ )
-                << xml::attribute( "psyop", ( *it )->psyop_ )
-                << xml::attribute( "number", ( *it )->number_ )
-            << xml::end; // human
-    xos.end(); // humans
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +312,7 @@ void PHY_RolePion_Composantes::ReadEquipment( xml::xistream& xis )
     if( !pType )
         xis.error( "Unknown composante type" );
     const PHY_BreakdownType* pBreakdownType = PHY_BreakdownType::Find( xis.attribute( "breakdown", "" ) );
-    if( *pState == PHY_ComposanteState::repairableWithEvacuation_ &&  !pBreakdownType )
+    if( *pState == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdownType )
         xis.error( "Unknown breakdown type" );
 
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
@@ -1106,24 +1073,40 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::FillEquipmentDotationMessage
+// Created: ABR 2011-07-25
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::AddEquipmentDotation( client::UnitAttributes& msg, const PHY_ComposanteTypePion& compType, const T_ComposanteTypeProperties& properties ) const
+{
+    sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_equipment_dotations()->add_elem();
+    value.mutable_type()->set_id( compType.GetMosID().id() );
+    value.set_available( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_.GetID() ] );
+    value.set_unavailable( properties.nbrsPerState_[ PHY_ComposanteState::dead_.GetID() ] );
+    value.set_repairable( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
+    value.set_on_site_fixable( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
+    value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
+    value.set_captured( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ] );
+
+    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    {
+        PHY_ComposantePion& composante = **itComposante;
+        if( composante.GetType() != compType || composante.GetState().GetID() != PHY_ComposanteState::repairableWithEvacuation_.GetID() )
+            continue;
+        const PHY_Breakdown*  breakdown = composante.GetBreakdown();
+        assert( breakdown );
+        value.add_breakdowns( breakdown->GetID() );
+    }
+    assert( value.repairable() == value.breakdowns_size() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) const
 {
-    if( !composanteTypes_.empty() )
-        for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
-        {
-            const PHY_ComposanteTypePion& compType = *itComposanteType->first;
-            const T_ComposanteTypeProperties& properties = itComposanteType->second;
-            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_equipment_dotations()->add_elem();
-            value.mutable_type()->set_id(  compType.GetMosID().id() );
-            value.set_available( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_.GetID() ] );
-            value.set_unavailable( properties.nbrsPerState_[ PHY_ComposanteState::dead_.GetID() ] );
-            value.set_repairable( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
-            value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
-            value.set_captured( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ] );
-        }
+    for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
+        AddEquipmentDotation( msg, *itComposanteType->first, itComposanteType->second );
     msg().set_raw_operational_state( static_cast< unsigned int >( rOperationalState_ * 100. ) );
     SendLoans( msg );
 }
@@ -1136,23 +1119,10 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
 {
     if( nNbrComposanteChanged_ > 0 )
         for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
-        {
-            const PHY_ComposanteTypePion& compType = *itComposanteType->first;
-            const T_ComposanteTypeProperties& properties = itComposanteType->second;
-            if( !properties.bHasChanged_ )
-                continue;
-
-            sword::EquipmentDotations_EquipmentDotation& value = *msg().mutable_equipment_dotations()->add_elem();
-            value.mutable_type()->set_id( compType.GetMosID().id() );
-            value.set_available( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_.GetID() ] );
-            value.set_unavailable( properties.nbrsPerState_[ PHY_ComposanteState::dead_.GetID() ] );
-            value.set_repairable( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
-            value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
-            value.set_captured( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ] );
-        }
+            if( itComposanteType->second.bHasChanged_ )
+                AddEquipmentDotation( msg, *itComposanteType->first, itComposanteType->second );
     if( bOperationalStateChanged_ )
         msg().set_raw_operational_state( static_cast< unsigned int >( rOperationalState_ * 100. ) );
-
     if( bLoansChanged_ )
         SendLoans( msg );
 }
@@ -1846,4 +1816,106 @@ void PHY_RolePion_Composantes::GiveComposante( unsigned int id, int quantity, PH
         else
             ++it;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CreateBreakdowns
+// Created: ABR 2011-08-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, unsigned int breakdownId )
+{
+    const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? &composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( breakdownId );
+    assert( breakdownType != 0 );
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( &composante.GetType() == &composanteType && composante.GetState().IsUsable() )
+        {
+            composante.ReinitializeState( PHY_ComposanteState::repairableWithEvacuation_, breakdownType );
+            --quantity;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CreateWounds
+// Created: ABR 2011-08-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::CreateWounds( unsigned int quantity, sword::EnumHumanWound wound )
+{
+    const PHY_HumanWound* pHumanWound = PHY_HumanWound::Find( wound );
+    if( !pHumanWound )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    if( pHumanWound == &PHY_HumanWound::notWounded_ || pHumanWound == &PHY_HumanWound::killed_ )
+        pHumanWound = PHY_HumanWound::GetRandomWoundSeriousness();
+
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+        quantity -= ( *it )->WoundHumans( PHY_HumanRank::militaireDuRang_, quantity, *pHumanWound );
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+        quantity -= ( *it )->WoundHumans( PHY_HumanRank::sousOfficier_, quantity, *pHumanWound );
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+        quantity -= ( *it )->WoundHumans( PHY_HumanRank::officier_, quantity, *pHumanWound );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ChangeEquipmentState
+// Created: ABR 2011-08-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePion& composanteType, const sword::MissionParameter_Value& message )
+{
+    typedef std::pair< const PHY_ComposanteState*, unsigned int > T_Repartition;
+    std::vector< T_Repartition > repartition;
+
+    std::string tmp = message.DebugString();
+
+    repartition.push_back( T_Repartition( &PHY_ComposanteState::undamaged_,                   message.list( 1 ).quantity() ) );
+    repartition.push_back( T_Repartition( &PHY_ComposanteState::dead_,                        message.list( 2 ).quantity() ) );
+    repartition.push_back( T_Repartition( &PHY_ComposanteState::repairableWithEvacuation_,    message.list( 3 ).quantity() ) );
+    repartition.push_back( T_Repartition( &PHY_ComposanteState::repairableWithoutEvacuation_, message.list( 4 ).quantity() ) );
+    repartition.push_back( T_Repartition( &PHY_ComposanteState::maintenance_,                 message.list( 5 ).quantity() ) );
+    repartition.push_back( T_Repartition( &PHY_ComposanteState::prisoner_,                    message.list( 6 ).quantity() ) );
+
+    std::vector< T_Repartition >::iterator stateIt = repartition.begin();
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( &composante.GetType() == &composanteType )
+        {
+            while( stateIt->second == 0 )
+                ++stateIt;
+
+            if( stateIt->first == &PHY_ComposanteState::repairableWithEvacuation_ )
+            {
+                if( !message.list( 7 ).list( stateIt->second - 1 ).has_identifier() )
+                    throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                unsigned int breakdownId = message.list( 7 ).list( stateIt->second - 1 ).identifier();
+                const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? &composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( static_cast< unsigned int >( breakdownId ) );
+                if( !breakdownType )
+                    throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                composante.ReinitializeState( *stateIt->first, breakdownType );
+            }
+            else
+                composante.ReinitializeState( *stateIt->first );
+            stateIt->second -= 1;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ChangeHumanState
+// Created: ABR 2011-08-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters& msg )
+{
+    sword::MissionParameters copy = msg;
+    for( PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin(); itCurrentComp != composantes_.end(); ++itCurrentComp )
+        ( *itCurrentComp )->ChangeHumanState( copy );
+    int remaining = 0;
+    for( int i = 0 ; i < copy.elem( 0 ).value_size(); ++i )
+    {
+        const sword::MissionParameter_Value& elem = copy.elem( 0 ).value().Get( i );
+        remaining += static_cast< unsigned int >( elem.list( 0 ).quantity() );
+    }
+    if( remaining )
+        MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining" );
 }

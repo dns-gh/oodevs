@@ -18,8 +18,9 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg )
-   : nDotationType_( asnMsg.type().id() )
-   , nNbr_         ( asnMsg.quantity() )
+   : nDotationType_             ( asnMsg.type().id() )
+   , nNbr_                      ( asnMsg.quantity() )
+   , rSupplyThresholdPercentage_( asnMsg.threshold() )
 {
     // NOTHING
 }
@@ -29,8 +30,9 @@ Dotation::Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg )
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const sword::DotationStock & asnMsg )
-   : nDotationType_( asnMsg.resource().id() )
-   , nNbr_         ( asnMsg.quantity() )
+   : nDotationType_             ( asnMsg.resource().id() )
+   , nNbr_                      ( asnMsg.quantity() )
+   , rSupplyThresholdPercentage_( 0.f )
 {
     // NOTHING
 }
@@ -51,6 +53,7 @@ Dotation::~Dotation()
 void Dotation::Update( const sword::ResourceDotations_ResourceDotation& asnMsg )
 {
     nNbr_ = asnMsg.quantity();
+    rSupplyThresholdPercentage_ = asnMsg.threshold();
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +73,7 @@ void Dotation::Send( sword::ResourceDotations_ResourceDotation& asnMsg ) const
 {
     asnMsg.mutable_type()->set_id( nDotationType_ );
     asnMsg.set_quantity( nNbr_ );
+    asnMsg.set_threshold( rSupplyThresholdPercentage_ );
 }
 
 // -----------------------------------------------------------------------------

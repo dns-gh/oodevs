@@ -332,9 +332,9 @@ bool PHY_Human::SetRank( const PHY_HumanRank& newRank )
 // -----------------------------------------------------------------------------
 bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
 {
-    PHY_Human oldHumanState( *this );
     if( newWound == *pWound_ )
         return false;
+    PHY_Human oldHumanState( *this );
     pWound_ = &newWound;
     if( *pWound_ == PHY_HumanWound::killed_ )
     {
@@ -544,4 +544,32 @@ bool PHY_Human::NeedEvacuation()
 void PHY_Human::SetMedicalState( PHY_MedicalHumanState* pMedicalState )
 {
     pMedicalState_ = pMedicalState;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::SetState
+// Created: ABR 2011-08-29
+// -----------------------------------------------------------------------------
+void PHY_Human::SetState( const PHY_HumanWound& newWound, bool mentalDisease, bool contaminated )
+{
+    PHY_Human oldHumanState( *this );
+
+    bMentalDiseased_ = mentalDisease;
+    bContamined_ = contaminated;
+    pWound_ = &newWound;
+    if( *pWound_ == PHY_HumanWound::killed_ )
+    {
+        nDeathTimeStep_ = 0;
+        assert( !bMentalDiseased_ );
+        assert( !bContamined_ );
+    }
+    else if( *pWound_ == PHY_HumanWound::notWounded_ )
+        nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
+    else
+        nDeathTimeStep_ = time_.GetCurrentTick() + pWound_->GetLifeExpectancy();
+
+    NotifyHumanChanged( oldHumanState );
+    // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
+    if( !NeedMedical() )
+        CancelLogisticRequest();
 }

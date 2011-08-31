@@ -206,9 +206,9 @@ void LogisticSupplyRecompletionDialog::InitializePersonal()
     if( const Troops* troops = selected_->Retrieve< Troops >() )
     {
         personalsTable_->setNumRows( 0 );
-        AddPersonal( sword::officer, tr( "officers" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
-        AddPersonal( sword::sub_officer, tr( "warrant-officers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
-        AddPersonal( sword::trooper, tr( "private" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
+        AddPersonal( sword::officer, tr( "officers" ), troops->GetTotalByRank( eHumanRank_Officier ) );
+        AddPersonal( sword::sub_officer, tr( "warrant-officers" ), troops->GetTotalByRank( eHumanRank_SousOfficer ) );
+        AddPersonal( sword::trooper, tr( "private" ), troops->GetTotalByRank( eHumanRank_Mdr ) );
         personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
     }
 }

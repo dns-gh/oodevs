@@ -283,7 +283,13 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Name", "string" );
     else if( name == "transfer_equipment" )
     {
-        CreateOrderParameter( "Receiver", "agent" );
+        CreateOrderParameter( "Receiver", "identifier" );
         CreateOrderParameter( "Equipments", "list" );
     }
+    else if( name == "change_equipment_state" )
+        CreateOrderParameter( "EquipmentStates", "list" );
+    else if( name == "change_human_state" )
+        CreateOrderParameter( "HumanStates", "list" );
+    else if( name == "change_dotation" )
+        CreateOrderParameter( "Dotations", "list" );
 }

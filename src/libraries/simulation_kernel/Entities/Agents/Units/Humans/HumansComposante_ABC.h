@@ -11,7 +11,6 @@
 #define __HumansComposante_ABC_h_
 
 class Human_ABC;
-class HumanStateHelper;
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_ComposantePion;
@@ -24,6 +23,11 @@ class MIL_FloodEffectManipulator;
 class MIL_AutomateLOG;
 class MIL_Injury_ABC;
 class PHY_InjuredHuman;
+
+namespace sword
+{
+    class MissionParameters;
+}
 
 // =============================================================================
 // @class  HumansComposante_ABC
@@ -57,7 +61,7 @@ public:
     virtual unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
     virtual unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false ) = 0;
     virtual unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;
-    virtual void FillHumanStateHelper( HumanStateHelper& helper ) const = 0;
+    virtual void ChangeHumanState( sword::MissionParameters& msg ) = 0;
 
     virtual PHY_InjuredHuman* GetInjury() = 0;
     virtual double GetOperationalState() const = 0;

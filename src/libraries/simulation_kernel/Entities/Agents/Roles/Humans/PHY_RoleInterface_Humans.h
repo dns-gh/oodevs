@@ -54,8 +54,6 @@ public:
     //@}
 
     virtual unsigned int GetNbrUsableHumans() const = 0;
-    virtual unsigned int GetNbrAliveHumans( const PHY_HumanRank& rank ) const = 0;
-    virtual unsigned int GetNbrHumans( const PHY_HumanRank& rank ) const = 0;
     //@}
 
     //! @name Medical
@@ -69,7 +67,6 @@ public:
     //@{
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
-    virtual bool HasChanged() const = 0;
 
     virtual void HealAllHumans() = 0;
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable ) = 0;

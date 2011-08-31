@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "DecimalSpinBoxAndSlider.h"
 #include "moc_DecimalSpinBoxAndSlider.cpp"
-#include "DecimalSpinBox.h"
 
 using namespace gui;
 
@@ -28,7 +27,11 @@ DecimalSpinBoxAndSlider::DecimalSpinBoxAndSlider( QWidget* parent, float& value,
         layout_ = new Q3HBoxLayout( this );
     else
         layout_ = new Q3VBoxLayout( this );
-    spinbox_ = new gui::DecimalSpinBox( this, value_, precision, min, max, gap );
+    spinbox_ = new QDoubleSpinBox( this );
+    spinbox_->setRange( min, max );
+    spinbox_->setSingleStep( gap );
+    spinbox_->setDecimals( precision );
+    spinbox_->setValue( value_ );
     slider_ = new QSlider( static_cast< int >( precision_ * min ), static_cast< int >( precision_ * max ), static_cast< int >( precision_ * gap ), static_cast< int >( precision_ * value_ ), sliderOrientation, this );
     if( spinboxFirst )
     {
@@ -87,7 +90,7 @@ float DecimalSpinBoxAndSlider::value() const
 void DecimalSpinBoxAndSlider::setSpinboxValue( int value )
 {
     value_ = value / precision_;
-    spinbox_->QSpinBox::setValue( value );
+    spinbox_->setValue( value_ );
     emit valueChanged( value_ );
 }
 

@@ -11,6 +11,7 @@
 #define __Kernel_Tools_h_
 
 #include "Types.h"
+#include "ENT/ENT_Tr_ABC.h"
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
@@ -54,11 +55,11 @@ namespace tools
     QString ToString( E_LogMaintenanceHandlingStatus nType );
     QString ToString( E_DotationFamily nType );
     QString ToString( E_LocationType nType );
-    QString ToString( E_EquipmentState nType );
-    QString ToString( E_HumanRank nType );
-    QString ToString( E_HumanState nType );
-    QString ToString( E_HumanLocation nType );
-    QString ToString( E_InjuriesSeriousness nType );
+    QString ToString( E_EquipmentState nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
+    QString ToString( E_HumanRank nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
+    QString ToString( E_HumanState nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
+    QString ToString( E_HumanLocation nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
+    QString ToString( E_InjuriesSeriousness nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
 
     QString Unknown();
 

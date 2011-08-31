@@ -15,18 +15,16 @@ using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: Humans constructor
-// Created: NLD 2006-09-26
+// Created: ABR 2011-07-21
 // -----------------------------------------------------------------------------
-Humans::Humans( const sword::HumanDotations_HumanDotation& asnMsg )
-    : nRank_                    ( asnMsg.rank() )
-    , nNbrTotal_                ( asnMsg.total() )
-    , nNbrOperational_          ( asnMsg.operational() )
-    , nNbrDead_                 ( asnMsg.dead() )
-    , nNbrWounded_              ( asnMsg.wounded() )
-    , nNbrMentalDiseased_       ( asnMsg.mentally_wounded() )
-    , nNbrNBC_                  ( asnMsg.contaminated() )
-    , nNbrInLogisticMedical_    ( asnMsg.healing() )
-    , nNbrInLogisticMaintenance_( asnMsg.maintenance() )
+Humans::Humans()
+    : number_      ( 0 )
+    , rank_        ( sword::officer )
+    , state_       ( sword::healthy )
+    , location_    ( sword::battlefield )
+    , injuries_    ()
+    , contaminated_( false )
+    , psyop_       ( false )
 {
     // NOTHING
 }
@@ -46,14 +44,19 @@ Humans::~Humans()
 // -----------------------------------------------------------------------------
 void Humans::Update( const sword::HumanDotations_HumanDotation& message )
 {
-    nNbrTotal_                = message.total();
-    nNbrOperational_          = message.operational();
-    nNbrDead_                 = message.dead();
-    nNbrWounded_              = message.wounded();
-    nNbrMentalDiseased_       = message.mentally_wounded();
-    nNbrNBC_                  = message.contaminated();
-    nNbrInLogisticMedical_    = message.healing();
-    nNbrInLogisticMaintenance_= message.maintenance();
+    number_       = message.quantity();
+    rank_         = message.rank();
+    state_        = message.state();
+    location_     = message.location();
+    assert( state_ == sword::injured && message.injuries_size() > 0 || state_ != sword::injured );
+    injuries_.resize( message.injuries_size() );
+    for( unsigned int i = 0; i < message.injuries_size(); ++i )
+    {
+        injuries_[ i ].first = message.injuries( i ).id();
+        injuries_[ i ].second = message.injuries( i ).seriousness();
+    }
+    contaminated_ = message.has_contaminated() ? message.contaminated() : false;
+    psyop_        = message.has_mentally_wounded() ? message.mentally_wounded() : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,14 +65,16 @@ void Humans::Update( const sword::HumanDotations_HumanDotation& message )
 // -----------------------------------------------------------------------------
 void Humans::Send( sword::HumanDotations_HumanDotation& message ) const
 {
-    message.set_rank               ( nRank_ );
-    message.set_total              ( nNbrTotal_ );
-    message.set_operational        ( nNbrOperational_ );
-    message.set_dead               ( nNbrDead_ );
-    message.set_wounded            ( nNbrWounded_ );
-    message.set_mentally_wounded   ( nNbrMentalDiseased_ );
-    message.set_contaminated       ( nNbrNBC_ );
-    message.set_healing            ( nNbrInLogisticMedical_ );
-    message.set_maintenance        ( nNbrInLogisticMaintenance_ );
-    message.set_unevacuated_wounded( 0 ); //$$$$ RPD TO IMPLEMENT
+    message.set_quantity( number_ );
+    message.set_rank( rank_ );
+    message.set_state( state_ );
+    message.set_location( location_ );
+    for( unsigned int i = 0; i < injuries_.size(); ++i )
+    {
+        sword::Injury* injury = message.mutable_injuries()->Add();
+        injury->set_id( injuries_[ i ].first );
+        injury->set_seriousness( injuries_[ i ].second );
+    }
+    message.set_contaminated( contaminated_ );
+    message.set_mentally_wounded( psyop_ );
 }

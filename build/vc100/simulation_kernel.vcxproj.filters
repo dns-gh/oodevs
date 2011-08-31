@@ -678,9 +678,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumansComposante.cpp">
       <Filter>Source Files\Entities\Agents\Units\Humans</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumanStateHelper.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanRank.cpp">
       <Filter>Source Files\Entities\Agents\Units\Humans\Types</Filter>
     </ClCompile>
@@ -2707,9 +2704,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumansComposante.h">
       <Filter>Source Files\Entities\Agents\Units\Humans</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumanStateHelper.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanRank.h">
       <Filter>Source Files\Entities\Agents\Units\Humans\Types</Filter>

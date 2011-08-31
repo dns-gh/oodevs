@@ -69,6 +69,17 @@ void UnitStateDialog::Reset()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitStateDialog::NotifySelected
+// Created: ABR 2011-08-31
+// -----------------------------------------------------------------------------
+void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
+{
+    for( unsigned int i = 0; i < tabs_.size(); ++i )
+        tabs_[ i ]->setReadOnly( false );
+    gui::UnitStateDialog::NotifySelected( element );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitStateDialog::NotifyContextMenu
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------

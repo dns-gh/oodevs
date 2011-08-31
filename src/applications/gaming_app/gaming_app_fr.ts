@@ -665,6 +665,10 @@ Reason: %3
         <source>Prisoner</source>
         <translation>Prisonnier</translation>
     </message>
+    <message>
+        <source>On site fixable</source>
+        <translation>Réparable sur place</translation>
+    </message>
 </context>
 <context>
     <name>EventToolbar</name>
@@ -958,13 +962,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Info</source>
         <translation>Info</translation>
-    </message>
-</context>
-<context>
-    <name>InfoDotationsDialog</name>
-    <message>
-        <source>Resources</source>
-        <translation>Dotations</translation>
     </message>
 </context>
 <context>
@@ -3088,6 +3085,50 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Reload brain</source>
         <translation type="unfinished">Recharger le decisionnel</translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateDialog</name>
+    <message>
+        <source>Resources</source>
+        <translation>Dotations</translation>
+    </message>
+    <message>
+        <source>Composition</source>
+        <translation>Composition</translation>
+    </message>
+    <message>
+        <source>Crew</source>
+        <translation>Personnel</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateTableCrew</name>
+    <message>
+        <source>Change human state</source>
+        <translation>Modifier l&apos;état des humains</translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateTableEquipment</name>
+    <message>
+        <source>Random</source>
+        <translation>Aléatoire</translation>
+    </message>
+    <message>
+        <source>Change equipment state</source>
+        <translation>Modifier l&apos;état de l&apos;équipement</translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateTableResource</name>
+    <message>
+        <source>Change dotations</source>
+        <translation>Modifier les dotations</translation>
     </message>
 </context>
 <context>

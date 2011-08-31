@@ -26,21 +26,33 @@ class PHY_DotationCategory;
 class PHY_DotationCapacity : private boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_DotationCapacity( const PHY_DotationCategory& category, xml::xistream& xis );
              PHY_DotationCapacity( const PHY_DotationCategory& category, double capacity, double supplyThreshold );
     virtual ~PHY_DotationCapacity();
+    //@}
 
     //! @name Accessors
     //@{
-    const PHY_DotationCategory& GetCategory       () const;
-          double              GetCapacity       () const;
-          double              GetSupplyThreshold() const;
+    const PHY_DotationCategory& GetCategory() const;
+    double GetCapacity() const;
+    double GetSupplyThreshold() const;
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ComputeThreshold( double supplyThresholdPercentage );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     const PHY_DotationCategory& category_;
-    double                    rCapacity_;
-    double                    rSupplyThreshold_;
+    double                      rCapacity_;
+    double                      rSupplyThreshold_;
+    //@}
 };
 
 #endif // __PHY_DotationCapacity_h_

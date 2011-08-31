@@ -83,9 +83,29 @@ bool UnitStateTable_ABC::GetCheckboxValue( unsigned int nRow, unsigned int nColu
 // Created: ABR 2011-07-20
 // -----------------------------------------------------------------------------
 template<>
+int UnitStateTable_ABC::GetNumericValue< int >( unsigned int nRow, unsigned int nColumn ) const
+{
+    return item( nRow, nColumn )->text().toInt();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTable_ABC::GetNumericValue
+// Created: ABR 2011-07-20
+// -----------------------------------------------------------------------------
+template<>
 unsigned int UnitStateTable_ABC::GetNumericValue< unsigned int >( unsigned int nRow, unsigned int nColumn ) const
 {
     return item( nRow, nColumn )->text().toUInt();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTable_ABC::GetNumericValue
+// Created: ABR 2011-07-20
+// -----------------------------------------------------------------------------
+template<>
+float UnitStateTable_ABC::GetNumericValue< float >( unsigned int nRow, unsigned int nColumn ) const
+{
+    return item( nRow, nColumn )->text().toFloat();
 }
 
 // -----------------------------------------------------------------------------

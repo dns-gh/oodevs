@@ -48,14 +48,15 @@ Personnel::~Personnel()
 // -----------------------------------------------------------------------------
 void Personnel::Update( const sword::HumanDotations::HumanDotation& message )
 {
-    total_ = message.total();
-    available_ = message.operational();
-    dead_ = message.dead();
-    wounded_ = message.wounded();
-    mentalDiseased_ = message.mentally_wounded();
-    contaminated_ = message.contaminated();
-    inTreatment_ = message.healing();
-    assignedToMaintenance_ = message.maintenance();
+    // $$$$ ABR 2011-08-31: Need to change Personnel architecture to match with story 644. No time for that and no need to maintain wise_drivers so ... commented.
+    //total_ = message.total();
+    //available_ = message.operational();
+    //dead_ = message.dead();
+    //wounded_ = message.wounded();
+    //mentalDiseased_ = message.mentally_wounded();
+    //contaminated_ = message.contaminated();
+    //inTreatment_ = message.healing();
+    //assignedToMaintenance_ = message.maintenance();
 }
 
 // -----------------------------------------------------------------------------

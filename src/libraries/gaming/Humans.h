@@ -24,24 +24,26 @@ public:
     //! @name Constructors/Destructor
     //@{
              Humans();
-             Humans( kernel::E_TroopHealthState state );
+             Humans( const Humans& );
+    explicit Humans( kernel::E_TroopHealthState state );
     virtual ~Humans();
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Operators
     //@{
-    Humans( const Humans& );            //!< Copy constructor
-    Humans& operator=( const Humans& ); //!< Assignment operator
+    const Humans& operator=( const Humans& rhs );
+    Humans& operator-=( const Humans& rhs );
+    Humans operator-( const Humans& rhs ) const;
+    Humans operator-() const;
     //@}
 
 public:
     //! @name Member data
     //@{
     kernel::E_TroopHealthState state_;
-    unsigned officers_;
-    unsigned subOfficers_;
-    unsigned troopers_;
+    int officers_;
+    int subOfficers_;
+    int troopers_;
     //@}
 };
 

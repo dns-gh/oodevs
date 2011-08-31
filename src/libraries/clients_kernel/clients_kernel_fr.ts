@@ -247,7 +247,7 @@
     </message>
     <message>
         <source>Under treatment </source>
-        <translation>En traitement </translation>
+        <translation>En traitement</translation>
     </message>
     <message>
         <source>Assigned to maintenance</source>

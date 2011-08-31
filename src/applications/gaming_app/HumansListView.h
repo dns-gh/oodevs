@@ -10,8 +10,7 @@
 #ifndef __HumansListView_h_
 #define __HumansListView_h_
 
-#include "gaming/Troops.h"
-#include "gaming/Humans.h"
+#include "gaming/TroopsCompatibilityVersion.h"
 #include "ResourcesListView_ABC.h"
 
 namespace kernel
@@ -24,13 +23,15 @@ namespace gui
     class ValuedListItem;
 }
 
+class Humans;
+
 // =============================================================================
 /** @class  HumansListView
     @brief  HumansListView
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class HumansListView : public ResourcesListView_ABC< HumansListView, Troops >
+class HumansListView : public ResourcesListView_ABC< HumansListView, TroopsCompatibilityVersion >
 {
     Q_OBJECT;
 
@@ -49,7 +50,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Troops& a );
+    virtual void NotifyUpdated( const TroopsCompatibilityVersion& a );
     //@}
 };
 

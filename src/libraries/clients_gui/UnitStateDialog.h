@@ -54,6 +54,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    bool IsReadOnly() const;
     //@}
 
 protected slots:

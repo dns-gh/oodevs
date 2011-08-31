@@ -63,6 +63,7 @@ public:
 
     void   ReadValue( xml::xistream& xis );
     void   Resupply ( double rFactor = 1. );
+    void   ChangeDotation( unsigned int number, float threshold );
 
     bool   HasReachedSupplyThreshold() const;
     bool   NeedSupply               () const;
@@ -76,6 +77,7 @@ public:
     //! @name Accessors
     //@{
     const PHY_DotationCategory& GetCategory() const;
+    double GetSupplyThresholdPercentage() const;
     //@}
 
 private:

@@ -183,6 +183,13 @@
     </message>
 </context>
 <context>
+    <name>gui::ComboTableItem</name>
+    <message>
+        <source>Unavailable</source>
+        <translation>Non disponible</translation>
+    </message>
+</context>
+<context>
     <name>gui::ConstructionPrototype_ABC</name>
     <message>
         <source>Construction</source>
@@ -1127,6 +1134,10 @@ Voulez-vous le supprimer?</translation>
         <source>Activation time:</source>
         <translation>Délai avant activation:</translation>
     </message>
+    <message>
+        <source>Activity time:</source>
+        <translation>Durée d&apos;activité:</translation>
+    </message>
 </context>
 <context>
     <name>gui::OptionsPanel</name>
@@ -1463,6 +1474,10 @@ Voulez-vous le supprimer?</translation>
         <source>Wind speed: %1km/h, direction: %2°</source>
         <translation>Vitesse du vent: %1km/h, direction: %2°</translation>
     </message>
+    <message>
+        <source>Temperature: %2°C</source>
+        <translation>Temperature: %2°C</translation>
+    </message>
 </context>
 <context>
     <name>gui::TerrainPreference</name>
@@ -1579,6 +1594,10 @@ Voulez-vous le supprimer?</translation>
         <source>---</source>
         <translation>---</translation>
     </message>
+    <message>
+        <source>You have unsaved modifications on unit %1 on the %2 tab, do you want to validate ?</source>
+        <translation>Vous avez des modifications non sauvegardées pour l&apos;unité %1 sur l&apos;onglet %2, voulez vous valider ?</translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitStateTableCrew</name>
@@ -1649,8 +1668,8 @@ Voulez-vous le supprimer?</translation>
         <translation>Quantité</translation>
     </message>
     <message>
-        <source>ADN quantity</source>
-        <translation>Quantité ADN</translation>
+        <source>Default capacity</source>
+        <translation>Capacité par défaut</translation>
     </message>
     <message>
         <source>Maximal capacity</source>

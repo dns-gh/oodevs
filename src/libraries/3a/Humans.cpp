@@ -25,19 +25,56 @@ Humans::Humans()
 
 namespace
 {
-    const unsigned nHumanStates = 9;
-    typedef google::protobuf::int32( HumanDotations_HumanDotation::*HumanDotationsMemberFn )()const;
-    HumanDotationsMemberFn humanData[nHumanStates] =
+    inline google::protobuf::int32 GetTotal( const HumanDotations_HumanDotation& humans )
     {
-        &HumanDotations_HumanDotation::total,
-        &HumanDotations_HumanDotation::operational,
-        &HumanDotations_HumanDotation::dead,
-        &HumanDotations_HumanDotation::wounded,
-        &HumanDotations_HumanDotation::mentally_wounded,
-        &HumanDotations_HumanDotation::contaminated,
-        &HumanDotations_HumanDotation::healing,
-        &HumanDotations_HumanDotation::maintenance,
-        &HumanDotations_HumanDotation::unevacuated_wounded
+        return humans.quantity();
+    }
+    inline google::protobuf::int32 GetOperational( const HumanDotations_HumanDotation& humans )
+    {
+        return ( humans.state() == sword::healthy && humans.location() != sword::medical && !humans.mentally_wounded() && !humans.contaminated() ) ? humans.quantity() : 0 ;
+    }
+    inline google::protobuf::int32 GetDead( const HumanDotations_HumanDotation& humans )
+    {
+        return ( humans.state() == sword::deadly ) ? humans.quantity() : 0;
+    }
+    inline google::protobuf::int32 GetWounded( const HumanDotations_HumanDotation& humans )
+    {
+        return ( humans.state() != sword::healthy && humans.state() != sword::deadly ) ? humans.quantity() : 0;
+    }
+    inline google::protobuf::int32 GetMentallyWounded( const HumanDotations_HumanDotation& humans )
+    {
+        return ( humans.mentally_wounded() ) ? humans.quantity() : 0;
+    }
+    inline google::protobuf::int32 GetContaminated( const HumanDotations_HumanDotation& humans )
+    {
+        return ( humans.contaminated() ) ? humans.quantity() : 0;
+    }
+    inline google::protobuf::int32 GetHealing( const HumanDotations_HumanDotation& humans )
+    {
+        return ( humans.location() == sword::medical ) ? humans.quantity() : 0;
+    }
+    inline google::protobuf::int32 GetMaintenance( const HumanDotations_HumanDotation& humans )
+    {
+        return ( humans.location() == sword::maintenance ) ? humans.quantity() : 0;
+    }
+    inline google::protobuf::int32 GetUnevacuatedWounded( const HumanDotations_HumanDotation& /*humans*/ )
+    {
+        return 0; //$$$ RPD TO IMPLEMENT
+    }
+
+    const unsigned nHumanStates = 9;
+    typedef inline google::protobuf::int32 ( HumanHelperFn )( const HumanDotations_HumanDotation& humans );
+    HumanHelperFn* humanData[nHumanStates] =
+    {
+        &GetTotal,
+        &GetOperational,
+        &GetDead,
+        &GetWounded,
+        &GetMentallyWounded,
+        &GetContaminated,
+        &GetHealing,
+        &GetMaintenance,
+        &GetUnevacuatedWounded //$$$ RPD TO IMPLEMENT
     };
     const char* humanStates[nHumanStates] =
     {
@@ -105,7 +142,7 @@ int Humans::Extract( const UnitAttributes& attributes )
         if( ( rankMask_ & ( 1 << humans.rank() ) ) != 0 )
             for( unsigned int i = 0; i < nHumanStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    result += ( humans.*humanData[ i ] )();
+                    result += humanData[ i ]( humans );
     }
     return result;
 }

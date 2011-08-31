@@ -48,6 +48,13 @@ namespace moving
     class SpeedComputer_ABC;
 }
 
+namespace sword
+{
+    class MissionParameters;
+    class MissionParameter_Value;
+    enum EnumHumanWound;
+}
+
 class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
 class PHY_DotationStock;
@@ -119,6 +126,10 @@ public:
     virtual void DestroyRandomComposante();
     virtual void DestroyAllComposantes();
     unsigned int GetNbrUsableHumans() const;
+    void CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, unsigned int breakdownId );
+    void CreateWounds( unsigned int quantity, sword::EnumHumanWound wound );
+    void ChangeEquipmentState( const PHY_ComposanteTypePion& composanteType, const sword::MissionParameter_Value& message );
+    void ChangeHumanState( const sword::MissionParameters& msg );
     //@}
 
     //! @name Pret de composantes
@@ -278,8 +289,6 @@ private:
     void DistributeCommanders      ();
     void ReadComposantesOverloading( xml::xistream& xis );
     void ReadHumansOverloading     ( xml::xistream& xis );
-    void WriteComposantesODB       ( xml::xostream& xos ) const;
-    void WriteHumansODB            ( xml::xostream& xos ) const;
     //@}
 
     //! @name Tools
@@ -287,17 +296,17 @@ private:
     virtual bool HasChanged() const;
     void UpdateOperationalStates();
     void UpdateMajorComposante  ();
-
     void UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
-
     void SendLoans( client::UnitAttributes& message ) const;
     //@}
+
     //! @name Helpers
     //@{
     void ReadEquipment( xml::xistream& xis );
     void ReadHuman    ( xml::xistream& xis );
     void GetStockTransporterCapacity( const PHY_DotationNature& nature, double& rWeightMax, double& rVolumeMax ) const;
+    void AddEquipmentDotation( client::UnitAttributes& msg, const PHY_ComposanteTypePion& compType, const T_ComposanteTypeProperties& properties ) const;
     //@}
 
 private:

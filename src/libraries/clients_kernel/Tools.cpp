@@ -468,45 +468,45 @@ QString tools::ToString( E_LocationType nType )
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_HumanRank nType )
+QString tools::ToString( E_HumanRank nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
 {
-    return ENT_Tr::ConvertFromHumanRank( nType, ENT_Tr_ABC::eToTr ).c_str();
+    return ENT_Tr::ConvertFromHumanRank( nType, conversion ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_HumanState nType )
+QString tools::ToString( E_HumanState nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
 {
-    return ENT_Tr::ConvertFromHumanState( nType, ENT_Tr_ABC::eToTr ).c_str();
+    return ENT_Tr::ConvertFromHumanState( nType, conversion ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: ABR 2011-07-25
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_HumanLocation nType )
+QString tools::ToString( E_HumanLocation nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
 {
-    return ENT_Tr::ConvertFromHumanLocation( nType, ENT_Tr_ABC::eToTr ).c_str();
+    return ENT_Tr::ConvertFromHumanLocation( nType, conversion ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_EquipmentState nType )
+QString tools::ToString( E_EquipmentState nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
 {
-    return ENT_Tr::ConvertFromEquipmentState( nType, ENT_Tr_ABC::eToTr ).c_str();
+    return ENT_Tr::ConvertFromEquipmentState( nType, conversion ).c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_InjuriesSeriousness nType )
+QString tools::ToString( E_InjuriesSeriousness nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
 {
-    return ENT_Tr::ConvertFromInjuriesSeriousness( nType, ENT_Tr_ABC::eToTr ).c_str();
+    return ENT_Tr::ConvertFromInjuriesSeriousness( nType, conversion ).c_str();
 }
 
 // -----------------------------------------------------------------------------

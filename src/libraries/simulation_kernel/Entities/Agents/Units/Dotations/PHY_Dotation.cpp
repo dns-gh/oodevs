@@ -331,6 +331,21 @@ void PHY_Dotation::Resupply( double rFactor /* = 1. */ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Dotation::ChangeDotation
+// Created: ABR 2011-08-10
+// -----------------------------------------------------------------------------
+void PHY_Dotation::ChangeDotation( unsigned int number, float thresholdPercentage )
+{
+    assert( number < rCapacity_ );
+    SetValue( number );
+    rConsumptionReservation_ = 0.;
+    rFireReservation_        = 0.;
+    rSupplyThreshold_ = rCapacity_ * thresholdPercentage / 100.f;
+    assert( pGroup_ );
+    pGroup_->NotifyDotationChanged( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Dotation::CancelConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------
@@ -393,4 +408,14 @@ double PHY_Dotation::Supply( double rSupply )
     const double rNewSupply = std::min( rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ - rValue_ );
     SetValue( rValue_ + rNewSupply );
     return rNewSupply;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Dotation::GetSupplyThresholdPercentage
+// Created: ABR 2011-07-27
+// -----------------------------------------------------------------------------
+double PHY_Dotation::GetSupplyThresholdPercentage() const
+{
+    assert( rSupplyThreshold_ <= rCapacity_ );
+    return rSupplyThreshold_ / rCapacity_ * 100.f;
 }

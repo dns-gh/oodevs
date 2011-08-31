@@ -47,7 +47,7 @@ void Equipment::Update( const sword::EquipmentDotations::EquipmentDotation& mess
 {
     available_ = message.available();
     unAvailable_ = message.unavailable();
-    repairable_ = message.repairable();
+    repairable_ = message.repairable() + message.on_site_fixable();
     inMaintenance_ = message.repairing();
     captured_ = message.captured();
 }

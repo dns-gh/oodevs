@@ -211,9 +211,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\DecimalSpinBox.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -1428,9 +1425,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationListView.h">
       <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\DecimalSpinBox.h">
-      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.h">
       <Filter>Source Files\Tools</Filter>

@@ -171,6 +171,23 @@ sword::SimToClient TestTools::MakeMounted( bool mounted, unsigned long id )
     return result;
 }
 
+namespace
+{
+    void AddHumanDotation( UnitAttributes& attributes, sword::EnumHumanState state, unsigned int quantity )
+    {
+        HumanDotations_HumanDotation& personnel = *attributes.mutable_human_dotations()->add_elem();
+        personnel.set_quantity( quantity );
+        personnel.set_rank( sword::officer );
+        personnel.set_state( state );
+        personnel.set_location( sword::battlefield );
+        sword::Injury* injury = personnel.mutable_injuries()->Add();
+        injury->set_id( 0 );
+        injury->set_seriousness( sword::wounded_u1 );
+        personnel.set_mentally_wounded( false );
+        personnel.set_contaminated( false );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: 3aTestTools::MakeHumanVariation
 // Created: FPO 2011-05-06
@@ -180,17 +197,12 @@ sword::SimToClient TestTools::MakeHumanVariation( int state[8], unsigned long id
     SimToClient result;
     UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
     attributes.mutable_unit()->set_id( id );
-    HumanDotations_HumanDotation& personnel = *attributes.mutable_human_dotations()->add_elem();
-    personnel.set_rank( sword::officer );
-    personnel.set_total( state[0] );
-    personnel.set_operational( state[1] );
-    personnel.set_dead( state[2] );
-    personnel.set_wounded( state[3] );
-    personnel.set_mentally_wounded( state[4] );
-    personnel.set_contaminated( state[5] );
-    personnel.set_healing( state[6] );
-    personnel.set_maintenance( state[7] );
-    personnel.set_unevacuated_wounded( 0 );
+    if( state[ 1 ] > 0 ) // operational
+        AddHumanDotation( attributes, sword::healthy, state[ 1 ] );
+    if( state[ 2 ] > 0 ) // dead
+        AddHumanDotation( attributes, sword::deadly, state[ 2 ] );
+    if( state[ 3 ] > 0 ) // wounded
+        AddHumanDotation( attributes, sword::injured, state[ 3 ] );
     return result;
 }
 

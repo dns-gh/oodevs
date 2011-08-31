@@ -52,12 +52,13 @@ public:
     //! @name Member data
     //@{
     const kernel::EquipmentType& type_;
-
-    int available_;
-    int unavailable_;
-    int repairable_;
-    int inMaintenance_;
-    int prisonners_;
+    int                          available_;
+    int                          unavailable_;
+    int                          repairable_;
+    int                          onSiteFixable_;
+    int                          inMaintenance_;
+    int                          prisonners_;
+    std::vector< int >           breakdowns_;
     //@}
 };
 

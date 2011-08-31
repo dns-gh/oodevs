@@ -44,6 +44,8 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
     if( selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
         return false;
     InitialState& extension = selected.Get< InitialState >();
+    if( extension.equipments_.size() == 0 )
+        return false;
     assert( extension.equipments_.size() == static_cast< unsigned int >( numRows() ) );
     int nRow = 0;
     for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end() && nRow < numRows(); ++it, ++nRow )
@@ -64,8 +66,8 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
     InitialState& extension = selected.Get< InitialState >();
     for( InitialState::CIT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it )
     {
-        if( it->breakdowns_.empty() )
-            continue;
+        //if( it->breakdowns_.empty() )
+        //    continue;
         if( it->state_ == eEquipmentState_RepairableWithEvacuation )
             AddLines( it->name_, 1, it->state_, it->breakdowns_, std::vector< unsigned int >( 1, it->currentBreakdown_ ) );
         else

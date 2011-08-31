@@ -48,6 +48,13 @@ protected slots:
     //@{
     void OnValueChanged( int row, int col );
     //@}
+
+private:
+    //! @name Members Data
+    //@{
+    bool isPreparation_;
+    //@}
+
 };
 }
 

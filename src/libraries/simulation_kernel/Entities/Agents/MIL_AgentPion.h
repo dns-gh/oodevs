@@ -182,6 +182,11 @@ private:
     void OnReceiveRecoverHumansTransporters();
     void OnReceiveCreateWound( const sword::MissionParameters& asn );
     void OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg );
+    void OnReceiveCreateBreakdowns( const sword::MissionParameters& msg );
+    void OnReceiveCreateWounds( const sword::MissionParameters& msg );
+    void OnReceiveChangeEquipmentState( const sword::MissionParameters& msg );
+    void OnReceiveChangeHumanState( const sword::MissionParameters& msg );
+    void OnReceiveChangeDotation( const sword::MissionParameters& msg );
     //@}
 
     //! @name Serialization

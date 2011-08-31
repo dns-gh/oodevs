@@ -309,19 +309,18 @@ BOOST_FIXTURE_TEST_CASE( unit_creation_to_client_is_converted, ContextFixture< s
 
 namespace
 {
-    template< typename D >
-    void FillHumanDotation( D* d )
+    template< typename D, typename R >
+    void FillHumanDotation( D* d, R r )
     {
-        d->set_rank( sword::trooper );
-        d->set_total( 10 );
-        d->set_operational( 11 );
-        d->set_dead( 12 );
-        d->set_wounded( 13 );
-        d->set_mentally_wounded( 14 );
-        d->set_contaminated( 15 );
-        d->set_healing( 16 );
-        d->set_maintenance( 17 );
-        d->set_unevacuated_wounded( 18 );
+        d->set_quantity( 10 );
+        d->set_rank( r );
+        d->set_state( sword::healthy );
+        d->set_location( sword::battlefield );
+        sword::Injury* injury = d->mutable_injuries()->Add();
+        injury->set_id( 0 );
+        injury->set_seriousness( sword::wounded_u1 );
+        d->set_mentally_wounded( true );
+        d->set_contaminated( true );
     }
     template< typename D >
     void FillEquipmentDotation( D* d )
@@ -330,8 +329,9 @@ namespace
         d->set_available( 21 );
         d->set_unavailable( 22 );
         d->set_repairable( 23 );
-        d->set_repairing( 24 );
-        d->set_captured( 25 );
+        d->set_on_site_fixable( 24 );
+        d->set_repairing( 25 );
+        d->set_captured( 26 );
     }
     template< typename D >
     void FillResourceDotation( D* d )
@@ -358,8 +358,10 @@ namespace
 BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_unit_attributes()->mutable_unit()->set_id( 7 );
-    FillHumanDotation( content.mutable_unit_attributes()->mutable_human_dotations()->add_elem() );
-    FillHumanDotation( content.mutable_unit_attributes()->mutable_human_dotations()->add_elem() );
+    FillHumanDotation( content.mutable_unit_attributes()->mutable_human_dotations()->add_elem(), sword::officer );
+    FillHumanDotation( content.mutable_unit_attributes()->mutable_human_dotations()->add_elem(), sword::sub_officer );
+    FillHumanDotation( content.mutable_unit_attributes()->mutable_human_dotations()->add_elem(), sword::trooper );
+    FillHumanDotation( content.mutable_unit_attributes()->mutable_human_dotations()->add_elem(), sword::trooper );
     FillEquipmentDotation( content.mutable_unit_attributes()->mutable_equipment_dotations()->add_elem() );
     FillEquipmentDotation( content.mutable_unit_attributes()->mutable_equipment_dotations()->add_elem() );
     FillResourceDotation( content.mutable_unit_attributes()->mutable_resource_dotations()->add_elem() );
@@ -413,7 +415,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_refugees_managed( true );
     FillExtension( content.mutable_unit_attributes()->mutable_extension()->add_entries() );
     FillExtension( content.mutable_unit_attributes()->mutable_extension()->add_entries() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_attributes { unit { id: 7 } dotation_eff_personnel { elem { rang: mdr nb_total: 10 nb_operationnels: 11 nb_morts: 12 nb_blesses: 13 nb_blesses_mentaux: 14 nb_contamines_nbc: 15 nb_dans_chaine_sante: 16 nb_utilises_pour_maintenance: 17 nb_blesses_non_evacues: 18 nb_morts_dans_chaine_mortuaire: 0 } elem { rang: mdr nb_total: 10 nb_operationnels: 11 nb_morts: 12 nb_blesses: 13 nb_blesses_mentaux: 14 nb_contamines_nbc: 15 nb_dans_chaine_sante: 16 nb_utilises_pour_maintenance: 17 nb_blesses_non_evacues: 18 nb_morts_dans_chaine_mortuaire: 0 } } dotation_eff_materiel { elem { type { id: 20 } nb_disponibles: 21 nb_indisponibles: 22 nb_reparables: 23 nb_dans_chaine_maintenance: 24 nb_prisonniers: 25 } elem { type { id: 20 } nb_disponibles: 21 nb_indisponibles: 22 nb_reparables: 23 nb_dans_chaine_maintenance: 24 nb_prisonniers: 25 } } dotation_eff_ressource { elem { type { id: 30 } quantite_disponible: 31 } elem { type { id: 30 } quantite_disponible: 31 } } equipements_pretes { elem { borrower { id: 40 } type { id: 41 } nombre: 42 } elem { borrower { id: 40 } type { id: 41 } nombre: 42 } } equipements_empruntes { elem { owner { id: 50 } type { id: 51 } nombre: 52 } elem { owner { id: 50 } type { id: 51 } nombre: 52 } } position { latitude: 17.23 longitude: 23.17 } direction { heading: 77 } hauteur: 78 altitude: 79 vitesse: 80 etat_operationnel_brut: 81 reinforcements { elem { id: 82 } elem { id: 83 } } reinforced_unit { id: 84 } mort: true neutralise: true mode_furtif_actif: true embarque: true transporteurs_disponibles: true posture_old: arret posture_new: arret posture_pourcentage: 90 etat_installation: 91 en_tenue_de_protection_nbc: true contamine_par_agents_nbc { elem { id: 100 } elem { id: 101 } } etat_contamination { percentage: 102 quantity: 103.4 } communications { jammed: true knowledge_group { id: 104 } } radio_emitter_disabled: true radio_receiver_disabled: true radar_actif: true transported_units { elem { id: 110 } elem { id: 111 } } transporting_unit { id: 112 } rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel disponibilite_au_tir_indirect: pret_au_tir roe: tir_libre roe_crowd: emploi_force_interdit fatigue: epuise moral: bon experience: conscrit surrendered_to_party { id: 120 } prisonnier: true refugie_pris_en_compte: true extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_attributes { unit { id: 7 } dotation_eff_personnel { elem { rang: officier nb_total: 10 nb_operationnels: 0 nb_morts: 0 nb_blesses: 0 nb_blesses_mentaux: 10 nb_contamines_nbc: 10 nb_dans_chaine_sante: 0 nb_utilises_pour_maintenance: 0 nb_blesses_non_evacues: 0 nb_morts_dans_chaine_mortuaire: 0 } elem { rang: sous_officier nb_total: 10 nb_operationnels: 0 nb_morts: 0 nb_blesses: 0 nb_blesses_mentaux: 10 nb_contamines_nbc: 10 nb_dans_chaine_sante: 0 nb_utilises_pour_maintenance: 0 nb_blesses_non_evacues: 0 nb_morts_dans_chaine_mortuaire: 0 } elem { rang: mdr nb_total: 20 nb_operationnels: 0 nb_morts: 0 nb_blesses: 0 nb_blesses_mentaux: 20 nb_contamines_nbc: 20 nb_dans_chaine_sante: 0 nb_utilises_pour_maintenance: 0 nb_blesses_non_evacues: 0 nb_morts_dans_chaine_mortuaire: 0 } } dotation_eff_materiel { elem { type { id: 20 } nb_disponibles: 21 nb_indisponibles: 22 nb_reparables: 47 nb_dans_chaine_maintenance: 25 nb_prisonniers: 26 } elem { type { id: 20 } nb_disponibles: 21 nb_indisponibles: 22 nb_reparables: 47 nb_dans_chaine_maintenance: 25 nb_prisonniers: 26 } } dotation_eff_ressource { elem { type { id: 30 } quantite_disponible: 31 } elem { type { id: 30 } quantite_disponible: 31 } } equipements_pretes { elem { borrower { id: 40 } type { id: 41 } nombre: 42 } elem { borrower { id: 40 } type { id: 41 } nombre: 42 } } equipements_empruntes { elem { owner { id: 50 } type { id: 51 } nombre: 52 } elem { owner { id: 50 } type { id: 51 } nombre: 52 } } position { latitude: 17.23 longitude: 23.17 } direction { heading: 77 } hauteur: 78 altitude: 79 vitesse: 80 etat_operationnel_brut: 81 reinforcements { elem { id: 82 } elem { id: 83 } } reinforced_unit { id: 84 } mort: true neutralise: true mode_furtif_actif: true embarque: true transporteurs_disponibles: true posture_old: arret posture_new: arret posture_pourcentage: 90 etat_installation: 91 en_tenue_de_protection_nbc: true contamine_par_agents_nbc { elem { id: 100 } elem { id: 101 } } etat_contamination { percentage: 102 quantity: 103.4 } communications { jammed: true knowledge_group { id: 104 } } radio_emitter_disabled: true radio_receiver_disabled: true radar_actif: true transported_units { elem { id: 110 } elem { id: 111 } } transporting_unit { id: 112 } rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel disponibilite_au_tir_indirect: pret_au_tir roe: tir_libre roe_crowd: emploi_force_interdit fatigue: epuise moral: bon experience: conscrit surrendered_to_party { id: 120 } prisonnier: true refugie_pris_en_compte: true extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

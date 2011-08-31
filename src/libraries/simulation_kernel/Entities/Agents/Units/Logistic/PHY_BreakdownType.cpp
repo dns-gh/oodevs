@@ -15,12 +15,13 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
-unsigned int                              PHY_BreakdownType::nDiagnosticTime_ = 0;
+unsigned int                      PHY_BreakdownType::nDiagnosticTime_ = 0;
 
 struct PHY_BreakdownType::LoadingWrapper
 {

@@ -387,8 +387,9 @@ message LentEquipments {
 
 message ResourceDotations {
     message ResourceDotation {
-        required Common.ResourceType type               = 1;
-        required int32              quantite_disponible = 2;
+        required Common.ResourceType type                = 1;
+        required int32               quantite_disponible = 2;
+        optional float               seuil_logistique    = 3;
     }
     repeated ResourceDotation elem = 1;
 }

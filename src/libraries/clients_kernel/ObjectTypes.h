@@ -54,7 +54,7 @@ class ObjectTypes
     , public Resolver2< NBCAgent >
     , public tools::StringResolver< FireClass >
     , public Resolver2< MedicalTreatmentType >
-    , public tools::Resolver< BreakdownType >
+    , public Resolver2< BreakdownType >
     , public tools::Resolver< VolumeType >
     , public tools::StringResolver< ResourceNetworkType >
     , public tools::StringResolver< MaterialCompositionType >

@@ -13,8 +13,6 @@
 namespace gui
 {
 
-class DecimalSpinBox;
-
 // =============================================================================
 /** @class  DecimalSpinBoxAndSlider
     @brief  DecimalSpinBoxAndSlider
@@ -71,7 +69,7 @@ private:
     //! @name Member data
     //@{
     Q3BoxLayout* layout_;
-    DecimalSpinBox* spinbox_;
+    QDoubleSpinBox* spinbox_;
     QSlider* slider_;
     const float precision_;
     float& value_;

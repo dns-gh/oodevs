@@ -19,6 +19,7 @@
 MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
 {
     MOCK_METHOD( ChangeHumanRank, 3 );
+    MOCK_METHOD( ChangeHumanState, 1 );
     MOCK_METHOD( ApplyContamination, 1 );
     MOCK_METHOD( ApplyPoisonous, 1 );
     MOCK_METHOD( ApplyInjury, 1 );
@@ -29,7 +30,6 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( HealHumans, 2 );
     MOCK_METHOD( HealAllHumans, 0 );
     MOCK_METHOD( OverloadHumans, 5 );
-    MOCK_METHOD( FillHumanStateHelper, 1 );
     MOCK_METHOD( GetOperationalState, 0 );
     MOCK_METHOD( IsViable, 0 );
     MOCK_METHOD( NotifyComposanteHandledByMaintenance, 0 );

@@ -535,20 +535,53 @@ void SimulationToClient::Convert( const sword::UnitCreation& from, MsgsSimToClie
 
 namespace
 {
-    template< typename From, typename To >
-    void ConvertHumanDotation( const From& from, To* to )
+    void ConvertHumanDotations( const sword::UnitAttributes& from, MsgsSimToClient::MsgUnitAttributes* to )
     {
-        CONVERT_RANK( rank, rang );
-        CONVERT_TO( total, nb_total );
-        CONVERT_TO( operational, nb_operationnels );
-        CONVERT_TO( dead, nb_morts );
-        CONVERT_TO( wounded, nb_blesses );
-        CONVERT_TO( mentally_wounded, nb_blesses_mentaux );
-        CONVERT_TO( contaminated, nb_contamines_nbc );
-        CONVERT_TO( healing, nb_dans_chaine_sante );
-        CONVERT_TO( maintenance, nb_utilises_pour_maintenance );
-        CONVERT_TO( unevacuated_wounded, nb_blesses_non_evacues );
-        to->set_nb_morts_dans_chaine_mortuaire( 0 );
+        //NB: Different message prototype for HumanDotations
+        if( !from.has_human_dotations() )
+            return;
+        to->mutable_dotation_eff_personnel();
+        for( int i = 0; i < 3; ++i )
+        {
+            MsgsSimToClient::HumanDotations_HumanDotation* dotation = to->mutable_dotation_eff_personnel()->add_elem();
+            dotation->set_rang                          ( static_cast< Common::EnumHumanRank >( i ) );
+            dotation->set_nb_total                      ( 0 );
+            dotation->set_nb_operationnels              ( 0 );
+            dotation->set_nb_morts                      ( 0 );
+            dotation->set_nb_blesses                    ( 0 );
+            dotation->set_nb_blesses_mentaux            ( 0 );
+            dotation->set_nb_contamines_nbc             ( 0 );
+            dotation->set_nb_dans_chaine_sante          ( 0 );
+            dotation->set_nb_utilises_pour_maintenance  ( 0 );
+            dotation->set_nb_blesses_non_evacues        ( 0 ); //$$$ RPD TO IMPLEMENT
+            dotation->set_nb_morts_dans_chaine_mortuaire( 0 );
+        }
+        for( int i = 0; i < from.human_dotations().elem().size(); ++i )
+        {
+            const sword::HumanDotations_HumanDotation& dotationFrom = from.human_dotations().elem( i );
+            MsgsSimToClient::HumanDotations_HumanDotation* dotationTo = to->mutable_dotation_eff_personnel()->mutable_elem( static_cast< int >( dotationFrom.rank() ) );
+            sword::EnumHumanState state = dotationFrom.state();
+            sword::EnumHumanLocation location = dotationFrom.location();
+            int quantity = dotationFrom.quantity();
+
+            dotationTo->set_nb_total( dotationTo->nb_total() + quantity );
+            if( state == sword::healthy && location != sword::medical && !dotationFrom.mentally_wounded() && !dotationFrom.contaminated() )
+                dotationTo->set_nb_operationnels( dotationTo->nb_operationnels() + quantity );
+            if( state == sword::deadly )
+                dotationTo->set_nb_morts( dotationTo->nb_morts() + quantity );
+            if( state != sword::healthy && state != sword::deadly )
+                dotationTo->set_nb_blesses( dotationTo->nb_blesses() + quantity );
+            if( dotationFrom.mentally_wounded() )
+                dotationTo->set_nb_blesses_mentaux( dotationTo->nb_blesses_mentaux() + quantity );
+            if( dotationFrom.contaminated() )
+                dotationTo->set_nb_contamines_nbc( dotationTo->nb_contamines_nbc() + quantity );
+            if( location == sword::medical )
+                dotationTo->set_nb_dans_chaine_sante( dotationTo->nb_dans_chaine_sante() + quantity );
+            if( location == sword::maintenance )
+                dotationTo->set_nb_utilises_pour_maintenance( dotationTo->nb_utilises_pour_maintenance() + quantity );
+            dotationTo->set_nb_blesses_non_evacues( 0 );
+            dotationTo->set_nb_morts_dans_chaine_mortuaire( 0 );
+        }
     }
     template< typename From, typename To >
     void ConvertEquipmentDotation( const From& from, To* to )
@@ -556,15 +589,18 @@ namespace
         CONVERT_ID( type );
         CONVERT_TO( available, nb_disponibles );
         CONVERT_TO( unavailable, nb_indisponibles );
-        CONVERT_TO( repairable, nb_reparables );
+        //NB: OnSiteFixable doesn't exist in "to"
+        to->set_nb_reparables( from.repairable() + from.on_site_fixable() );
         CONVERT_TO( repairing, nb_dans_chaine_maintenance );
         CONVERT_TO( captured, nb_prisonniers );
+        //NB: Breakdowns doesn't exist in "to"
     }
     template< typename From, typename To >
     void ConvertResourceDotation( const From& from, To* to )
     {
         CONVERT_ID( type );
         CONVERT_TO( quantity, quantite_disponible );
+        //NB: Threshold doesn't exist in "to"
     }
     template< typename From, typename To >
     void ConvertLentEquipment( const From& from, To* to )
@@ -608,7 +644,7 @@ namespace
 void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToClient::MsgUnitAttributes* to )
 {
     CONVERT_ID( unit );
-    CONVERT_LIST_TO( human_dotations, dotation_eff_personnel, elem, ConvertHumanDotation );
+    ConvertHumanDotations( from, to );
     CONVERT_LIST_TO( equipment_dotations, dotation_eff_materiel, elem, ConvertEquipmentDotation );
     CONVERT_LIST_TO( resource_dotations, dotation_eff_ressource, elem, ConvertResourceDotation );
     CONVERT_LIST_TO( lent_equipments, equipements_pretes, elem, ConvertLentEquipment );

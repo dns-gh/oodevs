@@ -114,6 +114,10 @@ TimelineListView.cpp \
 TimelinePanel.cpp \
 TimelineView.cpp \
 UnitMagicOrdersInterface.cpp \
+UnitStateDialog.cpp \
+UnitStateTableCrew.cpp \
+UnitStateTableEquipment.cpp \
+UnitStateTableResource.cpp \
 UrbanKnowledgePanel.cpp \
 UserProfileDialog.cpp \
 UserProfileList.cpp \

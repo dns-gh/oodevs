@@ -199,7 +199,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\sensors\PHY_SensorTypeObjectData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_Human.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumansComposante.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumanStateHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanRank.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanWound.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Experience.cpp" />
@@ -939,7 +938,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumansComposante_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_Human.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumansComposante.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\HumanStateHelper.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanRank.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humans\PHY_HumanWound.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Experience.h" />

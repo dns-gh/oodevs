@@ -149,6 +149,18 @@
     <Filter Include="Translations">
       <UniqueIdentifier>{75d8fbd9-c2fa-454f-83f3-62042a6a68e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Magic actions\Inhabitant">
+      <UniqueIdentifier>{2d639757-b551-4abc-9979-ec40a0dac128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Magic actions\Logistic">
+      <UniqueIdentifier>{67d48477-0f3f-41d8-89c6-5e4034186c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Magic actions\Population">
+      <UniqueIdentifier>{393d1f01-a70d-4f0b-96e8-db2bcc52058e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Magic actions\Unit state">
+      <UniqueIdentifier>{a616015c-fb09-44ee-b04d-7fddc560343e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp">
@@ -232,43 +244,10 @@
     <ClCompile Include="..\..\src\applications\gaming_app\EquipmentTransferDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeAffinitiesDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeAlertedStateDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeConfinedStateDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeHealthStateDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantExtractCrowdDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\KnowledgeAddInGroupDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyChangeQuotasDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPullFlowDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPushFlowDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\ResourceLinksDialog.cpp">
@@ -386,9 +365,6 @@
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\InfoDialog.cpp">
-      <Filter>Source Files\Panels\Info\dialogs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\InfoDotationsDialog.cpp">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\InfoLendingsDialog.cpp">
@@ -757,6 +733,51 @@
     <ClCompile Include="..\..\src\applications\gaming_app\TabWidget.cpp">
       <Filter>Source Files\Panels\Actions\Timeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableCrew.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableResource.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeAlertedStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeConfinedStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantChangeHealthStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantExtractCrowdDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyChangeQuotasDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPullFlowDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPushFlowDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Population</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -775,18 +796,6 @@
       <Filter>Source Files\Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\AgentChangeAffinitiesDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\InhabitantChangeAffinitiesDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\InhabitantChangeHealthStateDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.h">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\ResourceLinksDialog.h">
@@ -859,9 +868,6 @@
       <Filter>Source Files\Panels\Info\tabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoCompositionDialog.h">
-      <Filter>Source Files\Panels\Info\dialogs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\InfoDotationsDialog.h">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoLendingsDialog.h">
@@ -1101,6 +1107,27 @@
     <ClInclude Include="..\..\src\applications\gaming_app\ZoomViewCommand.h">
       <Filter>Source Files\Commands\Sim</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableCrew.h">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.h">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableResource.h">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InhabitantChangeAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InhabitantChangeHealthStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Population</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
@@ -1174,28 +1201,7 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\EquipmentTransferDialog.h">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantChangeAlertedStateDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantChangeConfinedStateDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantExtractCrowdDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\KnowledgeAddInGroupDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyChangeQuotasDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyPullFlowDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyPushFlowDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.h">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.h">
@@ -1392,6 +1398,30 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\TabWidget.h">
       <Filter>Source Files\Panels\Actions\Timeline</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantExtractCrowdDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantChangeAlertedStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantChangeConfinedStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyChangeQuotasDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyPullFlowDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyPushFlowDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\UnitStateDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -24,7 +24,7 @@ namespace kernel
 {
     struct Nothing {};
 
-enum E_TroopHealthState
+enum E_TroopHealthState // $$$$ ABR 2011-08-30: Here to preserve old troops display (cf TroopsCompatibilityVersion)
 {
     eTroopHealthStateTotal = 0,
     eTroopHealthStateOperational,

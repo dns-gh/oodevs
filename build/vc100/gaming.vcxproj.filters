@@ -802,6 +802,12 @@
     <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp">
       <Filter>Source Files\Model\Logistique</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\HumanState.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1511,6 +1517,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h">
       <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\HumanState.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

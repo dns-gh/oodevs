@@ -48,11 +48,13 @@ public:
     //! @name Member data
     //@{
     const unsigned int nEquipmentType_; // XML reference - no resolved by dispatcher
-          unsigned int nNbrAvailable_;
-          unsigned int nNbrUnavailable_;
-          unsigned int nNbrRepairable_;
-          unsigned int nNbrInMaintenance_;
-          unsigned int nNbrPrisoner_;
+    unsigned int       nNbrAvailable_;
+    unsigned int       nNbrUnavailable_;
+    unsigned int       nNbrRepairable_;
+    unsigned int       nNbrOnSiteFixable_;
+    unsigned int       nNbrInMaintenance_;
+    unsigned int       nNbrPrisoner_;
+    std::vector< int > vBreakdowns_;
     //@}
 };
 

@@ -505,6 +505,16 @@ void PHY_RolePion_Dotations::ResupplyDotations( const PHY_DotationType& type, do
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::ChangeDotation
+// Created: ABR 2011-08-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float threshold )
+{
+    assert( pDotations_ );
+    pDotations_->ChangeDotation( category, number, threshold );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::AddFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------

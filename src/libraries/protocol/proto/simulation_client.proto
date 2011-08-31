@@ -657,8 +657,9 @@ message ResourceDotations {
         @brief A resource dotation message
     */
     message ResourceDotation {
-        required ResourceType type     = 1; //!< The resource type @see ResourceType
-        required int32        quantity = 2; //!< The quantity available
+        required ResourceType type      = 1; //!< The resource type @see ResourceType
+        required int32        quantity  = 2; //!< The quantity available
+        optional float        threshold = 3; //!< The logistic threshold on the first tick, then if needed
     }
     repeated ResourceDotation elem = 1; //!< The resource dotations @see ResourceDotation
 }
@@ -671,12 +672,14 @@ message EquipmentDotations {
         @brief An equipment dotation message
     */
     message EquipmentDotation {
-        required EquipmentType type        = 1; //!< The equipment type @see EquipmentType
-        required int32         available   = 2; //!< The amount of equipment available
-        required int32         unavailable = 3; //!< The amount of equipment unavailable
-        required int32         repairable  = 4; //!< The amount of equipment fixable
-        required int32         repairing   = 5; //!< The amount of equipment under maintenance
-        required int32         captured    = 6; //!< The amount of equipment captured
+        required EquipmentType type            = 1; //!< The equipment type @see EquipmentType
+        required int32         available       = 2; //!< The amount of equipment available
+        required int32         unavailable     = 3; //!< The amount of equipment unavailable
+        required int32         repairable      = 4; //!< The amount of equipment fixable
+        required int32         on_site_fixable = 5; //!< The amount of equipment fixable on site
+        required int32         repairing       = 6; //!< The amount of equipment under maintenance
+        required int32         captured        = 7; //!< The amount of equipment captured
+        repeated int32         breakdowns      = 8; //!< The list of the breakdowns id/name. Must have EquipmentDotation.repairable elements.
     }
     repeated EquipmentDotation elem = 1; //!< The equipment dotations @see EquipmentDotation
 }
@@ -690,6 +693,42 @@ enum EnumHumanRank {
     trooper     = 2; //!< Other Enlisted Rank
 }
 
+/** @enum EnumHumanState
+    @brief Defines the different health state
+*/
+enum EnumHumanState {
+    healthy = 0; //!< Healthy state
+    injured = 1; //!< Injured state
+    deadly  = 2; //!< Dead state // $$$$ ABR 2011-07-20: FIXME RENAME
+}
+
+/** @enum EnumHumanLocation
+    @brief Defines the different location
+*/
+enum EnumHumanLocation {
+    battlefield = 0; //!< Located on the battlefield
+    maintenance = 1; //!< Assigned to maintenance
+    medical     = 2; //!< In treatment
+}
+
+/** @enum EnumInjuriesSeriousness
+    @brief Defines the injuries seriousness
+*/
+enum EnumInjuriesSeriousness {
+    wounded_u1 = 0; //!< Wounded emergency level 1
+    wounded_u2 = 1; //!< Wounded emergency level 2
+    wounded_u3 = 2; //!< Wounded emergency level 3
+    wounded_ue = 3; //!< Wounded extrem emergency
+}
+
+/** @struct Injury
+    @brief A definition of an injury
+*/
+message Injury {
+    required int32                   id = 1;          //!< Define the type of the injury
+    required EnumInjuriesSeriousness seriousness = 2; //!< Define the seriousness of the injury
+}
+
 /** @struct HumanDotations
     @brief A human dotations message
 */
@@ -698,16 +737,13 @@ message HumanDotations {
         @brief A human dotation message
     */
     message HumanDotation {
-        required EnumHumanRank rank                = 1;  //!< The rank
-        required int32         total               = 2;  //!< The total number of persons
-        required int32         operational         = 3;  //!< The number of persons operational
-        required int32         dead                = 4;  //!< The number of deads
-        required int32         wounded             = 5;  //!< The number of wounded persons
-        required int32         mentally_wounded    = 6;  //!< The number of mentally wounded persons
-        required int32         contaminated        = 7;  //!< The number of NBC contaminated persons
-        required int32         healing             = 8;  //!< The number of persons being treated by medical services
-        required int32         maintenance         = 9;  //!< The number of persons performing maintenance
-        required int32         unevacuated_wounded = 10; //!< The number of non-evacuated wounded persons
+        required int32               quantity         = 1; //!< The amount of persons
+        required EnumHumanRank       rank             = 2; //!< The rank @see EnumHumanRank
+        required EnumHumanState      state            = 3; //!< The state @see EnumHumanState
+        required EnumHumanLocation   location         = 4; //!< The location @see EnumHumanLocation
+        repeated Injury              injuries         = 5; //!< The list of injuries @see Injuries
+        optional bool                mentally_wounded = 6; //!< Whether the group is mentally wounded or not
+        optional bool                contaminated     = 7; //!< Whether the group is NBC contaminated or not
     }
     repeated HumanDotation elem = 1; //!< The human dotations
 }

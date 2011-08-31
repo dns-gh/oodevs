@@ -29,10 +29,12 @@ UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, const char* n
     setColumnReadOnly( eName, true );
     setColumnStretchable( eName,      true );
     setColumnStretchable( eBreakdown, true );
+    setSelectionMode( NoSelection );
+    setFocusStyle( FollowStyle );
 
+    Populate( eEquipmentState_RepairableWithEvacuation, limitedStates_ );
     Populate( eEquipmentState_InMaintenance, selectionableStates_ );
-    readOnlyStates_ << tools::ToString( eEquipmentState_InMaintenance );
-    readOnlyStates_ << tools::ToString( eEquipmentState_Prisonner );
+    Populate( eNbrEquipmentState, readOnlyStates_ );
 
     connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
 }
@@ -68,10 +70,9 @@ void UnitStateTableEquipment::AddLines( const QString& name, int size, E_Equipme
     {
         unsigned int nRow = numRows();
         insertRows( nRow );
-
         setText( nRow, eName, name );
         bool isReadOnly = state == eEquipmentState_InMaintenance || state == eEquipmentState_Prisonner;
-        AddCombo< E_EquipmentState >( nRow, eState, state, isReadOnly ? readOnlyStates_ : selectionableStates_, !isReadOnly );
+        AddCombo< E_EquipmentState >( nRow, eState, state, isReadOnly ? readOnlyStates_ : ( breakdowns.size() <= 1 ) ? limitedStates_ : selectionableStates_, !isReadOnly );
         AddCombo< unsigned int >( nRow, eBreakdown, currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ], breakdowns, !isReadOnly );
         OnValueChanged( nRow, eState );
     }

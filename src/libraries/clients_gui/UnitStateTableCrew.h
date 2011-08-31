@@ -39,6 +39,7 @@ protected:
 
     //! @name Helpers
     //@{
+    virtual void Purge();
     void MergeLine( E_HumanRank rank, E_HumanState state, E_InjuriesSeriousness seriousness, bool psy, bool contaminated, int number, E_HumanLocation location = eHumanLocation_Battlefield );
     //@}
 
@@ -65,11 +66,13 @@ private slots:
 private:
     //! @name Member data
     //@{
-    std::map< E_HumanRank, int > nbrOfficers_;
-    std::map< E_HumanRank, int > nbrOfficersLeft_;
+    std::map< E_HumanRank, int > nbrOfficersTotal_;
+    std::map< E_HumanRank, int > nbrOfficersHealthy_;
+    int         currentRow_;
 
     QStringList humanRanks_;
     QStringList humanStates_;
+    QStringList humanLocations_;
     QStringList injuriesSeriousness_;
     //@}
 };

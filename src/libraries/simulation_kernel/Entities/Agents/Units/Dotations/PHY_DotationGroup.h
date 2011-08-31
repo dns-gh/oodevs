@@ -108,12 +108,12 @@ public:
     //! @name Accessors
     //@{
     const T_DotationMap& GetDotations() const;
+    PHY_Dotation* GetDotation( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 
 private:
     //! @name Tools
     //@{
-    PHY_Dotation* GetDotation   ( const PHY_DotationCategory& dotationCategory ) const;
     PHY_Dotation& CreateDotation( const PHY_DotationCategory& dotationCategory );
     //@}
 

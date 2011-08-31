@@ -52,6 +52,7 @@ protected slots:
 protected:
     //! @name Member data
     //@{
+    QStringList limitedStates_;
     QStringList selectionableStates_;
     QStringList readOnlyStates_;
     //@}

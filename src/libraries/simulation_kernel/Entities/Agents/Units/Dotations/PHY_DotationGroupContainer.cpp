@@ -294,6 +294,21 @@ void PHY_DotationGroupContainer::Resupply( const PHY_DotationType& type, double 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::ChangeDotation
+// Created: ABR 2011-08-10
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float thresholdPercentage )
+{
+    PHY_DotationGroup* pGroup = GetDotationGroup( category.GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
+    if( pGroup )
+    {
+        PHY_Dotation* pDotation = pGroup->GetDotation( category );
+        if( pDotation )
+            pDotation->ChangeDotation( number, thresholdPercentage );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::HasIlluminationDotations
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
@@ -439,7 +454,8 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
         const PHY_Dotation& dotation = **itDotation;
         sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();
         asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
-        asnRessource.set_quantity( (unsigned int)dotation.GetValue() );
+        asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() ) );
+        asnRessource.set_threshold( static_cast< float >( dotation.GetSupplyThresholdPercentage() ) );
     }
 }
 
@@ -465,7 +481,8 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
             const PHY_Dotation& dotation = *itDotation->second;
             sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();
             asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
-            asnRessource.set_quantity( (unsigned int)dotation.GetValue() );
+            asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() ) );
+            asnRessource.set_threshold( static_cast< float >( dotation.GetSupplyThresholdPercentage() ) );
         }
     }
 }

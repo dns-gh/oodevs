@@ -575,6 +575,10 @@
         <source>Repairable</source>
         <translation>Réparable</translation>
     </message>
+    <message>
+        <source>On site fixable</source>
+        <translation>Réparable sur place</translation>
+    </message>
 </context>
 <context>
     <name>Formation</name>

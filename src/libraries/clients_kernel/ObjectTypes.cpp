@@ -77,7 +77,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void ObjectTypes::Purge()
 {
-    tools::Resolver< BreakdownType >::DeleteAll();
+    Resolver2< BreakdownType >::DeleteAll();
     Resolver2< NBCAgent >::DeleteAll();
     tools::Resolver< EquipmentType >::DeleteAll();
     tools::Resolver< WeaponSystemType, std::string >::DeleteAll();
@@ -260,7 +260,7 @@ void ObjectTypes::ReadBreakdownCategory( xml::xistream& xis )
 void ObjectTypes::ReadBreakdown( xml::xistream& xis )
 {
     BreakdownType* breakdown = new BreakdownType( xis );
-    tools::Resolver< BreakdownType >::Register( breakdown->GetId(), *breakdown );
+    Resolver2< BreakdownType >::Register( breakdown->GetId(), breakdown->GetName(), *breakdown );
 }
 
 // -----------------------------------------------------------------------------

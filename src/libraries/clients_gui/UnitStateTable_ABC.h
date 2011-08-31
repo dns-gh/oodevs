@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void Purge();
+    virtual void Purge();
     void RecursiveLoad( kernel::Entity_ABC& selected );
     //@}
 

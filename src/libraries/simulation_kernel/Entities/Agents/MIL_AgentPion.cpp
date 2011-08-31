@@ -49,6 +49,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_Wound.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
@@ -324,7 +325,8 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "command-post", bIsPC_ )
         << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
     pColor_->WriteODB( xos );
-    GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipments + Humans
+    GetRole< PHY_RolePion_Composantes >().WriteODB( xos );         // Equipments
+    GetRole< human::PHY_RolePion_Humans >().WriteODB( xos );       // Humans
     GetRole< dotation::PHY_RolePion_Dotations >().WriteODB( xos ); // Dotations
     const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
     if( role )
@@ -347,9 +349,9 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
-    GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
+    GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis );         // Equipments + Humans
     GetRole< dotation::PHY_RolePion_Dotations >().ReadOverloading( xis ); // Dotations
-    GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis ); // Human factor
+    GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis );        // Human factor
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ReadOverloading( xis ); // Stocks
@@ -993,6 +995,21 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         GetDecision().Reload(); 
         pOrderManager_->CancelMission();
         break;
+    case sword::UnitMagicAction::create_breakdowns:
+        OnReceiveCreateBreakdowns( msg.parameters() );
+        break;
+    case sword::UnitMagicAction::create_wounds:
+        OnReceiveCreateWounds( msg.parameters() );
+        break;
+    case sword::UnitMagicAction::change_equipment_state:
+        OnReceiveChangeEquipmentState( msg.parameters() );
+        break;
+    case sword::UnitMagicAction::change_human_state:
+        OnReceiveChangeHumanState( msg.parameters() );
+        break;
+    case sword::UnitMagicAction::change_dotation:
+        OnReceiveChangeDotation( msg.parameters() );
+        break;
     default:
         assert( false );
         break;
@@ -1311,4 +1328,158 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_Dotation& ) > visitor ) c
 void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
     GetRole< PHY_RoleInterface_Supply >().Apply( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveCreateBreakdowns
+// Created: ABR 2011-08-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& msg )
+{
+    if( msg.elem( 0 ).value_size() < 1 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    {
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        if( elem.list_size() < 2 || elem.list_size() > 3 || !elem.list( 0 ).has_identifier() || !elem.list( 1 ).has_quantity() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+        sword::EquipmentType type;
+        type.set_id( elem.list( 0 ).identifier() );
+        int number = elem.list( 1 ).quantity();
+        unsigned int breakdownId = 0;
+        if( elem.list_size() == 3 )
+        {
+            if( !elem.list( 2 ).has_identifier() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            breakdownId = elem.list( 2 ).identifier();
+        }
+        const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
+        if( !pComposanteType )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        roleComposantes.CreateBreakdowns( *pComposanteType, static_cast< unsigned int >( number ), breakdownId );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveCreateWounds
+// Created: ABR 2011-08-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
+{
+    if( msg.elem( 0 ).value_size() < 1 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    {
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        if( elem.list_size() < 1 || elem.list_size() > 2 || !elem.list( 0 ).has_quantity() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+        int number = elem.list( 0 ).quantity();
+        sword::EnumHumanWound wound = sword::unwounded;
+        if( elem.list_size() == 2 )
+        {
+            if( !elem.list( 1 ).has_enumeration() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            wound = static_cast< sword::EnumHumanWound >( elem.list( 1 ).enumeration() );
+            if( wound == sword::unwounded || wound == sword::dead )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        }
+        roleComposantes.CreateWounds( static_cast< unsigned int >( number ), wound );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveChangeEquipmentState
+// Created: ABR 2011-08-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameters& msg )
+{
+    if( msg.elem( 0 ).value_size() < 1 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    {
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        if( elem.list_size() != 8 || !elem.list( 0 ).has_identifier() ||
+            !elem.list( 1 ).has_quantity() || !elem.list( 2 ).has_quantity() || !elem.list( 3 ).has_quantity() ||
+            !elem.list( 4 ).has_quantity() || !elem.list( 5 ).has_quantity() || !elem.list( 6 ).has_quantity() ||
+            elem.list( 7 ).list_size() != elem.list( 3 ).quantity() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+        sword::EquipmentType type;
+        type.set_id( elem.list( 0 ).identifier() );
+        const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
+        if( !pComposanteType )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        roleComposantes.ChangeEquipmentState( *pComposanteType, elem );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveChangeHumanState
+// Created: ABR 2011-08-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& msg )
+{
+    if( msg.elem( 0 ).value_size() < 1 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    for( int i = 0 ; i < msg.elem( 0 ).value_size(); ++i )
+    {
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        if( elem.list_size() != 6 || !elem.list( 0 ).has_quantity() || !elem.list( 1 ).has_enumeration() || !elem.list( 2 ).has_enumeration() ||
+            !elem.list( 4 ).has_booleanvalue() || !elem.list( 5 ).has_booleanvalue() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        // rank
+        if( elem.list( 1 ).enumeration() < sword::EnumHumanRank_MIN || elem.list( 1 ).enumeration() > sword::EnumHumanRank_MAX )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
+        if( !pHumanRank )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        // state
+        if( elem.list( 2 ).enumeration() < sword::EnumHumanState_MIN || elem.list( 2 ).enumeration() > sword::EnumHumanState_MAX )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        sword::EnumHumanState state = static_cast< sword::EnumHumanState >( elem.list( 2 ).enumeration() );
+        if( state == sword::injured )
+        {
+            // $$$$ ABR 2011-08-10: waiting story 660, for each injury check the following
+            if( elem.list( 3 ).list_size() != 1 || elem.list( 3 ).list( 0 ).list_size() != 2 ||
+                !elem.list( 3 ).list( 0 ).list( 1 ).has_enumeration() ||
+                elem.list( 3 ).list( 0 ).list( 1 ).enumeration() < sword::EnumInjuriesSeriousness_MIN ||
+                elem.list( 3 ).list( 0 ).list( 1 ).enumeration() > sword::EnumInjuriesSeriousness_MAX )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        }
+    }
+    roleComposantes.ChangeHumanState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveChangeDotation
+// Created: ABR 2011-08-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg )
+{
+    if( msg.elem( 0 ).value_size() < 1 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
+    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    {
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        if( elem.list_size() != 3 || !elem.list( 0 ).has_identifier() || !elem.list( 1 ).has_quantity() || !elem.list( 2 ).has_areal() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        unsigned int dotationId = elem.list( 0 ).identifier();
+        int number = elem.list( 1 ).quantity();
+        float thresholdPercentage = elem.list( 2 ).areal();
+
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( dotationId );
+        if( !pDotationCategory || number < 0 || thresholdPercentage < 0.f || thresholdPercentage > 100.f )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        roleDotations.ChangeDotation( *pDotationCategory, static_cast< unsigned int >( number ), thresholdPercentage );
+    }
 }

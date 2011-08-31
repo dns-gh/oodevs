@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_HumansComposante.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Units/Humans/HumanStateHelper.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
@@ -174,20 +173,6 @@ unsigned int PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, unsig
         ++nNbrChanged;
     }
     return nNbrChanged;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::FillHumanStateHelper
-// Created: ABR 2011-03-08
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::FillHumanStateHelper( HumanStateHelper& helper ) const
-{
-    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-    {
-        const Human_ABC& human = **it;
-        if( human.GetWound() != PHY_HumanWound::notWounded_ || human.IsContaminated() || human.IsMentalDiseased() )
-            helper.AddHumanMergeIfNeeded( human );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -456,3 +441,64 @@ void PHY_HumansComposante::serialize( Archive& file, const unsigned int )
          & nNbrUsableHumans_;
     assert( pComposante_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ChangeHumanState
+// Created: ABR 2011-08-12
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ChangeHumanState( sword::MissionParameters& msg )
+{
+    std::vector< unsigned int > done;
+    for( int i = 0 ; i < msg.elem( 0 ).value_size(); ++i )
+    {
+        sword::MissionParameter_Value& elem = *msg.mutable_elem( 0 )->mutable_value()->Mutable( i );
+
+        std::string tmp = elem.DebugString();
+
+        const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
+        unsigned int number = static_cast< unsigned int >( elem.list( 0 ).quantity() );
+        if( number == 0 )
+            continue;
+        sword::EnumHumanState state = static_cast< sword::EnumHumanState >( elem.list( 2 ).enumeration() );
+        sword::EnumInjuriesSeriousness seriousness = sword::wounded_u1;
+        if( state == sword::injured )
+            seriousness = static_cast< sword::EnumInjuriesSeriousness >( elem.list( 3 ).list( 0 ).list( 1 ).enumeration() );
+        bool psyop = elem.list( 4 ).booleanvalue();
+        bool contaminated = elem.list( 5 ).booleanvalue();
+        const PHY_HumanWound* pWound = &PHY_HumanWound::killed_;
+        switch( state ) // $$$$ ABR 2011-08-29: waiting story 660
+        {
+        case sword::healthy:
+            pWound = &PHY_HumanWound::notWounded_;
+            break;
+        case sword::injured:
+            if( seriousness == sword::wounded_u1 )
+                pWound = &PHY_HumanWound::woundedU1_;
+            else if( seriousness == sword::wounded_u2 )
+                pWound = &PHY_HumanWound::woundedU2_;
+            else if( seriousness == sword::wounded_u3 )
+                pWound = &PHY_HumanWound::woundedU3_;
+            else if( seriousness == sword::wounded_ue )
+                pWound = &PHY_HumanWound::woundedUE_;
+            break;
+        case sword::deadly:
+        default:
+            break;
+        }
+        for( unsigned int i = 0; i < humans_.size() && number; ++i )
+        {
+            if( std::find( done.begin(), done.end(), i ) != done.end() )
+                continue;
+            Human_ABC& human = *humans_[ i ];
+            if( human.GetRank() != *pHumanRank )
+                continue;
+            done.push_back( i );
+            human.SetState( *pWound, psyop, contaminated );
+            --number;
+        }
+        elem.mutable_list( 0 )->set_quantity( number );
+        if( done.size() == humans_.size() )
+            break;
+    }
+}
+

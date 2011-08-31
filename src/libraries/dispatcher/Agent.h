@@ -92,7 +92,7 @@ public:
     virtual sword::EnumOperationalStatus GetOperationalState() const;
     virtual unsigned short GetOperationalStateValue() const;
     virtual const tools::Resolver< dispatcher::Equipment >& Equipments() const;
-    virtual const tools::Resolver< dispatcher::Humans >& Troops() const;
+    virtual const std::vector< dispatcher::Humans >& Troops() const;
     virtual unsigned short GetAltitude() const;
     virtual unsigned short GetSpeed() const;
     virtual unsigned short GetDirection() const;
@@ -165,7 +165,8 @@ private:
     bool                                       bRefugeeManaged_;
     DecisionalState                            decisionalInfos_;
     tools::Resolver< Equipment >               equipments_;
-    tools::Resolver< Humans >                  troops_;
+    //tools::Resolver< Humans >                  troops_;
+    std::vector< Humans >                      troops_;
     tools::Resolver< Dotation >                dotations_;
     tools::Resolver< Loan >                    borrowings_;
     tools::Resolver< Loan >                    lendings_;

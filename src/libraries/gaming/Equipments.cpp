@@ -16,6 +16,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "Tools.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 using namespace kernel;
 
@@ -50,8 +51,10 @@ Equipments::~Equipments()
 // -----------------------------------------------------------------------------
 void Equipments::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_equipment_dotations()  != 1 )
+    if( !message.has_equipment_dotations() )
         return;
+
+    std::string tmp = message.equipment_dotations().DebugString();
 
     std::vector< Equipment > differences;
     uint nSize = message.equipment_dotations().elem_size();
@@ -84,8 +87,11 @@ void Equipments::Update( const std::vector< Equipment >& differences )
             Register( it->type_.GetId(), *equipment );
         }
         else
+        {
             *equipment = *equipment + *it;
-        // $$$$ SBO 2007-04-11: TODO: remove equipment if null
+            if( equipment->Total() == 0 )
+                Remove( it->type_.GetId() );
+        }
     }
     if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Equipments* equipments = const_cast< Equipments* >( superior->Retrieve< Equipments >() ) )
@@ -125,6 +131,7 @@ void Equipments::AddToDictionary( const Equipment& equipment )
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Available" ), equipment.available_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Unavailable" ), equipment.unavailable_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Repairable" ), equipment.repairable_ );
+    dico_.Register( *this, baseName + tools::translate( "Equipments", "On site fixable" ), equipment.onSiteFixable_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "In maintenance" ), equipment.inMaintenance_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Prisoner" ), equipment.prisonners_ );
 }

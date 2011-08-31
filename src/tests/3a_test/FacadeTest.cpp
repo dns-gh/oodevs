@@ -616,7 +616,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumans, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int state[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
+    int state[8] = { 1, 0, 1, 0, 0, 0, 0, 0 };
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
     task->Receive( TestTools::MakeHumanVariation( state, 43 ) );
@@ -1151,7 +1151,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForUnitList, Fixture )
                              "<result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int state[8] = { 2, 1, 0, 0, 0, 1, 0, 0 };
+    int state[8] = { 2, 1, 1, 0, 0, 0, 0, 0 };
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
     task->Receive( TestTools::EndTick() );
@@ -1182,7 +1182,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForSpecifiedZone, Fixture )
                              "<result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int state[8] = { 2, 1, 0, 0, 0, 0, 1, 0 };
+    int state[8] = { 2, 1, 1, 0, 0, 0, 0, 0 };
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakePosition( "31TCM1508386208", 17 ) );
     task->Receive( TestTools::MakePosition( "31TCM1543486826", 15 ) );
@@ -1211,7 +1211,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWoundedHumansForUnitList, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int state[8] = { 3, 0, 0, 3, 1, 0, 0, 0 };
+    int state[8] = { 3, 0, 0, 3, 0, 0, 0, 0 };
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
     task->Receive( TestTools::EndTick() );

@@ -99,7 +99,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
 Agent::~Agent()
 {
     equipments_.DeleteAll();
-    troops_.DeleteAll();
+    troops_.clear();
     dotations_.DeleteAll();
     borrowings_.DeleteAll();
     lendings_.DeleteAll();
@@ -244,18 +244,11 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
             }
         }
     if( message.has_human_dotations() )
+    {
+        troops_.resize( message.human_dotations().elem_size() );
         for( int i = 0; i < message.human_dotations().elem_size(); ++i )
-        {
-            const sword::HumanDotations_HumanDotation& asn = message.human_dotations().elem( i );
-            Humans* pHumans = troops_.Find( asn.rank() );
-            if( pHumans )
-                pHumans->Update( asn );
-            else
-            {
-                pHumans = new Humans( asn );
-                troops_.Register( asn.rank(), *pHumans );
-            }
-        }
+            troops_[ i ].Update( message.human_dotations().elem( i ) );
+    }
     if( message.has_resource_dotations() )
         for( int i = 0; i < message.resource_dotations().elem_size(); ++i )
         {
@@ -477,8 +470,8 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
                 it.NextElement().Send( *asn().mutable_equipment_dotations()->add_elem() );
         }
         {
-            for( tools::Iterator< const Humans& > it = troops_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_human_dotations()->add_elem() );
+            for( unsigned int i = 0; i < troops_.size(); ++i )
+                troops_[ i ].Send( *asn().mutable_human_dotations()->add_elem() );
         }
         {
             for( tools::Iterator< const Dotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
@@ -632,7 +625,7 @@ const tools::Resolver< dispatcher::Equipment >& Agent::Equipments() const
 // Name: Agent::Troops
 // Created: SBO 2010-06-07
 // -----------------------------------------------------------------------------
-const tools::Resolver< dispatcher::Humans >& Agent::Troops() const
+const std::vector< dispatcher::Humans >& Agent::Troops() const
 {
     return troops_;
 }

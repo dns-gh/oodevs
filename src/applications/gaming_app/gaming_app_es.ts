@@ -665,6 +665,10 @@ Motivo: %3
         <source>Prisoner</source>
         <translation>Prisionero</translation>
     </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventToolbar</name>
@@ -822,15 +826,15 @@ Motivo: %3
     </message>
     <message>
         <source>Officer</source>
-        <translation>Oficial</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Warrant-officer</source>
-        <translation>Sub oficial</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Private</source>
-        <translation>Soldado</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -958,13 +962,6 @@ Motivo: %3
     <message>
         <source>Info</source>
         <translation>Info</translation>
-    </message>
-</context>
-<context>
-    <name>InfoDotationsDialog</name>
-    <message>
-        <source>Resources</source>
-        <translation>Dotaciones</translation>
     </message>
 </context>
 <context>
@@ -3087,6 +3084,50 @@ Motivo: %3
     </message>
     <message>
         <source>Reload brain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateDialog</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">Dotaciones</translation>
+    </message>
+    <message>
+        <source>Composition</source>
+        <translation type="unfinished">Composición</translation>
+    </message>
+    <message>
+        <source>Crew</source>
+        <translation type="unfinished">Tripulación</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished">Equipos</translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateTableCrew</name>
+    <message>
+        <source>Change human state</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateTableEquipment</name>
+    <message>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change equipment state</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitStateTableResource</name>
+    <message>
+        <source>Change dotations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

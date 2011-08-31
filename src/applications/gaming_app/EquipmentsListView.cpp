@@ -22,6 +22,7 @@ EquipmentsListView::EquipmentsListView( QWidget* parent, kernel::Controllers& co
     .AddColumn( tr( "Available" ) )
     .AddColumn( tr( "Unavailable" ) )
     .AddColumn( tr( "Repairable" ) )
+    .AddColumn( tr( "On site fixable" ) )
     .AddColumn( tr( "In maintenance" ) )
     .AddColumn( tr( "Prisoner" ) );
 }
@@ -45,6 +46,7 @@ void EquipmentsListView::Display( const Equipment& equipment, kernel::Displayer_
              .Display( tr( "Available" ), equipment.available_ )
              .Display( tr( "Unavailable" ), equipment.unavailable_ )
              .Display( tr( "Repairable" ), equipment.repairable_ )
+             .Display( tr( "On site fixable" ), equipment.onSiteFixable_ )
              .Display( tr( "In maintenance" ), equipment.inMaintenance_ )
              .Display( tr( "Prisoner" ), equipment.prisonners_ );
 }

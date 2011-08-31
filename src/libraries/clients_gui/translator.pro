@@ -8,6 +8,7 @@ AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
 ConstructionPrototype_ABC.cpp \
+ComboTableItem.cpp \
 CoordinateSystemsPanel.cpp \
 CrossingSitePrototype_ABC.cpp \
 DelayPrototype_ABC.cpp \

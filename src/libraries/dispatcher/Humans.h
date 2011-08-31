@@ -13,6 +13,9 @@
 namespace sword
 {
     enum EnumHumanRank;
+    enum EnumHumanState;
+    enum EnumHumanLocation;
+    enum EnumInjuriesSeriousness;
     class HumanDotations_HumanDotation;
 }
 
@@ -30,7 +33,7 @@ class Humans
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Humans( const sword::HumanDotations_HumanDotation& asnMsg );
+             Humans();
     virtual ~Humans();
     //@}
 
@@ -41,15 +44,26 @@ public:
     //@}
 
 public:
-    sword::EnumHumanRank nRank_;
-    unsigned int        nNbrTotal_;
-    unsigned int        nNbrOperational_;
-    unsigned int        nNbrDead_;
-    unsigned int        nNbrWounded_;
-    unsigned int        nNbrMentalDiseased_;
-    unsigned int        nNbrNBC_;
-    unsigned int        nNbrInLogisticMedical_;
-    unsigned int        nNbrInLogisticMaintenance_;
+    //! @name Types
+    //@{
+    typedef std::pair< unsigned int, sword::EnumInjuriesSeriousness >  T_Injury;
+
+    typedef std::vector< T_Injury >                                    T_Injuries;
+    typedef T_Injuries::iterator                                      IT_Injuries;
+    typedef T_Injuries::const_iterator                               CIT_Injuries;
+    //@}
+
+public:
+    //! @name Data members
+    //@{
+    unsigned int             number_;
+    sword::EnumHumanRank     rank_;
+    sword::EnumHumanState    state_;
+    sword::EnumHumanLocation location_;
+    T_Injuries               injuries_;
+    bool                     contaminated_;
+    bool                     psyop_;
+    //@}
 };
 
 }

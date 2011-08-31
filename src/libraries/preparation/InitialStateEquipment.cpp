@@ -58,7 +58,7 @@ void InitialStateEquipment::Serialize( xml::xostream& xos ) const
     xos << xml::start( "equipment" )
         << xml::attribute( "type", name_ )
         << xml::attribute( "state", ENT_Tr::ConvertFromEquipmentState( state_, ENT_Tr_ABC::eToSim ) );
-    if( state_ == eEquipmentState_RepairableWithEvacuation )
+    if( state_ == eEquipmentState_RepairableWithEvacuation && !breakdowns_.isEmpty() && static_cast< int >( currentBreakdown_ ) < breakdowns_.size() )
         xos << xml::attribute( "breakdown", breakdowns_[ currentBreakdown_ ] );
     xos << xml::end;
 }

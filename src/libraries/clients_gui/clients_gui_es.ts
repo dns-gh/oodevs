@@ -183,6 +183,13 @@
     </message>
 </context>
 <context>
+    <name>gui::ComboTableItem</name>
+    <message>
+        <source>Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ConstructionPrototype_ABC</name>
     <message>
         <source>Construction</source>
@@ -1127,6 +1134,10 @@ Voulez-vous le supprimer?</translation>
         <source>Activation time:</source>
         <translation>Délai avant activation:</translation>
     </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished">duración de actividad:</translation>
+    </message>
 </context>
 <context>
     <name>gui::OptionsPanel</name>
@@ -1463,6 +1474,10 @@ Voulez-vous le supprimer?</translation>
         <source>Wind speed: %1km/h, direction: %2°</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Temperature: %2°C</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::TerrainPreference</name>
@@ -1579,6 +1594,10 @@ Voulez-vous le supprimer?</translation>
         <source>---</source>
         <translation type="unfinished">---</translation>
     </message>
+    <message>
+        <source>You have unsaved modifications on unit %1 on the %2 tab, do you want to validate ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitStateTableCrew</name>
@@ -1649,10 +1668,6 @@ Voulez-vous le supprimer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ADN quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Maximal capacity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1666,6 +1681,10 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default capacity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -198,7 +198,7 @@ PHY_HumanWound::~PHY_HumanWound()
 // -----------------------------------------------------------------------------
 const PHY_HumanWound& PHY_HumanWound::ChooseRandomWound()
 {
-    const double rRand = MIL_Random::rand_oi( MIL_Random::eWounds);
+    const double rRand = MIL_Random::rand_oi( MIL_Random::eWounds );
     double rSumFactors = 0.;
     for( CIT_HumanWoundMap itWound = humanWounds_.begin(); itWound != humanWounds_.end(); ++itWound )
     {
@@ -209,6 +209,22 @@ const PHY_HumanWound& PHY_HumanWound::ChooseRandomWound()
     }
     assert( false ); // $$$$ MCO : throw instead, or even better rewrite algorithm
     return killed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::GetRandomWoundSeriousness
+// Created: ABR 2011-08-11
+// -----------------------------------------------------------------------------
+const PHY_HumanWound* PHY_HumanWound::GetRandomWoundSeriousness()
+{
+    unsigned long index = MIL_Random::rand32_io( 0, 4 ); // $$$$ ABR 2011-08-11: Hard coded, number of injury seriousness
+    switch( index )
+    {
+    case 0:  return &woundedU1_;
+    case 1:  return &woundedU2_;
+    case 2:  return &woundedU3_;
+    default: return &woundedUE_;
+    }
 }
 
 // -----------------------------------------------------------------------------

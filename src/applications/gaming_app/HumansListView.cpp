@@ -17,7 +17,7 @@
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 HumansListView::HumansListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : ResourcesListView_ABC< HumansListView, Troops >( parent, *this, controllers, factory )
+    : ResourcesListView_ABC< HumansListView, TroopsCompatibilityVersion >( parent, *this, controllers, factory )
 {
     AddColumn( tr( "Rank" ) )
     .AddColumn( tr( "Officer" ) )
@@ -50,7 +50,7 @@ void HumansListView::Display( const Humans& humans, kernel::Displayer_ABC& displ
 // Name: HumansListView::NotifyUpdated
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
-void HumansListView::NotifyUpdated( const Troops& a )
+void HumansListView::NotifyUpdated( const TroopsCompatibilityVersion& a )
 {
     if( ShouldUpdate( a ) )
         DeleteTail( DisplayList( &*a.humans_, a.humans_ + kernel::eTroopHealthStateNbrStates ) );

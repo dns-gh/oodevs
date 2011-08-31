@@ -77,6 +77,18 @@ UnitStateDialog::~UnitStateDialog()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitStateDialog::IsReadOnly
+// Created: ABR 2011-08-12
+// -----------------------------------------------------------------------------
+bool UnitStateDialog::IsReadOnly() const
+{
+    for( unsigned int i = 0; i < tabs_.size(); ++i )
+        if( tabs_[ i ]->isReadOnly() )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitStateDialog::NotifySelected
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
@@ -84,11 +96,11 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
 {
     if( selected_ == element )
         return;
-    if( selected_ && selected_->GetTypeName() == kernel::Agent_ABC::typeName_ && isShown() )
+    if( !IsReadOnly() && selected_ && selected_->GetTypeName() == kernel::Agent_ABC::typeName_ && isShown() )
         for( unsigned int i = 0; i < tabs_.size(); ++i )
             if( tabs_[ i ]->HasChanged( *selected_.ConstCast() ) )
             {
-                int nResult = QMessageBox::information( this, tr( "Sword" ), QString( "You have unsaved modifications on unit %1, do you want to send them ?" ).arg( selected_->GetName() ), QMessageBox::Yes, QMessageBox::No );
+                int nResult = QMessageBox::information( this, tr( "Sword" ), tr( "You have unsaved modifications on unit %1 on the %2 tab, do you want to validate ?" ).arg( selected_->GetName() ).arg( tabWidget_->tabText( i ) ), QMessageBox::Yes, QMessageBox::No );
                 if( nResult == QMessageBox::Yes )
                     Validate();
                 break;
@@ -134,11 +146,12 @@ void UnitStateDialog::Reset()
     for( unsigned int i = 0; i < tabs_.size(); ++i )
         tabs_[ i ]->Purge();
     // Disable if needed
-    bool enable = ( selected_ ) ? selected_->GetTypeName() == kernel::Agent_ABC::typeName_ : false;
+    bool readOnly = IsReadOnly();
+    readOnly |= ( selected_ ) ? selected_->GetTypeName() != kernel::Agent_ABC::typeName_ : true;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->setReadOnly( !enable );
-    resetButton_->setEnabled( enable );
-    validateButton_->setEnabled( enable );
+        tabs_[ i ]->setReadOnly( readOnly );
+    resetButton_->setEnabled( !readOnly );
+    validateButton_->setEnabled( !readOnly );
     // Exit if needed
     if( !selected_ )
         return;

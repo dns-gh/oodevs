@@ -27,28 +27,19 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
     xis >> xml::attribute( "capacity", rCapacity_ )
         >> xml::attribute( "logistic-threshold", rSupplyThresholdPercentage );
 
-    if( rCapacity_ <= 0 )
-        xis.error( "dotation: capacity <= 0" );
-    if( rSupplyThresholdPercentage < 0 || rSupplyThresholdPercentage > 100 )
-        xis.error( "dotation: logistic-threshold not in [0..100]" );
-
-    rSupplyThreshold_ = (float)( rCapacity_ * rSupplyThresholdPercentage / 100. );
+    ComputeThreshold( rSupplyThresholdPercentage );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacity constructor
 // Created: ABR 2011-03-08
 // -----------------------------------------------------------------------------
-PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, double capacity, double supplyThresholdPercentage )
+PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, double capacity, double rSupplyThresholdPercentage )
     : category_        ( category )
     , rCapacity_       ( capacity )
     , rSupplyThreshold_( 0. )
 {
-    if( rCapacity_ <= 0 )
-        throw std::runtime_error( __FUNCTION__ " dotation capacity <= 0" );
-    if( supplyThresholdPercentage < 0 || supplyThresholdPercentage > 100 )
-        throw std::runtime_error( __FUNCTION__ " dotation logistic-threshold not in [0..100]" );
-    rSupplyThreshold_ = (float)( rCapacity_ * supplyThresholdPercentage / 100. );
+    ComputeThreshold( rSupplyThresholdPercentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +49,19 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
 PHY_DotationCapacity::~PHY_DotationCapacity()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity::ComputeThreshold
+// Created: ABR 2011-07-27
+// -----------------------------------------------------------------------------
+void PHY_DotationCapacity::ComputeThreshold( double rSupplyThresholdPercentage )
+{
+    if( rCapacity_ <= 0 )
+        throw std::runtime_error( __FUNCTION__ " dotation capacity <= 0" );
+    if( rSupplyThresholdPercentage < 0 || rSupplyThresholdPercentage > 100 )
+        throw std::runtime_error( __FUNCTION__ " dotation logistic-threshold not in [0..100]" );
+    rSupplyThreshold_ = static_cast< float >( rCapacity_ * rSupplyThresholdPercentage / 100. );
 }
 
 // -----------------------------------------------------------------------------

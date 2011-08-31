@@ -20,7 +20,6 @@
 #include "preparation/TeamKarmas.h"
 #include "preparation/IntelligenceKarmas.h"
 #include "preparation/LogisticLevel.h"
-#include "clients_gui/DecimalSpinBox.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/ValueEditor.h"
@@ -318,21 +317,24 @@ void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 
 namespace
 {
-    class BoundedFloatEditor : public gui::DecimalSpinBox
+    class BoundedFloatEditor : public QDoubleSpinBox
                              , public kernel::ValueEditor< EntityAffinity >
     {
     public:
         explicit BoundedFloatEditor( QWidget* parent, float value = 0.f, unsigned short precision = 2, float min = 0.f, float max = 10.f, float gap = 0.1f )
-            : gui::DecimalSpinBox( parent, value, precision, min, max, gap )
+            : QDoubleSpinBox( parent )
             , factor_( std::pow( 10.f, precision ) )
         {
-            // NOTHING
+            setRange( min, max );
+            setSingleStep( gap );
+            setDecimals( precision );
+            setValue( value );
         }
         virtual ~BoundedFloatEditor() {}
 
         virtual EntityAffinity GetValue()
         {
-            return value() / factor_;
+            return static_cast< float >( value() ) / factor_;
         }
         const float factor_;
     };

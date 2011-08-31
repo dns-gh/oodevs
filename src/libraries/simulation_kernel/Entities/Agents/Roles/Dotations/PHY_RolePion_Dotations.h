@@ -90,6 +90,7 @@ public:
     void   ResupplyDotations();
     void   ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
     void   ResupplyDotations( const PHY_DotationType&      type             , double rFactor );
+    void   ChangeDotation   ( const PHY_DotationCategory& category, unsigned int number, float threshold );
     //@}
 
     //! @name Consumption management

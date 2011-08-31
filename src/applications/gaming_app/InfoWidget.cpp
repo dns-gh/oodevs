@@ -25,7 +25,8 @@
 // Name: InfoWidget constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory )
+InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
+                        gui::ItemFactory_ABC& itemFactory, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
     : Q3HBox( parent, "InfoWidget" )
 {
     layout()->setSpacing( 10 );
@@ -39,7 +40,7 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
     box->layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
     new InfoSummariesWidget( box, controllers );
     new InfoStancesWidget( box, controllers );
-    new InfoButtonsWidget( this, controllers, itemFactory );
+    new InfoButtonsWidget( this, controllers, itemFactory, staticModel, actionsModel, simulation, profile );
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );

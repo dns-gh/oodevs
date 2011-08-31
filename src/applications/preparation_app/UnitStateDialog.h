@@ -51,6 +51,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 
 private slots:

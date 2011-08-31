@@ -22,9 +22,11 @@ namespace gui
 */
 // Created: ABR 2011-07-20
 // =============================================================================
-class ComboTableItem : public Q3TableItem
+class ComboTableItem : public QObject
+                     , public Q3TableItem
                      , private boost::noncopyable
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -48,12 +50,17 @@ public:
     const QStringList& GetTexts() const;
     //@}
 
+private slots:
+    //! @name Member data
+    //@{
+    void OnComboIndexChanged( int index );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    const QStringList& contents_;
-    int                currentIndex_;
-    mutable QComboBox* currentCombo_;
+    QStringList contents_;
+    int         currentIndex_;
     //@}
 };
 

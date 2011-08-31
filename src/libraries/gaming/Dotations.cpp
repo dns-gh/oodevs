@@ -60,7 +60,7 @@ void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 void Dotations::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( ! message.has_resource_dotations()   )
+    if( !message.has_resource_dotations() )
         return;
 
     uint nSize = message.resource_dotations().elem_size();
@@ -73,6 +73,7 @@ void Dotations::DoUpdate( const sword::UnitAttributes& message )
             previous = *dotation;
         Dotation current( previous );
         current.quantity_ = value.quantity();
+        current.thresholdPercentage_ = value.threshold();
         differences.push_back( current - previous );
     }
     Update( differences );
@@ -91,7 +92,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
         {
             dotation = new Dotation( *it );
             Register( it->type_->GetId(), *dotation );
-            dictionary_.Register( *this, tools::translate( "Dotations", "Resources" ) + "/" + it->type_->GetName().c_str(), ((const Dotation&)*dotation).quantity_ ); // $$$$ AGE 2006-06-22:
+            dictionary_.Register( *this, tools::translate( "Dotations", "Resources" ) + "/" + it->type_->GetName().c_str(), ( ( const Dotation& ) *dotation ).quantity_ ); // $$$$ AGE 2006-06-22:
         }
         else
             *dotation = *dotation + *it;

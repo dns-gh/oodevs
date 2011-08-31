@@ -12,11 +12,17 @@
 
 #include "tools/SelectionObserver_ABC.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace gui
@@ -24,6 +30,8 @@ namespace gui
     class EntitySymbols;
     class ItemFactory_ABC;
 }
+
+class StaticModel;
 
 // =============================================================================
 /** @class  InfoDock
@@ -38,7 +46,8 @@ class InfoDock : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory );
+             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
+                       gui::ItemFactory_ABC& itemFactory, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
     virtual ~InfoDock();
     //@}
 

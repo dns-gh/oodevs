@@ -23,6 +23,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, const char* name /*= 0*/ )
     : UnitStateTable_ABC( 0, 7, parent, name )
+    , currentRow_( 0 )
 {
     tr( "" ); // $$$$ ABR 2011-08-11: HACK: neccessaire sinon le premier appel a tr n'est pas traduit !??!?!?!?!?
     horizontalHeader()->setLabel( eRank,         tr( "Rank" ) );
@@ -43,10 +44,12 @@ UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, const char* name /*= 0*
     setRowReadOnly( eHumanRank_Officier, true );
     setRowReadOnly( eHumanRank_SousOfficer, true );
     setRowReadOnly( eHumanRank_Mdr, true );
+    setColumnReadOnly( eLocation, true );
 
     Populate( eNbrHumanRank, humanRanks_ );
     Populate( eNbrHumanState, humanStates_ );
     Populate( eNbrInjuriesSeriousness, injuriesSeriousness_ );
+    Populate( eNbrHumanLocation, humanLocations_ );
 
     connect( this, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), SLOT( OnRequestContextMenu( int, int, const QPoint& ) ) );
     connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
@@ -67,7 +70,7 @@ UnitStateTableCrew::~UnitStateTableCrew()
 // -----------------------------------------------------------------------------
 void UnitStateTableCrew::paintCell( QPainter * p, int row, int col, const QRect & cr, bool selected, const QColorGroup & cg )
 {
-    if( row < eNbrHumanRank /*|| !item( row, col )->isEnabled()*/ )
+    if( row < eNbrHumanRank )
     {
         QColor backgroundColor;
         backgroundColor.setRgb( 200, 200, 200 );
@@ -79,6 +82,20 @@ void UnitStateTableCrew::paintCell( QPainter * p, int row, int col, const QRect 
     {
         Q3Table::paintCell( p, row, col, cr, selected, cg );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableCrew::Purge
+// Created: ABR 2011-08-12
+// -----------------------------------------------------------------------------
+void UnitStateTableCrew::Purge()
+{
+    for( int rank = 0; rank < eNbrHumanRank; ++rank )
+    {
+        nbrOfficersTotal_[ static_cast< E_HumanRank >( rank ) ] = 0;
+        nbrOfficersHealthy_[ static_cast< E_HumanRank >( rank ) ] = 0;
+    }
+    UnitStateTable_ABC::Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +115,12 @@ void UnitStateTableCrew::OnClearItems()
 // -----------------------------------------------------------------------------
 void UnitStateTableCrew::OnRemoveItem()
 {
-    removeRow( currentRow() );
-    ComputeAllValues();
+    if( currentRow_ >= eNbrHumanRank && currentRow_ <= numRows() )
+    {
+        removeRow( currentRow_ );
+        ComputeAllValues();
+        currentRow_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +131,7 @@ void UnitStateTableCrew::OnRequestContextMenu( int row, int /*col*/, const QPoin
 {
     if( isReadOnly() )
         return;
+    currentRow_ = row;
     Q3PopupMenu popupMenu;
     popupMenu.insertItem( tr( "Add" ), this, SLOT( AddLine() ) );
     if( numRows() > eNbrHumanRank )
@@ -146,7 +168,17 @@ void UnitStateTableCrew::OnValueChanged( int row, int col )
     else if( col == eNumber )
         ComputeValues( GetComboValue< E_HumanRank >( row, eRank ) );
     else if( col == eState )
-        static_cast< ComboTableItem* >( item( row, eInjuries ) )->setEnabled( GetComboValue< E_HumanState >( row, eState ) == eHumanState_Injured );
+    {
+        E_HumanState state = GetComboValue< E_HumanState >( row, eState );
+        static_cast< ComboTableItem* >( item( row, eInjuries ) )->setEnabled( state == eHumanState_Injured );
+        static_cast< Q3CheckTableItem* >( item( row, ePsy ) )->setEnabled( state != eHumanState_Dead );
+        static_cast< Q3CheckTableItem* >( item( row, eContaminated ) )->setEnabled( state != eHumanState_Dead );
+        if( state == eHumanState_Dead )
+        {
+            static_cast< Q3CheckTableItem* >( item( row, ePsy ) )->setChecked( false );
+            static_cast< Q3CheckTableItem* >( item( row, eContaminated ) )->setChecked( false );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -172,13 +204,13 @@ void UnitStateTableCrew::ComputeValues( E_HumanRank rank )
         if( rank == GetComboValue< E_HumanRank >( row, eRank ) )
             others += item( row, eNumber )->text().toUInt();
     // Update left officers count
-    nbrOfficersLeft_[ rank ] = nbrOfficers_[ rank ] - others;
+    nbrOfficersHealthy_[ rank ] = nbrOfficersTotal_[ rank ] - others;
     // Update max value for each spinbox
     for( int row = eNbrHumanRank; row < numRows(); ++row )
         if( rank == GetComboValue< E_HumanRank >( row, eRank ) )
-            static_cast< gui::SpinTableItem< int >* >( item( row, eNumber ) )->SetMinMaxValue( 0, nbrOfficersLeft_[ rank ] + item( row, eNumber )->text().toUInt() );
+            static_cast< gui::SpinTableItem< int >* >( item( row, eNumber ) )->SetMinMaxValue( 0, nbrOfficersHealthy_[ rank ] + item( row, eNumber )->text().toUInt() );
     // Update first line left value
-    item( rank, eNumber )->setText( QString::number( nbrOfficersLeft_[ rank ] ) );
+    item( rank, eNumber )->setText( QString::number( nbrOfficersHealthy_[ rank ] ) );
     updateCell( rank, eNumber );
 }
 
@@ -200,47 +232,39 @@ void UnitStateTableCrew::AddLine( int number /*= 0*/,
     AddCombo< E_HumanState >( nRow, eState, state, humanStates_, nRow >= eNbrHumanRank );
     AddCombo< E_InjuriesSeriousness >( nRow, eInjuries, seriousness, injuriesSeriousness_, nRow >= eNbrHumanRank );
     if( !isColumnHidden( eLocation ) )
-        setText( nRow, eLocation, tools::ToString( location ) );
-    OnValueChanged( nRow, eState );
+        AddCombo< E_HumanLocation>( nRow, eLocation, location, humanLocations_, nRow >= eNbrHumanRank );
     setItem( nRow, ePsy, new Q3CheckTableItem( this, "" ) );
     static_cast< Q3CheckTableItem* >( item( nRow, ePsy ) )->setChecked( psy );
     setItem( nRow, eContaminated, new Q3CheckTableItem( this, "" ) );
     static_cast< Q3CheckTableItem* >( item( nRow, eContaminated ) )->setChecked( contaminated );
-    setItem( nRow, eNumber, new gui::SpinTableItem< int >( this, 0, nbrOfficers_[ rank ] ) );
+    setItem( nRow, eNumber, new gui::SpinTableItem< int >( this, 0, nbrOfficersTotal_[ rank ] ) );
     item( nRow, eNumber )->setText( QString::number( number ) );
+    OnValueChanged( nRow, eState );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitStateTableCrew::MergeLine
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
-void UnitStateTableCrew::MergeLine( E_HumanRank rank, E_HumanState state, E_InjuriesSeriousness seriousness, bool psy, bool contaminated, int number, E_HumanLocation location /*= eHumanLocation_Battlefield*/ )
+void UnitStateTableCrew::MergeLine( E_HumanRank rank, E_HumanState state, E_InjuriesSeriousness seriousness, bool psyop, bool contaminated, int number, E_HumanLocation location /*= eHumanLocation_Battlefield*/ )
 {
-    bool founded = false;
-    for( int row = 0; row < numRows() && !founded; ++row )
+    nbrOfficersTotal_[ rank ] += number;
+    if( state == eHumanState_Healthy && location == eHumanLocation_Battlefield && !contaminated && !psyop && seriousness == eInjuriesSeriousness_U1 )
+        nbrOfficersHealthy_[ rank ] += number;
+    int row = 0;
+    for( ; row < numRows(); ++row )
     {
-        E_HumanRank rank2 = GetComboValue< E_HumanRank >( row, eRank );
-        E_HumanState state2 = GetComboValue< E_HumanState >( row, eState );
-        E_InjuriesSeriousness seriousness2 = GetComboValue< E_InjuriesSeriousness >( row, eInjuries );
-        bool psy2 = GetCheckboxValue( row, ePsy);
-        bool contaminated2 = GetCheckboxValue( row, eContaminated );
-        if( rank2 == rank && state2 == state && psy2 == psy && contaminated2 == contaminated && seriousness2 == seriousness )
+        if( rank         == GetComboValue< E_HumanRank >( row, eRank ) &&
+            state        == GetComboValue< E_HumanState >( row, eState ) &&
+            ( isColumnHidden( eLocation ) || location == GetComboValue< E_HumanLocation >( row, eLocation ) ) &&
+            psyop        == GetCheckboxValue( row, ePsy) &&
+            contaminated == GetCheckboxValue( row, eContaminated ) &&
+            ( state != eHumanState_Injured || seriousness == GetComboValue< E_InjuriesSeriousness >( row, eInjuries ) ) )
         {
             setText( row, eNumber, QString::number( item( row, eNumber )->text().toUInt() + number ) );
-            founded = true;
-            if( state == eHumanState_Healthy && location == eHumanLocation_Battlefield && !contaminated && !psy && seriousness == eInjuriesSeriousness_U1 )
-                nbrOfficersLeft_[ rank ] += number;
+            break;
         }
     }
-    if( !founded )
-    {
-        if( numRows() < eNbrHumanRank )
-        {
-            nbrOfficersLeft_[ rank ] = number;
-            nbrOfficers_[ rank ] = number;
-        }
-        else
-            nbrOfficers_[ rank ] += number;
-        AddLine( number, rank, state, seriousness, psy, contaminated );
-    }
+    if( row >= numRows() )
+        AddLine( number, rank, state, seriousness, psyop, contaminated, location );
 }

@@ -302,7 +302,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     new ClientCommandFacade( this, controllers_, publisher );
 
     // Info
-    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
+    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
     addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
 
     // Clock

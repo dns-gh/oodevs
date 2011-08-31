@@ -7,8 +7,11 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ComboTableItem */
+
 #include "clients_gui_pch.h"
 #include "ComboTableItem.h"
+#include "moc_ComboTableItem.cpp"
 
 using namespace gui;
 
@@ -17,11 +20,14 @@ using namespace gui;
 // Created: ABR 2011-07-20
 // -----------------------------------------------------------------------------
 ComboTableItem::ComboTableItem( Q3Table* parent, const QStringList& content, Q3TableItem::EditType editType, int currentIndex /*= 0*/ )
-    : Q3TableItem( parent, editType )
-    , contents_    ( content )
+    : QObject( parent )
+    , Q3TableItem( parent, editType )
     , currentIndex_( currentIndex )
-    , currentCombo_( 0 )
 {
+    if( content.size() > 1 )
+        contents_ = content;
+    else
+        contents_ << tr( "Unavailable" );
     setText( CurrentText() );
 }
 
@@ -41,10 +47,10 @@ ComboTableItem::~ComboTableItem()
 QWidget* ComboTableItem::createEditor() const
 {
     QComboBox* combo = new QComboBox( table()->viewport() );
-    QObject::connect( combo, SIGNAL( activated( int ) ), table(), SLOT( doValueChanged() ) );
-    combo->insertStringList( contents_ );
-    combo->setCurrentItem( currentIndex_ );
-    currentCombo_ = combo;
+    connect( combo, SIGNAL( currentIndexChanged( int ) ), SLOT( OnComboIndexChanged( int ) ) );
+    connect( combo, SIGNAL( currentIndexChanged( int ) ), table(), SLOT( doValueChanged() ) );
+    combo->addItems( contents_ );
+    combo->setCurrentIndex( currentIndex_ );
     return combo;
 }
 
@@ -54,11 +60,10 @@ QWidget* ComboTableItem::createEditor() const
 // -----------------------------------------------------------------------------
 void ComboTableItem::setContentFromEditor( QWidget* widget )
 {
-    currentCombo_ = 0;
     if( widget->inherits( "QComboBox" ) )
     {
         QComboBox* combo = static_cast< QComboBox* >( widget );
-        currentIndex_ = combo->currentItem();
+        currentIndex_ = combo->currentIndex();
         if( currentIndex_ == -1 )
             currentIndex_ = 0;
         setText( CurrentText() );
@@ -73,8 +78,6 @@ void ComboTableItem::setContentFromEditor( QWidget* widget )
 // -----------------------------------------------------------------------------
 int ComboTableItem::CurrentItem() const
 {
-    if( currentCombo_ )
-        return currentCombo_->currentItem();
     return currentIndex_;
 }
 
@@ -96,8 +99,6 @@ void ComboTableItem::SetCurrentItem( int index )
 QString ComboTableItem::CurrentText() const
 {
     assert( currentIndex_ >= 0 && currentIndex_ < contents_.size() );
-    if( currentCombo_ )
-        return currentCombo_->currentText();
     return contents_[ currentIndex_ ];
 }
 
@@ -120,4 +121,13 @@ void ComboTableItem::SetCurrentText( const QString& text )
 const QStringList& ComboTableItem::GetTexts() const
 {
     return contents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComboTableItem::OnComboIndexChanged
+// Created: ABR 2011-08-31
+// -----------------------------------------------------------------------------
+void ComboTableItem::OnComboIndexChanged( int index )
+{
+    currentIndex_ = index;
 }
