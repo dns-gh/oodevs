@@ -49,6 +49,7 @@ void ObstaclePrototype::Commit()
         ObstacleAttribute* attribute = new ObstacleAttribute( dico, types_->GetValue() );
         attribute->Activate( activation_->isChecked() );
         attribute->SetActivationTime( GetActivationTime() );
+        attribute->SetDuration( GetDuration() );
         creation_->Attach( *attribute );
     }
 }

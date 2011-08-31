@@ -67,6 +67,7 @@ protected:
     //@{
     bool IsActivated() const;
     int GetActivationTime() const;
+    int GetDuration() const;
     //@}
 
 protected:
@@ -75,6 +76,7 @@ protected:
     ValuedComboBox< E_DemolitionTargetType >* types_;
     LoadableCheckBox*                         activation_;
     LoadableTimeEdit*                         activationTime_;
+    LoadableTimeEdit*                         duration_;
     //@}
 };
 

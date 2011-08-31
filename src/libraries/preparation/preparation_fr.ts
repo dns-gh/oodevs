@@ -616,6 +616,14 @@
         <source>Max:</source>
         <translation>Max :</translation>
     </message>
+    <message>
+        <source>Duration:</source>
+        <translation>Durée :</translation>
+    </message>
+    <message>
+        <source>Info/Demolition target parameters/Duration</source>
+        <translation>Info/Attributs de destruction/Durée</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
