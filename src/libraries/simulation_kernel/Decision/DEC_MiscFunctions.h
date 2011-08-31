@@ -72,6 +72,7 @@ public:
     // Reinforcement
     static std::vector<DEC_Decision_ABC*> GetAgentReinforcements( const DEC_Decision_ABC* pAgent );
     static std::vector<DEC_Decision_ABC*> GetReinforcements  ( const MIL_AgentPion& callerAgent );
+    static int                            GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAgent );
     static bool Reinforce          ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget );
     static void CancelReinforcement( MIL_AgentPion& callerAgent );
 

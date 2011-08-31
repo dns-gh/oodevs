@@ -84,37 +84,25 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain.Register( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
     brain.Register( "DEC_Pion_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
     brain.Register( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
-    brain[ "DEC_Automate_PionsDeAutomateSansPC" ] =
-        boost::function< std::vector< DEC_Decision_ABC* >( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC, _1 ) );
-    brain[ "DEC_Automate_PionsDeAutomateAvecPC" ] =
-        boost::function< std::vector< DEC_Decision_ABC* >( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetAutomatPionsWithPC, _1 ) );
+    brain[ "DEC_Automate_PionsDeAutomateSansPC" ] = &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC;
+    brain[ "DEC_Automate_PionsDeAutomateAvecPC" ] = &DEC_AutomateFunctions::GetAutomatPionsWithPC;
     brain.Register( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
     brain[ "DEC_Connaissances_UnitesPrenantAPartieUnAmi" ] = &DEC_KnowledgeFunctions::GetEnemiesAttacking;
     brain[ "DEC_Connaissances_UniteLaPlusProcheDunAmi" ] = &DEC_KnowledgeFunctions::GetNearestToFriend;
     brain[ "DEC_Connaissances_UnitesEnnemiesDansZone" ] = &DEC_KnowledgeFunctions::GetEnemyAgentsInZone;
     
-    brain[ "DEC_Agent_Renforts" ] =
-        boost::function< std::vector<DEC_Decision_ABC*> ( DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::GetAgentReinforcements, _1 ) );
-    brain[ "DEC_Pion_PionPCDeAutomate" ] =
-        boost::function< DEC_Decision_ABC*( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::GetPionPCOfAutomate, _1 ) );
-    brain[ "DEC_Pion_PionsDeAutomateSansPC" ] =
-        boost::function< std::vector< DEC_Decision_ABC* >( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::GetPionsWithoutPCOfAutomate, _1 ) );
-    brain[ "DEC_GetAutomate" ] =
-        boost::function< DEC_Decision_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::GetAutomate, _1 ) );
-    brain[ "DEC_Pion_ChangeAutomate" ] =
-        boost::function< bool( DEC_Decision_ABC*, const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::PionChangeAutomate, _1, _2 ) );
-    brain[ "DEC_Automate_PionPosition" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionPosition, _1 ) );
-    brain[ "DEC_Automate_PerceptionPourPion" ] =
-        boost::function< double ( DEC_Decision_ABC*, boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_AutomateFunctions::GetPerceptionForPion, _1, _2, _3 ) );
-    brain[ "DEC_Automate_CalculerPositionParRapportALimaPourPion" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( int, float, const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::ComputePointBeforeLimaForPion, _1, _2, _3 ) );
-    brain[ "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite" ] =
-        boost::function< float( const DEC_Decision_ABC*, float ) >( boost::bind( &DEC_AutomateFunctions::PionTimeToMoveDistance, _1, _2 ) );
-    brain[ "DEC_GetRawMission" ] =
-        boost::function< boost::shared_ptr< MIL_Mission_ABC >( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetMission, _1 ) );
-    brain[ "DEC_SetMission" ] =
-        boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AutomateFunctions::SetMission, _1, _2 ) );
+    brain[ "DEC_Agent_Renforts" ] = &DEC_MiscFunctions::GetAgentReinforcements;
+    brain[ "DEC_Agent_NombreRenforts" ] = &DEC_MiscFunctions::GetAgentReinforcementsNumber;
+    brain[ "DEC_Pion_PionPCDeAutomate" ] = &DEC_AgentFunctions::GetPionPCOfAutomate;
+    brain[ "DEC_Pion_PionsDeAutomateSansPC" ] = &DEC_AgentFunctions::GetPionsWithoutPCOfAutomate;
+    brain[ "DEC_GetAutomate" ] = &DEC_MiscFunctions::GetAutomate;
+    brain[ "DEC_Pion_ChangeAutomate" ] = &DEC_AutomateFunctions::PionChangeAutomate;
+    brain[ "DEC_Automate_PionPosition" ] = &DEC_AutomateFunctions::GetPionPosition;
+    brain[ "DEC_Automate_PerceptionPourPion" ] = &DEC_AutomateFunctions::GetPerceptionForPion;
+    brain[ "DEC_Automate_CalculerPositionParRapportALimaPourPion" ] = &DEC_AutomateFunctions::ComputePointBeforeLimaForPion;
+    brain[ "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite" ] = &DEC_AutomateFunctions::PionTimeToMoveDistance;
+    brain[ "DEC_GetRawMission" ] = &DEC_AutomateFunctions::GetMission;
+    brain[ "DEC_SetMission" ] = &DEC_AutomateFunctions::SetMission;
     brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
     brain[ "DEC_Pion_GetMilPionType" ] = &DEC_AgentFunctions::GetMilPionType;
     brain[ "DEC_Agent_EstImmobilise" ] = &DEC_AgentFunctions::IsImmobilized;
@@ -127,16 +115,12 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
 void RegisterPopulationFunctions( directia::brain::Brain& brain )
 {
     // Population
-    brain[ "DEC_Agent_CanaliserPopulation" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ChannelPopulations, _1 ) );
+    brain[ "DEC_Agent_CanaliserPopulation" ] = &DEC_AgentFunctions::ChannelPopulations;
 
     // Inhabitants => je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
-    brain[ "DEC_Agent_Alert" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::AlertInhabitants, _1 ) );
-    brain[ "DEC_Agent_IsAlerted" ] =
-        boost::function< bool( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IsInhabitantsAlerted, _1 ) );
-    brain[ "DEC_Agent_Confine" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ConfineInhabitants, _1 ) );
+    brain[ "DEC_Agent_Alert" ] = &DEC_AgentFunctions::AlertInhabitants;
+    brain[ "DEC_Agent_IsAlerted" ] = &DEC_AgentFunctions::IsInhabitantsAlerted;
+    brain[ "DEC_Agent_Confine" ] = &DEC_AgentFunctions::ConfineInhabitants;
 }
 
 // -----------------------------------------------------------------------------
@@ -248,18 +232,13 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
 // -----------------------------------------------------------------------------
 void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
 {
-    brain[ "DEC_ConnaissanceUrbanBlock_Barycentre" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentBarycenter, _1 ) );
-    brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( UrbanObjectWrapper* ) >
-       ( boost::bind( &DEC_UrbanObjectFunctions::GetBoundingBox, _1 ) );
+    brain[ "DEC_ConnaissanceUrbanBlock_Barycentre" ] = &DEC_UrbanObjectFunctions::GetCurrentBarycenter;
+    brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = &DEC_UrbanObjectFunctions::GetBoundingBox;
     brain[ "DEC_NiveauDeProtectionMaterielComposantes" ] = &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel;
-    brain[ "DEC_PolygoneBlocUrbain" ] =
-        boost::function< boost::shared_ptr< TER_Localisation >( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock, _1 ) );
+    brain[ "DEC_PolygoneBlocUrbain" ] = &DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock;
     brain[ "DEC_BlocUrbain_Type" ] = &DEC_UrbanObjectFunctions::GetType;
-    brain[ "DEC_EtatBlocUrbain" ] =
-        boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetStateUrbanBlock, _1 ) );
-    brain[ "DEC_IsPointInUrbanBlock" ] =
-        boost::function< bool( MT_Vector2D&, UrbanObjectWrapper* ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlock, _1, _2 ) );
+    brain[ "DEC_EtatBlocUrbain" ] = &DEC_UrbanObjectFunctions::GetStateUrbanBlock;
+    brain[ "DEC_IsPointInUrbanBlock" ] = &DEC_GeometryFunctions::IsPointInUrbanBlock;
 }
 
 // -----------------------------------------------------------------------------
@@ -371,8 +350,7 @@ void RegisterEngineerObjectsFunctions( directia::brain::Brain& brain )
 void RegisterObjectsFunctions( directia::brain::Brain& brain )
 {
     brain[ "S_TypeObject_ToString" ] = &DEC_ObjectFunctions::ConvertTypeObjectToString;
-    brain[ "DEC_ConnaissanceObjet_PeutEtreValorise" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::CanBeValorized, _1 ) );
+    brain[ "DEC_ConnaissanceObjet_PeutEtreValorise" ] = &DEC_KnowledgeObjectFunctions::CanBeValorized;
     brain[ "DEC_ConnaissanceObjet_EstUneIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit;
     brain[ "DEC_ConnaissanceObjet_ActiverIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::ActivateUndergroundNetworkExit;
     brain[ "DEC_ConnaissanceObjet_DesactiverIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::DeactivateUndergroundNetworkExit;

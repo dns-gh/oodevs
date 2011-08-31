@@ -79,6 +79,17 @@ std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const MIL_A
     return result;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetAgentReinforcementsNumber
+// Created: LDC 2011-08-30
+// -----------------------------------------------------------------------------
+int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAgent )
+{
+    const MIL_AgentPion& pion = pAgent->GetPion();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    return reinforcements.size();
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_ABC::Reinforce
 // Created: NLD 2003-03-12

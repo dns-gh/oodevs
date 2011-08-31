@@ -82,10 +82,12 @@ void MIL_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
     T_Capacities capacities;
     file >> capacities;
-    std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
+    for( T_Capacities::const_iterator it = capacities.begin(); it != capacities.end(); ++it )
+        (*it)->Register( *this );
     T_Attributes attributes;
     file >> attributes;
-    std::for_each( attributes.begin(), attributes.end(), boost::bind( &ObjectAttribute_ABC::Register, _1, boost::ref( *this ) ) );
+    for( T_Attributes::const_iterator it = attributes.begin(); it != attributes.end(); ++it )
+        (*it)->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +108,8 @@ void MIL_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) cons
 void MIL_Object::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "attributes" );
-        std::for_each( attributes_.begin(), attributes_.end(), boost::bind( &ObjectAttribute_ABC::WriteODB, _1, boost::ref( xos ) ) );
+    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
+        (*it)->WriteODB( xos );
     xos << xml::end;
 }
 
@@ -152,8 +155,8 @@ void MIL_Object::Register( ObjectCapacity_ABC* capacity )
 // -----------------------------------------------------------------------------
 void MIL_Object::Instanciate( MIL_Object_ABC& object ) const
 {
-    std::for_each( capacities_.begin(), capacities_.end(),
-        boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
+    for( T_Capacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        (*it)->Instanciate( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +165,8 @@ void MIL_Object::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void MIL_Object::Finalize()
 {
-    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Finalize, _1, boost::ref( *this ) ) );
+    for( T_Capacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        (*it)->Finalize( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,8 +187,8 @@ bool MIL_Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 void MIL_Object::PreprocessAgent( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(),
-                   boost::bind( &MIL_InteractiveContainer_ABC::PreprocessAgent, _1, boost::ref( *this ), boost::ref( agent ) ) );
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+        (*it)->PreprocessAgent( *this, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,8 +197,8 @@ void MIL_Object::PreprocessAgent( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(),
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentEntering, _1, boost::ref( *this ), boost::ref( agent ) ) );
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+        (*it)->ProcessAgentEntering( *this, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,8 +207,8 @@ void MIL_Object::ProcessAgentEntering( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(),
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentExiting, _1, boost::ref( *this ), boost::ref( agent ) ) );
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+        (*it)->ProcessAgentExiting( *this, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,8 +217,8 @@ void MIL_Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(),
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+        (*it)->ProcessAgentMovingInside( *this, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,8 +227,8 @@ void MIL_Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(),
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+        (*it)->ProcessAgentInside( *this, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,8 +237,8 @@ void MIL_Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::PreprocessPopulation( MIL_PopulationElement_ABC& population )
 {
-    std::for_each( interactives_.begin(), interactives_.end(),
-                   boost::bind( &MIL_InteractiveContainer_ABC::PreprocessPopulation, _1, boost::ref( *this ), boost::ref( population ) ) );
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+        (*it)->PreprocessPopulation( *this, population );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,8 +247,8 @@ void MIL_Object::PreprocessPopulation( MIL_PopulationElement_ABC& population )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
 {
-    std::for_each( interactives_.begin(), interactives_.end(),
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessPopulationInside, _1, boost::ref( *this ), boost::ref( population ) ) );
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+        (*it)->ProcessPopulationInside( *this, population );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,8 +257,8 @@ void MIL_Object::ProcessPopulationInside( MIL_PopulationElement_ABC& population 
 // -----------------------------------------------------------------------------
 void MIL_Object::ApplyStructuralState( float structuralState ) const
 {
-    std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(),
-                   boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyStructuralStateChanged, _1, structuralState, boost::cref( *this ) ) );
+    for( T_StructuralStateNotifiers::const_iterator it = structuralStateNotifiers_.begin(); it != structuralStateNotifiers_.end(); ++it )
+        (*it)->NotifyStructuralStateChanged( structuralState, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +270,7 @@ void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, co
     if( StructuralCapacity* capacity = tools::Extendable< ObjectCapacity_ABC >::Retrieve< StructuralCapacity >() )
         capacity->ApplyIndirectFire( *this, attritionSurface, dotation, &army );
     if( GetLocalisation().IsInside( attritionSurface.ComputeBarycenter() ) )
-        std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
+        ApplyDirectFire();
 }
 
 // -----------------------------------------------------------------------------
@@ -278,7 +282,7 @@ void MIL_Object::ApplyDestruction( const TER_Localisation& attritionSurface, con
     if( StructuralCapacity* capacity = tools::Extendable< ObjectCapacity_ABC >::Retrieve< StructuralCapacity >() )
         capacity->ApplyDestruction( *this, attritionSurface, attrition );
     if( GetLocalisation().IsInside( attritionSurface.ComputeBarycenter() ) )
-        std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
+        ApplyDirectFire();
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +291,8 @@ void MIL_Object::ApplyDestruction( const TER_Localisation& attritionSurface, con
 // -----------------------------------------------------------------------------
 void MIL_Object::ApplyDirectFire() const
 {
-    std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
+    for( T_StructuralStateNotifiers::const_iterator it = structuralStateNotifiers_.begin(); it != structuralStateNotifiers_.end(); ++it )
+        (*it)->NotifyFired();
 }
 
 // -----------------------------------------------------------------------------
@@ -308,8 +313,9 @@ void MIL_Object::SendFullState() const
     client::ObjectUpdate asn;
     asn().mutable_object()->set_id( GetID() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );
+    ::sword::ObjectAttributes* attributes = asn().mutable_attributes();
+    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
+        (*it)->SendFullState( *attributes );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -376,11 +382,11 @@ void MIL_Object::UpdateState()
 {
     client::ObjectUpdate asn;
     asn().mutable_object()->set_id( GetID() );
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( *asn().mutable_attributes() ) ) );
+    sword::ObjectAttributes& attr = *asn().mutable_attributes();
+    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
+        (*it)->SendUpdate( attr );
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    sword::ObjectAttributes& attr = *asn().mutable_attributes();
     if( asn().has_location() || attr.has_construction() || attr.has_obstacle() || attr.has_mine()
         || attr.has_activity_time() || attr.has_bypass() || attr.has_logistic() || attr.has_nbc()
         || attr.has_crossing_site() || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
@@ -397,7 +403,8 @@ void MIL_Object::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Object::Update( unsigned int time )
 {
-    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Update, _1, boost::ref( *this ), time ) );
+    for( T_Capacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        (*it)->Update( *this, time );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,8 +442,8 @@ void MIL_Object::UpdateLocalisation( const TER_Localisation& location )
 boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_Army_ABC& team )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( team, *this ) );
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::Instanciate, _1, boost::ref( *pKnowledge ) ) );
+    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
+        (*it)->Instanciate( *pKnowledge );
     return pKnowledge;
 }
 
@@ -447,7 +454,7 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL
 boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_KnowledgeGroup& group )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( group, *this ) );
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::Instanciate, _1, boost::ref( *pKnowledge ) ) );
+    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
+        (*it)->Instanciate( *pKnowledge );
     return pKnowledge;
 }
