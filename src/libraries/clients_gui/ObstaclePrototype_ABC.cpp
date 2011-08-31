@@ -54,21 +54,21 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         activationTime_ = new LoadableTimeEdit( activationBox );
         activationLabel->hide();
         activationTime_->hide();
-        Q3HBox* durationBox = new Q3HBox( vbox );
-        QLabel* durationLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Duration:" ), durationBox );
-        duration_ = new LoadableTimeEdit( durationBox );
-        durationLabel->hide();
-        duration_->hide();
+        Q3HBox* activityBox = new Q3HBox( vbox );
+        QLabel* activityLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ), activityBox );
+        activityTime_ = new LoadableTimeEdit( activityBox );
+        activityLabel->hide();
+        activityTime_->hide();
 
         connect( this, SIGNAL( ToggleActivable( bool ) ), activationLabel, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), durationLabel, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), duration_, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setShown( bool ) ) );
 
         connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activationLabel, SLOT( setDisabled( bool ) ) );
         connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activationTime_, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), durationLabel, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), duration_, SLOT( setDisabled( bool ) ) );
+        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activityLabel, SLOT( setDisabled( bool ) ) );
+        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activityTime_, SLOT( setDisabled( bool ) ) );
     }
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }
@@ -137,14 +137,14 @@ int ObstaclePrototype_ABC::GetActivationTime() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstaclePrototype_ABC::GetDuration
+// Name: ObstaclePrototype_ABC::GetActivityTime
 // Created: LGY 2011-08-31
 // -----------------------------------------------------------------------------
-int ObstaclePrototype_ABC::GetDuration() const
+int ObstaclePrototype_ABC::GetActivityTime() const
 {
     if( IsActivated() )
         return 0;
-    QTime time = duration_->time();
+    QTime time = activityTime_->time();
     return 3600 * time.hour() + 60 * time.minute() + time.second();
 }
 
@@ -156,4 +156,5 @@ void ObstaclePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
     activation_->SetLoader( loader );
     activationTime_->SetLoader( loader );
+    activityTime_->SetLoader( loader );
 }

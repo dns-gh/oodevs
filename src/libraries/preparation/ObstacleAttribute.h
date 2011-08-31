@@ -56,7 +56,7 @@ public:
     //@{
     void Activate( bool activate );
     void SetActivationTime( int time );
-    void SetDuration( int time );
+    void SetActivityTime( int time );
     virtual bool IsReservedObstacle() const;
     virtual bool IsReservedObstacleActivated() const;
     //@}
@@ -80,7 +80,7 @@ private:
     Enum_DemolitionTargetType     type_;
     bool                          bActivated_;
     int                           activationTime_;
-    int                           duration_;
+    int                           activityTime_;
     //@}
 };
 

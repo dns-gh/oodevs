@@ -348,7 +348,7 @@
                 <xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
               </xs:complexType>
             </xs:element>
-            <xs:element name="duration" minOccurs="0">
+            <xs:element name="activity-time" minOccurs="0">
               <xs:complexType>
                 <xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
               </xs:complexType>

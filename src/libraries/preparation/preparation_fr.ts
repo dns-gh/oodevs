@@ -617,12 +617,8 @@
         <translation>Max :</translation>
     </message>
     <message>
-        <source>Duration:</source>
-        <translation>Durée :</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Duration</source>
-        <translation>Info/Attributs de destruction/Durée</translation>
+        <source>Info/Demolition target parameters/Activity time</source>
+        <translation>Info/Attributs de destruction/Durée d&apos;activité</translation>
     </message>
 </context>
 <context>

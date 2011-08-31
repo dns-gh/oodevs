@@ -25,7 +25,7 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary )
     , type_          ( eDemolitionTargetType_Preliminary )
     , bActivated_    ( true )
     , activationTime_( 0 )
-    , duration_      ( 0 )
+    , activityTime_  ( 0 )
 {
     CreateDictionary();
 }
@@ -39,7 +39,7 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, 
     , type_          ( type )
     , bActivated_    ( type_.GetValue() == eDemolitionTargetType_Preliminary )
     , activationTime_( 0 )
-    , duration_      ( 0 )
+    , activityTime_  ( 0 )
 {
     CreateDictionary();
 }
@@ -55,11 +55,11 @@ namespace
             >> xml::end;
         return result;
     }
-    int GetDuration( xml::xistream& xis )
+    int GetActivityTime( xml::xistream& xis )
     {
         int result = 0;
         xis >> xml::optional()
-            >> xml::start( "duration" )
+            >> xml::start( "activity-time" )
                 >> xml::attribute( "value", result )
             >> xml::end;
         return result;
@@ -75,7 +75,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDict
     , type_          ( xis.attribute< std::string >( "type", std::string() ) )
     , bActivated_    ( xis.attribute< bool >( "activated" ) )
     , activationTime_( GetActivationTime( xis ) )
-    , duration_      ( GetDuration( xis ) )
+    , activityTime_  ( GetActivityTime( xis ) )
 {
     CreateDictionary();
 }
@@ -101,7 +101,7 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
     if( !bActivated_ )
     {
         displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
-        displayer.Display( tools::translate( "Object", "Duration:" ), duration_ / 3600. * Units::hours );
+        displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ / 3600. * Units::hours );
     }
 }
 
@@ -117,7 +117,7 @@ void ObstacleAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
     if( !bActivated_ )
     {
         displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
-        displayer.Display( tools::translate( "Object", "Duration:" ), duration_ / 3600. * Units::hours );
+        displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ / 3600. * Units::hours );
     }
 }
 
@@ -135,8 +135,8 @@ void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( "activation-time" )
                 << xml::attribute( "value", activationTime_ )
             << xml::end
-            << xml::start( "duration" )
-                << xml::attribute( "value", duration_ )
+            << xml::start( "activity-time" )
+                << xml::attribute( "value", activityTime_ )
             << xml::end;
     }
     xos << xml::end;
@@ -153,7 +153,7 @@ void ObstacleAttribute::CreateDictionary()
     if( !bActivated_ )
     {
         dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activation time" ), activationTime_ );
-        dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Duration" ), duration_ );
+        dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activity time" ), activityTime_ );
     }
 }
 
@@ -169,7 +169,7 @@ void ObstacleAttribute::Activate( bool activate )
         if( bActivated_ )
         {
             dictionary_.Remove( tools::translate( "Object", "Info/Demolition target parameters/Activation time" ) );
-            dictionary_.Remove( tools::translate( "Object", "Info/Demolition target parameters/Duration" ) );
+            dictionary_.Remove( tools::translate( "Object", "Info/Demolition target parameters/Activity time" ) );
         }
     }
 }
@@ -184,12 +184,12 @@ void ObstacleAttribute::SetActivationTime( int time )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::SetDuration
+// Name: ObstacleAttribute::SetActivityTime
 // Created: LGY 2011-08-31
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SetDuration( int time )
+void ObstacleAttribute::SetActivityTime( int time )
 {
-    duration_ = time;
+    activityTime_ = time;
 }
 
 // -----------------------------------------------------------------------------

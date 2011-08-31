@@ -617,11 +617,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Duration:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Duration</source>
+        <source>Info/Demolition target parameters/Activity time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
