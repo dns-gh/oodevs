@@ -556,9 +556,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\ObjectsModel.cpp">
       <Filter>Source Files\Model\Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\gaming\ActivityTimeAttribute.cpp">
-      <Filter>Source Files\Model\Object\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClCompile>
@@ -807,6 +804,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TimeLimitedAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1257,9 +1257,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\ObjectsModel.h">
       <Filter>Source Files\Model\Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\gaming\ActivityTimeAttribute.h">
-      <Filter>Source Files\Model\Object\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.h">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClInclude>
@@ -1523,6 +1520,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.h">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TimeLimitedAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

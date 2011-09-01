@@ -101,6 +101,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Symbol.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TimeLimitedAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp" />
@@ -237,7 +238,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\ObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ObjectPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ObjectsModel.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\ActivityTimeAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\BurnAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\BurnSurfaceAttribute.cpp" />
@@ -324,6 +324,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Symbol.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TimeLimitedAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.h" />
     <ClInclude Include="..\..\src\libraries\gaming\VisionConesToggler.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h" />
@@ -472,7 +473,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\ObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ObjectPositions.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ObjectsModel.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\ActivityTimeAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\AltitudeModifierAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\BurnAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\BurnSurfaceAttribute.h" />

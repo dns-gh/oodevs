@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\TacticalHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\TimeLimitedAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Team.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\TeamFactory.cpp" />
@@ -208,7 +209,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\ObjectsModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ObjectHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ObjectPositions.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\ActivityTimeAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AltitudeModifierAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\BypassAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ConstructionAttribute.cpp" />
@@ -245,6 +245,7 @@
     <ClInclude Include="..\..\src\libraries\preparation\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Symbol.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TacticalHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\TimeLimitedAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Tools.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Types.h" />
@@ -359,7 +360,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\Overridable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ObjectHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ObjectPositions.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\ActivityTimeAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AltitudeModifierAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\BypassAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ConstructionAttribute.h" />
