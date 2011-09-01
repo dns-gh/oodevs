@@ -28,7 +28,7 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
 {
     setSelectionMode( Q3Table::SingleRow );
     setNumCols( 2 );
-    setFixedHeight( 64 );
+    setFixedHeight( 0 );
     setColumnReadOnly( 0, true );
     verticalHeader()->hide();
     setLeftMargin( 0 );
@@ -37,8 +37,8 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
     setHScrollBarMode( Q3ScrollView::AlwaysOff );
-    setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum);
-    setFrameStyle( MenuBarPanel );
+    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
+    setFrameStyle( QFrame::StyledPanel );
     setResizePolicy( Q3ScrollView::AutoOne );
 
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
@@ -61,9 +61,7 @@ QSize PropertiesTable::sizeHint() const
 {
     QSize original = Q3Table::sizeHint();
     if( numRows() > 0 )
-        // $$$$ SBO 2006-11-16: ahahah: not -4, not -6, -5!
-        // $$$$ SBO 2006-11-16: hack to get rid of this weird bug where table grows when elements are inserted after a showEvent()
-        return QSize( original.width() - 5, rowPos( numRows() - 1 ) + rowHeight( numRows() - 1 ) );
+        return QSize( original.width(), contentsHeight () + 4 );
     return QSize( original.width(), 0 );
 }
 
@@ -119,6 +117,8 @@ Displayer_ABC& PropertiesTable::SubItem( const QString& name )
         insertRows( row_ );
         rows_[name] = row_;
         setText( row_, 0, name );
+        setFixedHeight( contentsHeight () + 4 );
+        parentWidget()->adjustSize();
     }
     else
         row_ = it->second;

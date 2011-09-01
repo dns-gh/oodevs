@@ -64,17 +64,12 @@ namespace
     public:
         MyButton( QWidget* parent, const QPixmap& on, const QPixmap& off )
             : QToolButton( parent )
-            , on_( on )
-            , off_( off ) {};
-        virtual void drawButton( QPainter* p ) {
-            drawButtonLabel(p);
-        }
-        virtual void drawButtonLabel( QPainter* p ) {
-            p->drawPixmap( QRect( 2, 2, 9, 9 ), isOn() ? on_ : off_ );
-        }
-    private:
-        QPixmap on_;
-        QPixmap off_;
+        {   
+            QIcon pIcon;
+            pIcon.addPixmap( off, QIcon::Normal, QIcon::Off );
+            pIcon.addPixmap( on, QIcon::Normal, QIcon::On );
+            this->setIcon( pIcon );
+        };
     };
 }
 
@@ -105,6 +100,7 @@ void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
         button_->setFixedSize( 13, 15 );
         button_->setOn( true );
         button_->setPaletteBackgroundColor( background );
+        button_->setAutoFillBackground( true );
         QLabel* headerLabel = new QLabel( name, box );
         QFont font( headerLabel->font() );
         font.setBold( true );
@@ -112,11 +108,13 @@ void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
         headerLabel->setMaximumHeight( 15 );
         headerLabel->setPaletteBackgroundColor( background );
         headerLabel->setPaletteForegroundColor( foreground );
+        headerLabel->setAutoFillBackground( true );
         layout_->addMultiCellWidget( box, 0, 0, 0, 1 );
     }
     QWidget* spacer = new QWidget( this );
     spacer->setFixedWidth( 5 );
     spacer->setPaletteBackgroundColor( background );
+    spacer->setAutoFillBackground( true );
     layout_->addMultiCellWidget( spacer, 1, 100, 0, 0 );
 
     table_ = new PropertiesTable( this, factory_, displayer_ );
@@ -192,6 +190,7 @@ PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
     subWidgets_.push_back( subWidget );
     categories_[ subItem ] = subWidgets_.size() - 1;
     layout_->addWidget( subWidget, static_cast< int >( subWidgets_.size() + 1 ), 1 );
+    parentWidget()->adjustSize();
     subWidget->show();
     if( ! table_->numRows() )
         table_->hide();

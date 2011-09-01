@@ -71,7 +71,10 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
         selected_ = element;
         if( selected_ && isVisible() )
             if( kernel::PropertiesDictionary* dico = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
+            {
                 dico->Display( *table_ );
+                table_->adjustSize();
+            }
     }
     addChild( box_ );
 }
