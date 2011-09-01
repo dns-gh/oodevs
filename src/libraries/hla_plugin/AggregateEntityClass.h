@@ -29,6 +29,8 @@ namespace hla
     class AgentSubject_ABC;
     class Federate_ABC;
     class ClassBuilder_ABC;
+    class RemoteAggregateFactory_ABC;
+    class RemoteAgentListener_ABC;
 
 // =============================================================================
 /** @class  AggregateEntityClass
@@ -43,8 +45,15 @@ public:
     //! @name Constructors/Destructor
     //@{
              AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject,
-                                   const AggregateFactory_ABC& factory, const ClassBuilder_ABC& builder );
+                                   const AggregateFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
+                                   const ClassBuilder_ABC& builder );
     virtual ~AggregateEntityClass();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Register( RemoteAgentListener_ABC& listener );
+    void Unregister( RemoteAgentListener_ABC& listener );
     //@}
 
 private:
@@ -64,6 +73,8 @@ private:
     //! @name Types
     //@{
     typedef boost::shared_ptr< Aggregate_ABC > T_Entity;
+    typedef std::map< std::string, T_Entity > T_Entities;
+    typedef std::vector< RemoteAgentListener_ABC* > T_Listeners;
     //@}
 
 private:
@@ -72,8 +83,11 @@ private:
     unsigned short id_;
     AgentSubject_ABC& subject_;
     const AggregateFactory_ABC& factory_;
+    const RemoteAggregateFactory_ABC& remoteFactory_;
+    T_Entities localEntities_;
+    T_Entities remoteEntities_;
+    T_Listeners listeners_;
     std::auto_ptr< ::hla::Class< Aggregate_ABC > > hlaClass_;
-    std::map< std::string, T_Entity > entities_;
     //@}
 };
 

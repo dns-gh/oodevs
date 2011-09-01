@@ -15,6 +15,8 @@
 #include "RtiAmbassadorFactory_ABC.h"
 #include "AggregateFactory.h"
 #include "NetnAggregateFactory.h"
+#include "RemoteAggregateFactory.h"
+#include "NetnRemoteAggregateFactory.h"
 #include "ClassBuilder.h"
 #include "NetnClassBuilder.h"
 #include "protocol/Simulation.h"
@@ -83,18 +85,21 @@ private:
 FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                 AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
-    : timeFactory_          ( new ::hla::SimpleTimeFactory() )
-    , intervalFactory_      ( new ::hla::SimpleTimeIntervalFactory() )
-    , ambassador_           ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
-    , federate_             ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
-    , destructor_           ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
-    , pAggregateFactory_    ( new AggregateFactory() )
-    , pNetnAggregateFactory_( new NetnAggregateFactory( *pAggregateFactory_ ) )
-    , pClassBuilder_        ( new ClassBuilder() )
-    , pNetnClassBuilder_    ( new NetnClassBuilder( *pClassBuilder_ ) )
-    , agentClass_           ( new AggregateEntityClass( *federate_, subject,
-                                                        xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
-                                                        xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_ ) )
+    : timeFactory_                ( new ::hla::SimpleTimeFactory() )
+    , intervalFactory_            ( new ::hla::SimpleTimeIntervalFactory() )
+    , ambassador_                 ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , federate_                   ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
+    , destructor_                 ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
+    , pAggregateFactory_          ( new AggregateFactory() )
+    , pNetnAggregateFactory_      ( new NetnAggregateFactory( *pAggregateFactory_ ) )
+    , pRemoteAggregateFactory_    ( new RemoteAggregateFactory() )
+    , pNetnRemoteAggregateFactory_( new NetnRemoteAggregateFactory( *pRemoteAggregateFactory_ ) )
+    , pClassBuilder_              ( new ClassBuilder() )
+    , pNetnClassBuilder_          ( new NetnClassBuilder( *pClassBuilder_ ) )
+    , agentClass_                 ( new AggregateEntityClass( *federate_, subject,
+                                                              xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
+                                                              xis.attribute< bool >( "netn", true ) ? *pNetnRemoteAggregateFactory_ : *pRemoteAggregateFactory_,
+                                                              xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_ ) )
 {
     CONNECT( controller, *this, control_end_tick );
 }

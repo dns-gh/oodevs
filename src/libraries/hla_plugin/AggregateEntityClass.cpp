@@ -13,10 +13,13 @@
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
 #include "AggregateFactory_ABC.h"
+#include "RemoteAggregateFactory_ABC.h"
+#include "RemoteAgentListener_ABC.h"
 #include "ClassBuilder_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/ObjectRegistration_ABC.h>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -25,13 +28,15 @@ using namespace plugins::hla;
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
 AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject,
-                                            const AggregateFactory_ABC& factory, const ClassBuilder_ABC& builder )
-    : id_      ( 1 )
-    , subject_ ( subject )
-    , factory_ ( factory )
-    , hlaClass_( new ::hla::Class< Aggregate_ABC >( *this, true ) )
+                                            const AggregateFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
+                                            const ClassBuilder_ABC& builder )
+    : id_           ( 1 )
+    , subject_      ( subject )
+    , factory_      ( factory )
+    , remoteFactory_( remoteFactory )
+    , hlaClass_     ( new ::hla::Class< Aggregate_ABC >( *this, true ) )
 {
-    builder.Build( federate, *hlaClass_, true, false );
+    builder.Build( federate, *hlaClass_, true, true );
     subject_.Register( *this );
 }
 
@@ -50,8 +55,8 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    entities_[ identifier ] = T_Entity( factory_.Create( agent, name, ++id_, force, type ).release() );
-    hlaClass_->Register( *entities_[ identifier ], identifier );
+    localEntities_[ identifier ] = T_Entity( factory_.Create( agent, name, ++id_, force, type ).release() );
+    hlaClass_->Register( *localEntities_[ identifier ], identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,26 +65,55 @@ void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identif
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Destroyed( const std::string& identifier )
 {
-    if( entities_.find( identifier ) == entities_.end() )
+    if( localEntities_.find( identifier ) == localEntities_.end() )
         return;
-    hlaClass_->Unregister( *entities_[ identifier ] );
-    entities_.erase( identifier );
+    hlaClass_->Unregister( *localEntities_[ identifier ] );
+    localEntities_.erase( identifier );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntityClass::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& /*objectName*/ )
+Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& objectName )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    T_Entity& entity = remoteEntities_[ objectName ];
+    entity.reset( remoteFactory_.Create( objectName ).release() );
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->Created( objectName, *entity );
+    return *entity;
 }
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntityClass::Destroy
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::Destroy( Aggregate_ABC& /*object*/ )
+void AggregateEntityClass::Destroy( Aggregate_ABC& object )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
+        if( &*entity.second == &object )
+        {
+            BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+                listener->Destroyed( entity.first, *entity.second );
+            remoteEntities_.erase( entity.first );
+            return;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntityClass::Register
+// Created: SLI 2011-08-29
+// -----------------------------------------------------------------------------
+void AggregateEntityClass::Register( RemoteAgentListener_ABC& listener )
+{
+    listeners_.push_back( &listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntityClass::Unregister
+// Created: SLI 2011-08-29
+// -----------------------------------------------------------------------------
+void AggregateEntityClass::Unregister( RemoteAgentListener_ABC& listener )
+{
+    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
 }

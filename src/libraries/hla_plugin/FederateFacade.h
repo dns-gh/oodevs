@@ -11,6 +11,7 @@
 #define plugins_hla_FederateFacade_h
 
 #include "tools/MessageObserver.h"
+#include <memory>
 
 namespace xml
 {
@@ -40,6 +41,7 @@ namespace hla
     class Federate_ABC;
     class RtiAmbassadorFactory_ABC;
     class AggregateFactory_ABC;
+    class RemoteAggregateFactory_ABC;
     class ClassBuilder_ABC;
 
 // =============================================================================
@@ -48,7 +50,7 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-    class FederateFacade : private tools::MessageObserver< sword::ControlEndTick >
+class FederateFacade : private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
@@ -81,6 +83,8 @@ private:
     std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< AggregateFactory_ABC > pAggregateFactory_;
     std::auto_ptr< AggregateFactory_ABC > pNetnAggregateFactory_;
+    std::auto_ptr< RemoteAggregateFactory_ABC > pRemoteAggregateFactory_;
+    std::auto_ptr< RemoteAggregateFactory_ABC > pNetnRemoteAggregateFactory_;
     std::auto_ptr< ClassBuilder_ABC > pClassBuilder_;
     std::auto_ptr< ClassBuilder_ABC > pNetnClassBuilder_;
     std::auto_ptr< AggregateEntityClass > agentClass_;
