@@ -117,6 +117,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp" />
@@ -834,6 +835,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h" />

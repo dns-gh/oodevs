@@ -2502,6 +2502,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.cpp">
+      <Filter>Source Files\Decision\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4903,6 +4906,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.h">
+      <Filter>Source Files\Decision\Functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
