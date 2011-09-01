@@ -13,6 +13,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <map>
 #include <boost/assign.hpp>
+#include <boost/algorithm/string.hpp>
 #include <windows.h>
 
 using namespace plugins::hla;
@@ -24,6 +25,23 @@ namespace
 #else
     const std::string LIBRARY = "release";
 #endif
+
+    std::string GetLastErrorMessage()
+    {
+        LPVOID lpMsgBuf;
+        FormatMessage(
+            FORMAT_MESSAGE_ALLOCATE_BUFFER |
+            FORMAT_MESSAGE_FROM_SYSTEM |
+            FORMAT_MESSAGE_IGNORE_INSERTS,
+            NULL,
+            GetLastError(),
+            MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),
+            (LPTSTR) &lpMsgBuf,
+            0, NULL );
+        const std::string result( static_cast< char* >( lpMsgBuf ) );
+        LocalFree( lpMsgBuf );
+        return boost::algorithm::erase_last_copy( result, "\r\n" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +57,7 @@ RtiAmbassadorFactory::RtiAmbassadorFactory( xml::xisubstream configuration, xml:
                       >> xml::content( LIBRARY, library );
     HMODULE module = LoadLibrary( library.c_str() );
     if( !module )
-        throw std::runtime_error( "failed to load protocol library: '" + library + "'" );
+        throw std::runtime_error( "failed to load protocol library: '" + library + "', reason '" + GetLastErrorMessage() + "'" );
     createAmbassador = (T_CreateAmbassador)GetProcAddress( module, "CreateAmbassador" );
     if( !createAmbassador )
         throw std::runtime_error( "unable to find function createAmbassador function" );
