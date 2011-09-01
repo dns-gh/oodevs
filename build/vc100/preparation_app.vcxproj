@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\main.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\MainWindow.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ModelBuilder.cpp" />
@@ -289,6 +290,14 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LogisticStockEditor.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\preparation_app_pch.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PreparationProfile.h" />

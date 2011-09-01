@@ -767,5 +767,25 @@
         <source>Prisoner</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic - Fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Ammos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Shells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Water/food</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

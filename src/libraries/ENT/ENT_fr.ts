@@ -767,5 +767,25 @@
         <source>Prisoner</source>
         <translation>Prisonnier</translation>
     </message>
+    <message>
+        <source>Logistic - Fuel</source>
+        <translation>Logistique - carburant</translation>
+    </message>
+    <message>
+        <source>Logistic - Ammos</source>
+        <translation>Logistique - munitions</translation>
+    </message>
+    <message>
+        <source>Logistic - Shells</source>
+        <translation>Logistique - obus</translation>
+    </message>
+    <message>
+        <source>Logistic - Water/food</source>
+        <translation>Logistique - eau/nourriture</translation>
+    </message>
+    <message>
+        <source>Logistic - Parts</source>
+        <translation>Logistique - pièces détachées</translation>
+    </message>
 </context>
 </TS>

@@ -22,6 +22,7 @@ InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
+LogisticStockEditor.cpp \
 MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \

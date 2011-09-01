@@ -236,16 +236,6 @@ ADN_Tr::T_ConverterRadarType ADN_Tr::radarTypeConverter_[] =
     T_ConverterRadarType( "", "", (E_RadarType)-1 )
 };
 
-ADN_Tr::T_ConverterStockCategory ADN_Tr::stockCategoryConverter_[] =
-{
-    T_ConverterStockCategory( "Unite essence", QT_TRANSLATE_NOOP("ADN_Tr" ,"Logistic - Fuel"),       eStockCategory_UniteFuel ),
-    T_ConverterStockCategory( "Unite feu TD" , QT_TRANSLATE_NOOP("ADN_Tr" ,"Logistic - Ammos"),      eStockCategory_UniteFireDirect ),
-    T_ConverterStockCategory( "Unite feu -TD", QT_TRANSLATE_NOOP("ADN_Tr" ,"Logistic - Shells"),     eStockCategory_UniteFireNotDirect ),
-    T_ConverterStockCategory( "Unite vivre"  , QT_TRANSLATE_NOOP("ADN_Tr" ,"Logistic - Water/food"), eStockCategory_UniteSupply ),
-    T_ConverterStockCategory( "Pieces"       , QT_TRANSLATE_NOOP("ADN_Tr" ,"Logistic - Parts"),      eStockCategory_Piece ),
-    T_ConverterStockCategory( "", "", (E_StockCategory)-1 )
-};
-
 ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
 {
     T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP("ADN_Tr", "Maintenance support needed" ), eEquipmentState_ADN_FixableWithEvac ),
@@ -443,7 +433,6 @@ const std::string& ADN_Tr::ConvertFromMunitionType( E_MunitionType nValue, E_Con
     return ADN_Tr::InverseFindInConverter( munitionTypeConverter_, nValue, nConversion );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromRadarType
 // Created: APE 2005-03-07
@@ -451,15 +440,6 @@ const std::string& ADN_Tr::ConvertFromMunitionType( E_MunitionType nValue, E_Con
 const std::string& ADN_Tr::ConvertFromRadarType( E_RadarType nValue, E_Conversion nConversion )
 {
     return ADN_Tr::InverseFindInConverter( radarTypeConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromStockCategory
-// Created: SBO 2006-01-10
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromStockCategory( E_StockCategory nValue, E_Conversion nConversion )
-{
-    return ADN_Tr::InverseFindInConverter( stockCategoryConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -651,15 +631,6 @@ E_RadarType ADN_Tr::ConvertToRadarType( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToStockCategory
-// Created: SBO 2006-01-10
-// -----------------------------------------------------------------------------
-E_StockCategory ADN_Tr::ConvertToStockCategory( const std::string& strName )
-{
-    return ADN_Tr::FindInConverter( stockCategoryConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToEquipmentState
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
@@ -708,7 +679,6 @@ void ADN_Tr::InitTranslations()
     InitTr( breakdownNTIConverter_, "ADN_Tr" );
     InitTr( munitionTypeConverter_, "ADN_Tr" );
     InitTr( radarTypeConverter_, "ADN_Tr" );
-    InitTr( stockCategoryConverter_, "ADN_Tr" );
     InitTr( equipmentStateConverter_, "ADN_Tr" );
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
     InitTr( missionParameterTypeConverter_, "ADN_Tr" );

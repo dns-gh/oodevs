@@ -64,6 +64,28 @@ void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< Dotati
 }
 
 // -----------------------------------------------------------------------------
+// Name: Stocks::AddDotation
+// Created: MMC 2011-08-09
+// -----------------------------------------------------------------------------
+void Stocks::AddDotation( Dotation* pNewDotation )
+{
+    if ( !pNewDotation )
+        return;
+
+    Dotation* pDotation = Find( pNewDotation->type_->GetId() );
+    if ( pDotation )
+    {
+        *pDotation = *pNewDotation;
+        delete pNewDotation;
+        return;
+    }
+
+    item_->AddDotation( *pNewDotation );
+    Register( pNewDotation->type_->GetId(), *pNewDotation );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Stocks::SerializeAttributes
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------

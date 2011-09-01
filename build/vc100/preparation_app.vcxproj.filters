@@ -409,6 +409,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.cpp">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -747,6 +750,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UnitStateDialog.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LogisticStockEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

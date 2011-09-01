@@ -576,7 +576,7 @@
         <translation>Reparable</translation>
     </message>
     <message>
-        <source>OnSiteFixable</source>
+        <source>On site fixable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

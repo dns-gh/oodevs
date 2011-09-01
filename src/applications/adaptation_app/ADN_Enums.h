@@ -324,16 +324,6 @@ enum E_RadarType
     eNbrRadarType
 };
 
-enum E_StockCategory
-{
-    eStockCategory_UniteFuel,
-    eStockCategory_UniteFireDirect,
-    eStockCategory_UniteFireNotDirect,
-    eStockCategory_UniteSupply,
-    eStockCategory_Piece,
-    eNbrStockCategory
-};
-
 enum E_EquipmentState_ADN
 {
     eEquipmentState_ADN_FixableWithEvac,

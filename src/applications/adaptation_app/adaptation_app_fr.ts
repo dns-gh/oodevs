@@ -4816,26 +4816,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>écoute radar</translation>
     </message>
     <message>
-        <source>Logistic - Fuel</source>
-        <translation>Logistique - carburant</translation>
-    </message>
-    <message>
-        <source>Logistic - Ammos</source>
-        <translation>Logistique - munitions</translation>
-    </message>
-    <message>
-        <source>Logistic - Shells</source>
-        <translation>Logistique - obus</translation>
-    </message>
-    <message>
-        <source>Logistic - Water/food</source>
-        <translation>Logistique - eau/nourriture</translation>
-    </message>
-    <message>
-        <source>Logistic - Parts</source>
-        <translation>Logistique - pièces détachées</translation>
-    </message>
-    <message>
         <source>Maintenance support needed</source>
         <translation>Réparable avec évacuation</translation>
     </message>

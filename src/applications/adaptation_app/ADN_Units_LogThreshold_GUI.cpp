@@ -18,6 +18,7 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
+#include "ENT/Ent_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with
@@ -46,7 +47,7 @@ public:
         tab_.setItem( nRow, 1, pItemLogThreshold );
 
         pItemName->setEnabled(false);
-        pItemName->setText( ADN_Tr::ConvertFromStockCategory( pInfo->eCategory_.GetData(), ADN_Tr::eToApp ).c_str() );
+        pItemName->setText( ENT_Tr::ConvertFromStockCategory( pInfo->eCategory_.GetData(), ENT_Tr::eToApp ).c_str() );
 
         // Connect the item
         pItemLogThreshold->GetConnector().Connect( &pInfo->rLogThreshold_ );

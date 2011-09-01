@@ -4848,26 +4848,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>écoute radar</translation>
     </message>
     <message>
-        <source>Logistic - Fuel</source>
-        <translation>Logistique - carburant</translation>
-    </message>
-    <message>
-        <source>Logistic - Ammos</source>
-        <translation>Logistique - munitions</translation>
-    </message>
-    <message>
-        <source>Logistic - Shells</source>
-        <translation>Logistique - obus</translation>
-    </message>
-    <message>
-        <source>Logistic - Water/food</source>
-        <translation>Logistique - eau/nourriture</translation>
-    </message>
-    <message>
-        <source>Logistic - Parts</source>
-        <translation>Logisituqe - pièces détachées</translation>
-    </message>
-    <message>
         <source>Maintenance support needed</source>
         <translation>Réparable avec évacuation</translation>
     </message>

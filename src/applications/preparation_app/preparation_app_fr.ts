@@ -426,6 +426,29 @@
     </message>
 </context>
 <context>
+    <name>LogisticStockEditor</name>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Days of supply</source>
+        <translation>Jours de ravitaillement</translation>
+    </message>
+    <message>
+        <source>Supply stocks</source>
+        <translation>Ravitailler les stocks</translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation>Catégories</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Units</source>
@@ -1477,6 +1500,13 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStocksDialog</name>
+    <message>
+        <source>Supply stocks</source>
+        <translation type="unfinished">Ravitailler les stocks</translation>
     </message>
 </context>
 <context>

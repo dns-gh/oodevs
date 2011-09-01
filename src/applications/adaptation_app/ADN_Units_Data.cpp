@@ -145,7 +145,7 @@ ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos( E_StockCategory 
 , eCategory_          ( eCategory )
 , rLogThreshold_      ( 0. )
 {
-    ADN_Type_Enum< E_StockCategory, eNbrStockCategory >::SetConverter( &ADN_Tr::ConvertFromStockCategory );
+    ADN_Type_Enum< E_StockCategory, eNbrStockCategory >::SetConverter( &ENT_Tr::ConvertFromStockCategory );
     eCategory_.SetDataName( "la catégorie de stock" );
     eCategory_.SetParentNode( *this );
 }
@@ -178,7 +178,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "category", strCategory )
           >> xml::attribute( "threshold", rLogThreshold_ );
 
-    E_StockCategory eCategory = ADN_Tr::ConvertToStockCategory( strCategory );
+    E_StockCategory eCategory = ENT_Tr::ConvertToStockCategory( strCategory );
     if( eCategory == (E_StockCategory)-1 )
         throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit types - Invalid resource '%1'" ).arg( strCategory.c_str() ).ascii() );
     eCategory_ = eCategory;
@@ -191,7 +191,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "stock" )
-            << xml::attribute( "category", ADN_Tr::ConvertFromStockCategory( eCategory_.GetData() ) )
+            << xml::attribute( "category", ENT_Tr::ConvertFromStockCategory( eCategory_.GetData() ) )
             << xml::attribute( "threshold", rLogThreshold_ )
            << xml::end;
 }

@@ -14,6 +14,7 @@
 #include "DotationCapacityType.h"
 #include "SymbolFactory.h"
 #include <xeumeuleu/xml.hpp>
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 
@@ -43,6 +44,10 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
         >> xml::optional
         >> xml::start( "logistics" )
             >> xml::list( "category", *this, &AgentType::ReadResourcesCategory )
+        >> xml::end
+        >> xml::optional
+        >> xml::start( "stocks" )
+            >> xml::list( "stock", *this, &AgentType::ReadStock )
         >> xml::end;
 
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
@@ -105,6 +110,17 @@ void AgentType::ReadResourcesCategory( xml::xistream& xis )
 void AgentType::ReadResources( xml::xistream& xis )
 {
     resources_.push_back( new DotationCapacityType( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::ReadStock
+// Created: MMC 2011-08-30
+// -----------------------------------------------------------------------------
+void AgentType::ReadStock( xml::xistream& xis )
+{
+    std::string category = xis.attribute< std::string >( "category"  );
+    unsigned int threshold = xis.attribute< unsigned int >( "threshold" );
+    stocks_[ category ] = threshold;
 }
 
 // -----------------------------------------------------------------------------
@@ -246,4 +262,26 @@ bool AgentType::IsLogisticMedical() const
     return type_ == "Pion LOG BLD Sante"
         || type_ == "Pion LOG BLT Sante"
         || IsTC2();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::IsStockCategoryDefined
+// Created: MMC 2011-08-30
+// -----------------------------------------------------------------------------
+bool AgentType::IsStockCategoryDefined( std::string category ) const
+{
+    return ( stocks_.find( category ) != stocks_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetStockCategoryThreshold
+// Created: MMC 2011-08-30
+// -----------------------------------------------------------------------------
+unsigned int AgentType::GetStockCategoryThreshold( std::string category ) const
+{
+    CIT_StocksThresholds stock = stocks_.find( category );
+    if ( stock == stocks_.end() )
+        return 0;
+
+    return stock->second;
 }

@@ -67,6 +67,9 @@ public:
     bool IsLogisticSupply() const;
     bool IsLogisticMaintenance() const;
     bool IsLogisticMedical() const;
+
+    bool IsStockCategoryDefined( std::string category ) const;
+    unsigned int GetStockCategoryThreshold( std::string category ) const;
     //@}
 
 private:
@@ -76,6 +79,8 @@ private:
     typedef T_Components::const_iterator        CIT_Components;
     typedef std::vector< DotationCapacityType* >  T_Resources;
     typedef T_Resources::const_iterator         CIT_Resources;
+    typedef std::map< std::string, unsigned int > T_StocksThresholds;
+    typedef T_StocksThresholds::const_iterator  CIT_StocksThresholds;
     //@}
 
     //! @name Helpers
@@ -84,6 +89,7 @@ private:
     void ReadCrewRank( xml::xistream& xis );
     void ReadResourcesCategory( xml::xistream& xis );
     void ReadResources( xml::xistream& xis );
+    void ReadStock( xml::xistream& xis );
     //@}
 
 private:
@@ -103,6 +109,8 @@ private:
     unsigned int nbrOfficers_;
     unsigned int nbrWarrantOfficers_;
     T_Resources resources_;
+
+    T_StocksThresholds stocks_;
     //@}
 };
 

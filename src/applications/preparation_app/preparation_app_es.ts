@@ -426,6 +426,29 @@
     </message>
 </context>
 <context>
+    <name>LogisticStockEditor</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Days of supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply stocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Units</source>
@@ -1477,6 +1500,13 @@ Do you want to save anyway?</source>
     <message>
         <source>Delete</source>
         <translation>Borrar</translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStocksDialog</name>
+    <message>
+        <source>Supply stocks</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
