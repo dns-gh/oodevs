@@ -14,6 +14,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/ActionTasker.h"
 #include "actions/ParameterList.h"
+#include "actions/Enumeration.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
