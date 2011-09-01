@@ -109,8 +109,10 @@ bool ActivableCapacity::IsActivated( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void ActivableCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {
+    unsigned int delta = static_cast< int >( time - timeOfCreation_ );
     ObstacleAttribute& attr = object.GetAttribute< ObstacleAttribute >();
-    if( attr.GetActivationTime() > 0 && !attr.IsActivated()
-        && static_cast< int >( time - timeOfCreation_ ) > MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() ) )
+    if( attr.GetActivationTime() > 0 && !attr.IsActivated() && delta > MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() ) )
         attr.Activate();
+    if( attr.IsDeactivable() && delta > MIL_Tools::ConvertSecondsToSim( attr.GetEndActivity() ) )
+        attr.Deactivate();
 }

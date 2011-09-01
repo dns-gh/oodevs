@@ -46,7 +46,9 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
-             .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
+             .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ )
+             .Display( tools::translate( "Object", "Activation time:" ), activationTime_ )
+             .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,10 +94,14 @@ void ObstacleAttribute::DoUpdate( const sword::ObjectUpdate& message )
 template< typename T >
 void ObstacleAttribute::UpdateData( const T& message )
 {
-     if( message.has_obstacle()  )
+     if( message.has_obstacle() )
      {
         obstacleType_ = (E_DemolitionTargetType)message.obstacle().type();
         reservedObstacleActivated_= (message.obstacle().activated() != 0);
+        if( message.obstacle().has_activation_time() )
+            activationTime_ = message.obstacle().activation_time();
+        if( message.obstacle().has_activity_time() )
+            activityTime_ = message.obstacle().activity_time();
         controller_.Update( *(ObstacleAttribute_ABC*)this );
      }
 }

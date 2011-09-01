@@ -65,9 +65,12 @@ public:
     //! @name
     //@{
     int GetActivationTime() const;
+    int GetEndActivity() const;
     bool IsActivable() const;
+    bool IsDeactivable() const;
     bool IsActivated() const;
     void Activate();
+    void Deactivate();
     //@}
 
     //! @name Operations
@@ -83,6 +86,8 @@ private:
     sword::ObstacleType_DemolitionTargetType obstacle_;
     bool bActivated_;
     int activationTime_;
+    int activityTime_;
+    int endActivity_;
     //@}
 };
 

@@ -18,7 +18,6 @@
 #include "Entities\Agents\Roles\Composantes\PHY_RoleInterface_Composantes.h"
 #include "Entities\Populations\MIL_PopulationElement_ABC.h"
 #include "Entities\MIL_Army.h"
-#include "ObstacleAttribute.h"
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
 #include "simulation_terrain/TER_World.h"

@@ -1132,6 +1132,7 @@ message ObjectAttributeObstacle {
    required ObstacleType.DemolitionTargetType type            = 1; //!< The obstacle type
    optional bool                              activated       = 2; //!< Whether the obstacle is activated or not
    optional int32                             activation_time = 3; //!< The activation time @todo unit ?
+   optional int32                             activity_time   = 4; //!< The activity time @todo unit ?
 }
 
 /** @struct ObjectAttributeLifeTime

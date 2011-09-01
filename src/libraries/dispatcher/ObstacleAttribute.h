@@ -46,6 +46,7 @@ private:
     sword::ObstacleType_DemolitionTargetType obstacle_;
     bool isActivated_;
     int activationTime_;
+    int activityTime_;
     //@}
 };
 

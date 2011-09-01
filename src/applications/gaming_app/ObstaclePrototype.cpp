@@ -45,5 +45,6 @@ void ObstaclePrototype::Commit()
         list.AddIdentifier( "TargetType", types_->GetValue() );
         list.AddBool( "Activation", IsActivated() );
         list.AddQuantity( "ActivationTime", GetActivationTime() );
+        list.AddQuantity( "ActivityTime", GetActivityTime() );
     }
 }

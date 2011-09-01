@@ -1273,6 +1273,10 @@
         <source>Activated:</source>
         <translation>Activé:</translation>
     </message>
+    <message>
+        <source>Activation time:</source>
+        <translation>Délai avant activation :</translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

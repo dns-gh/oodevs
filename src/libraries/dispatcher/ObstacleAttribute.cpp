@@ -18,9 +18,10 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( const sword::ObjectAttributes& message )
-    : obstacle_( sword::ObstacleType_DemolitionTargetType_preliminary )
-    , isActivated_( true )
-    , activationTime_ ( 0 )
+    : obstacle_      ( sword::ObstacleType_DemolitionTargetType_preliminary )
+    , isActivated_   ( true )
+    , activationTime_( 0 )
+    , activityTime_  ( 0 )
 {
     Update( message );
 }
@@ -47,6 +48,8 @@ void ObstacleAttribute::Update( const sword::ObjectAttributes& message )
             isActivated_ = message.obstacle().activated();
         if( message.obstacle().has_activation_time() )
             activationTime_ = message.obstacle().activation_time();
+        if( message.obstacle().has_activity_time() )
+            activityTime_ = message.obstacle().activity_time();
     }
 }
 
@@ -59,4 +62,5 @@ void ObstacleAttribute::Send( sword::ObjectAttributes& message ) const
     message.mutable_obstacle()->set_type( obstacle_ );
     message.mutable_obstacle()->set_activated( isActivated_ );
     message.mutable_obstacle()->set_activation_time( activationTime_ );
+    message.mutable_obstacle()->set_activity_time( activityTime_ );
 }

@@ -29,6 +29,8 @@ ObstacleAttribute::ObstacleAttribute()
     : obstacle_      ( sword::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_    ( true )
     , activationTime_( 0 )
+    , activityTime_  ( 0 )
+    , endActivity_   ( 0 )
 {
     // NOTHING
 }
@@ -41,6 +43,8 @@ ObstacleAttribute::ObstacleAttribute( bool reserved )
     : obstacle_      ( reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_    ( !reserved )
     , activationTime_( 0 )
+    , activityTime_  ( 0 )
+    , endActivity_   ( 0 )
 {
     // NOTHING
 }
@@ -74,11 +78,19 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     : obstacle_      ( ExtractObstacle( xis.attribute< std::string >( "type", std::string() ) ) )
     , bActivated_    ( xis.attribute< bool >( "activated", false ) )
     , activationTime_( 0 )
+    , activityTime_  ( 0 )
 {
     xis >> xml::optional
         >> xml::start( "activation-time" )
             >> xml::attribute( "value", activationTime_ )
+        >> xml::end
+        >> xml::optional
+        >> xml::start( "activity-time" )
+            >> xml::attribute( "value", activityTime_ )
         >> xml::end;
+    if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
+        activityTime_ = 21600;
+    endActivity_ = activationTime_ + activationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +101,8 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     : obstacle_      ( ( sword::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
+    , activityTime_  ( attributes.list( 4 ).quantity() )
+    , endActivity_   ( activationTime_ + activityTime_ )
 {
     // NOTHING
 }
@@ -111,7 +125,9 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & obstacle_
          & bActivated_
-         & activationTime_;
+         & activationTime_
+         & activityTime_
+         & endActivity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -135,12 +151,30 @@ int ObstacleAttribute::GetActivationTime() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::GetEndActivity
+// Created: LGY 2011-08-31
+// -----------------------------------------------------------------------------
+int ObstacleAttribute::GetEndActivity() const
+{
+    return endActivity_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::IsActivable
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
 bool ObstacleAttribute::IsActivable() const
 {
     return obstacle_ == sword::ObstacleType_DemolitionTargetType_reserved;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::IsDeactivable
+// Created: LGY 2011-09-01
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::IsDeactivable() const
+{
+    return bActivated_ && activityTime_ != 0 && IsActivable();
 }
 
 // -----------------------------------------------------------------------------
@@ -161,9 +195,23 @@ void ObstacleAttribute::Activate()
     if( ! bActivated_ && IsActivable() )
     {
         bActivated_ = true;
+        activityTime_ += activationTime_;
         activationTime_ = 0;
         NotifyAttributeUpdated( eOnUpdate );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::Deactivate
+// Created: LGY 2011-08-31
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::Deactivate()
+{
+    bActivated_ = false;
+    activationTime_ = 0;
+    activityTime_ = 0;
+    endActivity_ = 0;
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,6 +241,7 @@ void ObstacleAttribute::SendFullState( sword::ObjectAttributes& asn ) const
     asn.mutable_obstacle()->set_type( obstacle_ );
     asn.mutable_obstacle()->set_activated( bActivated_ );
     asn.mutable_obstacle()->set_activation_time( activationTime_ );
+    asn.mutable_obstacle()->set_activity_time( activityTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,6 +255,7 @@ void ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
         asn.mutable_obstacle()->set_activated( bActivated_ );
         asn.mutable_obstacle()->set_type( obstacle_ );
         asn.mutable_obstacle()->set_activation_time( activationTime_ );
+        asn.mutable_obstacle()->set_activity_time( activityTime_ );
         Reset( eOnUpdate );
     }
 }
@@ -218,7 +268,20 @@ void ObstacleAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "obstacle" )
             << xml::attribute( "type", ExtractObstacle( obstacle_ ) )
-        << xml::end;
+            << xml::attribute( "activated", bActivated_ );
+    if( activationTime_ != 0 )
+    {
+        xos << xml::start( "activation-time" )
+                << xml::attribute( "value", activationTime_ )
+            << xml::end;
+    }
+    if( activityTime_ != 0 )
+    {
+        xos << xml::start( "activity-time" )
+                << xml::attribute( "value", activityTime_ )
+            << xml::end;
+    }
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -230,6 +293,8 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
     obstacle_ = rhs.obstacle_;
     bActivated_ = rhs.bActivated_;
     activationTime_ = rhs.activationTime_;
+    activityTime_ = rhs.activityTime_;
+    endActivity_ = rhs.endActivity_;
     return *this;
 }
 
@@ -266,6 +331,11 @@ bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
     {
         NotifyAttributeUpdated( eOnUpdate );
         activationTime_ = rhs.activationTime_;
+    }
+    if( activityTime_ != rhs.activityTime_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        activityTime_ = rhs.activityTime_;
     }
     return NeedUpdate( eOnUpdate );
 }

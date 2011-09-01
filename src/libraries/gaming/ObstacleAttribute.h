@@ -69,6 +69,8 @@ private:
     kernel::Controller& controller_;
     kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
     kernel::OptionalValue< bool >                   reservedObstacleActivated_;
+    kernel::OptionalValue< unsigned int >           activationTime_;
+    kernel::OptionalValue< unsigned int >           activityTime_;
     //@}
 };
 
