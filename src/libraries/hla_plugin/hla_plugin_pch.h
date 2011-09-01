@@ -15,4 +15,7 @@
 #include <map>
 #include <vector>
 
+#pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
+#pragma warning( disable : 4503 ) // decorated name length exceeded, name was truncated
+
 #endif // plugins_hla_plugin_pch_h
