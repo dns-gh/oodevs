@@ -1101,9 +1101,14 @@ namespace
     template< typename From, typename To >
     void ConvertObjectAttributeObstacle( const From& from, To* to )
     {
-        CONVERT_ENUM( type, ( sword::ObstacleType::preliminary, Common::ObstacleType::preliminary )
-                            ( sword::ObstacleType::reserved, Common::ObstacleType::reserved ) );
-        CONVERT( activated );
+        to->mutable_obstacle()->set_type( from.obstacle().type() == sword::ObstacleType::preliminary ?
+                                          Common::ObstacleType::preliminary : Common::ObstacleType::reserved );
+        if( from.obstacle().has_activated() )
+            to->mutable_obstacle()->set_activated( from.obstacle().activated() );
+        if( from.obstacle().has_activation_time() )
+            to->mutable_activity_time()->set_activation_time( from.obstacle().activation_time() );
+        if( from.obstacle().has_activity_time() )
+            to->mutable_activity_time()->set_activity_time( from.obstacle().activity_time() );
     }
     template< typename From, typename To >
     void ConvertObjectAttributeMine( const From& from, To* to )
@@ -1238,7 +1243,7 @@ namespace
     void ConvertObjectAttributes( const From& from, To* to )
     {
         CONVERT_CB( construction, ConvertObjectAttributeConstruction );
-        CONVERT_CB( obstacle, ConvertObjectAttributeObstacle );
+        ConvertObjectAttributeObstacle( from, to );
         CONVERT_CB_TO( mine, valorisation, ConvertObjectAttributeMine );
         if( from.has_bypass() )
             to->mutable_bypass()->set_percentage( from.bypass().percentage() );
