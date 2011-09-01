@@ -17,6 +17,7 @@ class TerrainRetractationHandle;
 class TER_NodeFunctor_ABC;
 class TER_StaticData;
 class TerrainData;
+class TER_Polygon;
 
 // =============================================================================
 /** @class  TER_Analyzer
@@ -38,7 +39,8 @@ public:
     void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const;
 
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );
-    std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance );
+    void FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
+    void FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
     std::vector< boost::shared_ptr< MT_Vector2D > > FindAllPositions( const MT_Vector2D& center, float radius );
 
     TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );

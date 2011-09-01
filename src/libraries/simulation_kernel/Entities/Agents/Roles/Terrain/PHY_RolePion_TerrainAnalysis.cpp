@@ -148,8 +148,9 @@ void PHY_RolePion_TerrainAnalysis::UpdateSafety( float radius, float safetyDista
             ++it;
     }
     //Add new points
-    std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_AnalyzerManager::GetAnalyzerManager().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance );
-    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = temp.begin(); it != temp.end(); it++ )
+    std::vector< boost::shared_ptr< MT_Vector2D > > positions;
+    TER_AnalyzerManager::GetAnalyzerManager().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance, positions );
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = positions.begin(); it != positions.end(); it++ )
         safetyBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
     if( !fuseau_.IsNull() )

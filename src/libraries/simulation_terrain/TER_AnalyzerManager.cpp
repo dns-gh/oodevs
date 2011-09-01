@@ -63,9 +63,18 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_AnalyzerManager::FindCrossro
 // Name: TER_AnalyzerManager::FindSafetyPositionsWithinCircle
 // Created: CMA 2011-08-16
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_AnalyzerManager::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )
+void TER_AnalyzerManager::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance, std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
 {
-    return pAnalyzer_->FindSafetyPositionsWithinCircle( center, radius, safetyDistance );
+    pAnalyzer_->FindSafetyPositionsWithinCircle( center, radius, safetyDistance, positions );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_AnalyzerManager::FindRoadsOnBorderOfPolygon
+// Created: CMA 2011-09-01
+// -----------------------------------------------------------------------------
+void TER_AnalyzerManager::FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon, std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
+{
+    pAnalyzer_->FindRoadsOnBorderOfPolygon( polygon, positions );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,9 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_TerrainFunctions.h"
-
 #include "DEC_Decision.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
+#include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_AnalyzerManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_TerrainFunctions::GetCrossroads
@@ -40,15 +41,19 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::FindSafety
 // Name: DEC_TerrainFunctions::GetRoadIntersectionsWithZone
 // Created: LDC 2011-06-22
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::GetRoadIntersectionsWithZone( const TER_Localisation* /*zone*/ )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::GetRoadIntersectionsWithZone( const TER_Localisation* zone )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    // $$$$ LDC TODO: Needs a function to retrieve all intersections of objects of type road with the polygon.
-    // create a functor who can add points to the list and call something like
-    // const MT_Vector2D& centre = zone->GetBoundingBox().GetCenter();
-    // TER_World::GetWorld().GetPathFindManager().ApplyOnLinksWithinCircle( centre, zone->GetLength() / 2, functor );
-    return points;    
-}    
+    if( zone->GetType() == TER_Localisation::ePolygon )
+    {
+        TER_Polygon polygon;
+        polygon.Reset( zone->GetPoints() );
+        TER_World::GetWorld().GetAnalyzerManager().FindRoadsOnBorderOfPolygon( polygon, points );
+    }
+    else
+        MT_LOG_INFO_MSG( "TER_Localisation parameter of DEC_TerrainFunctions::GetRoadIntersectionsWithZone method should be a polygon" );
+    return points;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_TerrainFunctions::CanMoveOn

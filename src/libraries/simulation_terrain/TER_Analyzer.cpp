@@ -11,6 +11,7 @@
 #include "TER_Analyzer.h"
 #include "TER_NodeFunctor_ABC.h"
 #include "TER_StaticData.h"
+#include "TER_Polygon.h"
 #include <spatialcontainer/Node.h>
 #include <analysis/TerrainAnalyzer.h>
 
@@ -67,6 +68,14 @@ namespace
     {
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( p.X() ), static_cast< double >( p.Y() ) ) );
     };
+    inline geometry::Polygon2f MakePolygon( const TER_Polygon& p )
+    {
+        geometry::Polygon2f polygon;
+        const T_PointVector& points = p.GetBorderPoints();
+        for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
+            polygon.Add( MakePoint( *it ) );
+        return polygon;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -96,13 +105,24 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindCrossroadsWith
 // Name: TER_Analyzer::FindSafetyPositionsWithinCircle
 // Created: LDC 2010-10-28
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )
+void TER_Analyzer::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance, std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    std::vector< geometry::Point2f > points = pAnalyzer_->FindSafetyPositionsWithinCircle( MakePoint( center ), radius, safetyDistance );
-    for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
-        result.push_back( MakeVectorPointer( *it ) );
-    return result;
+    std::vector< geometry::Point2f > safetyPoints;
+    pAnalyzer_->FindSafetyPositionsWithinCircle( MakePoint( center ), radius, safetyDistance, safetyPoints );
+    for( std::vector< geometry::Point2f >::const_iterator it = safetyPoints.begin(); it != safetyPoints.end(); ++it )
+        positions.push_back( MakeVectorPointer( *it ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Analyzer::FindRoadsOnBorderOfPolygon
+// Created: CMA 2011-09-01
+// -----------------------------------------------------------------------------
+void TER_Analyzer::FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon, std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
+{
+    std::vector< geometry::Point2f > roadPoints;
+    pAnalyzer_->FindRoadsOnBorderOfPolygon( MakePolygon( polygon ), roadPoints );
+    for( std::vector< geometry::Point2f >::const_iterator it = roadPoints.begin(); it != roadPoints.end(); ++it )
+        positions.push_back( MakeVectorPointer( *it ) );
 }
 
 // -----------------------------------------------------------------------------
