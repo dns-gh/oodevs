@@ -511,7 +511,7 @@
   <report category="operational" id="351" message="Zone confinement in progress"/>
   <report category="operational" id="352" message="Zone evacuated"/>
   <report category="operational" id="353" message="Arrived in evacuation zone"/>
-  <report category="operational" id="354" message="Evacuation in progress"/>  
+  <report category="operational" id="354" message="Evacuation in progress"/>
   <report category="operational" id="355" message="Valorization started for object : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
@@ -551,5 +551,5 @@
   <report category="operational" id="381" message="Indirect fire effect observation"/>
   <report category="exceptional" id="382" message="Damages inflicted to neutral side"/>
   <report category="exceptional" id="383" message="Damages inflicted by neutral side"/>
-  </reports>
-<!-- signature="1675311204" -->
+</reports>
+<!-- signature="1460084327" -->
