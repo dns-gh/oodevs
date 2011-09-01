@@ -127,6 +127,8 @@ public:
         eSpawnObjectType,
         eTrafficabilityCapacityPresent,
         eLimitedTrafficability,
+        eFireForbiddenCapacityPresent,
+        eBorderCapacityPresent,
         eNbrGuiElements
     };
 

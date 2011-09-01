@@ -126,17 +126,8 @@ public:
         eReport_IndirectFireOnTarget,
         eReport_MunitionInterdite,
         eReport_MunitionAutorise,
-        eRC_ArrivedOnGaragePosition,
-        eRC_ExtractFromStock_Arrived,
-        eRC_ExtractFromStock_Extracted,
-        eRC_SupplyStock_Supplied,
-        eRC_SupplyStock_Arrived,
-        eRC_SupplyStock_Distributed,
-        eRC_FirstTourOfZoneConfinementDone,
-        eRC_ZoneConfinementInProgress,
-        eRC_ZoneEvacuated,
-        eRC_ArrivedOnEvacuateZone,
-        eRC_ZoneEvacuationInProgress,
+        eReport_DamagesCausedToNeutralSide,
+        eReport_DamagesCausedByNeutralSide,
         eNbrReport
     };
 
@@ -483,9 +474,35 @@ public:
         eRC_ObjectExtinguished,
         eRC_ArrivedOnAlertZone,
         eRC_ZoneAlerted,
+        eRC_ArrivedOnGaragePosition,
+        eRC_ExtractFromStock_Arrived,
+        eRC_ExtractFromStock_Extracted,
+        eRC_SupplyStock_Supplied,
+        eRC_SupplyStock_Arrived,
+        eRC_SupplyStock_Distributed,
         eRC_ZoneConfined,
         eRC_ArrivedOnConfinedZone,
         eRC_PasDeDroneDisponible,
+        eRC_FirstTourOfZoneConfinementDone,
+        eRC_ZoneConfinementInProgress,
+        eRC_ZoneEvacuated,
+        eRC_ArrivedOnEvacuateZone,
+        eRC_ZoneEvacuationInProgress,
+        eRC_DebutValorisation,
+        eRC_FinValorisation,
+        eRC_EchecRelever,
+        eRC_criticalIntelligence,
+        eRC_criticalIntelligenceNone,
+        eRC_FinTravauxBlocUrbain,
+        eRC_BUNonTraficable,
+        eRC_StartDeploy,
+        eRC_DebutFouillePoint,
+        eRC_FinFouillePoint,
+        eRC_NotDeployedIndirectFireImpossible,
+        eRC_AgressionImpossible,
+        eRC_NoLogisticSuperior,
+        eRC_CrossingSiteNotRecon,
+        eRC_InvalidObject,
         eRC_TerroristCaptured,
         eRC_MiseEnPlaceProducePoint,
         eRC_ProduceImpossible,
@@ -498,6 +515,8 @@ public:
         eRC_PathfindWarning,
         eRC_DotationIndisponible,
         eRC_ObservationEffetTirIndirect,
+        eRC_DamagesCausedToNeutralSide,
+        eRC_DamagesCausedByNeutralSide,
         eLast
     };
     //@}
@@ -563,6 +582,7 @@ private:
     //@{
     unsigned int nID_;
     std::string strMessage_;
+    E_Type category_;
     T_ParameterVector parameters_;
     static T_ReportMap reports_;
     static T_DiaEventVector diaEvents_;

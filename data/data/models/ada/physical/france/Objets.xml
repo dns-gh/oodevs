@@ -317,6 +317,7 @@
   </object>
   <object geometry="polygon" name="Terrain de largage" symbol="G*GPGAD---****X" type="dropping area"/>
   <object geometry="polygon" name="Zone de tir interdit" symbol="G*FPAN----****X" type="fire forbidden area">
+    <fire-forbidden/>
     <interaction-height height="6000"/>
   </object>
   <object geometry="polygon" name="Zone de mouvement interdit" symbol="G*MPOGZ---****X" type="movement forbidden area">
@@ -388,4 +389,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="0708130689" -->
+<!-- signature="2438753899" -->

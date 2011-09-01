@@ -319,6 +319,7 @@
   </object>
   <object geometry="polygon" name="Drop Zone (DZ)" symbol="G*GPGAD---****X" type="dropping area"/>
   <object geometry="polygon" name="No-Fire Area (NFA)" symbol="G*FPAN----****X" type="fire forbidden area">
+    <fire-forbidden/>
     <interaction-height height="6000"/>
   </object>
   <object geometry="polygon" name="General obstacle zone" symbol="G*MPOGZ---****X" type="movement forbidden area">
@@ -511,7 +512,8 @@
     <universal/>
   </object>
   <object geometry="line" name="Border" symbol="Road" type="Border">
+    <border/>
     <universal/>
   </object>
 </objects>
-<!-- signature="1846777946" -->
+<!-- signature="0020968012" -->

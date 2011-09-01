@@ -305,7 +305,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 {
     const PHY_RoleInterface_Location& firerLocation = firer.GetRole< PHY_RoleInterface_Location >();
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
-    NotifyFirerPerception(firer, target );
+    NotifyFirerPerception( firer, target );
 
     const UrbanObjectWrapper* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     if( urbanObject )

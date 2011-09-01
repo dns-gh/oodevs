@@ -109,7 +109,7 @@ public:
 
     //! @name Fires
     //@{
-    virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation, MIL_Army_ABC& army ) = 0;
+    virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation, MIL_Army_ABC* army ) = 0;
     virtual void ApplyDirectFire() const = 0;
     virtual void ApplyDestruction( const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition ) = 0;
     //@}

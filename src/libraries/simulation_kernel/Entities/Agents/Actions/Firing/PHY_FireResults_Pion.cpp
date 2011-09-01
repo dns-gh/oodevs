@@ -11,6 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_FireResults_Pion.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -72,6 +75,41 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_FireResults_Pion::DoSendReport
+// Created: JSR 2011-09-01
+// -----------------------------------------------------------------------------
+template< typename T >
+void PHY_FireResults_Pion::DoSendReport( const T& entity, bool& rcSent ) const
+{
+    if( entity.GetArmy().IsNeutral( firer_.GetArmy() ) == eTristate_True )
+    {
+        MIL_Report::PostEvent( entity, MIL_Report::eReport_DamagesCausedByNeutralSide );
+        if( !rcSent )
+        {
+            MIL_Report::PostEvent( firer_, MIL_Report::eReport_DamagesCausedToNeutralSide );
+            rcSent = true;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireResults_Pion::SendReport
+// Created: JSR 2011-09-01
+// -----------------------------------------------------------------------------
+template< typename MSG >
+void PHY_FireResults_Pion::SendReport( const MSG& msg, bool& rcSent ) const
+{
+    for( int i = 0; i < msg.elem_size(); ++i )
+    {
+        unsigned int targetId = msg.elem( i ).target().id();
+        if( MIL_AgentPion* targetPion = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( targetId ) )
+            DoSendReport( *targetPion, rcSent );
+        else if( MIL_Population* targetPop = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( targetId ) )
+            DoSendReport( *targetPop, rcSent );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_FireResults_Pion destructor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
@@ -83,6 +121,9 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         Serialize( *asnMsg().mutable_units_damages() );
         Serialize( *asnMsg().mutable_crowds_damages() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
+        bool rcSent = false;
+        SendReport( asnMsg().units_damages(), rcSent );
+        SendReport( asnMsg().crowds_damages(), rcSent );
     }
     SendDamagesPion( firer_, nID_, direct_ );
     // $$$$ Merde pour VABF Popu

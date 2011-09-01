@@ -16,6 +16,7 @@
 #include "AttitudeModifierCapacity.h"
 #include "AttritionCapacity.h"
 #include "AvoidanceCapacity.h"
+#include "BorderCapacity.h"
 #include "BridgingCapacity.h"
 #include "BurnCapacity.h"
 #include "BurnSurfaceCapacity.h"
@@ -27,6 +28,7 @@
 #include "DelayCapacity.h"
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
+#include "FireForbiddenCapacity.h"
 #include "FirePropagationModifierCapacity.h"
 #include "FloodCapacity.h"
 #include "InfrastructureCapacity.h"
@@ -142,6 +144,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "attrition", boost::bind( &AddBuilder< AttritionCapacity >::Add, _1, _2 ) );
     DoRegister( "avoidable", boost::bind( &AddBuilder< AvoidanceCapacity >::Add, _1, _2 ) );
+    DoRegister( "border", boost::bind( &AddBuilder< BorderCapacity >::Add, _1, _2 ) );
     DoRegister( "bridging", boost::bind( &AddBuilder< BridgingCapacity >::Add, _1, _2 ) );
     DoRegister( "bypassable", boost::bind( &AddBuilder< BypassableCapacity >::Add, _1, _2 ) );
     DoRegister( "constructor", boost::bind( &AddConstructor, _1, _2 ) );
@@ -150,6 +153,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "delay", boost::bind( &AddBuilder< DelayCapacity >::Add, _1, _2 ) );
     DoRegister( "detection", boost::bind( &AddBuilder< DetectionCapacity >::Add, _1, _2 ) );
     DoRegister( "extinguishable", boost::bind( &AddBuilder< ExtinguishableCapacity >::Add, _1, _2 ) );
+    DoRegister( "fire-forbidden", boost::bind( &AddBuilder< FireForbiddenCapacity >::Add, _1, _2 ) );
     DoRegister( "fire-propagation-modifier", boost::bind( &AddBuilder< FirePropagationModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
     DoRegister( "heuristic", boost::bind( &AddBuilder< TerrainHeuristicCapacity >::Add, _1, _2 ) );

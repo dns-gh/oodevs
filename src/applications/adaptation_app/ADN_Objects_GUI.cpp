@@ -432,6 +432,17 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eUndergroundNetworkCapacityPresent ] = & undergroundNetwork->GetConnector();
     }
 
+    ADN_GroupBox* fireForbidden = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire forbidden" ), hBox );
+    {
+        vInfosConnectors[ eFireForbiddenCapacityPresent ] = & fireForbidden->GetConnector();
+    }
+
+
+    ADN_GroupBox* border = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Border" ), hBox );
+    {
+        vInfosConnectors[ eBorderCapacityPresent] = & border->GetConnector();
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

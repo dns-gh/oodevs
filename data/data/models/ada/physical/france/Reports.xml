@@ -16,7 +16,7 @@
     <parameter type="Integer"/>
   </report>
   <report category="operational" id="11" message="Debut mission"/>
-  <report category="operational" id="12" message="Fin mission"/>
+  <report category="operational" client-function-trigger="MissionEndAlert" id="12" message="Fin mission"/>
   <report category="operational" id="13" message="Dispositif installe"/>
   <report category="operational" id="14" message="En position"/>
   <report category="operational" id="15" message="Objectif atteint"/>
@@ -48,8 +48,8 @@
   <report category="operational" id="35" message="Ennemi detruit : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="36" message="Pris a partie par tir direct"/>
-  <report category="operational" id="37" message="Pris sous tir artillerie"/>
+  <report category="operational" client-function-trigger="FiredAlert" id="36" message="Pris a partie par tir direct"/>
+  <report category="operational" client-function-trigger="FiredAlert" id="37" message="Pris sous tir artillerie"/>
   <report category="operational" id="38" message="Point tenu par eni : %1">
     <parameter type="AgentKnowledge"/>
   </report>
@@ -114,7 +114,7 @@
       <value id="9" name="ligne_identification_accueil"/>
     </parameter>
   </report>
-  <report category="operational" id="79" message="Début travaux"/>
+  <report category="operational" id="79" message="Debut travaux"/>
   <report category="operational" id="80" message="Fin travaux"/>
   <report category="operational" id="81" message="Obstacle degage"/>
   <report category="operational" id="82" message="Organisation chantier"/>
@@ -126,21 +126,21 @@
   <report category="operational" id="88" message="Fin exploitation site franchissement"/>
   <report category="operational" id="89" message="Reussite renforcement : %1 sur %2">
     <parameter type="Agent"/>
-    <parameter type="Agent"/>
+    <parameter type="Automat"/>
   </report>
   <report category="operational" id="90" message="Echec renforcement : %1 sur %2">
     <parameter type="Agent"/>
-    <parameter type="Agent"/>
+    <parameter type="Automat"/>
   </report>
   <report category="operational" id="91" message="Obstacle en attente activation : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="92" message="debut amenagement berges"/>
-  <report category="operational" id="93" message="fin amenagement berges"/>
-  <report category="operational" id="94" message="regime maintenance delai depasse"/>
-  <report category="operational" id="95" message="section deployee"/>
-  <report category="operational" id="96" message="a nouveau disponible apres reparation"/>
-  <report category="operational" id="97" message="materiel retour de maintenance : %1">
+  <report category="operational" id="92" message="Debut amenagement berges"/>
+  <report category="operational" id="93" message="Fin amenagement berges"/>
+  <report category="operational" id="94" message="Regime maintenance delai depasse"/>
+  <report category="operational" id="95" message="Section deployee"/>
+  <report category="operational" id="96" message="A nouveau disponible apres reparation"/>
+  <report category="operational" id="97" message="Materiel retour de maintenance : %1">
     <parameter type="EquipmentType"/>
   </report>
   <report category="operational" id="98" message="Materiel repare sur place : %1">
@@ -205,11 +205,11 @@
   <report category="operational" id="145" message="Vehicule laisse sur position"/>
   <report category="operational" id="146" message="Rejoint position embarquement"/>
   <report category="operational" id="147" message="En attente transporteurs"/>
-  <report category="operational" id="148" message="Contamine nbc"/>
+  <report category="operational" client-function-trigger="NBCAlert" id="148" message="Contamine nbc"/>
   <report category="operational" id="149" message="Decontamine nbc"/>
   <report category="operational" id="150" message="Tenue protection nbc mise"/>
   <report category="operational" id="151" message="Tenue protection nbc enlevee"/>
-  <report category="operational" id="152" message="Alerte nbc niveau4"/>
+  <report category="operational" client-function-trigger="NBCAlert" id="152" message="Alerte nbc niveau4"/>
   <report category="operational" id="153" message="Fin alerte nbc niveau4"/>
   <report category="operational" id="154" message="Site decontamination anime"/>
   <report category="operational" id="155" message="Site decontamination desactive"/>
@@ -225,16 +225,16 @@
   <report category="operational" id="165" message="Reconnaissance terminee"/>
   <report category="operational" id="166" message="Reconnaissance initiale terminee"/>
   <report category="operational" id="167" message="Rejoint plot ravitaillement"/>
-  <report category="operational" id="168" message="Premier coup parti"/>
-  <report category="operational" id="169" message="Tir execute"/>
-  <report category="operational" id="170" message="Tir hors de portee"/>
-  <report category="operational" id="171" message="Tir impossible plus de munitions"/>
-  <report category="operational" id="172" message="Tir annule"/>
+  <report category="operational" client-function-trigger="FirstFireStarted" id="168" message="Premier coup parti"/>
+  <report category="operational" client-function-trigger="ExecutedFire" id="169" message="Tir execute"/>
+  <report category="operational" client-function-trigger="OutOfRangeFire" id="170" message="Tir hors de portee"/>
+  <report category="operational" client-function-trigger="NoAmoLeftFire" id="171" message="Tir impossible plus de munitions"/>
+  <report category="operational" client-function-trigger="CanceledFire" id="172" message="Tir annule"/>
   <report category="operational" id="173" message="Changement de position"/>
   <report category="operational" id="174" message="Debut installation"/>
   <report category="operational" id="175" message="Fin installation"/>
   <report category="operational" id="176" message="Pret pour conduite tir"/>
-  <report category="operational" id="177" message="Observation tir indirect id tir : %1">
+  <report category="operational" client-function-trigger="IndirectFireObservation" id="177" message="Observation tir indirect id tir : %1">
     <parameter type="IndirectFire"/>
   </report>
   <report category="operational" id="178" message="Zone implantation occupee"/>
@@ -249,19 +249,19 @@
   <report category="operational" id="187" message="Pas de camp prisonniers disponible"/>
   <report category="operational" id="188" message="Rendu"/>
   <report category="operational" id="189" message="Reddition annulee"/>
-  <report category="operational" id="190" message="Tir dans zone interdite"/>
-  <report category="operational" id="191" message="Tir sur camp ami"/>
-  <report category="operational" id="192" message="Pris à partie par camp ami"/>
-  <report category="operational" id="193" message="Tir sur camp neutre"/>
-  <report category="operational" id="194" message="Pris à partie par camp neutre"/>
-  <report category="operational" id="195" message="Tir sur civil"/>
-  <report category="operational" id="196" message="Pris à partie par civil"/>
-  <report category="operational" id="197" message="Tir indirect fratricide"/>
-  <report category="operational" id="198" message="Tir indirect sur la foule"/>
-  <report category="operational" id="199" message="Destruction pc"/>
-  <report category="operational" id="200" message="Deces blesse"/>
-  <report category="operational" id="201" message="Deces blesse pendant transport"/>
-  <report category="operational" id="202" message="Deces blesse pendant hospitalisation"/>
+  <report category="exceptional" id="190" message="Tir dans zone interdite"/>
+  <report category="exceptional" id="191" message="Tir sur camp ami"/>
+  <report category="exceptional" id="192" message="Pris a partie par camp ami"/>
+  <report category="exceptional" id="193" message="Tir sur camp neutre"/>
+  <report category="exceptional" id="194" message="Pris a partie par camp neutre"/>
+  <report category="exceptional" id="195" message="Tir sur civil"/>
+  <report category="exceptional" id="196" message="Pris a partie par civil"/>
+  <report category="exceptional" id="197" message="Tir indirect fratricide"/>
+  <report category="exceptional" id="198" message="Tir indirect sur la foule"/>
+  <report category="exceptional" id="199" message="Destruction pc"/>
+  <report category="exceptional" id="200" message="Deces blesse"/>
+  <report category="exceptional" id="201" message="Deces blesse pendant transport"/>
+  <report category="exceptional" id="202" message="Deces blesse pendant hospitalisation"/>
   <report category="operational" id="203" message="Mission impossible unites subordonnees non operationnelles"/>
   <report category="operational" id="204" message="Mission impossible lima invalide"/>
   <report category="operational" id="205" message="Mission impossible zone hors fuseau"/>
@@ -287,10 +287,10 @@
   <report category="operational" id="221" message="Emploi force interdit face aux foules"/>
   <report category="operational" id="222" message="Maintien a distance par moyens non letaux face aux foules"/>
   <report category="operational" id="223" message="Armes letales autorisees face aux foules"/>
-  <report category="operational" id="224" message="Foule detectee : %1">
+  <report category="operational" client-function-trigger="CrowAlert" id="224" message="Foule detectee : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="225" message="Prise a partie par la foule : %1">
+  <report category="operational" client-function-trigger="FiredAlert" id="225" message="Prise a partie par la foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="226" message="Riposte contre la foule : %1">
@@ -334,10 +334,10 @@
   <report category="operational" id="244" message="Foule temporairement controlee"/>
   <report category="operational" id="245" message="Foule temporairement repoussee"/>
   <report category="operational" id="246" message="Reprise des affrontements"/>
-  <report category="operational" id="247" message="Agression de foule : %1">
+  <report category="operational" client-function-trigger="CrowAlert" id="247" message="Agression de foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="248" message="Agression par foule : %1">
+  <report category="operational" client-function-trigger="FiredAlert" id="248" message="Agression par foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="249" message="Riposte contre agression par foule : %1">
@@ -384,11 +384,11 @@
   <report category="operational" id="269" message="Premier coup parti sur la cible : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="270" message="Pas de capacité de tir"/>
+  <report category="operational" id="270" message="Pas de capacite de tir"/>
   <report category="operational" id="271" message="Type de munition invalide"/>
   <report category="operational" id="272" message="Tir indirect impossible"/>
-  <report category="operational" id="273" message="Cible non perçue"/>
-  <report category="operational" id="274" message="Cible tactiquement détruite : %1">
+  <report category="operational" id="273" message="Cible non percue"/>
+  <report category="operational" id="274" message="Cible tactiquement detruite : %1">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="275" message="Vision verrouillee et radar active"/>
@@ -416,7 +416,7 @@
   </report>
   <report category="operational" id="286" message="Vision verrouillee"/>
   <report category="operational" id="287" message="Debut de construction objet"/>
-  <report category="operational" id="288" message="Object %1 déjà occupé">
+  <report category="operational" id="288" message="Object %1 deja occupe">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="289" message="Silence Radio Partiel"/>
@@ -424,8 +424,8 @@
   <report category="operational" id="291" message="Fin de reconnaissance de la zone"/>
   <report category="operational" id="292" message="Travaux impossibles : pas de capacite de construction"/>
   <report category="operational" id="293" message="Travaux impossibles : pas de dotation"/>
-  <report category="operational" id="294" message="Début embarquement"/>
-  <report category="operational" id="295" message="Début débarquement"/>
+  <report category="operational" id="294" message="Debut embarquement"/>
+  <report category="operational" id="295" message="Debut debarquement"/>
   <report category="operational" id="296" message="Debut fouille du bloc urbain"/>
   <report category="operational" id="297" message="Fin fouille du bloc urbain"/>
   <report category="operational" id="298" message="Debut fouille de la zone"/>
@@ -433,45 +433,45 @@
   <report category="operational" id="300" message="Munition interdite : %1">
     <parameter type="ResourceType"/>
   </report>
-  <report category="operational" id="301" message="Munition autorisée : %1">
+  <report category="operational" id="301" message="Munition autorisee : %1">
     <parameter type="ResourceType"/>
   </report>
   <report category="operational" id="302" message="Debut du bouclage de la zone"/>
   <report category="operational" id="303" message="Fin du bouclage de la zone"/>
   <report category="operational" id="304" message="En appui"/>
-  <report category="operational" id="305" message="En mouvement, l'appui n'est pas assuré"/>
+  <report category="operational" id="305" message="En mouvement, l'appui n'est pas assure"/>
   <report category="operational" id="306" message="L'objet %1 n'est pas contournable">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="307" message="Travaux impossibles : pas de capacite de destruction"/>
-  <report category="operational" id="308" message="Cible non illuminée"/>
+  <report category="operational" id="308" message="Cible non illuminee"/>
   <report category="operational" id="309" message="Tir impossible : Munition interdite"/>
   <report category="operational" id="310" message="%1">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="311" message="Posture de protection activée"/>
-  <report category="operational" id="312" message="Posture de protection désactivée"/>
+  <report category="operational" id="311" message="Posture de protection activee"/>
+  <report category="operational" id="312" message="Posture de protection desactivee"/>
   <report category="operational" id="313" message="Debut controle bloc urbain"/>
   <report category="operational" id="314" message="Fin controle bloc urbain"/>
   <report category="operational" id="315" message="Debut controle point"/>
   <report category="operational" id="316" message="Fin controle point"/>
-  <report category="operational" id="317" message="Aucun lanceur adapté à la munition spécifiée"/>
+  <report category="operational" id="317" message="Aucun lanceur adapte a la munition specifiee"/>
   <report category="operational" id="318" message="Silence Radio Partiel"/>
-  <report category="operational" id="319" message="Embarquement - début"/>
+  <report category="operational" id="319" message="Embarquement - debut"/>
   <report category="operational" id="320" message="Embarquement - interruption"/>
   <report category="operational" id="321" message="Embarquement - reprise"/>
   <report category="operational" id="322" message="Embarquement - fin"/>
-  <report category="operational" id="323" message="Débarquement - début"/>
-  <report category="operational" id="324" message="Débarquement - interruption"/>
-  <report category="operational" id="325" message="Débarquement - reprise"/>
-  <report category="operational" id="326" message="Débarquement - fin"/>
-  <report category="operational" id="327" message="Protection active réussie"/>
-  <report category="operational" id="328" message="Protection active hard kill réussie"/>
-  <report category="operational" id="329" message="Empoisonné"/>
-  <report category="operational" id="330" message="Contaminé"/>
+  <report category="operational" id="323" message="Debarquement - debut"/>
+  <report category="operational" id="324" message="Debarquement - interruption"/>
+  <report category="operational" id="325" message="Debarquement - reprise"/>
+  <report category="operational" id="326" message="Debarquement - fin"/>
+  <report category="operational" id="327" message="Protection active reussie"/>
+  <report category="operational" id="328" message="Protection active hard kill reussie"/>
+  <report category="operational" id="329" message="Empoisonne"/>
+  <report category="operational" id="330" message="Contamine"/>
   <report category="operational" id="331" message="Tir sur camp ennemi"/>
   <report category="operational" id="332" message="Tire par camp ennemi"/>
-  <report category="operational" id="333" message="Le drone doit être mis en oeuvre"/>
+  <report category="operational" id="333" message="Le drone doit etre mis en oeuvre"/>
   <report category="operational" id="334" message="Reussite renforcement : %1 sur %2">
     <parameter type="Agent"/>
     <parameter type="Agent"/>
@@ -480,7 +480,7 @@
     <parameter type="Agent"/>
     <parameter type="Agent"/>
   </report>
-  <report category="operational" id="336" message="Départ de lima de type %1">
+  <report category="operational" id="336" message="Depart de lima de type %1">
     <parameter type="Enumeration">
       <value id="0" name="ligne_debouche"/>
       <value id="1" name="ligne_changement_attitude"/>
@@ -512,24 +512,22 @@
   <report category="operational" id="352" message="Zone évacuée"/>
   <report category="operational" id="353" message="Arrivée sur la zone d'évacuation"/>
   <report category="operational" id="354" message="Evacuation de la zone en cours"/>
-  <report category="operational" id="355" message="Début de valorisation pour l'objet : %1">
+  <report category="operational" id="355" message="Debut de valorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="356" message="Fin de valorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="357" message="La mission ne peut être effectuée sur un automate sans mission"/>
+  <report category="operational" id="357" message="La mission ne peut etre effectuee sur un automate sans mission"/>
   <report category="operational" id="358" message="Renseignement critique recueilli : %1">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="359" message="La cible ne possède pas de renseignement critique"/>
-  <report category="operational" id="360" message="Renseignement critique recueilli : %1">
-    <parameter type="String"/>
-  </report>
+  <report category="operational" id="359" message="La cible ne possede pas de renseignement critique"/>
+  <report category="operational" id="360" message="Fin des travaux sur le bloc urbain"/>
   <report category="operational" id="361" message="Le bloc urbain n'est pas traficable"/>
-  <report category="operational" id="362" message="Début de deploiement"/>
-  <report category="operational" id="363" message="Début fouille du point"/>
-  <report category="operational" id="364" message="Fouille du point terminée"/>
+  <report category="operational" id="362" message="Debut de deploiement"/>
+  <report category="operational" id="363" message="Debut fouille du point"/>
+  <report category="operational" id="364" message="Fouille du point terminee"/>
   <report category="operational" id="365" message="Tir impossible : le tireur n'est pas deploye"/>
   <report category="operational" id="366" message="La foule est sous controle, l'agression est impossible"/>
   <report category="operational" id="367" message="Un supérieur logistique est nécessaire"/>
@@ -547,15 +545,11 @@
   <report category="operational" id="375" message="L'issue du reseau souterrain est invalide"/>
   <report category="operational" id="376" message="L'issue du reseau souterrain n'est pas operationnel (etat inactif) ou l'unité est déjà sous terre."/>
   <report category="operational" id="377" message="Impossible d'atteindre l'objectif"/>
-  <report category="operational" id="3015" message="Demande un renfort technique"/>
-  <report category="operational" id="3016" message="Demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
-    <parameter type="Integer"/>
-    <parameter type="Integer"/>
-  </report>
-  <report category="operational" id="3017" message="Feu de classe %1 identifié">
-    <parameter type="Integer"/>
-  </report>
-  <report category="operational" id="3018" message="Demande un renfort de police"/>
-  <report category="operational" id="3019" message="Demande un renfort médical"/>
+  <report category="operational" id="378" message="Explosion sur un bouchon de mines"/>
+  <report category="operational" id="379" message="Pathfind - Warning"/>
+  <report category="operational" id="380" message="La dotation est indisponible"/>
+  <report category="operational" id="381" message="Observation de l'effet du tir indirect"/>
+  <report category="exceptional" id="382" message="Degats infliges a un camp neutre"/>
+  <report category="exceptional" id="383" message="Degats infliges par un camp neutre"/>
 </reports>
-<!-- signature="0275584301" -->
+<!-- signature="4248979884" -->

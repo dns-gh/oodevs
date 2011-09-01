@@ -117,7 +117,8 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_Contaminated ] = eRC_Contaminated;
     diaEvents_[ eReport_FireOnEnemySide] = eRC_TirSurCampEnnemi;
     diaEvents_[ eReport_FiredByEnemySide] = eRC_TireParCampEnnemi;
-
+    diaEvents_[ eReport_DamagesCausedToNeutralSide ] = eRC_DamagesCausedToNeutralSide;
+    diaEvents_[ eReport_DamagesCausedByNeutralSide ] = eRC_DamagesCausedByNeutralSide;
 }
 
 // -----------------------------------------------------------------------------
@@ -134,6 +135,20 @@ void MIL_Report::ReadReport( xml::xistream& xis )
     pReport = new MIL_Report( id, xis );
 }
 
+namespace
+{
+    MIL_Report::E_Type ConvertCategory( const std::string& category )
+    {
+        if( category == "information" )
+            return MIL_Report::eRcTypeMessage;
+        if( category == "exceptional" )
+            return MIL_Report::eRcTypeEvent;
+        if( category == "warning" )
+            return MIL_Report::eRcTypeWarning;
+        return MIL_Report::eRcTypeOperational; // default
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Report constructor
 // Created: NLD 2006-12-06
@@ -141,7 +156,8 @@ void MIL_Report::ReadReport( xml::xistream& xis )
 MIL_Report::MIL_Report( unsigned int id, xml::xistream& xis )
     : nID_( id )
 {
-    xis >> xml::attribute( "message", strMessage_ );
+    strMessage_ = xis.attribute< std::string >( "message" );
+    category_ = ConvertCategory( xis.attribute< std::string >( "category" ) );
     xis >> xml::list( "parameter", *this, &MIL_Report::ReadParameter );
     ids_.Lock( id );
 }

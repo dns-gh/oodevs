@@ -265,10 +265,10 @@ void MIL_Object::ApplyStructuralState( float structuralState ) const
 // Name: MIL_Object::ApplyIndirectFire
 // Created: JSR 2011-01-25
 // -----------------------------------------------------------------------------
-void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation, MIL_Army_ABC& army )
+void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation, MIL_Army_ABC* army )
 {
     if( StructuralCapacity* capacity = tools::Extendable< ObjectCapacity_ABC >::Retrieve< StructuralCapacity >() )
-        capacity->ApplyIndirectFire( *this, attritionSurface, dotation, &army );
+        capacity->ApplyIndirectFire( *this, attritionSurface, dotation, army );
     if( GetLocalisation().IsInside( attritionSurface.ComputeBarycenter() ) )
         ApplyDirectFire();
 }

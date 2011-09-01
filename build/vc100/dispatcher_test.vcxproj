@@ -134,6 +134,9 @@
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <PostBuildEvent />
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\dispatcher_test\AgentTest.cpp" />

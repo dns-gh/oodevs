@@ -147,7 +147,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\Loan.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Object.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\ObjectAttributeContainer.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\AltitudeModifierAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\BurnAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\BurnSurfaceAttribute.cpp" />
@@ -168,6 +167,7 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\ResourceNetworkAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\StockAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\UndergroundAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\GenObject.cpp" />
@@ -280,7 +280,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\Object_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\ObjectAttribute_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\ObjectAttributeContainer.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\AltitudeModifierAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\BurnAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\BurnSurfaceAttribute.h" />
@@ -301,6 +300,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\ResourceNetworkAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\StockAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\UndergroundAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\GenObject.h" />

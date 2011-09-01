@@ -3229,6 +3229,14 @@ tirador</translation>
         <source>Urban Destruction</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fire forbidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

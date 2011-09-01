@@ -37,6 +37,15 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void DoSendReport( const T& entity, bool& rcSent ) const;
+    template< typename MSG >
+    void SendReport( const MSG& msg, bool& rcSent ) const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     const MIL_Agent_ABC& firer_;

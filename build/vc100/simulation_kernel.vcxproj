@@ -140,6 +140,8 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPushFlowRequestBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
@@ -866,6 +868,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPushFlowRequestBuilder.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />

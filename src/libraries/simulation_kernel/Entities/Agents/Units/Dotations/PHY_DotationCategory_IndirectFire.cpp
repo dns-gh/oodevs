@@ -19,6 +19,7 @@
 #include "Entities/Effects/MIL_Effect_Explosion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Objects/FireForbiddenCapacity.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/MIL_Army.h"
@@ -121,8 +122,6 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( attritionSurface, category_, 20 , false ) );
         MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true ) );
 
-        bool bRCSent = false;
-
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );
 
@@ -160,9 +159,19 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         std::vector< TER_Object_ABC* > objects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
 
+        bool bFireInForbiddenArea = false;
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
-            static_cast< MIL_Object_ABC* >( *it )->ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_, pFirer->GetArmy() );
+        {
+            MIL_Object_ABC& obj = *static_cast< MIL_Object_ABC* >( *it );
+            obj.ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_, pFirer ? &pFirer->GetArmy() : static_cast< MIL_Army_ABC* >( 0 ) );
+            if( obj.Retrieve< FireForbiddenCapacity >() && pFirer && !bFireInForbiddenArea && obj.GetArmy() && pFirer->GetArmy().IsAFriend( *obj.GetArmy() ) == eTristate_True )
+            {
+                MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FireInForbiddenArea );
+                bFireInForbiddenArea = true;
+            }
+        }
 
+        bool bRCSent = false;
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
@@ -192,7 +201,6 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         const double  rAttritionRadius = std::min( vTargetPosition.Distance( vTargetPosition + vFireDirection ),
                                                    vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
         const MT_Circle attritionCircle( vTargetPosition, rAttritionRadius );
-        bool bRCSent = false;
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
         TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle ( vTargetPosition, rAttritionRadius, concentrations );
@@ -200,11 +208,6 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         {
             MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );
             pElement->ApplyIndirectFire( attritionCircle, fireResult );
-        }
-        if( pFirer && !concentrations.empty() && !bRCSent )
-        {
-            MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_IndirectFireOnPopulation );
-            bRCSent = true;
         }
 
         TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
@@ -214,11 +217,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
             MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *it );
             pElement->ApplyIndirectFire( attritionCircle, fireResult );
         }
-        if( pFirer && !flows.empty() && !bRCSent )
-        {
+        if( pFirer && ( !concentrations.empty() || !flows.empty() ) )
             MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_IndirectFireOnPopulation );
-            bRCSent = true;
-        }
     }
 }
 
@@ -228,9 +228,6 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double /*rInterventionTypeFired*/, PHY_FireResults_ABC& fireResult ) const
 {
-    // Agents
-    bool bRCSent = false;
-
     //Active Protection Management
     if( ! (target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 ) )
     {
@@ -249,11 +246,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
             targetRoleComposantes.Neutralize();
             targetRoleComposantes.ApplyDirectFireOnMajorComposantes( dotationCategory_, fireResult );
 
-            if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
-            {
+            if( firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 MIL_Report::PostEvent( firer, MIL_Report::eReport_FratricideIndirectFire );
-                bRCSent = true;
-            }
         }
     }
     // Precision Fire, no Population attrition

@@ -2496,6 +2496,12 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestContainer.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4891,6 +4897,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

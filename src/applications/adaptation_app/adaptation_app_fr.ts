@@ -2854,11 +2854,11 @@ du tireur</translation>
     <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Objet - Type de matériel urbain invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -3230,6 +3230,14 @@ du tireur</translation>
     <message>
         <source>Urban Destruction</source>
         <translation>Destruction urbaine</translation>
+    </message>
+    <message>
+        <source>Fire forbidden</source>
+        <translation>Tir interdit</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation>Frontière</translation>
     </message>
 </context>
 <context>

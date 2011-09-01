@@ -426,8 +426,8 @@
   <report category="operational" id="293" message="Work impossible : no dotation"/>
   <report category="operational" id="294" message="Embarkment started"/>
   <report category="operational" id="295" message="Disembarkment started"/>
-  <report category="operational" id="296" message="Urban bloc sweeping started"/>
-  <report category="operational" id="297" message="Urban bloc sweeping completed"/>
+  <report category="operational" id="296" message="Urban block sweeping started"/>
+  <report category="operational" id="297" message="Urban block sweeping completed"/>
   <report category="operational" id="298" message="Area sweeping started"/>
   <report category="operational" id="299" message="Area sweeping completed"/>
   <report category="operational" id="300" message="Forbidden ammunition : %1">
@@ -451,8 +451,8 @@
   </report>
   <report category="operational" id="311" message="Cover posture on"/>
   <report category="operational" id="312" message="Cover posture off"/>
-  <report category="operational" id="313" message="Urban bloc control started"/>
-  <report category="operational" id="314" message="Urban bloc control finished"/>
+  <report category="operational" id="313" message="Urban block control started"/>
+  <report category="operational" id="314" message="Urban block control finished"/>
   <report category="operational" id="315" message="Point control started"/>
   <report category="operational" id="316" message="Point control finished"/>
   <report category="operational" id="317" message="No launcher with capacity to use specify munition"/>
@@ -511,7 +511,7 @@
   <report category="operational" id="351" message="Zone confinement in progress"/>
   <report category="operational" id="352" message="Zone evacuated"/>
   <report category="operational" id="353" message="Arrived in evacuation zone"/>
-  <report category="operational" id="354" message="Evacuation in progress"/>
+  <report category="operational" id="354" message="Evacuation in progress"/>  
   <report category="operational" id="355" message="Valorization started for object : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
@@ -523,13 +523,11 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="359" message="No critical intelligence"/>
-  <report category="operational" id="360" message="Critical intelligence : %1">
-    <parameter type="String"/>
-  </report>
-  <report category="operational" id="361" message="Urban Block is not trafficable"/>
+  <report category="operational" id="360" message="Works on urban block ended"/>
+  <report category="operational" id="361" message="Urban block is not trafficable"/>
   <report category="operational" id="362" message="Starting deploy"/>
   <report category="operational" id="363" message="Location search started"/>
-  <report category="operational" id="364" message="Location search finished"/>
+  <report category="operational" id="364" message="Location search completed"/>
   <report category="operational" id="365" message="Impossible to open fire : the shooter is not deployed"/>
   <report category="operational" id="366" message="Crowd is currently under control, attack impossible"/>
   <report category="operational" id="367" message="Missing mandatory logistic superior"/>
@@ -538,7 +536,7 @@
   <report category="operational" id="370" message="Terrorist neutralized %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="371" message="setting up production for the resources network"/>
+  <report category="operational" id="371" message="Setting up production for the resources network"/>
   <report category="operational" id="372" message="Cannot reach the network resources"/>
   <report category="operational" id="373" message="End of production for the network resources"/>
   <report category="operational" id="374" message="Arrival in %1 minute(s)">
@@ -547,15 +545,11 @@
   <report category="operational" id="375" message="Invalid underground network issue"/>
   <report category="operational" id="376" message="Underground network issue is not operationnal(state inactivated) or the unit is already underground"/>
   <report category="operational" id="377" message="Cannot reach objective"/>
-  <report category="operational" id="3015" message="need technical backup"/>
-  <report category="operational" id="3016" message="need %1 firetrucks backup to fight fire of class %2">
-    <parameter type="Integer"/>
-    <parameter type="Integer"/>
-  </report>
-  <report category="operational" id="3017" message="fire of class %1 identified">
-    <parameter type="Integer"/>
-  </report>
-  <report category="operational" id="3018" message="need police backup"/>
-  <report category="operational" id="3019" message="need medical backup"/>
-</reports>
-<!-- signature="1741602011" -->
+  <report category="operational" id="378" message="Explosion on a mine cluster"/>
+  <report category="operational" id="379" message="Pathfind - Warning"/>
+  <report category="operational" id="380" message="Unavailable dotation"/>
+  <report category="operational" id="381" message="Indirect fire effect observation"/>
+  <report category="exceptional" id="382" message="Damages inflicted to neutral side"/>
+  <report category="exceptional" id="383" message="Damages inflicted by neutral side"/>
+  </reports>
+<!-- signature="1675311204" -->

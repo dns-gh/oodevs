@@ -1,25 +1,20 @@
- //*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-12-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Objects/MIL_Object_ABC.cpp $
-// $Author: Jvt $
-// $Modtime: 6/04/05 15:21 $
-// $Revision: 7 $
-// $Workfile: MIL_Object_ABC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Object_ABC.h"
-#include "MIL_ObjectInteraction.h"
 #include "MIL_AgentServer.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectType_ABC.h"
 #include "FloodAttribute.h"
 #include "ResourceNetworkCapacity.h"
 #include "SpawnCapacity.h"
-#include "StructuralCapacity.h"
-#include "UniversalCapacity.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"

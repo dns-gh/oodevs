@@ -192,9 +192,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\ObjectAttributeContainer.cpp">
       <Filter>Source Files\Model\Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.cpp">
-      <Filter>Source Files\Model\Object\Attributes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\AltitudeModifierAttribute.cpp">
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClCompile>
@@ -480,6 +477,9 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.cpp">
       <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h">
@@ -586,9 +586,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\ObjectAttributeContainer.h">
       <Filter>Source Files\Model\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.h">
-      <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\AltitudeModifierAttribute.h">
       <Filter>Source Files\Model\Object\Attributes</Filter>
@@ -973,6 +970,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.h">
       <Filter>Source Files\Model\Logistic\Consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

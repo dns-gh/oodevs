@@ -36,7 +36,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, std::vect
         return;
     const MIL_Report* pReport = MIL_Report::Find( diaEvents_[ nReport ] );
     if( pReport )
-        pReport->Send< T >( receiver, MIL_Report::eRcTypeOperational, parameters );
+        pReport->Send< T >( receiver, pReport->category_, parameters );
 }
 
 // -----------------------------------------------------------------------------

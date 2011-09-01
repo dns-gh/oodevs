@@ -1290,6 +1290,8 @@ INIT_DATA( ADN_CapacityInfos_Lodging,                 "Lodging",                
 INIT_DATA( ADN_CapacityInfos_AltitudeModifier,        "AltitudeModifier",        "altitude-modifier" );
 INIT_DATA( ADN_CapacityInfos_UndergroundNetwork,      "UndergroundNetwork",      "underground-network" );
 INIT_DATA( ADN_CapacityInfos_UrbanDestruction,        "UrbanDestruction",        "urban-destruction" );
+INIT_DATA( ADN_CapacityInfos_FireForbidden,           "FireForbidden",           "fire-forbidden" );
+INIT_DATA( ADN_CapacityInfos_Border,                  "Border",                  "border" );
 
 #pragma warning( pop )
 
@@ -1384,6 +1386,8 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Lodging::TAG ].reset( new ADN_CapacityInfos_Lodging() );
     capacities_[ ADN_CapacityInfos_AltitudeModifier::TAG ].reset( new ADN_CapacityInfos_AltitudeModifier() );
     capacities_[ ADN_CapacityInfos_UndergroundNetwork::TAG ].reset( new ADN_CapacityInfos_UndergroundNetwork() );
+    capacities_[ ADN_CapacityInfos_FireForbidden::TAG ].reset( new ADN_CapacityInfos_FireForbidden() );
+    capacities_[ ADN_CapacityInfos_Border::TAG ].reset( new ADN_CapacityInfos_Border() );
 }
 
 // -----------------------------------------------------------------------------

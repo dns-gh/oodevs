@@ -397,7 +397,9 @@ eRC_ExplosionSurBouchonMine = 378
 eRC_PathfindWarning = 379
 eRC_DotationIndisponible = 380
 eRC_ObservationEffetTirIndirect = 381
-eNbr = 382
+eRC_DamagesCausedToNeutralSide = 382
+eRC_DamagesCausedByNeutralSide = 383
+eNbr = 384
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion

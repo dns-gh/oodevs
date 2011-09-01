@@ -80,7 +80,9 @@ enum E_Capacities
     eUndergroundNetworkCapacity,
     eUniversalCapacity,
     eUrbanDestructionCapacity,
-    eWorkableCapacity
+    eWorkableCapacity,
+    eFireForbiddenCapacity,
+    eBorderCapacity
 };
 
 template< E_Capacities T, typename DefaultFieldsHolderType = NullType >

@@ -243,6 +243,10 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_UndergroundNetwork >( ADN_Objects_GUI::eUndergroundNetworkCapacityPresent );
 
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_FireForbidden >( ADN_Objects_GUI::eFireForbiddenCapacityPresent );
+
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Border >( ADN_Objects_GUI::eBorderCapacityPresent );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

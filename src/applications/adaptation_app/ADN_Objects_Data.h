@@ -119,6 +119,8 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eLodgingCapacity >                 ADN_CapacityInfos_Lodging;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eAltitudeModifierCapacity >        ADN_CapacityInfos_AltitudeModifier;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eUndergroundNetworkCapacity >      ADN_CapacityInfos_UndergroundNetwork;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eFireForbiddenCapacity >           ADN_CapacityInfos_FireForbidden;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eBorderCapacity >                  ADN_CapacityInfos_Border;
 
     class ADN_CapacityInfos_Attrition
         : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >

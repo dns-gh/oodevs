@@ -420,6 +420,8 @@
 			<xs:element name="universal" minOccurs="0"/>
 			<xs:element name="stock" minOccurs="0"/>
 			<xs:element name="underground-network" minOccurs="0"/>
+			<xs:element name="fire-forbidden" minOccurs="0"/>
+			<xs:element name="border" minOccurs="0"/>
 		</xs:all>
 	</xs:complexType>
 	<xs:element name="object" type="T_Object"/>
