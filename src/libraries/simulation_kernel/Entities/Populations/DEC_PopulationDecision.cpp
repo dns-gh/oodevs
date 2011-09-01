@@ -87,8 +87,8 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const unsigne
 
 void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )
 {
-    diaType_ = model.GetDIAType();
-    InitBrain( model.GetScriptFile(), diaType_, model.GetIncludePath(), "none", model.IsMasalife(), false );
+    model_ = &model;
+    InitBrain( model.GetScriptFile(), model.GetDIAType(), model.GetIncludePath(), GetGroupName(), model.IsMasalife(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +98,15 @@ void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )
 void DEC_PopulationDecision::EndCleanStateAfterCrash()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetGroupName
+// Created: LDC 2011-09-01
+// -----------------------------------------------------------------------------
+std::string DEC_PopulationDecision::GetGroupName()
+{
+    return "none";
 }
 
 // -----------------------------------------------------------------------------

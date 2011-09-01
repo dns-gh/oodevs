@@ -1026,6 +1026,6 @@ bool DEC_Decision< T >::IsDead() const
 template< class T >
 void DEC_Decision< T >::Reload()
 {
-    InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetAutomate().GetName(), model_->IsMasalife(), true );
+    InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true );
     StartDefaultBehavior();
 }

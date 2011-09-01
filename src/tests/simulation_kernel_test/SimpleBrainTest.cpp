@@ -101,6 +101,7 @@ public:
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
+    virtual std::string GetGroupName() { return std::string(); };
     virtual void RegisterSelf( directia::brain::Brain& brain, bool /*isMasalife*/, const std::string& /*groupName*/ )
     {
         brain[ "myself" ] = this;

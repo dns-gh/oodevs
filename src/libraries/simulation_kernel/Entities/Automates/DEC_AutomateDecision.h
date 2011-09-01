@@ -118,6 +118,7 @@ protected:
     //! @name Tools
     //@{
     virtual void EndCleanStateAfterCrash();
+    virtual std::string GetGroupName();
 
     virtual void RegisterUserFunctions( directia::brain::Brain& brain );
     virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );

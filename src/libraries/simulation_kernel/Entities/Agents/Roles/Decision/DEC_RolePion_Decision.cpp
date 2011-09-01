@@ -168,6 +168,15 @@ void DEC_RolePion_Decision::EndCleanStateAfterCrash()
     GetPion().GetRole< PHY_RoleInterface_Perceiver >().DisableAllPerceptions();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetGroupName
+// Created: LDC 2011-09-01
+// -----------------------------------------------------------------------------
+std::string DEC_RolePion_Decision::GetGroupName()
+{
+    return GetAutomate().GetName();
+}
+
 // =============================================================================
 // DEFAULT BEHAVIOR MANAGEMENT
 // =============================================================================

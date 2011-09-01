@@ -147,6 +147,7 @@ protected:
     void ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission );
     void StopMission( const std::string& strBehavior );
 
+    virtual std::string GetGroupName() = 0;
     virtual void EndCleanStateAfterCrash  () = 0;
     virtual void RegisterUserFunctions( directia::brain::Brain& brain ) = 0;
     virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) = 0;
@@ -174,16 +175,15 @@ protected:
     //@{
     T*                              pEntity_;
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
-    std::string                     diaType_;
     unsigned int                    gcPause_;
     unsigned int                    gcMult_;
+    const DEC_Model_ABC*            model_;
     //@}
 
 private:
     //!@name Data
     //@{
     boost::shared_ptr< directia::brain::Brain > pBrain_;
-    const DEC_Model_ABC*               model_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     bool                               isMasalife_;
     //@}

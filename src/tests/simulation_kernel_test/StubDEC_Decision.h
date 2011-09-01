@@ -26,6 +26,7 @@ public:
     }
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { throw; }
+    virtual std::string GetGroupName() { return std::string(); }
     virtual void EndCleanStateAfterCrash() {}
     virtual void RegisterUserFunctions( directia::brain::Brain& ) {}
     virtual void RegisterSelf( directia::brain::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName*/ ) {}

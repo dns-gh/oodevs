@@ -128,6 +128,15 @@ void DEC_AutomateDecision::EndCleanStateAfterCrash()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::GetGroupName
+// Created: LDC 2011-09-01
+// -----------------------------------------------------------------------------
+std::string DEC_AutomateDecision::GetGroupName()
+{
+    return GetAutomate().GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Automate_Decision::RegisterUserArchetypeFunctions
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Brain& brain )
