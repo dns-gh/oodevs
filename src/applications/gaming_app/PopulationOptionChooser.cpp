@@ -101,7 +101,7 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
     }
     const QObjectList buttons = activities_->children();
     for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
-        if( Q3Button* button = dynamic_cast< Q3Button* >( *it ) )
+        if( QAbstractButton* button = dynamic_cast< QAbstractButton* >( *it ) )
         {
             button->toggle();
             break;
@@ -119,7 +119,7 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelUnLoaded& )
     const QObjectList buttons = activities_->children();
     for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
     {
-        Q3Button* button = dynamic_cast< Q3Button* >( *it );
+        QAbstractButton* button = dynamic_cast< QAbstractButton* >( *it );
         if( button )
             button->deleteLater();
     }
@@ -149,7 +149,7 @@ void PopulationOptionChooser::NotifyDeleted( const kernel::Inhabitant_ABC& inhab
     const QObjectList buttons = populations_->children();
     for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
     {
-        Q3Button* button = dynamic_cast< Q3Button* >( *it );
+        QAbstractButton* button = dynamic_cast< QAbstractButton* >( *it );
         if( button && button->text() == inhabitant.GetName() )
             button->deleteLater();
     }
@@ -163,7 +163,7 @@ void PopulationOptionChooser::OnAccomodationToggled( bool toggled )
 {
     if( toggled )
     {
-        const Q3Button* senderObject = dynamic_cast< const Q3Button* >( sender() );
+        const QAbstractButton* senderObject = dynamic_cast< const QAbstractButton* >( sender() );
         if( senderObject )
             controllers_.options_.Change( "UrbanAccommodationDisplayed", senderObject->text() );
     }
@@ -175,7 +175,7 @@ void PopulationOptionChooser::OnAccomodationToggled( bool toggled )
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::OnPopulationToggled( bool toggled )
 {
-    const Q3Button* senderObject = dynamic_cast< const Q3Button* >( sender() );
+    const QAbstractButton* senderObject = dynamic_cast< const QAbstractButton* >( sender() );
     if( senderObject )
     {
         gui::ChangePopulationDisplay display( senderObject->text().ascii(), toggled );
