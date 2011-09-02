@@ -39,12 +39,12 @@ namespace
 
         virtual void keyPressEvent( QKeyEvent* e )
         {
+            QLineEdit::keyPressEvent( e );
             if( text() == initialValue_ )
             {
                 clear();
                 setAlignment( Qt::AlignRight );
             }
-            QLineEdit::keyPressEvent( e );
         }
 
         virtual void showEvent( QShowEvent* e )
