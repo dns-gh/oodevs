@@ -16,6 +16,11 @@
 
 using namespace rpr;
 
+namespace
+{
+    const double rPiOver180 = std::acos( -1. ) / 180.;
+}
+
 // -----------------------------------------------------------------------------
 // Name: WorldLocation::WorldLocation
 // Created: AGE 2008-04-01
@@ -34,10 +39,10 @@ WorldLocation::WorldLocation()
 // -----------------------------------------------------------------------------
 WorldLocation::WorldLocation( const std::string& mgrs, float altitude )
 {
-    geocoord::MGRS base( mgrs );
+    const geocoord::MGRS base( mgrs );
     geocoord::Geodetic geodetic( base );
     geodetic.SetHeight( altitude );
-    geocoord::Geocentric centric( geodetic );
+    const geocoord::Geocentric centric( geodetic );
     x_ = centric.GetX();
     y_ = centric.GetY();
     z_ = centric.GetZ();
@@ -49,9 +54,8 @@ WorldLocation::WorldLocation( const std::string& mgrs, float altitude )
 // -----------------------------------------------------------------------------
 WorldLocation::WorldLocation( double latitude, double longitude, float altitude )
 {
-    static const double rPiOver180 = std::acos( -1. ) / 180.;
-    geocoord::Geodetic geodetic( latitude * rPiOver180, longitude * rPiOver180, altitude );
-    geocoord::Geocentric centric( geodetic );
+    const geocoord::Geodetic geodetic( latitude * rPiOver180, longitude * rPiOver180, altitude );
+    const geocoord::Geocentric centric( geodetic );
     x_ = centric.GetX();
     y_ = centric.GetY();
     z_ = centric.GetZ();
@@ -64,6 +68,40 @@ WorldLocation::WorldLocation( double latitude, double longitude, float altitude 
 WorldLocation::~WorldLocation()
 {
     // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: WorldLocation::Latitude
+// Created: SLI 2011-09-02
+// -----------------------------------------------------------------------------
+double WorldLocation::Latitude() const
+{
+    const geocoord::Geocentric centric( x_, y_, z_ );
+    const geocoord::Geodetic geodetic( centric );
+    return geodetic.GetLatitude() / rPiOver180;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldLocation::Longitude
+// Created: SLI 2011-09-02
+// -----------------------------------------------------------------------------
+double WorldLocation::Longitude() const
+{
+    const geocoord::Geocentric centric( x_, y_, z_ );
+    const geocoord::Geodetic geodetic( centric );
+    return geodetic.GetLongitude() / rPiOver180;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldLocation::Altitude
+// Created: SLI 2011-09-02
+// -----------------------------------------------------------------------------
+double WorldLocation::Altitude() const
+{
+    const geocoord::Geocentric centric( x_, y_, z_ );
+    const geocoord::Geodetic geodetic( centric );
+    return geodetic.GetHeight();
 }
 
 // -----------------------------------------------------------------------------

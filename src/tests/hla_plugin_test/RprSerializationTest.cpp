@@ -71,6 +71,14 @@ BOOST_FIXTURE_TEST_CASE( world_location_serialization, SerializationFixture )
     BOOST_CHECK_EQUAL( location.Z(), Read< real64 >( deserializer ) );
 }
 
+BOOST_FIXTURE_TEST_CASE( world_location_getters, SerializationFixture )
+{
+    const WorldLocation location( 1., 2., 3. );
+    BOOST_CHECK_CLOSE( location.Latitude() , 1., 0.00001 );
+    BOOST_CHECK_CLOSE( location.Longitude(), 2., 0.00001 );
+    BOOST_CHECK_CLOSE( location.Altitude() , 3., 0.00001 );
+}
+
 BOOST_FIXTURE_TEST_CASE( velocity_vector_serialization, SerializationFixture )
 {
     const WorldLocation location( 1., 2., 3. );

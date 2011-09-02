@@ -38,6 +38,11 @@ public:
     {
         archive << x_ << y_ << z_;
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> x_ >> y_ >> z_;
+    }
     //@}
 
     //! @name Accessors
@@ -45,6 +50,9 @@ public:
     double X() const { return x_; };
     double Y() const { return y_; };
     double Z() const { return z_; };
+    double Latitude () const;
+    double Longitude() const;
+    double Altitude()  const;
     //@}
 
 private:
@@ -76,6 +84,11 @@ public:
     void Serialize( Archive& archive ) const
     {
         archive << xv_ << yv_ << zv_;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+       archive >> xv_ >> yv_ >> zv_;
     }
     //@}
 
@@ -119,6 +132,11 @@ public:
     void Serialize( Archive& archive ) const
     {
         archive << psi_ << theta_ << phi_;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> psi_ >> theta_ >> phi_;
     }
     //@}
 
