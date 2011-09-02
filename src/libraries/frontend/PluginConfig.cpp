@@ -14,16 +14,18 @@
 #include "PluginSettingVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
-#include <algorithm>
-#include <boost/bind.hpp>
-#include <boost/filesystem/convenience.hpp>
+#pragma warning( push, 0 )
 #include <Qt/qapplication.h>
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3scrollview.h>
 #include <QtCore/qsettings.h>
 #include <QtCore/qtextcodec.h>
 #include <QtGui/qtooltip.h>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
+#include <boost/filesystem/convenience.hpp>
+#include <algorithm>
 
 using namespace frontend;
 

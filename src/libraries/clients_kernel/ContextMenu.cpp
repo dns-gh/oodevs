@@ -126,7 +126,7 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel /* = 0*/, int id /* = -1*/ )
+QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel /* = 0*/, int /*id*/ /* = -1*/ )
 {
     QAction* actionCategory = InsertCategory( category );
     QList<QAction*> actions = menu_->actions();
@@ -153,7 +153,7 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, int id /* = -1*/ )
+QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, int /*id*/ /* = -1*/ )
 {
     QAction* actionCategory = InsertCategory( category );
     QList<QAction*> actions = menu_->actions();
@@ -178,7 +178,7 @@ QAction* ContextMenu::InsertItem( const std::string& category, const QString& te
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int id /* = -1*/ )
+QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int /*id*/ /* = -1*/ )
 {
     QAction* actionCategory = InsertCategory( category );
     popup->setTitle( text );

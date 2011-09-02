@@ -11,7 +11,9 @@
 #define __PluginSetting_h_
 
 #include <boost/noncopyable.hpp>
-#include <QtCore/qobject.h>
+#pragma warning( push, 0 )
+#include <QtCore/QObject>
+#pragma warning( pop )
 
 class QCheckBox;
 class QLineEdit;
