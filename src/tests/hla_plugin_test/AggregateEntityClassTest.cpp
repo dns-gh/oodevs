@@ -100,7 +100,7 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_remote_instances, Regist
 {
     MockAggregate* aggregate( new MockAggregate() );
     entity.Register( remoteListener );
-    MOCK_EXPECT( remoteFactory, Create ).once().with( "name" ).returns( std::auto_ptr< Aggregate_ABC >( aggregate ) );
+    MOCK_EXPECT( remoteFactory, Create ).once().with( "name", mock::any ).returns( std::auto_ptr< Aggregate_ABC >( aggregate ) );
     MOCK_EXPECT( remoteListener, Created ).once().with( "name", mock::same( *aggregate ) );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();

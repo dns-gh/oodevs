@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Aggregate_ABC > Create( const std::string& name ) const;
+    virtual std::auto_ptr< Aggregate_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const;
     //@}
 };
 

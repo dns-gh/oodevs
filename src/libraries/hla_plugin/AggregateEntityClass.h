@@ -31,6 +31,7 @@ namespace hla
     class ClassBuilder_ABC;
     class RemoteAggregateFactory_ABC;
     class RemoteAgentListener_ABC;
+    class RemoteAgentListenerComposite;
 
 // =============================================================================
 /** @class  AggregateEntityClass
@@ -74,7 +75,6 @@ private:
     //@{
     typedef boost::shared_ptr< Aggregate_ABC > T_Entity;
     typedef std::map< std::string, T_Entity > T_Entities;
-    typedef std::vector< RemoteAgentListener_ABC* > T_Listeners;
     //@}
 
 private:
@@ -86,7 +86,7 @@ private:
     const RemoteAggregateFactory_ABC& remoteFactory_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
-    T_Listeners listeners_;
+    std::auto_ptr< RemoteAgentListenerComposite > pListeners_;
     std::auto_ptr< ::hla::Class< Aggregate_ABC > > hlaClass_;
     //@}
 };

@@ -15,6 +15,7 @@
 #include "AggregateFactory_ABC.h"
 #include "RemoteAggregateFactory_ABC.h"
 #include "RemoteAgentListener_ABC.h"
+#include "RemoteAgentListenerComposite.h"
 #include "ClassBuilder_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
@@ -34,6 +35,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     , subject_      ( subject )
     , factory_      ( factory )
     , remoteFactory_( remoteFactory )
+    , pListeners_   ( new RemoteAgentListenerComposite() )
     , hlaClass_     ( new ::hla::Class< Aggregate_ABC >( *this, true ) )
 {
     builder.Build( federate, *hlaClass_, true, true );
@@ -78,9 +80,8 @@ void AggregateEntityClass::Destroyed( const std::string& identifier )
 Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& objectName )
 {
     T_Entity& entity = remoteEntities_[ objectName ];
-    entity.reset( remoteFactory_.Create( objectName ).release() );
-    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
-        listener->Created( objectName, *entity );
+    entity.reset( remoteFactory_.Create( objectName, *pListeners_ ).release() );
+    pListeners_->Created( objectName, *entity );
     return *entity;
 }
 
@@ -93,8 +94,7 @@ void AggregateEntityClass::Destroy( Aggregate_ABC& object )
     BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
         if( &*entity.second == &object )
         {
-            BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
-                listener->Destroyed( entity.first, *entity.second );
+            pListeners_->Destroyed( entity.first, *entity.second );
             remoteEntities_.erase( entity.first );
             return;
         }
@@ -106,7 +106,7 @@ void AggregateEntityClass::Destroy( Aggregate_ABC& object )
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Register( RemoteAgentListener_ABC& listener )
 {
-    listeners_.push_back( &listener );
+    pListeners_->Register( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,5 +115,5 @@ void AggregateEntityClass::Register( RemoteAgentListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Unregister( RemoteAgentListener_ABC& listener )
 {
-    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+    pListeners_->Unregister( listener );
 }
