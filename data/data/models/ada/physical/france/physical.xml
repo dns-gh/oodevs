@@ -37,6 +37,6 @@
   <drawing-templates file="DrawingTemplates.xml"/>
   <scores file="scores.xml"/>
   <symbols file="symbols.xml"/>
-  <filters file="Filters/Filters.xml"/>  
+  <filters file="Filters/Filters.xml"/>
 </physical>
-<!-- signature="0063528226" -->
+<!-- signature="3086473956" -->
