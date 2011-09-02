@@ -44,7 +44,7 @@ void PHY_GlobalMeteo::SendCreation() const
     msg().mutable_weather()->set_id( id_ );
     sword::WeatherAttributes* att = msg().mutable_attributes();
     att->set_wind_speed( static_cast< int >( wind_.rSpeed_ / conversionFactor_ ) );
-    NET_ASN_Tools::WriteDirection( wind_.vDirection_, *( att->mutable_wind_direction() ) );
+    att->mutable_wind_direction()->set_heading( wind_.eAngle_ );
     att->set_cloud_floor( cloud_.nFloor_ );
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( cloud_.nDensityPercentage_ );

@@ -16,6 +16,9 @@
 // -----------------------------------------------------------------------------
 MT_Vector2D weather::ReadDirection( double orientation )
 {
+    if( orientation == 360. )
+        orientation = 0.;
+    assert( orientation >= 0. && orientation < 360. );
     MT_Vector2D result( 0, 1 ); // North vector
     double radAngle = orientation * MT_PI / 180.;
     result.Rotate( radAngle );

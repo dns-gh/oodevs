@@ -68,8 +68,8 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
         >> xml::end;
     if( wind_.rSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
-    if( wind_.eAngle_ < 0 || wind_.eAngle_ > 360 )
-        xis.error( "meteo: DirectionVent not in [0..360]" );
+    if( wind_.eAngle_ < 0 || wind_.eAngle_ >= 360 )
+        xis.error( "meteo: DirectionVent not in [0..360[" );
     wind_.vDirection_ = ReadDirection( wind_.eAngle_ );
     xis >> xml::optional
         >> xml::start( "temperature" )
