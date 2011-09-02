@@ -66,7 +66,7 @@ private:
     //! @name Operations
     //@{
     virtual void Create( dispatcher::Agent& entity );
-    virtual void Notify( const sword::UnitDestruction& message );
+    virtual void Notify( const sword::UnitDestruction& message, int context );
     //@}
 
 private:

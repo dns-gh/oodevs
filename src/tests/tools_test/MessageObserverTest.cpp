@@ -44,8 +44,8 @@ namespace
                               , public MessageObserver< SecondMessage >
     {
     public:
-        MOCK_METHOD_EXT( Notify, 1, void( const FirstMessage& ), NotifyFirst );
-        MOCK_METHOD_EXT( Notify, 1, void( const SecondMessage& ), NotifySecond );
+        MOCK_METHOD_EXT( Notify, 2, void( const FirstMessage&, int ), NotifyFirst );
+        MOCK_METHOD_EXT( Notify, 2, void( const SecondMessage&, int ), NotifySecond );
     };
 }
 
@@ -56,8 +56,19 @@ BOOST_AUTO_TEST_CASE( observer_connects_to_controller_and_receives_messages )
     CONNECT( controller, observer, first_message );
     CONNECT( controller, observer, second_message );
     mock::sequence s;
-    MOCK_EXPECT( observer, NotifyFirst ).once().in( s );
-    MOCK_EXPECT( observer, NotifySecond ).once().in( s );
+    MOCK_EXPECT( observer, NotifyFirst ).once().in( s ).with( mock::any, 42 );
+    MOCK_EXPECT( observer, NotifySecond ).once().in( s ).with( mock::any, 42 );
+    Category category;
+    controller.Dispatch( category, 42 );
+}
+
+BOOST_AUTO_TEST_CASE( context_is_negative_by_default )
+{
+    MessageController< Category > controller;
+    MockMessageObserver observer;
+    CONNECT( controller, observer, first_message );
+    mock::sequence s;
+    MOCK_EXPECT( observer, NotifyFirst ).once().in( s ).with( mock::any, -1 );
     Category category;
     controller.Dispatch( category );
 }
@@ -71,7 +82,7 @@ BOOST_AUTO_TEST_CASE( observer_can_explicitly_disconnect_from_controller )
     DISCONNECT( controller, observer, first_message );
     MOCK_EXPECT( observer, NotifySecond ).once();
     Category category;
-    controller.Dispatch( category );
+    controller.Dispatch( category, 42 );
 }
 
 BOOST_AUTO_TEST_CASE( observer_can_connect_to_multiple_controllers )
@@ -85,10 +96,10 @@ BOOST_AUTO_TEST_CASE( observer_can_connect_to_multiple_controllers )
     MOCK_EXPECT( observer, NotifyFirst ).once();
     controller1.Dispatch( category );
     MOCK_EXPECT( observer, NotifyFirst ).once();
-    controller2.Dispatch( category );
+    controller2.Dispatch( category, 42 );
 }
 
-BOOST_AUTO_TEST_CASE( observer_can_disconnect_from_on_controller )
+BOOST_AUTO_TEST_CASE( observer_can_disconnect_from_one_specific_controller )
 {
     MessageController< Category > controller1;
     MessageController< Category > controller2;
@@ -99,7 +110,7 @@ BOOST_AUTO_TEST_CASE( observer_can_disconnect_from_on_controller )
     DISCONNECT( controller1, observer, first_message );
     controller1.Dispatch( category );
     MOCK_EXPECT( observer, NotifyFirst ).once();
-    controller2.Dispatch( category );
+    controller2.Dispatch( category, 42 );
 }
 
 namespace
@@ -109,7 +120,7 @@ namespace
     {
         MOCK_METHOD_EXT_TPL( Register, 1, void( MessageHandler_ABC< Category >& ), Register )
         MOCK_METHOD_EXT_TPL( Unregister, 1, void( MessageHandler_ABC< Category >& ), Unregister )
-        MOCK_METHOD_EXT_TPL( Dispatch, 1, void( const Category& ), Dispatch )
+        MOCK_METHOD_EXT_TPL( Dispatch, 2, void( const Category&, int ), Dispatch )
     };
     class Observer : private MessageObserver< FirstMessage >
     {
@@ -119,7 +130,7 @@ namespace
             CONNECT( controller, *this, first_message );
         }
     private:
-        virtual void Notify( const FirstMessage& /*message*/ )
+        virtual void Notify( const FirstMessage& /*message*/, int /*context*/ )
         {
             // NOTHING
         }

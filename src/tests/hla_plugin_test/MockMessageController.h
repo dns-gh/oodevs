@@ -25,7 +25,7 @@ MOCK_BASE_CLASS( MockMessageController, MessageController_ABC< Category > )
 {
     MOCK_METHOD_EXT_TPL( Register, 1, void( MessageHandler_ABC< Category >& ), Register )
     MOCK_METHOD_EXT_TPL( Unregister, 1, void( MessageHandler_ABC< Category >& ), Unregister )
-    MOCK_METHOD_EXT_TPL( Dispatch, 1, void( const Category& ), Dispatch )
+    MOCK_METHOD_EXT_TPL( Dispatch, 2, void( const Category&, int ), Dispatch )
 };
 
 }

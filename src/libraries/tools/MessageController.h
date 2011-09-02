@@ -12,7 +12,7 @@
 
 #include "MessageController_ABC.h"
 #include "MessageHandler_ABC.h"
-#include <vector>
+#include <list>
 
 namespace tools
 {
@@ -40,19 +40,19 @@ public:
     }
     virtual void Unregister( MessageHandler_ABC< Category >& handler )
     {
-        handlers_.erase( std::remove( handlers_.begin(), handlers_.end(), &handler ) );
+        handlers_.erase( std::remove( handlers_.begin(), handlers_.end(), &handler ), handlers_.end() );
     }
-    virtual void Dispatch( const Category& message )
+    virtual void Dispatch( const Category& message, int context = -1 )
     {
         for( T_Handlers::iterator it = handlers_.begin(); it != handlers_.end(); ++it )
-            (*it)->Notify( message );
+            (*it)->Notify( message, context );
     }
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< MessageHandler_ABC< Category >* > T_Handlers;
+    typedef std::list< MessageHandler_ABC< Category >* > T_Handlers;
     //@}
 
 private:

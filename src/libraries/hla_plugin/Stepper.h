@@ -50,7 +50,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Notify( const sword::ControlEndTick& message );
+    virtual void Notify( const sword::ControlEndTick& message, int context );
     //@}
 
 private:

@@ -40,7 +40,7 @@ Stepper::~Stepper()
 // Name: Stepper::Notify
 // Created: SLI 2011-06-24
 // -----------------------------------------------------------------------------
-void Stepper::Notify( const sword::ControlEndTick& /*message*/ )
+void Stepper::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
 {
     simulation::ControlResume message;
     message().set_tick( 1 );

@@ -134,5 +134,5 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, BuildFixture )
     MOCK_EXPECT( federate, Step ).once();
     sword::SimToClient_Content message;
     message.mutable_control_end_tick()->set_current_tick( 3 );
-    listener->Notify( message );
+    listener->Notify( message, 42 );
 }

@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Notify( const Category& message ) = 0;
+    virtual void Notify( const Category& message, int context ) = 0;
     //@}
 };
 

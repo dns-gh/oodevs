@@ -42,7 +42,7 @@ public:
     //@{
     virtual void Register( MessageHandler_ABC< Category >& handler ) = 0;
     virtual void Unregister( MessageHandler_ABC< Category >& handler ) = 0;
-    virtual void Dispatch( const Category& message ) = 0;
+    virtual void Dispatch( const Category& message, int context ) = 0;
     //@}
 };
 

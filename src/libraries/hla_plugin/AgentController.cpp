@@ -74,7 +74,7 @@ void AgentController::Create( dispatcher::Agent& entity )
 // Name: AgentController::Notify
 // Created: SLI 2011-06-29
 // -----------------------------------------------------------------------------
-void AgentController::Notify( const sword::UnitDestruction& message )
+void AgentController::Notify( const sword::UnitDestruction& message, int /*context*/ )
 {
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->Destroyed( boost::lexical_cast< std::string >( message.unit().id() ) );

@@ -51,6 +51,7 @@ namespace hla
     class AgentSubject_ABC;
     class ObjectResolver_ABC;
     class Stepper;
+    class RemoteAgentController;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -88,6 +89,7 @@ private:
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
+    std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > federate_;
     std::auto_ptr< Stepper > pStepper_;

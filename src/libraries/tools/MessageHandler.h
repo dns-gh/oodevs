@@ -52,10 +52,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Notify( const Category& message )
+    virtual void Notify( const Category& message, int context )
     {
         if( ( message.*checker_ )() )
-            observer_.Notify( ( message.*retriever_ )() );
+            observer_.Notify( ( message.*retriever_ )(), context );
     }
     //@}
 

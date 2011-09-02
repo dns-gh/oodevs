@@ -117,7 +117,7 @@ FederateFacade::~FederateFacade()
 // Name: FederateFacade::Notify
 // Created: SLI 2011-06-24
 // -----------------------------------------------------------------------------
-void FederateFacade::Notify( const sword::ControlEndTick& /*message*/ )
+void FederateFacade::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
 {
     federate_->Step();
 }
