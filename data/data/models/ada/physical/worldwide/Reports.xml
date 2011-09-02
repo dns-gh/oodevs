@@ -551,5 +551,12 @@
   <report category="operational" id="381" message="Indirect fire effect observation"/>
   <report category="exceptional" id="382" message="Damages inflicted to neutral side"/>
   <report category="exceptional" id="383" message="Damages inflicted by neutral side"/>
+  <report category="exceptional" id="384" message="Infrastructure damaged"/>
+  <report category="exceptional" id="385" message="Living area damaged"/>
+  <report category="exceptional" id="386" message="Border crossed"/>
+  <report category="exceptional" id="387" message="Tactically destroyed"/>
+  <report category="exceptional" id="388" message="Civilians or refugees encountered"/>
+  <report category="exceptional" id="389" message="Population or prisoners unsupplied"/>
+  <report category="exceptional" id="390" message="Prisoners camp full"/>
 </reports>
-<!-- signature="1460084327" -->
+<!-- signature="0759078236" -->

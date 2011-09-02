@@ -129,9 +129,7 @@ void MedicalCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 // -----------------------------------------------------------------------------
 void MedicalCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& object )
 {
-    MedicalTreatmentAttribute* medicalAttribute = new MedicalTreatmentAttribute( xis );
-    const_cast< MIL_Object_ABC& >( object ).tools::Extendable< ObjectAttribute_ABC >::Attach< ObjectAttribute_ABC >( *medicalAttribute );
-    const_cast< MIL_Object_ABC& >( object ).GetAttribute< MedicalTreatmentAttribute >() = *medicalAttribute;
+    const_cast< MIL_Object_ABC& >( object ).GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( xis );
 }
 
 // -----------------------------------------------------------------------------

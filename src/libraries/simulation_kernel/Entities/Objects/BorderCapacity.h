@@ -11,6 +11,7 @@
 #define __BorderCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
+#include "MIL_InteractiveContainer_ABC.h"
 
 namespace xml
 {
@@ -24,6 +25,7 @@ class xistream;
 // Created: JSR 2011-08-31
 // =============================================================================
 class BorderCapacity : public ObjectCapacity_ABC
+                     , public MIL_InteractiveContainer_ABC
 {
 
 public:
@@ -39,6 +41,12 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    //@}
+
+    //! @name From MIL_InteractiveContainer_ABC
+    //@{
+    virtual void ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population );
     //@}
 
 private:

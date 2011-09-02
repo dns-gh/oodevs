@@ -19,7 +19,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
 
     MOCK_METHOD( NotifyExternalPerception, 2 );
     MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ), NotifyAgentPerceptionRecorded );
-    MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_Agent_ABC&, const PHY_PerceptionLevel& ), NotifyAgentPerception );
+    MOCK_METHOD_EXT( NotifyPerception, 2, bool( MIL_Agent_ABC&, const PHY_PerceptionLevel& ), NotifyAgentPerception );
     MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_Object_ABC&, const PHY_PerceptionLevel& ), NotifyObjectPerception );
     MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_PopulationConcentration&, const PHY_PerceptionLevel& ), NotifyPopulationConcentrationPerception );
     MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const T_PointVector& ), NotifyPopulationFlowPerception );

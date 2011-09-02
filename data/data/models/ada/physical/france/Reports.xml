@@ -494,23 +494,23 @@
       <value id="9" name="ligne_identification_accueil"/>
     </parameter>
   </report>
-  <report category="operational" id="337" message="Arrivée sur le lieu de l'incendie"/>
-  <report category="operational" id="338" message="Feu éteint"/>
-  <report category="operational" id="339" message="Arrivée dans la zone d'alerte"/>
-  <report category="operational" id="340" message="Zone alertée"/>
-  <report category="operational" id="341" message="Arrivée au point de garage"/>
-  <report category="operational" id="342" message="Arrivée sur le site d'extraction"/>
-  <report category="operational" id="343" message="Extraction terminée"/>
-  <report category="operational" id="344" message="Ravitaillement terminée"/>
-  <report category="operational" id="345" message="Arrivée sur le site de ravitaillement"/>
-  <report category="operational" id="346" message="Distribution terminée"/>
-  <report category="operational" id="347" message="Zone confinée"/>
-  <report category="operational" id="348" message="Arrivée dans la zone de confinement"/>
+  <report category="operational" id="337" message="Arrivee sur le lieu de l'incendie"/>
+  <report category="operational" id="338" message="Feu eteint"/>
+  <report category="operational" id="339" message="Arrivee dans la zone d'alerte"/>
+  <report category="operational" id="340" message="Zone alertee"/>
+  <report category="operational" id="341" message="Arrivee au point de garage"/>
+  <report category="operational" id="342" message="Arrivee sur le site d'extraction"/>
+  <report category="operational" id="343" message="Extraction terminee"/>
+  <report category="operational" id="344" message="Ravitaillement terminee"/>
+  <report category="operational" id="345" message="Arrivee sur le site de ravitaillement"/>
+  <report category="operational" id="346" message="Distribution terminee"/>
+  <report category="operational" id="347" message="Zone confinee"/>
+  <report category="operational" id="348" message="Arrivee dans la zone de confinement"/>
   <report category="operational" id="349" message="Aucun drone disponible"/>
-  <report category="operational" id="350" message="Premier confinement terminé"/>
+  <report category="operational" id="350" message="Premier confinement termine"/>
   <report category="operational" id="351" message="Confinement de la zone en cours"/>
-  <report category="operational" id="352" message="Zone évacuée"/>
-  <report category="operational" id="353" message="Arrivée sur la zone d'évacuation"/>
+  <report category="operational" id="352" message="Zone evacuee"/>
+  <report category="operational" id="353" message="Arrivee sur la zone d'evacuation"/>
   <report category="operational" id="354" message="Evacuation de la zone en cours"/>
   <report category="operational" id="355" message="Debut de valorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
@@ -530,10 +530,10 @@
   <report category="operational" id="364" message="Fouille du point terminee"/>
   <report category="operational" id="365" message="Tir impossible : le tireur n'est pas deploye"/>
   <report category="operational" id="366" message="La foule est sous controle, l'agression est impossible"/>
-  <report category="operational" id="367" message="Un supérieur logistique est nécessaire"/>
-  <report category="operational" id="368" message="Le site de franchissement doit être reconnu"/>
+  <report category="operational" id="367" message="Un superieur logistique est necessaire"/>
+  <report category="operational" id="368" message="Le site de franchissement doit etre reconnu"/>
   <report category="operational" id="369" message="Objet invalide"/>
-  <report category="operational" id="370" message="Terroriste %1 capturé">
+  <report category="operational" id="370" message="Terroriste %1 capture">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="371" message="Mise en place de la production pour le reseau de ressources"/>
@@ -543,7 +543,7 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="375" message="L'issue du reseau souterrain est invalide"/>
-  <report category="operational" id="376" message="L'issue du reseau souterrain n'est pas operationnel (etat inactif) ou l'unité est déjà sous terre."/>
+  <report category="operational" id="376" message="L'issue du reseau souterrain n'est pas operationnel (etat inactif) ou l'unite est deja sous terre."/>
   <report category="operational" id="377" message="Impossible d'atteindre l'objectif"/>
   <report category="operational" id="378" message="Explosion sur un bouchon de mines"/>
   <report category="operational" id="379" message="Pathfind - Warning"/>
@@ -551,5 +551,12 @@
   <report category="operational" id="381" message="Observation de l'effet du tir indirect"/>
   <report category="exceptional" id="382" message="Degats infliges a un camp neutre"/>
   <report category="exceptional" id="383" message="Degats infliges par un camp neutre"/>
+  <report category="exceptional" id="384" message="Dommages infliges sur une infrastructure"/>
+  <report category="exceptional" id="385" message="Dommages infliges sur une zone de vie d'une population couvrante"/>
+  <report category="exceptional" id="386" message="Franchissement de frontiere"/>
+  <report category="exceptional" id="387" message="Tactiquement detruit"/>
+  <report category="exceptional" id="388" message="Rencontre de refugies ou de population civile"/>
+  <report category="exceptional" id="389" message="Population ou prisonniers sans ravitaillement"/>
+  <report category="exceptional" id="390" message="Camp de prisonniers plein"/>
 </reports>
-<!-- signature="4248979884" -->
+<!-- signature="0131105800" -->

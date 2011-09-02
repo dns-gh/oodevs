@@ -70,7 +70,7 @@ public:
         eReport_WoundedManDeathDuringHospitalization,
         eReport_FireInForbiddenArea,
         eReport_FratricideIndirectFire,
-        eReport_IndirectFireOnPopulation,
+        eReport_IndirectFireOnPopulation, // 20
         eReport_FireOnFriendSide,
         eReport_FiredByFriendSide,
         eReport_FireOnNeutralSide,
@@ -90,7 +90,7 @@ public:
         eReport_EquipmentLoanInProgress,
         eReport_EquipmentLoanCanceled,
         eReport_EquipmentLoanDone,
-        eReport_EquipmentLoanPartiallyDone,
+        eReport_EquipmentLoanPartiallyDone, // 40
         eReport_EquipmentLoanImpossible,
         eReport_EquipmentLoanRetrievingDone,
         eReport_EquipmentLoanRetrievingPartiallyDone,
@@ -110,7 +110,7 @@ public:
         eReport_HaulerResourcesLevelReached,
         eReport_ConvoyTransporterResourcesLevelReached,
         eReport_EmbarkmentStarted,
-        eReport_EmbarkmentInterrupted,
+        eReport_EmbarkmentInterrupted, // 60
         eReport_EmbarkmentResumed,
         eReport_EmbarkmentFinished,
         eReport_DisembarkmentStarted,
@@ -124,10 +124,18 @@ public:
         eReport_FireOnEnemySide,
         eReport_FiredByEnemySide,
         eReport_IndirectFireOnTarget,
+        eReport_DestructionPC,
         eReport_MunitionInterdite,
         eReport_MunitionAutorise,
         eReport_DamagesCausedToNeutralSide,
         eReport_DamagesCausedByNeutralSide,
+        eReport_InfrastructureDamaged,
+        eReport_LivingAreaDamaged,
+        eReport_BorderCrossed, // 80
+        eReport_TacticallyDestroyed,
+        eReport_CiviliansEncountered,
+        eReport_PrisonersUnsupplied,
+        eReport_PrisonersCampFull,
         eNbrReport
     };
 
@@ -153,7 +161,7 @@ public:
         eRC_RejointUnite,
         eRC_EscorteUnite,
         eRC_EnFreinage,
-        eRC_Assaut,
+        eRC_Assaut, // 20
         eRC_EnCouverture,
         eRC_EnEclairage,
         eRC_EnManoeuvreRavitaillement,
@@ -173,7 +181,7 @@ public:
         eRC_PrisSousTirArtillerie,
         eRC_PointTenuParEni, // Parametre : T_ConnaissanceAgent
         eRC_ProgressionVersEni, // Parametre : T_ConnaissanceAgent
-        eRC_Decroche,
+        eRC_Decroche, // 40
         eRC_EniSurObjectif, // Parametre : T_ConnaissanceAgent
         eRC_Riposte,
         eRC_PretPourEngagementSurEnnemi,
@@ -193,7 +201,7 @@ public:
         eRC_ActivationBrouillage,
         eRC_DesactivationBrouillage,
         eRC_ActivationSystemeEcoute,
-        eRC_DesactivationSystemeEcoute,
+        eRC_DesactivationSystemeEcoute, // 60
         eRC_ActivationSystemeEcouteRadar,
         eRC_DesactivationSystemeEcouteRadar,
         eRC_DebutLiaison,
@@ -213,7 +221,7 @@ public:
         eRC_AmbianceSurete,
         eRC_SurLima, // Parametre : id
         eRC_DebutTravaux,
-        eRC_FinTravaux,
+        eRC_FinTravaux, // 80
         eRC_ObstacleDegage,
         eRC_OrganisationChantier,
         eRC_DesorganisationChantier,
@@ -233,7 +241,7 @@ public:
         eRC_MaterielRetourDeMaintenance, // Parametre : TypeEquipement
         eRC_MaterielRepareSurPlace, // Parametre : TypeEquipement
         eRC_DemandeRavitaillementDotations,
-        eRC_DemandeRavitaillementStocks,
+        eRC_DemandeRavitaillementStocks, // 100
         eRC_DemandeEvacuationSanitaire,
         eRC_DemandeEvacuationMateriel,
         eRC_AllocationConsentieBientotEpuisee, // Parametre : TypeDotation
@@ -253,7 +261,7 @@ public:
         eRC_AlerteDisponibiliteVecteurs,
         eRC_PretMaterielEnCours,
         eRC_PretMaterielAnnule,
-        eRC_PretMaterielEffectue,
+        eRC_PretMaterielEffectue, // 120
         eRC_PretMaterielImpossible,
         eRC_PretMaterielPartiellementEffectue,
         eRC_RecuperationMaterielPreteImpossible,
@@ -273,7 +281,7 @@ public:
         eRC_HelicoptereEnObservation,
         eRC_PerteInfoGuidage,
         eRC_TransportUnitePasPrete, // Parametre : T_Pion
-        eRC_TransportUnitePrete, // Parametre : T_Pion
+        eRC_TransportUnitePrete, // 140 - Parametre : T_Pion
         eRC_TransportEnCours,
         eRC_TransportEmbarquement,
         eRC_TransportDebarquement,
@@ -293,7 +301,7 @@ public:
         eRC_ZoneReconnue,
         eRC_ZoneDecontaminee,
         eRC_SiteROTAReconnu,
-        eRC_IncidentNBCTermine,
+        eRC_IncidentNBCTermine, // 160
         eRC_UniteDecontaminee, // Parametre : T_Pion
         eRC_SiteSature,
         eRC_DebutMesure,
@@ -313,7 +321,7 @@ public:
         eRC_ObservationTirIndirect, // Parametre : TirPion
         eRC_ZoneImplantationOccupee,
         eRC_InstallationSurZoneImplantation,
-        eRC_ReceptionOrdreDeFeu,
+        eRC_ReceptionOrdreDeFeu, // 180
         eRC_PretAuTir,
         eRC_PresencePopulation,
         eRC_OrientationPopulationVersCampRefugies,
@@ -333,7 +341,7 @@ public:
         eRC_TirIndirectFratricide,
         eRC_TirIndirectSurPopulation,
         eRC_DestructionPC,
-        eRC_DecesBlesse,
+        eRC_DecesBlesse, // 200
         eRC_DecesBlessePendantTransport,
         eRC_DecesBlessePendantHospitalisation,
         eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles,
@@ -353,7 +361,7 @@ public:
         eRC_TirInterdit,
         eRC_TirLibre,
         eRC_Trace, // Parametre : message
-        eRC_TraceID, // Parametre : float
+        eRC_TraceID, // 220 - Parametre : float
         eRC_EmploiForceInterdit,
         eRC_MaintienADistanceParMoyensNonLetaux,
         eRC_ArmesLetalesAutorisees,
@@ -373,7 +381,7 @@ public:
         eRC_UtilisationArmesNonLetalesFaceAPopulation,
         eRC_UtilisationArmementsFaceAPopulation,
         eRC_DebutInterventionFaceAPopulation, // Parametre : id
-        eRC_PopulationVictimeAffrontements, // Parametres : victimes (float), dont_blesses (float),
+        eRC_PopulationVictimeAffrontements, // 240 - Parametres : victimes (float), dont_blesses (float),
         eRC_AttitudePopulation, // Parametre : id
         eRC_AggravationAttitude,
         eRC_AffrontementAvecForcesEnnemies,
@@ -393,7 +401,7 @@ public:
         eRC_BM_DebutMission,
         eRC_BM_FinMission,
         eRC_BM_DebutPhase,
-        eRC_BM_FinPhase,
+        eRC_BM_FinPhase, // 260
         eRC_ActivationObstacleDeManoeuvre,
         eRC_DebutAnimationObjet,
         eRC_TirDirectSurCible,
@@ -413,7 +421,7 @@ public:
         eRC_FinReconnaissanceBlocUrbain,
         eRC_DebutReconnaissancePoint,
         eRC_FinReconnaissancePoint,
-        eRC_FinTirDirectSurCible,
+        eRC_FinTirDirectSurCible, // 280
         eRC_DebutTravauxObjet,
         eRC_FinTravauxObjet,
         eRC_FinTirIndirectSurCible,
@@ -433,7 +441,7 @@ public:
         eRC_FinFouilleBlocUrbain,
         eRC_DebutFouilleZone,
         eRC_FinFouilleZone,
-        eRC_MunitionInterdite,
+        eRC_MunitionInterdite, // 300
         eRC_MunitionAutorise,
         eRC_DebutBouclageZone,
         eRC_FinBouclageZone,
@@ -453,7 +461,7 @@ public:
         eRC_TirIndirectNoCapacity,
         eRC_DebutSilenceRadioPartiel,
         eRC_EmbarkmentStarted,
-        eRC_EmbarkmentInterrupted,
+        eRC_EmbarkmentInterrupted, // 320
         eRC_EmbarkmentResumed,
         eRC_EmbarkmentFinished,
         eRC_DisembarkmentStarted,
@@ -473,7 +481,7 @@ public:
         eRC_ArrivedOnExtinguishableObject,
         eRC_ObjectExtinguished,
         eRC_ArrivedOnAlertZone,
-        eRC_ZoneAlerted,
+        eRC_ZoneAlerted, // 340
         eRC_ArrivedOnGaragePosition,
         eRC_ExtractFromStock_Arrived,
         eRC_ExtractFromStock_Extracted,
@@ -493,7 +501,7 @@ public:
         eRC_EchecRelever,
         eRC_criticalIntelligence,
         eRC_criticalIntelligenceNone,
-        eRC_FinTravauxBlocUrbain,
+        eRC_FinTravauxBlocUrbain, // 360
         eRC_BUNonTraficable,
         eRC_StartDeploy,
         eRC_DebutFouillePoint,
@@ -513,10 +521,17 @@ public:
         eRC_ImpossibleAtteindreObjectif,
         eRC_ExplosionSurBouchonMine,
         eRC_PathfindWarning,
-        eRC_DotationIndisponible,
+        eRC_DotationIndisponible, // 380
         eRC_ObservationEffetTirIndirect,
         eRC_DamagesCausedToNeutralSide,
         eRC_DamagesCausedByNeutralSide,
+        eRc_InfrastructureDamaged,
+        eRc_LivingAreaDamaged,
+        eRc_BorderCrossed,
+        eRc_TacticallyDestroyed,
+        eRc_CiviliansEncountered,
+        eRc_PrisonersUnsupplied,
+        eRc_PrisonersCampFull,
         eLast
     };
     //@}

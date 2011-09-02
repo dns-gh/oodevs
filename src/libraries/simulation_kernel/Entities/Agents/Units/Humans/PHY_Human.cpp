@@ -427,7 +427,11 @@ void PHY_Human::Update()
         else
             nReportID = MIL_Report::eReport_WoundedManDeathDuringHospitalization;
         if( SetWound( PHY_HumanWound::killed_ ) )
+        {
             MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), nReportID );
+            if( pMedicalState_ )
+                MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), MIL_Report::eReport_WoundedManDeath );
+        }
     }
     // Demande santé
     if( NeedMedical() && !pMedicalState_ )

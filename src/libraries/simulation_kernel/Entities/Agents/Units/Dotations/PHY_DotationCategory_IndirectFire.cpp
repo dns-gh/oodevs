@@ -20,6 +20,8 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/FireForbiddenCapacity.h"
+#include "Entities/Objects/InfrastructureCapacity.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/MIL_Army.h"
@@ -160,14 +162,38 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
 
         bool bFireInForbiddenArea = false;
+        bool bInfrastructureDamaged = false;
+        bool bLivingAreaDamaged = false;
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
         {
             MIL_Object_ABC& obj = *static_cast< MIL_Object_ABC* >( *it );
+            UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &obj );
+            float state = 0;
+            if( wrapper )
+               if( StructuralCapacity* structural = wrapper->Retrieve< StructuralCapacity>() )
+                    state = structural->GetStructuralState();
             obj.ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_, pFirer ? &pFirer->GetArmy() : static_cast< MIL_Army_ABC* >( 0 ) );
             if( obj.Retrieve< FireForbiddenCapacity >() && pFirer && !bFireInForbiddenArea && obj.GetArmy() && pFirer->GetArmy().IsAFriend( *obj.GetArmy() ) == eTristate_True )
             {
                 MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FireInForbiddenArea );
                 bFireInForbiddenArea = true;
+            }
+            if( wrapper && pFirer )
+            {
+                StructuralCapacity* structural = wrapper->Retrieve< StructuralCapacity>();
+                if( structural && structural->GetStructuralState() < state )
+                {
+                    if( !bInfrastructureDamaged && wrapper->Retrieve< InfrastructureCapacity >() )
+                    {
+                        MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_InfrastructureDamaged );
+                        bInfrastructureDamaged = true;
+                    }
+                    if( !bLivingAreaDamaged && wrapper->GetTotalInhabitants() > 0 )
+                    {
+                        MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_LivingAreaDamaged );
+                        bLivingAreaDamaged = true;
+                    }
+                }
             }
         }
 

@@ -9,11 +9,12 @@
 #include "PHY_ZOPerceptionComputer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "DetectionComputer_ABC.h"
@@ -136,6 +137,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
 {
     if( bIsEnabled_ )
     {
+        bool civiliansEncountered = false;
         for ( TER_Agent_ABC::CIT_AgentPtrVector itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
         {
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
@@ -149,8 +151,12 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
 
             if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( agent ) )
                 perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( agent ) );
-            else if( detectionComputer->CanBeSeen() )
-                perceiver_.NotifyPerception( agent, Compute( agent ) );
+            else if( detectionComputer->CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
+                if( !civiliansEncountered && agent.GetType().IsRefugee() )
+                {
+                    MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eReport_CiviliansEncountered );
+                    civiliansEncountered = true;
+                }
         }
     }
 }

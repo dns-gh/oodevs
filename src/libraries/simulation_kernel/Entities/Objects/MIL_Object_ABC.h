@@ -54,7 +54,7 @@ class PHY_UrbanAttritionData;
 //=============================================================================
 class MIL_Object_ABC : public TER_Object_ABC
                      , public tools::Extendable< ObjectCapacity_ABC >
-                     , public tools::Extendable< ObjectAttribute_ABC >
+                     , protected tools::Extendable< ObjectAttribute_ABC >
                      , private boost::noncopyable
 {
 public:

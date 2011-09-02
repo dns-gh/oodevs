@@ -14,6 +14,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -172,7 +173,10 @@ void LodgingAttribute::ManageRefugee( MIL_AgentPion& pion )
     refugees_.push_back( &pion );
 
     if ( capacity_ <= nbrRefugees )
+    {
+        MIL_Report::PostEvent( pion, MIL_Report::eReport_PrisonersCampFull );
         return;
+    }
 
     unsigned nbrFreeLodging = capacity_ - nbrRefugees;
     PHY_RolePion_Composantes& composantes = pion.GetRole< PHY_RolePion_Composantes >();

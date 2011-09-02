@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "BorderCapacity.h"
 #include "MIL_Object_ABC.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BorderCapacity )
 
@@ -56,7 +58,8 @@ BorderCapacity::BorderCapacity( const BorderCapacity& )
 template< typename Archive >
 void BorderCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +70,7 @@ void BorderCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     BorderCapacity* capacity = new BorderCapacity( *this );
     object.AddCapacity( capacity );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,4 +80,23 @@ void BorderCapacity::Instanciate( MIL_Object_ABC& object ) const
 void BorderCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BorderCapacity::ProcessAgentEntering
+// Created: JSR 2011-09-02
+// -----------------------------------------------------------------------------
+void BorderCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
+{
+    MIL_Report::PostEvent( agent, MIL_Report::eReport_BorderCrossed );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BorderCapacity::ProcessPopulationInside
+// Created: JSR 2011-09-01
+// -----------------------------------------------------------------------------
+void BorderCapacity::ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& population )
+{
+    MIL_Report::PostEvent( population.GetPopulation(), MIL_Report::eReport_BorderCrossed );
 }

@@ -209,18 +209,19 @@ void DEC_KS_Perception::NotifyExternalPerception( MIL_Agent_ABC& agentPerceived,
 // Name: DEC_KS_Perception::NotifyPerception
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled )
+bool DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled )
 {
     if( level == PHY_PerceptionLevel::notSeen_ )
-        return;
+        return false;
 
     assert( pBlackBoard_ );
 
+    bool ret = false;
     DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( agentPerceived );
-    if( !pKnowledge )
+    if( ret = ( pKnowledge == 0 ) )
         pKnowledge = &pBlackBoard_->GetKnowledgeAgentPerceptionContainer().CreateKnowledgeAgentPerception( pBlackBoard_->GetPion(), agentPerceived );
-
     pKnowledge->Update( level, bRecordModeEnabled );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

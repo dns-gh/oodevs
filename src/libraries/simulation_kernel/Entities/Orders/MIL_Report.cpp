@@ -100,25 +100,34 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_ConvoyTransporterResourcesLevelReached      ] = eRC_AlerteDisponibiliteVecteurs;
 
     diaEvents_[ eReport_IndirectFireOnTarget] = eRC_TirIndirectSurCible;
-    diaEvents_[ eReport_MunitionInterdite] = eRC_MunitionInterdite;
-    diaEvents_[ eReport_MunitionAutorise] = eRC_MunitionAutorise;
+    diaEvents_[ eReport_DestructionPC ]       = eRC_DestructionPC;
+    diaEvents_[ eReport_MunitionInterdite   ] = eRC_MunitionInterdite;
+    diaEvents_[ eReport_MunitionAutorise    ] = eRC_MunitionAutorise;
 
-    diaEvents_[ eReport_EmbarkmentStarted ]        = eRC_EmbarkmentStarted;
-    diaEvents_[ eReport_EmbarkmentInterrupted ]    = eRC_EmbarkmentInterrupted;
-    diaEvents_[ eReport_EmbarkmentResumed ]        = eRC_EmbarkmentResumed;
-    diaEvents_[ eReport_EmbarkmentFinished ]       = eRC_EmbarkmentFinished;
-    diaEvents_[ eReport_DisembarkmentStarted ]     = eRC_DisembarkmentStarted;
+    diaEvents_[ eReport_EmbarkmentStarted        ] = eRC_EmbarkmentStarted;
+    diaEvents_[ eReport_EmbarkmentInterrupted    ] = eRC_EmbarkmentInterrupted;
+    diaEvents_[ eReport_EmbarkmentResumed        ] = eRC_EmbarkmentResumed;
+    diaEvents_[ eReport_EmbarkmentFinished       ] = eRC_EmbarkmentFinished;
+    diaEvents_[ eReport_DisembarkmentStarted     ] = eRC_DisembarkmentStarted;
     diaEvents_[ eReport_DisembarkmentInterrupted ] = eRC_DisembarkmentInterrupted;
-    diaEvents_[ eReport_DisembarkmentResumed ]     = eRC_DisembarkmentResumed;
-    diaEvents_[ eReport_DisembarkmentFinished ]    = eRC_DisembarkmentFinished;
-    diaEvents_[ eReport_ActiveProtectionCounter ]  = eRC_ActiveProtectionCounter;
+    diaEvents_[ eReport_DisembarkmentResumed     ] = eRC_DisembarkmentResumed;
+    diaEvents_[ eReport_DisembarkmentFinished    ] = eRC_DisembarkmentFinished;
+    diaEvents_[ eReport_ActiveProtectionCounter  ] = eRC_ActiveProtectionCounter;
     diaEvents_[ eReport_ActiveProtectionHardKill ] = eRC_ActiveProtectionHardKill;
-    diaEvents_[ eReport_Poisoned ] = eRC_Poisoned;
-    diaEvents_[ eReport_Contaminated ] = eRC_Contaminated;
-    diaEvents_[ eReport_FireOnEnemySide] = eRC_TirSurCampEnnemi;
-    diaEvents_[ eReport_FiredByEnemySide] = eRC_TireParCampEnnemi;
+    diaEvents_[ eReport_Poisoned                 ] = eRC_Poisoned;
+    diaEvents_[ eReport_Contaminated             ] = eRC_Contaminated;
+    diaEvents_[ eReport_FireOnEnemySide          ] = eRC_TirSurCampEnnemi;
+    diaEvents_[ eReport_FiredByEnemySide         ] = eRC_TireParCampEnnemi;
+
     diaEvents_[ eReport_DamagesCausedToNeutralSide ] = eRC_DamagesCausedToNeutralSide;
     diaEvents_[ eReport_DamagesCausedByNeutralSide ] = eRC_DamagesCausedByNeutralSide;
+    diaEvents_[ eReport_InfrastructureDamaged      ] = eRc_InfrastructureDamaged;
+    diaEvents_[ eReport_LivingAreaDamaged          ] = eRc_LivingAreaDamaged;
+    diaEvents_[ eReport_BorderCrossed              ] = eRc_BorderCrossed;
+    diaEvents_[ eReport_TacticallyDestroyed        ] = eRc_TacticallyDestroyed;
+    diaEvents_[ eReport_CiviliansEncountered       ] = eRc_CiviliansEncountered;
+    diaEvents_[ eReport_PrisonersUnsupplied        ] = eRc_PrisonersUnsupplied;
+    diaEvents_[ eReport_PrisonersCampFull          ] = eRc_PrisonersCampFull;
 }
 
 // -----------------------------------------------------------------------------

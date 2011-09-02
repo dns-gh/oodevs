@@ -1133,9 +1133,9 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_P
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
+bool PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bRecordModeEnabled_ );
+    return pion_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -399,7 +399,14 @@ eRC_DotationIndisponible = 380
 eRC_ObservationEffetTirIndirect = 381
 eRC_DamagesCausedToNeutralSide = 382
 eRC_DamagesCausedByNeutralSide = 383
-eNbr = 384
+eRc_InfrastructureDamaged = 384
+eRc_LivingAreaDamaged = 385
+eRc_BorderCrossed = 386
+eRc_TacticallyDestroyed = 387
+eRc_CiviliansEncountered = 388
+eRc_PrisonersUnsupplied = 389
+eRc_PrisonersCampFull = 390
+eNbr = 391
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion
