@@ -14,6 +14,15 @@ using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: Spatial constructor
+// Created: SLI 2011-09-02
+// -----------------------------------------------------------------------------
+Spatial::Spatial()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Spatial constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 Spatial::Spatial( bool isStatic, double latitude, double longitude, float altitude, float speed, float heading )

@@ -27,6 +27,7 @@ class Spatial
 public:
     //! @name Constructors/Destructor
     //@{
+             Spatial();
              Spatial( bool isStatic, double latitude, double longitude, float altitude, float speed, float heading );
     virtual ~Spatial();
     //@}
@@ -47,9 +48,24 @@ public:
         if( !isStatic_ )
             velocityVector_.Serialize( archive );
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        unsigned char padding[ 7 ] = { 0, 0, 0, 0, 0, 0, 0 };
+        uint8 junk;
+        archive >> deadReckoningAlgorithm_ >> padding;
+        isStatic_ = ( deadReckoningAlgorithm_ == 1 );
+        worldLocation_.Deserialize( archive );
+        uint8 isFrozen;
+        archive >> isFrozen >> junk >> junk >> junk;
+        isFrozen_ = ( isFrozen == 1 );
+        orientation_.Deserialize( archive );
+        if( !isStatic_ )
+            velocityVector_.Deserialize( archive );
+    }
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     bool isStatic_;
