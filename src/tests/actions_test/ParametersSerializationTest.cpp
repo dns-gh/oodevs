@@ -539,7 +539,7 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_PopulationKnowledge, KnowledgeF
     const std::string input( "<parameter name='test' type='crowdknowledge' value='42'/>" );
 
     MockPopulation population;
-    MOCK_EXPECT( resolver, GetPopulation ).with( 42u ).once().in( s ).returns( boost::ref( population ) );
+    MOCK_EXPECT( resolver, FindPopulation ).with( 42u ).once().in( s ).returns( &population );
     MockAgent owner;
     MockPopulationKnowledge knowledge;
     MockAgentKnowledgeConverter converter;
@@ -562,7 +562,7 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_ObjectKnowledge, KnowledgeFixtu
     const std::string input( "<parameter name='test' type='objectknowledge' value='42'/>" );
 
     MockObject object;
-    MOCK_EXPECT( resolver, GetObject ).once().in( s ).with( 42u ).returns( boost::ref( object ) );
+    MOCK_EXPECT( resolver, FindObject ).once().in( s ).with( 42u ).returns( &object );
     MockTeam owner;
     MockObjectKnowledgeConverter converter;
     MockObjectKnowledge knowledge;
@@ -585,7 +585,7 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixtur
     const std::string input( "<parameter name='test' type='agentknowledge' value='42'/>" );
 
     MockAgent agent;
-    MOCK_EXPECT( resolver, GetAgent ).once().in( s ).with( 42u ).returns( boost::ref( agent ) );
+    MOCK_EXPECT( resolver, FindAgent ).once().in( s ).with( 42u ).returns( &agent );
     MockAgent owner;
     MockAgentKnowledgeConverter converter;
     MockAgentKnowledge knowledge;
