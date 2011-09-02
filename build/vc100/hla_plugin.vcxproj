@@ -106,6 +106,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
@@ -141,6 +147,14 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />

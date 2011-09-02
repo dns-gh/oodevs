@@ -140,6 +140,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RprDeserializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />

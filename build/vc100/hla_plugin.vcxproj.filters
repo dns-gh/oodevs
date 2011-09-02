@@ -124,6 +124,24 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -250,6 +268,30 @@
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregate.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
