@@ -45,7 +45,8 @@ private:
     //@{
     const kernel::AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& owner_;
-    const kernel::Agent_ABC& agent_;
+    bool optional_;
+    const kernel::Agent_ABC* pAgent_;
     //@}
 };
 }

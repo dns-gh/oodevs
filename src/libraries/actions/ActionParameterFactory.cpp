@@ -100,7 +100,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         if( parameter.IsList() )
             return new parameters::ParameterList( parameter );
         else
-            return new parameters::String( parameter, tools::translate( "ActionParameterFactory", "not set" ).ascii() );
+            return new parameters::String( parameter, "0" );
     }
     else if( !parameter.IsList() && message.value_size() == 1 )
         return CreateParameter( parameter, message.value().Get( 0 ), entity );

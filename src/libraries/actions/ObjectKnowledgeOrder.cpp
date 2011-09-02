@@ -25,6 +25,11 @@ namespace
         xis >> xml::attribute( "value", id );
         return id;
     }
+
+    bool IsOptional( xml::xistream& xis )
+    {
+        return xis.attribute< std::string >( "type" ) == "string" || xis.attribute< unsigned long >( "value" ) == 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -36,9 +41,14 @@ ObjectKnowledgeOrder::ObjectKnowledgeOrder( const OrderParameter& parameter, xml
     : ObjectKnowledge( parameter, 0, controller )
     , converter_( converter )
     , owner_    ( owner )
-    , object_   ( resolver.GetObject( ReadId( xis ) ) )
+    , optional_ ( IsOptional( xis ) )
 {
-    // NOTHING
+    if( !optional_ )
+    {
+        pObject_ = resolver.FindObject( ReadId( xis ) );
+        if( !pObject_ )
+            throw std::runtime_error( "Unknown parameter : 'Invalid object id' " );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -56,12 +66,17 @@ ObjectKnowledgeOrder::~ObjectKnowledgeOrder()
 // -----------------------------------------------------------------------------
 void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
 {
-    const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( object_, owner_ );
-    if( pKnowledge )
+    if( optional_ )
+        message.set_null_value( true );
+    else
     {
-        message.set_null_value( false );
-        sword::ObjectKnowledgeId& id = *message.mutable_value()->Add()->mutable_objectknowledge();
-        id.set_id( pKnowledge->GetEntity()->GetId() );
+        const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( *pObject_, owner_ );
+        if( pKnowledge )
+        {
+            message.set_null_value( false );
+            sword::ObjectKnowledgeId& id = *message.mutable_value()->Add()->mutable_objectknowledge();
+            id.set_id( pKnowledge->GetEntity()->GetId() );
+        }
     }
 }
 
@@ -71,9 +86,12 @@ void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( object_, owner_ );
-    if( pKnowledge )
-        message.mutable_objectknowledge()->set_id( pKnowledge->GetEntity()->GetId() );
+    if( !optional_ )
+    {
+        const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( *pObject_, owner_ );
+        if( pKnowledge )
+            message.mutable_objectknowledge()->set_id( pKnowledge->GetEntity()->GetId() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +100,9 @@ void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) co
 // -----------------------------------------------------------------------------
 bool ObjectKnowledgeOrder::CheckKnowledgeValidity() const
 {
-    return converter_.Find( object_, owner_ ) ? true : false;
+    if( optional_ )
+        return true;
+    return converter_.Find( *pObject_, owner_ ) ? true : false;
 }
 
 // -----------------------------------------------------------------------------

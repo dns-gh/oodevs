@@ -81,10 +81,6 @@
 <context>
     <name>ActionParameterFactory</name>
     <message>
-        <source>not set</source>
-        <translation>non défini</translation>
-    </message>
-    <message>
         <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
         <translation>&apos;%2&apos; trouvé, &apos;%1&apos; attendu</translation>
     </message>

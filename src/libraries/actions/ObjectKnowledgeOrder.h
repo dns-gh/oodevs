@@ -45,7 +45,8 @@ private:
     //@{
     const kernel::ObjectKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& owner_;
-    const kernel::Object_ABC& object_;
+    bool optional_;
+    const kernel::Object_ABC* pObject_;
     //@}
 };
 
