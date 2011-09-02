@@ -107,7 +107,7 @@ MunitionDetonation::~MunitionDetonation()
 // Name: MunitionDetonation::Notify
 // Created: SLI 2011-06-24
 // -----------------------------------------------------------------------------
-void MunitionDetonation::Notify( const sword::StartUnitFire& /*message*/ )
+void MunitionDetonation::Notify( const sword::StartUnitFire& /*message*/, int /*context*/ )
 {
     // NOTHING
 }
@@ -116,7 +116,7 @@ void MunitionDetonation::Notify( const sword::StartUnitFire& /*message*/ )
 // Name: MunitionDetonation::Notify
 // Created: SLI 2011-06-27
 // -----------------------------------------------------------------------------
-void MunitionDetonation::Notify( const sword::StartFireEffect& message )
+void MunitionDetonation::Notify( const sword::StartFireEffect& message, int /*context*/ )
 {
     Parameters parameters;
     parameters.articulatedPartData = 0u;  // empty array

@@ -55,8 +55,8 @@ public:
 private:
     //! @name Messages
     //@{
-    virtual void Notify( const sword::StartUnitFire& message );
-    virtual void Notify( const sword::StartFireEffect& message );
+    virtual void Notify( const sword::StartUnitFire& message, int context );
+    virtual void Notify( const sword::StartFireEffect& message, int context );
     //@}
 
 private:
