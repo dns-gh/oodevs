@@ -328,14 +328,20 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int curr
     dataIdentification_.Update( knowledge.dataIdentification_ );
     if( criticalIntelligence_.empty() && !knowledge.GetCriticalIntelligence().empty() )
     {
-        criticalIntelligence_ = knowledge.GetCriticalIntelligence();
-        bCriticalIntelligenceUpdated_ = true;
+        const std::string& intelligence = knowledge.GetCriticalIntelligence();
+        if( intelligence != criticalIntelligence_ )
+        {
+            criticalIntelligence_ = intelligence;
+            bCriticalIntelligenceUpdated_ = true;
+        }
     }
     ChangeRelevance( std::max( rRelevance_, knowledge.GetRelevance() ) );
-    pMaxPerceptionLevel_ = &std::max( *pMaxPerceptionLevel_, knowledge.GetMaxPerceptionLevel() );
-    bRelevanceUpdated_ = true;
-    bMaxPerceptionLevelUpdated_ = true;
-    bCurrentPerceptionLevelUpdated_ = true;
+    const PHY_PerceptionLevel* newLevel = &std::max( *pMaxPerceptionLevel_, knowledge.GetMaxPerceptionLevel() );
+    if( newLevel != pMaxPerceptionLevel_)
+    {
+        pMaxPerceptionLevel_ = newLevel;
+        bMaxPerceptionLevelUpdated_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
