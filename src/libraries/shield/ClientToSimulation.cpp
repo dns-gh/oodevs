@@ -267,3 +267,12 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlCheckPointDel
 {
     CONVERT( checkpoint );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientToSimulation::Convert
+// Created: LGY 2011-09-02
+// -----------------------------------------------------------------------------
+void ClientToSimulation::Convert( const MsgsClientToSim::MsgOrderStream& from, sword::OrderStream* to )
+{
+    CONVERT( serialized_order );
+}

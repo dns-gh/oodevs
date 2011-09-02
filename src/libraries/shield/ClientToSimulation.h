@@ -47,6 +47,7 @@ public:
     static void Convert( const MsgsClientToSim::MsgMagicAction& from, sword::MagicAction* to );
     static void Convert( const MsgsClientToSim::MsgControlCheckPointListRequest& from, sword::ControlCheckPointListRequest* to );
     static void Convert( const MsgsClientToSim::MsgControlCheckPointDeleteRequest& from, sword::ControlCheckPointDeleteRequest* to );
+    static void Convert( const MsgsClientToSim::MsgOrderStream& from, sword::OrderStream* to );
 
     static void ConvertUnitMagicActionChangeLogisticLinks  ( const Common::MsgMissionParameters& from, sword::MissionParameters& to );
     static void ConvertUnitMagicActionLogSupplyChangeQuotas( const Common::MsgMissionParameters& from, sword::MissionParameters& to );

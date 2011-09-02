@@ -235,3 +235,10 @@ BOOST_FIXTURE_TEST_CASE( control_checkpoint_delete_request_from_client_is_conver
     MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { control_checkpoint_delete_request { checkpoint: \"checkpoint\" } }" ) );
     converter.ReceiveClientToSim( msg );
 }
+
+BOOST_FIXTURE_TEST_CASE( order_stream_from_client_is_converted, ContextFixture< MsgsClientToSim::MsgClientToSim > )
+{
+    content.mutable_order_stream()->set_serialized_order( "order" );
+    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { order_stream { serialized_order: \"order\" } }" ) );
+    converter.ReceiveClientToSim( msg );
+}

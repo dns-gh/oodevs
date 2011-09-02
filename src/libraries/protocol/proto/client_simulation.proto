@@ -312,6 +312,12 @@ message BurningCellRequest {
     required float y = 3;
 }
 
+/** @struct OrderStream
+*/
+message OrderStream {
+    required string serialized_order = 1; //!< The serialized order
+}
+
 /** @struct ClientToSim
     @brief Wraps messages from clients to the simulation
 */
@@ -347,6 +353,7 @@ message ClientToSim {
             @see BurningCellRequest
         */
         optional BurningCellRequest             burning_cell_request              = 23;
+        optional OrderStream                    order_stream                      = 24;
     }
     /** @property context
         @brief Identifies the request matching the response
