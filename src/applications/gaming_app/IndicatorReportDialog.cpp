@@ -31,41 +31,60 @@ IndicatorReportDialog::IndicatorReportDialog( QWidget* parent, const ScoreModel&
     , interpreter_( interpreter )
 {
     setCaption( tools::translate( "IndicatorReports", "Create report" ) );
-    setFixedSize( 400, 150 );
-    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
-    grid->setMargin( 5 );
-    grid->setRowStretch( 0, 4 );
-    grid->setRowStretch( 1, 4 );
+    setFixedWidth( 400 );
+    QVBoxLayout* vBox = new QVBoxLayout();
+    vBox->setContentsMargins( 5, 5, 5, 5 );
+    setLayout( vBox );
     {
-        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "IndicatorReports", "Template" ), this );
-        new QLabel( tools::translate( "IndicatorReports", "File: " ), box );
-        templateFile_ = new QLineEdit( box );
+        QGroupBox* box = new QGroupBox( tools::translate( "IndicatorReports", "Template" ) );
+        QLabel* label = new QLabel( tools::translate( "IndicatorReports", "File: " ) );
+        templateFile_ = new QLineEdit();
         templateFile_->setReadOnly( true );
-        QPushButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ), box );
+        QPushButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ) );
         connect( browse, SIGNAL( clicked() ), SLOT( OnBrowseTemplate() ) );
         connect( templateFile_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFileChanged() ) );
-        grid->addMultiCellWidget( box, 0, 0, 0, 1 );
+
+        QHBoxLayout* boxLayout = new QHBoxLayout();
+        boxLayout->addWidget( label );
+        boxLayout->addWidget( templateFile_, 1 );
+        boxLayout->addWidget( browse );
+        box->setLayout( boxLayout );
+
+        vBox->addWidget( box );
     }
     {
-        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "IndicatorReports", "Output" ), this );
-        new QLabel( tools::translate( "IndicatorReports", "File: " ), box );
-        outputFile_ = new QLineEdit( box );
-        QPushButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ), box );
-        new QWidget( box );
-        displayReport_ = new QCheckBox( tools::translate( "IndicatorReports", "Show generated report" ), box );
+        QGroupBox* box = new QGroupBox( tools::translate( "IndicatorReports", "Output" ) );
+        QLabel* label = new QLabel( tools::translate( "IndicatorReports", "File: " ) );
+        outputFile_ = new QLineEdit();
+        QPushButton* browse = new QPushButton( tools::translate( "IndicatorReports", "Browse..." ) );
+        displayReport_ = new QCheckBox( tools::translate( "IndicatorReports", "Show generated report" ) );
         displayReport_->setChecked( true );
         connect( browse, SIGNAL( clicked() ), SLOT( OnBrowseOutput() ) );
         connect( outputFile_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFileChanged() ) );
-        grid->addMultiCellWidget( box, 1, 1, 0, 1 );
+
+        QGridLayout* boxLayout = new QGridLayout();
+        boxLayout->setColumnStretch( 1, 1 );
+        boxLayout->addWidget( label, 0, 0 );
+        boxLayout->addWidget( outputFile_, 0, 1 );
+        boxLayout->addWidget( browse, 0, 2 );
+        boxLayout->addWidget( displayReport_, 1, 1 );
+        box->setLayout( boxLayout );
+
+        vBox->addWidget( box );
     }
     {
-        Q3HBox* box = new Q3HBox( this );
-        ok_ = new QPushButton( tools::translate( "IndicatorReports", "Ok" ), box );
+        ok_ = new QPushButton( tools::translate( "IndicatorReports", "Ok" ) );
         ok_->setEnabled( false );
-        QPushButton* cancel = new QPushButton( tools::translate( "IndicatorReports", "Cancel" ), box );
-        grid->addWidget( box, 2, 1 );
+        QPushButton* cancel = new QPushButton( tools::translate( "IndicatorReports", "Cancel" ) );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
+        
+        QHBoxLayout* boxLayout = new QHBoxLayout();
+        boxLayout->addStretch( 1 );
+        boxLayout->addWidget( ok_ );
+        boxLayout->addWidget( cancel );
+
+        vBox->addLayout( boxLayout );
     }
 }
 

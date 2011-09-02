@@ -146,8 +146,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     {
         Q3PopupMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
         pCheckpointButton_->setPopup( popup );
-        pCheckpointButton_->setPopupMode( QToolButton::InstantPopup );
-        pCheckpointButton_->setPopupDelay( 0 );
+        pCheckpointButton_->setPopupMode( QToolButton::MenuButtonPopup );
         popup->addAction( new LineEdit( this, popup ) );
     }
 
