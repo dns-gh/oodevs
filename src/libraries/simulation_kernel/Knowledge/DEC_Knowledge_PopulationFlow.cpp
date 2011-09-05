@@ -80,7 +80,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , pCurrentPerceptionLevel_ ( knowledge.pCurrentPerceptionLevel_ )
     , bReconAttributesValid_   ( knowledge.bReconAttributesValid_ )
 {
-    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
+    for( CIT_FlowPartMap it = knowledge.flowParts_.begin(); it != knowledge.flowParts_.end(); ++it )
         flowParts_[ it->first ] = new DEC_Knowledge_PopulationFlowPart( *it->second );
     SendMsgCreation();
 }
