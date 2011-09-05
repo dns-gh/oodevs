@@ -12,6 +12,7 @@
 
 #include "OrderParameterValue.h"
 #include <set>
+#include <map>
 
 namespace xml
 {
