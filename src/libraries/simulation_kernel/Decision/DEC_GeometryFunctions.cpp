@@ -1102,7 +1102,8 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion,
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 {
-    std::vector< const urban::TerrainObject_ABC* > cities = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetCities();
+    // $$$$ LDC RC: static because the cities can't be changed at run-time and there's no point recomputing the vector everytime.
+    static std::vector< const urban::TerrainObject_ABC* > cities = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetCities();
     geometry::Point2f geoPoint( static_cast< float >( point.rX_ ), static_cast< float >( point.rY_ ) );
     for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
     {
