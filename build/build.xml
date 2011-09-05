@@ -452,6 +452,7 @@
                   lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_order_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_3a-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
