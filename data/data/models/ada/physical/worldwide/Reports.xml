@@ -558,5 +558,13 @@
   <report category="exceptional" id="388" message="Civilians or refugees encountered"/>
   <report category="exceptional" id="389" message="Population or prisoners unsupplied"/>
   <report category="exceptional" id="390" message="Prisoners camp full"/>
+  <report category="exceptional" id="391" message="No positions found to destroy targets"/>
+  <report category="exceptional" id="392" message="No positions found to neutralize targets"/>
+  <report category="exceptional" id="393" message="No positions found to get cover from entities"/>
+  <report category="exceptional" id="394" message="No positions found to observe targets"/>
+  <report category="exceptional" id="395" message="No positions found to reach targets"/>
+  <report category="exceptional" id="396" message="The target cannot be reconnoitred because it is not accessible)"/>
+  <report category="exceptional" id="397" message="The target is not accessible"/>
+  <report category="exceptional" id="398" message="No key positions found in area"/>
 </reports>
-<!-- signature="0759078236" -->
+<!-- signature="0067836382" -->

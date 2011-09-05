@@ -532,6 +532,14 @@ public:
         eRc_CiviliansEncountered,
         eRc_PrisonersUnsupplied,
         eRc_PrisonersCampFull,
+		eRC_NoPositionsToDestroyTargets,
+		eRC_NoPositionsToNeutralizeTargets,
+		eRC_NoPositionsToGetCoverFromEntities,
+		eRC_NoPositionsToObserveTargets,
+		eRC_NoPositionsToReachTargets,
+		eRC_TheTargetCannotBeReconnoitre,
+		eRC_TargetIsNotAccessible,
+		eRC_NoKeyPositionsFoundInArea,
         eLast
     };
     //@}
