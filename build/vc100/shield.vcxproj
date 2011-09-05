@@ -101,6 +101,7 @@
     <ClCompile Include="..\..\src\libraries\shield\ReplayToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\shield\Server.cpp" />
     <ClCompile Include="..\..\src\libraries\shield\SimulationToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\shield\Utf8Converter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\shield\AarToClient.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="..\..\src\libraries\shield\SimulationToClient.h" />
     <ClInclude Include="..\..\src\libraries\shield\SimulationTools.h" />
     <ClInclude Include="..\..\src\libraries\shield\Tools.h" />
+    <ClInclude Include="..\..\src\libraries\shield\Utf8Converter.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\shield\proto\AarToClient.proto">
