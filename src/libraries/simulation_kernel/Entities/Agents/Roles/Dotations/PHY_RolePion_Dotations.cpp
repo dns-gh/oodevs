@@ -10,43 +10,35 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Dotations.h"
-
+#include "AlgorithmsFactories.h"
+#include "ConsumptionComputer_ABC.h"
+#include "ConsumptionComputerFactory_ABC.h"
+#include "ConsumptionModeChangeRequest_ABC.h"
+#include "DotationComputer_ABC.h"
+#include "FireData_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "OnComponentFunctor_ABC.h"
+#include "OnComponentFunctorComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "WeaponAvailabilityComputer_ABC.h"
+#include "WeaponAvailabilityComputerFactory_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-
-
-#include "FireData_ABC.h"
-#include "WeaponAvailabilityComputer_ABC.h"
-#include "WeaponAvailabilityComputerFactory_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.hpp>
-
-#include "simulation_kernel/AlgorithmsFactories.h"
-
-#include "simulation_kernel/ConsumptionComputer_ABC.h"
-#include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
-#include "simulation_kernel/MoveComputer_ABC.h"
-#include "simulation_kernel/DotationComputer_ABC.h"
-#include "simulation_kernel/OnComponentFunctor_ABC.h"
-#include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
-
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
-
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( dotation::PHY_RolePion_Dotations )
 
@@ -402,7 +394,11 @@ void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationTyp
 void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
     if( bNewNeed )
+    {
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticDotationThresholdExceeded, dotationCategory );
+        if( pion_.GetType().IsRefugee() || pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
+            MIL_Report::PostEvent( pion_, MIL_Report::eReport_PrisonersUnsupplied );
+    }
 
     pion_.GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
 }
@@ -670,4 +666,3 @@ bool PHY_RolePion_Dotations::HasDotationForFiring( const PHY_DotationCategory& c
 }
 
 } // namespace dotation
-

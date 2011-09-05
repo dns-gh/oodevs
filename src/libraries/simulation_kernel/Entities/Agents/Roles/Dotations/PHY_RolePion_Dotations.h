@@ -33,10 +33,7 @@ namespace xml
 namespace dotation
 {
     class DotationComputer_ABC;
-}
 
-namespace dotation
-{
 // =============================================================================
 // @class  PHY_RolePion_Dotations
 // Created: JVT 2004-08-03
@@ -65,7 +62,7 @@ public:
 
     //! @name External operations
     //@{
-    void ReadOverloading              ( xml::xistream& xis );
+    void ReadOverloading( xml::xistream& xis );
     //@}
 
     //! @name Notification
@@ -78,27 +75,27 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     virtual void Execute( dotation::DotationComputer_ABC& algorithm ) const;
     virtual void ChangeConsumptionMode(ConsumptionModeChangeRequest_ABC& request);
     //@}
 
     //! @name Dotations management
     //@{
-    double SupplyDotation   ( const PHY_DotationCategory& category, double rNbr );
-    void   ResupplyDotations();
-    void   ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
-    void   ResupplyDotations( const PHY_DotationType&      type             , double rFactor );
-    void   ChangeDotation   ( const PHY_DotationCategory& category, unsigned int number, float threshold );
+    double SupplyDotation( const PHY_DotationCategory& category, double rNbr );
+    void ResupplyDotations();
+    void ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
+    void ResupplyDotations( const PHY_DotationType& type, double rFactor );
+    void ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float threshold );
     //@}
 
     //! @name Consumption management
     //@{
-                  bool                 SetConsumptionMode      ( const PHY_ConsumptionType& mode );
-    virtual const PHY_ConsumptionType& GetConsumptionMode      () const;
-                  void                 RollbackConsumptionMode ();
-                  double             GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const;
+    bool SetConsumptionMode( const PHY_ConsumptionType& mode );
+    virtual const PHY_ConsumptionType& GetConsumptionMode() const;
+    void RollbackConsumptionMode();
+    double GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const;
     //@}
 
     //! @name Fire dotations
@@ -141,12 +138,12 @@ private:
     bool HasChanged() const;
     //@}
 
-          MIL_AgentPion&              pion_;
-          PHY_DotationGroupContainer* pDotations_;
+    MIL_AgentPion& pion_;
+    PHY_DotationGroupContainer* pDotations_;
 
-    const PHY_ConsumptionType*      pCurrentConsumptionMode_;
-    const PHY_ConsumptionType*      pPreviousConsumptionMode_;
-          T_DotationReservedMap     reservedConsumptions_;
+    const PHY_ConsumptionType* pCurrentConsumptionMode_;
+    const PHY_ConsumptionType* pPreviousConsumptionMode_;
+    T_DotationReservedMap reservedConsumptions_;
 
     std::vector< const PHY_DotationCategory* > forbiddenDotations_;
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
