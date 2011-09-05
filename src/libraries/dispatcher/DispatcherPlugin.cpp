@@ -12,6 +12,7 @@
 #include "SimulationPublisher_ABC.h"
 #include "LinkResolver_ABC.h"
 #include "Profile_ABC.h"
+#include "OrderResolver_ABC.h"
 #include "Model.h"
 #include "Services.h"
 #include "Logger.h"
@@ -26,10 +27,11 @@ using namespace dispatcher;
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 DispatcherPlugin::DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, tools::MessageDispatcher_ABC& clientCommands,
-                                    LinkResolver_ABC& links, RotatingLog& log )
+                                    LinkResolver_ABC& links, OrderResolver_ABC& order, RotatingLog& log )
     : model_     ( model )
     , simulation_( simulation )
     , links_     ( links )
+    , order_     ( order )
 {
     clientCommands.RegisterMessage( MakeLogger( log, "Dispatcher received : ", *this, &DispatcherPlugin::OnReceive ) );
 }
@@ -88,5 +90,8 @@ void DispatcherPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 void DispatcherPlugin::OnReceive( const std::string& link, const sword::ClientToSim& asnMsg )
 {
     if( links_.GetProfile( link ).CheckRights( asnMsg ) )
+    {
+        order_.Resolve( asnMsg );
         simulation_.Send( asnMsg );
+    }
 }

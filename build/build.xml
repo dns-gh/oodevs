@@ -271,7 +271,13 @@
     <target name="library.rights_plugin" depends="library.dispatcher" description="build rights_plugin static library">
         <build-lib name="rights_plugin" pattern="lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <defineset define="QT3_SUPPORT"/>
-        </build-lib>        
+        </build-lib>
+    </target>
+
+    <target name="library.order_plugin" depends="library.dispatcher" description="build order_plugin static library">
+        <build-lib name="order_plugin" pattern="lib${ant.project.name}_order_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+            <defineset define="QT3_SUPPORT"/>
+        </build-lib>
     </target>
 
     <target name="library.saver_plugin" depends="library.dispatcher" description="build saver_plugin static library">
@@ -371,7 +377,7 @@
     </target>
 
     <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
-                                            library.aar_plugin,library.rights_plugin,library.saver_plugin,library.replay_plugin,
+                                            library.aar_plugin,library.rights_plugin,library.order_plugin,library.saver_plugin,library.replay_plugin,
                                             library.3a,library.bml_plugin,library.script_plugin,library.score_plugin,
                                             library.crossbow_plugin_dll,library.timeline_plugin_dll,
                                             library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>

@@ -24,6 +24,10 @@ namespace rights
 {
     class RightsPlugin;
 }
+namespace order
+{
+    class OrderPlugin;
+}
 }
 
 namespace dispatcher
@@ -88,6 +92,7 @@ private:
     CompositeRegistrable& registrables_;
     T_Factories factories_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
+    boost::shared_ptr< plugins::order::OrderPlugin > pOrder_;
     const Services& services_;
     //@}
 };

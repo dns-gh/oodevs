@@ -24,6 +24,7 @@ namespace dispatcher
     class SimulationPublisher_ABC;
     class LinkResolver_ABC;
     class RotatingLog;
+    class OrderResolver_ABC;
 
 // =============================================================================
 /** @class  DispatcherPlugin
@@ -38,7 +39,7 @@ public:
     //@{
              DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation,
                                tools::MessageDispatcher_ABC& clientCommands,
-                               LinkResolver_ABC& links, RotatingLog& log );
+                               LinkResolver_ABC& links, OrderResolver_ABC& order, RotatingLog& log );
     virtual ~DispatcherPlugin();
     //@}
 
@@ -77,6 +78,7 @@ private:
     Model& model_;
     SimulationPublisher_ABC& simulation_;
     LinkResolver_ABC& links_;
+    OrderResolver_ABC& order_;
     T_Clients clients_;
     //@}
 };

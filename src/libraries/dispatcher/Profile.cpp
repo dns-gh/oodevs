@@ -242,6 +242,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return true;
     if( message.has_burning_cell_request() )
         return true;
+    if( message.has_order_stream() )
+        return true;
     return false;
 }
 

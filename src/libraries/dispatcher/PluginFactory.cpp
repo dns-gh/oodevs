@@ -25,6 +25,7 @@
 #include "saver_plugin/SaverPlugin.h"
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
+#include "order_plugin/OrderPlugin.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
 #include <windows.h>
@@ -47,10 +48,12 @@ PluginFactory::PluginFactory( const Config& config, Model& model, const dispatch
     , handler_     ( handler )
     , registrables_( registrables )
     , rights_      ( new plugins::rights::RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables, maxConnections ) )
+    , pOrder_      ( new plugins::order::OrderPlugin( config_, staticModel_ ,model_, simulation_ ) )
     , services_    ( services )
 {
     handler_.Add( rights_ );
-    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_, log ) );
+    handler_.Add( pOrder_ );
+    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_, *pOrder_, log ) );
 }
 
 // -----------------------------------------------------------------------------
