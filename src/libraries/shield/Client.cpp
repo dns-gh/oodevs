@@ -171,8 +171,8 @@ void Client::DoSend( T& message )
         callbacks_.push_back( boost::bind( &tools::MessageSender_ABC::Send< T >, this, boost::cref( host_ ), message ) );
     else
     {
-        if ( encodeStringsInUtf8_ )
-            Utf8Converter::ConvertUtf8StringsToAnsi< T >( message );
+        if( encodeStringsInUtf8_ )
+            Utf8Converter::ConvertUtf8StringsToAnsi( message );
         tools::MessageSender_ABC::Send( host_, message );
     }
 }
@@ -237,8 +237,8 @@ void Client::Send( sword::AdminToLauncher& message )
 // -----------------------------------------------------------------------------
 void Client::Send( MsgsSimToClient::MsgSimToClient& message )
 {
-    if ( encodeStringsInUtf8_ )
-        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsSimToClient::MsgSimToClient >( message );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8( message );
     sender_.Send( from_, message );
 }
 
@@ -248,8 +248,8 @@ void Client::Send( MsgsSimToClient::MsgSimToClient& message )
 // -----------------------------------------------------------------------------
 void Client::Send( MsgsAuthenticationToClient::MsgAuthenticationToClient& message )
 {
-    if ( encodeStringsInUtf8_ )
-        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsAuthenticationToClient::MsgAuthenticationToClient >( message );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8( message );
     sender_.Send( from_, message );
 }
 
@@ -259,8 +259,8 @@ void Client::Send( MsgsAuthenticationToClient::MsgAuthenticationToClient& messag
 // -----------------------------------------------------------------------------
 void Client::Send( MsgsReplayToClient::MsgReplayToClient& message )
 {
-    if ( encodeStringsInUtf8_ )
-        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsReplayToClient::MsgReplayToClient >( message );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8( message );
     sender_.Send( from_, message );
 }
 
@@ -270,8 +270,8 @@ void Client::Send( MsgsReplayToClient::MsgReplayToClient& message )
 // -----------------------------------------------------------------------------
 void Client::Send( MsgsAarToClient::MsgAarToClient& message )
 {
-    if ( encodeStringsInUtf8_ )
-        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsAarToClient::MsgAarToClient >( message );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8( message );
     sender_.Send( from_, message );
 }
 
@@ -281,8 +281,8 @@ void Client::Send( MsgsAarToClient::MsgAarToClient& message )
 // -----------------------------------------------------------------------------
 void Client::Send( MsgsMessengerToClient::MsgMessengerToClient& message )
 {
-    if ( encodeStringsInUtf8_ )
-        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsMessengerToClient::MsgMessengerToClient >( message );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8( message );
     sender_.Send( from_, message );
 }
 
@@ -292,8 +292,8 @@ void Client::Send( MsgsMessengerToClient::MsgMessengerToClient& message )
 // -----------------------------------------------------------------------------
 void Client::Send( MsgsDispatcherToClient::MsgDispatcherToClient& message )
 {
-    if ( encodeStringsInUtf8_ )
-        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsDispatcherToClient::MsgDispatcherToClient >( message );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8( message );
     sender_.Send( from_, message );
 }
 
@@ -303,7 +303,7 @@ void Client::Send( MsgsDispatcherToClient::MsgDispatcherToClient& message )
 // -----------------------------------------------------------------------------
 void Client::Send( MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
 {
-    if ( encodeStringsInUtf8_ )
-        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsLauncherToAdmin::MsgLauncherToAdmin >( message );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8( message );
     sender_.Send( from_, message );
 }
