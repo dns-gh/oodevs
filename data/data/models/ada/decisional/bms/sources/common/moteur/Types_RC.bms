@@ -406,7 +406,15 @@ eRc_TacticallyDestroyed = 387
 eRc_CiviliansEncountered = 388
 eRc_PrisonersUnsupplied = 389
 eRc_PrisonersCampFull = 390
-eNbr = 391
+eRC_NoPositionsToDestroyTargets = 391
+eRC_NoPositionsToNeutralizeTargets = 392
+eRC_NoPositionsToGetCoverFromEntities = 393
+eRC_NoPositionsToObserveTargets = 394
+eRC_NoPositionsToReachTargets = 395
+eRC_TheTargetCannotBeReconnoitre = 396
+eRC_TargetIsNotAccessible = 397
+eRC_NoKeyPositionsFoundInArea = 398
+eNbr = 399
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion

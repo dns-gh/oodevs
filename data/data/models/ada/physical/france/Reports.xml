@@ -558,13 +558,13 @@
   <report category="exceptional" id="388" message="Rencontre de refugies ou de population civile"/>
   <report category="exceptional" id="389" message="Population ou prisonniers sans ravitaillement"/>
   <report category="exceptional" id="390" message="Camp de prisonniers plein"/>
-  <report category="exceptional" id="391" message="Pas de positions pour detruire les cibles"/>
-  <report category="exceptional" id="392" message="Pas de positions pour neutraliser les cibles"/>
-  <report category="exceptional" id="393" message="Pas de positions pour se mettre a couvert"/>
-  <report category="exceptional" id="394" message="Pas de positions pour observer les cibles"/>
-  <report category="exceptional" id="395" message="Pas de positions pour atteindre les cibles"/>
-  <report category="exceptional" id="396" message="Reconnaissance impossible (l'objectif n'est pas accessible)"/>
-  <report category="exceptional" id="397" message="L'objectif n'est pas accessible"/>
-  <report category="exceptional" id="398" message="Pas de points cles dans la zone"/>
+  <report category="operational" id="391" message="Pas de positions pour detruire les cibles"/>
+  <report category="operational" id="392" message="Pas de positions pour neutraliser les cibles"/>
+  <report category="operational" id="393" message="Pas de positions pour se mettre a couvert"/>
+  <report category="operational" id="394" message="Pas de positions pour observer les cibles"/>
+  <report category="operational" id="395" message="Pas de positions pour atteindre les cibles"/>
+  <report category="operational" id="396" message="Reconnaissance impossible (l'objectif n'est pas accessible)"/>
+  <report category="operational" id="397" message="L'objectif n'est pas accessible"/>
+  <report category="operational" id="398" message="Pas de points cles dans la zone"/>
 </reports>
-<!-- signature="0235886263" -->
+<!-- signature="1651540454" -->
