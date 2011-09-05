@@ -61,7 +61,7 @@ class Server : private tools::ServerNetworker, private ClientListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Server( unsigned short port, const std::string& host, Listener_ABC& listener );
+             Server( unsigned short port, const std::string& host, Listener_ABC& listener, bool encodeStringsInUtf8 );
     virtual ~Server();
     //@}
 
@@ -109,6 +109,7 @@ private:
     Listener_ABC& listener_;
     T_Clients clients_;
     T_Errors errors_;
+    bool utf8StringEncoding_;
     //@}
 };
 

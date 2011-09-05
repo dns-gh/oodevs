@@ -10,6 +10,7 @@
 #include "Client.h"
 #include "ClientListener_ABC.h"
 #include "Logger.h"
+#include "Utf8Converter.h"
 #pragma warning( push, 0 )
 #include "proto/ClientToAar.pb.h"
 #include "proto/ClientToAuthentication.pb.h"
@@ -45,12 +46,13 @@ namespace
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
 Client::Client( const std::string& host, const std::string& from,
-                tools::MessageSender_ABC& sender, ClientListener_ABC& listener )
+                tools::MessageSender_ABC& sender, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
     : tools::ClientNetworker( host )
-    , from_     ( from )
-    , sender_   ( sender )
-    , listener_ ( listener )
-    , converter_( *this, *this, listener )
+    , from_                ( from )
+    , sender_              ( sender )
+    , listener_            ( listener )
+    , converter_           ( *this, *this, listener )
+    , encodeStringsInUtf8_ ( encodeStringsInUtf8 )
 {
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveSimToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAuthenticationToClient ) );
@@ -162,20 +164,24 @@ void Client::ConnectionError( const std::string& host, const std::string& error 
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
 template< typename T >
-void Client::DoSend( const T& message )
+void Client::DoSend( T& message )
 {
     listener_.Debug( DebugInfo< T >( "Shield sent : ", message ) );
     if( host_.empty() )
         callbacks_.push_back( boost::bind( &tools::MessageSender_ABC::Send< T >, this, boost::cref( host_ ), message ) );
     else
+    {
+        if ( encodeStringsInUtf8_ )
+            Utf8Converter::ConvertUtf8StringsToAnsi< T >( message );
         tools::MessageSender_ABC::Send( host_, message );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const sword::ClientToSim& message )
+void Client::Send( sword::ClientToSim& message )
 {
     DoSend( message );
 }
@@ -184,7 +190,7 @@ void Client::Send( const sword::ClientToSim& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const sword::ClientToAuthentication& message )
+void Client::Send( sword::ClientToAuthentication& message )
 {
     DoSend( message );
 }
@@ -193,7 +199,7 @@ void Client::Send( const sword::ClientToAuthentication& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const sword::ClientToReplay& message )
+void Client::Send( sword::ClientToReplay& message )
 {
     DoSend( message );
 }
@@ -202,7 +208,7 @@ void Client::Send( const sword::ClientToReplay& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const sword::ClientToAar& message )
+void Client::Send( sword::ClientToAar& message )
 {
     DoSend( message );
 }
@@ -211,7 +217,7 @@ void Client::Send( const sword::ClientToAar& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const sword::ClientToMessenger& message )
+void Client::Send( sword::ClientToMessenger& message )
 {
     DoSend( message );
 }
@@ -220,7 +226,7 @@ void Client::Send( const sword::ClientToMessenger& message )
 // Name: Client::Send
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void Client::Send( const sword::AdminToLauncher& message )
+void Client::Send( sword::AdminToLauncher& message )
 {
     DoSend( message );
 }
@@ -229,8 +235,10 @@ void Client::Send( const sword::AdminToLauncher& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsSimToClient::MsgSimToClient& message )
+void Client::Send( MsgsSimToClient::MsgSimToClient& message )
 {
+    if ( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsSimToClient::MsgSimToClient >( message );
     sender_.Send( from_, message );
 }
 
@@ -238,8 +246,10 @@ void Client::Send( const MsgsSimToClient::MsgSimToClient& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& message )
+void Client::Send( MsgsAuthenticationToClient::MsgAuthenticationToClient& message )
 {
+    if ( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsAuthenticationToClient::MsgAuthenticationToClient >( message );
     sender_.Send( from_, message );
 }
 
@@ -247,8 +257,10 @@ void Client::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& 
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsReplayToClient::MsgReplayToClient& message )
+void Client::Send( MsgsReplayToClient::MsgReplayToClient& message )
 {
+    if ( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsReplayToClient::MsgReplayToClient >( message );
     sender_.Send( from_, message );
 }
 
@@ -256,8 +268,10 @@ void Client::Send( const MsgsReplayToClient::MsgReplayToClient& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsAarToClient::MsgAarToClient& message )
+void Client::Send( MsgsAarToClient::MsgAarToClient& message )
 {
+    if ( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsAarToClient::MsgAarToClient >( message );
     sender_.Send( from_, message );
 }
 
@@ -265,8 +279,10 @@ void Client::Send( const MsgsAarToClient::MsgAarToClient& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsMessengerToClient::MsgMessengerToClient& message )
+void Client::Send( MsgsMessengerToClient::MsgMessengerToClient& message )
 {
+    if ( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsMessengerToClient::MsgMessengerToClient >( message );
     sender_.Send( from_, message );
 }
 
@@ -274,8 +290,10 @@ void Client::Send( const MsgsMessengerToClient::MsgMessengerToClient& message )
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsDispatcherToClient::MsgDispatcherToClient& message )
+void Client::Send( MsgsDispatcherToClient::MsgDispatcherToClient& message )
 {
+    if ( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsDispatcherToClient::MsgDispatcherToClient >( message );
     sender_.Send( from_, message );
 }
 
@@ -283,7 +301,9 @@ void Client::Send( const MsgsDispatcherToClient::MsgDispatcherToClient& message 
 // Name: Client::Send
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
+void Client::Send( MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
 {
+    if ( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertAnsiStringsToUtf8< MsgsLauncherToAdmin::MsgLauncherToAdmin >( message );
     sender_.Send( from_, message );
 }

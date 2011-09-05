@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Client( const std::string& host, const std::string& from,
-                     tools::MessageSender_ABC& sender, ClientListener_ABC& listener );
+                     tools::MessageSender_ABC& sender, ClientListener_ABC& listener, bool encodeStringsInUtf8 );
     virtual ~Client();
     //@}
 
@@ -52,26 +52,26 @@ private:
     virtual void ConnectionFailed( const std::string& host, const std::string& error );
     virtual void ConnectionError( const std::string& host, const std::string& error );
 
-    virtual void Send( const sword::ClientToAar& message );
-    virtual void Send( const sword::ClientToAuthentication& message );
-    virtual void Send( const sword::ClientToSim& message );
-    virtual void Send( const sword::ClientToReplay& message );
-    virtual void Send( const sword::ClientToMessenger& message );
-    virtual void Send( const sword::AdminToLauncher& message );
+    virtual void Send( sword::ClientToAar& message );
+    virtual void Send( sword::ClientToAuthentication& message );
+    virtual void Send( sword::ClientToSim& message );
+    virtual void Send( sword::ClientToReplay& message );
+    virtual void Send( sword::ClientToMessenger& message );
+    virtual void Send( sword::AdminToLauncher& message );
 
-    virtual void Send( const MsgsSimToClient::MsgSimToClient& message );
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& message );
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& message );
-    virtual void Send( const MsgsAarToClient::MsgAarToClient& message );
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& message );
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& message );
-    virtual void Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
+    virtual void Send( MsgsSimToClient::MsgSimToClient& message );
+    virtual void Send( MsgsAuthenticationToClient::MsgAuthenticationToClient& message );
+    virtual void Send( MsgsReplayToClient::MsgReplayToClient& message );
+    virtual void Send( MsgsAarToClient::MsgAarToClient& message );
+    virtual void Send( MsgsMessengerToClient::MsgMessengerToClient& message );
+    virtual void Send( MsgsDispatcherToClient::MsgDispatcherToClient& message );
+    virtual void Send( MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
     //@}
 
     //! @name Helpers
     //@{
     template< typename T >
-    void DoSend( const T& message );
+    void DoSend( T& message );
     //@}
 
 private:
@@ -89,6 +89,7 @@ private:
     tools::MessageSender_ABC& sender_;
     ClientListener_ABC& listener_;
     Converter converter_;
+    bool encodeStringsInUtf8_;
     //@}
 };
 

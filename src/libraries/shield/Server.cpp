@@ -45,10 +45,11 @@ namespace
 // Name: Server constructor
 // Created: MCO 2010-11-29
 // -----------------------------------------------------------------------------
-Server::Server( unsigned short port, const std::string& host, Listener_ABC& listener )
+Server::Server( unsigned short port, const std::string& host, Listener_ABC& listener, bool encodeStringsInUtf8 )
     : tools::ServerNetworker( port )
     , host_    ( host )
     , listener_( listener )
+    , utf8StringEncoding_ ( encodeStringsInUtf8 )
 {
     listener_.Info( "Starting shield server on port " + boost::lexical_cast< std::string >( port ) );
     RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToAar ) );
@@ -90,7 +91,7 @@ void Server::Update()
 void Server::ConnectionSucceeded( const std::string& from )
 {
     clients_.erase( from );
-    boost::shared_ptr< Client > client( new Client( host_, from, *this, *this ) );
+    boost::shared_ptr< Client > client( new Client( host_, from, *this, *this, utf8StringEncoding_ ) );
     clients_.insert( std::make_pair( from, client ) );
     listener_.Info( "Shield proxy received connection from " + from );
     tools::ServerNetworker::ConnectionSucceeded( from );

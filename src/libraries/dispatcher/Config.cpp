@@ -35,6 +35,7 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , logSize_                 ( 0 )
     , shieldLogFiles_          ( 0 )
     , shieldLogSize_           ( 0 )
+    , useShieldUtf8Encoding_   ( true )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -104,7 +105,8 @@ void Config::Parse( int argc, char** argv )
                         >> xml::optional >>xml::start( "shield" )
                             >> xml::attribute( "server", networkShieldParameters_ )
                             >> xml::optional >> xml::attribute( "logfiles", shieldLogFiles_ )
-                            >> xml::optional >> xml::attribute( "logsize", shieldLogSize_ );
+                            >> xml::optional >> xml::attribute( "logsize", shieldLogSize_ )
+                            >> xml::optional >> xml::attribute( "use-utf8-string-encoding", useShieldUtf8Encoding_ );
     ReadDebugConfigFile( BuildExerciseChildFile( "debug.xml" ), logFiles_, logSize_, shieldLogFiles_, shieldLogSize_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
@@ -139,6 +141,15 @@ unsigned short Config::GetNetworkClientsParameters() const
 unsigned short Config::GetNetworkShieldParameters() const
 {
     return networkShieldParameters_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::UseShieldUtf8Encoding
+// Created: RPD 2011-09-05
+// -----------------------------------------------------------------------------
+bool Config::UseShieldUtf8Encoding() const
+{
+    return useShieldUtf8Encoding_;
 }
 
 // -----------------------------------------------------------------------------

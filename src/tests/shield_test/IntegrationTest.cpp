@@ -83,7 +83,7 @@ namespace
     struct Fixture : ListenerFixture
     {
         Fixture()
-            : shield( PORT, "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ), listener )
+            : shield( PORT, "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ), listener, true )
         {
             MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) );
             MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy connected to" ) );
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE( non_existing_dispatcher_is_detected_by_proxy_when_a_client
 {
     MockListener listener;
     MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Starting shield server on port" ) );
-    shield::Server shield( PORT, "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ), listener );
+    shield::Server shield( PORT, "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ), listener, true );
     Client client;
     MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) );
     int errors = 3;

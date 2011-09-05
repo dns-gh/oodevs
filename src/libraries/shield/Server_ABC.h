@@ -41,12 +41,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const sword::ClientToSim& message ) = 0;
-    virtual void Send( const sword::ClientToAuthentication& message ) = 0;
-    virtual void Send( const sword::ClientToReplay& message ) = 0;
-    virtual void Send( const sword::ClientToAar& message ) = 0;
-    virtual void Send( const sword::ClientToMessenger& message ) = 0;
-    virtual void Send( const sword::AdminToLauncher& message ) = 0;
+    virtual void Send( sword::ClientToSim& message ) = 0;
+    virtual void Send( sword::ClientToAuthentication& message ) = 0;
+    virtual void Send( sword::ClientToReplay& message ) = 0;
+    virtual void Send( sword::ClientToAar& message ) = 0;
+    virtual void Send( sword::ClientToMessenger& message ) = 0;
+    virtual void Send( sword::AdminToLauncher& message ) = 0;
     //@}
 };
 

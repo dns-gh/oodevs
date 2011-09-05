@@ -42,31 +42,33 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetNetworkSimulationParameters() const;
-    unsigned short GetNetworkClientsParameters() const;
-    unsigned short GetNetworkShieldParameters() const;
-    unsigned int GetKeyFramesFrequency() const;
-    unsigned int GetReplayFragmentsFrequency() const;
-    unsigned int GetTickDuration() const;
-    unsigned int GetLogFiles() const;
-    unsigned int GetLogSize() const;
-    unsigned int GetShieldLogFiles() const;
-    unsigned int GetShieldLogSize() const;
+    unsigned short     GetNetworkClientsParameters() const;
+    unsigned short     GetNetworkShieldParameters() const;
+    bool               UseShieldUtf8Encoding() const;
+    unsigned int       GetKeyFramesFrequency() const;
+    unsigned int       GetReplayFragmentsFrequency() const;
+    unsigned int       GetTickDuration() const;
+    unsigned int       GetLogFiles() const;
+    unsigned int       GetLogSize() const;
+    unsigned int       GetShieldLogFiles() const;
+    unsigned int       GetShieldLogSize() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string networkSimulationParameters_;
+    std::string    networkSimulationParameters_;
     unsigned short networkSimulationPort_;
     unsigned short networkClientsParameters_;
     unsigned short networkShieldParameters_;
-    unsigned int keyFramesFrequency_;
-    unsigned int replayFragmentsFrequency_;
-    unsigned int timeStep_;
-    unsigned int logFiles_;
-    unsigned int logSize_;
-    unsigned int shieldLogFiles_;
-    unsigned int shieldLogSize_;
+    bool           useShieldUtf8Encoding_;
+    unsigned int   keyFramesFrequency_;
+    unsigned int   replayFragmentsFrequency_;
+    unsigned int   timeStep_;
+    unsigned int   logFiles_;
+    unsigned int   logSize_;
+    unsigned int   shieldLogFiles_;
+    unsigned int   shieldLogSize_;
     //@}
 };
 

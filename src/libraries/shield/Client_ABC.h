@@ -71,13 +71,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsAarToClient::MsgAarToClient& message ) = 0;
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& message ) = 0;
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& message ) = 0;
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& message ) = 0;
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& message ) = 0;
-    virtual void Send( const MsgsSimToClient::MsgSimToClient& message ) = 0;
-    virtual void Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message ) = 0;
+    virtual void Send( MsgsAarToClient::MsgAarToClient& message ) = 0;
+    virtual void Send( MsgsAuthenticationToClient::MsgAuthenticationToClient& message ) = 0;
+    virtual void Send( MsgsDispatcherToClient::MsgDispatcherToClient& message ) = 0;
+    virtual void Send( MsgsMessengerToClient::MsgMessengerToClient& message ) = 0;
+    virtual void Send( MsgsReplayToClient::MsgReplayToClient& message ) = 0;
+    virtual void Send( MsgsSimToClient::MsgSimToClient& message ) = 0;
+    virtual void Send( MsgsLauncherToAdmin::MsgLauncherToAdmin& message ) = 0;
     //@}
 };
 

@@ -46,22 +46,22 @@ namespace shield
 {
     MOCK_BASE_CLASS( MockClient, Client_ABC )
     {
-        MOCK_METHOD_EXT( Send, 1, void( const MsgsAarToClient::MsgAarToClient& ), SendAarToClient )
-        MOCK_METHOD_EXT( Send, 1, void( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ), SendAuthenticationToClient )
-        MOCK_METHOD_EXT( Send, 1, void( const MsgsDispatcherToClient::MsgDispatcherToClient& ), SendDispatcherToClient )
-        MOCK_METHOD_EXT( Send, 1, void( const MsgsMessengerToClient::MsgMessengerToClient& ), SendMessengerToClient )
-        MOCK_METHOD_EXT( Send, 1, void( const MsgsReplayToClient::MsgReplayToClient& ), SendReplayToClient )
-        MOCK_METHOD_EXT( Send, 1, void( const MsgsSimToClient::MsgSimToClient& ), SendSimToClient )
-        MOCK_METHOD_EXT( Send, 1, void( const MsgsLauncherToAdmin::MsgLauncherToAdmin& ), SendLauncherToAdmin )
+        MOCK_METHOD_EXT( Send, 1, void( MsgsAarToClient::MsgAarToClient& ), SendAarToClient )
+        MOCK_METHOD_EXT( Send, 1, void( MsgsAuthenticationToClient::MsgAuthenticationToClient& ), SendAuthenticationToClient )
+        MOCK_METHOD_EXT( Send, 1, void( MsgsDispatcherToClient::MsgDispatcherToClient& ), SendDispatcherToClient )
+        MOCK_METHOD_EXT( Send, 1, void( MsgsMessengerToClient::MsgMessengerToClient& ), SendMessengerToClient )
+        MOCK_METHOD_EXT( Send, 1, void( MsgsReplayToClient::MsgReplayToClient& ), SendReplayToClient )
+        MOCK_METHOD_EXT( Send, 1, void( MsgsSimToClient::MsgSimToClient& ), SendSimToClient )
+        MOCK_METHOD_EXT( Send, 1, void( MsgsLauncherToAdmin::MsgLauncherToAdmin& ), SendLauncherToAdmin )
     };
     MOCK_BASE_CLASS( MockServer, Server_ABC )
     {
-        MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToSim& ), SendClientToSim )
-        MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToAuthentication& ), SendClientToAuthentication )
-        MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToReplay& ), SendClientToReplay )
-        MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToAar& ), SendClientToAar )
-        MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToMessenger& ), SendClientToMessenger )
-        MOCK_METHOD_EXT( Send, 1, void( const sword::AdminToLauncher& ), SendAdminToLauncher )
+        MOCK_METHOD_EXT( Send, 1, void( sword::ClientToSim& ), SendClientToSim )
+        MOCK_METHOD_EXT( Send, 1, void( sword::ClientToAuthentication& ), SendClientToAuthentication )
+        MOCK_METHOD_EXT( Send, 1, void( sword::ClientToReplay& ), SendClientToReplay )
+        MOCK_METHOD_EXT( Send, 1, void( sword::ClientToAar& ), SendClientToAar )
+        MOCK_METHOD_EXT( Send, 1, void( sword::ClientToMessenger& ), SendClientToMessenger )
+        MOCK_METHOD_EXT( Send, 1, void( sword::AdminToLauncher& ), SendAdminToLauncher )
     };
     MOCK_BASE_CLASS( MockClientListener, ClientListener_ABC )
     {

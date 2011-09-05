@@ -10,5 +10,5 @@
 package Version;
 
 message ProtocolVersion {
-   required string value	= 1 [default = "4.7.2"];
+   required string value	= 1 [default = "4.8.1"];
 }
