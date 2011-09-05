@@ -807,6 +807,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissance_PeutTransporterPion" ] = &DEC_ActionFunctions::CanTransportKnowledge;
 
     brain[ "DEC_Agent_PeutTransporterFoule" ] = &DEC_ActionFunctions::CanTransportCrowd;
+    brain[ "DEC_Agent_TransporteFoule" ] = &DEC_ActionFunctions::IsTransportingCrowd;
     brain[ "DEC_StartEmbarquerFouleDUneConcentration" ] =
         boost::function< unsigned int( int, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< crowdtransport::PHY_ActionLoadCrowd, int, unsigned int >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_StartDebarquerFouleSurPosition" ] =

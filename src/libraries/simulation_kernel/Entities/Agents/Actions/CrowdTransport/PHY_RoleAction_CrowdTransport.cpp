@@ -113,6 +113,15 @@ int PHY_RoleAction_CrowdTransport::GetFinalReturnCode() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_CrowdTransport::GetFinalReturnCode
+// Created: DDA 2011-08-31
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_CrowdTransport::IsTransportingCrowd() const
+{
+    return !loadedHumans_.IsEmpty();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_CrowdTransport::NotifyComposanteChanged
 // Created: JSR 2011-08-11
 // -----------------------------------------------------------------------------
@@ -150,11 +159,12 @@ int PHY_RoleAction_CrowdTransport::LoadCrowd( MIL_Population& crowd, unsigned in
 {
     bUpdated_ = true;
     MIL_PopulationConcentration* concentration = crowd.RetrieveConcentration( concentrationId );
-    if( !concentration )
+
+    if( !concentration || concentration->GetAllHumans() == 0 )
     {
         // TODO envoyer un CR ?
         nState_ = eNothing;
-        return eImpossible;
+        return eFinished;
     }
 
     if( nState_ == eNothing )

@@ -61,6 +61,7 @@ public:
     void Clean();
     int GetInitialReturnCode() const;
     int GetFinalReturnCode  () const;
+    bool IsTransportingCrowd() const;
     //@}
 
     //! @name Event handler
