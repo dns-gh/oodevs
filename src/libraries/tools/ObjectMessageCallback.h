@@ -71,8 +71,8 @@ public:
     virtual void OnMessage( const std::string& link, Message& input )
     {
         MessageDecoder< T > decoder( input );
-        std::for_each( callbacks_.begin(), callbacks_.end(),
-            boost::bind( boost::apply< void >(), _1, boost::ref( link ), boost::ref( decoder ) ) );
+        for( std::vector< T_Callback >::const_iterator it = callbacks_.begin(); it != callbacks_.end(); ++it )
+            (*it)( link, decoder );
     }
     //@}
 
