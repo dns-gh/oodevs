@@ -80,3 +80,12 @@ bool ParamDotationDType::IsOptional() const
 {
     return parameter_.IsOptional();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationDType::CheckValidity
+// Created: LDC 2011-09-05
+// -----------------------------------------------------------------------------
+bool ParamDotationDType::CheckValidity()
+{
+    return GetValue() != 0;
+}
