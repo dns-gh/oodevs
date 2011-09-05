@@ -406,7 +406,14 @@ void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory 
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory )
 {
-    populationFactory.Create( xis, *this );
+    try
+    {
+        populationFactory.Create( xis, *this );
+    }
+    catch( MT_ScipioException& e)
+    {
+        MT_LOG_ERROR_MSG( e.GetMsg() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +422,14 @@ void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& popula
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabitantFactory )
 {
-    inhabitantFactory.Create( xis, *this );
+    try
+    {
+        inhabitantFactory.Create( xis, *this );
+    }
+    catch( MT_ScipioException& e)
+    {
+        MT_LOG_ERROR_MSG( e.GetMsg() );
+    }
 }
 
 // -----------------------------------------------------------------------------
