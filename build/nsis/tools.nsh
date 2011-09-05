@@ -265,11 +265,6 @@
 ; Adds File Associations
 ;------------------------------------------------------------------------------
 !macro OT.AddUninstallEntry
-
-    ; Compute InstallDirectory Size
-    ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
-    IntFmt $0 "0x%08X" $0
-    
     ; Write Register entry
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallLocation" "$INSTDIR"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${PRODUCT_NAME}"
@@ -278,7 +273,6 @@
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE} /$MultiUser.InstallMode"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "QuietUninstallString" "${UNINST_EXE} /$MultiUser.InstallMode /S"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "Publisher" "${COMPANY_NAME}"
-    WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "EstimatedSize" $0
     WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoModify" 1
     WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoRepair" 1
 
