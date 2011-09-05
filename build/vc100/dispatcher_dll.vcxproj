@@ -199,6 +199,14 @@
       <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="order_plugin.vcxproj">
+      <Project>{867a219d-34d0-4eb3-9bb2-3a03a6839cec}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
     <ProjectReference Include="positions_plugin.vcxproj">
       <Project>{b35507ee-6644-47df-9e2f-469cd09751a1}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
