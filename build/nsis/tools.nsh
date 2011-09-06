@@ -285,6 +285,7 @@
 
     WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "Language" "$(OT_LANG)"
     WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory" "$INSTDATADIR"
+    WriteRegDWORD ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "NoSignatureCheck" 1
 
 !macroend
 
