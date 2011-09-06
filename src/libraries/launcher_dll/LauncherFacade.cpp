@@ -80,7 +80,7 @@ void LauncherFacade::Initialize( int argc, char** argv )
         launcher_.reset( new launcher::Launcher( *config_ ) );
         unsigned short port = config_->GetLauncherPort();
         static NullLogger logger;
-        proxy_.reset( new shield::Server( port + 1, "localhost:" + boost::lexical_cast< std::string >( port ), logger ) ); // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
+        proxy_.reset( new shield::Server( port + 1, "localhost:" + boost::lexical_cast< std::string >( port ), logger, true ) ); // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
     }
     catch( std::exception& e )
     {
