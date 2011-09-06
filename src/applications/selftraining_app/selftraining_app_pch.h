@@ -70,4 +70,7 @@
 
 #pragma warning( pop )
 
+#undef min
+#undef max
+
 #endif // __selftraining_app_pch_h_

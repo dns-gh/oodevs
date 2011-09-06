@@ -104,8 +104,8 @@ MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const ker
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, unsigned int timeStep, const std::string& name /*= ""*/  )
     : Meteo( msg.weather().id(), msg.attributes(), timeStep, name )
-    , topLeft_    ( msg.top_left().longitude(), msg.top_left().latitude() ) // $$$$ ABR 2011-06-08: Warning, no coordinate converter for dispatcher
-    , bottomRight_( msg.bottom_right().longitude(), msg.bottom_right().latitude() )
+    , topLeft_    ( static_cast< float >( msg.top_left().longitude() ), static_cast< float >( msg.top_left().latitude() ) ) // $$$$ ABR 2011-06-08: Warning, no coordinate converter for dispatcher
+    , bottomRight_( static_cast< float >( msg.bottom_right().longitude() ), static_cast< float >( msg.bottom_right().latitude() ) )
     , converter_  ( 0 )
 {
     // NOTHING

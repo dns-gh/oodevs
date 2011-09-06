@@ -22,7 +22,9 @@
 #include "clients_kernel/Team_ABC.h"
 #include "XmlChecks.h"
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
 #include <QtGui/qapplication.h>
+#pragma warning( pop )
 #undef max
 
 namespace

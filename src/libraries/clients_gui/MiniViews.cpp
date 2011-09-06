@@ -36,7 +36,7 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
 {
     setObjectName( "miniviews" );
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-    parent->addDockWidget( Qt::DockWidgetArea::TopDockWidgetArea, this );
+    parent->addDockWidget( Qt::TopDockWidgetArea, this );
     setCaption( tr( "Miniviews" ) );
     grid_ = new SmartGridWidget( this, 2, Qt::Vertical, "miniviews" );
     setWidget( grid_ );

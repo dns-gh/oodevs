@@ -14,7 +14,9 @@
 #include "Controller.h"
 #include "EditorFactory_ABC.h"
 #include "Displayer_ABC.h"
+#pragma warning( push, 0 )
 #include <QtGui/qwidget.h>
+#pragma warning( pop )
 
 namespace kernel
 {

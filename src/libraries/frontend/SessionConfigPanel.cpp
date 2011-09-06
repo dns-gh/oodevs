@@ -12,11 +12,13 @@
 #include "clients_gui/tools.h"
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+#pragma warning( push, 0 )
 #include <QtGui/qlabel.h>
 #include <QtGui/qlineedit.h>
 #include <QtGui/qspinbox.h>
 #include <Qt3Support/q3textedit.h>
 #include <Qt3Support/q3vbox.h>
+#pragma warning( pop )
 
 using namespace frontend;
 

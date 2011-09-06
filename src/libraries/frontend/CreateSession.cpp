@@ -11,14 +11,13 @@
 #include "CreateSession.h"
 #include "CommandLineTools.h"
 #include "tools/GeneralConfig.h"
-#pragma warning( push )
-#pragma warning( disable: 4127 4244 4245 4511 4512 4702 )
+#pragma warning( push, 0 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 #include <QtCore/qsettings.h>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;

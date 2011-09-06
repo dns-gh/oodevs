@@ -42,7 +42,7 @@ CompositePluginConfig::CompositePluginConfig( QTabWidget* parent )
 {
     Q3GroupBox* pluginsBox = new Q3GroupBox( 1, Qt::Vertical, this );
     pluginsBox->setMargin( 5 );
-    pluginsBox->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
+    pluginsBox->setFrameShape( Q3GroupBox::NoFrame );
     pluginsBox->setBackgroundOrigin( QWidget::WindowOrigin );
     tabs_ = new TabWidget( pluginsBox );
     parent->addTab( this, tools::translate( "CompositePluginConfig", "Plugins" ) );

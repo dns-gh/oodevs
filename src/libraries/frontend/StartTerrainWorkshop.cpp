@@ -11,8 +11,10 @@
 #include "StartTerrainWorkshop.h"
 #include <boost/filesystem/convenience.hpp>
 #include <boost/filesystem/operations.hpp>
+#pragma warning( push, 0 )
 #include <QtGui/qapplication.h>
 #include <QtCore/qsettings.h>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 

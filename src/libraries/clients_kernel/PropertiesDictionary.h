@@ -12,7 +12,9 @@
 
 #include "Extension_ABC.h"
 #include "Property_ABC.h"
+#pragma warning( push, 0 )
 #include <QtCore/qstringlist.h>
+#pragma warning( pop )
 
 namespace kernel
 {

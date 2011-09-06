@@ -27,9 +27,9 @@ namespace
     protected:
         virtual void drawContents( QPainter* )
         {
-            paintEvent();
+            paintEvent( 0 );
         }
-        virtual void paintEvent( QPaintEvent* e = 0 )
+        virtual void paintEvent( QPaintEvent* /*e*/ )
         {
             QPainter painter;
             if ( painter.begin( this ) )

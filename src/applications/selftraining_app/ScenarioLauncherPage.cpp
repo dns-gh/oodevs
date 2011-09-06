@@ -156,7 +156,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
         {
             Q3GroupBox* configBox = new Q3GroupBox( 1, Qt::Vertical, tabs );
             configBox->setMargin( 5 );
-            configBox->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
+            configBox->setFrameShape( Q3GroupBox::NoFrame );
             configBox->setBackgroundOrigin( QWidget::WindowOrigin );
             TabWidget* config = new TabWidget( configBox );
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );

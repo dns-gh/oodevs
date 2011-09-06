@@ -12,12 +12,14 @@
 #include "CreateSession.h"
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
+#pragma warning( push, 0 )
 #include <QtGui/qlineedit.h>
 #include <QtGui/qspinbox.h>
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3datetimeedit.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qcheckbox.h>
+#pragma warning( pop )
 #include <boost/filesystem.hpp>
 
 using namespace frontend;

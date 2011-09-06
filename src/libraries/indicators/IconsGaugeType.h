@@ -11,7 +11,9 @@
 #define __IconsGaugeType_h_
 
 #include "GaugeType.h"
+#pragma warning( push, 0 )
 #include <QtGui/qpixmap.h>
+#pragma warning( pop )
 
 namespace indicators
 {

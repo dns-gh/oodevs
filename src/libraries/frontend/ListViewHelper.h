@@ -10,7 +10,9 @@
 #ifndef __ListViewHelper_h_
 #define __ListViewHelper_h_
 
+#pragma warning( push, 0 )
 #include <Qt3Support/q3listview.h>
+#pragma warning( pop )
 
 namespace tools
 {

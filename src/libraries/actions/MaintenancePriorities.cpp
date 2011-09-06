@@ -52,7 +52,7 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, c
     std::string value;
     xis >> xml::attribute( "value", value );
     QStringList list = QStringList::split( ";", value.c_str() );
-    for( unsigned int i = 0; i < list.count(); ++i )
+    for( int i = 0; i < list.count(); ++i )
         AddPriority( resolver.Get( list[i].toUInt() ) );
 }
 

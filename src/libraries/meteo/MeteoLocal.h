@@ -11,7 +11,10 @@
 #define __weather_MeteoLocal_h_
 
 #include "Meteo/Meteo.h"
+#pragma warning( push )
+#pragma warning( disable : 4127 )
 #include <QtCore/QDateTime.h>
+#pragma warning( pop )
 
 namespace sword
 {

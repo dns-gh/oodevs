@@ -11,7 +11,9 @@
 #include "Tendency.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "tools/GeneralConfig.h"
+#pragma warning( push, 0 )
 #include <QtGui/qpixmap.h>
+#pragma warning( pop )
 
 using namespace indicators;
 

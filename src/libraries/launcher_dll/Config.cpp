@@ -11,10 +11,9 @@
 #include "Config.h"
 #include "clients_gui/Tools.h"
 #include <shlobj.h>
+#pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
 #include <QtGui/qapplication.h>
-#pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

@@ -10,8 +10,10 @@
 #ifndef __CheckpointList_h_
 #define __CheckpointList_h_
 
+#pragma warning( push, 0 )
 #include <Qt3Support/q3listbox.h>
 #include <Qt3Support/q3vbox.h>
+#pragma warning( pop )
 
 namespace tools
 {

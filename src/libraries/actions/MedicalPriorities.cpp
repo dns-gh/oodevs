@@ -47,7 +47,7 @@ MedicalPriorities::MedicalPriorities( const kernel::OrderParameter& parameter, x
     std::string value;
     xis >> xml::optional >> xml::attribute( "value", value );
     QStringList list = QStringList::split( ";", value.c_str() );
-    for( unsigned int i = 0; i < list.count(); ++i )
+    for( int i = 0; i < list.count(); ++i )
         AddMedicalPriority( E_HumanWound( list[i].toUInt() ) );
 }
 

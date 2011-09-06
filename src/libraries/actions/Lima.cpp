@@ -56,7 +56,7 @@ Lima::Lima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
     xis >> xml::attribute( "value", value )
         >> xml::list( "parameter", *this, &Lima::ReadParameter, converter );
     QStringList functions = QStringList::split( ", ", value.c_str() );
-    for( unsigned int i = 0; i < functions.size(); ++i )
+    for( int i = 0; i < functions.size(); ++i )
         functions[i] = tools::ToShortString( tools::LimaTypeFromXmlString( functions[i] ) );
     SetValue( functions.join( ", " ) );
 }
@@ -88,7 +88,7 @@ void Lima::AddFunction( unsigned int i )
 void Lima::Serialize( xml::xostream& xos ) const
 {
     QStringList functions = QStringList::split( ", ", GetValue() );
-    for( unsigned int i = 0; i < functions.size(); ++i )
+    for( int i = 0; i < functions.size(); ++i )
         functions[i] = tools::LimaTypeShortToXmlString( functions[i] );
     Parameter< QString >::Serialize( xos );
     xos << xml::attribute( "type", "lima" )
@@ -137,7 +137,7 @@ void Lima::DisplayInToolTip( Displayer_ABC& displayer ) const
 void Lima::CommitTo( sword::PhaseLineOrder& message ) const
 {
     QStringList functions = QStringList::split( ", ", GetValue() );
-    for( unsigned int i = 0; i < functions.count(); ++i )
+    for( int i = 0; i < functions.count(); ++i )
         message.add_fonctions( sword::PhaseLineOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )

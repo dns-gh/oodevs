@@ -42,7 +42,7 @@ OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& conf
     mainBox->setBackgroundOrigin( QWidget::WindowOrigin );
     mainBox->setMargin( 10 );
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, mainBox );
-    box->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
+    box->setFrameShape( Q3GroupBox::NoFrame );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     {
         QLabel* label = new QLabel( tools::translate( "OptionsPage", "Language: " ), box );
