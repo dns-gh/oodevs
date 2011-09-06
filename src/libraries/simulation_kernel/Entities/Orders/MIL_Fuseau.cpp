@@ -106,9 +106,15 @@ void InsertClosestIntersectionWithDroite( T_PointVector& pointVector, const MT_D
     if( itWhereToInsertIntersection == pointVector.end() )
     {
         if( vPointSrc.SquareDistance( pointVector.front() ) < vPointSrc.SquareDistance( pointVector.back() ) )
-            pointVector.insert( pointVector.begin(), pointVector.front() );
+        {
+            MT_Vector2D tmp = pointVector.front();
+            pointVector.insert( pointVector.begin(), tmp );
+        }
         else
-            pointVector.insert( pointVector.end(), pointVector.back() );
+        {
+            MT_Vector2D tmp = pointVector.back();
+            pointVector.insert( pointVector.end(), tmp );
+        }
     }
     else
         pointVector.insert( itWhereToInsertIntersection, vIntersect );
