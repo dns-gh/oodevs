@@ -26,6 +26,7 @@ MOCK_BASE_CLASS( MockRemoteAgentListener, RemoteAgentListener_ABC )
 {
     MOCK_METHOD( Created, 2 );
     MOCK_METHOD( Destroyed, 2 );
+    MOCK_METHOD( Moved, 2 );
 };
 
 }

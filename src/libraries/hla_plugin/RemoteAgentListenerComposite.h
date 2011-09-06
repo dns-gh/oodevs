@@ -42,6 +42,7 @@ public:
     //@{
     virtual void Created( const std::string& identifier, const Aggregate_ABC& aggregate );
     virtual void Destroyed( const std::string& identifier, const Aggregate_ABC& aggregate );
+    virtual void Moved( double latitude, double longitude );
     //@}
 
 private:

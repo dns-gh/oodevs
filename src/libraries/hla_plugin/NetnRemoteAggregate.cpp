@@ -9,6 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "NetnRemoteAggregate.h"
+#include <hla/Deserializer.h>
 
 using namespace plugins::hla;
 
@@ -44,7 +45,7 @@ void NetnRemoteAggregate::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool
 // Name: NetnRemoteAggregate::Deserialize
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnRemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, const ::hla::Deserializer& deserializer )
+void NetnRemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer )
 {
     aggregate_->Deserialize( identifier, deserializer );
 }

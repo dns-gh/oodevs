@@ -16,6 +16,8 @@ namespace plugins
 {
 namespace hla
 {
+    class RemoteAgentListener_ABC;
+
 // =============================================================================
 /** @class  RemoteAggregate
     @brief  Remote aggregate
@@ -27,19 +29,20 @@ class RemoteAggregate : public Aggregate_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteAggregate();
+    explicit RemoteAggregate( RemoteAgentListener_ABC& listener );
     virtual ~RemoteAggregate();
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
-    virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, const ::hla::Deserializer& deserializer );
+    virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer );
     //@}
 
 private:
     //! @name Member data
     //@{
+    RemoteAgentListener_ABC& listener_;
     //@}
 };
 

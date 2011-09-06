@@ -69,3 +69,13 @@ void RemoteAgentListenerComposite::Destroyed( const std::string& identifier, con
     BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
         listener->Destroyed( identifier, aggregate );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentListenerComposite::Moved
+// Created: SLI 2011-09-02
+// -----------------------------------------------------------------------------
+void RemoteAgentListenerComposite::Moved( double latitude, double longitude )
+{
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->Moved( latitude, longitude );
+}

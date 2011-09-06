@@ -71,7 +71,7 @@ void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateA
 // Name: AggregateEntity::Deserialize
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-void AggregateEntity::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, const ::hla::Deserializer& /*deserializer*/ )
+void AggregateEntity::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

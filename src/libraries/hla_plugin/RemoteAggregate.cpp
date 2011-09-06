@@ -9,6 +9,11 @@
 
 #include "hla_plugin_pch.h"
 #include "RemoteAggregate.h"
+#include "SerializationTools.h"
+#include "Spatial.h"
+#include "RemoteAgentListener_ABC.h"
+#include <hla/AttributeIdentifier.h>
+#include <hla/Deserializer.h>
 
 using namespace plugins::hla;
 
@@ -16,7 +21,8 @@ using namespace plugins::hla;
 // Name: RemoteAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-RemoteAggregate::RemoteAggregate()
+RemoteAggregate::RemoteAggregate( RemoteAgentListener_ABC& listener )
+    : listener_( listener )
 {
     // NOTHING
 }
@@ -43,7 +49,12 @@ void RemoteAggregate::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool /*u
 // Name: RemoteAggregate::Deserialize
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, const ::hla::Deserializer& deserializer )
+void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer )
 {
-
+    if( identifier == "Spatial" )
+    {
+        Spatial spatial;
+        spatial.Deserialize( deserializer );
+        listener_.Moved( spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
+    }
 }

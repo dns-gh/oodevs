@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const = 0;
-    virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, const ::hla::Deserializer& deserializer ) = 0;
+    virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer ) = 0;
     //@}
 };
 

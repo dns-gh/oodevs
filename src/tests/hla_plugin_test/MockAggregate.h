@@ -11,6 +11,7 @@
 #define hla_plugin_MockAggregate_h
 
 #include "hla_plugin/Aggregate_ABC.h"
+#include <hla/Deserializer.h>
 
 namespace plugins
 {

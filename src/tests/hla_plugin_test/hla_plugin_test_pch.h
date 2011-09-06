@@ -21,6 +21,45 @@
 #pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
 
+namespace mock
+{
+    template< typename S >
+    boost::function< S > make_function( mock::function< S >& e )
+    {
+        return boost::function< S >( e );
+    }
+
+    namespace detail
+    {
+        template< typename Expected >
+        class close
+        {
+        public:
+            explicit close( const Expected& expected, const Expected& tolerance )
+                : expected_ ( expected )
+                , tolerance_( tolerance )
+            {}
+            template< typename Actual >
+            bool operator()( const Actual& actual ) const
+            {
+                return std::abs( expected_ - actual ) < tolerance_;
+            }
+            friend std::ostream& operator<<( std::ostream& s, const close& c )
+            {
+                return s << "close( " << c.expected_ << ", " << c.tolerance_ << " )";
+            }
+        private:
+            Expected expected_;
+            Expected tolerance_;
+        };
+    }
+    template< typename T >
+    mock::constraint< detail::close< T > > close( T expected, T tolerance )
+    {
+        return detail::close< T >( expected, tolerance );
+    }
+}
+
 std::string BOOST_RESOLVE( const std::string& filename );
 
 #include <hla/AttributeIdentifier.h>
