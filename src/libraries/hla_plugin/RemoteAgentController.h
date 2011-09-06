@@ -44,7 +44,7 @@ class RemoteAgentController : private tools::MessageObserver< sword::ControlEndT
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+             RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                     dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~RemoteAgentController();
     //@}
