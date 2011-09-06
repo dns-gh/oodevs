@@ -5,6 +5,9 @@
       <UniqueIdentifier>{c2d4de11-6974-4d3e-8fb0-69f3306c9955}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Source Files\Protocol">
+      <UniqueIdentifier>{311573af-32d3-4732-9b87-b35ba2efeb3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\shield_test\AarToClientTest.cpp">
@@ -55,6 +58,12 @@
     <ClCompile Include="..\..\src\tests\shield_test\SimToClientTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\shield_test\Protocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\shield_test\Utf8conversionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\shield_test\ClientTools.h">
@@ -69,5 +78,13 @@
     <ClInclude Include="..\..\src\tests\shield_test\Tools.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\shield_test\Protocol.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\tests\shield_test\proto\utf8conversionTest.proto">
+      <Filter>Source Files\Protocol</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

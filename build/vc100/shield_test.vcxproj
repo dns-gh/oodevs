@@ -45,6 +45,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -53,6 +54,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -61,6 +63,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -69,6 +72,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -108,6 +112,7 @@
     <ClCompile Include="..\..\src\tests\shield_test\IntegrationTest.cpp" />
     <ClCompile Include="..\..\src\tests\shield_test\LauncherToAdminTest.cpp" />
     <ClCompile Include="..\..\src\tests\shield_test\MessengerToClientTest.cpp" />
+    <ClCompile Include="..\..\src\tests\shield_test\Protocol.cpp" />
     <ClCompile Include="..\..\src\tests\shield_test\ReplayToClientTest.cpp" />
     <ClCompile Include="..\..\src\tests\shield_test\shield_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -116,9 +121,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\shield_test\SimToClientTest.cpp" />
+    <ClCompile Include="..\..\src\tests\shield_test\Utf8conversionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\shield_test\ClientTools.h" />
+    <ClInclude Include="..\..\src\tests\shield_test\Protocol.h" />
     <ClInclude Include="..\..\src\tests\shield_test\shield_test_pch.h" />
     <ClInclude Include="..\..\src\tests\shield_test\SimTools.h" />
     <ClInclude Include="..\..\src\tests\shield_test\Tools.h" />
@@ -139,6 +146,23 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\tests\shield_test\proto\utf8conversionTest.proto">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\protoc --proto_path=%(RootDir)%(Directory) --cpp_out=$(IntDir)proto %(FullPath)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
