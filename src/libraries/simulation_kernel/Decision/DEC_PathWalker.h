@@ -147,6 +147,7 @@ private:
     double rWalkedDistance_;
     bool bForcePathCheck_;
     bool bHasMoved_;
+    bool bFuelReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
     //@}
 };

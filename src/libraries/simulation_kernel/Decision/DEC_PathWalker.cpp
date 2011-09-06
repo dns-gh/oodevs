@@ -33,6 +33,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , rWalkedDistance_   ( 0. )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )
+    , bFuelReportSent_   ( false )
 {
     // NOTHING
 }
@@ -382,9 +383,14 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
     if( !movingEntity_.HasResources() )
     {
         rCurrentSpeed_ = 0.;
-        movingEntity_.SendRC( MIL_Report::eReport_OutOfGas );
+        if( !bFuelReportSent_ )
+        {
+            movingEntity_.SendRC( MIL_Report::eReport_OutOfGas );
+            bFuelReportSent_ = true;
+        }
         return eNotEnoughFuel;
     }
+    bFuelReportSent_ = false;
 
     double rTimeRemaining = 1.; // 1 dT
     if( ( *itNextPathPoint_ )->GetPos() != vNewPos_ )
