@@ -37,13 +37,11 @@ public:
     static void ConvertUtf8StringsToCP1252( google::protobuf::Message& message );
     //@}
 
-public: //RPD: should be private once we have some higher level unitary tests
+private:
     //! @name Helpers
     //@{
     static void CP1252ToUtf8( const std::string& ansiString, std::string& utf8String );
     static void Utf8ToCP1252( const std::string& utf8String, std::string& ansiString );
-    //
-private:
     static unsigned int  CP1252ToUnicode( unsigned char cp1252Character );
     static unsigned char UnicodeToCP1252( unsigned int unicodeCharacter );
     //@}

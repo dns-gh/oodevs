@@ -101,13 +101,14 @@ void Utf8Converter::ConvertUtf8StringsToCP1252( Message& message )
             }
             case FieldDescriptor::TYPE_MESSAGE:
             {
-                if( reflection->HasField( message, descriptor ) )
+                if( descriptor->is_repeated() )
                 {
-                    if( descriptor->is_repeated() )
-                        for( int index = 0; index < reflection->FieldSize( message, descriptor ); ++index )
-                            ConvertUtf8StringsToCP1252( *reflection->MutableRepeatedMessage( &message, descriptor, index ) );
-                    else
-                        ConvertUtf8StringsToCP1252( *reflection->MutableMessage( &message, descriptor ) );
+                    for( int index = 0; index < reflection->FieldSize( message, descriptor ); ++index )
+                        ConvertUtf8StringsToCP1252( *reflection->MutableRepeatedMessage( &message, descriptor, index ) );
+                }
+                else if( reflection->HasField( message, descriptor ) )
+                {
+                    ConvertUtf8StringsToCP1252( *reflection->MutableMessage( &message, descriptor ) );
                 }
                 break;
             }

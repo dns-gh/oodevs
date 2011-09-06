@@ -1,0 +1,51 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2011 MASA Group
+//
+// *****************************************************************************
+
+// utf8conversionTest.proto
+// UTF8<->CP1252 conversion test messages
+
+option optimize_for = SPEED;
+
+
+message SimpleMessage {
+  required string truk = 1;
+  optional string choz = 2;
+}
+
+message SubStructure1 {
+  required string stuff = 1;
+}
+
+message SubStructure2 {
+  repeated SubStructure1 sub_machins  = 1;
+  optional int32         not_a_string = 2;
+  optional string        bidule       = 3;
+}
+
+message CompositeMessage {
+  required string        truk			 = 1;
+  optional SubStructure1 sub_truk		 = 2;
+  optional string        optional_machin = 3;
+}
+
+message MoreComplexMessage {
+  required string        truk			 = 1;
+  repeated string        choses			 = 2;
+  optional SubStructure1 sub_truk		 = 3;
+  optional string        optional_machin = 4;
+}
+
+message ReallyComplexMessage {
+  required string        truk            = 1;
+  repeated string        choses          = 2;
+  repeated SubStructure1 sub_bidules     = 3;
+  optional SubStructure2 sub_chouette    = 4;
+  optional string        optional_machin = 5;
+  optional int32         not_a_string    = 6;
+}
