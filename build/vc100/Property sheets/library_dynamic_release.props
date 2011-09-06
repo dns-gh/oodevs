@@ -18,7 +18,7 @@
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\libraries\$(ProjectName)\</OutDir>
     <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\libraries\$(ProjectName)\</IntDir>
-    <TargetName>libcsword_$(ProjectName)-$(CurrentPlatform)-mt</TargetName>
+    <TargetName>$(ProjectName)-$(CurrentPlatform)-mt</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
