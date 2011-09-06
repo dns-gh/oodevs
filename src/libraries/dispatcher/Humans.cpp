@@ -50,7 +50,7 @@ void Humans::Update( const sword::HumanDotations_HumanDotation& message )
     location_     = message.location();
     assert( state_ == sword::injured && message.injuries_size() > 0 || state_ != sword::injured );
     injuries_.resize( message.injuries_size() );
-    for( unsigned int i = 0; i < message.injuries_size(); ++i )
+    for( int i = 0; i < message.injuries_size(); ++i )
     {
         injuries_[ i ].first = message.injuries( i ).id();
         injuries_[ i ].second = message.injuries( i ).seriousness();

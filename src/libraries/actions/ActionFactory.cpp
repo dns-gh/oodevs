@@ -288,12 +288,20 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool read
     const kernel::Entity_ABC* target = entities_.FindAgent( id );
     if( target )
         action.reset( new actions::AgentMission( xis, controller_, missions_, *target, stub ) );
-    else if( target = entities_.FindAutomat( id ) )
-        action.reset( new actions::AutomatMission( xis, controller_, missions_, *target, stub ) );
-    else if( target = entities_.FindPopulation( id ) )
-        action.reset( new actions::PopulationMission( xis, controller_, missions_, *target, stub ) );
     else
-        throw TargetNotFound( id );
+    {
+        target = entities_.FindAutomat( id );
+        if( target )
+            action.reset( new actions::AutomatMission( xis, controller_, missions_, *target, stub ) );
+        else
+        {
+            target = entities_.FindPopulation( id );
+            if( target )
+                action.reset( new actions::PopulationMission( xis, controller_, missions_, *target, stub ) );
+            else
+                throw TargetNotFound( id );
+        }
+    }
     action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
     action->Attach( *new ActionTasker( target, readonly ) );
     action->Polish();

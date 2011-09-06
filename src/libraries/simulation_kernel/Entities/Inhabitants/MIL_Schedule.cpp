@@ -95,11 +95,11 @@ void MIL_Schedule::ReadEvent( xml::xistream& xis )
 // Name: MIL_Schedule::AddEvent
 // Created: ABR 2011-03-23
 // -----------------------------------------------------------------------------
-void MIL_Schedule::AddEvent( const std::string& motivation, double transfertTimeInSecond /*= 0.*/ )
+void MIL_Schedule::AddEvent( const std::string& motivation, int transfertTimeInSecond /*= 0*/ )
 {
     bpt::ptime pdate( bpt::from_time_t( MIL_AgentServer::GetWorkspace().GetRealTime() ) );
     unsigned int duration = MIL_AgentServer::GetWorkspace().GetTickDuration();
-    double transfertTime = ( transfertTimeInSecond ) ? transfertTimeInSecond : transferTime_;
+    int transfertTime = ( transfertTimeInSecond ) ? transfertTimeInSecond : transferTime_;
 
     Event event;
     event.day_= pdate.date().day_of_week();

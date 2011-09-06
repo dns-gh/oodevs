@@ -68,6 +68,14 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
     }
  }
 
+namespace
+{
+    geometry::Point2f ToPoint( const sword::CoordLatLong& coord )
+    {
+        return geometry::Point2f( static_cast< float >( coord.longitude() ), static_cast< float >( coord.latitude() ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::OnReceiveMsgLocalMeteo
 // Created: HBD 2010-03-23
@@ -80,7 +88,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
     if( meteo )
     {
         meteo->Update( msg.attributes() );
-        static_cast< weather::MeteoLocal* >( meteo )->SetPosition( geometry::Point2f( msg.top_left().longitude(), msg.top_left().latitude() ), geometry::Point2f( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) );
+        static_cast< weather::MeteoLocal* >( meteo )->SetPosition( ToPoint( msg.top_left() ), ToPoint( msg.bottom_right() ) );
     }
     else
     {

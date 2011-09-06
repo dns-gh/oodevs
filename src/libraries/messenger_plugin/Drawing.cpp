@@ -13,8 +13,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include <boost/bind.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( push, 0 )
 #include <QtGui/qcolor.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>

@@ -175,8 +175,8 @@ void StockAttribute::Send( sword::ObjectAttributeStock& attribute ) const
     {
         sword::StockResource* resource = attribute.add_resources();
         resource->mutable_resource()->set_id( it->first->GetMosID() );
-        resource->set_current( it->second.stock_ );
-        resource->set_maximum( it->second.maxStock_ );
+        resource->set_current( static_cast< int >( it->second.stock_ ) );
+        resource->set_maximum( static_cast< int >( it->second.maxStock_ ) );
     }
 }
 

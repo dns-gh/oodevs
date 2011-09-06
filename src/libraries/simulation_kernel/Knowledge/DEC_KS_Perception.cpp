@@ -216,9 +216,9 @@ bool DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const P
 
     assert( pBlackBoard_ );
 
-    bool ret = false;
     DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( agentPerceived );
-    if( ret = ( pKnowledge == 0 ) )
+    bool ret = ( pKnowledge == 0 );
+    if( ret )
         pKnowledge = &pBlackBoard_->GetKnowledgeAgentPerceptionContainer().CreateKnowledgeAgentPerception( pBlackBoard_->GetPion(), agentPerceived );
     pKnowledge->Update( level, bRecordModeEnabled );
     return ret;

@@ -41,7 +41,7 @@ public:
     virtual void Configure( xml::xistream& xis );
     virtual void Update( unsigned int date, unsigned int duration );
     virtual bool IsMoving() const;
-    virtual void AddEvent( const std::string& motivation, double transfertTimeInSecond = 0. );
+    virtual void AddEvent( const std::string& motivation, int transfertTimeInSecond = 0 );
     virtual void RestartLastEvent();
     //@}
 
@@ -74,8 +74,7 @@ private:
     //@{
     MIL_LivingArea_ABC& livingArea_;
     T_Events events_;
-    double transferTime_;
-    //int occurence_;
+    int transferTime_;
     bool isMoving_;
     bool initialized_;
     boost::optional< Event > optionalEvent_;
