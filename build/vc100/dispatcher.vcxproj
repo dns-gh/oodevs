@@ -248,6 +248,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\dispatcher_pch.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\MemoryLogger_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Services.h" />

@@ -974,6 +974,9 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.h">
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MemoryLogger_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\dispatcher\EquipmentAvailability.inl">
