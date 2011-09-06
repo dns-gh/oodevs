@@ -96,7 +96,7 @@ T_PointVector MT_Circle::Intersection( const MT_Line& line) const
     a=  (p2-p1).SquareMagnitude();
     b=  2   *   DotProduct(p2-p1,p1-c_);
     c=  c_.SquareMagnitude() + p1.SquareMagnitude() - 2* DotProduct(c_,p1) - square(r_) ;
-    i=  b * b - 4 * a * c ;
+    i=  square(b) - 4 * a * c ;
 
     assert( a != 0 );
 
@@ -113,7 +113,7 @@ T_PointVector MT_Circle::Intersection( const MT_Line& line) const
     }
     else if( i > 0.0 )
     {
-        double  ts=sqrt( square(b) - 4*a*c );
+        double ts = sqrt( i );
 
         // first intersection
         mu = (-b + ts) / (2*a);
