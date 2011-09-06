@@ -33,15 +33,19 @@ class Utf8Converter
 public:
     //! @name Operations
     //@{
-    static void ConvertAnsiStringsToUtf8( google::protobuf::Message& message );
-    static void ConvertUtf8StringsToAnsi( google::protobuf::Message& message );
+    static void ConvertCP1252StringsToUtf8( google::protobuf::Message& message );
+    static void ConvertUtf8StringsToCP1252( google::protobuf::Message& message );
     //@}
 
 public: //RPD: should be private once we have some higher level unitary tests
     //! @name Helpers
     //@{
-    static void AnsiToUtf8( const std::string& ansiString, std::string& utf8String );
-    static void Utf8ToAnsi( const std::string& utf8String, std::string& ansiString );
+    static void CP1252ToUtf8( const std::string& ansiString, std::string& utf8String );
+    static void Utf8ToCP1252( const std::string& utf8String, std::string& ansiString );
+    //
+private:
+    static unsigned int  CP1252ToUnicode( unsigned char cp1252Character );
+    static unsigned char UnicodeToCP1252( unsigned int unicodeCharacter );
     //@}
 };
 
