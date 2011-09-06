@@ -121,7 +121,7 @@ void UnitStateTableResource::OnRemoveCurrentItem()
 // Name: UnitStateTableResource::OnRequestContextMenu
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::OnRequestContextMenu( int row, int col, const QPoint& pos )
+void UnitStateTableResource::OnRequestContextMenu( int /*row*/, int /*col*/, const QPoint& pos )
 {
     if( isReadOnly() )
         return;
@@ -145,8 +145,7 @@ void UnitStateTableResource::OnRequestContextMenu( int row, int col, const QPoin
         targetMenu.insertItem( it->first.c_str(), it->second );
     }
     menu.insertItem( tr( "Add resource"), &targetMenu, 0 );
-    if( isSelected( row, col ) )
-        menu.insertItem( tr( "Remove resource" ), this, SLOT( OnRemoveCurrentItem() ) );
+    menu.insertItem( tr( "Remove resource" ), this, SLOT( OnRemoveCurrentItem() ) );
     int nMenuResult = menu.exec( pos );
     if( nMenuResult > 0 )
         AddItem( nMenuResult );
