@@ -29,10 +29,11 @@ class ADN_CT_Composantes_Dotations : public ADN_Connector_Table_ABC
 {
 
 public:
-    explicit ADN_CT_Composantes_Dotations( ADN_Composantes_Dotations_GUI& tab)
+    explicit ADN_CT_Composantes_Dotations( ADN_Composantes_Dotations_GUI& tab, bool bQtyDecimal = true )
         : ADN_Connector_Table_ABC( tab, false )
         , bIncludeNormalizedConsumption_( tab.bIncludeNormalizedConsumption_ )
         , bIncludeThreshold_( tab.bIncludeThreshold_ )
+		, bQtyDecimal_( bQtyDecimal )
     {}
 
     void AddSubItems( int n, void* pObj )
@@ -42,11 +43,11 @@ public:
 
         // Add a new row.
         ADN_TableItem_String*    pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
-        ADN_TableItem_Double*    pItemQty  = new ADN_TableItem_Double( &tab_, pObj );
+        ADN_TableItem_Double*	 pItemQty  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemNormalizedConsumption  = new ADN_TableItem_Double( &tab_, pObj );
 
-        pItemQty->GetValidator().setRange( 0.001, INT_MAX, 3 );
+		pItemQty->GetValidator().setRange(  bQtyDecimal_? 0.001 : 1 , INT_MAX, bQtyDecimal_? 3 : 0 );			
         pItemLogThreshold->GetValidator().setRange( 0, 100, 2 );
         pItemNormalizedConsumption->GetValidator().setRange( 0.001, INT_MAX, 3 );
 
@@ -67,13 +68,14 @@ public:
 private:
     bool bIncludeNormalizedConsumption_;
     bool bIncludeThreshold_;
+	bool bQtyDecimal_;
 };
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
+ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold, bool bQtyDecimal )
     : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
     , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
     , bIncludeThreshold_( bIncludeThreshold )
@@ -107,7 +109,7 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
         horizontalHeader()->setLabel( 3, tr( "Normalized consumption" ) );
 
     // Connector creation
-    pConnector_ = new ADN_CT_Composantes_Dotations( *this );
+    pConnector_ = new ADN_CT_Composantes_Dotations( *this, bQtyDecimal );
 }
 
 //-----------------------------------------------------------------------------

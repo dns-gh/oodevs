@@ -129,7 +129,7 @@ void ADN_Objects_GUI::Build()
         {
             vInfosConnectors[ eBuildableCapacityPresent ] = & buildable->GetConnector();
 
-            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, buildable, false );
+            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, buildable, false, false );
             vInfosConnectors[ eBuildableCapacity_Dotation ] = &pDotations->GetConnector();
         }
 
@@ -138,7 +138,7 @@ void ADN_Objects_GUI::Build()
         {
             vInfosConnectors[ eImprovableCapacityPresent ] = & improvable->GetConnector();
 
-            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, improvable, false );
+            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, improvable, false, false );
             vInfosConnectors[ eImprovableCapacity_Dotation ] = &pDotations->GetConnector();
         }
     }
