@@ -73,7 +73,7 @@ void Utf8Converter::ConvertUtf8StringsToCP1252( Message& message )
     const Message::Reflection* reflection = message.GetReflection();
     std::vector< const FieldDescriptor * > fields;
     reflection->ListFields( message, &fields );
-    std::string utf8string, ansiConverted;
+    std::string utf8string, cp1252Converted;
     for( std::size_t i = 0; i < fields.size(); ++i )
     {
         const FieldDescriptor* descriptor = fields[i];
@@ -87,15 +87,15 @@ void Utf8Converter::ConvertUtf8StringsToCP1252( Message& message )
                     for( int index = 0; index < size; ++index )
                     {
                         utf8string = reflection->GetRepeatedString( message, descriptor, index );
-                        Utf8ToCP1252( utf8string, ansiConverted );
-                        reflection->SetRepeatedString( &message, descriptor, index, ansiConverted );
+                        Utf8ToCP1252( utf8string, cp1252Converted );
+                        reflection->SetRepeatedString( &message, descriptor, index, cp1252Converted );
                     }
                 }
                 else if( reflection->HasField( message, descriptor ) )
                 {
                     utf8string = reflection->GetString( message, descriptor );
-                    Utf8ToCP1252( utf8string, ansiConverted );
-                    reflection->SetString( &message, descriptor, ansiConverted );
+                    Utf8ToCP1252( utf8string, cp1252Converted );
+                    reflection->SetString( &message, descriptor, cp1252Converted );
                 }
                 break;
             }
@@ -183,7 +183,7 @@ void Utf8Converter::Utf8ToCP1252( const std::string& utf8String, std::string &cp
             }
             else
             {
-                character = '?';    //ansi conversion impossible
+                character = '?';    //cp1252 conversion impossible
             }
             incoming += 4;
             i -= 4;

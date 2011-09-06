@@ -1091,7 +1091,6 @@
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio-1.9.2"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/security-fr"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
-        <test-adaptation input="${data.dir}/data/models/ada/physical/scipioPIV3"/>
     </target>
 
     <target name="application.simulation_kernel_test" depends="library.simulation_kernel" description="build Sword Simulation kernel test executable">

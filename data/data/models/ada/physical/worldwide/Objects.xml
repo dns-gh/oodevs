@@ -432,7 +432,7 @@
     <population-filter density="0"/>
     <universal/>
   </object>
-  <object geometry="polygon" name="Moving Population" symbol="" type="populationMoving"/>
+  <object geometry="polygon" name="Moving Population" symbol="" type="population moving"/>
   <object geometry="polygon" name="Secured Area" symbol="G*GPGAL---****X" type="secured area">
     <attitude-modifier attitude="calme"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -516,4 +516,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2649626820" -->
+<!-- signature="1182764517" -->

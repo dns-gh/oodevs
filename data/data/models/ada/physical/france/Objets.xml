@@ -376,7 +376,7 @@
       <modifier fire-class="Class D" ignition-threshold="2000" max-combustion-energy="1000"/>
     </fire-propagation-modifier>
   </object>
-  <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
+  <object geometry="polygon" name="Mouvement Population" symbol="" type="population moving"/>
   <object geometry="point" name="Issue souterraine" symbol="G*EXIT*********" type="underground exit">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -389,4 +389,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="2253420667" -->
+<!-- signature="3097095305" -->
