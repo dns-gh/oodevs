@@ -16,6 +16,7 @@
 #include "Loader.h"
 #include "Services.h"
 #include "StaticModel.h"
+#include "MemoryLogger_ABC.h"
 #include "Shield.h"
 #include "aar_plugin/AarPlugin.h"
 #include "replay_plugin/ReplayPlugin.h"
@@ -36,6 +37,30 @@ namespace
     }
 }
 
+namespace
+{
+    class NullMemoryLogger : public MemoryLogger_ABC
+    {
+    public:
+        NullMemoryLogger()
+        {
+            // NOTHING
+        }
+        virtual ~NullMemoryLogger()
+        {
+            // NOTHING
+        }
+        virtual void Update( const sword::ControlEndTick& /*message*/ )
+        {
+            // NOTHING
+        }
+        virtual void Update()
+        {
+            // NOTHING
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Replayer constructor
 // Created: AGE 2007-04-10
@@ -43,7 +68,8 @@ namespace
 Replayer::Replayer( const Config& config )
     : services_        ( new Services() )
     , staticModel_     ( new StaticModel( config ) )
-    , model_           ( new Model( config, *staticModel_ ) )
+    , logger_          ( new ::NullMemoryLogger() )
+    , model_           ( new Model( config, *staticModel_, *logger_ ) )
     , clientsNetworker_( new ClientsNetworker( config, handler_, *services_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )

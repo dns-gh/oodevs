@@ -10,7 +10,7 @@
 #ifndef __dispatcher_MemoryLogger_h_
 #define __dispatcher_MemoryLogger_h_
 
-#include <boost/noncopyable.hpp>
+#include "MemoryLogger_ABC.h"
 #include <memory>
 
 class ProcessMonitor;
@@ -23,7 +23,7 @@ namespace dispatcher
 */
 // Created: LDC 2009-09-09
 // =============================================================================
-class MemoryLogger : private boost::noncopyable
+class MemoryLogger : public MemoryLogger_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -34,7 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update();
+    virtual void Update( const sword::ControlEndTick& message );
+    virtual void Update();
     //@}
 
 private:
@@ -42,6 +43,7 @@ private:
     //@{
     std::auto_ptr< ProcessMonitor > monitor_;
     int next_;
+    unsigned int nCurrentTick_;
     //@}
 };
 }

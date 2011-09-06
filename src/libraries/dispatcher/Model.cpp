@@ -36,6 +36,7 @@
 #include "UrbanKnowledge.h"
 #include "UrbanObject.h"
 #include "Visitors.h"
+#include "MemoryLogger_ABC.h"
 #include "EntityPublisher.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -66,8 +67,9 @@ using namespace dispatcher;
 // Name: Model constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Model::Model( const Config& config, const kernel::StaticModel& staticModel )
+Model::Model( const Config& config, const kernel::StaticModel& staticModel, MemoryLogger_ABC& logger )
     : staticModel_     ( staticModel )
+    , logger_          ( logger )
     , simulation_      ( new SimulationModel( config ) )
     , compositeFactory_( new CompositeFactory() )
     , folk_            ( new FolkModel() )
@@ -183,7 +185,11 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( wrapper.message().has_control_begin_tick() )
         simulation_->Update( wrapper.message().control_begin_tick() );
     else if( wrapper.message().has_control_end_tick() )
-        simulation_->Update( wrapper.message().control_end_tick() );
+    {
+        const sword::ControlEndTick& message = wrapper.message().control_end_tick();
+        logger_.Update( message );
+        simulation_->Update( message );
+    }
     else if( wrapper.message().has_control_stop_ack() )
         simulation_->Update_Stop( wrapper.message().control_stop_ack() );
     else if( wrapper.message().has_control_pause_ack() )

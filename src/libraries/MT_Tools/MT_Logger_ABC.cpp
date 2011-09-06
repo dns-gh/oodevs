@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 MT_Logger_ABC::MT_Logger_ABC( int nLogLevels )
     : bPaused_     ( false )
-    , strTimestamp_( "%H:%M:%S" ) // Sample : "11:38:52"
+    , strTimestamp_( "%A %d - %H:%M:%S" ) // Sample : "Thursday 23 - 11:38:52 "
     , nLogLevels_  ( nLogLevels )
 {
     // NOTHING

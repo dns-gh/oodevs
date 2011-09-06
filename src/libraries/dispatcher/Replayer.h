@@ -37,6 +37,7 @@ namespace dispatcher
     class Loader;
     class Services;
     class Shield;
+    class MemoryLogger_ABC;
 
 // =============================================================================
 /** @class  Replayer
@@ -70,6 +71,7 @@ private:
     //@{
     std::auto_ptr< Services >                          services_;
     std::auto_ptr< kernel::StaticModel >               staticModel_;
+    std::auto_ptr< MemoryLogger_ABC >                  logger_;
     boost::shared_ptr< Model >                         model_;
     CompositePlugin                                    handler_;
     dispatcher::CompositeRegistrable                   registrables_;

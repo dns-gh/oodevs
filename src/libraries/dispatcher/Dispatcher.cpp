@@ -42,7 +42,8 @@ namespace
 // -----------------------------------------------------------------------------
 Dispatcher::Dispatcher( const Config& config, int maxConnections )
     : staticModel_        ( new StaticModel( config ) )
-    , model_              ( new Model( config, *staticModel_ ) )
+    , memoryLogger_       ( new MemoryLogger() )
+    , model_              ( new Model( config, *staticModel_, *memoryLogger_ ) )
     , registrables_       ( new CompositeRegistrable() )
     , handler_            ( new CompositePlugin() )
     , services_           ( new Services() )
@@ -51,7 +52,6 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
     , shield_             ( new Shield( config ) )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )
-    , memoryLogger_       ( new MemoryLogger() )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     handler_->AddHandler( clientsNetworker_ );

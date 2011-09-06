@@ -35,6 +35,7 @@ namespace dispatcher
     class MeteoModel;
     class SimulationModel;
     class UrbanKnowledge;
+    class MemoryLogger_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -47,7 +48,7 @@ class Model : public MessageHandler_ABC, public Model_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( const Config& config, const kernel::StaticModel& staticModel );
+             Model( const Config& config, const kernel::StaticModel& staticModel, MemoryLogger_ABC& logger );
     virtual ~Model();
     //@}
 
@@ -148,6 +149,7 @@ private:
     //! @name Member data
     //@{
     const kernel::StaticModel&               staticModel_;
+    MemoryLogger_ABC&                        logger_;
     std::auto_ptr< SimulationModel >         simulation_;
     std::auto_ptr< CompositeFactory >        compositeFactory_;
     std::auto_ptr< FolkModel >               folk_;

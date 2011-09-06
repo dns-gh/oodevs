@@ -22,7 +22,7 @@ namespace dispatcher
     class ClientsNetworker;
     class Config;
     class Model;
-    class MemoryLogger;
+    class MemoryLogger_ABC;
     class PluginFactory_ABC;
     class PluginFactory;
     class Services;
@@ -64,6 +64,7 @@ private:
 
 private:
     std::auto_ptr< dispatcher::StaticModel >  staticModel_;
+    std::auto_ptr< MemoryLogger_ABC >     memoryLogger_;
     boost::shared_ptr< Model >            model_;
     std::auto_ptr< CompositeRegistrable > registrables_;
     std::auto_ptr< CompositePlugin >      handler_;
@@ -73,7 +74,6 @@ private:
     std::auto_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< Shield >               shield_;
     std::auto_ptr< PluginFactory >        factory_;
-    std::auto_ptr< MemoryLogger >         memoryLogger_;
     std::auto_ptr< Application_ABC >      qapp_;
 };
 
