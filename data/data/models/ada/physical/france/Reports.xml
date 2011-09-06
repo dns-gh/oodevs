@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Reports.xsd">
+<reports model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Reports.xsd">
   <report category="information" id="0" message="ras"/>
   <report category="operational" id="1" message="En poste face a obstacle : %1">
     <parameter type="ObjectKnowledge"/>
@@ -567,4 +567,4 @@
   <report category="operational" id="397" message="L'objectif n'est pas accessible"/>
   <report category="operational" id="398" message="Pas de points cles dans la zone"/>
 </reports>
-<!-- signature="0727155498" -->
+<!-- signature="2042188877" -->

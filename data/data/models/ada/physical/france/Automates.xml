@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<automats model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Automats.xsd">
+<automats model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Automats.xsd">
   <automat decisional-model="Batterie Tir AUF1" id="460" name="Artillerie Animation AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="Artillerie Animation AUF1"/>
@@ -1092,4 +1092,4 @@
     <unit command-post="true" min-occurs="1" type="Refugies"/>
   </automat>
 </automats>
-<!-- signature="1412047491" -->
+<!-- signature="2384142334" -->

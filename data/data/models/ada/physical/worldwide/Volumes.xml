@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<volumes model-version="4.7.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Volumes.xsd">
+<volumes model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Volumes.xsd">
   <volume name="Stealth"/>
   <volume name="Heavy"/>
   <volume name="Medium"/>
   <volume name="Small"/>
   <volume name="Personal"/>
 </volumes>
-<!-- signature="0135100252" -->
+<!-- signature="0176745137" -->
