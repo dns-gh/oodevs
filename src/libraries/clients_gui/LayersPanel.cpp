@@ -121,7 +121,7 @@ void LayersPanel::Commit()
         options_.Change( std::string( "Layers/" ) + names_[ i ].ascii() + "/Alpha", current_[ i ] );
         T_Layers::const_iterator it = std::find( currentLayers_.begin(), currentLayers_.end(), layers_[i] );
         if( it != currentLayers_.end() )
-            options_.Change( std::string( "Layers/" ) + names_[ i ].ascii() + "/Position", it - currentLayers_.begin() );
+            options_.Change( std::string( "Layers/" ) + names_[ i ].ascii() + "/Position", static_cast< int >( it - currentLayers_.begin() ) );
     }
 }
 
