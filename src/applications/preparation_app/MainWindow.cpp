@@ -121,6 +121,35 @@ namespace bfs = boost::filesystem;
 using namespace kernel;
 using namespace gui;
 
+namespace
+{
+    class LoadingDialog
+    {
+    public:
+        LoadingDialog( QWidget* parent, const QString& text )
+        {
+            loadingDialog_ = new QDialog( parent, Qt::SplashScreen );
+            loadingDialog_->setModal( true );
+            QLabel* label = new QLabel( loadingDialog_ );
+            label->setFrameStyle( QFrame::Box | QFrame::Raised );
+            label->setText( text );
+            label->setStyleSheet( "font-size: 20pt;text-align: center;background-color: rgb( 165, 193, 221);" );
+            label->setAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
+            loadingDialog_->resize( label->sizeHint() );
+            loadingDialog_->open();
+        }
+
+        virtual ~LoadingDialog()
+        {
+            loadingDialog_->close();
+            delete loadingDialog_;
+        }
+
+    private:
+        QDialog* loadingDialog_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
@@ -270,16 +299,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     addToolBar( new DisplayToolbar( this, controllers ) );
     addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
     addToolBar( LocEditToolBar );
-    
-    loadingDialog_ = new QDialog( this, Qt::SplashScreen );
-    loadingDialog_->setModal( true );
-    QLabel* label = new QLabel( loadingDialog_ );
-    label->setFrameStyle( QFrame::Box | QFrame::Raised );
-    label->setText( tr( "Loading..." ) );
-    label->setStyleSheet( "font-size: 20pt;text-align: center;background-color: rgb( 165, 193, 221);" );
-    label->setAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
-    loadingDialog_->resize( label->sizeHint() );
-    loadingDialog_->open();
+
+    LoadingDialog loadingDialog( this, tr( "Loading..." ) );
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
@@ -304,7 +325,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         LoadExercise();
 
     restoreState(settings.value("mainWindowState").toByteArray());
-    loadingDialog_->close();
 }
 
 // -----------------------------------------------------------------------------
@@ -416,14 +436,11 @@ void MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::DoLoad( QString filename )
 {
-    loadingDialog_->open();
+    LoadingDialog loadingDialog( this, tr( "Loading..." ) );
     qApp->processEvents();
 
     if( filename.isEmpty() )
-    {
-        loadingDialog_->close();
         return;
-    }
 
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
@@ -436,8 +453,6 @@ void MainWindow::DoLoad( QString filename )
         SetWindowTitle( true );
         LoadExercise();
     }
-
-    loadingDialog_->close();
 }
 
 // -----------------------------------------------------------------------------

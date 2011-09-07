@@ -154,7 +154,6 @@ private:
     QByteArray toolbars_;
     CreationPanels* pCreationPanel_;
     ScoreDialog* pScoreDialog_;
-    QDialog* loadingDialog_;
     FilterDialogs* filterDialogs_;
     //@}
 };
