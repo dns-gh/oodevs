@@ -61,9 +61,6 @@
     <ClCompile Include="..\..\src\libraries\launcher_dll\PauseResumeMessageHandler.cpp">
       <Filter>Source Files\Notification</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\launcher_dll\StatusMessageHandler.cpp">
-      <Filter>Source Files\Notification</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.cpp">
       <Filter>Source Files\Notification</Filter>
     </ClCompile>
@@ -118,9 +115,6 @@
       <Filter>Source Files\Notification</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\launcher_dll\PauseResumeMessageHandler.h">
-      <Filter>Source Files\Notification</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\launcher_dll\StatusMessageHandler.h">
       <Filter>Source Files\Notification</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.h">

@@ -39,11 +39,28 @@ bool ControlInformationMessageHandler::OnReceiveMessage( const sword::SimToClien
     if( message.message().has_control_information() )
     {
         const sword::ControlInformation& control = message.message().control_information();
-        SessionParameterChangeResponse response;
-        response().set_error_code( sword::SessionParameterChangeResponse::success );
-        response().set_checkpoint_frequency( control.checkpoint_frequency() );
-        response().set_acceleration_factor( control.time_factor() );
-        Send( response );
+        SessionParameterChangeResponse parameterChangeResponse;
+        parameterChangeResponse().set_error_code( sword::SessionParameterChangeResponse::success );
+        parameterChangeResponse().set_checkpoint_frequency( control.checkpoint_frequency() );
+        parameterChangeResponse().set_acceleration_factor( control.time_factor() );
+        Send( parameterChangeResponse );
+        SessionStatus statusResponse;
+        switch( control.status() )
+        {
+        case sword::running:
+            statusResponse().set_status( sword::SessionStatus::running );
+            break;
+        case sword::paused:
+            statusResponse().set_status( sword::SessionStatus::paused );
+            break;
+        case sword::stopped:
+            statusResponse().set_status( sword::SessionStatus::not_running );
+            break;
+        case sword::loading:
+            statusResponse().set_status( sword::SessionStatus::starting );
+            break;
+        }
+        Send( statusResponse );
     }
     return false;
 }

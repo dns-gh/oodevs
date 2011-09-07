@@ -179,7 +179,6 @@
     <ClCompile Include="..\..\src\libraries\launcher_dll\ControlInformationMessageHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\NotificationMessageHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\PauseResumeMessageHandler.cpp" />
-    <ClCompile Include="..\..\src\libraries\launcher_dll\StatusMessageHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +199,6 @@
     <ClInclude Include="..\..\src\libraries\launcher_dll\MessageHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\NotificationMessageHandler.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\PauseResumeMessageHandler.h" />
-    <ClInclude Include="..\..\src\libraries\launcher_dll\StatusMessageHandler.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.h" />
   </ItemGroup>
   <ItemGroup>

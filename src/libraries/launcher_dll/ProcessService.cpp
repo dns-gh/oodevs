@@ -23,7 +23,6 @@
 #include "Config.h"
 #include "CheckpointMessageHandler.h"
 #include "PauseResumeMessageHandler.h"
-#include "StatusMessageHandler.h"
 #include "LauncherService.h"
 #include "TimeMessageHandler.h"
 #include "NotificationMessageHandler.h"
@@ -182,7 +181,6 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     }
     wrapper->Start( *this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new StatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     return sword::SessionStartResponse::success;
