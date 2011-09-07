@@ -10,6 +10,7 @@
 #ifndef plugins_hla_AggregateEntityClass_h
 #define plugins_hla_AggregateEntityClass_h
 
+#include "RemoteAgentSubject_ABC.h"
 #include "AgentListener_ABC.h"
 #include <hla/ObjectRegistration_ABC.h>
 #include <boost/shared_ptr.hpp>
@@ -39,7 +40,8 @@ namespace hla
 */
 // Created: AGE 2008-02-22
 // =============================================================================
-class AggregateEntityClass : private AgentListener_ABC
+class AggregateEntityClass : public RemoteAgentSubject_ABC
+                           , private AgentListener_ABC
                            , private ::hla::ObjectRegistration_ABC< Aggregate_ABC >
 {
 public:
@@ -53,8 +55,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( RemoteAgentListener_ABC& listener );
-    void Unregister( RemoteAgentListener_ABC& listener );
+    virtual void Register( RemoteAgentListener_ABC& listener );
+    virtual void Unregister( RemoteAgentListener_ABC& listener );
     //@}
 
 private:

@@ -121,3 +121,21 @@ void FederateFacade::Notify( const sword::ControlEndTick& /*message*/, int /*con
 {
     federate_->Step();
 }
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Register
+// Created: VPR 2011-09-07
+// -----------------------------------------------------------------------------
+void FederateFacade::Register( RemoteAgentListener_ABC& listener )
+{
+    agentClass_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Unregister
+// Created: VPR 2011-09-07
+// -----------------------------------------------------------------------------
+void FederateFacade::Unregister( RemoteAgentListener_ABC& listener )
+{
+    agentClass_->Unregister( listener );
+}

@@ -10,6 +10,7 @@
 #ifndef plugins_hla_FederateFacade_h
 #define plugins_hla_FederateFacade_h
 
+#include "RemoteAgentSubject_ABC.h"
 #include "tools/MessageObserver.h"
 #include <memory>
 
@@ -35,7 +36,6 @@ namespace plugins
 {
 namespace hla
 {
-    class AggregateEntityClass;
     class AgentSubject_ABC;
     class FederateAmbassadorFactory_ABC;
     class Federate_ABC;
@@ -50,7 +50,8 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class FederateFacade : private tools::MessageObserver< sword::ControlEndTick >
+class FederateFacade : public RemoteAgentSubject_ABC
+                     , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,6 +60,12 @@ public:
                              AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory,
                              const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
     virtual ~FederateFacade();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Register( RemoteAgentListener_ABC& listener );
+    virtual void Unregister( RemoteAgentListener_ABC& listener );
     //@}
 
 private:
@@ -87,7 +94,7 @@ private:
     std::auto_ptr< RemoteAggregateFactory_ABC > pNetnRemoteAggregateFactory_;
     std::auto_ptr< ClassBuilder_ABC > pClassBuilder_;
     std::auto_ptr< ClassBuilder_ABC > pNetnClassBuilder_;
-    std::auto_ptr< AggregateEntityClass > agentClass_;
+    std::auto_ptr< RemoteAgentSubject_ABC > agentClass_;
     //@}
 };
 
