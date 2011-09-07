@@ -116,8 +116,6 @@ void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> depth_
          >> refDist_
          >> location_;
-    // TODO à faire posttraitement
-    //GenerateFlood();
 }
 
 // -----------------------------------------------------------------------------
@@ -170,6 +168,16 @@ void FloodAttribute::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "depth", depth_ )
             << xml::attribute( "reference-distance", refDist_ )
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::OnUpdate
+// Created: JSR 2011-09-06
+// -----------------------------------------------------------------------------
+void FloodAttribute::OnUpdate( const sword::MissionParameter_Value& /*attribute*/ )
+{
+    GenerateFlood( true );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------

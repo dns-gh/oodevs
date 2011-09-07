@@ -395,7 +395,6 @@ void ObjectMagicOrdersInterface::GenerateFlood()
     ParameterList& list = *new ParameterList( OrderParameter( "Flood", "list", false ) );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::flood );
     actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
-    flood->GenerateFlood( true );
 }
 
 // -----------------------------------------------------------------------------

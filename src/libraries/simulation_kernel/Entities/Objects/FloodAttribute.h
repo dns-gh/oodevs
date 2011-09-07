@@ -78,6 +78,7 @@ public:
 
     //! @name Network updates
     //@{
+    virtual void OnUpdate( const sword::MissionParameter_Value& attribute );
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}

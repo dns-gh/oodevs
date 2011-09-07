@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "FloodAttribute.h"
-#include "Simulation.h"
 #include "Tools.h"
 #include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/DetectionMap.h"
@@ -29,12 +28,11 @@ FloodAttribute::FloodAttribute( kernel::Controller& controller, const kernel::De
     , positions_     ( positions )
     , floodModel_    ( new flood::FloodModel( *this ) )
     , floodDrawer_   ( new flood::FloodDrawer( *floodModel_ ) )
-    , floodGenerated_( false )
     , readFromODB_   ( false )
     , depth_         ( 0 )
     , refDist_       ( 0 )
 {
-    controller_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +41,7 @@ FloodAttribute::FloodAttribute( kernel::Controller& controller, const kernel::De
 // -----------------------------------------------------------------------------
 FloodAttribute::~FloodAttribute()
 {
-    controller_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -96,16 +94,6 @@ short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodAttribute::NotifyUpdated
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-void FloodAttribute::NotifyUpdated( const Simulation& simulation )
-{
-    if( !floodGenerated_ && simulation.IsInitialized() )
-        GenerateFlood();
-}
-
-// -----------------------------------------------------------------------------
 // Name: FloodAttribute::ReadFromODB
 // Created: JSR 2011-05-20
 // -----------------------------------------------------------------------------
@@ -120,7 +108,6 @@ bool FloodAttribute::ReadFromODB() const
 // -----------------------------------------------------------------------------
 void FloodAttribute::GenerateFlood( bool force )
 {
-    floodGenerated_ = true;
     floodModel_->GenerateFlood( positions_.GetPosition(), depth_, refDist_, force );
     floodDrawer_->ResetTexture();
 }
@@ -141,6 +128,8 @@ void FloodAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 void FloodAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
+    if( message.attributes().has_flood() )
+        GenerateFlood( true );
 }
 
 // -----------------------------------------------------------------------------

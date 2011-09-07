@@ -362,7 +362,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_Object::OnUpdate( const google::protob
             Get< InfrastructureCapacity >().OnUpdate( attribute );
             break;
         case sword::ObjectMagicAction::flood:
-            GetAttribute< FloodAttribute >().GenerateFlood( true );
+            GetAttribute< FloodAttribute >().OnUpdate( attribute );
             break;
         case sword::ObjectMagicAction::underground:
             GetAttribute< UndergroundAttribute >().OnUpdate( attribute );
