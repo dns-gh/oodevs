@@ -1086,10 +1086,10 @@
           </automat>
           <automat engaged="true" id="2187" knowledge-group="6" name="Surface To Air Battery [2187]" type="Surface To Air Battery">
             <unit command-post="true" id="2188" name="Surface To Air Battery CP" position="30TXS3584283961" type="Surface To Air Battery CP"/>
-            <unit command-post="false" id="2189" name="Surface To Air Defense Troop" position="30TXS3636083480" type="Surface To Air Defense Troop"/>
-            <unit command-post="false" id="2190" name="Surface To Air Defense Troop" position="30TXS3587782963" type="Surface To Air Defense Troop"/>
-            <unit command-post="false" id="2191" name="Surface To Air Defense Troop" position="30TXS3535983444" type="Surface To Air Defense Troop"/>
-            <unit command-post="false" id="2192" name="Surface To Air Defense Troop" position="30TXS3634283979" type="Surface To Air Defense Troop"/>
+            <unit command-post="false" id="2189" name="Surface To Air Defense Troop" position="30TXS3636083480" type="Short Range Surface To Air Defense Troop"/>
+            <unit command-post="false" id="2190" name="Surface To Air Defense Troop" position="30TXS3587782963" type="Short Range Surface To Air Defense Troop"/>
+            <unit command-post="false" id="2191" name="Surface To Air Defense Troop" position="30TXS3535983444" type="Short Range Surface To Air Defense Troop"/>
+            <unit command-post="false" id="2192" name="Surface To Air Defense Troop" position="30TXS3634283979" type="Short Range Surface To Air Defense Troop"/>
           </automat>
           <automat engaged="true" id="2193" knowledge-group="6" name="Tank CO (M1) [2193]" type="Tank CO (M1)">
             <unit command-post="true" id="2194" name="Tank CO HQ (M1)" position="30TXS3191684143" type="Tank CO HQ (M1)"/>
@@ -1137,4 +1137,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="4224977434" -->
+<!-- signature="0033304452" -->

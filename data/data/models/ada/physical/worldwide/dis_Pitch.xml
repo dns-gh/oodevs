@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<dis-mapping default="1 1 225 1 1 0 0">
+    <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
+    <!-- aggregates -->
+<entry name="MBT Platoon" dis="1 1 225 1 1 0 0"/>
+<entry name="Light armored platoon" dis="1 1 225 1 6 0 0"/>
+<entry name="Armored squadron CP" dis="1 1 225 0 5 0 0"/>
+<entry name="Scout patrol" dis="1 1 225 2 17 0 0"/>
+<entry name="Antitank patrol" dis="1 1 225 1 5 0 0"/>
+<entry name="Infantry platoon" dis="3 1 225 1 0 0 0"/>
+<entry name="Mortar troop" dis="1 1 225 10 0 0 0"/>
+<entry name="Countermobility platoon" dis="1 1 225 3 5 0 0"/>
+<entry name="Artillery firing platoon" dis="1 1 225 4 6 0 0"/>
+<entry name="Militia" dis="3 1 225 1 0 0 0"/>
+<entry name="Drones station" dis="1 2 225 50 1 0 0"/>
+<entry name="Drone (real time)" dis="1 2 225 50 3 0 0"/>
+<entry name="Commando troop" dis="3 1 225 1 0 0 0"/>
+<entry name="AAC CP" dis="1 2 225 0 0 0 0"/>
+<entry name="Antitank Helicopter Patrol" dis="1 2 225 20 0 0 0"/>
+<entry name="Refugee" dis="3 1 225 0 0 0 0"/>
+<entry name="Terrorist" dis="3 1 225 6 0 0 0"/>
+<entry name="Terrorist Bombmaker" dis="3 1 225 6 0 0 1"/>
+
+  
+    <!-- entities -->
+    <entry name="10m3 Gasoil Tank Trunk" dis="1 1 225 15 1 0 0"/>
+    <entry name="12.7-mm Armed Load Carrying Vehicle" dis="1 1 225 14 1 0 0"/>
+    <entry name="12.7-mm Armoured Personnel Carrier" dis="1 1 225 3 1 0 0"/>
+    <entry name="155-mm Artillery Tank" dis="1 1 225 4 1 0 0"/>
+    <entry name="20-mm Armoured Personnel Carrier" dis="1 1 225 3 1 0 0"/>
+    <entry name="20-mm Chain Gun Helicopter" dis="1 2 225 20 1 0 0"/>
+    <entry name="30m3 Semi-Trailer Gasoil Tank Trunk" dis="1 1 225 15 1 0 0"/>
+    <entry name="5m3 Gasoil Tank Trunk" dis="1 1 225 15 1 0 0"/>
+    <entry name="5m3 Kerosene Tank Trunk" dis="1 1 225 15 1 0 0"/>
+    <entry name="7.62-mm Armed Load Carrying Vehicle" dis="1 1 225 14 1 0 0"/>
+    <entry name="7.62-mm Armoured Personnel Carrier" dis="1 1 225 3 1 0 0"/>
+    <entry name="Air Defence Helicopter" dis="1 2 225 20 1 0 0"/>
+    <entry name="Ambulance" dis="1 1 225 18 1 0 0"/>
+    <entry name="Antitank Helicopter" dis="1 2 225 20 1 0 0"/>
+    <entry name="Armoured Personnel Carrier Antitank" dis="1 1 225 3 1 0 0"/>
+    <entry name="Armoured Personnel Carrier Artillery" dis="1 1 225 3 1 0 0"/>
+    <entry name="Armoured Personnel Carrier Command Post" dis="1 1 225 3 1 0 0"/>
+    <entry name="Armoured Recovery Vehicule" dis="1 1 225 20 1 0 0"/>
+    <entry name="Artillery Firefinder Radar" dis="1 1 225 4 1 0 0"/>
+    <entry name="Artillery Recce Vehicle" dis="1 1 225 4 1 0 0"/>
+    <entry name="Champ Operatoire" dis="1 1 225 18 1 0 0"/>
+    <entry name="Command and Control Vehicle" dis="1 1 225 20 1 0 0"/>
+    <entry name="Commando" dis="3 1 225 1 1 0 0"/>
+    <entry name="CP failure reapairs team" dis="3 1 225 1 1 0 0"/>
+    <entry name="CP mobility repairs team" dis="3 1 225 1 1 0 0"/>
+    <entry name="CP repairs team" dis="3 1 225 1 1 0 0"/>
+    <entry name="Cruiser" dis="1 3 225 1 1 0 0"/>
+    <entry name="Engineer Bridge Vehicule" dis="1 1 225 18 1 0 0"/>
+    <entry name="Engineer VPC" dis="3 1 225 1 1 0 0"/>
+    <entry name="Fire Engine" dis="1 1 225 18 1 0 0"/>
+    <entry name="Fire Truck" dis="1 1 225 18 1 0 0"/>
+    <entry name="Firing mobility repairs team (corps)" dis="3 1 225 1 1 0 0"/>
+    <entry name="Firing mobility repairs team (division)" dis="3 1 225 1 1 0 0"/>
+    <entry name="Heavy Equipment Transporter System" dis="1 1 225 19 1 0 0"/>
+    <entry name="Infantry Soldiers" dis="3 1 225 1 1 0 0"/>
+    <entry name="Jammer" dis="1 1 225 18 1 0 0"/>
+    <entry name="Landing Craft" dis="1 3 225 1 1 0 0"/>
+    <entry name="Light Armored Vehicle" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Armored Vehicle 12.7-mm" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Armored Vehicle 7.62-mm" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Armored Vehicle Antitiank" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Armored Vehicle Rocket" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Medium Tactical 12.7-mm Armed Vehicle" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Medium Tactical 20-mm Armed Vehicle" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Medium Tactical 7.62-mm Armed Vehicle" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Medium Tactical Vehicle" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Medium Tactical Vehicle (RASIT)" dis="1 1 225 2 1 0 0"/>
+    <entry name="Light Recovery Vehicle" dis="1 1 225 20 1 0 0"/>
+    <entry name="Listening Vehicle" dis="1 1 225 18 1 0 0"/>
+    <entry name="Load Carrying Vehicle" dis="1 1 225 14 1 0 0"/>
+    <entry name="Logistic decontamination team" dis="3 1 225 1 1 0 0"/>
+    <entry name="Long Range Surveillance Detachment Soldier" dis="3 1 225 1 1 0 0"/>
+    <entry name="Main Battle Tank" dis="1 1 225 1 1 0 0"/>
+    <entry name="MBT mobility repairs team" dis="3 1 225 1 1 0 0"/>
+    <entry name="MBT repairs team" dis="3 1 225 1 1 0 0"/>
+    <entry name="Medical and Psychological Staff" dis="3 1 225 1 1 0 0"/>
+    <entry name="Medical Cell" dis="3 1 225 1 1 0 0"/>
+    <entry name="Medical Evacuation Helicopter" dis="1 2 225 21 1 0 0"/>
+    <entry name="Medical triage team" dis="3 1 225 1 1 0 0"/>
+    <entry name="Medium Range Antitank Weapon Team" dis="3 1 225 1 1 0 0"/>
+    <entry name="Medium tactical Vehicle" dis="1 1 225 2 1 0 0"/>
+    <entry name="Medium Tank" dis="1 1 225 2 1 0 0"/>
+    <entry name="Militia 14.5mm Armed Vehicle" dis="1 1 102 6 1 0 0"/>
+    <entry name="Militia 5.56mm Pistol Armed Man" dis="3 1 102 1 1 0 0"/>
+    <entry name="Mobility repairs team (corps)" dis="3 1 225 1 1 0 0"/>
+    <entry name="Mobility repairs team (division)" dis="3 1 225 1 1 0 0"/>
+    <entry name="Mortar Launcher 120mm" dis="1 1 225 10 1 0 0"/>
+    <entry name="Mortar Troop" dis="3 1 225 1 1 0 0"/>
+    <entry name="Motocycle" dis="1 1 225 6 1 0 0"/>
+    <entry name="MTV 1 Pers" dis="1 1 225 20 1 0 0"/>
+    <entry name="MTV 2Pers" dis="1 1 225 20 1 0 0"/>
+    <entry name="MTV 2Pers 12.7" dis="1 1 225 20 1 0 0"/>
+    <entry name="MTV 3Pers" dis="1 1 225 20 1 0 0"/>
+    <entry name="MTV CLD" dis="1 1 225 20 1 0 0"/>
+    <entry name="MTV Plt Depos" dis="1 1 225 20 1 0 0"/>
+    <entry name="MTV12,7" dis="1 1 225 20 1 0 0"/>
+    <entry name="Multiple Launch Rocket System" dis="1 1 225 4 1 0 0"/>
+    <entry name="MVT 700 100" dis="1 1 225 20 1 0 0"/>
+    <entry name="Police Car" dis="1 1 225 18 1 0 0"/>
+    <entry name="Radar Detection Vehicle" dis="1 1 225 18 1 0 0"/>
+    <entry name="Real Time Drone" dis="1 2 225 50 1 0 0"/>
+    <entry name="Refugee" dis="3 1 225 3 1 0 0"/>
+    <entry name="Regimental Aid Post" dis="1 1 225 18 1 0 0"/>
+    <entry name="Repairs team (corps)" dis="3 1 225 1 1 0 0"/>
+    <entry name="Repairs team (division)" dis="3 1 225 1 1 0 0"/>
+    <entry name="RSV" dis="3 1 225 1 1 0 0"/>
+    <entry name="RSV decontamination NBC" dis="3 1 225 1 1 0 0"/>
+    <entry name="RSV reconnaissance NBC" dis="3 1 225 1 1 0 0"/>
+    <entry name="Short Range Surface To Air Tank" dis="1 1 225 4 1 0 0"/>
+    <entry name="SRAW soldier" dis="3 1 225 1 1 0 0"/>
+    <entry name="Strategic Bomber" dis="1 2 225 3 1 0 0"/>
+    <entry name="TBU15 CLD" dis="1 1 225 18 1 0 0"/>
+    <entry name="Terroriste" dis="3 1 102 1 1 0 0"/>
+    <entry name="Theater High Altitude Aera Defense Device" dis="1 1 225 7 1 0 0"/>
+    <entry name="Theater High Altitude Radar Vehicle" dis="1 1 225 7 1 0 0"/>
+    <entry name="Tigre helicopter" dis="1 2 225 20 1 0 0"/>
+    <entry name="Transport helicopter" dis="1 2 225 21 1 0 0"/>
+    <entry name="TUM 12.7" dis="1 1 225 18 1 0 0"/>
+    <entry name="VAB RATAC" dis="1 1 225 3 1 0 0"/>
+    <entry name="VAB SAN" dis="1 1 225 3 1 0 0"/>
+    <entry name="Very Short Range Surface To Air System" dis="1 1 225 7 1 0 0"/>
+    <entry name="VSB" dis="1 1 225 3 1 0 0"/>
+    <entry name="VSRAW soldier" dis="3 1 225 1 1 0 0"/>
+</dis-mapping>
+<!-- signature="3074272416" -->

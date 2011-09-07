@@ -555,7 +555,7 @@
         <resource capacity="4" logistic-threshold="0" name="Antitank Missile" normalized-consumption="2"/>
       </category>
       <category name="carburant">
-        <resource capacity="540" logistic-threshold="1" name="Kerosene" normalized-consumption="540"/>
+        <resource capacity="540" logistic-threshold="10" name="Kerosene" normalized-consumption="540"/>
       </category>
       <category name="ration">
         <resource capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
@@ -1383,6 +1383,9 @@
       <category name="carburant">
         <resource capacity="102" logistic-threshold="30" name="Diesel" normalized-consumption="17"/>
       </category>
+      <category name="barbele">
+        <resource capacity="100" logistic-threshold="10" name="Standard Barbed Wire" normalized-consumption="10"/>
+      </category>
       <category name="ration">
         <resource capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
         <resource capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
@@ -1415,7 +1418,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object type="checkpoint"/>
+      <object initial-construction-time="180s" type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -15327,83 +15330,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="173" name="TEST Camion - Ravitaillement et distribution" protection="UnarmouredVehicle" size="Heavy" weight="33">
-    <speeds max="110">
-      <speed terrain="unknown" value="5"/>
-      <speed terrain="forest" value="5"/>
-      <speed terrain="orchard" value="20"/>
-      <speed terrain="swamp" value="0"/>
-      <speed terrain="dune" value="0"/>
-      <speed terrain="urban area" value="15"/>
-      <speed terrain="lake" value="0"/>
-      <speed terrain="glacier" value="0"/>
-      <speed terrain="forest edge" value="5"/>
-      <speed terrain="suburb" value="0"/>
-      <speed terrain="waterfront" value="0"/>
-      <speed terrain="orchard edge" value="10"/>
-      <speed terrain="swamp edge" value="0"/>
-      <speed terrain="dune edge" value="0"/>
-      <speed terrain="glacier edge" value="0"/>
-      <speed terrain="country road" value="30"/>
-      <speed terrain="highway" value="120"/>
-      <speed terrain="main road" value="90"/>
-      <speed terrain="secondary road" value="70"/>
-      <speed terrain="stream" value="0"/>
-      <speed terrain="river" value="0"/>
-      <speed terrain="main river" value="0"/>
-      <speed terrain="bridge" value="70"/>
-      <speed terrain="cliff" value="0"/>
-      <speed terrain="railroad" value="0"/>
-      <speed terrain="crossroad" value="30"/>
-      <speed terrain="mountain" value="0"/>
-      <speed terrain="mountain edge" value="0"/>
-    </speeds>
-    <composition>
-      <category name="carburant">
-        <resource capacity="400" logistic-threshold="1" name="Kerosene" normalized-consumption="400"/>
-      </category>
-      <category name="ration">
-        <resource capacity="10" logistic-threshold="1" name="Cover" normalized-consumption="10"/>
-        <resource capacity="3" logistic-threshold="1" name="Bottle of Distilled Water" normalized-consumption="3"/>
-        <resource capacity="60" logistic-threshold="1" name="Food" normalized-consumption="60"/>
-      </category>
-    </composition>
-    <sensors>
-      <sensor height="1.5" type="Eye"/>
-    </sensors>
-    <radars/>
-    <transports/>
-    <consumptions>
-      <consumption status="ArretMoteurAllume">
-        <resource category="carburant" name="Kerosene" value="5"/>
-      </consumption>
-      <consumption status="Deplacement">
-        <resource category="carburant" name="Kerosene" value="25"/>
-      </consumption>
-    </consumptions>
-    <weapon-systems/>
-    <human-protections/>
-    <objects>
-      <object initial-construction-time="10m" type="secured area"/>
-    </objects>
-    <logistic-functions>
-      <supply-functions>
-        <carrying mass="10" nature="Water" volume="10"/>
-      </supply-functions>
-    </logistic-functions>
-    <breakdowns>
-      <breakdown origin="random" percentage="45" type="Tire flat"/>
-      <breakdown origin="random" percentage="15" type="Heater failure"/>
-      <breakdown origin="random" percentage="15" type="Oil leak"/>
-      <breakdown origin="random" percentage="5" type="Warning or blinker failure"/>
-      <breakdown origin="random" percentage="5" type="Universal joint failure"/>
-      <breakdown origin="random" percentage="5" type="Cylinder head gasket failure"/>
-      <breakdown origin="random" percentage="10" type="Gear failure"/>
-      <breakdown origin="attrition" percentage="100" type="Tire flat"/>
-    </breakdowns>
-    <equipment-category>Autres</equipment-category>
-  </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="174" name="Commercial Vehicle" protection="UnarmouredVehicle" size="Medium" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="173" name="Commercial Vehicle" protection="UnarmouredVehicle" size="Medium" weight="2">
     <speeds max="130">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15472,7 +15399,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="175" name="Tow Truck" protection="UnarmouredVehicle" size="Heavy" weight="33">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="174" name="Tow Truck" protection="UnarmouredVehicle" size="Heavy" weight="33">
     <speeds max="110">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15547,7 +15474,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="176" name="Police Car Megaphone" protection="UnarmouredVehicle" size="Small" weight="1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="175" name="Police Car Megaphone" protection="UnarmouredVehicle" size="Small" weight="1">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15616,7 +15543,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Engine" id="177" name="Fire Engine" protection="UnarmouredVehicle" size="Medium" weight="5">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Engine" id="176" name="Fire Engine" protection="UnarmouredVehicle" size="Medium" weight="5">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15687,5 +15614,187 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="177" name="Light Armored Vehicle 20-mm" protection="LightTank" size="Small" weight="4">
+    <speeds max="90">
+      <speed terrain="unknown" value="60"/>
+      <speed terrain="forest" value="60"/>
+      <speed terrain="orchard" value="10"/>
+      <speed terrain="swamp" value="10"/>
+      <speed terrain="dune" value="25"/>
+      <speed terrain="urban area" value="60"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="70"/>
+      <speed terrain="suburb" value="80"/>
+      <speed terrain="waterfront" value="15"/>
+      <speed terrain="orchard edge" value="30"/>
+      <speed terrain="swamp edge" value="30"/>
+      <speed terrain="dune edge" value="30"/>
+      <speed terrain="glacier edge" value="30"/>
+      <speed terrain="country road" value="60"/>
+      <speed terrain="highway" value="80"/>
+      <speed terrain="main road" value="80"/>
+      <speed terrain="secondary road" value="60"/>
+      <speed terrain="stream" value="10"/>
+      <speed terrain="river" value="15"/>
+      <speed terrain="main river" value="15"/>
+      <speed terrain="bridge" value="80"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="20"/>
+      <speed terrain="crossroad" value="80"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
+        <resource capacity="500" logistic-threshold="10" name="20-mm Shell" normalized-consumption="50"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="102" logistic-threshold="30" name="Diesel" normalized-consumption="17"/>
+      </category>
+      <category name="ration">
+        <resource capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <resource capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="2" type="Eye"/>
+      <sensor height="2" type="Light Intensifier Device"/>
+      <sensor height="2" type="x8 Optical Binoculars"/>
+    </sensors>
+    <radars/>
+    <transports>
+      <crew man-boarding-time="010s" man-unloading-time="010s"/>
+    </transports>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="Water" value="0.75"/>
+        <resource category="ration" name="Food" value="0.12"/>
+      </consumption>
+      <consumption status="ArretMoteurAllume">
+        <resource category="carburant" name="Diesel" value="2"/>
+      </consumption>
+      <consumption status="Deplacement">
+        <resource category="carburant" name="Diesel" value="11"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
+      <weapon-system launcher="20-mm Gun" munition="20-mm Shell"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects>
+      <object type="checkpoint"/>
+    </objects>
+    <breakdowns>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 2 EB"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 2 EB Evac"/>
+      <breakdown origin="random" percentage="12" type="MOB Breakdown 3 EB"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 3 EB Evac"/>
+      <breakdown origin="random" percentage="9" type="MOB Breakdown 4 EB"/>
+      <breakdown origin="random" percentage="7" type="MOB Breakdown 4 EB Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 10 EB Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 12 EB Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 16 EB Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown NTI3 EB Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5 EB"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5 EB Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 6 EB"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 6 EB Evac"/>
+      <breakdown origin="random" percentage="1" type="MOB Breakdown 7 EB"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 7 EB Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 8 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 1 EB"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 2 EB"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 2 EB Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 3 EB"/>
+      <breakdown origin="attrition" percentage="2" type="MOB Breakdown 3 EB Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 4 EB"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 4 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5 EB"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5 EB Evac"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 6 EB"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 6 EB Evac"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 7 EB"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 7 EB Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 8 EB Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 10 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 12 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 16 EB Evac"/>
+      <breakdown origin="attrition" percentage="50" type="MOB Breakdown NTI3 EB Evac"/>
+    </breakdowns>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="178" name="Transporter Van Vehicle" protection="UnarmouredVehicle" size="Medium" weight="2">
+    <speeds max="110">
+      <speed terrain="unknown" value="5"/>
+      <speed terrain="forest" value="5"/>
+      <speed terrain="orchard" value="20"/>
+      <speed terrain="swamp" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urban area" value="15"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="0"/>
+      <speed terrain="forest edge" value="5"/>
+      <speed terrain="suburb" value="0"/>
+      <speed terrain="waterfront" value="0"/>
+      <speed terrain="orchard edge" value="10"/>
+      <speed terrain="swamp edge" value="0"/>
+      <speed terrain="dune edge" value="0"/>
+      <speed terrain="glacier edge" value="0"/>
+      <speed terrain="country road" value="30"/>
+      <speed terrain="highway" value="100"/>
+      <speed terrain="main road" value="90"/>
+      <speed terrain="secondary road" value="70"/>
+      <speed terrain="stream" value="0"/>
+      <speed terrain="river" value="0"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="70"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="0"/>
+      <speed terrain="crossroad" value="30"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="1" name="Gasoil" normalized-consumption="100"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="1.5" type="Eye"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurAllume">
+        <resource category="carburant" name="Gasoil" value="3"/>
+      </consumption>
+      <consumption status="Deplacement">
+        <resource category="carburant" name="Gasoil" value="7"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems/>
+    <human-protections/>
+    <objects/>
+    <logistic-functions>
+      <supply-functions>
+        <carrying mass="8" nature="Water" volume="24"/>
+      </supply-functions>
+    </logistic-functions>
+    <breakdowns>
+      <breakdown origin="random" percentage="45" type="Tire flat"/>
+      <breakdown origin="random" percentage="15" type="Heater failure"/>
+      <breakdown origin="random" percentage="15" type="Oil leak"/>
+      <breakdown origin="random" percentage="5" type="Warning or blinker failure"/>
+      <breakdown origin="random" percentage="5" type="Universal joint failure"/>
+      <breakdown origin="random" percentage="5" type="Cylinder head gasket failure"/>
+      <breakdown origin="random" percentage="10" type="Gear failure"/>
+      <breakdown origin="attrition" percentage="100" type="Tire flat"/>
+    </breakdowns>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
 </equipments>
-<!-- signature="0206182788" -->
+<!-- signature="3798367445" -->

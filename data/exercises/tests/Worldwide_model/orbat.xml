@@ -220,7 +220,7 @@
             </automat>
             <automat engaged="false" id="234" knowledge-group="6" name="ArtDsa [234]" type="Artillery firing battery">
               <unit command-post="true" id="219" name="Surface To Air Battery CP" position="30UXU3314041292" type="Surface To Air Battery CP"/>
-              <unit command-post="false" id="220" name="Surface To Air Defense Troop (Very Short Range)" position="30UXU3354940599" type="Surface To Air Defense Troop"/>
+              <unit command-post="false" id="220" name="Surface To Air Defense Troop (Very Short Range)" position="30UXU3354940599" type="Short Range Surface To Air Defense Troop"/>
               <unit command-post="false" id="223" name="Patriot Launcher PLT (Theater High Altitude Defense Troop)" position="30UXU3755942256" type="Patriot Launcher PLT"/>
             </automat>
             <automat engaged="false" id="238" knowledge-group="6" name="ArtFdp [238]" type="Artillery firing battery">
@@ -450,10 +450,10 @@
             <formation id="289" level="iii" name="ArtDsa">
               <automat engaged="true" id="459" knowledge-group="6" name="Surface To Air Battery [459]" type="Surface To Air Battery">
                 <unit command-post="true" id="460" name="Surface To Air Battery CP" position="30UXU8894538870" type="Surface To Air Battery CP"/>
-                <unit command-post="false" id="461" name="Surface To Air Defense Troop" position="30UXU8946438389" type="Surface To Air Defense Troop"/>
-                <unit command-post="false" id="462" name="Surface To Air Defense Troop" position="30UXU8898137871" type="Surface To Air Defense Troop"/>
-                <unit command-post="false" id="463" name="Surface To Air Defense Troop" position="30UXU8846338352" type="Surface To Air Defense Troop"/>
-                <unit command-post="false" id="464" name="Surface To Air Defense Troop" position="30UXU8944638888" type="Surface To Air Defense Troop"/>
+                <unit command-post="false" id="461" name="Surface To Air Defense Troop" position="30UXU8946438389" type="Short Range Surface To Air Defense Troop"/>
+                <unit command-post="false" id="462" name="Surface To Air Defense Troop" position="30UXU8898137871" type="Short Range Surface To Air Defense Troop"/>
+                <unit command-post="false" id="463" name="Surface To Air Defense Troop" position="30UXU8846338352" type="Short Range Surface To Air Defense Troop"/>
+                <unit command-post="false" id="464" name="Surface To Air Defense Troop" position="30UXU8944638888" type="Short Range Surface To Air Defense Troop"/>
               </automat>
               <automat engaged="true" id="470" knowledge-group="6" name="Patriot Fire Unit BTY [470]" type="Patriot Fire Unit BTY">
                 <unit command-post="true" id="471" name="Patriot BTY CP" position="30UXU8419447639" type="Patriot BTY CP"/>
@@ -547,7 +547,7 @@
         <knowledge-group id="153" name="Groupe de connaissance [153]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" id="267" name="Population standard [267]" position="30UXU3150525657" type="Population standard">
+        <population attitude="calme" id="267" name="Population standard [267]" position="30UXU3150525657" type="Standard Crowd">
           <composition contaminated="0" dead="0" healthy="100000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -931,7 +931,7 @@
         <knowledge-group id="133" name="Groupe de connaissance [133]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" id="155" name="Population standard [155]" position="30UXU2259645029" type="Population standard">
+        <population attitude="calme" id="155" name="Population standard [155]" position="30UXU2259645029" type="Standard Crowd">
           <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -957,7 +957,7 @@
         <knowledge-group id="141" name="Groupe de connaissance [141]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" id="156" name="Population standard [156]" position="30UXU2472544970" type="Population standard">
+        <population attitude="calme" id="156" name="Population standard [156]" position="30UXU2472544970" type="Standard Crowd">
           <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -983,7 +983,7 @@
         <knowledge-group id="149" name="Groupe de connaissance [149]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" id="157" name="Population standard [157]" position="30UXU2628245049" type="Population standard">
+        <population attitude="calme" id="157" name="Population standard [157]" position="30UXU2628245049" type="Standard Crowd">
           <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -1020,4 +1020,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1496013570" -->
+<!-- signature="0702712958" -->

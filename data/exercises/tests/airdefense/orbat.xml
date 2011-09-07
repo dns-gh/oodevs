@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat>
-  <dotations infinite="true"/>
-  <sides>
-    <side id="1" name="Army 1" type="friend">
+<orbat model-version="4.5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/exercise/orbat.xsd">
+  <resources infinite="true"/>
+  <parties>
+    <party id="1" name="Army 1" type="friend">
       <objects/>
       <tactical>
         <formation id="3" level="x" name="Formation [3]">
           <automat engaged="false" id="36" knowledge-group="6" name="Surface To Air Battery [36]" type="Surface To Air Battery">
             <unit command-post="true" id="37" name="Surface To Air Battery CP" position="31UDQ8519450978" type="Surface To Air Battery CP"/>
-            <unit command-post="false" id="38" name="Surface To Air Defense Troop" position="31UDQ8569550478" type="Surface To Air Defense Troop"/>
-            <unit command-post="false" id="39" name="Surface To Air Defense Troop" position="31UDQ8519349980" type="Surface To Air Defense Troop"/>
-            <unit command-post="false" id="40" name="Surface To Air Defense Troop" position="31UDQ8385450650" type="Surface To Air Defense Troop"/>
-            <unit command-post="false" id="41" name="Surface To Air Defense Troop" position="31UDQ8569550978" type="Surface To Air Defense Troop"/>
+            <unit command-post="false" id="38" name="Surface To Air Defense Troop" position="31UDQ8569550478" type="Short Range Surface To Air Defense Troop"/>
+            <unit command-post="false" id="39" name="Surface To Air Defense Troop" position="31UDQ8519349980" type="Short Range Surface To Air Defense Troop"/>
+            <unit command-post="false" id="40" name="Surface To Air Defense Troop" position="31UDQ8385450650" type="Short Range Surface To Air Defense Troop"/>
+            <unit command-post="false" id="41" name="Surface To Air Defense Troop" position="31UDQ8569550978" type="Short Range Surface To Air Defense Troop"/>
           </automat>
         </formation>
       </tactical>
@@ -19,9 +19,10 @@
         <knowledge-group id="6" name="Knowledge group [6]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
-    </side>
-    <side id="2" name="Army 2" type="enemy">
+    </party>
+    <party id="2" name="Army 2" type="enemy">
       <objects/>
       <tactical>
         <formation id="4" level="x" name="Formation [4]">
@@ -49,16 +50,17 @@
         <knowledge-group id="21" name="Knowledge group [21]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="2"/>
-    </side>
-    <side id="2">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>
-<!-- signature="0082453577" -->
+<!-- signature="2003841267" -->

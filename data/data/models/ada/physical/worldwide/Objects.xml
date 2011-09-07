@@ -418,7 +418,7 @@
     <stock/>
     <universal/>
   </object>
-  <object geometry="polygon" name="Flood" symbol="G*MPORC---****X" type="flood">
+  <object geometry="point" name="Flood Origin" symbol="G*MPSF----****X" type="flood">
     <flood>
       <injuries>
         <injury percentage="0.1" type="u1"/>
@@ -516,4 +516,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1182764517" -->
+<!-- signature="1530812536" -->

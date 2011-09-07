@@ -926,7 +926,6 @@
   <weapon-system launcher="56-mm Grenade Launcher" munition="56-mm Light Grenade">
     <burst duration="2s" munition="1"/>
     <reloading duration="30s" munition="1"/>
-    <indirect-fire average-speed="200" max-range="2000" min-range="0"/>
   </weapon-system>
   <weapon-system launcher="81-mm Mortar" munition="81-mm Smoke Shell">
     <burst duration="2s" munition="1"/>
@@ -1470,4 +1469,4 @@
     <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
   </weapon-system>
 </weapons>
-<!-- signature="2847758253" -->
+<!-- signature="0998816079" -->
