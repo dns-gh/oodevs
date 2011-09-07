@@ -18,9 +18,8 @@ namespace dispatcher
 */
 // Created: SLI 2011-09-07
 // =============================================================================
-MOCK_BASE_CLASS( MockTeam, dispatcher::Team_ABC )
+MOCK_BASE_CLASS( MockTeam, Team_ABC )
 {
-public:
     MockTeam( unsigned long id )
         : Team_ABC( id )
     {}

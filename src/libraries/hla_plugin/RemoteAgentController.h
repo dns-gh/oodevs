@@ -77,6 +77,7 @@ private:
     tools::MessageController_ABC< sword::SimToClient_Content >& controller_;
     dispatcher::Model_ABC& model_;
     dispatcher::SimulationPublisher_ABC& publisher_;
+    const unsigned long automatType_;
     T_Contexts contexts_;
     //@}
 };

@@ -15,6 +15,7 @@
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/KnowledgeGroup_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -36,7 +37,10 @@ RemoteAgentController::RemoteAgentController( tools::MessageController_ABC< swor
     : controller_( controller )
     , model_     ( model )
     , publisher_ ( publisher )
+    , automatType_( 230u ) // $$$$ _RC_ SLI 2011-09-07: hardcoded
 {
+    if( model_.Automats().Find( automatType_ ) == 0 )
+        throw std::runtime_error( "Automat type identifier '" + boost::lexical_cast< std::string >( automatType_ ) + "' not found, please check your physical model." );
     CONNECT( controller, *this, control_end_tick );
 }
 
@@ -72,8 +76,11 @@ void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, in
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::FormationCreation& message, int context )
 {
-    AddAutomat( message.formation().id(), FindKnowledgeGroup( message.party().id() ) );
-    contexts_.erase( context );
+    if( contexts_.find( context ) != contexts_.end() )
+    {
+        AddAutomat( message.formation().id(), FindKnowledgeGroup( message.party().id() ) );
+        contexts_.erase( context );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +116,7 @@ void RemoteAgentController::AddAutomat( unsigned long formation, unsigned long k
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_formation()->set_id( formation );                      // parent
     message().set_type( sword::UnitMagicAction::automat_creation );
-    message().mutable_parameters()->add_elem()->add_value()->set_identifier( 230 );            // type
+    message().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );            // type
     message().mutable_parameters()->add_elem()->add_value()->set_identifier( knowledgeGroup ); // knowledge group
     message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
 }
