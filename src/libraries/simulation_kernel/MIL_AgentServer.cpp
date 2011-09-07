@@ -281,14 +281,14 @@ void MIL_AgentServer::MainSimLoop()
     pPathFindManager_->UpdateInSimulationThread();
     if( pProcessMonitor_->MonitorProcess() )
     {
-        MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
+        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
         nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
         pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
         pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     }
     else
     {
-        MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done",
+        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done",
         nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
         pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
         pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests() ) );

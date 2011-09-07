@@ -20,6 +20,9 @@
 #include "dispatcher/Services.h"
 #include "tools/SessionConfig.h"
 #include "reports/ReportFactory.h"
+#include <boost/lexical_cast.hpp>
+#pragma warning( disable: 4996 )
+#include <ctime>
 
 namespace replay
 {
@@ -33,17 +36,18 @@ using namespace plugins::logger;
 // Created: LDC 2010-03-17
 // -----------------------------------------------------------------------------
 LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services )
-    : filename_   ( config.BuildSessionChildFile( "Messages.log" ).c_str() )
-    , file_       ( 0 )
-    , resolver_   ( model )
-    , factory_    ( resolver_, objectTypes_, objectTypes_, 0 )
-    , model_      ( model )
-    , staticModel_( staticModel )
-    , services_   ( services )
-    , enabled_    ( true )
-    , initialized_( false )
-    , simulation_ ( new Simulation() )
-    , actions_    ( new ActionsLogger( config, model, staticModel, *simulation_ ) )
+    : filename_    ( config.BuildSessionChildFile( "Messages.log" ).c_str() )
+    , file_        ( 0 )
+    , resolver_    ( model )
+    , factory_     ( resolver_, objectTypes_, objectTypes_, 0 )
+    , model_       ( model )
+    , staticModel_ ( staticModel )
+    , services_    ( services )
+    , enabled_     ( true )
+    , initialized_ ( false )
+    , simulation_  ( new Simulation() )
+    , actions_     ( new ActionsLogger( config, model, staticModel, *simulation_ ) )
+    , nCurrentTick_( 0 )
 {
     objectTypes_.Load( config );
     factory_.Load( config );
@@ -120,6 +124,28 @@ bool LoggerPlugin::Initialize()
     return enabled_;
 }
 
+namespace
+{
+    const char* GetTimestampAsString()
+    {
+        static char buffer[256];
+        time_t nTime = time( NULL );
+        strftime( buffer, 256, "%A %d - %H:%M:%S", localtime( &nTime ) );
+        return buffer;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoggerPlugin::FormatMessage
+// Created: LGY 2011-09-07
+// -----------------------------------------------------------------------------
+void LoggerPlugin::FormatMessage( const std::string& message, const std::string& level, const std::string& entity,
+                                  unsigned int id, const std::string& date )
+{
+    *file_ << "[" << GetTimestampAsString() << "] " << level << " - ***** Time tick "
+           << nCurrentTick_ << " - [" << date << "] - " << entity << "[" <<  id << "] : " << message << std::endl;
+}
+
 // -----------------------------------------------------------------------------
 // Name: LoggerPlugin::Receive
 // Created: LDC 2010-03-17
@@ -138,10 +164,9 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
         else if( message.message().report().source().has_crowd() )
             id = message.message().report().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
-        std::string messageText = factory_.FormatReport( message.message().report() );
-        *file_ << factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).ascii()
-               << " Report - " << ( entity ? entity->GetName() : "Unknown entity" ) << "[" << id << "] : "
-               << messageText << std::endl;
+        FormatMessage( factory_.FormatReport( message.message().report() ), "Report",
+                       entity ? entity->GetName().ascii() : "Unknown entity", id,
+                       factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).ascii() );
     }
     else if( message.message().has_trace() )
     {
@@ -153,9 +178,8 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
         else if( message.message().trace().source().has_crowd() )
             id = message.message().trace().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
-        *file_ << date_
-               << " Trace - " << ( entity ? entity->GetName() : "Unknown entity" ) << "[" << id << "] : "
-               << message.message().trace().message() << std::endl;
+        FormatMessage( message.message().trace().message(), "Trace",
+                       entity ? entity->GetName().ascii() : "Unknown entity", id, date_ );
     }
     else if( message.message().has_control_information() )
     {
@@ -167,6 +191,8 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
         date_ = Format( message.message().control_begin_tick().date_time().data().c_str() );
         simulation_->Update( message.message().control_begin_tick() );
     }
+    else if( message.message().has_control_end_tick() )
+        nCurrentTick_ = message.message().control_end_tick().current_tick();
     else if( message.message().has_unit_order() )
     {
         kernel::Entity_ABC* agent = model_.Agents().Find( message.message().unit_order().tasker().id() );
@@ -198,14 +224,14 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
                 target = model_.Agents().Find( message.message().start_unit_fire().target().unit().id() );
             else if( message.message().start_unit_fire().target().has_crowd() )
                 target = model_.Populations().Find( message.message().start_unit_fire().target().crowd().id() );
-            *file_ << date_ << " Fire - " << agent->GetName() << "[" << message.message().start_unit_fire().firing_unit().id()
-                   << "] : Fire on ";
+            std::string text = "Fire on ";
             if( target )
-                *file_ << target->GetName() << "[" << target->GetId() << "]";
+                text += boost::lexical_cast< std::string >( target->GetName().ascii() ) + "[" +
+                        boost::lexical_cast< std::string >( target->GetId() ) + "]";
             else
-                *file_ << "position";
+                text += "position";
             //*file_ << ", ammo = " << message.message().start_unit_fire().ammunition();
-            *file_ << std::endl;
+            FormatMessage( text, "Fire", agent->GetName().ascii(), message.message().start_unit_fire().firing_unit().id(), date_ );
         }
     }
     else if( message.message().has_stop_unit_fire() )
@@ -219,7 +245,7 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
     {
         kernel::Entity_ABC* agent = model_.Populations().Find( message.message().start_crowd_fire().firing_crowd().id() );
         if( agent )
-            *file_ << date_ << " Fire - " << agent->GetName() << "[" << message.message().start_crowd_fire().firing_crowd().id() << "] " << std::endl;
+            FormatMessage( "", "Fire", agent->GetName().ascii(), message.message().start_crowd_fire().firing_crowd().id(), date_ );
     }
     else if( message.message().has_stop_crowd_fire() )
     {
@@ -235,10 +261,10 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
 void LoggerPlugin::FormatMission( const char* name, int id, int mission )
 {
     if( mission )
-        *file_ << date_ << " Mission - " << name << "[" << id << "] : "
-               << staticModel_.types_.tools::Resolver< kernel::MissionType >::Get( mission ).GetName() << std::endl;
+        FormatMessage( staticModel_.types_.tools::Resolver< kernel::MissionType >::Get( mission ).GetName(),
+                       "Mission", name, id, date_ );
     else
-        *file_ << date_ << " Mission - " << name << "[" << id << "] : Mission cancelled." << std::endl;
+        FormatMessage( "Mission cancelled.", "Mission", name, id, date_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,7 +298,10 @@ void LoggerPlugin::LogPopulationsFireDamages( const sword::CrowdsFireDamages& po
         {
             kernel::Entity_ABC* target = model_.Populations().Find( damages.target().id() );
             if( target )
-                *file_ << date_ << " Fire - " << target->GetName() << "[" << target->GetId() << "] damaged : " << damages.dead() << " killed" << std::endl;
+            {
+                std::string text = "damaged : " + boost::lexical_cast< std::string >( damages.dead() ) + " killed";
+                FormatMessage( text, "Fire", target->GetName().ascii(), target->GetId(), date_ );
+            }
         }
     }
 }
@@ -303,16 +332,16 @@ void LoggerPlugin::LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages
         }
         if( dead > 0 || wounded > 0 )
         {
-            *file_ << date_ << " Fire - " << target.GetName() << "[" << target.GetId() << "] damaged : ";
+            std::string text = "damaged : ";
             if( dead > 0 )
-                *file_ << dead << " killed";
+                text += boost::lexical_cast< std::string >( dead ) + " killed";
             if( wounded > 0 )
             {
                 if( dead > 0 )
-                    *file_ << ", ";
-                *file_ << wounded << " wounded";
+                    text += ", ";
+                text += boost::lexical_cast< std::string >( wounded ) + " wounded";
             }
-            *file_ << std::endl;
+            FormatMessage( text, "Fire", target.GetName().ascii(), target.GetId(), date_ );
         }
     }
 
@@ -330,16 +359,16 @@ void LoggerPlugin::LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages
         }
         if( repairable > 0 || unavailable > 0)
         {
-            *file_ << date_ << " Fire - " << target.GetName() << "[" << target.GetId() << "] damaged : ";
+            std::string text = "damaged : ";
             if( unavailable > 0 )
-                *file_ << unavailable << " unavailable";
+                text += boost::lexical_cast< std::string >( unavailable ) + " unavailable";
             if( repairable > 0 )
             {
                 if( unavailable > 0 )
-                    *file_ << ", ";
-                *file_ << repairable << " repairable";
+                    text += ", ";
+                text += boost::lexical_cast< std::string >( repairable ) + " repairable";
             }
-            *file_ << std::endl;
+            FormatMessage( text, "Fire", target.GetName().ascii(), target.GetId(), date_ );
         }
     }
 }

@@ -65,6 +65,6 @@ void MemoryLogger::Update()
     {
         next_ = static_cast< int >( current ) + 60;
         monitor_->MonitorProcess();
-        MT_LOG_INFO_MSG( "**************** Time tick " << nCurrentTick_ << " - Memory: " << ToMb( monitor_->GetMemory() ) << " MB / " << ToMb( monitor_->GetVirtualMemory() ) << " MB (VM)" );
+        MT_LOG_INFO_MSG( "**** Time tick " << nCurrentTick_ << " - Memory: " << ToMb( monitor_->GetMemory() ) << " MB / " << ToMb( monitor_->GetVirtualMemory() ) << " MB (VM)" );
     }
 }

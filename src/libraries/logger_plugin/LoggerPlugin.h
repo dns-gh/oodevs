@@ -77,24 +77,27 @@ private:
     void LogUnitsFireDamages( const sword::UnitsFireDamages& unitsDamages );
     void LogPopulationsFireDamages( const sword::CrowdsFireDamages& populationsDamages );
     void LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages, const kernel::Entity_ABC& target );
+    void FormatMessage( const std::string& message, const std::string& level, const std::string& entity,
+                        unsigned int id, const std::string& date );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string                 filename_;
-    std::ofstream*              file_;
-    kernel::ObjectTypes         objectTypes_;
-    RcEntityResolver            resolver_;
-    ReportFactory               factory_;
-    const dispatcher::Model_ABC&    model_;
-    const kernel::StaticModel&  staticModel_;
-    const dispatcher::Services& services_;
-    std::string                 date_;
-    bool                        enabled_;
-    bool                        initialized_;
-    std::auto_ptr< Simulation > simulation_;
+    std::string                    filename_;
+    std::ofstream*                 file_;
+    kernel::ObjectTypes            objectTypes_;
+    RcEntityResolver               resolver_;
+    ReportFactory                  factory_;
+    const dispatcher::Model_ABC&   model_;
+    const kernel::StaticModel&     staticModel_;
+    const dispatcher::Services&    services_;
+    std::string                    date_;
+    bool                           enabled_;
+    bool                           initialized_;
+    std::auto_ptr< Simulation >    simulation_;
     std::auto_ptr< ActionsLogger > actions_;
+    unsigned int                   nCurrentTick_;
     //@}
 };
 }
