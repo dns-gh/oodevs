@@ -67,6 +67,20 @@
 !macroend
 
 ;------------------------------------------------------------------------------
+; Check if current user is admin
+;------------------------------------------------------------------------------
+!macro OT.CheckAdmin
+
+    userInfo::getAccountType
+    pop $0
+    strCmp $0 "Admin" +3
+        MessageBox MB_OK "$(OT_ABORTING_INSTALLATION_NOT_ADMIN)"
+        Abort
+
+!macroend
+
+
+;------------------------------------------------------------------------------
 ; Adds Decisional Models Section
 ;------------------------------------------------------------------------------
 !macro OT.AddDecisionalModels DataSet

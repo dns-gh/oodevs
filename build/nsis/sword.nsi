@@ -7,6 +7,8 @@
 ;
 ; ------------------------------------------------------------------------------
 
+RequestExecutionLevel admin
+
 !include "tools.nsh"
 !insertmacro OT.Initialize
 
@@ -55,7 +57,7 @@ Section "!${PRODUCT_NAME}"
     File "${OUTDIR}\release\applications\package_app\*.exe"
     File "${OUTDIR}\release\applications\launcher_app\*.exe"
     File "${RUNDIR}\gradients.xml"
-	File "${RUNDIR}\style.qss"
+    File "${RUNDIR}\style.qss"
     File "${RUNDIR}\preferences.xml"
     File "${RUNDIR}\functions.xml"
     File "${RUNDIR}\service-config.xml"
@@ -117,9 +119,14 @@ Section "!${PRODUCT_NAME}"
     SetOutPath "$INSTDIR\installation files"
     File "Scipio-Sword_post_install.reg"
     File "Scipio-Sword_post_install.bat"
+
+    ; VCRedist
     File "${OUTDIR}\vcredist_${PLATFORM}.exe"
     ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
-    
+    IfErrors 0 +3
+        MessageBox MB_OK "$(OT_ABORTING_INSTALLATION_NOT_ADMIN)"
+        Abort
+
 SectionEnd
 
 ; ------------------------------------------------------------------------------
@@ -169,6 +176,7 @@ SectionEnd
 
 ; ------------------------------------------------------------------------------
 Function .onInit
+    !insertmacro OT.CheckAdmin
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 

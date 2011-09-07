@@ -55,6 +55,9 @@ LangString OT_SECTION_QUICKLAUNCH_SHORTCUT ${LANG_FRENCH} "Barre de lancement ra
 LangString OT_APPLICATION_IS_RUNNING ${LANG_ENGLISH} "The application '$9' is running, you need to close it to continue uninstallation.$\nDo you want to close it now?"
 LangString OT_APPLICATION_IS_RUNNING ${LANG_FRENCH} "L'application '$9' est en cours d'exécution, vous devez la fermer pour continuer la désinstallation.$\nVoulez-vous la fermer maintenant?"
 
+LangString OT_ABORTING_INSTALLATION_NOT_ADMIN ${LANG_ENGLISH} "Access denied, you need an administrator account to install SWORD."
+LangString OT_ABORTING_INSTALLATION_NOT_ADMIN ${LANG_FRENCH} "Accès refusé, vous avez besoin d'un compte d'administrateur pour installer SWORD."
+
 LangString OT_ABORTING_UNINSTALLATION ${LANG_ENGLISH} "Uninstallation aborted."
 LangString OT_ABORTING_UNINSTALLATION ${LANG_FRENCH} "Désinstallation interrompue."
 
