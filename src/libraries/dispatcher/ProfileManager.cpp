@@ -28,6 +28,8 @@
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -66,7 +68,13 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
     if( wrapper.message().has_control_send_current_state_end() )
         Reset();
     if( wrapper.message().has_control_checkpoint_save_end() )
-        Save( config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() ) );
+    {
+        std::string strPath = config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() );
+        const bfs::path p( strPath, bfs::native );
+        if ( !bfs::exists( p ) )
+            bfs::create_directories( p );
+        Save( strPath );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +83,7 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void ProfileManager::Save( const std::string& path )
 {
-    const std::string filename = path + "/profiles.xml";
+    const std::string filename = config_.BuildDirectoryFile( path, "profiles.xml" );
     xml::xofstream xos( filename );
     xos << xml::start( "profiles" );
     pSchemaWriter_->WriteExerciseSchema( xos, "profiles" );
@@ -86,7 +94,7 @@ void ProfileManager::Save( const std::string& path )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileManager::Save
+// Name: ProfileManager::ReadProfiles
 // Created: LGY 2011-03-28
 // -----------------------------------------------------------------------------
 void ProfileManager::ReadProfiles( xml::xistream& xis )
