@@ -40,25 +40,25 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_win32.props" />
-    <Import Project="Property sheets\sample_release.props" />
+    <Import Project="Property sheets\application_release.props" />
     <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_x64.props" />
-    <Import Project="Property sheets\sample_release.props" />
+    <Import Project="Property sheets\application_release.props" />
     <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_win32.props" />
-    <Import Project="Property sheets\sample_debug.props" />
     <Import Project="Property sheets\link_protobuf.props" />
+    <Import Project="Property sheets\application_debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_x64.props" />
-    <Import Project="Property sheets\sample_debug.props" />
+    <Import Project="Property sheets\application_debug.props" />
     <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />

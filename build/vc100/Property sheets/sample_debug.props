@@ -14,6 +14,7 @@
     <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
     <libGdal>gdal_i.lib;gdal_ogr_d.lib</libGdal>
     <libGraphics>graphics_d.lib</libGraphics>
+    <SrcDir>..\..\src\samples\$(ProjectName)</SrcDir>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\samples\$(ProjectName)\</OutDir>
@@ -82,6 +83,9 @@
     </BuildMacro>
     <BuildMacro Include="libGraphics">
       <Value>$(libGraphics)</Value>
+    </BuildMacro>
+    <BuildMacro Include="SrcDir">
+      <Value>$(SrcDir)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
