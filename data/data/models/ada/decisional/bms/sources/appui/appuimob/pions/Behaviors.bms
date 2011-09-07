@@ -261,7 +261,6 @@ node "BEH_Ordre_Pion_LOG_OrdresInopines"
 do
                 local ordre = x
                 local repOrdre = ordre
-                DEC_Trace( "$$ Ordre de conduite : " .. EnumToString( repOrdre:GeteOrdre_(), E_TypeOrdreConduite ) )
                  do
                     local _continue = true
                     local switch_1 = repOrdre:GetType()
@@ -293,7 +292,6 @@ do
                             _continue = false
                         
                         else
-                            Activate( self.activations.ACT_Info_Trace, 1, { "Ordre " .. EnumToString( repOrdre:GeteOrdre_(), E_TypeOrdreConduite ) .. " inconnu", } )
                             _continue = false
                                                 end
                     end
