@@ -36,12 +36,14 @@ public:
     //! @name Accessor
     //@{
     bool HasGenerateScores() const;
+    const std::string& GetFolderToMigrate();
     //@}
 
 private:
     //! @name Member data
     //@{
     bool generateScores_;
+    std::string folderToMigrate_;
     //@}
 };
 

@@ -27,6 +27,7 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
 {
     po::options_description desc( "Preparation options" );
     desc.add_options()( "generate_scores", "generate default scores" );
+    desc.add_options()( "migrate", po::value< std::string >( &folderToMigrate_ )->default_value( "" ), "migrate a specific exercises directory" );
     AddOptions( desc );
     Parse( argc, argv );
     if( IsSet( "generate_scores" ) )
@@ -41,6 +42,15 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
 }
 
 // -----------------------------------------------------------------------------
+// Name: Config destructor
+// Created: NLD 2007-01-12
+// -----------------------------------------------------------------------------
+Config::~Config()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::HasGenerateScores
 // Created: JSR 2011-07-27
 // -----------------------------------------------------------------------------
@@ -50,10 +60,10 @@ bool Config::HasGenerateScores() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config destructor
-// Created: NLD 2007-01-12
+// Name: Config::GetFolderToMigrate
+// Created: JSR 2011-09-07
 // -----------------------------------------------------------------------------
-Config::~Config()
+const std::string& Config::GetFolderToMigrate()
 {
-    // NOTHING
+    return folderToMigrate_;
 }

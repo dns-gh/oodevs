@@ -111,6 +111,7 @@
 #include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
+#include <iostream>
 #include <tools/XmlCrc32Signature.h>
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
@@ -178,10 +179,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     settings.beginGroup( "/Gaming" );
     restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
 
-    if( config_.HasGenerateScores() )
+    if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().empty() )
     {
-        staticModel_.Load( config_ );
-        LoadExercise();
+        if( config_.HasGenerateScores() )
+        {
+            staticModel_.Load( config_ );
+            LoadExercise();
+        }
+        if( !config_.GetFolderToMigrate().empty() )
+            MigrateExercises();
         return;
     }
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
@@ -452,6 +458,43 @@ void MainWindow::DoLoad( QString filename )
     {
         SetWindowTitle( true );
         LoadExercise();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::MigrateExercises
+// Created: JSR 2011-09-07
+// -----------------------------------------------------------------------------
+void MainWindow::MigrateExercises()
+{
+    const bfs::path root = bfs::path( config_.GetFolderToMigrate(), bfs::native );
+    if( ! bfs::exists( root ) )
+        throw std::exception( ( "The folder " + config_.GetFolderToMigrate() + " does not exist" ).c_str() );
+
+    bfs::recursive_directory_iterator end;
+    for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
+    {
+        const bfs::path dirPath = ( *it );
+        const bfs::path child = dirPath / "exercise.xml";
+        if( bfs::exists( child ) )
+        {
+            try
+            {
+                std::cout << "Loading exercise " << dirPath.leaf() << "...\n";
+                config_.LoadExercise( child.file_string() );
+                staticModel_.Load( config_ );
+                LoadExercise();
+                std::cout << "Saving exercise " << dirPath.leaf() << "...\n";
+                needsSaving_ = true;
+                Save();
+            }
+            catch( ... )
+            {
+                // NOTHING
+            }
+            model_.Purge();
+            staticModel_.Purge();
+        }
     }
 }
 

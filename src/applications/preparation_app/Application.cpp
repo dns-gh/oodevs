@@ -84,7 +84,7 @@ bool Application::Initialize( int argc, char** argv )
     staticModel_.reset( new StaticModel( *controllers_ ) );
     model_.reset( new Model( *controllers_, *staticModel_ ) );
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );
-    if( config_->HasGenerateScores() )
+    if( config_->HasGenerateScores() || !config_->GetFolderToMigrate().empty() )
         return false;
 
     mainWindow_->show();
