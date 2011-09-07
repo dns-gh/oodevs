@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE( Utf8conversionTest_really_complex_message_both_way )
 BOOST_AUTO_TEST_CASE( Utf8conversionTest_performance_test )
 {
     ReallyComplexMessage message;
-    message.set_truk( "forêt" );
+    message.set_truk( "¡Hola! ¿A donde vas?… Être loin de ma forêt, où les œufs Magic™ à 1€ abondent …Mon âne eût été si près de ton île…" );
     message.add_choses( "1€" );
     message.add_choses( "âne" );
     message.add_choses( "été" );
@@ -159,9 +159,5 @@ BOOST_AUTO_TEST_CASE( Utf8conversionTest_performance_test )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
         Utf8Converter::ConvertUtf8StringsToCP1252( message );
     }
-    long after = GetTickCount();
-    long ellapsed ( after - before );
-    char buffer [128];
-    sprintf ( buffer, "Ellapsed time for 10.000 2-way CP1252<->utf8 conversions was: %l.", ellapsed );
-    BOOST_MESSAGE( buffer );
+    //printf ( "Duration for 20.000 CP1252<->utf8 message conversions was %ul milliseconds.", GetTickCount() - before );
 }
