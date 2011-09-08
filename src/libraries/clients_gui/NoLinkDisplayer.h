@@ -31,12 +31,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    NoLinkDisplayer( const NoLinkDisplayer& );            //!< Copy constructor
-    NoLinkDisplayer& operator=( const NoLinkDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Call( const kernel::Agent_ABC& value );

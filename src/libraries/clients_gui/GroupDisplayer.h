@@ -43,12 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GroupDisplayer( const GroupDisplayer& );            //!< Copy constructor
-    GroupDisplayer& operator=( const GroupDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< QString, kernel::Displayer_ABC* > T_Items;

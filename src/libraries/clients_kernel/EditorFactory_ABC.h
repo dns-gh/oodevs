@@ -12,6 +12,7 @@
 
 #include "tools/VirtualTemplate.h"
 #include "Units.h"
+#include <boost/noncopyable.hpp>
 
 class QWidget;
 
@@ -25,6 +26,7 @@ namespace kernel
 // Created: SBO 2006-10-18
 // =============================================================================
 class EditorFactory_ABC : public tools::VirtualTemplate< EditorFactory_ABC >
+                        , private boost::noncopyable
 {
     friend tools::VirtualTemplate< EditorFactory_ABC >;
 
@@ -47,12 +49,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EditorFactory_ABC( const EditorFactory_ABC& );            //!< Copy constructor
-    EditorFactory_ABC& operator=( const EditorFactory_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void BeginEditor( QWidget* parent ) = 0;

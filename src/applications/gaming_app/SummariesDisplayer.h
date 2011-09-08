@@ -28,12 +28,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SummariesDisplayer( const SummariesDisplayer& );            //!< Copy constructor
-    SummariesDisplayer& operator=( const SummariesDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual kernel::Displayer_ABC& SubItem( const QString& name );

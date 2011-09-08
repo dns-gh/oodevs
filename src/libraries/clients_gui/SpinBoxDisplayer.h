@@ -47,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SpinBoxDisplayer( const SpinBoxDisplayer& );            //!< Copy constructor
-    SpinBoxDisplayer& operator=( const SpinBoxDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Hide();

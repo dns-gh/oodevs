@@ -105,12 +105,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    BaseDisplayer( const BaseDisplayer& );            //!< Copy constructor
-    BaseDisplayer& operator=( const BaseDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Call( const bool& value );

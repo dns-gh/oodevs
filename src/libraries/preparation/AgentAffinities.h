@@ -50,15 +50,8 @@ public:
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    virtual void Add( unsigned long team, EntityAffinity value );
+    virtual void Add( unsigned long team, float affinity );
     virtual void Clear();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AgentAffinities( const AgentAffinities& );            //!< Copy constructor
-    AgentAffinities& operator=( const AgentAffinities& ); //!< Assignment operator
     //@}
 
     //! @name Types

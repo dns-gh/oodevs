@@ -42,6 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PropertiesWidget( kernel::Controller& controller, QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
+             PropertiesWidget( kernel::Controller& controller, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     virtual ~PropertiesWidget();
     //@}
 
@@ -52,13 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PropertiesWidget( kernel::Controller& controller, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
-    PropertiesWidget( const PropertiesWidget& );            //!< Copy constructor
-    PropertiesWidget& operator=( const PropertiesWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< PropertiesWidget* >  T_SubWidgets;

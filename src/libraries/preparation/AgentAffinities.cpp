@@ -66,9 +66,9 @@ AgentAffinities::~AgentAffinities()
 // Name: AgentAffinities::Add
 // Created: LGY 2011-04-20
 // -----------------------------------------------------------------------------
-void AgentAffinities::Add( unsigned long team, EntityAffinity value )
+void AgentAffinities::Add( unsigned long team, float affinity )
 {
-    affinities_[ team ] = value;
+    affinities_[ team ] = affinity;
     CIT_Affinities it = affinities_.find( team );
     dictionary_.Register( agent_, propertyName_ + "/" + teams_[ team ].c_str(), it->second );
     controllers_.controller_.Update( kernel::DictionaryUpdated( agent_, propertyName_ ) );

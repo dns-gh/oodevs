@@ -59,16 +59,16 @@ void Affinities::ReadAffinity( xml::xistream& xis )
 // Name: Affinities::Add
 // Created: LGY 2011-03-17
 // -----------------------------------------------------------------------------
-void Affinities::Add( unsigned long team, EntityAffinity value )
+void Affinities::Add( unsigned long team, float affinity )
 {
-    affinities_[ team ] = value;
+    affinities_[ team ] = affinity;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Affinities::Fill
 // Created: LGY 2011-03-17
 // -----------------------------------------------------------------------------
-void Affinities::Fill( std::map< unsigned long, EntityAffinity >& content )
+void Affinities::Fill( std::map< unsigned long, float >& content )
 {
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         content[ it->first ] = it->second;

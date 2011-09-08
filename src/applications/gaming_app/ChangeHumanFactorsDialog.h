@@ -78,12 +78,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ChangeHumanFactorsDialog( const ChangeHumanFactorsDialog& );            //!< Copy constructor
-    ChangeHumanFactorsDialog& operator=( const ChangeHumanFactorsDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );

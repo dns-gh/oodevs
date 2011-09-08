@@ -41,12 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EditorFactory( const EditorFactory& );            //!< Copy constructor
-    EditorFactory& operator=( const EditorFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Call( QString* const& value );

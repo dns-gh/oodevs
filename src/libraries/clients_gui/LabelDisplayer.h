@@ -41,12 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LabelDisplayer( const LabelDisplayer& );            //!< Copy constructor
-    LabelDisplayer& operator=( const LabelDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Displayer_ABC& SubItem( const QString& name );

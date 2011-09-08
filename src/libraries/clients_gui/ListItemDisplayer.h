@@ -44,12 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ListItemDisplayer( const ListItemDisplayer& );            //!< Copy constructor
-    ListItemDisplayer& operator=( const ListItemDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< QString > T_Columns;

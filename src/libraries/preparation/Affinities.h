@@ -43,15 +43,15 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< unsigned long, EntityAffinity > T_Affinities;
+    typedef std::map< unsigned long, float > T_Affinities;
     typedef T_Affinities::const_iterator            CIT_Affinities;
     //@}
 
     //! @name Operations
     //@{
     virtual void Clear() = 0;
-    virtual void Add( unsigned long team, EntityAffinity value );
-    virtual void Fill( std::map< unsigned long, EntityAffinity >& content );
+    virtual void Add( unsigned long team, float value );
+    virtual void Fill( std::map< unsigned long, float >& content );
     virtual bool HasAffinities() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}

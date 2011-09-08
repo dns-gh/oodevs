@@ -57,12 +57,6 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PropertiesTable( const PropertiesTable& );            //!< Copy constructor
-    PropertiesTable& operator=( const PropertiesTable& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual QSize sizeHint() const;

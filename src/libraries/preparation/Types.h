@@ -31,6 +31,5 @@ DECLARE_SUBTYPE( TeamKarma, const kernel::Karma* );
 DECLARE_SUBTYPE( IntelligenceKarma, const kernel::Karma* );
 
 DECLARE_SUBTYPE( EntityLogisticLevel, const kernel::LogisticLevel* );
-DECLARE_SUBTYPE( EntityAffinity, float );
 
 #endif // __Preparation_Types_h_

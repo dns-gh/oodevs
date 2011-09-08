@@ -40,12 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CheckBoxDisplayer( const CheckBoxDisplayer& );            //!< Copy constructor
-    CheckBoxDisplayer& operator=( const CheckBoxDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Displayer_ABC& SubItem( const QString& name );

@@ -79,7 +79,7 @@ private:
     typedef std::map< unsigned long, std::string > T_Teams;
     typedef boost::tuples::tuple< unsigned long, QLabel*, gui::DecimalSpinBoxAndSlider* > T_QAffinity;
     typedef std::vector< T_QAffinity >                                                    T_QAffinities;
-    typedef std::map< unsigned long, EntityAffinity > T_Affinities;
+    typedef std::map< unsigned long, float > T_Affinities;
     //@}
 
 protected:

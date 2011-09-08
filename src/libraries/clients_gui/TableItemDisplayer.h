@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TableItemDisplayer( const TableItemDisplayer& );            //!< Copy constructor
-    TableItemDisplayer& operator=( const TableItemDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual kernel::Displayer_ABC& SubItem( const QString& name ) ;

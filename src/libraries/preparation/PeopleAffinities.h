@@ -55,12 +55,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PeopleAffinities( const PeopleAffinities& );            //!< Copy constructor
-    PeopleAffinities& operator=( const PeopleAffinities& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void InitializeAffinities();

@@ -16,7 +16,6 @@
 #include "tools/Resolver_ABC.h"
 #include "preparation/LogisticSuperior.h"
 //#include <boost/type_traits.hpp>
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -46,7 +45,6 @@ class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Entity_
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                              , public tools::ElementObserver_ABC< kernel::Automat_ABC >
-                             , private boost::noncopyable
 {
 public:
     //typedef typename LogisticSuperiorTraits<Superior>::BaseTypeNCNP SuperiorEntityType;

@@ -57,12 +57,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GlTooltip( const GlTooltip& );            //!< Copy constructor
-    GlTooltip& operator=( const GlTooltip& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Call( const QColor& value );

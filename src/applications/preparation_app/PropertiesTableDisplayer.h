@@ -53,13 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PropertiesTableDisplayer( const PropertiesTableDisplayer& );            //!< Copy constructor
-    PropertiesTableDisplayer& operator=( const PropertiesTableDisplayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;

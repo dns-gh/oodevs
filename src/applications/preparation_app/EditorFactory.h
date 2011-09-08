@@ -54,7 +54,6 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< Enum_DemolitionTargetType* >
                     , public tools::Caller< DotationsItem** >
                     , public tools::Caller< kernel::Moveable_ABC** >
-                    , public tools::Caller< EntityAffinity* >
                     , public tools::Caller< PopulationRepartition** >
 {
 public:
@@ -78,17 +77,10 @@ public:
     virtual void Call( kernel::LogisticLevel** const& value );
     virtual void Call( EntityLogisticLevel* const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
-    virtual void Call( EntityAffinity* const& value );
     virtual void Call( PopulationRepartition** const& value );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EditorFactory( const EditorFactory& );            //!< Copy constructor
-    EditorFactory& operator=( const EditorFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );

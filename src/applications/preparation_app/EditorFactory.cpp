@@ -315,40 +315,6 @@ void EditorFactory::Call( kernel::Moveable_ABC** const& value )
     }
 }
 
-namespace
-{
-    class BoundedFloatEditor : public QDoubleSpinBox
-                             , public kernel::ValueEditor< EntityAffinity >
-    {
-    public:
-        explicit BoundedFloatEditor( QWidget* parent, float value = 0.f, unsigned short precision = 2, float min = 0.f, float max = 10.f, float gap = 0.1f )
-            : QDoubleSpinBox( parent )
-            , factor_( std::pow( 10.f, precision ) )
-        {
-            setRange( min, max );
-            setSingleStep( gap );
-            setDecimals( precision );
-            setValue( value );
-        }
-        virtual ~BoundedFloatEditor() {}
-
-        virtual EntityAffinity GetValue()
-        {
-            return static_cast< float >( value() ) / factor_;
-        }
-        const float factor_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2011-02-02
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( EntityAffinity* const& value )
-{
-    result_ = new BoundedFloatEditor( parent_, *value, 2, -1.f, 1.f, 0.01f );
-}
-
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
 // Created: JSR 2011-03-08

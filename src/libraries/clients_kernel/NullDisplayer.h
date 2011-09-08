@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    NullDisplayer( const NullDisplayer& );            //!< Copy constructor
-    NullDisplayer& operator=( const NullDisplayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Displayer_ABC& SubItem( const QString& name );

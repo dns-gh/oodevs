@@ -11,6 +11,7 @@
 #define __Displayer_ABC_h_
 
 #include "tools/VirtualTemplate.h"
+#include <boost/noncopyable.hpp>
 
 class QString;
 
@@ -24,6 +25,7 @@ namespace kernel
 // Created: AGE 2006-02-21
 // =============================================================================
 class Displayer_ABC : public tools::VirtualTemplate< Displayer_ABC >
+                    , private boost::noncopyable
 {
     friend tools::VirtualTemplate< Displayer_ABC >;
 
@@ -76,6 +78,7 @@ private:
     Displayer_ABC& operator=( const Displayer_ABC& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Helpers
     //@{
     template< typename T >
