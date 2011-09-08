@@ -776,7 +776,7 @@ actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::Pop
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::String( it.NextElement(), type.GetName() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
-    action->AddParameter( *new parameters::Numeric( it.NextElement(), number ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), static_cast< float >( number ) ) );
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     return action;
 }

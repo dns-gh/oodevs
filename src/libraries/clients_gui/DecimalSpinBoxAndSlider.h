@@ -55,7 +55,7 @@ private slots:
     //! @name Helpers slots
     //@{
     void setSpinboxValue( int value );
-    void setSliderValue( int value );
+    void setSliderValue( double value );
     //@}
 
 private:

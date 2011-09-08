@@ -43,7 +43,7 @@ DecimalSpinBoxAndSlider::DecimalSpinBoxAndSlider( QWidget* parent, float& value,
         layout_->addWidget( slider_ );
         layout_->addWidget( spinbox_ );
     }
-    connect( spinbox_, SIGNAL( valueChanged( int ) ), SLOT( setSliderValue( int ) ) );
+    connect( spinbox_, SIGNAL( valueChanged( double ) ), SLOT( setSliderValue( double ) ) );
     connect( slider_,  SIGNAL( valueChanged( int ) ), SLOT( setSpinboxValue( int ) ) );
 }
 
@@ -98,10 +98,10 @@ void DecimalSpinBoxAndSlider::setSpinboxValue( int value )
 // Name: DecimalSpinBoxAndSlider::setSliderValue
 // Created: ABR 2011-01-31
 // -----------------------------------------------------------------------------
-void DecimalSpinBoxAndSlider::setSliderValue( int value )
+void DecimalSpinBoxAndSlider::setSliderValue( double value )
 {
-    value_ = value / precision_;
-    slider_->setValue( value );
+    value_ = static_cast< float >( value );
+    slider_->setValue( static_cast< int >( value * precision_ ) );
     emit valueChanged( value_ );
 }
 

@@ -160,7 +160,7 @@ namespace
                 input.remove( '*' );
                 input.remove( ' ' );
             }
-            else if( trailing_ && input.length() >= trailing_ && input.right( trailing_ ) == QString().fill( '*', trailing_ ) )
+            else if( trailing_ && input.length() >= static_cast< int >( trailing_ ) && input.right( trailing_ ) == QString().fill( '*', trailing_ ) )
                 input = input.left( input.length() - trailing_ );
             trailing_ = 0;
             int len = input.length();

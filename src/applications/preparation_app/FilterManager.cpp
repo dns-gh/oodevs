@@ -117,7 +117,7 @@ void FilterManager::ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetSta
 void FilterManager::AddFilter( Filter_ABC& filter, Q3ListBox& list, Q3WidgetStack& stack )
 {
     list.insertItem( filter.GetName().c_str() );
-    stack.addWidget( filter.CreateParametersWidget( &stack ), filters_.size() );
+    stack.addWidget( filter.CreateParametersWidget( &stack ), static_cast< int >( filters_.size() ) );
     filters_.push_back( &filter );
 }
 
