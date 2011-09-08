@@ -98,21 +98,19 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_destroys_instance_when_notified,
 
 BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_remote_instances, RegisteredFixture )
 {
-    MockAggregate* aggregate( new MockAggregate() );
     entity.Register( remoteListener );
-    MOCK_EXPECT( remoteFactory, Create ).once().with( "name", mock::any ).returns( std::auto_ptr< Aggregate_ABC >( aggregate ) );
-    MOCK_EXPECT( remoteListener, Created ).once().with( "name", mock::same( *aggregate ) );
+    MOCK_EXPECT( remoteFactory, Create ).once().with( "name", mock::any ).returns( std::auto_ptr< Aggregate_ABC >( new MockAggregate() ) );
+    MOCK_EXPECT( remoteListener, Created ).once().with( "name" );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();
-    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "name", mock::same( *aggregate ) );
+    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "name" );
 }
 
 BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_destroys_remote_instances, RegisteredFixture )
 {
-    MockAggregate* aggregate( new MockAggregate() );
-    MOCK_EXPECT( remoteFactory, Create ).once().returns( std::auto_ptr< Aggregate_ABC >( aggregate ) );
+    MOCK_EXPECT( remoteFactory, Create ).once().returns( std::auto_ptr< Aggregate_ABC >( new MockAggregate() ) );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     entity.Register( remoteListener );
-    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "name", mock::same( *aggregate ) );
+    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "name" );
     hlaClass->Destroy( 42u );
 }

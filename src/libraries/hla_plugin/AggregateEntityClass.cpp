@@ -81,7 +81,7 @@ Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& /*ob
 {
     T_Entity& entity = remoteEntities_[ objectName ];
     entity.reset( remoteFactory_.Create( objectName, *pListeners_ ).release() );
-    pListeners_->Created( objectName, *entity );
+    pListeners_->Created( objectName );
     return *entity;
 }
 
@@ -94,7 +94,7 @@ void AggregateEntityClass::Destroy( Aggregate_ABC& object )
     BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
         if( &*entity.second == &object )
         {
-            pListeners_->Destroyed( entity.first, *entity.second );
+            pListeners_->Destroyed( entity.first );
             remoteEntities_.erase( entity.first );
             return;
         }

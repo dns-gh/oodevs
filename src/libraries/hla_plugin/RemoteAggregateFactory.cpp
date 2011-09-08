@@ -35,7 +35,7 @@ RemoteAggregateFactory::~RemoteAggregateFactory()
 // Name: RemoteAggregateFactory::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< Aggregate_ABC > RemoteAggregateFactory::Create( const std::string& /*name*/, RemoteAgentListener_ABC& listener ) const
+std::auto_ptr< Aggregate_ABC > RemoteAggregateFactory::Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
 {
-    return std::auto_ptr< Aggregate_ABC >( new RemoteAggregate( listener ) );
+    return std::auto_ptr< Aggregate_ABC >( new RemoteAggregate( name, listener ) );
 }

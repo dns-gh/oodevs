@@ -19,8 +19,10 @@
 #include "Stepper.h"
 #include "RemoteAgentController.h"
 #include "tools/MessageController.h"
+#include "clients_kernel/AgentTypes.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
+#include "dispatcher/StaticModel.h"
 #include "protocol/Simulation.h"
 #include "rpr/EntityTypeResolver.h"
 #include <hla/HLAException.h>
@@ -45,8 +47,10 @@ namespace
 // Name: HlaPlugin constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : model_                 ( model )
+HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel,
+                      dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config,
+                      xml::xistream& xis, dispatcher::Logger_ABC& logger )
+    : dynamicModel_          ( dynamicModel )
     , logger_                ( logger )
     , publisher_             ( publisher )
     , pObjectResolver_       ( new ObjectResolver() )
@@ -56,12 +60,12 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublis
     , pDebugFederateFactory_ ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
     , pEntityTypeResolver_   ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
     , pMessageController_    ( new tools::MessageController< sword::SimToClient_Content >() )
-    , pRemoteAgentController_( new RemoteAgentController( *pMessageController_, model, publisher ) )
-    , pSubject_              ( new AgentController( *pMessageController_, model, *pEntityTypeResolver_ ) )
-    , federate_              ( new FederateFacade( xis, *pMessageController_, *pSubject_,
+    , pSubject_              ( new AgentController( *pMessageController_, dynamicModel, *pEntityTypeResolver_ ) )
+    , pFederate_             ( new FederateFacade( xis, *pMessageController_, *pSubject_,
                                                    xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                    xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                    config.BuildPluginDirectory( "hla" ) ) )
+    , pRemoteAgentController_( new RemoteAgentController( *pMessageController_, dynamicModel, staticModel.types_, publisher, *pFederate_ ) )
     , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
 {
     // NOTHING

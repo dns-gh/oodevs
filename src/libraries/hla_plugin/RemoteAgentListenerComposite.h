@@ -40,9 +40,10 @@ public:
 
     //! @name Observer
     //@{
-    virtual void Created( const std::string& identifier, const Aggregate_ABC& aggregate );
-    virtual void Destroyed( const std::string& identifier, const Aggregate_ABC& aggregate );
-    virtual void Moved( double latitude, double longitude );
+    virtual void Created( const std::string& identifier );
+    virtual void Destroyed( const std::string& identifier );
+    virtual void Moved( const std::string& identifier, double latitude, double longitude );
+    virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     //@}
 
 private:

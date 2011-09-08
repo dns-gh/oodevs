@@ -21,8 +21,9 @@ using namespace plugins::hla;
 // Name: RemoteAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-RemoteAggregate::RemoteAggregate( RemoteAgentListener_ABC& listener )
-    : listener_( listener )
+RemoteAggregate::RemoteAggregate( const std::string& identifier, RemoteAgentListener_ABC& listener )
+    : identifier_( identifier )
+    , listener_  ( listener )
 {
     // NOTHING
 }
@@ -55,6 +56,12 @@ void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier,
     {
         Spatial spatial;
         spatial.Deserialize( deserializer );
-        listener_.Moved( spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
+        listener_.Moved( identifier_, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
+    }
+    else if( identifier == "ForceIdentifier" )
+    {
+        int8 force;
+        deserializer >> force;
+        listener_.SideChanged( identifier_, static_cast< rpr::ForceIdentifier >( force ) );
     }
 }

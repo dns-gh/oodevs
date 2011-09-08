@@ -29,7 +29,7 @@ class RemoteAggregate : public Aggregate_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RemoteAggregate( RemoteAgentListener_ABC& listener );
+             RemoteAggregate( const std::string& identifier, RemoteAgentListener_ABC& listener );
     virtual ~RemoteAggregate();
     //@}
 
@@ -42,6 +42,7 @@ public:
 private:
     //! @name Member data
     //@{
+    const std::string identifier_;
     RemoteAgentListener_ABC& listener_;
     //@}
 };

@@ -7,31 +7,29 @@
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_MockRemoteAgentListener_h
-#define hla_plugin_MockRemoteAgentListener_h
+#ifndef MockRemoteAgentSubject_h
+#define MockRemoteAgentSubject_h
 
-#include "hla_plugin/RemoteAgentListener_ABC.h"
+#include "hla_plugin/RemoteAgentSubject_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
+
 // =============================================================================
-/** @class  MockRemoteAgentListener
-    @brief  Mock remote agent listener
+/** @class  MockRemoteAgentSubject
+    @brief  Mock remote agent subject
 */
-// Created: SLI 2011-08-29
+// Created: VPR 2011-09-07
 // =============================================================================
-MOCK_BASE_CLASS( MockRemoteAgentListener, RemoteAgentListener_ABC )
+MOCK_BASE_CLASS( MockRemoteAgentSubject, RemoteAgentSubject_ABC )
 {
-    MOCK_METHOD( Created, 1 );
-    MOCK_METHOD( Destroyed, 1 );
-    MOCK_METHOD( Moved, 3 );
-    MOCK_METHOD( SideChanged, 2 );
+    MOCK_METHOD( Register, 1 );
+    MOCK_METHOD( Unregister, 1 );
 };
 
 }
-
 }
 
-#endif // hla_plugin_MockRemoteAgentListener_h
+#endif // MockRemoteAgentSubject_h

@@ -54,28 +54,39 @@ void RemoteAgentListenerComposite::Unregister( RemoteAgentListener_ABC& listener
 // Name: RemoteAgentListenerComposite::Created
 // Created: SLI 2011-09-02
 // -----------------------------------------------------------------------------
-void RemoteAgentListenerComposite::Created( const std::string& identifier, const Aggregate_ABC& aggregate )
+void RemoteAgentListenerComposite::Created( const std::string& identifier )
 {
     BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
-        listener->Created( identifier, aggregate );
+        listener->Created( identifier );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentListenerComposite::Destroyed
 // Created: SLI 2011-09-02
 // -----------------------------------------------------------------------------
-void RemoteAgentListenerComposite::Destroyed( const std::string& identifier, const Aggregate_ABC& aggregate )
+void RemoteAgentListenerComposite::Destroyed( const std::string& identifier )
 {
     BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
-        listener->Destroyed( identifier, aggregate );
+        listener->Destroyed( identifier );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentListenerComposite::Moved
 // Created: SLI 2011-09-02
 // -----------------------------------------------------------------------------
-void RemoteAgentListenerComposite::Moved( double latitude, double longitude )
+void RemoteAgentListenerComposite::Moved( const std::string& identifier, double latitude, double longitude )
 {
     BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
-        listener->Moved( latitude, longitude );
+        listener->Moved( identifier, latitude, longitude );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentListenerComposite::SideChanged
+// Created: VPR 2011-09-07
+// -----------------------------------------------------------------------------
+void RemoteAgentListenerComposite::SideChanged( const std::string& identifier, rpr::ForceIdentifier side )
+{
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->SideChanged( identifier, side );
+}
+

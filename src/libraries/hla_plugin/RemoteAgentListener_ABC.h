@@ -10,11 +10,12 @@
 #ifndef plugins_hla_RemoteAgentListener_ABC_h
 #define plugins_hla_RemoteAgentListener_ABC_h
 
+#include "rpr/ForceIdentifier.h"
+
 namespace plugins
 {
 namespace hla
 {
-    class Aggregate_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentListener_ABC
@@ -33,9 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Created( const std::string& identifier, const Aggregate_ABC& aggregate ) = 0;
-    virtual void Destroyed( const std::string& identifier, const Aggregate_ABC& aggregate ) = 0;
-    virtual void Moved( double latitude, double longitude ) = 0;
+    virtual void Created( const std::string& identifier ) = 0;
+    virtual void Destroyed( const std::string& identifier ) = 0;
+    virtual void Moved( const std::string& identifier, double latitude, double longitude ) = 0;
+    virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side ) = 0;
     //@}
 };
 
