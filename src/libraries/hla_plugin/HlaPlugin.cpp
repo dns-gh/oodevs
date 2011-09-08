@@ -50,8 +50,7 @@ namespace
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel,
                       dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config,
                       xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : dynamicModel_          ( dynamicModel )
-    , logger_                ( logger )
+    : logger_                ( logger )
     , publisher_             ( publisher )
     , pObjectResolver_       ( new ObjectResolver() )
     , pRtiFactory_           ( new RtiAmbassadorFactory( xis, xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/protocols.xml" ) ) )

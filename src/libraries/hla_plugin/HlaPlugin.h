@@ -82,7 +82,6 @@ public:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model_ABC& dynamicModel_;
     dispatcher::Logger_ABC& logger_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< ObjectResolver_ABC > pObjectResolver_;
