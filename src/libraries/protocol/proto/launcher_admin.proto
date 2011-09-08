@@ -242,6 +242,18 @@ message ClientConnectionNotification {
     repeated ClientConnection connection = 3;
 }
 
+/** @struct TickInformation
+    @brief tick information from client
+*/
+message TickInformation
+{
+   required int32 current_tick                   = 1;
+   required int32 tick_duration                  = 2;
+   required int32 time_factor                    = 3;
+   required int32 pathfind_request_number        = 4;
+   optional int32 last_checkpoint_build_duration = 5;
+}
+
 /** @struct LauncherToAdmin
     @brief Lancher to admin protocol messages
 */
@@ -260,7 +272,7 @@ message LauncherToAdmin {
         optional CheckpointListResponse          checkpoint_list_response           = 12;
         optional CheckpointDeleteResponse        checkpoint_delete_response         = 13;
         optional SessionNotification             session_notification               = 14; 
-        optional ControlInformation              control_information                = 15;
+        optional TickInformation                 tick_information                   = 15;
         optional ClientConnectionNotification    connected_clients_update           = 16;
     }
     optional int32   context = 1;

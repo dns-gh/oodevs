@@ -350,7 +350,7 @@ void Converter::ReceiveLauncherToAdmin( const sword::LauncherToAdmin& msg )
     FORWARD( client_, LauncherToAdmin, checkpoint_list_response )
     FORWARD( client_, LauncherToAdmin, checkpoint_delete_response )
     FORWARD( client_, LauncherToAdmin, session_notification )
-    FORWARD( client_, LauncherToAdmin, control_information )
+    FORWARD_TO( client_, LauncherToAdmin, tick_information, control_information )
     FORWARD( client_, LauncherToAdmin, connected_clients_update )
 }
 

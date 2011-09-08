@@ -44,7 +44,7 @@ namespace launcher
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, CheckpointListResponse , checkpoint_list_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, CheckpointDeleteResponse , checkpoint_delete_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionNotification , session_notification )
-    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ControlInformation , control_information )
+    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, TickInformation , tick_information )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ClientConnectionNotification , connected_clients_update )
 
 }

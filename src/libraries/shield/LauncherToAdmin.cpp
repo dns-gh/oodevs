@@ -257,13 +257,13 @@ void LauncherToAdmin::Convert( const sword::SessionNotification& from, MsgsLaunc
 // Name: LauncherToAdmin::Convert
 // Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::ControlInformation& from, MsgsLauncherToAdmin::MsgControlInformation* to )
+void LauncherToAdmin::Convert( const sword::TickInformation& from, MsgsLauncherToAdmin::MsgControlInformation* to )
 {
     CONVERT( current_tick );
     CONVERT( tick_duration );
     CONVERT( time_factor );
-    to->set_pathfind_request_number( 0 ); // TODO AHC
-    to->set_last_checkpoint_build_duration( 0 ); // TODO AHC
+    CONVERT( pathfind_request_number );
+    CONVERT( last_checkpoint_build_duration );
 }
 
 namespace

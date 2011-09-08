@@ -41,7 +41,7 @@ public:
     static void Convert( const sword::CheckpointListResponse& from, MsgsLauncherToAdmin::MsgCheckpointListResponse* to );
     static void Convert( const sword::CheckpointDeleteResponse& from, MsgsLauncherToAdmin::MsgCheckpointDeleteResponse* to );
     static void Convert( const sword::SessionNotification& from, MsgsLauncherToAdmin::MsgSessionNotification* to );
-    static void Convert( const sword::ControlInformation& from, MsgsLauncherToAdmin::MsgControlInformation* to );
+    static void Convert( const sword::TickInformation& from, MsgsLauncherToAdmin::MsgControlInformation* to );
     static void Convert( const sword::ClientConnectionNotification& from, MsgsLauncherToAdmin::MsgClientConnectionNotification* to );
     //@}
 };

@@ -157,18 +157,13 @@ BOOST_FIXTURE_TEST_CASE( connected_clients_update_from_launcher_is_converted, Co
     converter.ReceiveLauncherToAdmin( msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( control_information_from_launcher_is_converted, ContextFixture< sword::LauncherToAdmin > )
+BOOST_FIXTURE_TEST_CASE( tick_information_from_launcher_is_converted, ContextFixture< sword::LauncherToAdmin > )
 {
-    content.mutable_control_information()->set_current_tick( 42 );
-    content.mutable_control_information()->set_tick_duration( 2) ;
-    content.mutable_control_information()->set_time_factor( 12) ;;
-    content.mutable_control_information()->set_checkpoint_frequency( 12) ;
-    content.mutable_control_information()->set_status( sword::paused ) ;
-    content.mutable_control_information()->set_send_vision_cones( false ) ;
-    content.mutable_control_information()->set_profiling_enabled( false) ;;
-    content.mutable_control_information()->set_time_factor( 12) ;
-    content.mutable_control_information()->mutable_date_time()->set_data ( "date1") ;
-    content.mutable_control_information()->mutable_initial_date_time()->set_data( "initdate") ;
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { control_information { current_tick: 42 tick_duration: 2 time_factor: 12 pathfind_request_number: 0 last_checkpoint_build_duration: 0 } }" ) );
+    content.mutable_tick_information()->set_current_tick( 42 );
+    content.mutable_tick_information()->set_tick_duration( 2 );
+    content.mutable_tick_information()->set_time_factor( 12 );
+    content.mutable_tick_information()->set_pathfind_request_number( 13 );
+    content.mutable_tick_information()->set_last_checkpoint_build_duration( 14 );
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { control_information { current_tick: 42 tick_duration: 2 time_factor: 12 pathfind_request_number: 13 last_checkpoint_build_duration: 14 } }" ) );
     converter.ReceiveLauncherToAdmin( msg );
 }
