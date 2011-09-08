@@ -123,6 +123,7 @@ void RemoteAgentController::Notify( const sword::AutomatCreation& message, int c
     if( automatContexts_.find( context ) != automatContexts_.end() )
     {
         parties_[ message.party().id() ] = message.automat().id();
+        DisengageAutomat( message.automat().id() );
         automatContexts_.erase( context );
     }
 }
@@ -301,5 +302,17 @@ void RemoteAgentController::Teleport( const std::string& identifier, double lati
     sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
     coordinates.set_latitude( latitude );
     coordinates.set_longitude( longitude );
+    message.Send( publisher_, MakeContext() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::DisengageAutomat
+// Created: SLI 2011-09-08
+// -----------------------------------------------------------------------------
+void RemoteAgentController::DisengageAutomat( unsigned long identifier )
+{
+    simulation::SetAutomatMode message;
+    message().mutable_automate()->set_id( identifier );
+    message().set_mode( sword::disengaged );
     message.Send( publisher_, MakeContext() );
 }

@@ -249,6 +249,25 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_distant_automat_when_re
     BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA distant automat" );
 }
 
+BOOST_FIXTURE_TEST_CASE( remote_agent_controller_disengage_distant_automat_when_receiving_automat_creation_message, FormationFixture )
+{
+    const unsigned long automat = 1337;
+    ConfigureKnowledgeGroups();
+    sword::ClientToSim automatCreationMessage;
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( automatCreationMessage ) );
+    formationCreationHandler->Notify( MakeFormationCreationMessage( party, formation ), formationCreationMessage.context() );
+    mock::verify();
+    BOOST_REQUIRE( automatCreationHandler );
+    sword::ClientToSim disengageMessage;
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( disengageMessage ) );
+    automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), automatCreationMessage.context() );
+    mock::verify();
+    BOOST_CHECK( disengageMessage.message().has_set_automat_mode() );
+    const sword::SetAutomatMode& mode = disengageMessage.message().set_automat_mode();
+    BOOST_CHECK_EQUAL( mode.automate().id(), automat );
+    BOOST_CHECK_EQUAL( mode.mode(), sword::disengaged );
+}
+
 namespace
 {
     class AutomatFixture : public FormationFixture
@@ -264,6 +283,7 @@ namespace
             formationCreationHandler->Notify( MakeFormationCreationMessage( party, formation ), formationCreationMessage.context() );
             mock::verify();
             BOOST_REQUIRE( automatCreationHandler );
+            MOCK_EXPECT( publisher, SendClientToSim ).once(); // disengage automat
             automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), automatCreationMessage.context() );
             ConfigureTeams();
             BOOST_REQUIRE( remoteAgentListener );

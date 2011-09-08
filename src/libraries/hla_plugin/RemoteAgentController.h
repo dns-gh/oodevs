@@ -96,6 +96,7 @@ private:
     unsigned long FindKnowledgeGroup( unsigned long party ) const;
     unsigned long FindAutomat( rpr::ForceIdentifier ) const;
     void Teleport( const std::string& identifier, double latitude, double longitude );
+    void DisengageAutomat( unsigned long identifier );
     //@}
 
 private:
