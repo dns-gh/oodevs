@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Blue" type="friend">
       <objects>
@@ -13,9 +13,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="44" name="Anti-tank Ditch [44]" type="anti tank obstacle">
@@ -44,9 +42,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="47" name="Checkpoint [47]" type="checkpoint">
@@ -216,9 +212,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="64" name="Forward Arming and Refueling Point (FARP) [64]" type="logistic area">
@@ -264,9 +258,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -348,9 +340,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="80" name="ROTA Point [80]" type="rota area">
@@ -439,9 +429,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -455,9 +443,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -479,7 +465,7 @@
             </points>
           </shape>
           <attributes>
-            <fire class="Fire Class A" max-combustion-energy="10000"/>
+            <fire class="Class B" max-combustion-energy="10000"/>
           </attributes>
         </object>
         <object id="2002" name="Flood [2002]" type="flood">
@@ -534,7 +520,7 @@
           </shape>
           <attributes/>
         </object>
-        <object id="2006" name="Mined Area (linear &amp; destructible) [2006]" type="Mined Area (linear &amp; destructible)">
+        <object id="2006" name="Mined Area (linear and destructible) [2006]" type="mined area (linear and destructible)">
           <shape type="polygone">
             <points>
               <point>30UXU4061228089</point>
@@ -544,14 +530,12 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
         </object>
-        <object id="2007" name="Moving Population [2007]" type="populationMoving">
+        <object id="2007" name="Moving Population [2007]" type="population moving">
           <shape type="polygone">
             <points>
               <point>30UXU4225328181</point>
@@ -619,7 +603,7 @@
       </objects>
       <tactical>
         <formation id="93" level="xx" name="Test all">
-          <automat engaged="true" id="94" knowledge-group="6" logistic-level="tc2" name="Armored battalion combat train [94]" type="Armored battalion combat train">
+          <automat engaged="true" id="94" knowledge-group="6" logistic-level="logistic-base" name="Armored battalion combat train [94]" type="Armored battalion combat train">
             <unit command-post="true" id="95" name="Teeth arms battalion CT" position="30TXT8335005070" type="Teeth arms battalion CT"/>
           </automat>
           <automat engaged="true" id="96" knowledge-group="6" name="Artillery firing battery [96]" type="Artillery firing battery">
@@ -656,10 +640,10 @@
             <unit command-post="false" id="121" name="Bridging troop" position="30TYT0665806414" type="Bridging troop"/>
             <unit command-post="false" id="122" name="Bridging troop" position="30TYT0617505897" type="Bridging troop"/>
           </automat>
-          <automat engaged="true" id="123" knowledge-group="6" logistic-level="tc2" name="Brigade combat train [123]" type="Brigade combat train">
+          <automat engaged="true" id="123" knowledge-group="6" logistic-level="logistic-base" name="Brigade combat train [123]" type="Brigade combat train">
             <unit command-post="true" id="124" name="Battalion CT" position="30TYT0996107031" type="Battalion CT"/>
           </automat>
-          <automat engaged="true" id="125" knowledge-group="6" logistic-level="tc2" name="Combined arms battalion combat train [125]" type="Combined arms battalion combat train">
+          <automat engaged="true" id="125" knowledge-group="6" logistic-level="logistic-base" name="Combined arms battalion combat train [125]" type="Combined arms battalion combat train">
             <unit command-post="true" id="126" name="Combined arms battalion CT" position="30TYT1282807855" type="Combined arms battalion CT"/>
           </automat>
           <automat engaged="true" id="127" knowledge-group="6" name="Commandos platoon [127]" type="Commandos platoon">
@@ -741,7 +725,7 @@
           <automat engaged="true" id="194" knowledge-group="6" name="Listening station [194]" type="Listening station">
             <unit command-post="true" id="195" name="Listening Station" position="30TYT1676704696" type="Listening Station"/>
           </automat>
-          <automat engaged="true" id="196" knowledge-group="6" logistic-level="tc2" name="Logistic combat train [196]" type="Logistic combat train">
+          <automat engaged="true" id="196" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [196]" type="Logistic combat train">
             <unit command-post="true" id="197" name="Logistic CT" position="30TYT1923105196" type="Logistic CT"/>
           </automat>
           <automat engaged="true" id="198" knowledge-group="6" name="LRA infantry company [198]" type="LRA infantry company">
@@ -857,7 +841,7 @@
             <unit command-post="false" id="356" name="General Purpose Helicopter Patrol" position="30TYT1185100000" type="General Purpose Helicopter Patrol"/>
           </automat>
           <automat engaged="true" id="357" knowledge-group="6" name="Transportation squadron [357]" type="Transportation squadron">
-            <unit command-post="true" id="358" name="Transportation platoon (transportation squadron)" position="30TYS1445699871" type="Transportation platoon (transportation squadron)"/>
+            <unit command-post="true" id="358" name="Transportation platoon (transportation squadron)" position="30TYS1445699871" type="Transportation platoon"/>
             <unit command-post="false" id="359" name="Medium transportation platoon" position="30TYS1497499389" type="Medium transportation platoon"/>
             <unit command-post="false" id="360" name="Heavy transportation platoon" position="30TYS1449198873" type="Heavy transportation platoon"/>
           </automat>
@@ -955,8 +939,8 @@
             <unit command-post="true" id="2030" name="AHC CP" position="30TXT3494501663" type="AHC CP"/>
           </automat>
           <automat engaged="true" id="2031" knowledge-group="6" name="Avenger Battery (HVY DIV) [2031]" type="Avenger Battery (HVY DIV)">
-            <unit command-post="false" id="2032" name="Avengert PLT (HVY DIV)" position="30TXT3733702319" type="Avengert PLT (HVY DIV)"/>
-            <unit command-post="false" id="2033" name="Avengert PLT (HVY DIV)" position="30TXT3785601838" type="Avengert PLT (HVY DIV)"/>
+            <unit command-post="false" id="2032" name="Avengert PLT (HVY DIV)" position="30TXT3733702319" type="Avenger PLT (HVY DIV)"/>
+            <unit command-post="false" id="2033" name="Avengert PLT (HVY DIV)" position="30TXT3785601838" type="Avenger PLT (HVY DIV)"/>
             <unit command-post="true" id="2034" name="Avenger BTY CP (HVY DIV)" position="30TXT3737301321" type="Avenger BTY CP (HVY DIV)"/>
           </automat>
           <automat engaged="true" id="2035" knowledge-group="6" name="Brigade Support BN [2035]" type="Brigade Support BN">
@@ -1014,11 +998,11 @@
             <unit command-post="false" id="2129" name="General Support Helicopter PLT (UH-60)" position="30TXS4661691016" type="General Support Helicopter PLT (UH-60)"/>
             <unit command-post="true" id="2130" name="GSHC CP (MDM)" position="30TXS4613390499" type="GSHC CP (MDM)"/>
           </automat>
-          <automat engaged="true" id="2131" knowledge-group="6" name="HS - Fire Suppression HQ [2131]" type="HS - Fire Suppression HQ">
+          <automat engaged="true" id="2131" knowledge-group="6" name="HS - Fire Suppression HQ [2131]" type="HS - Fire_Suppression_HQ">
             <unit command-post="true" id="2132" name="HS - Fire_Station_CP" position="30TXS3075888009" type="HS - Fire_Station_CP"/>
-            <unit command-post="false" id="2133" name="HS - Fire Suppression" position="30TXS3127787527" type="HS - Fire Suppression"/>
-            <unit command-post="false" id="2134" name="HS - Fire Suppression" position="30TXS3079487011" type="HS - Fire Suppression"/>
-            <unit command-post="false" id="2135" name="HS - Fire Suppression" position="30TXS3027687492" type="HS - Fire Suppression"/>
+            <unit command-post="false" id="2133" name="HS - Fire Suppression" position="30TXS3127787527" type="HS - Fire_Suppression"/>
+            <unit command-post="false" id="2134" name="HS - Fire Suppression" position="30TXS3079487011" type="HS - Fire_Suppression"/>
+            <unit command-post="false" id="2135" name="HS - Fire Suppression" position="30TXS3027687492" type="HS - Fire_Suppression"/>
           </automat>
           <automat engaged="true" id="2136" knowledge-group="6" name="Light Infantry BN [2136]" type="Light Infantry BN">
             <unit command-post="true" id="2137" name="Light Infantry BN HQ" position="30TXS3357387359" type="Light Infantry BN HQ"/>
@@ -1115,18 +1099,18 @@
       <populations/>
       <inhabitants/>
       <logistics>
-        <tc2 id="94">
+        <logistic-base id="94">
           <subordinate id="94"/>
-        </tc2>
-        <tc2 id="123">
+        </logistic-base>
+        <logistic-base id="123">
           <subordinate id="123"/>
-        </tc2>
-        <tc2 id="125">
+        </logistic-base>
+        <logistic-base id="125">
           <subordinate id="125"/>
-        </tc2>
-        <tc2 id="196">
+        </logistic-base>
+        <logistic-base id="196">
           <subordinate id="196"/>
-        </tc2>
+        </logistic-base>
         <logistic-base id="1000">
           <subordinate id="2000"/>
         </logistic-base>
@@ -1137,4 +1121,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="0033304452" -->
+<!-- signature="2467617493" -->

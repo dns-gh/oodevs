@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Blue" type="friend">
       <objects>
@@ -32,7 +32,7 @@
             </points>
           </shape>
           <attributes>
-            <tc2 id="89"/>
+            <logistic-base id="89"/>
           </attributes>
         </object>
         <object id="152" name="Detainee Holding Area [152]" type="prisoners camp">
@@ -45,7 +45,7 @@
             </points>
           </shape>
           <attributes>
-            <tc2 id="89"/>
+            <logistic-base id="89"/>
           </attributes>
         </object>
         <object id="154" name="Bridge (continuous) [154]" type="continuous pontoon bridge">
@@ -83,6 +83,7 @@
           <attributes>
             <obstacle activated="false" type="reserved">
               <activation-time value="0"/>
+              <activity-time value="0"/>
             </obstacle>
           </attributes>
         </object>
@@ -107,6 +108,7 @@
           <attributes>
             <obstacle activated="false" type="reserved">
               <activation-time value="0"/>
+              <activity-time value="0"/>
             </obstacle>
           </attributes>
         </object>
@@ -123,6 +125,7 @@
           <attributes>
             <obstacle activated="false" type="reserved">
               <activation-time value="0"/>
+              <activity-time value="0"/>
             </obstacle>
           </attributes>
         </object>
@@ -139,6 +142,7 @@
           <attributes>
             <obstacle activated="false" type="reserved">
               <activation-time value="0"/>
+              <activity-time value="0"/>
             </obstacle>
           </attributes>
         </object>
@@ -177,14 +181,14 @@
             <unit command-post="false" id="191" name="Aircraft Carrier" position="30UXU3162922475" type="Aircraft Carrier"/>
             <unit command-post="true" id="200" name="Marine CP" position="30UXU3094722509" type="Marine CP"/>
           </automat>
-          <automat engaged="false" id="204" knowledge-group="6" name="Emergency [204]" type="HS - Fire Suppression HQ">
+          <automat engaged="false" id="204" knowledge-group="6" name="Emergency [204]" type="HS - Fire_Suppression_HQ">
             <unit command-post="true" id="205" name="HS - Fire_Station_CP" position="30UXU2877228537" type="HS - Fire_Station_CP"/>
             <unit command-post="false" id="214" name="HS - Disturbance" position="30UXU2778827902" type="HS - Disturbance"/>
             <unit command-post="false" id="215" name="HS - Med_Ambulance" position="30UXU2863427696" type="HS - Med_Ambulance"/>
             <unit command-post="false" id="216" name="HS - Law_Police" position="30UXU2880227190" type="HS - Law_Police"/>
           </automat>
           <formation id="228" level="x" name="Appui">
-            <automat engaged="false" id="89" knowledge-group="6" logistic-level="tc2" name="Log [89] [89]" type="Armored battalion combat train">
+            <automat engaged="false" id="89" knowledge-group="6" logistic-level="logistic-base" name="Log [89] [89]" type="Armored battalion combat train">
               <unit command-post="false" id="13" name="ACA (Medical section)" position="30UXU1965349347" type="Medical section"/>
               <unit command-post="false" id="27" name="Decontamination NBC (Logistic decontamination section)" position="30UXU3781350902" type="Logistic decontamination section"/>
               <unit command-post="false" id="37" name="Groupe Maintenance Evacuation (Maintenance evacuation group)" position="30UXU5151954478" type="Maintenance evacuation group"/>
@@ -246,8 +250,8 @@
             <unit command-post="true" id="14" name="Air CP" position="30UXU2183149577" type="Air CP"/>
             <unit command-post="false" id="80" name="Strategic Bomber Patrol" position="30UXU4424646705" type="Strategic Bomber Patrol"/>
           </automat>
-          <automat engaged="false" id="248" knowledge-group="6" name="Secu (DIA5) [248]" type="HS - Fire Suppression HQ">
-            <unit command-post="true" id="251" name="HS - Fire Suppression" position="30UXU2534541607" type="HS - Fire Suppression"/>
+          <automat engaged="false" id="248" knowledge-group="6" name="Secu (DIA5) [248]" type="HS - Fire_Suppression_HQ">
+            <unit command-post="true" id="251" name="HS - Fire Suppression" position="30UXU2534541607" type="HS - Fire_Suppression"/>
           </automat>
           <formation id="253" level="x" name="Melee">
             <automat engaged="false" id="254" knowledge-group="6" name="Abc [254]" type="MBT squadron">
@@ -462,18 +466,13 @@
             </formation>
           </formation>
           <formation id="280" level="x" name="Emergency">
-            <automat engaged="true" id="358" knowledge-group="6" name="HS - Fire Suppression HQ [358]" type="HS - Fire Suppression HQ">
+            <automat engaged="true" id="358" knowledge-group="6" name="HS - Fire Suppression HQ [358]" type="HS - Fire_Suppression_HQ">
               <unit command-post="true" id="359" name="HS - Fire_Station_CP" position="30TYU1182318617" type="HS - Fire_Station_CP"/>
-              <unit command-post="false" id="360" name="HS - Fire Suppression" position="30TYU1234218135" type="HS - Fire Suppression"/>
-              <unit command-post="false" id="361" name="HS - Fire Suppression" position="30TYU1185917618" type="HS - Fire Suppression"/>
-              <unit command-post="false" id="362" name="HS - Fire Suppression" position="30TYU1134118099" type="HS - Fire Suppression"/>
+              <unit command-post="false" id="360" name="HS - Fire Suppression" position="30TYU1234218135" type="HS - Fire_Suppression"/>
+              <unit command-post="false" id="361" name="HS - Fire_Suppression" position="30TYU1185917618" type="HS - Fire_Suppression"/>
+              <unit command-post="false" id="362" name="HS - Fire_Suppression" position="30TYU1134118099" type="HS - Fire_Suppression"/>
               <unit command-post="false" id="363" name="HS - Firefighter - Eng" position="30TYU1232418635" type="HS - Firefighter - Eng"/>
               <unit command-post="false" id="364" name="HS - Fire_Station" position="30TYU1254918143" type="HS - Fire_Station"/>
-            </automat>
-            <automat engaged="true" id="365" knowledge-group="6" name="HS - Safety [365]" type="HS - Safety">
-              <unit command-post="true" id="366" name="HS - Law_Police_CP" position="30TYU1572217081" type="HS - Law_Police_CP"/>
-              <unit command-post="false" id="367" name="HS - Law_Police" position="30TYU1624116600" type="HS - Law_Police"/>
-              <unit command-post="false" id="368" name="HS - Law_Police" position="30TYU1575816082" type="HS - Law_Police"/>
             </automat>
             <automat engaged="true" id="369" knowledge-group="6" name="HS - Police_HQ [369]" type="HS - Police_HQ">
               <unit command-post="true" id="370" name="HS - Law_Police_CP" position="30TYU1562719712" type="HS - Law_Police_CP"/>
@@ -481,7 +480,7 @@
               <unit command-post="false" id="372" name="HS - Law_Police" position="30TYU1566318714" type="HS - Law_Police"/>
               <unit command-post="false" id="373" name="HS - Disturbance" position="30TYU1514519195" type="HS - Disturbance"/>
               <unit command-post="false" id="374" name="HS - National Guards" position="30TYU1612819730" type="HS - National Guards"/>
-              <unit command-post="false" id="375" name="HS - Police Forces" position="30TYU1635319238" type="HS - Police Forces"/>
+              <unit command-post="false" id="375" name="HS - Police Forces" position="30TYU1635319238" type="HS - Law_Police"/>
             </automat>
             <automat engaged="true" id="376" knowledge-group="6" name="HS - Medical_HQ [376]" type="HS - Medical_HQ">
               <unit command-post="true" id="377" name="HS - Med_Ambulance" position="30TYU1316514737" type="HS - Med_Ambulance"/>
@@ -559,9 +558,9 @@
       </populations>
       <inhabitants/>
       <logistics>
-        <tc2 id="89">
+        <logistic-base id="89">
           <subordinate id="89"/>
-        </tc2>
+        </logistic-base>
       </logistics>
     </party>
     <party id="126" name="Rouge" type="enemy">
@@ -588,9 +587,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -601,9 +598,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -614,9 +609,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -627,9 +620,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -640,9 +631,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -653,9 +642,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -681,9 +668,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -694,9 +679,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -707,9 +690,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -720,9 +701,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -733,9 +712,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -746,9 +723,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -759,9 +734,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -772,9 +745,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -785,7 +756,7 @@
             </points>
           </shape>
           <attributes>
-            <fire class="Fire Class A" max-combustion-energy="1000000000"/>
+            <fire class="Class B" max-combustion-energy="1000000000"/>
           </attributes>
         </object>
         <object id="211" name="Arson/Fire [211]" type="fire">
@@ -795,7 +766,7 @@
             </points>
           </shape>
           <attributes>
-            <fire class="Fire Class A" max-combustion-energy="1000000000"/>
+            <fire class="Class B" max-combustion-energy="1000000000"/>
           </attributes>
         </object>
         <object id="213" name="Arson/Fire [213]" type="fire">
@@ -805,7 +776,7 @@
             </points>
           </shape>
           <attributes>
-            <fire class="Fire Class A" max-combustion-energy="1000000000"/>
+            <fire class="Class B" max-combustion-energy="1000000000"/>
           </attributes>
         </object>
         <object id="268" name="Arson/Fire [268]" type="fire">
@@ -815,7 +786,7 @@
             </points>
           </shape>
           <attributes>
-            <fire class="Fire Class A" max-combustion-energy="100"/>
+            <fire class="Class B" max-combustion-energy="100"/>
           </attributes>
         </object>
         <object id="269" name="Arson/Fire [269]" type="fire">
@@ -825,7 +796,7 @@
             </points>
           </shape>
           <attributes>
-            <fire class="Fire Class A" max-combustion-energy="5000"/>
+            <fire class="Class B" max-combustion-energy="5000"/>
           </attributes>
         </object>
         <object id="483" name="Mine Cluster [483]" type="mines">
@@ -835,9 +806,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
@@ -849,9 +818,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
@@ -863,9 +830,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
@@ -877,9 +842,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
@@ -891,9 +854,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
@@ -905,9 +866,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
@@ -1020,4 +979,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0702712958" -->
+<!-- signature="3777048902" -->
