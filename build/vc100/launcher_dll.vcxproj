@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\launcher_dll\Config.cpp" />
+    <ClCompile Include="..\..\src\libraries\launcher_dll\ControlEndTickMessageHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\launcher_dll.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </PrecompiledHeader>
@@ -183,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\launcher_dll\Config.h" />
+    <ClInclude Include="..\..\src\libraries\launcher_dll\ControlEndTickMessageHandler.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\DllConfig.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\launcher_dll_pch.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\LauncherFacade.h" />

@@ -64,6 +64,9 @@
     <ClCompile Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.cpp">
       <Filter>Source Files\Notification</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\launcher_dll\ControlEndTickMessageHandler.cpp">
+      <Filter>Source Files\Notification</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\launcher_dll\Config.h">
@@ -118,6 +121,9 @@
       <Filter>Source Files\Notification</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\launcher_dll\TimeMessageHandler.h">
+      <Filter>Source Files\Notification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\launcher_dll\ControlEndTickMessageHandler.h">
       <Filter>Source Files\Notification</Filter>
     </ClInclude>
   </ItemGroup>
