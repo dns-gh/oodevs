@@ -1583,6 +1583,10 @@ Do you want to save anyway?</source>
         <source>Change initial state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Display initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserProfileList</name>

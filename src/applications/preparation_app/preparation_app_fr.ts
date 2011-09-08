@@ -1583,6 +1583,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Change initial state</source>
         <translation>Modifier l&apos;état initial</translation>
     </message>
+    <message>
+        <source>Display initial state</source>
+        <translation>Afficher l&apos;état initial</translation>
+    </message>
 </context>
 <context>
     <name>UserProfileList</name>

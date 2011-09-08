@@ -96,7 +96,7 @@ void UnitStateDialog::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
 void UnitStateDialog::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Automat_ABC* > ( &entity );
-    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Change initial state" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Display initial state" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void UnitStateDialog::NotifyContextMenu( const kernel::Automat_ABC& entity, kern
 void UnitStateDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Formation_ABC* > ( &entity );
-    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Change initial state" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Display initial state" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,5 +116,5 @@ void UnitStateDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, ke
 void UnitStateDialog::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Team_ABC* > ( &entity );
-    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Change initial state" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Display initial state" ), this, SLOT( Show() ) );
 }
