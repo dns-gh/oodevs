@@ -6225,6 +6225,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Logistic supply system - Invalid unit type for convoy units</source>
         <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Units_Data</name>

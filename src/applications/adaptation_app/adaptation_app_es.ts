@@ -6214,6 +6214,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Logistic supply system - Invalid unit type for convoy units</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Units_Data</name>
