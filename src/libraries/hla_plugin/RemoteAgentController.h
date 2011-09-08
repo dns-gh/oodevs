@@ -14,7 +14,6 @@
 #include "RemoteAgentListener_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <set>
 #include <map>
 
 namespace dispatcher
@@ -101,7 +100,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< int > T_Contexts;
+    typedef std::map< int, std::string > T_Contexts;
     typedef boost::shared_ptr< simulation::UnitCreationRequest > T_UnitCreation;
     typedef std::map< std::string, T_UnitCreation > T_UnitCreations;
     typedef std::map< unsigned long, unsigned long > T_Parties;
@@ -115,7 +114,9 @@ private:
     dispatcher::SimulationPublisher_ABC& publisher_;
     RemoteAgentSubject_ABC& agentSubject_;
     const unsigned long automatType_;
-    T_Contexts contexts_;
+    T_Contexts formationContexts_;
+    T_Contexts automatContexts_;
+    T_Contexts unitContexts_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     //@}

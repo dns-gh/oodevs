@@ -23,10 +23,13 @@ using namespace plugins::hla;
 
 namespace
 {
-    int MakeContext()
+    template< typename T, typename U >
+    int MakeContext( T& contexts, const U& identifier )
     {
         static int context = 0;
-        return ++context;
+        int current = ++context;
+        contexts[ current ] = boost::lexical_cast< std::string >( identifier );
+        return current;
     }
 }
 
@@ -83,8 +86,13 @@ void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, in
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::UnitMagicActionAck& message, int context )
 {
-    if( contexts_.find( context ) != contexts_.end() && message.error_code() != sword::UnitActionAck::no_error )
-        throw std::runtime_error( "Error while creating distant unit '" + boost::lexical_cast< std::string >( message.unit().id() ) + "'" );
+    if( message.error_code() != sword::UnitActionAck::no_error )
+    {
+        if( formationContexts_.find( context ) != formationContexts_.end() )
+            throw std::runtime_error( "Error while creating distant formation '" + formationContexts_[ context ] + "'" );
+        if( automatContexts_.find( context ) != automatContexts_.end() )
+            throw std::runtime_error( "Error while creating distant automat '" + automatContexts_[ context ] + "'" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +101,8 @@ void RemoteAgentController::Notify( const sword::UnitMagicActionAck& message, in
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::UnitCreationRequestAck& message, int context )
 {
-    if( contexts_.find( context ) != contexts_.end() && message.error_code() != sword::UnitActionAck::no_error )
-        throw std::runtime_error( "Error while creating distant unit" );
+    if( unitContexts_.find( context ) != unitContexts_.end() && message.error_code() != sword::UnitActionAck::no_error )
+        throw std::runtime_error( "Error while creating distant unit '" + unitContexts_[ context ] + "'" );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,10 +111,10 @@ void RemoteAgentController::Notify( const sword::UnitCreationRequestAck& message
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::FormationCreation& message, int context )
 {
-    if( contexts_.find( context ) != contexts_.end() )
+    if( formationContexts_.find( context ) != formationContexts_.end() )
     {
         AddAutomat( message.formation().id(), FindKnowledgeGroup( message.party().id() ) );
-        contexts_.erase( context );
+        formationContexts_.erase( context );
     }
 }
 
@@ -116,10 +124,10 @@ void RemoteAgentController::Notify( const sword::FormationCreation& message, int
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::AutomatCreation& message, int context )
 {
-    if( contexts_.find( context ) != contexts_.end() )
+    if( automatContexts_.find( context ) != automatContexts_.end() )
     {
         parties_[ message.party().id() ] = message.automat().id();
-        contexts_.erase( context );
+        automatContexts_.erase( context );
     }
 }
 
@@ -135,7 +143,7 @@ void RemoteAgentController::AddFormation( unsigned long party )
     message().mutable_parameters()->add_elem()->add_value()->set_areal( 6 );                          // hierarchy level
     message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant formation" ); // name
     message().mutable_parameters()->add_elem()->set_null_value( true );                               // logistic level
-    message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
+    message.Send( publisher_, MakeContext( formationContexts_, party ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +158,7 @@ void RemoteAgentController::AddAutomat( unsigned long formation, unsigned long k
     message().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );        // type
     message().mutable_parameters()->add_elem()->add_value()->set_identifier( knowledgeGroup );      // knowledge group
     message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant automat" ); // name
-    message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
+    message.Send( publisher_, MakeContext( automatContexts_, formation ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +209,7 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
     message().mutable_position()->set_longitude( longitude );
     if( message().has_superior() )
     {
-        message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
+        message.Send( publisher_, MakeContext( unitContexts_, identifier ) );
         unitCreations_.erase( identifier );
     }
 }
@@ -235,7 +243,7 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
     message().mutable_superior()->set_id( automat );
     if( message().has_position() )
     {
-        message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
+        message.Send( publisher_, MakeContext( unitContexts_, identifier ) );
         unitCreations_.erase( identifier );
     }
 }
