@@ -32,6 +32,7 @@ namespace sword
     class ControlEndTick;
     class AutomatCreation;
     class FormationCreation;
+    class UnitCreation;
     class SimToClient_Content;
     class UnitMagicActionAck;
 }
@@ -57,6 +58,7 @@ class RemoteAgentController : private tools::MessageObserver< sword::ControlEndT
                             , private tools::MessageObserver< sword::UnitMagicActionAck >
                             , private tools::MessageObserver< sword::FormationCreation >
                             , private tools::MessageObserver< sword::AutomatCreation >
+                            , private tools::MessageObserver< sword::UnitCreation >
                             , private RemoteAgentListener_ABC
 {
 public:
@@ -75,6 +77,7 @@ private:
     virtual void Notify( const sword::UnitMagicActionAck& message, int context );
     virtual void Notify( const sword::FormationCreation& message, int context );
     virtual void Notify( const sword::AutomatCreation& message, int context );
+    virtual void Notify( const sword::UnitCreation& message, int context );
     //@}
 
     //! @name Operations
@@ -92,6 +95,7 @@ private:
     void AddAutomat( unsigned long formation, unsigned long knowledgeGroup );
     unsigned long FindKnowledgeGroup( unsigned long party ) const;
     unsigned long FindAutomat( rpr::ForceIdentifier ) const;
+    void Teleport( const std::string& identifier, double latitude, double longitude );
     //@}
 
 private:
@@ -101,6 +105,7 @@ private:
     typedef boost::shared_ptr< simulation::UnitMagicAction > T_UnitCreation;
     typedef std::map< std::string, T_UnitCreation > T_UnitCreations;
     typedef std::map< unsigned long, unsigned long > T_Parties;
+    typedef std::map< std::string, unsigned long > T_Units;
     //@}
 
 private:
@@ -116,6 +121,7 @@ private:
     T_Contexts unitContexts_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
+    T_Units units_;
     //@}
 };
 
