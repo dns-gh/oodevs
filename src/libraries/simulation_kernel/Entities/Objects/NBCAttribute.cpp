@@ -179,13 +179,15 @@ void NBCAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: NBCAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool NBCAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

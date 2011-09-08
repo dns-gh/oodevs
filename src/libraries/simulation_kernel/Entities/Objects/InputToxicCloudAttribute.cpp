@@ -243,13 +243,15 @@ void InputToxicCloudAttribute::SendFullState( sword::ObjectAttributes& asn ) con
 // Name: InputToxicCloudAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool InputToxicCloudAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( bExport_ && NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

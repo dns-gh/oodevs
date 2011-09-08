@@ -168,10 +168,14 @@ void ResourceNetworkCapacity::SendState( sword::UrbanAttributes& message ) const
 // Name: ResourceNetworkCapacity::SendState
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::SendState( sword::ObjectAttributes& asn ) const
+bool ResourceNetworkCapacity::SendState( sword::ObjectAttributes& asn ) const
 {
     if( nodeProperties_->NeedUpdate() )
+    {
         nodeProperties_->Serialize( *asn.mutable_resource_networks() );
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

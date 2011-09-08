@@ -173,13 +173,15 @@ void NBCTypeAttribute::SendFullState( sword::ObjectAttributes& /*message*/ ) con
 // Name: NBCTypeAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool NBCTypeAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

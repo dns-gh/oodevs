@@ -59,7 +59,7 @@ public:
     //! @name Network
     //@{
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
+    virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 

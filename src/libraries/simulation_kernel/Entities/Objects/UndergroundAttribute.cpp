@@ -165,13 +165,15 @@ void UndergroundAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: UndergroundAttribute::SendUpdate
 // Created: JSR 2011-07-11
 // -----------------------------------------------------------------------------
-void UndergroundAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool UndergroundAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

@@ -52,7 +52,7 @@ public:
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( MIL_Object_ABC& object ) const;
     void SendFullState( sword::ObjectAttributes& asn ) const;
-    void SendUpdate( sword::ObjectAttributes& asn ) const;
+    bool SendUpdate( sword::ObjectAttributes& asn ) const;
     void WriteODB( xml::xostream& xos ) const;
     //@}
 

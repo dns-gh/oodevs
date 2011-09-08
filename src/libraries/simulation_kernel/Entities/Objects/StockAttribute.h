@@ -67,7 +67,7 @@ public:
     //! @name Network Update
     //@{
     void SendFullState( sword::ObjectAttributes& asn ) const;
-    void SendUpdate( sword::ObjectAttributes& asn ) const;
+    bool SendUpdate( sword::ObjectAttributes& asn ) const;
     void OnUpdate( const sword::ObjectAttributes& asn );
     //@}
 

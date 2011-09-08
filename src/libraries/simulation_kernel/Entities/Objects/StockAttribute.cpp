@@ -194,13 +194,15 @@ void StockAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: StockAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void StockAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool StockAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate) )
     {
         Send( *asn.mutable_stock() );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

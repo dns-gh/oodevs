@@ -126,13 +126,15 @@ void LodgingAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: LodgingAttribute::Send
 // Created: MMC 2011-05-04
 // -----------------------------------------------------------------------------
-void LodgingAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool LodgingAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

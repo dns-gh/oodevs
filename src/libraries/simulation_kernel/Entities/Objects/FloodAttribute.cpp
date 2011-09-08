@@ -195,13 +195,15 @@ void FloodAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: FloodAttribute::SendUpdate
 // Created: JSR 2011-01-03
 // -----------------------------------------------------------------------------
-void FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

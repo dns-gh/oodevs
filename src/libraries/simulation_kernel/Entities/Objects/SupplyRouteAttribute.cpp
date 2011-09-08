@@ -162,13 +162,15 @@ void SupplyRouteAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: SupplyRouteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool SupplyRouteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

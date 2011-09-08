@@ -118,13 +118,15 @@ void AltitudeModifierAttribute::SendFullState( sword::ObjectAttributes& asn ) co
 // Name: AltitudeModifierAttribute::SendUpdate
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool AltitudeModifierAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

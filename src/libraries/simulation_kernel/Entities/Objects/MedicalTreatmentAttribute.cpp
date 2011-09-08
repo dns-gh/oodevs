@@ -320,13 +320,15 @@ void MedicalTreatmentAttribute::SendFullState( sword::ObjectAttributes& message 
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool MedicalTreatmentAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

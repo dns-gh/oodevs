@@ -132,13 +132,15 @@ void LogisticAttribute::SendFullState( sword::ObjectAttributes& msg ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool LogisticAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

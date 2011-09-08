@@ -127,13 +127,15 @@ void BurnSurfaceAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: BurnSurfaceAttribute::Send
 // Created: BCI 2010-12-09
 // -----------------------------------------------------------------------------
-void BurnSurfaceAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool BurnSurfaceAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) && pObject_ )
     {
         burningCells_.SendUpdate( asn, *pObject_ );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

@@ -57,9 +57,9 @@ public:
 
     //! @name ASN Network update
     //@{
-    virtual void SendFullState( sword::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
-    virtual void SendUpdate( sword::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
-    virtual void OnUpdate( const sword::MissionParameter_Value& /*attribute*/ ) {} //<! Update from asn msg
+    virtual void SendFullState( sword::ObjectAttributes& /*asn*/ ) const {}             //<! Send update to asn client
+    virtual bool SendUpdate( sword::ObjectAttributes& /*asn*/ ) const { return false; } //<! Send update to asn client
+    virtual void OnUpdate( const sword::MissionParameter_Value& /*attribute*/ ) {}      //<! Update from asn msg
     //@}
 
     //! @name ODB

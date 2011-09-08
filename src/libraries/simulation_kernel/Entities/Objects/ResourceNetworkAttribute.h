@@ -45,7 +45,7 @@ public:
     //! @name Network update
     //@{
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
+    virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
     //! @name CheckPoint

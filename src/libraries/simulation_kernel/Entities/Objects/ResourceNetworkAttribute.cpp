@@ -77,10 +77,11 @@ void ResourceNetworkAttribute::SendFullState( sword::ObjectAttributes& asn ) con
 // Name: ResourceNetworkAttribute::SendUpdate
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool ResourceNetworkAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( capacity_ )
-        capacity_->SendState( asn );
+        return capacity_->SendState( asn );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

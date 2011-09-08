@@ -134,7 +134,7 @@ public:
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( MIL_Object_ABC& object ) const;
     void SendFullState( sword::ObjectAttributes& asn ) const;
-    void SendUpdate( sword::ObjectAttributes& asn ) const;
+    bool SendUpdate( sword::ObjectAttributes& asn ) const;
     void OnUpdate( const sword::MissionParameter_Value& attribute );
     void WriteODB( xml::xostream& xos ) const;
     void RegisterPatients( unsigned int injuryID, unsigned int category, int n );

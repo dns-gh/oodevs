@@ -101,13 +101,15 @@ void BypassAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: BypassAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool BypassAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

@@ -120,13 +120,15 @@ void DelayAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: DelayAttribute::SendUpdate
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool DelayAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

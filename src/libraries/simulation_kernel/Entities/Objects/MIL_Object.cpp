@@ -395,16 +395,12 @@ void MIL_Object::UpdateState()
     client::ObjectUpdate asn;
     asn().mutable_object()->set_id( GetID() );
     sword::ObjectAttributes& attr = *asn().mutable_attributes();
+    bool send = false;
     for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
-        (*it)->SendUpdate( attr );
+        send = (*it)->SendUpdate( attr ) || send;
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    if( asn().has_location() || attr.has_construction() || attr.has_obstacle() || attr.has_mine()
-        || attr.has_life_time() || attr.has_bypass() || attr.has_logistic() || attr.has_nbc()
-        || attr.has_crossing_site() || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
-        || attr.has_burn() || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
-        || attr.has_nbc_agent() || attr.has_effect_delay() || attr.has_resource_networks() || attr.has_flood()
-        || attr.has_lodging() || attr.has_altitude_modifier() || attr.has_underground() )
+    if( send || asn().has_location() )
         asn.Send( NET_Publisher_ABC::Publisher() );
     xAttrToUpdate_ = 0;
 }

@@ -55,7 +55,7 @@ public:
     //! @name Network updates
     //@{
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
+    virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
     //! @name Operation

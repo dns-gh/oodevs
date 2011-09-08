@@ -248,7 +248,7 @@ void ObstacleAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: ObstacleAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
@@ -257,7 +257,9 @@ void ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
         asn.mutable_obstacle()->set_activation_time( activationTime_ );
         asn.mutable_obstacle()->set_activity_time( activityTime_ );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

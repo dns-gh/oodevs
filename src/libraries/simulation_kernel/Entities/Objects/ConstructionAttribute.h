@@ -70,7 +70,7 @@ public:
     //! @name Network Update
     //@{
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
+    virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void OnUpdate( const sword::MissionParameter_Value& attribute );
     //@}
 

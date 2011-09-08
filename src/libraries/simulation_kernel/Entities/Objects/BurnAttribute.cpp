@@ -118,13 +118,15 @@ void BurnAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: BurnAttribute::Send
 // Created: BCI 2010-12-09
 // -----------------------------------------------------------------------------
-void BurnAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool BurnAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

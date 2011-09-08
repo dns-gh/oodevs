@@ -140,13 +140,15 @@ void CrossingSiteAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 // Name: CrossingSiteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool CrossingSiteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

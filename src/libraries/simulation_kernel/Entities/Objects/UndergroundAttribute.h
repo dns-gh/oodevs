@@ -61,7 +61,7 @@ public:
     //@{
     virtual void OnUpdate( const sword::MissionParameter_Value& attribute );
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
+    virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
     //! @name Getter/Setter
