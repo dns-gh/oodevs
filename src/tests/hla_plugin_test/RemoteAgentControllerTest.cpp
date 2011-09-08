@@ -212,10 +212,10 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_distant_automat_when_re
     const sword::UnitMagicAction& action = actual.message().unit_magic_action();
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::automat_creation );
     BOOST_CHECK_EQUAL( action.tasker().formation().id(), formation );
-    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 2 );
+    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 230u );  // $$$$ _RC_ SLI 2011-09-07: hardcoded
     BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).identifier(), party );
-}
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA distant automat" );}
 
 namespace
 {

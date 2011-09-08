@@ -123,10 +123,11 @@ void RemoteAgentController::AddFormation( unsigned long party )
 void RemoteAgentController::AddAutomat( unsigned long formation, unsigned long knowledgeGroup )
 {
     simulation::UnitMagicAction message;
-    message().mutable_tasker()->mutable_formation()->set_id( formation );                      // parent
+    message().mutable_tasker()->mutable_formation()->set_id( formation );                           // parent
     message().set_type( sword::UnitMagicAction::automat_creation );
-    message().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );            // type
-    message().mutable_parameters()->add_elem()->add_value()->set_identifier( knowledgeGroup ); // knowledge group
+    message().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );        // type
+    message().mutable_parameters()->add_elem()->add_value()->set_identifier( knowledgeGroup );      // knowledge group
+    message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant automat" ); // name
     message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
 }
 
