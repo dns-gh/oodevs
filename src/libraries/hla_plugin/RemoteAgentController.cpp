@@ -183,23 +183,6 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::SideChanged
-// Created: VPR 2011-09-07
-// -----------------------------------------------------------------------------
-void RemoteAgentController::SideChanged( const std::string& identifier, rpr::ForceIdentifier side )
-{
-    if( unitCreations_.find( identifier ) == unitCreations_.end() )
-        return;
-    simulation::UnitCreationRequest& message = *unitCreations_[ identifier ];
-    message().mutable_superior()->set_id( FindAutomat( side ) );
-    if( message().has_position() )
-    {
-        message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
-        unitCreations_.erase( identifier );
-    }
-}
-
 namespace
 {
     const kernel::Karma& GetKarma( rpr::ForceIdentifier force )
@@ -211,6 +194,26 @@ namespace
         if( force == rpr::Opposing )
             return kernel::Karma::enemy_;
         return kernel::Karma::unknown_;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::SideChanged
+// Created: VPR 2011-09-07
+// -----------------------------------------------------------------------------
+void RemoteAgentController::SideChanged( const std::string& identifier, rpr::ForceIdentifier side )
+{
+    if( unitCreations_.find( identifier ) == unitCreations_.end() )
+        return;
+    simulation::UnitCreationRequest& message = *unitCreations_[ identifier ];
+    const unsigned long automat = FindAutomat( side );
+    if( automat == 0 )
+        throw std::runtime_error( "Army '" + GetKarma( side ).GetName().toStdString() + "' does not exist for remote agent '" + identifier + "'" );
+    message().mutable_superior()->set_id( automat );
+    if( message().has_position() )
+    {
+        message.Send( publisher_, *contexts_.insert( MakeContext() ).first );
+        unitCreations_.erase( identifier );
     }
 }
 
