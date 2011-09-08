@@ -74,6 +74,7 @@ void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, in
     CONNECT( controller_, *this, formation_creation );
     CONNECT( controller_, *this, automat_creation );
     CONNECT( controller_, *this, unit_magic_action_ack );
+    CONNECT( controller_, *this, unit_creation_request_ack );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +84,17 @@ void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, in
 void RemoteAgentController::Notify( const sword::UnitMagicActionAck& message, int context )
 {
     if( contexts_.find( context ) != contexts_.end() && message.error_code() != sword::UnitActionAck::no_error )
-        throw std::runtime_error( "Error while creating unit '" + boost::lexical_cast< std::string >( message.unit().id() ) + "'" );
+        throw std::runtime_error( "Error while creating distant unit '" + boost::lexical_cast< std::string >( message.unit().id() ) + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::Notify
+// Created: SLI 2011-09-08
+// -----------------------------------------------------------------------------
+void RemoteAgentController::Notify( const sword::UnitCreationRequestAck& message, int context )
+{
+    if( contexts_.find( context ) != contexts_.end() && message.error_code() != sword::UnitActionAck::no_error )
+        throw std::runtime_error( "Error while creating distant unit" );
 }
 
 // -----------------------------------------------------------------------------

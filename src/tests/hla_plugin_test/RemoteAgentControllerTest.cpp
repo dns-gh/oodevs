@@ -41,11 +41,12 @@ namespace
     {
     public:
         Fixture()
-            : controlEndTickHandler    ( 0 )
-            , formationCreationHandler ( 0 )
-            , automatCreationHandler   ( 0 )
-            , unitMagicActionAckHandler( 0 )
-            , remoteAgentListener      ( 0 )
+            : controlEndTickHandler        ( 0 )
+            , formationCreationHandler     ( 0 )
+            , automatCreationHandler       ( 0 )
+            , unitMagicActionAckHandler    ( 0 )
+            , unitCreationRequestAckHandler( 0 )
+            , remoteAgentListener          ( 0 )
         {
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( controlEndTickHandler ) );
             MOCK_EXPECT( automatResolver, Find ).once().returns( reinterpret_cast< kernel::AutomatType* >( 1 ) );
@@ -82,6 +83,7 @@ namespace
         tools::MessageHandler_ABC< sword::SimToClient_Content >* formationCreationHandler;
         tools::MessageHandler_ABC< sword::SimToClient_Content >* automatCreationHandler;
         tools::MessageHandler_ABC< sword::SimToClient_Content >* unitMagicActionAckHandler;
+        tools::MessageHandler_ABC< sword::SimToClient_Content >* unitCreationRequestAckHandler;
         tools::MockResolver< dispatcher::Team_ABC > teamResolver;
         tools::MockResolver< kernel::AutomatType > automatResolver;
         T_Teams teams;
@@ -96,10 +98,10 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_listen_to_control_end_tick_mess
     MOCK_EXPECT( model, Sides ).once().returns( boost::ref( teamResolver ) );
     MOCK_EXPECT( teamResolver, CreateIterator ).once().returns( MakeTeamIterator( T_Identifiers() ) );
     MOCK_EXPECT( messageController, Unregister ).once();
-    MOCK_EXPECT( messageController, Register ).exactly( 3 );
+    MOCK_EXPECT( messageController, Register ).exactly( 4 );
     controlEndTickHandler->Notify( MakeControlEndTickMessage(), 42 );
     mock::verify();
-    MOCK_EXPECT( messageController, Unregister ).exactly( 3 );
+    MOCK_EXPECT( messageController, Unregister ).exactly( 4 );
     MOCK_EXPECT( remoteSubject, Unregister ).once();
 }
 
@@ -126,10 +128,11 @@ namespace
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( formationCreationHandler ) );
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( automatCreationHandler ) );
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( unitMagicActionAckHandler ) );
+            MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( unitCreationRequestAckHandler ) );
         }
         virtual ~TickedFixture()
         {
-            MOCK_EXPECT( messageController, Unregister ).exactly( 3 );
+            MOCK_EXPECT( messageController, Unregister ).exactly( 4 );
             MOCK_EXPECT( remoteSubject, Unregister ).once();
         }
         RemoteAgentController remoteController;
@@ -308,4 +311,43 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_throws_if_distant_party_does_no
 {
     remoteAgentListener->Created( "identifier" );
     BOOST_CHECK_THROW( remoteAgentListener->SideChanged( "identifier", rpr::Opposing ), std::runtime_error );
+}
+
+namespace
+{
+    class UnitFixture : public AutomatFixture
+    {
+    public:
+        UnitFixture()
+        {
+            remoteAgentListener->Created( "identifier" );
+            remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
+            MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( unitCreationRequest ) );
+            remoteAgentListener->Moved( "identifier", latitude, longitude );
+            mock::verify();
+            BOOST_REQUIRE( unitCreationRequestAckHandler );
+        }
+        sword::SimToClient_Content MakeUnitCreationRequestAckMessage( sword::UnitActionAck::ErrorCode error_code )
+        {
+            sword::SimToClient_Content message;
+            message.mutable_unit_creation_request_ack()->set_error_code( error_code );
+            return message;
+        }
+        sword::ClientToSim unitCreationRequest;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_agent_controller_throws_if_unit_creation_failed, UnitFixture )
+{
+    BOOST_CHECK_THROW( unitCreationRequestAckHandler->Notify( MakeUnitCreationRequestAckMessage( sword::UnitActionAck::error_invalid_unit ), unitCreationRequest.context() ), std::runtime_error );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_nothing_if_no_error_on_unit_creation, UnitFixture )
+{
+    unitCreationRequestAckHandler->Notify( MakeUnitCreationRequestAckMessage( sword::UnitActionAck::no_error ), unitCreationRequest.context() );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_nothing_if_context_is_unknown_on_unit_creation, UnitFixture )
+{
+    unitCreationRequestAckHandler->Notify( MakeUnitCreationRequestAckMessage( sword::UnitActionAck::no_error ), unitCreationRequest.context() + 1000 );
 }

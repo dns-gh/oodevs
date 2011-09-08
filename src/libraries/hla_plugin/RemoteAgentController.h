@@ -35,6 +35,7 @@ namespace sword
     class FormationCreation;
     class SimToClient_Content;
     class UnitMagicActionAck;
+    class UnitCreationRequestAck;
 }
 
 namespace simulation
@@ -56,6 +57,7 @@ namespace hla
 // =============================================================================
 class RemoteAgentController : private tools::MessageObserver< sword::ControlEndTick >
                             , private tools::MessageObserver< sword::UnitMagicActionAck >
+                            , private tools::MessageObserver< sword::UnitCreationRequestAck >
                             , private tools::MessageObserver< sword::FormationCreation >
                             , private tools::MessageObserver< sword::AutomatCreation >
                             , private RemoteAgentListener_ABC
@@ -74,6 +76,7 @@ private:
     //@{
     virtual void Notify( const sword::ControlEndTick& message, int context );
     virtual void Notify( const sword::UnitMagicActionAck& message, int context );
+    virtual void Notify( const sword::UnitCreationRequestAck& message, int context );
     virtual void Notify( const sword::FormationCreation& message, int context );
     virtual void Notify( const sword::AutomatCreation& message, int context );
     //@}
