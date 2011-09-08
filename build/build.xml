@@ -471,10 +471,11 @@
     </target>
 
     <target name="application.dispatcher_app" depends="application.dispatcher_dll" description="build Sword Dispatcher executable">
-        <build-app name="dispatcher_app" subsystem="console" mode="release" depends="boost,terrain,flexlm"
+        <build-app name="dispatcher_app" mode="release" depends="boost,terrain,flexlm"
             libs="masalloc,tools,
                   Qt3Support4,
                   dispatcher-${platform}-mt@{suffix},
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
             <defineset define="QT3_SUPPORT"/>

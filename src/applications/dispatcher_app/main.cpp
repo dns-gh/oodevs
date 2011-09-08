@@ -11,6 +11,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/WinArguments.h"
 #include "tools/win32/FlexLm.h"
 #include <windows.h>
 
@@ -18,7 +19,7 @@
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
-int Run( int argc, char** argv )
+int Run( LPSTR lpCmdLine )
 {
     int maxConnections = 10;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
@@ -40,7 +41,8 @@ int Run( int argc, char** argv )
     int nResult = 0;
     try
     {
-        Application app( argc, argv, maxConnections );
+        tools::WinArguments winArgs( lpCmdLine );
+        Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
         nResult = app.Execute();
     }
     catch( std::exception& e )
@@ -56,7 +58,7 @@ int Run( int argc, char** argv )
 // Name: main constructor
 // Created: FBD 02-11-22
 //-----------------------------------------------------------------------------
-int main( int argc, char** argv )
+int WINAPI WinMain( HINSTANCE /*hinstance*/, HINSTANCE /*hPrevInstance*/, LPSTR lpCmdLine, int /*nCmdShow*/ )
 {
     /*__try
     {
@@ -67,10 +69,11 @@ int main( int argc, char** argv )
     }*/
     try
     {
-        return Run( argc, argv );
+        return Run( lpCmdLine );
     }
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( e.what() );
     }
+    return 0;
 }
