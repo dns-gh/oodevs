@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
-    <party id="1" name="Les Méchants" type="enemy">
+    <party id="1" name="Les MÃ©chants" type="enemy">
       <objects>
         <object id="494" name="Abattis [494]" type="abattis">
           <shape type="polygone">
@@ -16,7 +17,7 @@
             <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
-        <object id="496" name="Fossé anti-char [496]" type="anti tank obstacle">
+        <object id="496" name="FossÃ© anti-char [496]" type="anti tank obstacle">
           <shape type="polygone">
             <points>
               <point>30TXU3040401925</point>
@@ -272,8 +273,17 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="457" name="Population standard[457]" position="31UCP0257236725" type="Population standard"/>
+        <population attitude="calme" id="457" name="Population standard[457]" position="31UCP0257236725" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="3" name="Les Gentils" type="friend">
@@ -289,7 +299,7 @@
             </points>
           </shape>
           <attributes>
-            <tc2 id="459"/>
+            <logistic-base id="459"/>
           </attributes>
         </object>
         <object id="462" name="Refuge[462]" type="refugees camp">
@@ -303,10 +313,10 @@
             </points>
           </shape>
           <attributes>
-            <tc2 id="459"/>
+            <logistic-base id="459"/>
           </attributes>
         </object>
-        <object id="465" name="Site de décontamination[465]" type="decontamination site">
+        <object id="465" name="Site de dÃ©contamination[465]" type="decontamination site">
           <shape type="polygone">
             <points>
               <point>31UCP2502219238</point>
@@ -545,7 +555,7 @@
             <unit command-post="false" id="449" name="Peloton AMX30B2 BRENNUS CDP OFF[449]" position="31UCP1825826906" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
             <unit command-post="false" id="450" name="Peloton AMX30B2 BRENNUS CDP SOFF[450]" position="31UCP1928027364" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
           </automat>
-          <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS" logistic-level="tc2">
+          <automat engaged="false" id="459" knowledge-group="4" logistic-level="logistic-base" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS">
             <unit command-post="true" id="460" name="TC2 RGT AMX30B2 BRENNUS[460]" position="31UCP2393826631" type="TC2 RGT AMX30B2 BRENNUS"/>
           </automat>
           <automat engaged="false" id="463" knowledge-group="4" name="Refugies x100 [463]" type="Refugies x100">
@@ -659,11 +669,18 @@
         <knowledge-group id="778" name="RENS" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="458" name="Population standard [458]" position="31UCP2427337060" type="Population standard"/>
+        <population attitude="calme" id="458" name="Population standard [458]" position="31UCP2427337060" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
-      <logistics>
-        <tc2 id="459"/>
-      </logistics>
+      <inhabitants/>
+      <logistics/>
     </party>
   </parties>
   <diplomacy>
@@ -675,4 +692,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1121613982" -->
+<!-- signature="0454146073" -->

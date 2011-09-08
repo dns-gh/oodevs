@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
-    <party id="1" name="Les Méchants" type="enemy">
+    <party id="1" name="Les MÃ©chants" type="enemy">
       <objects>
         <object id="774" name="Plot de ravitaillement [774]" type="logistic support area">
           <shape type="point">
@@ -55,12 +56,21 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="457" name="Population standard[457]" position="31UCP0257236725" type="Population standard"/>
+        <population attitude="calme" id="457" name="Population standard[457]" position="31UCP0257236725" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="3" name="Les Gentils" type="friend">
-     <objects/>
+      <objects/>
       <tactical>
         <formation id="10" level="ii" name="Bataillon Case 1">
           <automat engaged="false" id="13" knowledge-group="4" name="Compagnie INF AMX 10 P [13]" type="Compagnie INF AMX 10 P">
@@ -84,8 +94,17 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="458" name="Population standard [458]" position="31UCP2278735626" type="Population standard"/>
+        <population attitude="calme" id="458" name="Population standard [458]" position="31UCP2278735626" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -98,4 +117,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3336595809" -->
+<!-- signature="3246606473" -->

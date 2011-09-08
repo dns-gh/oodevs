@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="99" name="Capteur" type="friend">
       <objects/>
@@ -32,9 +33,10 @@
         <knowledge-group id="158" name="Knowledge group [158]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
-    <party id="162" name="Capté" type="friend">
+    <party id="162" name="CaptÃ©" type="friend">
       <objects/>
       <tactical>
         <formation id="163" level="i" name="Formation [163]">
@@ -51,6 +53,7 @@
         <knowledge-group id="165" name="Knowledge group [165]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="176" name="Camp 176" type="enemy">
@@ -66,6 +69,7 @@
         <knowledge-group id="179" name="Knowledge group [179]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -84,4 +88,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1931042260" -->
+<!-- signature="3608635675" -->

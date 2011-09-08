@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="Camp Bleu" type="friend">
       <objects/>
@@ -48,6 +49,7 @@
         <knowledge-group id="53" name="Group 4" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="57" name="Camp Rouge" type="enemy">
@@ -67,6 +69,7 @@
         <knowledge-group id="60" name="Groupe de connaissance [60]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -79,4 +82,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2285235988" -->
+<!-- signature="3186885863" -->

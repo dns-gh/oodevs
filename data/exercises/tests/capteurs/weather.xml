@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<weather>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<weather model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/weather.xsd">
   <exercise-date value="20100308T164119"/>
-  <ephemerides moon="JourSansNuage" sunrise="7h30m0s" sunset="21h30m0s"/>
-  <theater end-time="1h0m0s" start-time="1h0m0s">
+  <ephemerides day-lighting="JourSansNuage" night-lighting="NuitPleineLune" sunrise="7h30m0s" sunset="21h30m0s"/>
+  <theater>
     <wind direction="0" speed="0"/>
     <cloud-cover ceiling="10000" density="0" floor="1000"/>
+    <temperature value="20"/>
     <precipitation value="PasDePrecipitation"/>
   </theater>
   <local-weather/>
 </weather>
-<!-- signature="1998500968" -->
+<!-- signature="3999081376" -->

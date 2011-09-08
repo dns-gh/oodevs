@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="Camp 1" type="friend">
       <objects/>
@@ -20,6 +21,7 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -27,4 +29,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="2069591632" -->
+<!-- signature="2823967885" -->

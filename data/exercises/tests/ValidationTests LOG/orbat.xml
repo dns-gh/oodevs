@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
-    <party id="1" name="Les Méchants" type="enemy">
+    <party id="1" name="Les MÃ©chants" type="enemy">
       <objects/>
       <tactical>
         <formation id="444" level="ii" name="GTIA Case 5">
@@ -24,6 +25,7 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="3" name="Les Gentils" type="friend">
@@ -54,7 +56,7 @@
             <unit command-post="false" id="449" name="Peloton AMX30B2 BRENNUS CDP OFF[449]" position="31UCP1825826906" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
             <unit command-post="false" id="450" name="Peloton AMX30B2 BRENNUS CDP SOFF[450]" position="31UCP1928027364" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
           </automat>
-          <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS" logistic-level="tc2">
+          <automat engaged="false" id="459" knowledge-group="4" logistic-level="logistic-base" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS">
             <unit command-post="true" id="460" name="TC2 RGT AMX30B2 BRENNUS[460]" position="31UCP2393826631" type="TC2 RGT AMX30B2 BRENNUS">
               <resources>
                 <resource name="F63 Gasoil" quantity="500"/>
@@ -168,7 +170,7 @@
             <point>31TCP2376905150</point>
           </limit>
         </formation>
-        <formation id="775" level="ii" name="Logistique Case 5 [775]" logistic-level="logistic-base">
+        <formation id="775" level="ii" logistic-level="logistic-base" name="Logistique Case 5 [775]">
           <automat engaged="false" id="596" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLT [596]" type="Zone Fonctionnelle Maintenance BLT">
             <unit command-post="true" id="597" name="PC LOG BLD Maintenance" position="31UCP1911252191" type="PC LOG BLD Maintenance"/>
             <unit command-post="false" id="598" name="Section CDT CMM (EVAC)" position="31UCP1959251671" type="Section CDT CMM (EVAC)"/>
@@ -332,8 +334,9 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics>
-        <tc2 id="459">
+        <logistic-base id="459">
           <subordinate id="445"/>
           <subordinate id="463"/>
           <subordinate id="466"/>
@@ -351,11 +354,10 @@
           <subordinate id="572"/>
           <subordinate id="576"/>
           <subordinate id="734"/>
-          <subordinate id="459"/>
-        </tc2>
+        </logistic-base>
         <logistic-base id="775">
-            <subordinate id="459">
-             <quotas>
+          <subordinate id="459">
+            <quotas>
               <resource name="F63 Gasoil" quantity="500"/>
             </quotas>
           </subordinate>
@@ -372,4 +374,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0858706175" -->
+<!-- signature="2497175459" -->

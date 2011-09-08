@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="red" type="enemy">
       <objects>
@@ -28,6 +29,7 @@
         <knowledge-group id="3" name="Knowledge group [3]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="4" name="blue" type="friend">
@@ -37,7 +39,7 @@
           <automat engaged="false" id="7" knowledge-group="6" name="Escadron de Chars LECLERC [7]" type="Escadron de Chars LECLERC">
             <unit command-post="true" id="8" name="Peloton LECLERC CDT ESC" position="31UEQ0689955485" type="Peloton LECLERC CDT ESC"/>
           </automat>
-          <automat engaged="true" id="12" knowledge-group="6" name="TC2 GAM604 [12]" type="TC2 GAM604" logistic-level="tc2">
+          <automat engaged="true" id="12" knowledge-group="6" logistic-level="logistic-base" name="TC2 GAM604 [12]" type="TC2 GAM604">
             <unit command-post="true" id="13" name="TC2 GAM604" position="31UDQ8545043790" type="TC2 GAM604"/>
           </automat>
         </formation>
@@ -46,11 +48,12 @@
         <knowledge-group id="6" name="Knowledge group [6]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics>
-        <tc2 id="12">
+        <logistic-base id="12">
           <subordinate id="7"/>
           <subordinate id="12"/>
-        </tc2>
+        </logistic-base>
       </logistics>
     </party>
   </parties>
@@ -63,4 +66,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1196131238" -->
+<!-- signature="2818239535" -->

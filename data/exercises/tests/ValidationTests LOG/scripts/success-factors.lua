@@ -1,3 +1,4 @@
+
 brain "brain" {}
 
 dofile "resources/scripts/commands.lua"
@@ -7,16 +8,13 @@ dofile "resources/scripts/actions.lua"
 scriptName = "success-factors"
 
 function Start()
-    
+
     local indicators = {}
     local factors = {
 
     }
 
     function GetIndicator( name )
-        if indicators[name] == nil then
-            return 0
-        end
         return indicators[name]
     end
 
@@ -33,7 +31,8 @@ function Start()
         local result = false
         for _, factor in pairs( factors ) do
             if factor.CheckConditions() then
-                result = result or factor.ExecuteActions()
+                factor.ExecuteActions()
+                result = true
             end
         end
         return result
@@ -51,7 +50,7 @@ function Start()
                 ChangeState( "processing" )
             end
         },
-        
+
         {
             events.indicators:IndicatorChanged(),
             { "processing" },
@@ -62,7 +61,7 @@ function Start()
                 end
             end
         },
-        
+
         AtState( "finish",
             function()
                 Deactivate()
@@ -70,5 +69,5 @@ function Start()
         )
     }
     DeclareEvents( eventTable )
-    
+
 end

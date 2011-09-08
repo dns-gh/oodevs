@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<profiles>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/profiles.xsd">
   <profile name="Preparator" password="" supervision="true">
     <rights>
       <readonly/>
@@ -81,7 +81,7 @@
       </readwrite>
     </rights>
   </profile>
-   <profile name="Automate TRANS Commander" password="" supervision="true">
+  <profile name="Automate TRANS Commander" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -837,7 +837,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Automate Communes Contrôler Populations dans Zone" password="" supervision="true">
+  <profile name="Automate Communes ContrÃ´ler Populations dans Zone" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -945,7 +945,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Automate Communes Sécuriser Zone Contre Population" password="" supervision="true">
+  <profile name="Automate Communes SÃ©curiser Zone Contre Population" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -964,4 +964,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="2837364405" -->
+<!-- signature="2683491138" -->

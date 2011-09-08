@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<profiles>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/profiles.xsd">
   <profile name="Preparator" password="" supervision="true">
     <rights>
       <readonly/>
@@ -342,7 +342,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion ASY Commettre attentat contre forces armées" password="" supervision="true">
+  <profile name="Pion ASY Commettre attentat contre forces armÃ©es" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -432,7 +432,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Améliorer mobilité" password="" supervision="true">
+  <profile name="Pion GENIE AmÃ©liorer mobilitÃ©" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -450,7 +450,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Dégager obstacles" password="" supervision="true">
+  <profile name="Pion GENIE DÃ©gager obstacles" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -459,7 +459,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Dépolluer Zone" password="" supervision="true">
+  <profile name="Pion GENIE DÃ©polluer Zone" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -486,7 +486,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Ouvrir itinéraire" password="" supervision="true">
+  <profile name="Pion GENIE Ouvrir itinÃ©raire" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -495,7 +495,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Réaliser camps" password="" supervision="true">
+  <profile name="Pion GENIE RÃ©aliser camps" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -504,7 +504,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Réaliser Travaux Appui Déploiement" password="" supervision="true">
+  <profile name="Pion GENIE RÃ©aliser Travaux Appui DÃ©ploiement" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -513,7 +513,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Réaliser travaux contre mobilité" password="" supervision="true">
+  <profile name="Pion GENIE RÃ©aliser travaux contre mobilitÃ©" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -522,7 +522,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Réaliser travaux protection" password="" supervision="true">
+  <profile name="Pion GENIE RÃ©aliser travaux protection" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -531,7 +531,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Reconnaitre itinéraire" password="" supervision="true">
+  <profile name="Pion GENIE Reconnaitre itinÃ©raire" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -576,7 +576,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion GENIE Rétablir Itinéraire" password="" supervision="true">
+  <profile name="Pion GENIE RÃ©tablir ItinÃ©raire" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -657,7 +657,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion ABC Escorter une unité" password="" supervision="true">
+  <profile name="Pion ABC Escorter une unitÃ©" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -666,7 +666,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion ABC Escorter des unités" password="" supervision="true">
+  <profile name="Pion ABC Escorter des unitÃ©s" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -720,7 +720,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion ABC Relever unité" password="" supervision="true">
+  <profile name="Pion ABC Relever unitÃ©" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1035,7 +1035,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Prendre en compte réfugiés" password="" supervision="true">
+  <profile name="Pion Commun Prendre en compte rÃ©fugiÃ©s" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1062,7 +1062,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Se faire décontaminer" password="" supervision="true">
+  <profile name="Pion Commun Se faire dÃ©contaminer" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1080,7 +1080,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Sécuriser zone contre crowd" password="" supervision="true">
+  <profile name="Pion Commun SÃ©curiser zone contre crowd" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1126,4 +1126,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="1769940675" -->
+<!-- signature="3557007939" -->

@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="Camp Bleu" type="friend">
       <objects>
@@ -38,8 +39,17 @@
         <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="10000" id="29" name="Population standard [29]" position="31UEQ1089024355" type="Population standard"/>
+        <population attitude="calme" id="29" name="Population standard [29]" position="31UEQ1089024355" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="3" name="Camp Rouge" type="enemy">
@@ -62,6 +72,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -74,4 +85,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1499285161" -->
+<!-- signature="0300990641" -->

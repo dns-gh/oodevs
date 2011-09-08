@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.2.6">
+<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/exercise.xsd">
+  <meta>
+    <briefing/>
+    <resources/>
+  </meta>
   <profiles file="profiles.xml"/>
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
   <terrain name="Cabourg"/>
   <model dataset="ada" physical="france"/>
 </exercise>
-<!-- signature="2920276704" -->
+<!-- signature="1091854338" -->

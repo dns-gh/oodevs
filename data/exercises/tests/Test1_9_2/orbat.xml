@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="AZUR" type="friend">
       <objects>
@@ -198,7 +199,7 @@
             <unit command-post="false" id="480" name="GLAISE - GEN - Groupe MDK2" position="31UBQ8930111343" type="GLAISE - GEN - Groupe MDK2"/>
             <unit command-post="false" id="481" name="GLAISE - GEN - Groupe MDK2" position="31UBQ8879311154" type="GLAISE - GEN - Groupe MDK2"/>
           </automat>
-          <automat engaged="true" id="482" knowledge-group="2" name="GLAISE - LOG - TC2 [482]" type="GLAISE - LOG - TC2" logistic-level="tc2">
+          <automat engaged="true" id="482" knowledge-group="2" logistic-level="logistic-base" name="GLAISE - LOG - TC2 [482]" type="GLAISE - LOG - TC2">
             <unit command-post="true" id="483" name="GLAISE - LOG - TC2" position="31UBQ8234211670" type="GLAISE - LOG - TC2"/>
           </automat>
           <automat engaged="true" id="484" knowledge-group="2" name="GLAISE - NBC - Groupe Reco [484]" type="GLAISE - NBC - Groupe Reco">
@@ -347,11 +348,16 @@
         <knowledge-group id="270" name="Groupe de connaissance [270]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="3622" name="Population standard [3622]" position="31UBQ9527104949" type="Population standard"/>
+        <population attitude="calme" id="3622" name="Population standard [3622]" position="31UBQ9527104949" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
-      <logistics>
-        <tc2 id="482"/>
-      </logistics>
+      <inhabitants/>
+      <logistics/>
     </party>
     <party id="3" name="VERMILLON" type="enemy">
       <objects>
@@ -385,6 +391,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -397,4 +404,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1512035122" -->
+<!-- signature="1495252452" -->

@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="Les Gentils" type="friend">
       <objects>
@@ -83,7 +84,7 @@
           <automat engaged="true" id="497" knowledge-group="2" name="Refugies x1000 [497]" type="Refugies x1000">
             <unit command-post="true" id="498" name="Refugies 1000 Pers" position="30UXU2226730386" type="Refugies 1000 Pers"/>
           </automat>
-          <automat engaged="true" id="543" knowledge-group="2" name="TC2 GE40 LECLERC [543]" type="TC2 GE40 LECLERC" logistic-level="tc2">
+          <automat engaged="true" id="543" knowledge-group="2" logistic-level="logistic-base" name="TC2 GE40 LECLERC [543]" type="TC2 GE40 LECLERC">
             <unit command-post="true" id="544" name="TC2 GE40 LECLERC" position="30UXU2602328289" type="TC2 GE40 LECLERC"/>
           </automat>
           <automat engaged="true" id="589" knowledge-group="2" name="Compagnie CBT GENIE type BB BM [589]" type="Compagnie CBT GENIE type BB BM">
@@ -423,7 +424,7 @@
             <point>30TXT9376444746</point>
           </limit>
         </formation>
-       <formation id="9" level="ii" name="Bataillon Case 5">
+        <formation id="9" level="ii" name="Bataillon Case 5">
           <automat engaged="true" id="740" knowledge-group="2" name="ELGE [740]" type="ELGE">
             <unit command-post="true" id="741" name="Groupe ELGE" position="31UCP1480950114" type="Groupe ELGE"/>
           </automat>
@@ -471,14 +472,29 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="363" name="Population standard [363]" position="30UXU3072941084" type="Population standard"/>
-        <population attitude="calme" humans="1000" id="366" name="Population standard [366]" position="30UXU8978145987" type="Population standard"/>
+        <population attitude="calme" id="363" name="Population standard [363]" position="30UXU3072941084" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="366" name="Population standard [366]" position="30UXU8978145987" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
-      <logistics>
-        <tc2 id="543"/>
-      </logistics>
+      <inhabitants/>
+      <logistics/>
     </party>
-    <party id="3" name="Les Méchants" type="enemy">
+    <party id="3" name="Les MÃ©chants" type="enemy">
       <objects>
         <object id="614" name="Abattis [614]" type="abattis">
           <shape type="polygone">
@@ -643,7 +659,7 @@
             <point>30TYT1029130017</point>
           </limit>
         </formation>
-         <formation id="14" level="ii" name="GTIA Case 5">
+        <formation id="14" level="ii" name="GTIA Case 5">
           <automat engaged="true" id="768" knowledge-group="4" name="Compagnie INF AMX 10 P [768]" type="Compagnie INF AMX 10 P">
             <unit command-post="true" id="769" name="Section CDT CIE INF AMX10P" position="31UCP0996739145" type="Section CDT CIE INF AMX10P"/>
             <unit command-post="false" id="770" name="Section CBT INF AMX10P CDS OFF" position="31UCP1044638625" type="Section CBT INF AMX10P CDS OFF"/>
@@ -672,9 +688,26 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="364" name="Population standard [364]" position="30UXU4014141775" type="Population standard"/>
-        <population attitude="calme" humans="1000" id="365" name="Population standard [365]" position="30UYU0095743402" type="Population standard"/>
+        <population attitude="calme" id="364" name="Population standard [364]" position="30UXU4014141775" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="365" name="Population standard [365]" position="30UYU0095743402" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -687,4 +720,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0049668993" -->
+<!-- signature="4078602759" -->

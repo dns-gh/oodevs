@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.2.6">
+<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/exercise.xsd">
   <meta>
     <name><![CDATA[Test 1.9.2]]></name>
     <briefing/>
@@ -16,4 +16,4 @@
   <terrain name="Cabourg"/>
   <model dataset="ada" physical="scipio-1.9.2"/>
 </exercise>
-<!-- signature="4195202663" -->
+<!-- signature="0303772325" -->

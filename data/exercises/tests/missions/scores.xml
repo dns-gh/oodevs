@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<scores>
+<scores model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/scores.xsd">
   <score name="Detection">
     <formula><![CDATA[sum( domain( detecting-unit( $unit, $visibility ), $units ) )]]></formula>
     <gauge type="Default"/>
@@ -15,13 +15,6 @@
         <reduce function="sum" id="3" input="2" type="unsigned long"/>
         <result function="indicator" input="3" name="Detection" type="unsigned long"/>
       </indicator>
-      <indicator>
-        <extract detected="11" function="detecting-unit" id="1" visibility="detected,identified,recognized"/>
-        <transform function="domain" id="2" input="1" select="8" type="unsigned long"/>
-        <reduce function="sum" id="3" input="2" type="unsigned long"/>
-        <transform function="derivate" id="5" input="3" period="10" type="unsigned long"/>
-        <result function="indicator" input="5" name="Detection/Tendency" type="unsigned long"/>
-      </indicator>
     </indicators>
   </score>
   <score name="Dismounted">
@@ -36,12 +29,6 @@
         <reduce function="select" id="2" input="1" key="11" type="float"/>
         <result function="indicator" input="2" name="Dismounted" type="float"/>
       </indicator>
-      <indicator>
-        <extract function="mounted" id="1"/>
-        <reduce function="select" id="2" input="1" key="11" type="float"/>
-        <transform function="derivate" id="4" input="2" period="10" type="float"/>
-        <result function="indicator" input="4" name="Dismounted/Tendency" type="float"/>
-      </indicator>
     </indicators>
   </score>
   <score name="OpState">
@@ -55,12 +42,6 @@
         <extract function="operational-state" id="1"/>
         <reduce function="select" id="2" input="1" key="8" type="float"/>
         <result function="indicator" input="2" name="OpState" type="float"/>
-      </indicator>
-      <indicator>
-        <extract function="operational-state" id="1"/>
-        <reduce function="select" id="2" input="1" key="8" type="float"/>
-        <transform function="derivate" id="4" input="2" period="10" type="float"/>
-        <result function="indicator" input="4" name="OpState/Tendency" type="float"/>
       </indicator>
     </indicators>
   </score>
@@ -83,18 +64,7 @@
         <transform function="integrate" id="7" input="6" type="unsigned long"/>
         <result function="indicator" input="7" name="Time between detection and destruction" type="unsigned long"/>
       </indicator>
-      <indicator>
-        <extract detected="11" function="detecting-unit" id="1" visibility="detected,identified,recognized"/>
-        <reduce function="select" id="2" input="1" key="8" type="unsigned long"/>
-        <extract function="operational-state" id="3"/>
-        <reduce function="select" id="4" input="3" key="11" type="float"/>
-        <reduce function="threshold" id="5" input="4" thresholds="0" type="float" values="0,1"/>
-        <reduce function="product" id="6" input="2,5" type="unsigned long"/>
-        <transform function="integrate" id="7" input="6" type="unsigned long"/>
-        <transform function="derivate" id="9" input="7" period="10" type="unsigned long"/>
-        <result function="indicator" input="9" name="Time between detection and destruction/Tendency" type="unsigned long"/>
-      </indicator>
     </indicators>
   </score>
 </scores>
-<!-- signature="2634026209" -->
+<!-- signature="3014309656" -->

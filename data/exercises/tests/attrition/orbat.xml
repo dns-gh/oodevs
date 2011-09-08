@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/orbat.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="Camp 1" type="friend">
       <objects/>
@@ -12,7 +13,7 @@
             <unit command-post="false" id="16" name="Peloton LECLERC CDP SOFF" position="31UEQ0878323363" type="Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="17" name="Peloton d appui direct" position="31UEQ0978523860" type="Peloton d appui direct"/>
           </automat>
-          <automat engaged="true" id="27" knowledge-group="2" name="TC2 GE40 LECLERC [27]" type="TC2 GE40 LECLERC" logistic-level="tc2">
+          <automat engaged="true" id="27" knowledge-group="2" logistic-level="logistic-base" name="TC2 GE40 LECLERC [27]" type="TC2 GE40 LECLERC">
             <unit command-post="true" id="28" name="TC2 GE40 LECLERC" position="31UEQ0878126383" type="TC2 GE40 LECLERC"/>
           </automat>
           <automat engaged="true" id="31" knowledge-group="2" name="Batterie de Tir AUF1 [31]" type="Batterie de Tir AUF1">
@@ -49,17 +50,18 @@
         <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics>
-        <tc2 id="27">
+        <logistic-base id="27">
           <subordinate id="12"/>
-          <subordinate id="31"/>
           <subordinate id="27"/>
-        </tc2>
+          <subordinate id="31"/>
+        </logistic-base>
       </logistics>
     </party>
     <party id="3" name="Camp 2" type="enemy">
       <objects>
-        <object id="36" name="Zone minée" type="mined area (linear)">
+        <object id="36" name="Zone minÃ©e" type="mined area (linear)">
           <shape type="polygone">
             <points>
               <point>31UEQ0689522931</point>
@@ -83,7 +85,7 @@
             <unit command-post="false" id="25" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0810617104" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="26" name="Section CBT INF AMX10P CDS SOFF" position="31UEQ0910817601" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
-          <automat engaged="true" id="29" knowledge-group="4" name="TC2 GTIA INF AMX 10P [29]" type="TC2 GTIA INF AMX 10P" logistic-level="tc2">
+          <automat engaged="true" id="29" knowledge-group="4" logistic-level="logistic-base" name="TC2 GTIA INF AMX 10P [29]" type="TC2 GTIA INF AMX 10P">
             <unit command-post="true" id="30" name="TC2 GTIA INF AMX 10P" position="31UEQ0687915479" type="TC2 GTIA INF AMX 10P"/>
           </automat>
         </formation>
@@ -92,13 +94,22 @@
         <knowledge-group id="4" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="agressive" humans="10000" id="35" name="Population standard [35]" position="31UEQ0355116745" type="Population standard"/>
+        <population attitude="agressive" id="35" name="Population standard [35]" position="31UEQ0355116745" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants/>
       <logistics>
-        <tc2 id="29">
+        <logistic-base id="29">
           <subordinate id="21"/>
           <subordinate id="29"/>
-        </tc2>
+        </logistic-base>
       </logistics>
     </party>
   </parties>
@@ -111,4 +122,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1358831287" -->
+<!-- signature="2868781846" -->

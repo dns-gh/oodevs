@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+  <resources infinite="true"/>
   <parties>
     <party id="1" name="Friend" type="friend">
       <objects/>
@@ -12,7 +13,7 @@
             <unit command-post="false" id="177" name="Section CBT INF AMX10P CDS OFF" position="30TYT1203955698" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="178" name="Section CBT INF AMX10P CDS SOFF" position="30TYT1184956395" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
-          <automat engaged="false" id="188" knowledge-group="158" name="TC2 BAT ART 32AUF1 [188]" type="TC2 BAT ART 32AUF1" logistic-level="tc2">
+          <automat engaged="false" id="188" knowledge-group="158" logistic-level="logistic-base" name="TC2 BAT ART 32AUF1 [188]" type="TC2 BAT ART 32AUF1">
             <unit command-post="true" id="189" name="TC2 BAT ART 32AUF1" position="30TYT1343550026" type="TC2 BAT ART 32AUF1"/>
           </automat>
         </formation>
@@ -21,9 +22,8 @@
         <knowledge-group id="158" name="Knowledge group [158]" type="Standard"/>
       </communication>
       <populations/>
-      <logistics>
-        <tc2 id="188"/>
-      </logistics>
+      <inhabitants/>
+      <logistics/>
     </party>
     <party id="3" name="Enemy" type="enemy">
       <objects/>
@@ -42,6 +42,7 @@
         <knowledge-group id="165" name="Knowledge group [165]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -54,4 +55,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2449513233" -->
+<!-- signature="2545602046" -->
