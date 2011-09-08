@@ -95,17 +95,19 @@ void TrafficabilityAttribute::SendFullState( sword::ObjectAttributes& asn ) cons
 // Name: TrafficabilityAttribute::SendUpdate
 // Created: LGY 2011-08-24
 // -----------------------------------------------------------------------------
-void TrafficabilityAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+bool TrafficabilityAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TrafficabilityAttribute::SendUpdate
+// Name: TrafficabilityAttribute::OnUpdate
 // Created: CMA 2011-09-07
 // -----------------------------------------------------------------------------
 void TrafficabilityAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
