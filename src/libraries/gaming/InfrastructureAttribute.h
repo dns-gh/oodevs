@@ -40,10 +40,15 @@ public:
     virtual ~InfrastructureAttribute();
     //@}
 
-    //! @name Operations
+	//! @name Accessors
+    //@{
+    virtual bool IsEnabled() const;
+    virtual unsigned int GetThreshold() const;
+    //@}
+
+	//! @name Operations
     //@{
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual bool IsEnabled() const;
     //@}
 
 private:

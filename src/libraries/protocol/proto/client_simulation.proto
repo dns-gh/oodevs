@@ -204,6 +204,7 @@ message ObjectMagicAction {
         lodging            = 25;
         altitude_modifier  = 26;
         underground        = 27;
+        trafficability     = 28;
     }
     required ObjectId          object     = 1; //!< The object identifier
     required Type              type       = 2; //!< The type of magic action

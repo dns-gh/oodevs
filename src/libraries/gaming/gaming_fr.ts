@@ -1277,6 +1277,14 @@
         <source>Activation time:</source>
         <translation>Délai avant activation :</translation>
     </message>
+    <message>
+        <source>Trafficability parameters</source>
+        <translation>Paramètres de traficabilité</translation>
+    </message>
+    <message>
+        <source>Trafficability:</source>
+        <translation>Traficabilité:</translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

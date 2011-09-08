@@ -2337,10 +2337,6 @@ Motivo: %3
         <translation>Activar Obstáculoi reservado</translation>
     </message>
     <message>
-        <source>Change Urban state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2369,10 +2365,6 @@ Motivo: %3
         <translation type="unfinished">Habilitar</translation>
     </message>
     <message>
-        <source>Enter value</source>
-        <translation type="unfinished">Ingresar valor</translation>
-    </message>
-    <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation type="unfinished">Ingrese un valor y luego presione &apos;enter&apos;</translation>
     </message>
@@ -2394,6 +2386,14 @@ Motivo: %3
     </message>
     <message>
         <source>Activate exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Urban state</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -40,6 +40,15 @@ StructuralStateAttribute::~StructuralStateAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::GetValue
+// Created: CMA 2011-09-08
+// -----------------------------------------------------------------------------
+unsigned int StructuralStateAttribute::GetValue() const
+{
+    return structuralState_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: StructuralStateAttribute::CreateDictionary
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------

@@ -34,6 +34,7 @@
 #include "UndergroundAttribute.h"
 #include "protocol/ClientSenders.h"
 #include "TimeLimitedAttribute.h"
+#include "TrafficabilityAttribute.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -141,6 +142,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< AltitudeModifierAttribute >( message );
     if( message.has_underground() )
         CreateOrUpdate< UndergroundAttribute >( message );
+    if( message.has_trafficability() )
+        CreateOrUpdate< TrafficabilityAttribute >( message );
 }
 
 // -----------------------------------------------------------------------------

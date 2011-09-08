@@ -59,6 +59,7 @@ SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
 TimeLimitedAttribute.cpp \
+TrafficabilityAttribute.cpp \
 Transports.cpp \
 UndergroundAttribute.cpp \
 UrbanKnowledge.cpp \

@@ -1353,6 +1353,14 @@ message ObjectAttributeUnderground {
     required bool   available    = 2; //!< The activation state
 }
 
+
+/** @struct ObjectAttributeTrafficability
+    @brief Defines an object attribute trafficability
+*/
+message ObjectAttributeTrafficability {
+    required float value = 1;
+}
+
 /** @struct ObjectAttributes
     @brief Encapsulates an object attribute
 */
@@ -1380,6 +1388,7 @@ message ObjectAttributes {
    optional ObjectAttributeLodging           lodging            = 21; //!< @copybrief ObjectAttributeLodging   
    optional ObjectAttributeAltitudeModifier  altitude_modifier  = 22; //!< @copybrief ObjectAttributeAltitudeModifier
    optional ObjectAttributeUnderground       underground        = 23; //!< @copybrief ObjectAttributeUnderground
+   optional ObjectAttributeTrafficability    trafficability     = 24; //!< @copybrief ObjectAttributeTrafficability
 }
 
 /** @struct Marker

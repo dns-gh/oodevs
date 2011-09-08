@@ -50,6 +50,12 @@ public:
     virtual ~InfrastructureAttribute();
     //@}
 
+    //! @name Accessors
+    //@{
+    virtual bool IsEnabled() const;
+    virtual unsigned int GetThreshold() const;
+    //@}
+
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
@@ -57,7 +63,6 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void SetOverriden( bool& overriden ) const;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual bool IsEnabled() const;
     void Update( xml::xistream& xis );
     //@}
 

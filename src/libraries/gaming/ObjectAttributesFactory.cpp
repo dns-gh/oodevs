@@ -30,6 +30,7 @@
 #include "StockAttribute.h"
 #include "ToxicCloudAttribute.h"
 #include "UndergroundAttribute.h"
+#include "TrafficabilityAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -130,4 +131,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_underground() && entity.Retrieve< kernel::UndergroundAttribute_ABC >() == 0 )
         entity.Attach< kernel::UndergroundAttribute_ABC >( *new UndergroundAttribute( controllers_.controller_ ) );
+
+    if( attributes.has_trafficability() && entity.Retrieve< kernel::TrafficabilityAttribute_ABC >() == 0 )
+        entity.Attach< kernel::TrafficabilityAttribute_ABC >( *new TrafficabilityAttribute( controllers_.controller_ ) );
 }

@@ -1277,6 +1277,14 @@
         <source>Activation time:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Trafficability parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trafficability:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

@@ -34,6 +34,11 @@ public:
     virtual ~StructuralStateAttribute();
     //@}
 
+    //! @name Accessors
+    //@{
+    unsigned int GetValue() const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

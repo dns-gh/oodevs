@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ResourceNetworkAttribute();
-             ResourceNetworkAttribute( MIL_Object_ABC& object );
+    explicit ResourceNetworkAttribute( MIL_Object_ABC& object );
              ResourceNetworkAttribute( xml::xistream& xis, MIL_Object_ABC& object );
     virtual ~ResourceNetworkAttribute();
     //@}

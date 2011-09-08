@@ -34,6 +34,7 @@
 #include "UndergroundAttribute.h"
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"
+#include "TrafficabilityAttribute.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 
@@ -128,6 +129,7 @@ AttributeFactory::AttributeFactory()
     Register( "altitude-modifier", boost::bind( &AddBuilder< AltitudeModifierAttribute >::Add, _1, _2 ) );
     Register( "lodging", boost::bind( &AddBuilder< LodgingAttribute >::Add, _1, _2 ) );
     Register( "underground", boost::bind( &AddBuilder< UndergroundAttribute >::Add, _1, _2 ) );
+    Register( "trafficability", boost::bind( &AddBuilder< TrafficabilityAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

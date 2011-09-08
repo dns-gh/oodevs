@@ -147,3 +147,12 @@ bool InfrastructureAttribute::IsEnabled() const
 {
     return enabled_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::GetThreshold
+// Created: CMA 2011-09-08
+// -----------------------------------------------------------------------------
+unsigned int InfrastructureAttribute::GetThreshold() const
+{
+	return threshold_;
+}

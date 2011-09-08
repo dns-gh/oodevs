@@ -33,10 +33,15 @@ public:
     virtual ~Infrastructure_ABC() {}
     //@}
 
-    //! @name Operations
+	//! @name Accessors
+    //@{
+    virtual bool IsEnabled() const = 0;
+    virtual unsigned int GetThreshold() const = 0;
+    //@}
+
+	//! @name Operations
     //@{
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
-    virtual bool IsEnabled() const = 0;
     //@}
 
 private:

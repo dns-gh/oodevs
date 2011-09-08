@@ -2337,10 +2337,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Activer l&apos;obstacle de manoeuvre</translation>
     </message>
     <message>
-        <source>Change Urban state</source>
-        <translation>Changer l&apos;état structurel</translation>
-    </message>
-    <message>
         <source>Alert</source>
         <translation>Alerter</translation>
     </message>
@@ -2369,10 +2365,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Activer</translation>
     </message>
     <message>
-        <source>Enter value</source>
-        <translation>Saisir une valeur</translation>
-    </message>
-    <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
@@ -2395,6 +2387,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Activate exit</source>
         <translation>Activer l&apos;issue</translation>
+    </message>
+    <message>
+        <source>Change Trafficability</source>
+        <translation>Modifier la traficabilité</translation>
+    </message>
+    <message>
+        <source>Change Urban state</source>
+        <translation>Modifier l&apos;état structurel</translation>
     </message>
 </context>
 <context>

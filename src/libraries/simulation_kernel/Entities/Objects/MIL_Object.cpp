@@ -22,6 +22,7 @@
 #include "SupplyRouteAttribute.h"
 #include "StructuralCapacity.h"
 #include "UndergroundAttribute.h"
+#include "TrafficabilityAttribute.h"
 #include "UniversalCapacity.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
@@ -378,6 +379,9 @@ sword::ObjectMagicActionAck_ErrorCode MIL_Object::OnUpdate( const google::protob
             break;
         case sword::ObjectMagicAction::underground:
             GetAttribute< UndergroundAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction::trafficability:
+            GetAttribute< TrafficabilityAttribute >().OnUpdate( attribute );
             break;
         default:
             break;

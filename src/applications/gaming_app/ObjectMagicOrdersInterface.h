@@ -72,13 +72,15 @@ private slots:
     void GenerateFlood();
     void ActivateUndergroundExit();
     void DeactivateUndergroundExit();
+	void ChangeTrafficability();
     //@}
 
 private:
     //! @name Helpers
     //@{
     int AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu );
-    void AddValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
+    void AddIntValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, unsigned int value );
+    void AddDoubleValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, double value );
     void DoMineObject( int quantity );
     void PublishActivation( const std::string& name, unsigned int id, bool activate );
     void DoActivateReservedObstacle( bool activate );

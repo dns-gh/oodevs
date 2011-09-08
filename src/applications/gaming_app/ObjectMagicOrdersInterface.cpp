@@ -18,6 +18,9 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/FloodAttribute.h"
+#include "gaming/InfrastructureAttribute.h"
+#include "gaming/StructuralStateAttribute.h"
+#include "gaming/TrafficabilityAttribute.h"
 #include "gaming/Object.h"
 #include "protocol/SimulationSenders.h"
 
@@ -32,10 +35,7 @@ namespace
     {
     public:
         InitializedLineEdit( QWidget* parent, const QString& initialValue )
-            : QLineEdit( initialValue, parent ), initialValue_( initialValue )
-        {
-            setValidator( new QIntValidator( 0, 100, this ) );
-        }
+            : QLineEdit( initialValue, parent ), initialValue_( initialValue ) {}
 
         virtual void keyPressEvent( QKeyEvent* e )
         {
@@ -59,6 +59,26 @@ namespace
 
     private:
         QString initialValue_;
+    };
+
+    class InitializedIntLineEdit : public InitializedLineEdit
+    {
+    public:
+        InitializedIntLineEdit( QWidget* parent, unsigned int initialValue )
+            : InitializedLineEdit( parent, QString( "%1" ).arg( initialValue ) )
+        {
+            setValidator( new QIntValidator( 0, 100, this ) );
+        }
+    };
+
+	class InitializedDoubleLineEdit : public InitializedLineEdit
+    {
+    public:
+        InitializedDoubleLineEdit( QWidget* parent, double initialValue )
+            : InitializedLineEdit( parent, QString( "%1" ).arg( initialValue ) )
+        {
+            setValidator( new QDoubleValidator( 0, 10000, 2, this ) );
+        }
     };
 }
 
@@ -97,16 +117,17 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
     Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     if( entity.GetType().IsUrban() )
     {
-        AddValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ) );
+		unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
+		AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), value );
         AddMagic( tr( "Alert" ), SLOT( Alert() ), magicMenu );
         AddMagic( tr( "Stop alert" ), SLOT( StopAlert() ), magicMenu );
         AddMagic( tr( "Confine" ), SLOT( Confine() ), magicMenu );
         AddMagic( tr( "Stop confine" ), SLOT( StopConfine() ), magicMenu );
         AddMagic( tr( "Evacuate" ), SLOT( Evacuate() ), magicMenu );
         AddMagic( tr( "Stop evacuate" ), SLOT( StopEvacuate() ), magicMenu );
-        if( entity.Retrieve< Infrastructure_ABC >() )
+        if( const Infrastructure_ABC* infrastructure = entity.Retrieve< Infrastructure_ABC >() )
         {
-            AddValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ) );
+            AddIntValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ), infrastructure->GetThreshold() );
             AddMagic( tr( "Disable" ), SLOT( DisableInfrastructure() ), magicMenu );
             AddMagic( tr( "Enable" ), SLOT( EnableInfrastructure() ), magicMenu );
         }
@@ -137,6 +158,11 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
             else
                 AddMagic( tr( "Activate exit" ), SLOT( ActivateUndergroundExit() ), magicMenu );
         }
+		if( const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >() )
+		{
+			double value = static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue();
+	        AddDoubleValuedMagic( magicMenu, menu, tr( "Change Trafficability" ), SLOT( ChangeTrafficability() ), value );
+		}
     }
 }
 
@@ -150,13 +176,28 @@ int ObjectMagicOrdersInterface::AddMagic( const QString& label, const char* slot
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::AddValuedMagic
+// Name: ObjectMagicOrdersInterface::AddIntValuedMagic
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::AddValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot )
+void ObjectMagicOrdersInterface::AddIntValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, unsigned int value )
 {
     Q3PopupMenu* valueMenu = new Q3PopupMenu( parent );
-    QLineEdit* valueEditor = new InitializedLineEdit( valueMenu, tr( "Enter value" ) );
+    QLineEdit* valueEditor = new InitializedIntLineEdit( valueMenu, value );
+    valueMenu->insertItem( valueEditor->text() );
+    parent->insertItem( label, valueMenu );
+    QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
+    connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
+    connect( valueEditor, SIGNAL( returnPressed() ), menu, SLOT( hide() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::AddDoubleValuedMagic
+// Created: CMA 2011-09-07
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::AddDoubleValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, double value )
+{
+    Q3PopupMenu* valueMenu = new Q3PopupMenu( parent );
+    QLineEdit* valueEditor = new InitializedDoubleLineEdit( valueMenu, value );
     valueMenu->insertItem( valueEditor->text() );
     parent->insertItem( label, valueMenu );
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
@@ -413,4 +454,22 @@ void ObjectMagicOrdersInterface::ActivateUndergroundExit()
 void ObjectMagicOrdersInterface::DeactivateUndergroundExit()
 {
     PublishActivation( "Underground", sword::ObjectMagicAction::underground, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::ChangeTrafficability
+// Created: CMA 2011-09-07
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::ChangeTrafficability()
+{
+    if( !selectedEntity_ )
+        return;
+    if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
+        if( const TrafficabilityAttribute_ABC* trafficability = selectedEntity_->Retrieve< TrafficabilityAttribute_ABC >() )
+        {
+            ParameterList& list = *new ParameterList( OrderParameter( "Trafficability", "list", false ) );
+            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::trafficability );
+            list.AddNumeric( "Trafficability", editor->text().toFloat() );
+            actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+        }
 }
