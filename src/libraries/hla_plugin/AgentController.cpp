@@ -19,6 +19,7 @@
 #include "clients_kernel/Karma.h"
 #include "rpr/EntityTypeResolver_ABC.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace plugins::hla;
 
@@ -64,10 +65,12 @@ namespace
 // -----------------------------------------------------------------------------
 void AgentController::Create( dispatcher::Agent& entity )
 {
+    if( boost::algorithm::starts_with( entity.GetName().toStdString(), "HLA_" ) )
+        return;
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     const std::string type = entity.GetType().GetName();
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( *agents_.back(), boost::lexical_cast< std::string >( entity.GetId() ), entity.GetName().ascii(), GetForce( entity ), resolver_.Find( type ) );
+        (*it)->Created( *agents_.back(), boost::lexical_cast< std::string >( entity.GetId() ), entity.GetName().toStdString(), GetForce( entity ), resolver_.Find( type ) );
 }
 
 // -----------------------------------------------------------------------------
