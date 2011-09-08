@@ -41,12 +41,11 @@ namespace
     {
     public:
         Fixture()
-            : controlEndTickHandler        ( 0 )
-            , formationCreationHandler     ( 0 )
-            , automatCreationHandler       ( 0 )
-            , unitMagicActionAckHandler    ( 0 )
-            , unitCreationRequestAckHandler( 0 )
-            , remoteAgentListener          ( 0 )
+            : controlEndTickHandler    ( 0 )
+            , formationCreationHandler ( 0 )
+            , automatCreationHandler   ( 0 )
+            , unitMagicActionAckHandler( 0 )
+            , remoteAgentListener      ( 0 )
         {
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( controlEndTickHandler ) );
             MOCK_EXPECT( automatResolver, Find ).once().returns( reinterpret_cast< kernel::AutomatType* >( 1 ) );
@@ -83,7 +82,6 @@ namespace
         tools::MessageHandler_ABC< sword::SimToClient_Content >* formationCreationHandler;
         tools::MessageHandler_ABC< sword::SimToClient_Content >* automatCreationHandler;
         tools::MessageHandler_ABC< sword::SimToClient_Content >* unitMagicActionAckHandler;
-        tools::MessageHandler_ABC< sword::SimToClient_Content >* unitCreationRequestAckHandler;
         tools::MockResolver< dispatcher::Team_ABC > teamResolver;
         tools::MockResolver< kernel::AutomatType > automatResolver;
         T_Teams teams;
@@ -98,10 +96,10 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_listen_to_control_end_tick_mess
     MOCK_EXPECT( model, Sides ).once().returns( boost::ref( teamResolver ) );
     MOCK_EXPECT( teamResolver, CreateIterator ).once().returns( MakeTeamIterator( T_Identifiers() ) );
     MOCK_EXPECT( messageController, Unregister ).once();
-    MOCK_EXPECT( messageController, Register ).exactly( 4 );
+    MOCK_EXPECT( messageController, Register ).exactly( 3 );
     controlEndTickHandler->Notify( MakeControlEndTickMessage(), 42 );
     mock::verify();
-    MOCK_EXPECT( messageController, Unregister ).exactly( 4 );
+    MOCK_EXPECT( messageController, Unregister ).exactly( 3 );
     MOCK_EXPECT( remoteSubject, Unregister ).once();
 }
 
@@ -128,11 +126,10 @@ namespace
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( formationCreationHandler ) );
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( automatCreationHandler ) );
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( unitMagicActionAckHandler ) );
-            MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( unitCreationRequestAckHandler ) );
         }
         virtual ~TickedFixture()
         {
-            MOCK_EXPECT( messageController, Unregister ).exactly( 4 );
+            MOCK_EXPECT( messageController, Unregister ).exactly( 3 );
             MOCK_EXPECT( remoteSubject, Unregister ).once();
         }
         RemoteAgentController remoteController;
@@ -246,7 +243,8 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_distant_automat_when_re
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 230u );  // $$$$ _RC_ SLI 2011-09-07: hardcoded
     BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).identifier(), party );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA distant automat" );}
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA distant automat" );
+}
 
 namespace
 {
@@ -290,11 +288,18 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( actual ) );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();
-    BOOST_CHECK( actual.message().has_unit_creation_request() );
-    const sword::UnitCreationRequest& request = actual.message().unit_creation_request();
-    BOOST_CHECK_EQUAL( request.position().latitude(), latitude );
-    BOOST_CHECK_EQUAL( request.position().longitude(), longitude );
-    BOOST_CHECK_EQUAL( request.superior().id(), automat );
+    BOOST_CHECK( actual.message().has_unit_magic_action() );
+    const sword::UnitMagicAction& action = actual.message().unit_magic_action();
+    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::unit_creation );
+    BOOST_CHECK_EQUAL( action.tasker().automat().id(), automat );
+    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 64u );  // $$$$ _RC_ SLI 2011-09-07: hardcoded
+    const sword::Location& location = action.parameters().elem( 1 ).value( 0 ).point().location();
+    BOOST_CHECK_EQUAL( location.type(), sword::Location::point );
+    BOOST_CHECK_EQUAL( location.coordinates().elem_size(), 1 );
+    BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).latitude(), latitude );
+    BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).longitude(), longitude );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA_identifier" );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_second_moved_event, AutomatFixture )
@@ -325,13 +330,6 @@ namespace
             MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( unitCreationRequest ) );
             remoteAgentListener->Moved( "identifier", latitude, longitude );
             mock::verify();
-            BOOST_REQUIRE( unitCreationRequestAckHandler );
-        }
-        sword::SimToClient_Content MakeUnitCreationRequestAckMessage( sword::UnitActionAck::ErrorCode error_code )
-        {
-            sword::SimToClient_Content message;
-            message.mutable_unit_creation_request_ack()->set_error_code( error_code );
-            return message;
         }
         sword::ClientToSim unitCreationRequest;
     };
@@ -339,15 +337,15 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_throws_if_unit_creation_failed, UnitFixture )
 {
-    BOOST_CHECK_THROW( unitCreationRequestAckHandler->Notify( MakeUnitCreationRequestAckMessage( sword::UnitActionAck::error_invalid_unit ), unitCreationRequest.context() ), std::runtime_error );
+    BOOST_CHECK_THROW( unitMagicActionAckHandler->Notify( MakeUnitMagicActionAckMessage( 3, sword::UnitActionAck::error_invalid_unit ), unitCreationRequest.context() ), std::runtime_error );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_nothing_if_no_error_on_unit_creation, UnitFixture )
 {
-    unitCreationRequestAckHandler->Notify( MakeUnitCreationRequestAckMessage( sword::UnitActionAck::no_error ), unitCreationRequest.context() );
+    unitMagicActionAckHandler->Notify( MakeUnitMagicActionAckMessage( 3, sword::UnitActionAck::no_error ), unitCreationRequest.context() );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_nothing_if_context_is_unknown_on_unit_creation, UnitFixture )
 {
-    unitCreationRequestAckHandler->Notify( MakeUnitCreationRequestAckMessage( sword::UnitActionAck::no_error ), unitCreationRequest.context() + 1000 );
+    unitMagicActionAckHandler->Notify( MakeUnitMagicActionAckMessage( 3, sword::UnitActionAck::no_error ), unitCreationRequest.context() + 1000 );
 }

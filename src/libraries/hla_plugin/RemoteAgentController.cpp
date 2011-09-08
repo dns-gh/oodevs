@@ -77,7 +77,6 @@ void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, in
     CONNECT( controller_, *this, formation_creation );
     CONNECT( controller_, *this, automat_creation );
     CONNECT( controller_, *this, unit_magic_action_ack );
-    CONNECT( controller_, *this, unit_creation_request_ack );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,17 +91,9 @@ void RemoteAgentController::Notify( const sword::UnitMagicActionAck& message, in
             throw std::runtime_error( "Error while creating distant formation '" + formationContexts_[ context ] + "'" );
         if( automatContexts_.find( context ) != automatContexts_.end() )
             throw std::runtime_error( "Error while creating distant automat '" + automatContexts_[ context ] + "'" );
+        if( unitContexts_.find( context ) != unitContexts_.end() )
+            throw std::runtime_error( "Error while creating distant unit '" + unitContexts_[ context ] + "'" );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Notify
-// Created: SLI 2011-09-08
-// -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::UnitCreationRequestAck& message, int context )
-{
-    if( unitContexts_.find( context ) != unitContexts_.end() && message.error_code() != sword::UnitActionAck::no_error )
-        throw std::runtime_error( "Error while creating distant unit '" + unitContexts_[ context ] + "'" );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,8 +174,12 @@ unsigned long RemoteAgentController::FindKnowledgeGroup( unsigned long party ) c
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Created( const std::string& identifier )
 {
-    unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitCreationRequest() );
-    (*unitCreations_[ identifier ])().mutable_type()->set_id( 64 ); // $$$$ _RC_ VPR 2011-09-07: Hardcoded
+    unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitMagicAction() );
+    simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
+    message().set_type( sword::UnitMagicAction::unit_creation );
+    message().mutable_parameters()->add_elem()->add_value()->set_identifier( 64 ); // $$$$ _RC_ VPR 2011-09-07: Hardcoded
+    message().mutable_parameters()->add_elem();                                                   // position
+    message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA_" + identifier ); // name
 }
 
 // -----------------------------------------------------------------------------
@@ -204,10 +199,13 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
-    simulation::UnitCreationRequest& message = *unitCreations_[ identifier ];
-    message().mutable_position()->set_latitude( latitude );
-    message().mutable_position()->set_longitude( longitude );
-    if( message().has_superior() )
+    simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
+    sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
+    location->set_type( sword::Location::point );
+    sword::CoordLatLong* coordLatLong = location->mutable_coordinates()->add_elem();
+    coordLatLong->set_latitude( latitude );
+    coordLatLong->set_longitude( longitude );
+    if( message().has_tasker() )
     {
         message.Send( publisher_, MakeContext( unitContexts_, identifier ) );
         unitCreations_.erase( identifier );
@@ -236,12 +234,12 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
-    simulation::UnitCreationRequest& message = *unitCreations_[ identifier ];
+    simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     const unsigned long automat = FindAutomat( side );
     if( automat == 0 )
         throw std::runtime_error( "Army '" + GetKarma( side ).GetName().toStdString() + "' does not exist for remote agent '" + identifier + "'" );
-    message().mutable_superior()->set_id( automat );
-    if( message().has_position() )
+    message().mutable_tasker()->mutable_automat()->set_id( automat );
+    if( message().parameters().elem( 1 ).value_size() > 0 )
     {
         message.Send( publisher_, MakeContext( unitContexts_, identifier ) );
         unitCreations_.erase( identifier );
