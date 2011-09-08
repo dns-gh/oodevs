@@ -13,6 +13,7 @@
 #include "MIL_Object_ABC.h"
 #include "MIL_AgentServer.h"
 #include "StructuralCapacity.h"
+#include "UrbanObjectWrapper.h"
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"
 #include "resource_network/ResourceNetworkModel.h"
@@ -135,7 +136,8 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *this );
     object.AddCapacity( capacity );
-    object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
+    if( dynamic_cast< UrbanObjectWrapper* >( &object ) == 0 )
+        object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
     object.Register( *static_cast< MIL_StructuralStateNotifier_ABC *>( capacity ) );
     capacity->RegisterNode( object.GetID() );
     // $$$$ JSR 2011-01-14: TODO vérifier si ça peut être fait automatiquement par MIL_StructuralStateNotifier_ABC

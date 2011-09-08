@@ -39,6 +39,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Object )
 MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type )
     : MIL_Object_ABC( army, type )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
+    , xAttrToUpdate_( 0 )
 {
     // NOTHING
 }
@@ -50,6 +51,7 @@ MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type )
 MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id )
     : MIL_Object_ABC( army, type, id )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
+    , xAttrToUpdate_( 0 )
 {
     // NOTHING
 }
@@ -60,6 +62,7 @@ MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsi
 // -----------------------------------------------------------------------------
 MIL_Object::MIL_Object()
     : manipulator_( *new MIL_ObjectManipulator( *this ) )
+    , xAttrToUpdate_( 0 )
 {
     // NOTHING
 }
@@ -302,6 +305,15 @@ void MIL_Object::ApplyDirectFire() const
 bool MIL_Object::IsUniversal() const
 {
     return tools::Extendable< ObjectCapacity_ABC >::Retrieve< UniversalCapacity >() != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::CountAttributes
+// Created: JSR 2011-09-08
+// -----------------------------------------------------------------------------
+size_t MIL_Object::CountAttributes() const
+{
+    return attributes_.size();
 }
 
 // -----------------------------------------------------------------------------

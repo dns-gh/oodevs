@@ -23,14 +23,14 @@
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( kernel::Controller& controller, const kernel::DetectionMap& detection, const kernel::Positions& positions )
-    : controller_    ( controller )
-    , detection_     ( detection )
-    , positions_     ( positions )
-    , floodModel_    ( new flood::FloodModel( *this ) )
-    , floodDrawer_   ( new flood::FloodDrawer( *floodModel_ ) )
-    , readFromODB_   ( false )
-    , depth_         ( 0 )
-    , refDist_       ( 0 )
+    : controller_ ( controller )
+    , detection_  ( detection )
+    , positions_  ( positions )
+    , floodModel_ ( new flood::FloodModel( *this ) )
+    , floodDrawer_( new flood::FloodDrawer( *floodModel_ ) )
+    , readFromODB_( false )
+    , depth_      ( 0 )
+    , refDist_    ( 0 )
 {
     // NOTHING
 }

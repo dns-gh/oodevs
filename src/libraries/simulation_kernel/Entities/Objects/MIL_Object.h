@@ -39,7 +39,7 @@ public:
 
     //! @name Construction
     //@{
-    void UpdateLocalisation( const TER_Localisation& location );
+    virtual void UpdateLocalisation( const TER_Localisation& location );
     //@}
 
     //! @name InteractiveContainer
@@ -92,16 +92,13 @@ public:
     virtual void UpdateState();
     virtual void SendCreation() const = 0;
     virtual void SendDestruction() const = 0;
-    virtual void SendFullState() const = 0;
+    virtual void SendFullState() const;
     //@}
 
     //! @name Accessors
     //@{
     virtual const std::string& GetName() const = 0;
-    //@}
-
-    //! @name 
-    //@{
+    size_t CountAttributes() const;
     /*virtual*/ bool IsUniversal() const;
     //@}
 

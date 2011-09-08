@@ -127,7 +127,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
     // $$$$ TODO: refactor to handle more than a single resource
     const ConstructionAttribute* pAttribute = object.RetrieveAttribute< ConstructionAttribute >();
     const PHY_DotationCategory* pDotationCategory = 0;
-    double nDotationNeeded = 0.;
+    unsigned int nDotationNeeded = 0;
     if( pAttribute )
     {
         nDotationNeeded = pAttribute->GetDotationNeededForConstruction( rDeltaPercentage );
@@ -141,9 +141,10 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object().Construct( rDeltaPercentage );
+    double rDotationNeeded = nDotationNeeded;
     if( pDotationCategory )
-        dataComputer.ConsumeDotations( *pDotationCategory, nDotationNeeded );
-    assert( 0. == nDotationNeeded );
+        dataComputer.ConsumeDotations( *pDotationCategory, rDotationNeeded );
+    assert( 0. == rDotationNeeded );
     if( object().IsBuilt() )
         return eFinished;
     return eRunning;
@@ -240,7 +241,7 @@ int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
         return eNoCapacity;
 
     const MineAttribute& attribute = object.GetAttribute< MineAttribute >();
-    double nDotationNeeded = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+    unsigned int nDotationNeeded = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
     const PHY_DotationCategory* pDotationCategory = 0;
     if( nDotationNeeded )
     {
@@ -251,8 +252,9 @@ int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object().Mine( rDeltaPercentage );
+    double rDotationNeeded = nDotationNeeded;
     if( pDotationCategory )
-        dataComputer.ConsumeDotations( *pDotationCategory, nDotationNeeded );
+        dataComputer.ConsumeDotations( *pDotationCategory, rDotationNeeded );
     if( object().IsFullyMined() )
         return eFinished;
     return eRunning;

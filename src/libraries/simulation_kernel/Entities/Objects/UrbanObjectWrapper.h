@@ -52,6 +52,11 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
+    //! @name Construction
+    //@{
+    virtual void UpdateLocalisation( const TER_Localisation& location );
+    //@}
+
     //! @name ODB
     //@{
     virtual void WriteODB( xml::xostream& xos ) const;

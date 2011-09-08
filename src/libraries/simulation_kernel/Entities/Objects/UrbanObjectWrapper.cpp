@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "UrbanObjectWrapper.h"
 #include "MIL_AgentServer.h"
+#include "ResourceNetworkAttribute.h"
 #include "ResourceNetworkCapacity.h"
 #include "MaterialAttribute.h"
 #include "MedicalCapacity.h"
@@ -65,6 +66,15 @@ UrbanObjectWrapper::UrbanObjectWrapper()
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::~UrbanObjectWrapper()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::UpdateLocalisation
+// Created: JSR 2011-09-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::UpdateLocalisation( const TER_Localisation& /*location*/ )
 {
     // NOTHING
 }
@@ -286,7 +296,9 @@ void UrbanObjectWrapper::SendFullState() const
     SendFullStateCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     SendFullStateCapacity< InfrastructureCapacity >( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
-    MIL_Object::SendFullState();
+    size_t notSendableAttributes = RetrieveAttribute< MaterialAttribute >() ? 1 : 0;
+    if( CountAttributes() > notSendableAttributes )
+        MIL_Object::SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +316,9 @@ void UrbanObjectWrapper::UpdateState()
     SendCapacity< InfrastructureCapacity >( *message().mutable_attributes() );
     if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )
         message.Send( NET_Publisher_ABC::Publisher() );
-    MIL_Object::UpdateState();
+    size_t notSendableAttributes = RetrieveAttribute< MaterialAttribute >() ? 1 : 0;
+    if( CountAttributes() > notSendableAttributes )
+        MIL_Object::UpdateState();
 }
 
 // -----------------------------------------------------------------------------
