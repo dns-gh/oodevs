@@ -95,7 +95,9 @@
   <object geometry="line" name="Itinéraire logistique" symbol="G*SPLRM---****X" type="logistic route">
     <supply-route/>
   </object>
-  <object geometry="line" name="Site de franchissement" symbol="G*MPBCL---****X" type="crossing site"/>
+  <object geometry="line" name="Site de franchissement" symbol="G*MPBCL---****X" type="crossing site">
+    <bridging type="bridge"/>
+  </object>
   <object geometry="point" name="Site ROTA" symbol="G*ROTA*********" type="rota area">
     <contamination max-toxic="-1"/>
     <intoxication max-toxic="-1"/>
@@ -389,4 +391,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="3097095305" -->
+<!-- signature="2802981499" -->
