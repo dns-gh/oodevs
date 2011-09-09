@@ -91,15 +91,17 @@ void DEC_Knowledge_RapForLocal::Update()
     }
 
     // 2 - Compute the friend fight scores against the agent local enemies
-    if( !dangerousEnemies_.empty() )
+    int enemiesSize = dangerousEnemies_.size();
+    if( enemiesSize )
     {
         for( CIT_KnowledgeAgentVector itFriend = friends.begin(); itFriend != friends.end(); ++itFriend )
         {
             DEC_Knowledge_Agent& knowledgeFriend = **itFriend;
             double rTotalDangerosity = 0.;
+            double operationalState = knowledgeFriend.GetOperationalState();
             for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * knowledgeFriend.GetOperationalState() );
-            rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
+                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * operationalState );
+            rTotalFightScoreFriend += ( rTotalDangerosity / enemiesSize );
         }
     }
 

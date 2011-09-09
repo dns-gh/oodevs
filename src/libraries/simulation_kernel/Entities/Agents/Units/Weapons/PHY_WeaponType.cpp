@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_WeaponType.h"
+#include "DefaultDotationComputer.h"
 #include "PHY_LauncherType.h"
 #include "PHY_WeaponDataType_IndirectFire.h"
 #include "PHY_WeaponDataType_DirectFire.h"
@@ -312,11 +313,11 @@ double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PH
     if( dotation && dotation != pDotationCategory_ )
         return 0.;
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMaxRangeToFireOn( targetComposanteType, rWantedPH );
 }

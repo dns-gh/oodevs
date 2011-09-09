@@ -587,15 +587,27 @@ double DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) const
     const PHY_ComposantePion* pTargetMajorComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
     if( !pTargetMajorComposante )
         return 0.;
+    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();    
+    const MT_Vector2D& position2d = targetLocation.GetPosition();
+    const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, targetLocation.GetAltitude() );
+    const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();
+    return GetDangerosity( vTargetPosition, targetType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetDangerosity
+// Created: JSR 2011-09-09
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_Agent::GetDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante ) const
+{
     double rDangerosity = 0.;
     // Fight score
-    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
-    const MT_Vector3D vTargetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
-    const MT_Vector3D vDataPosition  ( dataDetection_.GetPosition().rX_, dataDetection_.GetPosition().rY_, dataDetection_.GetAltitude() );
+    const MT_Vector2D& position2d = dataDetection_.GetPosition();
+    const MT_Vector3D vDataPosition( position2d.rX_, position2d.rY_, dataDetection_.GetAltitude() );
     const double    rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
-        rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
+        rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, targetMajorComposante, rDistBtwSourceAndTarget ) );
     DegradeDangerosity( rDangerosity );
     return rDangerosity;
 }
@@ -608,23 +620,15 @@ double DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target ) 
 {
     if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ )
         return 0.;
-        // Same team ...
-//    if( GetArmy() && GetArmy().IsAFriend( target ) == eTristate_True )
-//        return 0.;
-    double rDangerosity = 0.;
     // Target is dead ....
     const DEC_Knowledge_AgentComposante* pTargetMajorComposante = target.GetMajorComposante();
     if( !pTargetMajorComposante )
         return 0.;
     // Fight score
-    const MT_Vector3D vTargetPosition( target.GetPosition().rX_, target.GetPosition().rY_, target.GetAltitude() );
-    const MT_Vector3D vDataPosition  ( dataDetection_.GetPosition().rX_, dataDetection_.GetPosition().rY_, dataDetection_.GetAltitude() );
-    const double rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
-    const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
-    for( CIT_KnowledgeComposanteVector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
-        rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
-    DegradeDangerosity( rDangerosity );
-    return rDangerosity;
+    const MT_Vector2D& position2d = target.GetPosition();
+    const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, target.GetAltitude() );
+    const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();
+    return GetDangerosity( vTargetPosition, targetType );
 }
 
 // -----------------------------------------------------------------------------

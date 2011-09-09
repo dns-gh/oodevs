@@ -83,26 +83,14 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentComposante::GetDangerosity
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, double rDistBtwSourceAndTarget ) const
-{
-    assert( pType_ );
-    if( !bCanFire_ )
-        return 0.;
-    return pType_->GetDangerosity( firer, compTarget.GetType(), rDistBtwSourceAndTarget );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentComposante::GetDangerosity
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwSourceAndTarget ) const
+double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwSourceAndTarget ) const
 {
     assert( pType_ );
     if( !bCanFire_ )
         return 0.;
-    return pType_->GetDangerosity( firer, compTarget.GetType(), rDistBtwSourceAndTarget );
+    return pType_->GetDangerosity( firer, compTarget, rDistBtwSourceAndTarget );
 }
 
 // -----------------------------------------------------------------------------
