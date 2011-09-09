@@ -480,6 +480,9 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.cpp">
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\TrafficabilityAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h">
@@ -976,6 +979,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\MemoryLogger_ABC.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\TrafficabilityAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

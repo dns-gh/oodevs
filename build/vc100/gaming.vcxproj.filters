@@ -808,6 +808,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\TimeLimitedAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TrafficabilityAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1522,6 +1525,9 @@
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\TimeLimitedAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TrafficabilityAttribute.h">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClInclude>
   </ItemGroup>

@@ -169,6 +169,7 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\UndergroundAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\GenObject.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Localisation.cpp" />
@@ -303,6 +304,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\TimeLimitedAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\UndergroundAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\GenObject.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Localisation.h" />

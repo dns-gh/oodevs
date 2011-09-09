@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\TimeLimitedAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp" />
@@ -325,6 +326,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Symbol.h" />
     <ClInclude Include="..\..\src\libraries\gaming\TimeLimitedAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.h" />
     <ClInclude Include="..\..\src\libraries\gaming\VisionConesToggler.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h" />
