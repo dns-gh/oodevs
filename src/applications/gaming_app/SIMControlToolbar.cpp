@@ -207,6 +207,7 @@ void SIMControlToolbar::SlotConnectDisconnect()
         pConnectDlg_->exec();
         pConnectButton_->setIconSet( disconnectPix_ );
         pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
+        pConnectButton_->setShortcut( QKeySequence( Qt::Key_C ) ); // bug QT setText() function overwrites the already defined shortcut
     }
 }
 
@@ -347,6 +348,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             pSpeedButton_->setEnabled( false );
             pCheckpointButton_->setEnabled( false );
         }
+        pConnectButton_->setShortcut( QKeySequence( Qt::Key_C ) ); // Bug Qt : setText() function overwrites the already defined shortcut
     }
 
     if( paused_ != simulation.IsPaused() )
