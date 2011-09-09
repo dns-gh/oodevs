@@ -11,6 +11,7 @@
 #define __WeatherModel_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -20,7 +21,7 @@ namespace sword
 
 namespace kernel
 {
-    class Controllers;
+    class Controller;
 }
 
 class AmmoEffect;
@@ -33,11 +34,12 @@ class Model;
 // Created: AGE 2006-04-04
 // =============================================================================
 class WeatherModel : public tools::Resolver< AmmoEffect >
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherModel( kernel::Controllers& controllers, Model& model );
+             WeatherModel( kernel::Controller& controller, Model& model );
     virtual ~WeatherModel();
     //@}
 
@@ -50,17 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    WeatherModel( const WeatherModel& );            //!< Copy constructor
-    WeatherModel& operator=( const WeatherModel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    Model&               model_;
+    kernel::Controller& controller_;
+    Model& model_;
     //@}
 };
 

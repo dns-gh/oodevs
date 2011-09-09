@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Inhabitant.h"
-#include "Affinities.h"
 #include "Tools.h"
 #include "UrbanModel.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -17,28 +16,34 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 
 using namespace geometry;
 using namespace kernel;
+
+namespace
+{
+    inline unsigned int ToInt( float value )
+    {
+        return static_cast< unsigned int >( 100 * ( value + 0.005f ) );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< InhabitantType >& typeResolver,
-                        const tools::Resolver_ABC< kernel::DotationType >& dotationResolver )
-    : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
-    , controllers_     ( controllers )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& controller, const UrbanModel& model, const tools::Resolver_ABC< InhabitantType >& typeResolver,
+                        const tools::Resolver_ABC< DotationType >& dotationResolver )
+    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ) )
+    , controller_      ( controller )
     , type_            ( typeResolver.Get( message.type().id() ) )
-    , male_            ( static_cast< unsigned int >( 100 * type_.GetMalePercentage() + 0.5f ) )
-    , female_          ( static_cast< unsigned int >( 100 * type_.GetFemalePercentage() + 0.5f ) )
-    , children_        ( static_cast< unsigned int >( 100 * type_.GetChildrenPercentage() + 0.5f ) )
+    , male_            ( ToInt( type_.GetMalePercentage() ) )
+    , female_          ( ToInt( type_.GetFemalePercentage() ) )
+    , children_        ( ToInt( type_.GetChildrenPercentage() ) )
     , dotationResolver_( dotationResolver )
 {
     if( name_.isEmpty() )
@@ -48,9 +53,9 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
         int id = message.objects( i ).id();
         livingUrbanObject_[ id ] = &model.GetObject( id );
     }
-    CreateDictionary( controllers.controller_ );
+    CreateDictionary();
     RegisterSelf( *this );
-    controllers_.Register( *this );
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +64,7 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
 // -----------------------------------------------------------------------------
 Inhabitant::~Inhabitant()
 {
-    controllers_.Unregister( *this );
+    controller_.Unregister( *this );
     Destroy();
 }
 
@@ -67,9 +72,9 @@ Inhabitant::~Inhabitant()
 // Name: Agent::CreateDictionary
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::CreateDictionary( Controller& controller )
+void Inhabitant::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller_ );
     Attach( dictionary );
     const Inhabitant& self = *this;
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
@@ -81,14 +86,6 @@ void Inhabitant::CreateDictionary( Controller& controller )
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), self.healthSatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), self.safetySatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );
-}
-
-namespace
-{
-    unsigned int ToInt( float value )
-    {
-        return static_cast< unsigned int >( 100 * ( value + 0.005f ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +123,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         for( int i = 0; i < msg.satisfaction().resources_size(); ++i )
         {
             const sword::PopulationUpdate_ResourceSatisfaction& resource = msg.satisfaction().resources( i );
-            const kernel::DotationType* dotation = dotationResolver_.Find( resource.resource().id() );
+            const DotationType* dotation = dotationResolver_.Find( resource.resource().id() );
             if( !dotation )
                 continue;
             resourceSatisfactions_[ dotation ] = ToInt( resource.value() );
@@ -152,7 +149,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             it->second->UpdateHumans( name_.ascii(), blockOccupation, occupation.alerted(), occupation.confined(), occupation.evacuated(), occupation.angriness() );
         }
     }
-    controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
+    controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,8 +159,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 void Inhabitant::Draw( const Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::UrbanPositions_ABC* positions = it->second->Retrieve< kernel::UrbanPositions_ABC >() )
-                tools.DrawPolygon( positions->Vertices() );
+        if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
+            tools.DrawPolygon( positions->Vertices() );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +171,7 @@ Point2f Inhabitant::GetPosition( bool ) const
 {
     Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::UrbanPositions_ABC* positions = it->second->Retrieve< kernel::UrbanPositions_ABC >() )
+        if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
             poly.Add( positions->Barycenter() );
     return poly.Barycenter();
 }
@@ -214,7 +211,7 @@ Rectangle2f Inhabitant::GetBoundingBox() const
 {
     Rectangle2f box;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::UrbanPositions_ABC* positions = it->second->Retrieve< kernel::UrbanPositions_ABC >() )
+        if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
             BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, positions->Vertices() )
                 box.Incorporate( point );
     return box;

@@ -23,20 +23,17 @@
 #include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_gui/Usages.h"
 #include "clients_gui/Architecture.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/UrbanColor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
 UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& resourceNetwork, const StaticModel& staticModel )
-    : controllers_           ( controllers )
-    , resourceNetwork_       ( resourceNetwork )
-    , static_                ( staticModel )
-    , urbanDisplayOptions_   ( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    : controllers_        ( controllers )
+    , resourceNetwork_    ( resourceNetwork )
+    , static_             ( staticModel )
+    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
 {
     // NOTHING
 }

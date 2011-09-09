@@ -41,23 +41,21 @@ UrbanBlockDetectionMap::~UrbanBlockDetectionMap()
 // -----------------------------------------------------------------------------
 void UrbanBlockDetectionMap::NotifyCreated( const gui::TerrainObjectProxy& object )
 {
-    float cellsize = map_.GetCellSize();
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-    {
-        geometry::Rectangle2f boundingBox = positions->BoundingBox();
-        const unsigned int imin = static_cast< unsigned int >( boundingBox.Left() / cellsize );
-        const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom() / cellsize );
-        const unsigned int imax = static_cast< unsigned int >( boundingBox.Right() / cellsize );
-        const unsigned int jmax = static_cast< unsigned int >( boundingBox.Top() / cellsize );
-        for( unsigned int j = jmin; j < jmax; ++j )
-            for( unsigned int i = imin; i < imax; ++i )
-            {
-                geometry::Point2f cellCenter( i * cellsize + cellsize / 2, j * cellsize + cellsize / 2 );
-                if( positions->IsInside( cellCenter ) )
-                    if( const kernel::Architecture_ABC* pArchitecture = object.Retrieve< kernel::Architecture_ABC >() )
+        if( const kernel::Architecture_ABC* pArchitecture = object.Retrieve< kernel::Architecture_ABC >() )
+        {
+            const float cellsize = map_.GetCellSize();
+            const float halfcellsize = 0.5f * map_.GetCellSize();
+            const geometry::Rectangle2f boundingBox = positions->BoundingBox();
+            const unsigned int imin = static_cast< unsigned int >( boundingBox.Left() / cellsize );
+            const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom() / cellsize );
+            const unsigned int imax = static_cast< unsigned int >( boundingBox.Right() / cellsize );
+            const unsigned int jmax = static_cast< unsigned int >( boundingBox.Top() / cellsize );
+            for( unsigned int j = jmin; j < jmax; ++j )
+                for( unsigned int i = imin; i < imax; ++i )
+                    if( positions->IsInside( geometry::Point2f( i * cellsize + halfcellsize, j * cellsize + halfcellsize ) ) )
                         urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture->GetMaterial();
-            }
-    }
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +64,7 @@ void UrbanBlockDetectionMap::NotifyCreated( const gui::TerrainObjectProxy& objec
 // -----------------------------------------------------------------------------
 const boost::optional< std::string > UrbanBlockDetectionMap::GetEnvironment( const geometry::Point2f& point ) const
 {
-    float cellsize = map_.GetCellSize();
+    const float cellsize = map_.GetCellSize();
     const unsigned int nCellX = static_cast< unsigned int >( point.X() / cellsize );
     const unsigned int nCellY = static_cast< unsigned int >( point.Y() / cellsize );
     T_Environment::const_iterator it = urbanBlockEnvironment_.find( T_Pair( nCellX, nCellY ) );

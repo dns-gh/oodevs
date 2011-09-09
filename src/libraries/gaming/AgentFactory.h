@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Controllers;
-    class AgentTypes;
     class Entity_ABC;
     class Workers;
 }
@@ -49,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentFactory( const AgentFactory& );            //!< Copy constructor
-    AgentFactory& operator=( const AgentFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AttachExtensions( kernel::Entity_ABC& agent );

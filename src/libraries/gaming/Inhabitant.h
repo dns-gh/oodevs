@@ -29,7 +29,6 @@ namespace kernel
     class Displayer_ABC;
     class GlTools_ABC;
     class InhabitantType;
-    class StaticModel;
 }
 
 namespace sword
@@ -52,7 +51,7 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver,
+             Inhabitant( const sword::PopulationCreation& message, kernel::Controller& controller, const UrbanModel& model, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver,
                          const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
     virtual ~Inhabitant();
     //@}
@@ -84,7 +83,7 @@ private:
     //! @name Helpers
     //@{
     void DoUpdate( const sword::PopulationUpdate& message );
-    void CreateDictionary( kernel::Controller& controller );
+    void CreateDictionary();
     //@}
 
 private:
@@ -103,7 +102,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controller& controller_;
     const kernel::InhabitantType& type_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const unsigned int male_;

@@ -10,6 +10,8 @@
 #ifndef __AgentFactory_ABC_h_
 #define __AgentFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class AutomatCreation;
@@ -32,7 +34,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class AgentFactory_ABC
+class AgentFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -47,13 +49,6 @@ public:
     virtual kernel::Agent_ABC* Create( const sword::UnitCreation& message ) = 0;
     virtual kernel::Population_ABC* Create( const sword::CrowdCreation& message ) = 0;
     virtual kernel::Inhabitant_ABC* Create( const sword::PopulationCreation& message ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AgentFactory_ABC( const AgentFactory_ABC& );            //!< Copy constructor
-    AgentFactory_ABC& operator=( const AgentFactory_ABC& ); //!< Assignment operator
     //@}
 };
 

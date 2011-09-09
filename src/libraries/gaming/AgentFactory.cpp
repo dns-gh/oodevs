@@ -13,7 +13,6 @@
 #include "Agent.h"
 #include "AgentConvexHulls.h"
 #include "AgentDetections.h"
-#include "AgentHierarchies.h"
 #include "AgentHierarchiesCommunication.h"
 #include "AgentPositions.h"
 #include "AgentsModel.h"
@@ -43,7 +42,6 @@
 #include "Lendings.h"
 #include "LimitsModel.h"
 #include "Lives.h"
-#include "Lives_ABC.h"
 #include "LivingArea.h"
 #include "LogisticConsigns.h"
 #include "LogisticLinks.h"
@@ -89,7 +87,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Color_ABC.h"
-#include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/SymbolHierarchy.h"
 
 // -----------------------------------------------------------------------------
@@ -236,7 +233,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
 // -----------------------------------------------------------------------------
 kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& message )
 {
-    Inhabitant* result = new Inhabitant( message, controllers_, model_.urbanObjects_, static_.types_, static_.objectTypes_ );
+    Inhabitant* result = new Inhabitant( message, controllers_.controller_, model_.urbanObjects_, static_.types_, static_.objectTypes_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
