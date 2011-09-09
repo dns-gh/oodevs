@@ -28,13 +28,6 @@ namespace
         static int context = 0;
         return ++context;
     }
-    template< typename T, typename U >
-    int MakeContext( T& contexts, const U& identifier )
-    {
-        int current = MakeContext();
-        contexts[ current ] = boost::lexical_cast< std::string >( identifier );
-        return current;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -44,11 +37,14 @@ namespace
 RemoteAgentController::RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                               dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
                                               dispatcher::SimulationPublisher_ABC& publisher, RemoteAgentSubject_ABC& agentSubject )
-    : controller_  ( controller )
-    , model_       ( model )
-    , publisher_   ( publisher )
-    , agentSubject_( agentSubject )
-    , automatType_ ( 230u ) // $$$$ _RC_ SLI 2011-09-07: hardcoded
+    : controller_       ( controller )
+    , model_            ( model )
+    , publisher_        ( publisher )
+    , agentSubject_     ( agentSubject )
+    , automatType_      ( 230u ) // $$$$ _RC_ SLI 2011-09-07: hardcoded
+    , pFormationHandler_( 0 )
+    , pAutomatHandler_  ( 0 )
+    , pUnitHandler_     ( 0 )
 {
     if( automatTypes.Find( automatType_ ) == 0 )
         throw std::runtime_error( "Automat type identifier '" + boost::lexical_cast< std::string >( automatType_ ) + "' not found, please check your physical model." );
@@ -65,80 +61,102 @@ RemoteAgentController::~RemoteAgentController()
     agentSubject_.Unregister( *this );
 }
 
+namespace
+{
+    template< typename Message >
+    class ContextHandler : public ContextHandler_ABC,
+                           public tools::MessageObserver< Message >,
+                           private tools::MessageObserver< sword::UnitMagicActionAck >
+    {
+    public:
+        ContextHandler( const std::string& errorMessage, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                        CreationObserver_ABC< Message >& observer )
+            : errorMessage_( errorMessage )
+            , observer_    ( observer )
+        {
+            CONNECT( controller, *this, unit_magic_action_ack );
+        }
+        virtual ~ContextHandler()
+        {
+            // NOTHING
+        }
+        virtual int MakeContext( const std::string& identifier )
+        {
+            int current = ::MakeContext();
+            contexts_[ current ] = identifier;
+            return current;
+        }
+        virtual void Notify( const Message& message, int context )
+        {
+            if( contexts_.find( context ) != contexts_.end() )
+            {
+                observer_.Notify( message, contexts_[ context ] );
+                contexts_.erase( context );
+            }
+        }
+    private:
+        virtual void Notify( const sword::UnitMagicActionAck& message, int context )
+        {
+            if( message.error_code() != sword::UnitActionAck::no_error && contexts_.find( context ) != contexts_.end() )
+                throw std::runtime_error( "Error while creating distant " + errorMessage_ + " '" + contexts_[ context ] + "'" );
+        }
+    private:
+        const std::string errorMessage_;
+        CreationObserver_ABC< Message >& observer_;
+        std::map< int, std::string > contexts_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController::Notify
 // Created: SLI 2011-09-01
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
 {
+    DISCONNECT( controller_, *this, control_end_tick );
+    ContextHandler< sword::FormationCreation >* formationHandler = new ContextHandler< sword::FormationCreation >( "formation", controller_, *this );
+    ContextHandler< sword::AutomatCreation >* automatHandler = new ContextHandler< sword::AutomatCreation >( "automat", controller_, *this );
+    ContextHandler< sword::UnitCreation >* unitHandler = new ContextHandler< sword::UnitCreation >( "unit", controller_, *this );
+    pFormationHandler_.reset( formationHandler );
+    pAutomatHandler_.reset( automatHandler );
+    pUnitHandler_.reset( unitHandler );
     tools::Iterator< const dispatcher::Team_ABC& > it = model_.Sides().CreateIterator();
     while( it.HasMoreElements() )
     {
         const dispatcher::Team_ABC& team = it.NextElement();
         AddFormation( team.GetId() );
     }
-    DISCONNECT( controller_, *this, control_end_tick );
-    CONNECT( controller_, *this, formation_creation );
-    CONNECT( controller_, *this, automat_creation );
-    CONNECT( controller_, *this, unit_creation );
-    CONNECT( controller_, *this, unit_magic_action_ack );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Notify
-// Created: SLI 2011-09-08
-// -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::UnitMagicActionAck& message, int context )
-{
-    if( message.error_code() != sword::UnitActionAck::no_error )
-    {
-        if( formationContexts_.find( context ) != formationContexts_.end() )
-            throw std::runtime_error( "Error while creating distant formation '" + formationContexts_[ context ] + "'" );
-        if( automatContexts_.find( context ) != automatContexts_.end() )
-            throw std::runtime_error( "Error while creating distant automat '" + automatContexts_[ context ] + "'" );
-        if( unitContexts_.find( context ) != unitContexts_.end() )
-            throw std::runtime_error( "Error while creating distant unit '" + unitContexts_[ context ] + "'" );
-    }
+    CONNECT( controller_, *formationHandler, formation_creation );
+    CONNECT( controller_, *automatHandler, automat_creation );
+    CONNECT( controller_, *unitHandler, unit_creation );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController::Notify
 // Created: SLI 2011-09-01
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::FormationCreation& message, int context )
+void RemoteAgentController::Notify( const sword::FormationCreation& message, const std::string& /*identifier*/ )
 {
-    if( formationContexts_.find( context ) != formationContexts_.end() )
-    {
-        AddAutomat( message.formation().id(), FindKnowledgeGroup( message.party().id() ) );
-        formationContexts_.erase( context );
-    }
+    AddAutomat( message.formation().id(), FindKnowledgeGroup( message.party().id() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController::Notify
 // Created: SLI 2011-09-01
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::AutomatCreation& message, int context )
+void RemoteAgentController::Notify( const sword::AutomatCreation& message, const std::string& /*identifier*/ )
 {
-    if( automatContexts_.find( context ) != automatContexts_.end() )
-    {
-        parties_[ message.party().id() ] = message.automat().id();
-        DisengageAutomat( message.automat().id() );
-        automatContexts_.erase( context );
-    }
+    parties_[ message.party().id() ] = message.automat().id();
+    DisengageAutomat( message.automat().id() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController::Notify
 // Created: SLI 2011-09-08
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::UnitCreation& message, int context )
+void RemoteAgentController::Notify( const sword::UnitCreation& message, const std::string& identifier )
 {
-    if( unitContexts_.find( context ) != unitContexts_.end() )
-    {
-        units_[ unitContexts_[ context ] ] = message.unit().id();
-        unitContexts_.erase( context );
-    }
+    units_[ identifier ] = message.unit().id();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +171,7 @@ void RemoteAgentController::AddFormation( unsigned long party )
     message().mutable_parameters()->add_elem()->add_value()->set_areal( 6 );                          // hierarchy level
     message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant formation" ); // name
     message().mutable_parameters()->add_elem()->set_null_value( true );                               // logistic level
-    message.Send( publisher_, MakeContext( formationContexts_, party ) );
+    message.Send( publisher_, pFormationHandler_->MakeContext( boost::lexical_cast< std::string >( party ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +186,7 @@ void RemoteAgentController::AddAutomat( unsigned long formation, unsigned long k
     message().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );        // type
     message().mutable_parameters()->add_elem()->add_value()->set_identifier( knowledgeGroup );      // knowledge group
     message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant automat" ); // name
-    message.Send( publisher_, MakeContext( automatContexts_, formation ) );
+    message.Send( publisher_, pAutomatHandler_->MakeContext( boost::lexical_cast< std::string >( formation ) )  );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +246,7 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
         coordLatLong->set_longitude( longitude );
         if( message().has_tasker() )
         {
-            message.Send( publisher_, MakeContext( unitContexts_, identifier ) );
+            message.Send( publisher_, pUnitHandler_->MakeContext( identifier ) );
             unitCreations_.erase( identifier );
         }
     }
@@ -263,7 +281,7 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
     message().mutable_tasker()->mutable_automat()->set_id( automat );
     if( message().parameters().elem( 1 ).value_size() > 0 )
     {
-        message.Send( publisher_, MakeContext( unitContexts_, identifier ) );
+        message.Send( publisher_, pUnitHandler_->MakeContext( identifier ) );
         unitCreations_.erase( identifier );
     }
 }

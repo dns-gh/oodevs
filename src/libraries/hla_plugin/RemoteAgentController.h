@@ -34,7 +34,6 @@ namespace sword
     class FormationCreation;
     class UnitCreation;
     class SimToClient_Content;
-    class UnitMagicActionAck;
 }
 
 namespace simulation
@@ -48,6 +47,23 @@ namespace hla
 {
     class RemoteAgentSubject_ABC;
 
+    template< typename Message >
+    class CreationObserver_ABC : private boost::noncopyable
+    {
+    public:
+                 CreationObserver_ABC() {}
+        virtual ~CreationObserver_ABC() {}
+        virtual void Notify( const Message& message, const std::string& identifier ) = 0;
+    };
+    class ContextHandler_ABC : private boost::noncopyable
+    {
+    public:
+                 ContextHandler_ABC() {}
+        virtual ~ContextHandler_ABC() {}
+        virtual int MakeContext( const std::string& identifier ) = 0;
+    };
+
+
 // =============================================================================
 /** @class  RemoteAgentController
     @brief  Remote agent controller
@@ -55,10 +71,9 @@ namespace hla
 // Created: SLI 2011-09-01
 // =============================================================================
 class RemoteAgentController : private tools::MessageObserver< sword::ControlEndTick >
-                            , private tools::MessageObserver< sword::UnitMagicActionAck >
-                            , private tools::MessageObserver< sword::FormationCreation >
-                            , private tools::MessageObserver< sword::AutomatCreation >
-                            , private tools::MessageObserver< sword::UnitCreation >
+                            , private CreationObserver_ABC< sword::FormationCreation >
+                            , private CreationObserver_ABC< sword::AutomatCreation >
+                            , private CreationObserver_ABC< sword::UnitCreation >
                             , private RemoteAgentListener_ABC
 {
 public:
@@ -74,10 +89,9 @@ private:
     //! @name Operations
     //@{
     virtual void Notify( const sword::ControlEndTick& message, int context );
-    virtual void Notify( const sword::UnitMagicActionAck& message, int context );
-    virtual void Notify( const sword::FormationCreation& message, int context );
-    virtual void Notify( const sword::AutomatCreation& message, int context );
-    virtual void Notify( const sword::UnitCreation& message, int context );
+    virtual void Notify( const sword::FormationCreation& message, const std::string& identifier );
+    virtual void Notify( const sword::AutomatCreation& message, const std::string& identifier );
+    virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
     //@}
 
     //! @name Operations
@@ -102,7 +116,6 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< int, std::string > T_Contexts;
     typedef boost::shared_ptr< simulation::UnitMagicAction > T_UnitCreation;
     typedef std::map< std::string, T_UnitCreation > T_UnitCreations;
     typedef std::map< unsigned long, unsigned long > T_Parties;
@@ -117,9 +130,9 @@ private:
     dispatcher::SimulationPublisher_ABC& publisher_;
     RemoteAgentSubject_ABC& agentSubject_;
     const unsigned long automatType_;
-    T_Contexts formationContexts_;
-    T_Contexts automatContexts_;
-    T_Contexts unitContexts_;
+    std::auto_ptr< ContextHandler_ABC > pFormationHandler_;
+    std::auto_ptr< ContextHandler_ABC > pAutomatHandler_;
+    std::auto_ptr< ContextHandler_ABC > pUnitHandler_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Units units_;
