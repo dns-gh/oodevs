@@ -148,7 +148,7 @@ namespace
     QString GetPrefix( const QString& name )
     {
         {
-            QRegExp regexp( "^([A-Z]{3,})\\s" );
+            QRegExp regexp( "(^[A-Z ]*[A-Z]{3,})\\s" );
             if( regexp.search( name ) > -1 )
                 return regexp.cap( 1 );
         }
