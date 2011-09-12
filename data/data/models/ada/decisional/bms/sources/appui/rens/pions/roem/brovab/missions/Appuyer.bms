@@ -112,7 +112,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                         end
                     end
 
-                    Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.mission.delay_, } )
+                    Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.mission.delay_ or 15, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eFinMission then
