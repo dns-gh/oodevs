@@ -20,8 +20,11 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+
+std::set<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::enemyRepresentations_;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator
@@ -234,6 +237,40 @@ std::string DEC_MiscFunctions::GetPointXY( boost::shared_ptr< MT_Vector2D > poin
 unsigned int DEC_MiscFunctions::GetTimeInSeconds()
 {
     return MIL_AgentServer::GetWorkspace().GetRealTime();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::AddEnemyRepresentation
+// Created: LDC 2011-09-12
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::AddEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent )
+{
+    enemyRepresentations_.insert( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::AddEnemyRepresentation
+// Created: LDC 2011-09-12
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::RemoveEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent )
+{
+    enemyRepresentations_.erase( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::AddEnemyRepresentation
+// Created: LDC 2011-09-12
+// -----------------------------------------------------------------------------
+std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetEnemyRepresentation( DEC_Decision_ABC* caller )
+{
+    std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > result;
+    MIL_Army_ABC& army = caller->GetPion().GetArmy();
+    for ( std::set<  boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = enemyRepresentations_.begin(); it != enemyRepresentations_.end(); ++it )
+    {
+        if( (*it)->IsValid() && (*it)->IsAnEnemy( army ) );
+            result.push_back( *it );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

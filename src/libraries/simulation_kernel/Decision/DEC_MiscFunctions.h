@@ -89,6 +89,10 @@ public:
     static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
     static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_PathPoint > pPoint );
 
+    static void AddEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );
+    static void RemoveEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );
+    static std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetEnemyRepresentation( DEC_Decision_ABC* caller );
+
     //
     static void FillMissionParameters                         ( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
 
@@ -96,6 +100,8 @@ public:
     static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );
     static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void CopyDirectionDanger                           ( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission );
+
+    static std::set<  boost::shared_ptr< DEC_Knowledge_Agent > > enemyRepresentations_;
 };
 
 #include "DEC_MiscFunctions.inl"

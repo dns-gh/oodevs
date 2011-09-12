@@ -1,18 +1,5 @@
 local emptyTable = emptyTable
 
--- The allUnitsAttackedByFireSupport table defined below is local to the file. It means it is shared between all brains of the same kind, be they friend or enemies.
-local allUnitsAttackedByFireSupport = {}
-
-local filterEnemies = function( units )
-    local result = {}
-    for unit, v in pairs( units ) do
-        if DEC_ConnaissanceAgent_EstUnEnnemi( unit ) then
-            result[#result + 1] = unit
-        end
-    end
-    return result
-end
-
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_FireSupport
 ]]--[[//
@@ -76,7 +63,7 @@ end
             self.ePhase = ePreparerMission
         elseif self.ePhase == ePreparerMission then
         -- Define enemy
-            local enemiesList = filterEnemies( allUnitsAttackedByFireSupport )
+            local enemiesList = DEC_GetEnemyRepresentations( myself )
             if #enemiesList == 0 then
                 DEC_Trace( "No other fire support unit is targetting an enemy" )
                 enemiesList = DEC_Connaissances_UnitesPrenantAPartieUnAmi( myself ) -- N.B. This is extra slow as it must heck every friend to see if it's beign attacked.
@@ -98,7 +85,7 @@ end
             end
             self.enemy = DEC_Connaissances_UniteLaPlusProcheDunAmi( myself, enemiesList )
             self.enemyPosition = DEC_ConnaissanceAgent_Position( self.enemy )
-            allUnitsAttackedByFireSupport[ self.enemy ] = true
+	    DEC_AddEnemyRepresentation( self.enemy )
             self.ePhase = eProgresser
         elseif self.ePhase == eProgresser then
         -- Move to position where one can fire
@@ -137,7 +124,7 @@ end
     destroy = function( self )
         -- Clean up list of units beign fired upon
         if self.enemy then
-            allUnitsAttackedByFireSupport[ self.enemy ] = nil
+	    DEC_RemoveEnemyRepresentation( self.enemy )
         end
     end,
 

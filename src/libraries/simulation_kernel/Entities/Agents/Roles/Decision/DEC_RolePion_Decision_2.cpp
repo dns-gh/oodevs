@@ -861,6 +861,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_RemoveFromPointsCategory"  ] =
         boost::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( *pEntity_ ), _1 ) );
     brain[ "DEC_GetSzName" ] = &DEC_MiscFunctions::GetName;
+    brain[ "DEC_AddEnemyRepresentation" ] = &DEC_MiscFunctions::AddEnemyRepresentation;
+    brain[ "DEC_RemoveEnemyRepresentation" ] = &DEC_MiscFunctions::RemoveEnemyRepresentation;
+    brain[ "DEC_GetEnemyRepresentations" ] = &DEC_MiscFunctions::GetEnemyRepresentation;
 
     pEntity_->GetType().RegisterFunctions( brain, GetPion() );
     //
