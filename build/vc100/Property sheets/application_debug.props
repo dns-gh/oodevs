@@ -20,6 +20,7 @@
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
     <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
