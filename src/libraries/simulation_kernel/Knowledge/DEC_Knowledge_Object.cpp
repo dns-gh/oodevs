@@ -26,6 +26,7 @@
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/ObstacleAttribute.h"
+#include "Entities/Objects/TrafficabilityAttribute.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -656,6 +657,7 @@ bool DEC_Knowledge_Object::IsConstructed() const
         return construction->IsConstructed();
     return false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::IsReservedObstacle
 // Created: NLD 2007-05-22
@@ -937,4 +939,15 @@ void DEC_Knowledge_Object::HackPerceptionLevel( const PHY_PerceptionLevel* pPerc
 bool DEC_Knowledge_Object::IsPerceptionDistanceHacked() const
 {
     return bPerceptionDistanceHacked_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetMaxTrafficability
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_Object::GetMaxTrafficability() const
+{
+    if( const TrafficabilityAttribute* pTrafficability = RetrieveAttribute< TrafficabilityAttribute >() )
+        return pTrafficability->GetMaxValue();
+    return 0.;
 }

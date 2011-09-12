@@ -19,7 +19,8 @@ using namespace geometry;
 // Created: JSR 2010-12-20
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObjectFlood::DEC_Path_KnowledgeObjectFlood( E_CrossingHeight crossingHeight, const DEC_Knowledge_Object& knowledge )
-    : crossingHeight_( crossingHeight )
+    : crossingHeight_   ( crossingHeight )
+    , maxTrafficability_( knowledge.GetMaxTrafficability() )
 {
     const FloodAttribute* attribute = knowledge.RetrieveAttribute< FloodAttribute >();
     if( attribute )
@@ -65,12 +66,14 @@ DEC_Path_KnowledgeObjectFlood::~DEC_Path_KnowledgeObjectFlood()
 // Name: DEC_Path_KnowledgeObjectFlood::ComputeCost
 // Created: JSR 2010-12-20
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObjectFlood::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
+double DEC_Path_KnowledgeObjectFlood::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/, double weight ) const
 {
     const MT_Line line( from, to );
     if( crossingHeight_ != eCrossingHeightAlways )
         if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
         {
+            if( ( maxTrafficability_ != 0. ) && ( weight > maxTrafficability_ ) )
+                return -1.f;
             std::vector< TER_Polygon >::const_iterator it;
             for( it = deepAreas_.begin(); it != deepAreas_.end(); ++it )
                 if( it->Intersect2D( line, 0 ) )
@@ -89,5 +92,14 @@ double DEC_Path_KnowledgeObjectFlood::ComputeCost( const MT_Vector2D& from, cons
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObjectFlood::GetCostOut() const
 {
-    return 0;
+    return 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObjectFlood::GetMaxTrafficability
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+double DEC_Path_KnowledgeObjectFlood::GetMaxTrafficability() const
+{
+    return maxTrafficability_;
 }

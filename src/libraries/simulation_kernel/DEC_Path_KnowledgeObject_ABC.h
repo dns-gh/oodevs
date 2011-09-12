@@ -32,8 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const = 0;
+    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double weight ) const = 0;
     virtual double GetCostOut() const = 0;
+    virtual double GetMaxTrafficability() const = 0;
     //@}
 };
 

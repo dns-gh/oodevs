@@ -2389,11 +2389,11 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Trafficability</source>
+        <source>Change Urban state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Urban state</source>
+        <source>Limit Trafficability</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

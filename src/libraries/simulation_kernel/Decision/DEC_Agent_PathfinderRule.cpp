@@ -142,7 +142,9 @@ double DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to )
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    return path_.GetPathClass().IsFlying() ? 0.f : MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( static_cast< float >( path_.GetUnitMajorWeight() ), VECTOR_TO_POINT( from ), VECTOR_TO_POINT( to ) );
+    if( !path_.GetPathClass().IsFlying() )
+        return MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( static_cast< float >( path_.GetUnitMajorWeight() ), VECTOR_TO_POINT( from ), VECTOR_TO_POINT( to ) );
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +153,9 @@ double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, con
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& /*rSpeed*/ ) const
 {
+    if( path_.GetPathClass().IsFlying() )
+        return 0.;
+
     // default cost : outside all objects
     double rObjectCost = path_.GetCostOutsideOfAllObjects();
     const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
@@ -160,7 +165,7 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
         const DEC_Agent_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
         for( DEC_Agent_Path::CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
-            double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+            double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, path_.GetUnitMajorWeight() );
             if( rCurrentObjectCost != std::numeric_limits< double >::min()  )
             {
                 if( !bInsideObjectType )

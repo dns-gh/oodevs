@@ -84,6 +84,7 @@ public:
     bool IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const;
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     bool IsPerceptionDistanceHacked() const;
+    double GetMaxTrafficability() const;
     //@}
 
     //! @name Relevance management

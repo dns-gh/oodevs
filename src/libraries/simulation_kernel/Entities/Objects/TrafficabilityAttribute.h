@@ -12,6 +12,8 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
+#include <boost/serialization/export.hpp>
 
 namespace xml
 {
@@ -28,6 +30,11 @@ class TrafficabilityAttribute : public ObjectAttribute_ABC
                               , public UpdatableAttribute_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< TrafficabilityAttribute > T_KnowledgeProxyType;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
              TrafficabilityAttribute();
@@ -37,8 +44,14 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive >
-    void serialize( Archive&, const double );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    double GetMaxValue() const;
     //@}
 
     //! @name Operations
@@ -48,11 +61,13 @@ public:
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
     virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void OnUpdate( const sword::MissionParameter_Value& attribute );
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name Copy/Assignment
     //@{
     TrafficabilityAttribute& operator=( const TrafficabilityAttribute& ); //!< Assignment operator
+    bool Update( const TrafficabilityAttribute& rhs );
     //@}
 
 private:
@@ -67,5 +82,7 @@ private:
     double max_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( TrafficabilityAttribute )
 
 #endif // __TrafficabilityAttribute_h_

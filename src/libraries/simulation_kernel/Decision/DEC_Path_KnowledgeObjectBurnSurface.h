@@ -32,8 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double weight ) const;
     virtual double GetCostOut() const;
+    virtual double GetMaxTrafficability() const;
     //@}
 
 private:
@@ -47,6 +48,7 @@ private:
     //! @name Member data
     //@{
     const BurnSurfaceAttribute* pBurnSurfaceAttribute_;
+    double maxTrafficability_;
     //@}
 };
 

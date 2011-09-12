@@ -161,7 +161,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
 		if( const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >() )
 		{
 			double value = static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue();
-	        AddDoubleValuedMagic( magicMenu, menu, tr( "Change Trafficability" ), SLOT( ChangeTrafficability() ), value );
+	        AddDoubleValuedMagic( magicMenu, menu, tr( "Limit Trafficability" ), SLOT( ChangeTrafficability() ), value );
 		}
     }
 }

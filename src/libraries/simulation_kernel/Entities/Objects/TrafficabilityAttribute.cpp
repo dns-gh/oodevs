@@ -10,13 +10,20 @@
 #include "simulation_kernel_pch.h"
 #include "TrafficabilityAttribute.h"
 #include "Object.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( TrafficabilityAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< TrafficabilityAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< TrafficabilityAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
 TrafficabilityAttribute::TrafficabilityAttribute()
+    : max_( 0. )
 {
     // NOTHING
 }
@@ -51,14 +58,32 @@ TrafficabilityAttribute::~TrafficabilityAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TrafficabilityAttribute::serialize
-// Created: LGY 2011-08-23
+// Name: TrafficabilityAttribute::load
+// Created: CMA 2011-09-09
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void TrafficabilityAttribute::serialize( Archive& file, const double )
+void TrafficabilityAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & max_;
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    ar >> max_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TrafficabilityAttribute::save
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+void TrafficabilityAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
+{
+    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    ar << max_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TrafficabilityAttribute::GetMaxValue
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+double TrafficabilityAttribute::GetMaxValue() const
+{
+    return max_;
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +105,6 @@ void TrafficabilityAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< TrafficabilityAttribute, TrafficabilityAttribute >( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TrafficabilityAttribute::SendFullState
@@ -114,4 +138,27 @@ void TrafficabilityAttribute::OnUpdate( const sword::MissionParameter_Value& att
 {
 	max_ = attribute.list( 1 ).areal();
 	NotifyAttributeUpdated( eOnUpdate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TrafficabilityAttribute::Instanciate
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+void TrafficabilityAttribute::Instanciate( DEC_Knowledge_Object& object ) const
+{
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< TrafficabilityAttribute > >( *new T_KnowledgeProxyType() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TrafficabilityAttribute::Update
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+bool TrafficabilityAttribute::Update( const TrafficabilityAttribute& rhs )
+{
+    if( max_ != rhs.max_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        max_ = rhs.max_;
+    }
+    return NeedUpdate( eOnUpdate );
 }

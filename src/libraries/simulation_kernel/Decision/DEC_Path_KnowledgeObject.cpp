@@ -21,6 +21,7 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
     , rCostIn_              ( 0 )
     , rCostOut_             ( 0 )
     , rObstructionThreshold_( pathClass.GetThreshold() )
+    , rMaxTrafficability_   ( knowledge.GetMaxTrafficability() )
 {
     const double rCost = pathClass.GetObjectCost( knowledge.GetType() );
     if( rCost > 0 )
@@ -42,11 +43,13 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 // Name: DEC_Path_KnowledgeObject::ComputeCost
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
+double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData&, double weight ) const
 {
     const MT_Line line( from, to );
     if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
     {
+        if( ( rMaxTrafficability_ != 0. ) && ( weight > rMaxTrafficability_ ) )
+            return -1.f; //$$$$ CMA in order to block the unit if there is a non-trafficable object
         if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
             return -1;  //$$$$ SLG in order to block the unit if there is an object
         return rCostIn_;

@@ -33,8 +33,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& toTerrainType, const TerrainData& linkTerrainType ) const;
+    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& toTerrainType, const TerrainData& linkTerrainType, double weight ) const;
     virtual double GetCostOut() const;
+    virtual double GetMaxTrafficability() const;
     //@}
 
 private:
@@ -51,6 +52,7 @@ private:
     std::vector< TER_Polygon > deepAreas_;
     std::vector< TER_Polygon > lowAreas_;
     TER_Localisation localisation_;
+    double maxTrafficability_;
     //@}
 };
 

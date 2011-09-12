@@ -16,7 +16,8 @@
 // Created: JSR 2010-12-20
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObjectBurnSurface::DEC_Path_KnowledgeObjectBurnSurface( const DEC_Knowledge_Object& knowledge )
-: pBurnSurfaceAttribute_( knowledge.RetrieveAttribute< BurnSurfaceAttribute >() )
+    : pBurnSurfaceAttribute_( knowledge.RetrieveAttribute< BurnSurfaceAttribute >() )
+    , maxTrafficability_    ( knowledge.GetMaxTrafficability() )
 {
     //NOTHING
 }
@@ -34,7 +35,7 @@ DEC_Path_KnowledgeObjectBurnSurface::~DEC_Path_KnowledgeObjectBurnSurface()
 // Name: DEC_Path_KnowledgeObjectBurnSurface::ComputeCost
 // Created: JSR 2010-12-20
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeObjectBurnSurface::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
+double DEC_Path_KnowledgeObjectBurnSurface::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/, double /*weight*/ ) const
 {
     if( pBurnSurfaceAttribute_ )
         return pBurnSurfaceAttribute_->ComputePathCost( from, to );
@@ -48,5 +49,14 @@ double DEC_Path_KnowledgeObjectBurnSurface::ComputeCost( const MT_Vector2D& from
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObjectBurnSurface::GetCostOut() const
 {
-    return 0;
+    return 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObjectBurnSurface::GetMaxTrafficability
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+double DEC_Path_KnowledgeObjectBurnSurface::GetMaxTrafficability() const
+{
+    return maxTrafficability_;
 }

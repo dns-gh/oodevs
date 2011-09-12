@@ -2389,12 +2389,12 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Activer l&apos;issue</translation>
     </message>
     <message>
-        <source>Change Trafficability</source>
-        <translation>Modifier la traficabilité</translation>
-    </message>
-    <message>
         <source>Change Urban state</source>
         <translation>Modifier l&apos;état structurel</translation>
+    </message>
+    <message>
+        <source>Limit Trafficability</source>
+        <translation>Limiter la traficabilité</translation>
     </message>
 </context>
 <context>
