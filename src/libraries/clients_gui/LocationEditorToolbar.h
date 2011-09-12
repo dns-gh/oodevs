@@ -32,7 +32,6 @@ namespace gui
     class LocationParsers;
     class View_ABC;
 
-
 // =============================================================================
 /** @class  LocationEditorToolbar
     @brief  LocationEditorToolbar

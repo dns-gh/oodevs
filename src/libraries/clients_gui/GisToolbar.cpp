@@ -73,7 +73,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         button->setToggleButton( true );
         connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
         connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
-        
+
         Q3HBox* contourBox = new Q3HBox( this );
         contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
         QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );

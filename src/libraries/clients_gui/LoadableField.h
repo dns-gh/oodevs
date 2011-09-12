@@ -77,7 +77,6 @@ public:
         defaultValueWidget_ = w;
     }
 
-
     T* GetDefaultValueWidget() const
     {
         return static_cast< T* >( defaultValueWidget_ );

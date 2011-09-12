@@ -61,7 +61,7 @@ private:
     //@{
     typedef std::vector<Param_ABC*>  T_Params;
     typedef T_Params::const_iterator CIT_Params;
-	virtual bool IsOptional() const;
+    virtual bool IsOptional() const;
     //@}
 
 private:

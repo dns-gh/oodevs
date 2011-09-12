@@ -121,7 +121,6 @@ bool TerrainFeatureSearcher::FindNext( geometry::Point2f& point, QString& hint )
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TerrainFeatureSearcher::NotifyUpdated
 // Created: AGE 2008-05-29

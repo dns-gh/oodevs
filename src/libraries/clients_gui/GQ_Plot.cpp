@@ -222,7 +222,6 @@ void GQ_Plot::TouchData()
     bPlotUpdateNeeded_ = true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::Layers
 /** @return

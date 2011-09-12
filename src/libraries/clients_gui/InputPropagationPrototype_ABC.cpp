@@ -18,7 +18,6 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 
-
 namespace bfs = boost::filesystem;
 
 using namespace kernel;

@@ -64,7 +64,7 @@ namespace
     public:
         MyButton( QWidget* parent, const QPixmap& on, const QPixmap& off )
             : QToolButton( parent )
-        {   
+        {
             QIcon pIcon;
             pIcon.addPixmap( off, QIcon::Normal, QIcon::Off );
             pIcon.addPixmap( on, QIcon::Normal, QIcon::On );
@@ -122,7 +122,6 @@ void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
     layout_->addWidget( table_, 1, 1 );
     table_->hide();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesWidget::Clear

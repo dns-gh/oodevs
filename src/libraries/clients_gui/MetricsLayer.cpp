@@ -149,7 +149,6 @@ bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f&
     return multiRulingMode_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MetricsLayer::ComputeRuleDistance
 // Created: SLG 2010-03-01

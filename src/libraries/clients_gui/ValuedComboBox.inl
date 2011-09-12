@@ -27,7 +27,6 @@ ValuedComboBox<T>::ValuedComboBox( QWidget* parent, const char* name )
         QObject::connect( this, SIGNAL( activated( int ) ), (Q3Table*)parent, SLOT( doValueChanged() ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox destructor
 // Created: APE 2004-04-21
@@ -37,7 +36,6 @@ ValuedComboBox<T>::~ValuedComboBox()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::AddItem
@@ -89,12 +87,11 @@ void ValuedComboBox< T >::AddItem( const std::string& label, const T& value )
 //    values_.push_back( value );
 //}
 
-
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::AddItem
-/** @param  pixmap 
-    @param  strLabel 
-    @param  value 
+/** @param  pixmap
+    @param  strLabel
+    @param  value
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
@@ -121,7 +118,6 @@ void ValuedComboBox< T >::AddItem( const std::string& label, const T& value )
 //    }
 //}
 
-
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::ChangeItem
 // Created: APE 2004-06-23
@@ -134,7 +130,6 @@ void ValuedComboBox<T>::ChangeItem( const QString& label, const T& value )
         return;
     changeItem( label, n );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::ChangeItem
@@ -149,12 +144,11 @@ void ValuedComboBox<T>::ChangeItem( const QString& label, const T& value )
 //    changeItem( pixmap, n );
 //}
 
-
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::ChangeItem
-/** @param  pixmap 
-    @param  strLabel 
-    @param  value 
+/** @param  pixmap
+    @param  strLabel
+    @param  value
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
@@ -167,10 +161,9 @@ void ValuedComboBox<T>::ChangeItem( const QString& label, const T& value )
 //    changeItem( pixmap, strLabel, n );
 //}
 
-
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::RemoveItem
-/** @param  value 
+/** @param  value
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
@@ -209,7 +202,6 @@ int ValuedComboBox<T>::GetItemIndex( const T& value )
         return -1;
     return static_cast< int >( it - values_.begin() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::GetValue

@@ -55,7 +55,7 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
     longitude_->setFixedWidth( 60 );
 
     singleField_ = new QLineEdit( valueBox_ );
-    
+
     FillDefaultMenu();
     SelectParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
 

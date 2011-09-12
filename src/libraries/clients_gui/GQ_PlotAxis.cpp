@@ -737,7 +737,6 @@ void GQ_PlotAxis::Update()
 
     rSubTickPeriod_ = rTickPeriod_ / ( nNbrSubTicks_ + 1 );
 
-
     // Estimate space needed to display tick values
     if( bShowTickValues_ )
     {
@@ -761,7 +760,6 @@ void GQ_PlotAxis::Update()
 
     UpdateTicks();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::UpdateTickPeriod

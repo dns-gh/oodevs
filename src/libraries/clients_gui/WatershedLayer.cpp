@@ -99,7 +99,6 @@ void WatershedLayer::OptionChanged( const std::string& name, const kernel::Optio
     }
 }
 
-
 namespace
 {
     struct MyVisitor : public Visitor2d

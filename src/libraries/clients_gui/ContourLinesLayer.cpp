@@ -38,7 +38,7 @@ ContourLinesLayer::ContourLinesLayer( kernel::Controllers& controllers )
     , color_          ( 245, 245, 220 )
     , setup_          ( *new ContourGraphicSetup() )
 {
-    setup_.SetColor( color_.red() / 256.f, color_.green() / 256.f, color_.blue() / 256.f );    
+    setup_.SetColor( color_.red() / 256.f, color_.green() / 256.f, color_.blue() / 256.f );
     controllers_.Register( *this );
 }
 

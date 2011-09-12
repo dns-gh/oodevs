@@ -37,7 +37,6 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
     nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
 
-
     new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ), this );
     nbcStates_ = new ValuedComboBox< std::string >( this );
     nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Liquid" ), std::string( "liquid" ) );

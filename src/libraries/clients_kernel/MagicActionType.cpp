@@ -293,5 +293,5 @@ void MagicActionType::Initialize()
     else if( name == "change_dotation" )
         CreateOrderParameter( "Dotations", "list" );
     else if( name == "change_trafficability" )
-		CreateOrderParameter( "Trafficability", "numeric" );
+        CreateOrderParameter( "Trafficability", "numeric" );
 }

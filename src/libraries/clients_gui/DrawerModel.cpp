@@ -110,7 +110,7 @@ namespace
 {
     typedef std::set< const Drawing_ABC* > T_Drawings;
     typedef std::map< unsigned long, T_Drawings > T_DrawingsMap;
-    
+
     void SerializeDrawings( xml::xostream& xos, const T_Drawings& drawings )
     {
         std::for_each( drawings.begin(), drawings.end(), boost::bind( &Drawing_ABC::Serialize, _1, boost::ref( xos ) ) );

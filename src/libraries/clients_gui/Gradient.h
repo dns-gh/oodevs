@@ -33,7 +33,6 @@ public:
     virtual void Visit( float position, const QColor& color ) = 0;
 };
 
-
 // =============================================================================
 /** @class  Gradient
     @brief  Gradient

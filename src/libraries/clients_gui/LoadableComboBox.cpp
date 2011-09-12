@@ -41,7 +41,7 @@ QString LoadableComboBox::currentText() const
     if( currentLoader_ )
     {
         QString field = GetField();
-        if( !field.isNull() ) 
+        if( !field.isNull() )
             return currentLoader_->GetCurrentFieldValueAsString( field );
     }
     return GetDefaultValueWidget()->currentText();

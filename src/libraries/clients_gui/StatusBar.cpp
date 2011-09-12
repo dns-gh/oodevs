@@ -90,7 +90,7 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, int id, bool
 {
     kernel::CoordinateSystems::CIT_spatialReference it = converter_.GetCoordSystem().systems_.find( id );
     if( it != converter_.GetCoordSystem().systems_.end() )
-    {   
+    {
         QLabel* field = AddField( parent, size, it->second->c_str(), checked );
         coordinateFields_[id] = field;
         return field;

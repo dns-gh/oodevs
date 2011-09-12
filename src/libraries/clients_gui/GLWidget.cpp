@@ -581,7 +581,6 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
         maxAngle = maxAngle + twoPi;
     }
 
-
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glMatrixMode(GL_MODELVIEW);
     glEnable( GL_LINE_SMOOTH );
@@ -704,7 +703,6 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/ 
         glEnd();
     glPopAttrib();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::Print

@@ -15,7 +15,6 @@
 #include "Tools.h"
 #include "LoadableLineEdit.h"
 
-
 using namespace kernel;
 using namespace gui;
 

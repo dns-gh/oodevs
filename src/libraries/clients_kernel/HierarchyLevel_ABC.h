@@ -16,7 +16,6 @@
 #include <QtCore/qstring.h>
 #pragma warning( pop )
 
-
 class QString;
 
 namespace kernel

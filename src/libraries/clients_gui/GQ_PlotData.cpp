@@ -450,7 +450,6 @@ void GQ_PlotData::TouchData()
         TouchRange();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::Draw
 /** @param
@@ -473,7 +472,6 @@ void GQ_PlotData::Draw( QPainter& painter )
     DrawPolyline( painter, points );
     DrawBars    ( painter, points );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::DrawCaption

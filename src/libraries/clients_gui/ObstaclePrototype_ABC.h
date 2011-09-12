@@ -15,7 +15,6 @@
 #include "clients_kernel/tools.h"
 #include "ValuedComboBox.h"
 
-
 namespace gui
 {
     class LoadableCheckBox;

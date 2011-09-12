@@ -26,7 +26,7 @@ namespace kernel
     class ModelLoaded;
 }
 
-namespace 
+namespace
 {
     class ContourGraphicSetup : public GraphicSetup_ABC
     {

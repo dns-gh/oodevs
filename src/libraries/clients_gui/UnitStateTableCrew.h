@@ -55,7 +55,7 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void AddLine( int number = 0, E_HumanRank rank = eHumanRank_Officier, E_HumanState state = eHumanState_Healthy, E_InjuriesSeriousness seriousness = eInjuriesSeriousness_U1, 
+    void AddLine( int number = 0, E_HumanRank rank = eHumanRank_Officier, E_HumanState state = eHumanState_Healthy, E_InjuriesSeriousness seriousness = eInjuriesSeriousness_U1,
                   bool psy = false, bool contaminated = false, E_HumanLocation location = eHumanLocation_Battlefield );
     void OnClearItems();
     void OnRemoveItem();

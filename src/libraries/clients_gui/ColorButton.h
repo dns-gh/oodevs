@@ -35,8 +35,8 @@ public:
 
     void SetColor( const QColor& rgb );
     QColor GetColor() const;
-    
-	void Revert();
+
+    void Revert();
     void Commit();
     //@}
 

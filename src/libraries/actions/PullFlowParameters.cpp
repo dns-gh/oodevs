@@ -144,7 +144,7 @@ void PullFlowParameters::Serialize( xml::xostream& xos ) const
     xos << xml::start( "supplier" );
         xos << xml::attribute( "id", supplierAutomat_ ? supplierAutomat_->GetId() : supplierFormation_->GetId() );
     xos << xml::end;
-            
+
     BOOST_FOREACH( const T_Resources::value_type& resource, resources_ )
     {
         xos << xml::start( "resource" );

@@ -72,5 +72,4 @@ void HierarchyListView< H >::NotifyDeleted( const H& hierarchy )
     NotifyDeleted( ( const kernel::Hierarchies&)( hierarchy ) );
 }
 
-
 }

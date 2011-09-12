@@ -35,7 +35,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
     lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
-    
+
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
     lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), container );
     lightingType_->resize( this->size() );

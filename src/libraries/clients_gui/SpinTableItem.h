@@ -49,7 +49,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: SpinTableItem::SpinTableItem
 // Created: JSR 2010-08-30
@@ -84,7 +83,6 @@ void SpinTableItem< T >::SetMinMaxValue( int minValue, int maxValue )
     minValue_ = minValue;
     maxValue_ = maxValue;
 }
-
 
 } // namespace gui
 

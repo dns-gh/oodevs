@@ -13,7 +13,6 @@
 
 using namespace gui;
 
-
 // -----------------------------------------------------------------------------
 // Name: FeatureNameParser constructor
 // Created: AGE 2008-05-29

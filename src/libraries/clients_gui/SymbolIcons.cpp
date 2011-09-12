@@ -25,7 +25,7 @@ SymbolIcons::SymbolIcons( QObject* parent, kernel::GlTools_ABC& tools )
     , defaultSymbol_( 1, 1 )
     , renderPass_   ( new IconsRenderPass( tools ) )
 {
-    defaultSymbol_.fill( Qt::white ); 
+    defaultSymbol_.fill( Qt::white );
 }
 
 // -----------------------------------------------------------------------------

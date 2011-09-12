@@ -46,7 +46,7 @@ TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& c
 TerrainPreference::~TerrainPreference()
 {
     controllers_.Unregister( *this );
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: TerrainPreference::Display

@@ -44,7 +44,6 @@ DiffusionListFunctor_ABC::~DiffusionListFunctor_ABC()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // DiffusionListClearer
 // -----------------------------------------------------------------------------
@@ -79,7 +78,6 @@ void DiffusionListClearer::operator()( const kernel::Entity_ABC& agent ) const
         return;
     dico->SetValue( name_, "" );
 }
-
 
 // -----------------------------------------------------------------------------
 // DiffusionListGenerator

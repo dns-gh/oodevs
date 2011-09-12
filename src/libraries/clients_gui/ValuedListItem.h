@@ -115,7 +115,6 @@ ValuedListItem* FindItem( const kernel::SafePointer< T >& searched, Q3ListViewIt
     return FindItem( (const T*)searched, root );
 }
 
-
 // =============================================================================
 /** @function  FindSibling
     @brief  Search for a given item in the children of root
@@ -297,7 +296,6 @@ public:
 private:
     const kernel::Inhabitant_ABC* value_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ValuedListItem::IsA

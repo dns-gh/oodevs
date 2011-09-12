@@ -76,6 +76,6 @@ void PreferencesList::setCurrentItem( Q3ListViewItem* item )
             item = item->parent();
         }
         QWidget* widget = widgets_[name];
-		pages_.setCurrentWidget( widget );
+        pages_.setCurrentWidget( widget );
     }
 }

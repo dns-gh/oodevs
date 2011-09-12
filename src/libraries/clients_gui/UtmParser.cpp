@@ -85,7 +85,6 @@ QString UtmParser::Fill( QString value )
     return value;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UtmParser::NotifyUpdated
 // Created: AGE 2008-05-29

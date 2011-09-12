@@ -71,7 +71,6 @@ void LogisticPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
         selected_ = &automat;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype_ABC::NotifyCreated
 // Created: SBO 2006-04-19
@@ -119,7 +118,6 @@ void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, Context
         menu.InsertItem( "Parameter", tr( "Camp's logistic unit" ), this, SLOT( SetSelected() ) );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype_ABC::NotifyContextMenu

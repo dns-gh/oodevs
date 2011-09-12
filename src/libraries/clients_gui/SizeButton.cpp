@@ -26,7 +26,7 @@ SizeButton::SizeButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, flo
     , previous_( value )
 {
     setTickPosition( QSlider::Below );
-    setRange( 0, 20 ); 
+    setRange( 0, 20 );
     setTickInterval( 2 );
     setPageStep( 1 );
     setOrientation( Qt::Horizontal );

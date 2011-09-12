@@ -145,7 +145,7 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 // Created: HBD 2010-09-06
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::ChangeOkValueButton( bool planningMode )
-{ 
+{
    if( ok_ )
    {
        if( planningMode )

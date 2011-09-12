@@ -266,7 +266,6 @@ void EditorFactory::Call( unsigned long* const& value )
     result_ = CreateNumberEditor( parent_, *value, unit_ );
 }
 
-
 // =============================================================================
 // Boolean
 // =============================================================================

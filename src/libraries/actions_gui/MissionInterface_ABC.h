@@ -68,7 +68,7 @@ public slots:
     //@}
 
 signals:
-    void OkClicked();    
+    void OkClicked();
 
 protected:
     //! @name Helpers

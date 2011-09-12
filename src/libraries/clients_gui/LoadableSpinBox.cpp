@@ -41,7 +41,7 @@ int LoadableSpinBox::value() const
     if( currentLoader_ )
     {
         QString field = GetField();
-        if( !field.isNull() ) 
+        if( !field.isNull() )
         {
             int value = currentLoader_->GetCurrentFieldValueAsInt( field );
             int max = GetDefaultValueWidget()->maxValue();

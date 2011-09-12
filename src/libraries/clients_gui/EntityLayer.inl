@@ -52,7 +52,7 @@ void EntityLayer< ConcreteEntity >::NotifyCreated( const ConcreteEntity& entity 
     if( filter_.IsAllowed( entity.GetTypeName() ) )
         AddEntity( entity );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayer::NotifyDeleted
 // Created: AGE 2006-03-23

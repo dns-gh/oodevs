@@ -41,7 +41,7 @@ bool LoadableCheckBox::isChecked() const
     if( currentLoader_ )
     {
         QString field = GetField();
-        if( !field.isNull() ) 
+        if( !field.isNull() )
             return currentLoader_->GetCurrentFieldValueAsBool( field );
     }
     return GetDefaultValueWidget()->isOn();

@@ -44,7 +44,7 @@ ColorButton::~ColorButton()
 void ColorButton::drawButton( QPainter* )
 {
     paintEvent();
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: ColorButton::paintEvent
