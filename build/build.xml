@@ -1393,7 +1393,8 @@
  
     <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.tutorials,package.otpack.defense.france,
                                             package.otpack.defense.scipio,package.otpack.security.worldwide,package.otpack.security.masa,
-                                            package.otpack.lossc,package.otpack.tutosw,package.otpack.validation,package.otpack.trainingML" description="package the exercise otpacks"/>
+                                            package.otpack.lossc,package.otpack.tutosw,package.otpack.validation,package.otpack.trainingML, package.otpack.decisional"
+                                            description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide" description="defense-worldwide exercises package">
@@ -1553,7 +1554,7 @@
             <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>
-    
+
     <target name="package.otpack.trainingML" description="package de training MasaLife">
         <pack name="trainingML" description="package de training MasaLife">
             <include name="data/models/training/physical/worldwide/**"/>
@@ -1564,6 +1565,14 @@
             <include name="data/terrains/PortoV3Lite - worldwide/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
+        </pack>
+    </target>
+
+    <target name="package.otpack.decisional" description="decisional package">
+        <pack name="decisional" description="decisional package">
+            <include name="data/models/ada/decisional/bms/**"/>
+            <include name="data/models/ada/decisional/directia5/**"/>
+            <include name="data/models/ada/decisional/decisional.xml"/>
         </pack>
     </target>
 

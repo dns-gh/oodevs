@@ -136,12 +136,6 @@ SectionGroup "Additional components"
 SectionGroupEnd
 
 ; ------------------------------------------------------------------------------
-SectionGroup "Models" s_mod
-    !insertmacro OT.AddDecisionalModels "ada"
-    ;!insertmacro OT.AddDecisionalModelSources "ada"
-SectionGroupEnd
-
-; ------------------------------------------------------------------------------
 Section "Documentation" s_doc
     !insertmacro OT.AddDocumentation
 SectionEnd

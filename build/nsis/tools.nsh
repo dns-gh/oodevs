@@ -79,33 +79,6 @@
 
 !macroend
 
-
-;------------------------------------------------------------------------------
-; Adds Decisional Models Section
-;------------------------------------------------------------------------------
-!macro OT.AddDecisionalModels DataSet
-    Section "Decisional" s_decmod
-        SetOutPath "$INSTDATADIR\data\models\${DataSet}\decisional"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\bms"
-        File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\directia5"
-        File "${DATADIR}\data\models\${DataSet}\decisional\decisional.xml"
-        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    SectionEnd
-!macroend
-
-;------------------------------------------------------------------------------
-; Adds Decisional Model Sources Section
-;------------------------------------------------------------------------------
-!macro OT.AddDecisionalModelSources DataSet
-    Section "Sources" s_decmodsrc
-        SetOutPath "$INSTDATADIR\data\models\${DataSet}\decisional"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\Sources"
-        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    SectionEnd
-!macroend
-
 ;------------------------------------------------------------------------------
 ; Adds Physical Models Section
 ;------------------------------------------------------------------------------

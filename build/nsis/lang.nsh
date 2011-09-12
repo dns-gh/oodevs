@@ -16,15 +16,6 @@ LangString OT_INSTALL_ADOBE_READER ${LANG_FRENCH} "L'application Adobe® Reader®,
 LangString OT_FINISH ${LANG_ENGLISH} "The software installation is now complete. If you need a licence file start the application and follow the instructions provided."
 LangString OT_FINISH ${LANG_FRENCH} "Votre logiciel est maintenant correctement installé. Si vous n'avez pas de licence, lancez l'application et suivez les instructions."
 
-LangString OT_SECTION_MODELS ${LANG_ENGLISH} "Models"
-LangString OT_SECTION_MODELS ${LANG_FRENCH} "Modèles"
-
-LangString OT_SECTION_DECISIONAL_MODELS ${LANG_ENGLISH} "Decisional models"
-LangString OT_SECTION_DECISIONAL_MODELS ${LANG_FRENCH} "Modèles décisionnels"
-
-LangString OT_SECTION_DECISIONAL_MODELS_SOURCES ${LANG_ENGLISH} "Decisional models (sources)"
-LangString OT_SECTION_DECISIONAL_MODELS_SOURCES ${LANG_FRENCH} "Modèles décisionnels (sources)"
-
 LangString OT_SECTION_PHYSICAL_MODELS ${LANG_ENGLISH} "Physical models"
 LangString OT_SECTION_PHYSICAL_MODELS ${LANG_FRENCH} "Modèles physiques"
 
