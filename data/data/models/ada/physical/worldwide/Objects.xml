@@ -203,6 +203,7 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
+    <trafficability default="true"/>
     <urban-destruction>
       <urban-modifier material-type="Wood" value="0.8"/>
       <urban-modifier material-type="Concrete" value="0.4"/>
@@ -260,9 +261,11 @@
   </object>
   <object geometry="line" name="Bridge (continuous)" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
     <bridging type="bridge"/>
+    <trafficability default="false"/>
   </object>
   <object geometry="line" name="Bridge (discontinuous)" symbol="S*GPEVED--*****" type="discontinuous pontoon bridge">
     <bridging type="bridge"/>
+    <trafficability default="false"/>
     <workable max-animator="0"/>
   </object>
   <object geometry="point" name="Firing post" symbol="G*FPAP----****X" type="firing post">
@@ -518,4 +521,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2481857182" -->
+<!-- signature="1544442771" -->

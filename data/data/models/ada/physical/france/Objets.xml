@@ -212,6 +212,7 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
+    <trafficability default="true"/>
   </object>
   <object geometry="point" name="Destruction de route" symbol="G*MPORC---****X" type="road destruction">
     <activable/>
@@ -260,9 +261,11 @@
   </object>
   <object geometry="line point" name="Pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
     <bridging type="bridge"/>
+    <trafficability default="false"/>
   </object>
   <object geometry="line point" name="Pont flottant discontinu" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
     <bridging type="bridge"/>
+    <trafficability default="false"/>
     <workable max-animator="0"/>
   </object>
   <object geometry="point" name="Poste de tir" symbol="G*FPAP----****X" type="firing post">
@@ -391,4 +394,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="2802981499" -->
+<!-- signature="2321796514" -->
