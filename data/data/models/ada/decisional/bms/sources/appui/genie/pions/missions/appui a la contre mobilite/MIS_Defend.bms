@@ -13,7 +13,7 @@ node "MIS_Pion_Defend"
     create = function( self )
         self.zone = self.params.mission.zone_ or DEC_ConnaissanceObjet_Localisation( self.params.mission.knowledge_ )
         self.destination = S_Geometrie_BarycentreZone( self.zone )
-        local distanceEnemies = 3000 -- distance defining when "an enemy unit (is) close to the area"
+        local distanceEnemies = 30000 -- distance defining when "an enemy unit (is) close to the area"
         self.enemyZone = DEC_Geometrie_AgrandirLocalisation( self.zone, distanceEnemies )
         self.ePhase = eProgresser
     end,
