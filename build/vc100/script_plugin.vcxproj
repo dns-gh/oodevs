@@ -79,11 +79,6 @@
       <Message>Creating LUA scripts intermediate directory.</Message>
       <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
     </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>%(Outputs)</Outputs>
-    </CustomBuildStep>
     <ClCompile />
     <Lib />
     <PostBuildEvent>
@@ -98,11 +93,6 @@ copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
       <Message>Creating LUA scripts intermediate directory.</Message>
       <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
     </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>%(Outputs)</Outputs>
-    </CustomBuildStep>
     <ClCompile />
     <Lib />
     <PostBuildEvent>
@@ -117,11 +107,6 @@ copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
       <Message>Creating LUA scripts intermediate directory.</Message>
       <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
     </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>%(Outputs)</Outputs>
-    </CustomBuildStep>
     <ClCompile />
     <Lib />
     <PostBuildEvent>
@@ -136,11 +121,6 @@ copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
       <Message>Creating LUA scripts intermediate directory.</Message>
       <Command>if not exist "$(TargetDir)scripts" mkdir "$(TargetDir)scripts"</Command>
     </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>%(Outputs)</Outputs>
-    </CustomBuildStep>
     <ClCompile />
     <Lib />
     <PostBuildEvent>
@@ -485,6 +465,11 @@ copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(TargetDir)%(Filename)%(Extension);%(Outputs)</Outputs>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

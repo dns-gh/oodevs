@@ -159,29 +159,32 @@
     <ClInclude Include="..\..\src\tests\clients_test\XmlChecks.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="actions_gui.vcxproj">
-      <Project>{8a046748-9de1-41e7-b976-40f4b1dbf512}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    <ProjectReference Include="clients_gui.vcxproj">
+      <Project>{414655f4-84bf-4f22-9afb-855102f9cf2a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="clients_kernel.vcxproj">
+      <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="ENT.vcxproj">
+      <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
     </ProjectReference>
     <ProjectReference Include="flood.vcxproj">
       <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="indicators.vcxproj">
       <Project>{a95887c7-751e-43ea-b541-38b573587c7b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="meteo.vcxproj">
       <Project>{b03a3fb8-fad3-4d51-96ba-91ff6b63ec1d}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
     </ProjectReference>
     <ProjectReference Include="preparation.vcxproj">
       <Project>{2f277c44-47e7-422b-9d34-bb8fbad7ad8d}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="tools.vcxproj">
       <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

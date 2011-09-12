@@ -154,13 +154,8 @@
     <ClInclude Include="..\..\src\tests\flood_test\MockElevationGetter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="dispatcher.vcxproj">
-      <Project>{e761ba44-a370-4f9d-97b5-a047e068ba5b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="flood.vcxproj">
       <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -115,6 +115,11 @@
     <ClCompile Include="..\..\src\libraries\tic\PlatformDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\tic\PlatformDelegateFactory.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

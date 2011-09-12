@@ -67,30 +67,18 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -164,16 +152,6 @@
     <None Include="..\..\src\libraries\simulation_terrain\TER_Polygon.inl" />
     <None Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.inl" />
     <None Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="MT_Tools.vcxproj">
-      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>true</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

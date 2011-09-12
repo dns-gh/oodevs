@@ -62,35 +62,19 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
-    <ClCompile>
-      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
+    <ClCompile />
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
-    <ClCompile>
-      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
+    <ClCompile />
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -106,16 +90,6 @@
     <ClInclude Include="..\..\src\libraries\rpr\EntityTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\rpr\ForceIdentifier.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="clients_kernel.vcxproj">
-      <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>true</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

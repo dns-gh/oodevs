@@ -79,12 +79,7 @@
       <Message>Generating protobuf code</Message>
       <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
     </PreBuildEvent>
-    <ClCompile>
-      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
+    <ClCompile />
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -92,14 +87,7 @@
       <Message>Generating protobuf code</Message>
       <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
     </PreBuildEvent>
-    <ClCompile>
-      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
+    <ClCompile />
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -108,11 +96,7 @@
       <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
     </PreBuildEvent>
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
-    <ClCompile />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <PreBuildEvent>
@@ -120,14 +104,7 @@
       <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
     </PreBuildEvent>
     <ClCompile />
-    <ResourceCompile>
-      <Culture>0x040c</Culture>
-    </ResourceCompile>
     <Lib />
-    <ClCompile />
-    <ClCompile />
-    <ClCompile />
-    <ClCompile />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\protocol\Aar.h" />

@@ -164,11 +164,12 @@
   <ItemGroup>
     <ProjectReference Include="hla_plugin.vcxproj">
       <Project>{2dbd11a9-a85b-4cb3-99a1-364b2e93e4b5}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>true</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+    </ProjectReference>
+    <ProjectReference Include="rpr.vcxproj">
+      <Project>{70a0412c-1716-4034-bf76-39f8dd7d817f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

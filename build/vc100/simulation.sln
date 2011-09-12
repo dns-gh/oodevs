@@ -33,9 +33,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dispatcher_app", "dispatcher_app.vcxproj", "{0CF2C8C4-E7F8-48BD-B5DE-3AD6B2133596}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dispatcher_dll", "dispatcher_dll.vcxproj", "{71063679-B378-45A9-87AA-5E15B358209F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{867A219D-34D0-4EB3-9BB2-3A03A6839CEC} = {867A219D-34D0-4EB3-9BB2-3A03A6839CEC}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hla_plugin", "hla_plugin.vcxproj", "{2DBD11A9-A85B-4CB3-99A1-364B2E93E4B5}"
 EndProject
@@ -44,26 +41,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugins_test", "plugins_test.vcxproj", "{68081D48-9B4E-457A-B414-315A4BAC109D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "replayer_app", "replayer_app.vcxproj", "{90075E95-6468-4E63-B36E-6EF2BC2993C0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B03A3FB8-FAD3-4D51-96BA-91FF6B63EC1D} = {B03A3FB8-FAD3-4D51-96BA-91FF6B63EC1D}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "score_plugin", "score_plugin.vcxproj", "{C2FF4137-154D-4807-8276-D655FCE7396F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{428D1458-2AD1-40AF-B98D-72253DE09E0A} = {428D1458-2AD1-40AF-B98D-72253DE09E0A}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "script_plugin", "script_plugin.vcxproj", "{2904015E-0B2B-45C1-BAFB-F70BCA8ADF77}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simulation_app", "simulation_app.vcxproj", "{944BB6C9-0F29-4E72-B8EF-962B25504B8C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8979D7D9-B248-4739-A7BE-04AC0112AC08} = {8979D7D9-B248-4739-A7BE-04AC0112AC08}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simulation_kernel", "simulation_kernel.vcxproj", "{725898A0-58C0-4DD2-9215-CB0A66DF1980}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8979D7D9-B248-4739-A7BE-04AC0112AC08} = {8979D7D9-B248-4739-A7BE-04AC0112AC08}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simulation_kernel_test", "simulation_kernel_test.vcxproj", "{4067166B-DB88-4C67-8FCC-808221BAA84C}"
 EndProject
@@ -124,20 +109,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "integration_decisionnal_test", "integration_decisionnal_test.vcxproj", "{07EE9711-535B-4C37-9C2C-A2BF4E652651}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "timeline_plugin_dll", "timeline_plugin_dll.vcxproj", "{D2D056BC-3707-499F-87BC-E48C76796A65}"
-	ProjectSection(ProjectDependencies) = postProject
-		{867A219D-34D0-4EB3-9BB2-3A03A6839CEC} = {867A219D-34D0-4EB3-9BB2-3A03A6839CEC}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crossbow_plugin_dll", "crossbow_plugin_dll.vcxproj", "{24CCFE27-7774-4E39-AD0D-C33A8F8F57D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{35E52E2B-5B01-4CDD-BF13-2C0E9082D52C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "order_plugin", "order_plugin.vcxproj", "{867A219D-34D0-4EB3-9BB2-3A03A6839CEC}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F8EB9126-DA8E-4166-8D1D-4D0F76198A93} = {F8EB9126-DA8E-4166-8D1D-4D0F76198A93}
-		{E761BA44-A370-4F9D-97B5-A047E068BA5B} = {E761BA44-A370-4F9D-97B5-A047E068BA5B}
-		{87EDA2F3-CD3B-4878-951C-F221ACB635AB} = {87EDA2F3-CD3B-4878-951C-F221ACB635AB}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
