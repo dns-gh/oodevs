@@ -397,9 +397,9 @@ void NodeElement::AddProduction( unsigned int production )
 void NodeElement::DecreaseProduction( unsigned int production )
 {
     if( productionCapacity_ < production )
-		productionCapacity_ = 0;
-	else
-		productionCapacity_ = productionCapacity_ - production;
+        productionCapacity_ = 0;
+    else
+        productionCapacity_ = productionCapacity_ - production;
     needUpdate_ = true;
 }
 

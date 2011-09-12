@@ -71,7 +71,7 @@ public:
     void Push( int quantity, unsigned long resourceId );
     void ActivateAll();
     void SetActivation( unsigned long resourceId, bool activated );
-	void CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production );
+    void CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production );
     void SetModifier( float modifier );
     void AddConsumption( unsigned long resourceId, double consumption );
     void RemoveLink( unsigned int nodeId );
