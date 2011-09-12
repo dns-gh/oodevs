@@ -264,7 +264,7 @@ void DiffusionListHierarchy::Initialize( SafePointer< Entity_ABC > selected, con
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( dico->GetExtensionTypes().GetNameByType( AttributeType::ETypeDiffusionList ) );
         if( !attribute )
             continue;
-        if( !dico->GetValue( "TypePC" ).empty() &&
+        if( !dico->GetValue( "TypePC" ).empty() && dico->GetValue( "TypePC" ) != "PasCorresp" &&
             &selected_->Get< kernel::TacticalHierarchies >().GetTop() == &entity->Get< kernel::TacticalHierarchies >().GetTop() )
             potentials_.insert( entity->GetId() );
     }
