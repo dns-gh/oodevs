@@ -20,7 +20,6 @@
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
     <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>$(ProjectName)-$(CurrentPlatform)-mt-gt</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

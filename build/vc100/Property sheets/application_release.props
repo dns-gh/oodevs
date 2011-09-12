@@ -20,7 +20,6 @@
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
     <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>$(ProjectName)-$(CurrentPlatform)-mt</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
