@@ -1357,6 +1357,9 @@ lrelease -verbose %(FullPath)
     <ProjectReference Include="preparation.vcxproj">
       <Project>{2f277c44-47e7-422b-9d34-bb8fbad7ad8d}</Project>
     </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+    </ProjectReference>
     <ProjectReference Include="tools.vcxproj">
       <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
     </ProjectReference>
