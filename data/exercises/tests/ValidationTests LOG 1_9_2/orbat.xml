@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
   <parties>
-    <party id="1" name="Les Méchants" type="enemy">
+    <party id="1" name="Les MÃ©chants" type="enemy">
       <objects/>
       <tactical>
         <formation id="898" level="xxxx" name="Formation [898]"/>
@@ -10,6 +10,7 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="3" name="Les Gentils" type="friend">
@@ -32,7 +33,7 @@
         </object>
       </objects>
       <tactical>
-        <formation id="897" level="xxxx" name="Formation [897]" logistic-level="logistic-base">
+        <formation id="897" level="xxxx" logistic-level="logistic-base" name="Formation [897]">
           <automat engaged="true" id="899" knowledge-group="4" name="LOG - PC BIA [899]" type="LOG - PC BIA">
             <unit command-post="true" id="900" name="TRANS - PC BIA" position="30UXU3370539922" type="TRANS - PC BIA"/>
           </automat>
@@ -74,7 +75,7 @@
             <unit command-post="false" id="932" name="GLAISE - LOG - Groupe Munitions OFF TD" position="30UXU3552339581" type="GLAISE - LOG - Groupe Munitions OFF TD"/>
             <unit command-post="false" id="933" name="GLAISE - LOG - Groupe Munitions SOFF TD" position="30UXU3501539769" type="GLAISE - LOG - Groupe Munitions SOFF TD"/>
           </automat>
-          <automat engaged="true" id="934" knowledge-group="4" name="LOG - Secteur réparation maint mob [934]" type="LOG - Secteur réparation maint mob">
+          <automat engaged="true" id="934" knowledge-group="4" name="LOG - Secteur rÃ©paration maint mob [934]" type="LOG - Secteur reparation maint mob">
             <unit command-post="true" id="935" name="LOG - PC LOG BLD Secteur Maintenance" position="30UXU3814044814" type="LOG - PC LOG BLD Secteur Maintenance"/>
             <unit command-post="false" id="936" name="LOG - Section CDT CMM (EVAC)" position="30UXU3865944333" type="LOG - Section CDT CMM (EVAC)"/>
             <unit command-post="false" id="937" name="LOG - Section Reparation Mob BLD  MOB" position="30UXU3817743816" type="LOG - Section Reparation Mob BLD  MOB"/>
@@ -83,7 +84,7 @@
             <unit command-post="false" id="940" name="GLAISE - LOG - Section Reparation Mob BLD" position="30UXU3886644340" type="GLAISE - LOG - Section Reparation Mob BLD"/>
             <unit command-post="false" id="941" name="GLAISE - LOG - Section Reparation MOB FEU BLD" position="30UXU3867743834" type="GLAISE - LOG - Section Reparation MOB FEU BLD"/>
           </automat>
-          <automat engaged="true" id="942" knowledge-group="4" name="LOG - Secteur réparation techniques fines [942]" type="LOG - Secteur réparation techniques fines">
+          <automat engaged="true" id="942" knowledge-group="4" name="LOG - Secteur rÃ©paration techniques fines [942]" type="LOG - Secteur reparation techniques fines">
             <unit command-post="true" id="943" name="LOG - PC LOG BLD Secteur Maintenance" position="30UXU4351044208" type="LOG - PC LOG BLD Secteur Maintenance"/>
             <unit command-post="false" id="944" name="LOG - Section Reparation EA BLD SREAT" position="30UXU4402943727" type="LOG - Section Reparation EA BLD SREAT"/>
             <unit command-post="false" id="945" name="GLAISE - LOG - Section Reparation EA BLD" position="30UXU4354743210" type="GLAISE - LOG - Section Reparation EA BLD"/>
@@ -113,66 +114,66 @@
             <unit command-post="false" id="966" name="LOG - Section Triage modulaire" position="30UXU5000439343" type="LOG - Section Triage modulaire"/>
             <unit command-post="false" id="967" name="GLAISE - LOG - Section Triage Modulaire" position="30UXU4952238826" type="GLAISE - LOG - Section Triage Modulaire"/>
           </automat>
-         </formation>
-         <formation id="1897" level="xxxx" name="Formation [1897]">
+        </formation>
+        <formation id="1897" level="xxxx" name="Formation [1897]">
           <automat engaged="true" id="968" knowledge-group="4" name="LOG - Section CDT LOG URB [968]" type="LOG - Section CDT LOG URB">
             <unit command-post="true" id="969" name="LOG - Section CDT et  URB" position="30UXU3296943628" type="LOG - Section CDT et  URB"/>
           </automat>
-          <automat engaged="true" id="970" knowledge-group="4" name="LOG - TC2 10RC [970]" type="LOG - TC2 10RC" logistic-level="tc2" logistic-level="tc2">
+          <automat engaged="true" id="970" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 10RC [970]" type="LOG - TC2 10RC">
             <unit command-post="true" id="971" name="LOG - TC2 10RC" position="30UXU3984442076" type="LOG - TC2 10RC"/>
           </automat>
-          <automat engaged="true" id="972" knowledge-group="4" name="LOG - TC2 BAT ART 32AUF1 [972]" type="LOG - TC2 BAT ART 32AUF1" logistic-level="tc2" logistic-level="tc2">
+          <automat engaged="true" id="972" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 BAT ART 32AUF1 [972]" type="LOG - TC2 BAT ART 32AUF1">
             <unit command-post="true" id="973" name="ART - TC2 BAT 32AUF1" position="30UXU3404537934" type="ART - TC2 BAT 32AUF1"/>
           </automat>
-          <automat engaged="true" id="974" knowledge-group="4" name="LOG - TC2 BAT ART 32TRF1 [974]" type="LOG - TC2 BAT ART 32TRF1" logistic-level="tc2" logistic-level="tc2">
+          <automat engaged="true" id="974" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 BAT ART 32TRF1 [974]" type="LOG - TC2 BAT ART 32TRF1">
             <unit command-post="true" id="975" name="ART - TC2 BAT 32TRF1" position="30UXU3769038799" type="ART - TC2 BAT 32TRF1"/>
           </automat>
-          <automat engaged="true" id="976" knowledge-group="4" name="LOG - TC2 BON ART 24LRM [976]" type="LOG - TC2 BON ART 24LRM" logistic-level="tc2" logistic-level="tc2">
+          <automat engaged="true" id="976" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 BON ART 24LRM [976]" type="LOG - TC2 BON ART 24LRM">
             <unit command-post="true" id="977" name="ART - TC2 BON 24LRM" position="30UXU4038038363" type="ART - TC2 BON 24LRM"/>
           </automat>
-          <automat engaged="true" id="978" knowledge-group="4" name="LOG - TC2 GAM602 [978]" type="LOG - TC2 GAM602" logistic-level="tc2">
+          <automat engaged="true" id="978" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 GAM602 [978]" type="LOG - TC2 GAM602">
             <unit command-post="true" id="979" name="LOG - TC2 GAM602" position="30UXU4150136937" type="LOG - TC2 GAM602"/>
           </automat>
-          <automat engaged="true" id="980" knowledge-group="4" name="LOG - TC2 GAM603 [980]" type="LOG - TC2 GAM603" logistic-level="tc2">
+          <automat engaged="true" id="980" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 GAM603 [980]" type="LOG - TC2 GAM603">
             <unit command-post="true" id="981" name="LOG - TC2 GAM603" position="30UXU4467737851" type="LOG - TC2 GAM603"/>
           </automat>
-          <automat engaged="true" id="982" knowledge-group="4" name="LOG - TC2 GAM604 [982]" type="LOG - TC2 GAM604" logistic-level="tc2">
+          <automat engaged="true" id="982" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 GAM604 [982]" type="LOG - TC2 GAM604">
             <unit command-post="true" id="983" name="LOG - TC2 GAM604" position="30UXU3599537605" type="LOG - TC2 GAM604"/>
           </automat>
-          <automat engaged="true" id="984" knowledge-group="4" name="LOG - TC2 GE40 LECLERC [984]" type="LOG - TC2 GE40 LECLERC" logistic-level="tc2">
+          <automat engaged="true" id="984" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 GE40 LECLERC [984]" type="LOG - TC2 GE40 LECLERC">
             <unit command-post="true" id="985" name="ABC - TC2 GE40 LECLERC" position="30UXU3773637534" type="ABC - TC2 GE40 LECLERC"/>
           </automat>
-          <automat engaged="true" id="986" knowledge-group="4" name="LOG - TC2 Groupement Roland Mistral [986]" type="LOG - TC2 Groupement Roland Mistral" logistic-level="tc2">
+          <automat engaged="true" id="986" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 Groupement Roland Mistral [986]" type="LOG - TC2 Groupement Roland Mistral">
             <unit command-post="true" id="987" name="ART - TC2 Groupement RLD Mistral" position="30UXU4413136298" type="ART - TC2 Groupement RLD Mistral"/>
           </automat>
-          <automat engaged="true" id="988" knowledge-group="4" name="LOG - TC2 GTIA INF AMX 10P [988]" type="LOG - TC2 GTIA INF AMX 10P" logistic-level="tc2">
+          <automat engaged="true" id="988" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 GTIA INF AMX 10P [988]" type="LOG - TC2 GTIA INF AMX 10P">
             <unit command-post="true" id="989" name="INF - TC2 GTIA  AMX 10P" position="30UXU3735933188" type="INF - TC2 GTIA  AMX 10P"/>
           </automat>
-          <automat engaged="true" id="990" knowledge-group="4" name="LOG - TC2 GTIA INF VAB [990]" type="LOG - TC2 GTIA INF VAB" logistic-level="tc2">
+          <automat engaged="true" id="990" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 GTIA INF VAB [990]" type="LOG - TC2 GTIA INF VAB">
             <unit command-post="true" id="991" name="INF - TC2 GTIA  VAB" position="30UXU5057931798" type="INF - TC2 GTIA  VAB"/>
           </automat>
-          <automat engaged="true" id="992" knowledge-group="4" name="LOG - TC2 LOG [992]" type="LOG - TC2 LOG" logistic-level="tc2">
+          <automat engaged="true" id="992" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 LOG [992]" type="LOG - TC2 LOG">
             <unit command-post="true" id="993" name="LOG - TC2" position="30UXU3935135393" type="LOG - TC2"/>
           </automat>
-          <automat engaged="true" id="994" knowledge-group="4" name="LOG - TC2 RB ERC90 [994]" type="LOG - TC2 RB ERC90" logistic-level="tc2">
+          <automat engaged="true" id="994" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 RB ERC90 [994]" type="LOG - TC2 RB ERC90">
             <unit command-post="true" id="995" name="ABC - TC2 RB ERC90" position="30UXU4153134272" type="ABC - TC2 RB ERC90"/>
           </automat>
-          <automat engaged="true" id="996" knowledge-group="4" name="LOG - TC2 RC53 LECLERC [996]" type="LOG - TC2 RC53 LECLERC" logistic-level="tc2">
+          <automat engaged="true" id="996" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 RC53 LECLERC [996]" type="LOG - TC2 RC53 LECLERC">
             <unit command-post="true" id="997" name="ABC - TC2 RC53 LECLERC" position="30UXU4566534554" type="ABC - TC2 RC53 LECLERC"/>
           </automat>
-          <automat engaged="true" id="998" knowledge-group="4" name="LOG - TC2 RG BIA [998]" type="LOG - TC2 RG BIA" logistic-level="tc2">
+          <automat engaged="true" id="998" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 RG BIA [998]" type="LOG - TC2 RG BIA">
             <unit command-post="true" id="999" name="LOG - TC2 RG BIA" position="30UXU4362533681" type="LOG - TC2 RG BIA"/>
           </automat>
-          <automat engaged="true" id="1000" knowledge-group="4" name="LOG - TC2 RGT AMX30B2 BRENNUS [1000]" type="LOG - TC2 RGT AMX30B2 BRENNUS" logistic-level="tc2">
+          <automat engaged="true" id="1000" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 RGT AMX30B2 BRENNUS [1000]" type="LOG - TC2 RGT AMX30B2 BRENNUS">
             <unit command-post="true" id="1001" name="ABC - TC2 RGT AMX30B2 BRENNUS" position="30UXU4340832273" type="ABC - TC2 RGT AMX30B2 BRENNUS"/>
           </automat>
-          <automat engaged="true" id="1002" knowledge-group="4" name="LOG - TC2 SGAM [1002]" type="LOG - TC2 SGAM" logistic-level="tc2">
+          <automat engaged="true" id="1002" knowledge-group="4" logistic-level="logistic-base" name="LOG - TC2 SGAM [1002]" type="LOG - TC2 SGAM">
             <unit command-post="true" id="1003" name="ALAT - TC2 SGAM" position="30UXU4859634860" type="ALAT - TC2 SGAM"/>
           </automat>
-          <automat engaged="true" id="1004" knowledge-group="4" name="GLAISE - LOG - TC2 [1004]" type="GLAISE - LOG - TC2" logistic-level="tc2">
+          <automat engaged="true" id="1004" knowledge-group="4" logistic-level="logistic-base" name="GLAISE - LOG - TC2 [1004]" type="GLAISE - LOG - TC2">
             <unit command-post="true" id="1005" name="GLAISE - LOG - TC2" position="30UXU3855931432" type="GLAISE - LOG - TC2"/>
           </automat>
-          <automat engaged="true" id="1006" knowledge-group="4" name="GLAISE - LOG - TC2 ALAT [1006]" type="GLAISE - LOG - TC2 ALAT" logistic-level="tc2">
+          <automat engaged="true" id="1006" knowledge-group="4" logistic-level="logistic-base" name="GLAISE - LOG - TC2 ALAT [1006]" type="GLAISE - LOG - TC2 ALAT">
             <unit command-post="true" id="1007" name="GLAISE - LOG - TC2 ALAT" position="30UXU4647130784" type="GLAISE - LOG - TC2 ALAT"/>
             <limit name="Limit 1030">
               <point>30UXU3182352366</point>
@@ -183,10 +184,10 @@
               <point>30UXU4964820040</point>
             </limit>
           </automat>
-          <automat engaged="true" id="1008" knowledge-group="4" name="GLAISE - LOG - TC2 ART [1008]" type="GLAISE - LOG - TC2 ART" logistic-level="tc2">
+          <automat engaged="true" id="1008" knowledge-group="4" logistic-level="logistic-base" name="GLAISE - LOG - TC2 ART [1008]" type="GLAISE - LOG - TC2 ART">
             <unit command-post="true" id="1009" name="GLAISE - LOG - TC2 ART" position="30UXU4979729371" type="GLAISE - LOG - TC2 ART"/>
           </automat>
-          <automat engaged="true" id="1010" knowledge-group="4" name="GLAISE - LOG - TC2 char [1010]" type="GLAISE - LOG - TC2 char" logistic-level="tc2">
+          <automat engaged="true" id="1010" knowledge-group="4" logistic-level="logistic-base" name="GLAISE - LOG - TC2 char [1010]" type="GLAISE - LOG - TC2 char">
             <unit command-post="true" id="1011" name="GLAISE - LOG - TC2 char" position="30UXU4513628870" type="GLAISE - LOG - TC2 char"/>
           </automat>
           <automat engaged="true" id="1012" knowledge-group="4" name="ABC - Escadron Blinde AMX 10 RC [1012]" type="ABC - Escadron Blinde AMX 10 RC">
@@ -216,91 +217,80 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics>
-        <logistic-base id="1897">
+        <logistic-base id="970">
+          <subordinate id="899"/>
+          <subordinate id="970"/>
+          <subordinate id="1018"/>
+        </logistic-base>
+        <logistic-base id="972">
+          <subordinate id="972"/>
+          <subordinate id="1024"/>
+        </logistic-base>
+        <logistic-base id="974">
+          <subordinate id="974"/>
+        </logistic-base>
+        <logistic-base id="976">
+          <subordinate id="976"/>
+        </logistic-base>
+        <logistic-base id="978">
+          <subordinate id="978"/>
+        </logistic-base>
+        <logistic-base id="980">
+          <subordinate id="980"/>
+        </logistic-base>
+        <logistic-base id="982">
+          <subordinate id="982"/>
+        </logistic-base>
+        <logistic-base id="984">
+          <subordinate id="984"/>
+        </logistic-base>
+        <logistic-base id="986">
+          <subordinate id="986"/>
+        </logistic-base>
+        <logistic-base id="988">
+          <subordinate id="988"/>
+        </logistic-base>
+        <logistic-base id="990">
+          <subordinate id="990"/>
+        </logistic-base>
+        <logistic-base id="992">
+          <subordinate id="992"/>
+        </logistic-base>
+        <logistic-base id="994">
+          <subordinate id="994"/>
+        </logistic-base>
+        <logistic-base id="996">
+          <subordinate id="996"/>
+        </logistic-base>
+        <logistic-base id="998">
+          <subordinate id="998"/>
+        </logistic-base>
+        <logistic-base id="1000">
+          <subordinate id="1000"/>
+        </logistic-base>
+        <logistic-base id="1002">
+          <subordinate id="1002"/>
+        </logistic-base>
+        <logistic-base id="1004">
           <subordinate id="1004">
             <quotas>
               <resource name="RATION DE COMBAT 1" quantity="1000"/>
               <resource name="EAU MINERALE 1L T 1" quantity="1000"/>
             </quotas>
           </subordinate>
-          <subordinate id="1006">
-            <quotas/>
-          </subordinate>
-          <subordinate id="1008">
-            <quotas/>
-          </subordinate>
-          <subordinate id="1010">
-            <quotas/>
-          </subordinate>
-        </logistic-base>
-        <tc2 id="970">
-          <subordinate id="899"/>
-          <subordinate id="1018"/>
-          <subordinate id="970"/>
-        </tc2>
-        <tc2 id="972">
-          <subordinate id="1024"/>
-          <subordinate id="972"/>
-        </tc2>
-        <tc2 id="974">
-          <subordinate id="974"/>
-        </tc2>
-        <tc2 id="976">
-          <subordinate id="976"/>
-        </tc2>
-        <tc2 id="978">
-          <subordinate id="978"/>
-        </tc2>
-        <tc2 id="980">
-          <subordinate id="980"/>
-        </tc2>
-        <tc2 id="982">
-          <subordinate id="982"/>
-        </tc2>
-        <tc2 id="984">
-          <subordinate id="984"/>
-        </tc2>
-        <tc2 id="986">
-          <subordinate id="986"/>
-        </tc2>
-        <tc2 id="988">
-          <subordinate id="988"/>
-        </tc2>
-        <tc2 id="990">
-          <subordinate id="990"/>
-        </tc2>
-        <tc2 id="992">
-          <subordinate id="992"/>
-        </tc2>
-        <tc2 id="994">
-          <subordinate id="994"/>
-        </tc2>
-        <tc2 id="996">
-          <subordinate id="996"/>
-        </tc2>
-        <tc2 id="998">
-          <subordinate id="998"/>
-        </tc2>
-        <tc2 id="1000">
-          <subordinate id="1000"/>
-        </tc2>
-        <tc2 id="1002">
-          <subordinate id="1002"/>
-        </tc2>
-        <tc2 id="1004">
           <subordinate id="1012"/>
-          <subordinate id="1004"/>
-        </tc2>
-        <tc2 id="1010">
-          <subordinate id="1010"/>
-        </tc2>
-        <tc2 id="1008">
-          <subordinate id="1008"/>
-        </tc2>
-        <tc2 id="1006">
+        </logistic-base>
+        <logistic-base id="1006">
           <subordinate id="1006"/>
-        </tc2>
+        </logistic-base>
+        <logistic-base id="1008">
+          <subordinate id="1008"/>
+        </logistic-base>
+        <logistic-base id="1010">
+          <subordinate id="1010"/>
+        </logistic-base>
       </logistics>
     </party>
   </parties>
@@ -312,5 +302,6 @@
       <relationship diplomacy="enemy" party="1"/>
     </party>
   </diplomacy>
+  <resources infinite="true"/>
 </orbat>
-<!-- signature="0223822618" -->
+<!-- signature="3994720322" -->

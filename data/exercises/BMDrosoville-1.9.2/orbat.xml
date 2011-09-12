@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
   <parties>
     <party id="1" name="GoodGuys" type="friend">
       <objects>
@@ -31,6 +31,7 @@
           <attributes>
             <obstacle activated="false" type="reserved">
               <activation-time value="0"/>
+              <activity-time value="0"/>
             </obstacle>
           </attributes>
         </object>
@@ -41,9 +42,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="36000"/>
           </attributes>
         </object>
@@ -128,10 +127,10 @@
             <unit command-post="false" id="71" name="Section CBT INF AMX10P CDS OFF" position="31TCM1106089324" type="INF - Section CBT AMX10P CDS OFF"/>
             <unit command-post="false" id="72" name="Section CBT INF AMX10P CDS SOFF" position="31TCM1207789791" type="INF - Section CBT AMX10P CDS SOFF"/>
           </automat>
-          <automat engaged="true" id="73" knowledge-group="2" name="Batterie de Tir AUF1 [73]" type="Batterie ASS . AUF1">
+          <automat engaged="true" id="73" knowledge-group="2" name="Batterie de Tir AUF1 [73]" type="ASS . Batterie de Tir AUF1">
             <unit command-post="true" id="74" name="PC Batterie ASS[74]" position="31TCM1413286675" type="PC . Batterie ASS"/>
-            <unit command-post="false" id="75" name="Section de Tir AUF1 CDS OFF[75]" position="31TCM1413286675" type="Section de Tir . AUF1 CDS OFF"/>
-            <unit command-post="false" id="76" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1413286675" type="Section de Tir . AUF1 CDS OFF"/>
+            <unit command-post="false" id="75" name="Section de Tir AUF1 CDS OFF[75]" position="31TCM1423786671" type="Section de Tir . AUF1 CDS OFF"/>
+            <unit command-post="false" id="76" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1412986607" type="Section de Tir . AUF1 CDS OFF"/>
           </automat>
           <automat engaged="true" id="81" knowledge-group="2" name="Section Decontamination [81]" type="NBC - Section Decontamination">
             <unit command-post="true" id="82" name="Equipe CDT deconta NBC" position="31TCM1533688471" type="NBC - PC deconta"/>
@@ -279,4 +278,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2258727280" -->
+<!-- signature="0486397811" -->
