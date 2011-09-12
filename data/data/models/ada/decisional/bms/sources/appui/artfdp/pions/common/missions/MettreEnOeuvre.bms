@@ -472,21 +472,21 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
                     local switch_1 = mission:GetType()
                         if switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" then
                                                     DEC_Copie_Point( mission.positionImplantation_, self.ptObjImplantation )
-                            self.bSauvegardeAutomatique = mission.sauvegardeAutomatique_
+                            self.bSauvegardeAutomatique = mission.positionSauvegarde_
                             _continue = false
                         elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnBatterieInopinee" then
                                                     DEC_Copie_Point( myself:DEC_Agent_Position(), self.ptObjImplantation )
-                            self.bSauvegardeAutomatique = mission.sauvegardeAutomatique_
+                            self.bSauvegardeAutomatique = mission.positionSauvegarde_
                             _continue = false
                         elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                                                     self.repObjImplantation = mission.zoneImplantation_
                             self.ptObjImplantation = S_Obj_Position( self.repObjImplantation )
-                            self.bSauvegardeAutomatique = mission.sauvegardeAutomatique_
+                            self.bSauvegardeAutomatique = mission.positionSauvegarde_
                             _continue = false
                         elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones" then
                                                     self.repObjImplantation = mission.zoneImplantation1_
                             self.ptObjImplantation = S_Obj_Position( self.repObjImplantation )
-                            self.bSauvegardeAutomatique = mission.sauvegardeAutomatique_
+                            self.bSauvegardeAutomatique = mission.positionSauvegarde_
                             _continue = false
                                                 end
                     end
@@ -610,7 +610,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                     end
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
-                    if( self.bSauvegardeAutomatique or ( myself:GetType() == "SectionASS_LRM" ) ) then
+                    if( self.bSauvegardeAutomatique ) then -- or ( myself:GetType() == "SectionASS_LRM" ) ) then
                         do
                             local mission = DEC_GetMission( myself )
                              do

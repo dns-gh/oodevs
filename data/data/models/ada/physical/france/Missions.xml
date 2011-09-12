@@ -271,7 +271,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zoneImplantation_" name="Zone implantation" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" id="30" name="ASS Assurer Mise En Oeuvre Sur Position">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -280,7 +279,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positionImplantation_" name="Position implantation" optional="false" type="Point"/>
       <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones" id="1005" name="ASS Assurer Mise En Oeuvre2Zones">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -290,7 +288,6 @@
       <parameter dia-name="zoneImplantation1_" name="Zone implantation1" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="zoneImplantation2_" name="Zone implantation2" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnBatterieInopinee" dia-type=" T_Mission_Pion_ASS_AssurerMiseEnBatterieInopinee" id="465" name="ASS Assurer Mise En Batterie Inopinee">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -298,7 +295,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-      <parameter dia-name="sauvegardeAutomatique_" name="sauvegarde automatique" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_ReconnaitreZoneDeploiement" dia-type="T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" id="31" name="ASS Reconnaitre Zone Deploiement" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -5295,4 +5291,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2048405305" -->
+<!-- signature="1145587897" -->
