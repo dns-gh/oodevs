@@ -70,6 +70,7 @@ void DelayCapacity::Instanciate( MIL_Object_ABC& object ) const
     DelayCapacity* capacity = new DelayCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+    object.GetAttribute< DelayAttribute >() = DelayAttribute();
 }
 
 // -----------------------------------------------------------------------------
