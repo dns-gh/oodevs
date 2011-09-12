@@ -16,7 +16,7 @@
 
 class ADN_TimeField_EditLine;
 class QComboBox;
-class QIntValidator;
+class ADN_IntValidator;
 
 // =============================================================================
 // Created: SBO 2005-09-09
@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     QString text() const;
-    QIntValidator& GetValidator();
+    ADN_IntValidator& GetValidator();
     void setText( const QString& strText );
     void SetMinimumValueInSecond( unsigned int value );
     //@}
@@ -66,7 +66,7 @@ private:
     unsigned int            nMinimumMinutesValue_;
     unsigned int            nMinimumHoursValue_;
     bool                    bFreezeSlot_;
-    QIntValidator*          pValidator_;
+    ADN_IntValidator*          pValidator_;
     //@}
 };
 

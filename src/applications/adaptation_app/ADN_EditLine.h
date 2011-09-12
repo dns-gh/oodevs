@@ -39,7 +39,7 @@ private:
 #include "ADN_EditLine.inl"
 
 typedef ADN_EditLine< ADN_Connector_String< ADN_EditLine_ABC >, QRegExpValidator >    ADN_EditLine_String;
-typedef ADN_EditLine< ADN_Connector_Int< ADN_EditLine_ABC >,    QIntValidator >       ADN_EditLine_Int;
+typedef ADN_EditLine< ADN_Connector_Int< ADN_EditLine_ABC >,    ADN_IntValidator >       ADN_EditLine_Int;
 typedef ADN_EditLine< ADN_Connector_Double< ADN_EditLine_ABC >, ADN_DoubleValidator > ADN_EditLine_Double;
 
 #endif // __ADN_EditLine_h_

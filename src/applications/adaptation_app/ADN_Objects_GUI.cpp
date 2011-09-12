@@ -309,7 +309,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eProtectionCapacityPresent ] = & protection->GetConnector();
         builder.AddField< ADN_EditLine_Int >( protection, tr( "Max size" ), vInfosConnectors[ eProtectionCapacity_MaxSize ], tr( "agents" ) );
-        builder.SetValidator( new QIntValidator( 1, INT_MAX, this ) );
+        builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
         builder.AddField< ADN_CheckBox >( protection, tr( "Genie prepared" ), vInfosConnectors[ eProtectionCapacity_GeniePrepared ] );
     }
 
@@ -361,7 +361,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eScatteringCapacityPresent ] = & scattering->GetConnector();
         builder.AddField< ADN_EditLine_Int >( scattering, tr( "Nombre d'humain par pas de simulation" ), vInfosConnectors[eHumanByTimeStep] );
-        builder.SetValidator( new QIntValidator( 1, INT_MAX, this ) );
+        builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
     }
 
     ADN_GroupBox* structural = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Structural state" ), hBox );

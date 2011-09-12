@@ -256,3 +256,16 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
     else
         return Acceptable;
 }
+
+ADN_IntValidator::ADN_IntValidator( QObject* parent ) : QIntValidator( parent )
+{}
+
+ADN_IntValidator::ADN_IntValidator( int bottom, int top, QObject * parent ) : QIntValidator( bottom, top, parent )
+{}
+  
+ADN_IntValidator::~ADN_IntValidator()
+{}
+
+void ADN_IntValidator::fixup( QString& strInput ) const
+{
+}
