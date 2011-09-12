@@ -58,7 +58,8 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Reserved obstacle activated:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Perceived:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Relevance:" ) );
+                .AddLabel( tools::findTranslation( "Object", "Relevance:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Delay time:" ) );
 
     display_->AddGroup( tools::findTranslation( "Object", "Crossing site" ) )
                 .AddLabel( tools::findTranslation( "Object", "Width:" ) )

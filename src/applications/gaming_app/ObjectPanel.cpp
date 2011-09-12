@@ -57,7 +57,8 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tools::findTranslation( "Object", "Development resource:" ) )
                 .AddSpinBox( tools::findTranslation( "Object", "Bypass:" ), 0, 100, 1 )
                 .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
-                .AddCheckBox( tools::findTranslation( "Object", "Reserved obstacle activated:" ) );
+                .AddCheckBox( tools::findTranslation( "Object", "Reserved obstacle activated:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Delay time:" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Crossing site" ) )
                 .AddLabel( tools::findTranslation( "Object", "Width:" ) )
