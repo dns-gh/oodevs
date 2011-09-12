@@ -9,7 +9,7 @@
 
 namespace dispatcher
 {
-   
+
 // -----------------------------------------------------------------------------
 // Name: EquipmentAvailability constructor
 // Created: NLD 2006-10-02
@@ -49,9 +49,9 @@ void EquipmentAvailability< T >::Send( T& asn ) const
     asn.set_working( nNbrWorking_ );
     asn.set_lent( nNbrLent_ );
     if( nNbrResting_ != std::numeric_limits< unsigned int >::max() )
-    {        
+    {
         asn.set_resting( nNbrResting_ );
-    }   
+    }
 }
 
 }

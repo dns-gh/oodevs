@@ -81,7 +81,6 @@ void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_mental_wound( bMentalDiseased_ );
     asn().set_nbc_contaminated( bContaminated_ );
 
-
     asn.Send( publisher );
 }
 

@@ -261,7 +261,6 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( wrapper.message().has_explosion() )
     {} // $$$$ merge
 
-
     else if( wrapper.message().has_report() )
         CreateUpdate< Report >( reports_, wrapper.message().report().report().id(), wrapper.message().report() );
     else if( wrapper.message().has_invalidate_report() )
@@ -337,7 +336,6 @@ void Model::Update( const sword::SimToClient& wrapper )
         logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().request().id() ).Update( wrapper.message().log_medical_handling_update() );
     else if( wrapper.message().has_log_medical_state() )
         agents_.Get( wrapper.message().log_medical_state().unit().id() ).Update( wrapper.message().log_medical_state() );
-
 
     else if( wrapper.message().has_population_creation() )
         CreateUpdate< Inhabitant >( inhabitants_, wrapper.message().population_creation().id().id(), wrapper.message().population_creation() );

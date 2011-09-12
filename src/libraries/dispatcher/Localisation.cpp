@@ -66,7 +66,6 @@ void Localisation::Send( sword::Location& msg ) const
         *msg.mutable_coordinates()->add_elem() = *it;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Localisation::Send
 // Created: NLD 2010-12-27

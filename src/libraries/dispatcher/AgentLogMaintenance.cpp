@@ -16,7 +16,6 @@
 #include "protocol/ClientSenders.h"
 #include "MaintenanceEquipmentAvailability.h"
 
-
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

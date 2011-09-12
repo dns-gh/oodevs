@@ -10,7 +10,6 @@
 #ifndef __AgentLogSupply_h_
 #define __AgentLogSupply_h_
 
-
 #include "EquipmentAvailability.h"
 #include "tools/Resolver.h"
 

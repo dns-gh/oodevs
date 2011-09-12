@@ -91,4 +91,3 @@ StockAttribute::StockResource::StockResource( const sword::StockResource& msg )
 {
 }
 
-
