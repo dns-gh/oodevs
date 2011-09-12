@@ -27,6 +27,7 @@ RichListItem::RichListItem( Q3ListView * parent )
     , font_( parent->font() )
     , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     // NOTHING
 }
@@ -40,6 +41,7 @@ RichListItem::RichListItem( Q3ListView * parent, Q3ListViewItem * after )
     , font_( parent->font() )
     , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     // NOTHING
 }
@@ -53,6 +55,7 @@ RichListItem::RichListItem( Q3ListView * parent, QString label1, QString label2 
     , font_( parent->font() )
     , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
 }
@@ -66,6 +69,7 @@ RichListItem::RichListItem( Q3ListView * parent, Q3ListViewItem * after, QString
     , font_( parent->font() )
     , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
 }
@@ -79,6 +83,7 @@ RichListItem::RichListItem( Q3ListViewItem * parent )
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     // NOTHING
 }
@@ -92,6 +97,7 @@ RichListItem::RichListItem( Q3ListViewItem * parent, Q3ListViewItem * after )
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     // NOTHING
 }
@@ -105,6 +111,7 @@ RichListItem::RichListItem( Q3ListViewItem * parent, QString label1, QString lab
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
 }
@@ -118,6 +125,7 @@ RichListItem::RichListItem( Q3ListViewItem * parent, Q3ListViewItem * after, QSt
     , font_( listView()->font() )
     , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
+    , colorChanged_( false )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
 }
@@ -179,6 +187,7 @@ void RichListItem::SetBackgroundColor( const QColor& color )
     backgroundColor_ = color;
     backgroundColor2_ = QColor();
     even_ = InitializeColor();
+    colorChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -190,6 +199,7 @@ void RichListItem::SetBackgroundColor( const QColor& color1, const QColor& color
     backgroundColor_ = color1;
     backgroundColor2_ = color2;
     even_ = InitializeColor();
+    colorChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,10 +273,10 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
     else
     {
         colorGroup.setColor( QColorGroup::Text, fontColor_ );
-        if( listView()->backgroundOrigin() == QWidget::WindowOrigin )
-            brush = listView()->backgroundBrush();
-        else
+        if( colorChanged_ ) // $$$$ ABR 2011-09-12: that was ( listView()->backgroundOrigin() == QWidget::WindowOrigin ), but QT3ListView return always WindowOrigin, so colorChanged_ is here waiting for a full QT4 implementation.
             brush.setColor( GetBackgroundColor() );
+        else
+            brush = listView()->backgroundBrush();
     }
 
     Q3SimpleRichText* pRichText = columns_[ nColumn ].rich;

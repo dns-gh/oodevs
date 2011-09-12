@@ -100,6 +100,7 @@ private:
     QColor backgroundColor_;
     QColor backgroundColor2_;   // For listviews with alternating colors
     bool even_;
+    bool colorChanged_;
 
     QFont font_;
     QColor fontColor_;

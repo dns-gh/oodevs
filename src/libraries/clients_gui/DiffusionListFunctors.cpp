@@ -134,7 +134,7 @@ void DiffusionListGenerator::operator()( const Entity_ABC& agent ) const
 
             DictionaryExtensions* entityDico = const_cast< DictionaryExtensions* >( entity.Retrieve< DictionaryExtensions >() );
             const TacticalHierarchies& entityHierarchy = entity.Get< TacticalHierarchies >();
-            if( entityDico && attribute->IsActive( entityDico->GetExtensions() ) && entityHierarchy.GetLevel() == fatherHierarchy.GetLevel() )
+            if( entityDico && !entityDico->GetValue( "TypePC" ).empty() && entityHierarchy.GetLevel() == grandFatherHierarchy.GetLevel() )
             {
                 diffusion += ( diffusion.empty() ) ? "" : DiffusionListHierarchy::diffusionSeparator_;
                 diffusion += boost::lexical_cast< std::string >( entity.GetId() );

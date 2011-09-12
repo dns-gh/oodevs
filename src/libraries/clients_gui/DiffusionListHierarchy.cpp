@@ -264,7 +264,8 @@ void DiffusionListHierarchy::Initialize( SafePointer< Entity_ABC > selected, con
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( dico->GetExtensionTypes().GetNameByType( AttributeType::ETypeDiffusionList ) );
         if( !attribute )
             continue;
-        if( attribute->IsActive( dico->GetExtensions() ) )
+        if( !dico->GetValue( "TypePC" ).empty() &&
+            &selected_->Get< kernel::TacticalHierarchies >().GetTop() == &entity->Get< kernel::TacticalHierarchies >().GetTop() )
             potentials_.insert( entity->GetId() );
     }
     UpdateDisplay( diffusionList );
