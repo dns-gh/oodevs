@@ -13,6 +13,7 @@
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
 #include "ADN_FireClass_Wizard.h"
+#include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FireClass_ListView constructor
@@ -22,7 +23,7 @@ ADN_FireClass_ListView::ADN_FireClass_ListView( QWidget* pParent /* = 0*/, const
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Fires" ) );
+    addColumn( tools::translate( "ADN_FireClass_ListView", "Fires" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_FireClass_Data::FireClassInfos >( *this );

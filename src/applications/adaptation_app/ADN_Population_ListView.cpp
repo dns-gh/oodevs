@@ -13,6 +13,7 @@
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Population_Wizard.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Population_Data::PopulationInfos PopulationInfos;
 
@@ -24,7 +25,7 @@ ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent, const char* 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Crowds" ) );
+    addColumn( tools::translate( "ADN_Population_ListView", "Crowds" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<PopulationInfos>(*this);

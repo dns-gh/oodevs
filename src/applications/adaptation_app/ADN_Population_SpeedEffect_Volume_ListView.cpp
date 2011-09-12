@@ -12,6 +12,7 @@
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Population_Data::SpeedEffectVolumeInfos SpeedEffectVolumeInfos;
 
@@ -46,7 +47,7 @@ ADN_Population_SpeedEffect_Volume_ListView::ADN_Population_SpeedEffect_Volume_Li
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Volumes" ) );
+    addColumn( tools::translate( "ADN_Population_SpeedEffect_Volume_ListView", "Volumes" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Sizes( *this );

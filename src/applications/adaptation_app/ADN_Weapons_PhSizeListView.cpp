@@ -22,6 +22,7 @@
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
+#include "ADN_Tr.h"
 #include "GQ_PlotData.h"
 #include "GQ_Plot.h"
 
@@ -75,7 +76,7 @@ ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* 
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Target size" ) );
+    addColumn( tools::translate( "ADN_Weapons_PhSizeListView", "Target size" ) );
     setResizeMode( Q3ListView::AllColumns );
     setSorting( -1 );
 

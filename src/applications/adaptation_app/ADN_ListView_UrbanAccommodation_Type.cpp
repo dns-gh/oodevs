@@ -14,6 +14,7 @@
 #include "ADN_GuiTools.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
+#include "ADN_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Internal List View Urban_Accommodation connector to be connected with ADN_ListView_Urban_Accommodation
@@ -53,7 +54,7 @@ ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWid
     : ADN_ListView( parent, name, f )
 {
     // Add a column && disable sorting
-    addColumn( tr( name ) );
+    addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", name ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
@@ -92,8 +93,8 @@ void ADN_ListView_UrbanAccommodation_Type::ConnectItem( bool bConnect )
 void  ADN_ListView_UrbanAccommodation_Type::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popuMenu( this );
-    popuMenu.insertItem( tr( "New" ), 0 );
-    popuMenu.insertItem( tr( "Delete" ), 1 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "New" ), 0 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Delete" ), 1 );
     popuMenu.setItemEnabled( 1, pCurData_ != 0 );
     switch( popuMenu.exec( pt ) )
     {

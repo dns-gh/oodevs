@@ -23,6 +23,7 @@
 #include "ADN_Equipement_Wizard.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_WeaponFilter.h"
+#include "ADN_Tr.h"
 #include <boost/bind.hpp>
 
 typedef ADN_Equipement_Data::AmmoCategoryInfo AmmoCategoryInfo;
@@ -37,7 +38,7 @@ ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent, cons
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Ammunition" ) );
+    addColumn( tools::translate( "ADN_Equipement_AmmoListView", "Ammunition" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
@@ -156,7 +157,7 @@ std::string ADN_Equipement_AmmoListView::GetToolTipFor( Q3ListViewItem& item )
     AmmoCategoryInfo* pCastData = (AmmoCategoryInfo*)pData;
     assert( pCastData != 0 );
 
-    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    std::string strToolTip = tools::translate( "ADN_Equipement_AmmoListView", "<b>Used by:</b><br>" ).ascii();
     strToolTip += ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData );
 
     return strToolTip;

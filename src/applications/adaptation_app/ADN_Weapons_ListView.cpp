@@ -35,7 +35,7 @@ ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent, const char* szName
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Weapon system" ) );
+    addColumn( tools::translate( "ADN_Weapons_ListView", "Weapon system" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
@@ -117,7 +117,7 @@ std::string ADN_Weapons_ListView::GetToolTipFor( Q3ListViewItem& item )
     WeaponInfos* pCastData = (WeaponInfos*)pData;
     assert( pCastData != 0 );
 
-    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    std::string strToolTip = tools::translate( "ADN_Weapons_ListView", "<b>Used by:</b><br>" ).ascii();
     strToolTip += ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData );
 
     return strToolTip;

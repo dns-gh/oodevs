@@ -34,7 +34,7 @@ ADN_Automata_ListView::ADN_Automata_ListView( QWidget* pParent, const char* szNa
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Automata" ) );
+    addColumn( tools::translate( "ADN_Automata_ListView", "Automata" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation

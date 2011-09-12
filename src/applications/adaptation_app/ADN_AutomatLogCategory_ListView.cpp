@@ -60,17 +60,17 @@ ADN_AutomatLogCategory_ListView::~ADN_AutomatLogCategory_ListView()
 // -----------------------------------------------------------------------------
 void ADN_AutomatLogCategory_ListView::BuildHeaders()
 {
-    addColumn( tr( "Item > Automat > Unit > Comp" ) );
-    addColumn( tr( "Units" ) );
-    addColumn( tr( "Equipments" ) );
-    addColumn( tr( "Resources" ) );
-    addColumn( tr( "Norm. Consumption" ) );
-    addColumn( tr( "Consumption\nMoving" ) );
-    addColumn( tr( "Autonomy\nMoving" ) );
-    addColumn( tr( "Consumption\nParked engine stopped" ) );
-    addColumn( tr( "Autonomy\nParked engine Stopped" ) );
-    addColumn( tr( "Consumption\nParked engine running" ) );
-    addColumn( tr( "Autonomy\nParked engine running" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Item > Automat > Unit > Comp" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Units" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Equipments" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Resources" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Norm. Consumption" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nMoving" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nMoving" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nParked engine stopped" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nParked engine Stopped" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nParked engine running" ) );
+    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nParked engine running" ) );
     for( int i = 1; i < columns(); ++i )
         setColumnAlignment( i, Qt::AlignVCenter | Qt::AlignRight );
 }

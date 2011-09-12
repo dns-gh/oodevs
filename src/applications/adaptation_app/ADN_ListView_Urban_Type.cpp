@@ -14,6 +14,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_GuiTools.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Urban_Data::UrbanInfos UrbanInfos;
 
@@ -56,7 +57,7 @@ ADN_ListView_Urban_Type::ADN_ListView_Urban_Type(QWidget * parent, const char * 
 :   ADN_ListView(parent,name,f)
 {
     // Add a column && disable sorting
-    addColumn( tr( name ) );
+    addColumn( tools::translate( "ADN_ListView_Urban_Type", name ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 
@@ -100,8 +101,8 @@ void  ADN_ListView_Urban_Type::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popuMenu( this );
 
-    popuMenu.insertItem( tr( "New" ), 0 );
-    popuMenu.insertItem( tr( "Delete" ), 1 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_Urban_Type", "New" ), 0 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_Urban_Type", "Delete" ), 1 );
     popuMenu.setItemEnabled( 1, pCurData_ != 0 );
 
     int nResult = popuMenu.exec( pt );

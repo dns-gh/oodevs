@@ -28,7 +28,7 @@ ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent, const char* szName
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Sensors" ) );
+    addColumn( tools::translate( "ADN_ListView_Sensors", "Sensors" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
@@ -119,7 +119,7 @@ std::string ADN_ListView_Sensors::GetToolTipFor( Q3ListViewItem& item )
     SensorInfos* pCastData = (SensorInfos*)pData;
     assert( pCastData != 0 );
 
-    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    std::string strToolTip = tools::translate( "ADN_ListView_Sensors", "<b>Used by:</b><br>" ).ascii();
     strToolTip += ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData );
 
     return strToolTip;

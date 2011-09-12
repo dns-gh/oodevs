@@ -32,7 +32,7 @@ ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Equipments" ) );
+    addColumn( tools::translate( "ADN_ListView_Composantes", "Equipments" ) );
     setResizeMode(Q3ListView::AllColumns);
 
     // Connector creation.
@@ -189,7 +189,7 @@ std::string ADN_ListView_Composantes::GetToolTipFor( Q3ListViewItem& item )
     ComposanteInfos* pCastData = (ComposanteInfos*)pData;
     assert( pCastData != 0 );
 
-    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    std::string strToolTip = tools::translate( "ADN_ListView_Composantes", "<b>Used by:</b><br>" ).ascii();
     strToolTip += ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData );
 
     return strToolTip;

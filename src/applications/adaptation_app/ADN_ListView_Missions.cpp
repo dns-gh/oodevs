@@ -65,7 +65,7 @@ ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_Mod
     , currentMissions_( 0 )
 {
     // add one column
-    addColumn( tr( "Missions"));
+    addColumn( tools::translate( "ADN_ListView_Missions", "Missions"));
     setResizeMode(Q3ListView::AllColumns);
 
     // connector creation
@@ -110,7 +110,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         return;
 
     Q3PopupMenu menu;
-    menu.insertItem( tr( "Configure missions" ), 1 );
+    menu.insertItem( tools::translate( "ADN_ListView_Missions", "Configure missions" ), 1 );
 
     if( menu.exec( pt ) != 1 )
         return;
@@ -122,17 +122,17 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 
     if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
     {
-        pParent = new Q3CheckListItem( pMissionList, tr( "Unit" ), Q3CheckListItem::CheckBoxController );
+        pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Unit" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() );
     }
     else if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
     {
-        pParent = new Q3CheckListItem( pMissionList, tr( "Automate" ), Q3CheckListItem::CheckBoxController );
+        pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Automate" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() );
     }
     else
     {
-        pParent = new Q3CheckListItem( pMissionList, tr( "Crowd" ), Q3CheckListItem::CheckBoxController );
+        pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Crowd" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() );
     }
     if( cfgDlg.exec() != QDialog::Accepted )

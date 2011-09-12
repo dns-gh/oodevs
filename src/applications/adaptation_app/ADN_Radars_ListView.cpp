@@ -14,6 +14,7 @@
 #include "ADN_Radars_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Radars_Wizard.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Radars_Data::RadarInfos RadarInfos;
 
@@ -25,7 +26,7 @@ ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent, const char* szName, 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Special sensors" ) );
+    addColumn( tools::translate( "ADN_Radars_ListView", "Special sensors" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<RadarInfos>(*this);

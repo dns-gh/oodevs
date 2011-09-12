@@ -30,7 +30,7 @@ ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityT
 , eEntityType_( eEntityType )
 {
     // Add one column.
-    addColumn( tr( "Models" ) );
+    addColumn( tools::translate( "ADN_ListView_Models", "Models" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation.
@@ -91,7 +91,7 @@ std::string ADN_ListView_Models::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     ModelInfos* pCastData = (ModelInfos*)pData;
-    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    std::string strToolTip = tools::translate( "ADN_ListView_Models", "<b>Used by:</b><br>" ).ascii();
     switch( eEntityType_ )
     {
     case ModelInfos::ePawn:

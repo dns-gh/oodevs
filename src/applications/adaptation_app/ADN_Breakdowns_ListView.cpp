@@ -34,7 +34,7 @@ ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* 
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Breakdowns" ) );
+    addColumn( tools::translate( "ADN_Breakdowns_ListView", "Breakdowns" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation

@@ -14,6 +14,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
 #include "ADN_GuiTools.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Categories_Data::SizeInfos SizeInfos;
 
@@ -57,7 +58,7 @@ ADN_ListView_Categories_Size::ADN_ListView_Categories_Size(QWidget * parent, con
 :   ADN_ListView(parent,name,f)
 {
     // Add a column && disable sorting
-    addColumn( tr( "Sizes" ) );
+    addColumn( tools::translate( "ADN_ListView_Categories_Size", "Sizes" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 
@@ -102,8 +103,8 @@ void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popuMenu( this );
 
-    popuMenu.insertItem( tr( "New size"), 0 );
-    popuMenu.insertItem( tr( "Delete size"), 1 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_Size", "New size"), 0 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_Size", "Delete size"), 1 );
     popuMenu.setItemEnabled( 1, pCurData_ != 0 );
 
     int nResult = popuMenu.exec( pt );

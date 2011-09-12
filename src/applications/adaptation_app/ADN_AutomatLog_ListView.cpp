@@ -60,17 +60,17 @@ ADN_AutomatLog_ListView::~ADN_AutomatLog_ListView()
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::BuildHeaders()
 {
-    addColumn( tr( "Automat > Unit > Comp > Item" ) );
-    addColumn( tr( "Units" ) );
-    addColumn( tr( "Equipments" ) );
-    addColumn( tr( "Resources" ) );
-    addColumn( tr( "Norm. Consumption" ) );
-    addColumn( tr( "Consumption\nMoving" ) );
-    addColumn( tr( "Autonomy\nMoving" ) );
-    addColumn( tr( "Consumption\nParked engine stopped" ) );
-    addColumn( tr( "Autonomy\nParked engine Stopped" ) );
-    addColumn( tr( "Consumption\nParked engine running" ) );
-    addColumn( tr( "Autonomy\nParked engine running" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Automat > Unit > Comp > Item" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Units" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Equipments" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Resources" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Norm. Consumption" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Consumption\nMoving" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nMoving" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Consumption\nParked engine stopped" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nParked engine Stopped" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Consumption\nParked engine running" ) );
+    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nParked engine running" ) );
     for( int i = 1; i < columns(); ++i )
         setColumnAlignment( i, Qt::AlignCenter );
 }
@@ -90,7 +90,7 @@ void ADN_AutomatLog_ListView::BuildBody()
 
         // Total Unit/Dotation
         ADN_Rich_ListViewItem* pAutomatTotalItem = new ADN_Rich_ListViewItem( pAutomatItem, true );
-        pAutomatTotalItem->setText( eColumnTarget, tr( "Total" ) );
+        pAutomatTotalItem->setText( eColumnTarget, tools::translate( "ADN_AutomatLog_ListView", "Total" ) );
         pAutomatTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
 
         // Unit
@@ -126,7 +126,7 @@ void ADN_AutomatLog_ListView::BuildBody()
 
             // Total Component/Dotation
             ADN_Rich_ListViewItem* pUnitTotalItem = new ADN_Rich_ListViewItem( pUnitItem, true );
-            pUnitTotalItem->setText( eColumnTarget, tr( "Total" ) );
+            pUnitTotalItem->setText( eColumnTarget, tools::translate( "ADN_AutomatLog_ListView", "Total" ) );
             pUnitTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
 
             // Component

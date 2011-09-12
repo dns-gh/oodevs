@@ -24,6 +24,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tools.h"
+#include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
 typedef ADN_Models_Data::OrderInfos OrderInfos;
@@ -67,7 +68,7 @@ ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget * parent
     , usedWithMission_ ( usedWithMission )
 {
     // add one column
-    addColumn( tr( "Frag orders"));
+    addColumn( tools::translate( "ADN_ListView_Orders", "Frag orders"));
     setResizeMode(Q3ListView::AllColumns);
 
     // connector creation
@@ -120,9 +121,9 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 
     Q3PopupMenu * pMenu=new Q3PopupMenu(this);
     if( bDisplayAdd )
-        pMenu->insertItem( tr( "Add frag order"), pTargetMenu.get() ,0 );
+        pMenu->insertItem( tools::translate( "ADN_ListView_Orders", "Add frag order"), pTargetMenu.get() ,0 );
     if( bDisplayRem )
-        pMenu->insertItem( tr( "Remove frag order"), 1 );
+        pMenu->insertItem( tools::translate( "ADN_ListView_Orders", "Remove frag order"), 1 );
 
     int nMenu = pMenu->exec( pt );
     if( nMenu == 1 )

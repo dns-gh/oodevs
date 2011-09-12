@@ -15,6 +15,7 @@
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_ActiveProtections_Wizard.h"
+#include "ADN_Tr.h"
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 
@@ -26,7 +27,7 @@ ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent, 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "active Protection" ) );
+    addColumn( tools::translate( "ADN_ActiveProtectionsListView", "active Protection" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation

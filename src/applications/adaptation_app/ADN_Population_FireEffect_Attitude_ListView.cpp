@@ -12,6 +12,7 @@
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Population_Data::FireEffectInfos FireEffectInfos;
 
@@ -23,7 +24,7 @@ ADN_Population_FireEffect_Attitude_ListView::ADN_Population_FireEffect_Attitude_
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Attitudes" ) );
+    addColumn( tools::translate( "ADN_Population_FireEffect_Attitude_ListView", "Attitudes" ) );
     setSortColumn( -1 );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation

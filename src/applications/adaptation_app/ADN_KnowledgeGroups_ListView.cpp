@@ -14,6 +14,7 @@
 #include "ADN_KnowledgeGroups_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_KnowledgeGroups_Wizard.h"
+#include "ADN_Tr.h"
 
 typedef ADN_KnowledgeGroups_Data::GroupInfo GroupInfo;
 
@@ -25,7 +26,7 @@ ADN_KnowledgeGroups_ListView::ADN_KnowledgeGroups_ListView( QWidget* pParent, co
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Knowledge groups" ) );
+    addColumn( tools::translate( "ADN_KnowledgeGroups_ListView", "Knowledge groups" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<GroupInfo>(*this);

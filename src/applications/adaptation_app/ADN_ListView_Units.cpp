@@ -26,7 +26,7 @@ ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent, const char* szName, Qt
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Units" ) );
+    addColumn( tools::translate( "ADN_ListView_Units", "Units" ) );
     //setResizeMode( QListView::AllColumns );// $$$$ SBO 2006-02-15: makes content to large for tab (=> scrollbar )...
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<UnitInfos>( *this );
@@ -117,7 +117,7 @@ std::string ADN_ListView_Units::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
     UnitInfos* pCastData = static_cast< UnitInfos* >( pData );
     assert( pCastData != 0 );
-    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    std::string strToolTip = tools::translate( "ADN_ListView_Units", "<b>Used by:</b><br>" ).ascii();
     strToolTip += ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData );
     return strToolTip;
 }

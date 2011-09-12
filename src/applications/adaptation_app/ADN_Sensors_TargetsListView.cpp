@@ -21,6 +21,7 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_Sensors_GUI.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Sensors_Data::TargetInfos TargetInfos;
 
@@ -33,7 +34,7 @@ ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent, cons
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Targets" ) );
+    addColumn( tools::translate( "ADN_Sensors_TargetsListView", "Targets" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
@@ -93,9 +94,9 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
     }
     ADN_Tools::SortMenu( addMenu );
 
-    popupMenu.insertItem( tr( "Add object" ), &addMenu, 0 );
+    popupMenu.insertItem( tools::translate( "ADN_Sensors_TargetsListView", "Add object" ), &addMenu, 0 );
     if( pCurData_ != 0 )
-        popupMenu.insertItem( tr( "Remove object" ), 1 );
+        popupMenu.insertItem( tools::translate( "ADN_Sensors_TargetsListView", "Remove object" ), 1 );
 
     int nMenuResult = popupMenu.exec( pt );
 

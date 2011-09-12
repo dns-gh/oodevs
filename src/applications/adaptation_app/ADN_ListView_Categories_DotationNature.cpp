@@ -14,6 +14,7 @@
 #include "ADN_Categories_GUI.h"
 #include "ADN_GuiTools.h"
 #include "ADN_ResourceNatureInfos.h"
+#include "ADN_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Internal List View Categories_DotationNature connector to be connected with ADN_ListView_Categories_DotationNature
@@ -47,7 +48,7 @@ private:
 ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget * parent, const char * name, Qt::WFlags f )
     : ADN_ListView( parent, name, f )
 {
-    addColumn( tr( "Resource Natures" ) );
+    addColumn( tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_CLV_Categories_DotationNature( *this );
@@ -87,8 +88,8 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popuMenu( this );
 
-    popuMenu.insertItem( tr( "New nature"), 0 );
-    popuMenu.insertItem( tr( "Delete nature"), 1 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_DotationNature", "New nature"), 0 );
+    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_DotationNature", "Delete nature"), 1 );
     popuMenu.setItemEnabled( 1, pCurData_ != 0 );
 
     int nResult = popuMenu.exec( pt );

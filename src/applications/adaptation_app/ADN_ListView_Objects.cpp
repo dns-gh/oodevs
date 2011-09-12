@@ -16,6 +16,7 @@
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_Objects_Wizard.h"
 #include "ADN_ComboBox.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
 
@@ -29,7 +30,7 @@ ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName
     , pComboListPropagation_ ( pComboListPropagation ) 
 {
     // Add one column.
-    addColumn( tr( "Objects" ) );
+    addColumn( tools::translate( "ADN_ListView_Objects", "Objects" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation

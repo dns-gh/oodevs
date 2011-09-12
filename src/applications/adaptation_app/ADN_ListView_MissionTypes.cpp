@@ -14,6 +14,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Mission_Wizard.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Missions_Data::Mission Mission;
 
@@ -25,7 +26,7 @@ ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Missions_Data::T_Missi
     : ADN_ListView( parent, szName )
     , missions_( missions )
 {
-    addColumn( tr( "Missions" ) );
+    addColumn( tools::translate( "ADN_ListView_MissionTypes", "Missions" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     pConnector_ = new ADN_Connector_ListView< Mission >( *this );

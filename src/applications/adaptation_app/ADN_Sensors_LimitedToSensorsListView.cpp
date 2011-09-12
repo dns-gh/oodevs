@@ -11,6 +11,7 @@
 #include "ADN_Sensors_LimitedToSensorsListView.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Sensors_Data::LimitedToSensorsInfos LimitedToSensorsInfos;
 
@@ -23,7 +24,7 @@ ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView( QWid
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Sensors" ) );
+    addColumn( tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Sensors" ) );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
@@ -78,10 +79,10 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
 
     ADN_Tools::SortMenu( addRadarMenu );
 
-    popupMenu.insertItem( tr( "Add sensor" ), &addSensorMenu, 0 );
-    popupMenu.insertItem( tr( "Add special sensor" ), &addRadarMenu, 1 );
+    popupMenu.insertItem( tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Add sensor" ), &addSensorMenu, 0 );
+    popupMenu.insertItem( tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Add special sensor" ), &addRadarMenu, 1 );
     if( pCurData_ != 0 )
-        popupMenu.insertItem( tr( "Remove item" ), 2 );
+        popupMenu.insertItem( tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Remove item" ), 2 );
 
     int nMenuResult = popupMenu.exec( pt );
 

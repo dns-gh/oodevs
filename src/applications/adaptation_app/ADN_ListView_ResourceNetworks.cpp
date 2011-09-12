@@ -13,6 +13,7 @@
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_ResourceNetworks_GUI.h"
 #include "ADN_ResourceNetworks_Wizard.h"
+#include "ADN_Tr.h"
 
 typedef ADN_ResourceNetworks_Data::ResourceNetworkInfos ResourceNetworkInfos;
 
@@ -24,7 +25,7 @@ ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent, 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Resource networks" ) );
+    addColumn( tools::translate( "ADN_ListView_ResourceNetworks", "Resource networks" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ResourceNetworkInfos >(*this);

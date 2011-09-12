@@ -15,6 +15,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
 #include "ADN_GuiTools.h"
+#include "ADN_Tr.h"
 
 typedef helpers::ArmorInfos ArmorInfos;
 
@@ -27,7 +28,7 @@ ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, c
 {
 
     // add one column && disable sort
-    addColumn( tr( "Armor-Plating" ) );
+    addColumn( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 
@@ -76,8 +77,8 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu * pMenu=new Q3PopupMenu( this );
-    pMenu->insertItem( tr( "New Armor-Plating" ), 0  );
-    pMenu->insertItem( tr( "Delete Armor-Plating" ), 1 );
+    pMenu->insertItem( tools::translate( "ADN_ListView_Categories_Armor", "New Armor-Plating" ), 0  );
+    pMenu->insertItem( tools::translate( "ADN_ListView_Categories_Armor", "Delete Armor-Plating" ), 1 );
     pMenu->setItemEnabled( 1, pCurData_ != 0 );
     int nMenu=pMenu->exec( pt );
     switch ( nMenu )
