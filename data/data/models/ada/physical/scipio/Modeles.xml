@@ -5997,45 +5997,6 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="Terroriste">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION ASY Renseigner"/>
-        <mission name="PION ASY SInfiltrer"/>
-        <mission name="PION ASY Commettre Attentat Contre Forces Armees"/>
-        <mission name="PION ASY Commettre Attentat Contre Installation"/>
-        <mission name="PION ASY Commettre Attentat Contre Population"/>
-        <mission name="PION ASY Commettre Attentat Suicide Contre Forces Armees"/>
-        <mission name="PION ASY Commettre Attentat Suicide Contre Installation"/>
-        <mission name="PION ASY Commettre Attentat Suicide Contre Population"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HR">
       <missions>
         <mission name="PION ALAT Eclairer"/>
@@ -13545,31 +13506,6 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" masalife="false" name="Terroristes">
-      <missions>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="GLAISE ABC cie char lourd">
       <missions>
         <mission name="AUTOMATE Decrocher"/>
@@ -15085,28 +15021,6 @@
     </automat>
   </automats>
   <crowd>
-    <crowd dia-type="T_Population" file="Population\Populations\Model.bms" masalife="false" name="Population">
-      <missions>
-        <mission name="FOULES Faire Mouvement">
-          <fragorder name="Population Changer Attitude"/>
-          <fragorder name="Poursuivre"/>
-          <fragorder name="Attendre Se Poster"/>
-        </mission>
-        <mission name="FOULES Commettre Exactions">
-          <fragorder name="Population Changer Attitude"/>
-          <fragorder name="Poursuivre"/>
-          <fragorder name="Attendre Se Poster"/>
-        </mission>
-        <mission name="FOULES Manifester">
-          <fragorder name="Population Changer Attitude"/>
-          <fragorder name="Poursuivre"/>
-          <fragorder name="Attendre Se Poster"/>
-        </mission>
-      </missions>
-      <fragorders>
-        <fragorder name="Population Changer Attitude"/>
-      </fragorders>
-    </crowd>
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
       <missions>
         <mission name="FOULES COMMUNES AllerA">
@@ -15140,4 +15054,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1106712243" -->
+<!-- signature="4169366721" -->
