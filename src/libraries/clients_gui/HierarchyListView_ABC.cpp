@@ -145,7 +145,10 @@ void HierarchyListView_ABC::DisplayIcon( const Entity_ABC& entity, ValuedListIte
 {
     QPixmap pixmap = symbols_.GetSymbol( entity );
     if( pixmap.isNull() )
-        timer_->start( 500, true ); // $$$$ SBO 2007-02-21: return; ?
+    {
+        timer_->start( 500, true );
+        return;
+    }
     item->setPixmap( 0, pixmap );
     item->invalidateHeight();
 }
