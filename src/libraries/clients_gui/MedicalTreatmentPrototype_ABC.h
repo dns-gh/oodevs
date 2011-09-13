@@ -69,7 +69,7 @@ protected:
         {
             Q3HBox* hbox = new Q3HBox( parent );
             new QLabel( QString( name.c_str() ), hbox );
-            baseline_ = new LoadableSpinBox( 0, 500, 1, hbox );
+            baseline_ = new LoadableSpinBox( 0, 10000, 1, hbox );
         }
 
         std::string name_;
