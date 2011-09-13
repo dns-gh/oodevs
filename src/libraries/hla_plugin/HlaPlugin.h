@@ -58,6 +58,7 @@ namespace hla
     class RemoteAgentController;
     template< typename T > class ContextHandler_ABC;
     class ContextFactory_ABC;
+    class AutomatDisengager;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -102,6 +103,7 @@ private:
     std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;
+    std::auto_ptr< AutomatDisengager > pAutomatDisengager_;
     std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
     std::auto_ptr< Stepper > pStepper_;
     //@}

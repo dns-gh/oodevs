@@ -20,6 +20,7 @@
 #include "RemoteAgentController.h"
 #include "ContextFactory.h"
 #include "ContextHandler.h"
+#include "AutomatDisengager.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "dispatcher/Config.h"
@@ -101,6 +102,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pFormationHandler_     ( new FormationContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
     , pAutomatHandler_       ( new AutomatContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
     , pUnitHandler_          ( new UnitContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
+    , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher, *pContextFactory_ ) )
     , pRemoteAgentController_( new RemoteAgentController( *pMessageController_, dynamicModel, staticModel.types_,
                                                           publisher, *pFederate_, *pContextFactory_, *pFormationHandler_,
                                                           *pAutomatHandler_, *pUnitHandler_ ) )
