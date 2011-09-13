@@ -23,6 +23,7 @@ UserProfilePopulationRights::UserProfilePopulationRights( QWidget* pParent, kern
     , UserProfileRights_ABC( this )
 {
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
+    setResizeMode( Q3ListView::NoColumn );
 }
 
 // -----------------------------------------------------------------------------
