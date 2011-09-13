@@ -38,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TrafficabilityAttribute();
+    explicit TrafficabilityAttribute( const sword::MissionParameter_Value& attributes );
     explicit TrafficabilityAttribute( xml::xistream& xis );
     virtual ~TrafficabilityAttribute();
     //@}

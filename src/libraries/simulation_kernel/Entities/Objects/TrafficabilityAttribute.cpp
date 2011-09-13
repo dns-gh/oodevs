@@ -28,6 +28,13 @@ TrafficabilityAttribute::TrafficabilityAttribute()
     // NOTHING
 }
 
+TrafficabilityAttribute::TrafficabilityAttribute( const sword::MissionParameter_Value& attributes )
+    : max_( attributes.list( 1 ).areal() )
+{
+    // NOTHING
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-08-23

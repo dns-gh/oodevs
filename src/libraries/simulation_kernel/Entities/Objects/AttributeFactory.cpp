@@ -247,6 +247,9 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             case ObjectMagicAction::underground:
                 object.GetAttribute< UndergroundAttribute >() = UndergroundAttribute( attributes );
                 break;
+            case ObjectMagicAction::trafficability:
+                object.GetAttribute< TrafficabilityAttribute >() = TrafficabilityAttribute( attributes );
+                break;
             default:
                 break;
             }
