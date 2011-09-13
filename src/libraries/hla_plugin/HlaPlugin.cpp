@@ -21,12 +21,14 @@
 #include "ContextFactory.h"
 #include "ContextHandler.h"
 #include "AutomatDisengager.h"
+#include "FormationCreater.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/StaticModel.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/Model_ABC.h"
 #include "protocol/Simulation.h"
 #include "rpr/EntityTypeResolver.h"
 #include <hla/HLAException.h>
@@ -103,9 +105,8 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pAutomatHandler_       ( new AutomatContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
     , pUnitHandler_          ( new UnitContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
     , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher, *pContextFactory_ ) )
-    , pRemoteAgentController_( new RemoteAgentController( *pMessageController_, dynamicModel, staticModel.types_,
-                                                          publisher, *pFederate_, *pFormationHandler_,
-                                                          *pAutomatHandler_, *pUnitHandler_ ) )
+    , pFormationCreater_     ( new FormationCreater( *pMessageController_, dynamicModel.Sides(), *pFormationHandler_ ) )
+    , pRemoteAgentController_( new RemoteAgentController( dynamicModel, staticModel.types_, *pFederate_, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_ ) )
     , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
 {
     // NOTHING

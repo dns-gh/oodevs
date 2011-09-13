@@ -16,7 +16,6 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/KnowledgeGroup_ABC.h"
-#include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/Karma.h"
 #include <boost/lexical_cast.hpp>
 
@@ -26,24 +25,22 @@ using namespace plugins::hla;
 // Name: RemoteAgentController constructor
 // Created: SLI 2011-09-01
 // -----------------------------------------------------------------------------
-RemoteAgentController::RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                              dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
-                                              dispatcher::SimulationPublisher_ABC& publisher, RemoteAgentSubject_ABC& agentSubject,
+RemoteAgentController::RemoteAgentController( dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
+                                              RemoteAgentSubject_ABC& agentSubject,
                                               ContextHandler_ABC< sword::FormationCreation >& formationHandler,
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                               ContextHandler_ABC< sword::UnitCreation >& unitHandler )
-    : controller_       ( controller )
-    , model_            ( model )
-    , publisher_        ( publisher )
-    , agentSubject_     ( agentSubject )
-    , automatType_      ( 230u ) // $$$$ _RC_ SLI 2011-09-07: hardcoded
-    , formationHandler_ ( formationHandler )
-    , automatHandler_   ( automatHandler )
-    , unitHandler_      ( unitHandler )
+    : model_           ( model )
+    , agentSubject_    ( agentSubject )
+    , automatType_     ( 230u ) // $$$$ _RC_ SLI 2011-09-07: hardcoded
+    , formationHandler_( formationHandler )
+    , automatHandler_  ( automatHandler )
+    , unitHandler_     ( unitHandler )
 {
     if( automatTypes.Find( automatType_ ) == 0 )
         throw std::runtime_error( "Automat type identifier '" + boost::lexical_cast< std::string >( automatType_ ) + "' not found, please check your physical model." );
-    CONNECT( controller, *this, control_end_tick );
+    formationHandler_.Register( *this );
+    automatHandler_.Register( *this );
     agentSubject_.Register( *this );
 }
 
@@ -62,23 +59,6 @@ RemoteAgentController::~RemoteAgentController()
 // Name: RemoteAgentController::Notify
 // Created: SLI 2011-09-01
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
-{
-    DISCONNECT( controller_, *this, control_end_tick );
-    formationHandler_.Register( *this );
-    automatHandler_.Register( *this );
-    tools::Iterator< const dispatcher::Team_ABC& > it = model_.Sides().CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const dispatcher::Team_ABC& team = it.NextElement();
-        AddFormation( team.GetId() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Notify
-// Created: SLI 2011-09-01
-// -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::FormationCreation& message, const std::string& /*identifier*/ )
 {
     AddAutomat( message.formation().id(), FindKnowledgeGroup( message.party().id() ) );
@@ -91,21 +71,6 @@ void RemoteAgentController::Notify( const sword::FormationCreation& message, con
 void RemoteAgentController::Notify( const sword::AutomatCreation& message, const std::string& /*identifier*/ )
 {
     parties_[ message.party().id() ] = message.automat().id();
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::AddFormation
-// Created: SLI 2011-09-01
-// -----------------------------------------------------------------------------
-void RemoteAgentController::AddFormation( unsigned long party )
-{
-    simulation::UnitMagicAction message;
-    message().mutable_tasker()->mutable_party()->set_id( party );
-    message().set_type( sword::UnitMagicAction::formation_creation );
-    message().mutable_parameters()->add_elem()->add_value()->set_areal( 6 );                          // hierarchy level
-    message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant formation" ); // name
-    message().mutable_parameters()->add_elem()->set_null_value( true );                               // logistic level
-    formationHandler_.Send( message, boost::lexical_cast< std::string >( party ) );
 }
 
 // -----------------------------------------------------------------------------

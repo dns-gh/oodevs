@@ -10,7 +10,6 @@
 #ifndef plugins_hla_RemoteAgentController_h
 #define plugins_hla_RemoteAgentController_h
 
-#include "tools/MessageObserver.h"
 #include "RemoteAgentListener_ABC.h"
 #include "ResponseObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
@@ -20,7 +19,6 @@
 namespace dispatcher
 {
     class Model_ABC;
-    class SimulationPublisher_ABC;
 }
 
 namespace kernel
@@ -30,7 +28,6 @@ namespace kernel
 
 namespace sword
 {
-    class ControlEndTick;
     class AutomatCreation;
     class FormationCreation;
     class UnitCreation;
@@ -55,17 +52,15 @@ namespace hla
 */
 // Created: SLI 2011-09-01
 // =============================================================================
-class RemoteAgentController : private tools::MessageObserver< sword::ControlEndTick >
-                            , private ResponseObserver_ABC< sword::FormationCreation >
+class RemoteAgentController : private ResponseObserver_ABC< sword::FormationCreation >
                             , private ResponseObserver_ABC< sword::AutomatCreation >
                             , private RemoteAgentListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                    dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
-                                    dispatcher::SimulationPublisher_ABC& publisher, RemoteAgentSubject_ABC& agentSubject,
+             RemoteAgentController( dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
+                                    RemoteAgentSubject_ABC& agentSubject,
                                     ContextHandler_ABC< sword::FormationCreation >& formationHandler,
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler );
@@ -75,7 +70,6 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Notify( const sword::ControlEndTick& message, int context );
     virtual void Notify( const sword::FormationCreation& message, const std::string& identifier );
     virtual void Notify( const sword::AutomatCreation& message, const std::string& identifier );
     //@}
@@ -91,7 +85,6 @@ private:
 private:
     //! @name Helpers
     //@{
-    void AddFormation( unsigned long party );
     void AddAutomat( unsigned long formation, unsigned long knowledgeGroup );
     unsigned long FindKnowledgeGroup( unsigned long party ) const;
     unsigned long FindAutomat( rpr::ForceIdentifier ) const;
@@ -109,9 +102,7 @@ private:
 private:
     //! @name Member data
     //@{
-    tools::MessageController_ABC< sword::SimToClient_Content >& controller_;
     dispatcher::Model_ABC& model_;
-    dispatcher::SimulationPublisher_ABC& publisher_;
     RemoteAgentSubject_ABC& agentSubject_;
     const unsigned long automatType_;
     ContextHandler_ABC< sword::FormationCreation >& formationHandler_;
