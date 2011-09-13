@@ -34,6 +34,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )
     , bFuelReportSent_   ( false )
+    , bTerrainReportSent_( false )
 {
     // NOTHING
 }
@@ -254,6 +255,11 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                     rCurrentSpeed_ = 0;
                     vNewPos_ = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
                     movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
+                    if( !bTerrainReportSent_ )
+                    {
+                        movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
+                        bTerrainReportSent_ = true;
+                    }
                     return false;
                 }
             }
@@ -274,6 +280,11 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                 rCurrentSpeed_ = 0;
                 vNewPos_ = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
                 movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
+                if( !bTerrainReportSent_ )
+                {
+                    movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
+                    bTerrainReportSent_ = true;
+                }
                 return false;
             }
         }
@@ -405,6 +416,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
             return eRunning;
         }
+        bTerrainReportSent_ = false;
 
         rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
 
