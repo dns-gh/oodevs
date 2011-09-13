@@ -23,7 +23,6 @@
 #include "MockKnowledgeGroup.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockContextHandler.h"
-#include "MockContextFactory.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
@@ -77,7 +76,6 @@ namespace
         dispatcher::MockModel model;
         dispatcher::MockSimulationPublisher publisher;
         MockRemoteAgentSubject remoteSubject;
-        MockContextFactory contextFactory;
         RemoteAgentListener_ABC* remoteAgentListener;
         tools::MessageHandler_ABC< sword::SimToClient_Content >* controlEndTickHandler;
         ResponseObserver_ABC< sword::FormationCreation >* formationCreationHandler;
@@ -94,7 +92,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_listen_to_control_end_tick_message, Fixture )
 {
-    RemoteAgentController remoteController( messageController, model, automatResolver, publisher, remoteSubject, contextFactory, formationCreation, automatCreation, unitCreation );
+    RemoteAgentController remoteController( messageController, model, automatResolver, publisher, remoteSubject, formationCreation, automatCreation, unitCreation );
     BOOST_REQUIRE( controlEndTickHandler );
     MOCK_EXPECT( model, Sides ).once().returns( boost::ref( teamResolver ) );
     MOCK_EXPECT( teamResolver, CreateIterator ).once().returns( MakeTeamIterator( T_Identifiers() ) );
@@ -114,7 +112,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_checks_remote_automat_type_id_existence, F
     automatResolver.reset();
     remoteSubject.reset();
     MOCK_EXPECT( automatResolver, Find ).once().returns( 0 );
-    BOOST_CHECK_THROW( RemoteAgentController remoteController( messageController, model, automatResolver, publisher, remoteSubject, contextFactory, formationCreation, automatCreation, unitCreation  ), std::runtime_error );
+    BOOST_CHECK_THROW( RemoteAgentController remoteController( messageController, model, automatResolver, publisher, remoteSubject, formationCreation, automatCreation, unitCreation  ), std::runtime_error );
 }
 
 namespace
@@ -123,7 +121,7 @@ namespace
     {
     public:
         TickedFixture()
-            : remoteController( messageController, model, automatResolver, publisher, remoteSubject, contextFactory, formationCreation, automatCreation, unitCreation  )
+            : remoteController( messageController, model, automatResolver, publisher, remoteSubject, formationCreation, automatCreation, unitCreation  )
         {
             BOOST_REQUIRE( controlEndTickHandler );
             MOCK_EXPECT( model, Sides ).once().returns( boost::ref( teamResolver ) );
