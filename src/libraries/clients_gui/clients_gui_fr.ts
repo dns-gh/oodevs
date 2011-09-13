@@ -1535,8 +1535,8 @@ Voulez-vous le supprimer?</translation>
         <translation>Traficabilité</translation>
     </message>
     <message>
-        <source>Max:</source>
-        <translation>Max :</translation>
+        <source>Max weight:</source>
+        <translation>Poids max:</translation>
     </message>
 </context>
 <context>

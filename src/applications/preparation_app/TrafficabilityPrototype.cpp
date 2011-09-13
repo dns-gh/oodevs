@@ -21,8 +21,8 @@ using namespace gui;
 // Name: TrafficabilityPrototype constructor
 // Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-TrafficabilityPrototype::TrafficabilityPrototype( QWidget* parent, Object_ABC*& creation )
-    : TrafficabilityPrototype_ABC( parent )
+TrafficabilityPrototype::TrafficabilityPrototype( QWidget* parent, Object_ABC*& creation, double maxWeight )
+    : TrafficabilityPrototype_ABC( parent, maxWeight )
     , creation_( creation )
 {
     // NOTHING
@@ -46,7 +46,7 @@ void TrafficabilityPrototype::Commit()
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        TrafficabilityAttribute* attribute = new TrafficabilityAttribute( dictionary, trafficability_->text().toDouble() );
+        TrafficabilityAttribute* attribute = new TrafficabilityAttribute( dictionary, maxWeight_->text().toDouble() );
         creation_->Attach( *attribute );
     }
 }

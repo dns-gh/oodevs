@@ -21,14 +21,14 @@ using namespace gui;
 // Name: TrafficabilityPrototype_ABC constructor
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-TrafficabilityPrototype_ABC::TrafficabilityPrototype_ABC( QWidget* parent )
+TrafficabilityPrototype_ABC::TrafficabilityPrototype_ABC( QWidget* parent, double maxWeight )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::TrafficabilityPrototype_ABC", "Trafficability" ) )
 {
-    new QLabel( tools::translate( "gui::TrafficabilityPrototype_ABC", "Max:" ), this );
+    new QLabel( tools::translate( "gui::TrafficabilityPrototype_ABC", "Max weight:" ), this );
     Q3HBox* box = new Q3HBox( this );
-    trafficability_ = new LoadableLineEdit( box );
-    trafficability_->setText( QString::number( 0. ) );
-    trafficability_->setValidator( new QDoubleValidator( 0, 1000000, 2, trafficability_ ) );
+    maxWeight_ = new LoadableLineEdit( box );
+    maxWeight_->setText( QString::number( maxWeight ) );
+    maxWeight_->setValidator( new QDoubleValidator( 0, 1000000, 2, maxWeight_ ) );
     new QLabel( kernel::Units::tons.AsString(), box );
 }
 
@@ -56,5 +56,5 @@ bool TrafficabilityPrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void TrafficabilityPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
-    trafficability_->SetLoader( loader );
+    maxWeight_->SetLoader( loader );
 }

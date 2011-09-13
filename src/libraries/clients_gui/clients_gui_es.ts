@@ -1535,7 +1535,7 @@ Voulez-vous le supprimer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Max:</source>
+        <source>Max weight:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -26,7 +26,7 @@ class TrafficabilityPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TrafficabilityPrototype_ABC( QWidget* parent );
+    explicit TrafficabilityPrototype_ABC( QWidget* parent, double maxWeight );
     virtual ~TrafficabilityPrototype_ABC();
     //@}
 
@@ -39,7 +39,7 @@ public:
 protected:
     //! @name Member data
     //@{
-    LoadableLineEdit* trafficability_;
+    LoadableLineEdit* maxWeight_;
     //@}
 };
 

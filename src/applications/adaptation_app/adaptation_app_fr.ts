@@ -3224,10 +3224,6 @@ du tireur</translation>
         <translation>Traficabilité</translation>
     </message>
     <message>
-        <source>Default limited trafficability</source>
-        <translation>Traficabilité limitée par défaut</translation>
-    </message>
-    <message>
         <source>Urban Destruction</source>
         <translation>Destruction urbaine</translation>
     </message>
@@ -3238,6 +3234,18 @@ du tireur</translation>
     <message>
         <source>Border</source>
         <translation>Frontière</translation>
+    </message>
+    <message>
+        <source>Max Weight</source>
+        <translation>Poids max</translation>
+    </message>
+    <message>
+        <source>tons</source>
+        <translation>tonnes</translation>
+    </message>
+    <message>
+        <source>Default Limitation</source>
+        <translation>Limitation par défaut</translation>
     </message>
 </context>
 <context>

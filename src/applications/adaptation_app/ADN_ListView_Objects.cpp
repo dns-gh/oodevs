@@ -130,6 +130,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     ADN_Objects_Data::ADN_CapacityInfos_Trafficability& trafficability = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Trafficability >( ADN_Objects_GUI::eTrafficabilityCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eLimitedTrafficability ]->Connect( &trafficability.limited_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eTrafficabilityMaxWeight ]->Connect( &trafficability.maxWeight_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Activable >( ADN_Objects_GUI::eActivableCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Logistic >( ADN_Objects_GUI::eLogisticCapacityPresent );

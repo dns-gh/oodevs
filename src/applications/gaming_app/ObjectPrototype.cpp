@@ -26,6 +26,7 @@
 #include "StockPrototype.h"
 #include "SupplyRoutePrototype.h"
 #include "UndergroundPrototype.h"
+#include "TrafficabilityPrototype.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -110,6 +111,15 @@ namespace
     void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver, ParameterList*& attributesList )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
+    }
+
+    void TrafficabilityAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
+    {
+        if( xis.attribute< bool >( "default" ) )
+        {
+            double maxWeight = xis.attribute< double >( "max-weight" );
+            container.push_back( new TrafficabilityPrototype( parent, attributesList, maxWeight ) );
+        }
     }
 
     template<typename T>
@@ -206,6 +216,7 @@ namespace
         factory->Register( "resources"                 , boost::bind( &Capacity< ResourceNetworkPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &Capacity< AltitudeModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "trafficability"            , boost::bind( &TrafficabilityAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilders( new NBCBuilder() );
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );

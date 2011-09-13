@@ -3222,10 +3222,6 @@ tirador</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default limited trafficability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Urban Destruction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3235,6 +3231,18 @@ tirador</translation>
     </message>
     <message>
         <source>Border</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max Weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Limitation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

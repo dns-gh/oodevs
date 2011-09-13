@@ -28,7 +28,7 @@ class TrafficabilityPrototype : public gui::TrafficabilityPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TrafficabilityPrototype( QWidget* parent, kernel::Object_ABC*& creation );
+             TrafficabilityPrototype( QWidget* parent, kernel::Object_ABC*& creation, double maxWeight );
     virtual ~TrafficabilityPrototype();
     //@}
 

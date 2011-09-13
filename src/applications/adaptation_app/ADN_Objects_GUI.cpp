@@ -191,19 +191,25 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eMobilityCapacityPresent ] = & mobility->GetConnector();
 
         // Default speed
-        builder.AddField< ADN_EditLine_Double >( mobility, tr( "Default speed"), vInfosConnectors[ eMobilityCapacity_DefaultSpeed ], tr( "km/h" ) );
+        builder.AddField< ADN_EditLine_Double >( mobility, tr( "Default speed" ), vInfosConnectors[ eMobilityCapacity_DefaultSpeed ], tr( "km/h" ) );
         pSpeedImpactCombo_ = builder.AddEnumField< E_SpeedImpact >( mobility, tr( "Speed impact" ), vInfosConnectors[ eMobilityCapacity_SpeedModifier ], ADN_Tr::ConvertFromSpeedImpact );
         pMaxAgentSpeed_ = builder.AddField< ADN_EditLine_Double >( mobility, tr( "Max agent speed" ), vInfosConnectors[ eMobilityCapacity_MaxAgentSpeed ], tr( "%" ), ePercentage );
         connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
     }
 
     // Trafficability
-    ADN_GroupBox* trafficability = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Trafficability" ), hBox );
+    ADN_GroupBox* trafficability = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Trafficability" ), hBox );
     {
         vInfosConnectors[ eTrafficabilityCapacityPresent ] = & trafficability->GetConnector();
-        builder.AddField< ADN_CheckBox >( trafficability, tr( "Default limited trafficability" ), vInfosConnectors[ eLimitedTrafficability ] );
+        // Limitation
+        ADN_GroupBox* limitation = new ADN_GroupBox( 4, Qt::Horizontal, tr( "Default Limitation" ), trafficability );
+        {
+            vInfosConnectors[ eLimitedTrafficability ] = & limitation->GetConnector();
+            builder.AddField< ADN_EditLine_Double >( limitation, tr( "Max Weight" ), vInfosConnectors[ eTrafficabilityMaxWeight ], tr( "tons" ) );
+        }
     }
 
+    // Workable
     ADN_GroupBox* workable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Workable" ), hBox );
     {
         vInfosConnectors[ eWorkableCapacityPresent ] = & workable->GetConnector();

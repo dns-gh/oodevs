@@ -68,8 +68,11 @@ namespace
 
     void TrafficabilityAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
     {
-        if( xis.attribute< bool >( "default") )
-            container.push_back( new TrafficabilityPrototype( parent, object ) );
+        if( xis.attribute< bool >( "default" ) )
+        {
+            double maxWeight = xis.attribute< double >( "max-weight" );
+            container.push_back( new TrafficabilityPrototype( parent, object, maxWeight ) );
+        }
     }
 
     void FloodAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const DetectionMap& detection, Object_ABC*& object )

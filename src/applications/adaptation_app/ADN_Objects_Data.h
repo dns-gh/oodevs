@@ -358,6 +358,7 @@ public:
 
     public:
         ADN_Type_Bool limited_;
+        ADN_Type_Double maxWeight_;
     };
 
     class ADN_CapacityInfos_Occupable

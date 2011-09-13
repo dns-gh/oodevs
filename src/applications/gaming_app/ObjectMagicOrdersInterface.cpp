@@ -65,7 +65,7 @@ namespace
     {
     public:
         InitializedIntLineEdit( QWidget* parent, unsigned int initialValue )
-            : InitializedLineEdit( parent, QString( "%1" ).arg( initialValue ) )
+            : InitializedLineEdit( parent, QString::number( initialValue ) )
         {
             setValidator( new QIntValidator( 0, 100, this ) );
         }
@@ -75,9 +75,9 @@ namespace
     {
     public:
         InitializedDoubleLineEdit( QWidget* parent, double initialValue )
-            : InitializedLineEdit( parent, QString( "%1" ).arg( initialValue ) )
+            : InitializedLineEdit( parent, QString::number( initialValue ) )
         {
-            setValidator( new QDoubleValidator( 0, 10000, 2, this ) );
+            setValidator( new QDoubleValidator( 0, 1000000, 2, this ) );
         }
     };
 }

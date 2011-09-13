@@ -17,8 +17,8 @@
 // Name: TrafficabilityPrototype constructor
 // Created: CMA 2011-09-05
 // -----------------------------------------------------------------------------
-TrafficabilityPrototype::TrafficabilityPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
-    : TrafficabilityPrototype_ABC( parent )
+TrafficabilityPrototype::TrafficabilityPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList, double maxWeight )
+    : TrafficabilityPrototype_ABC( parent, maxWeight )
     , attributesList_( attributesList )
 {
     // NOTHING
@@ -40,5 +40,6 @@ TrafficabilityPrototype::~TrafficabilityPrototype()
 void TrafficabilityPrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "Trafficability" );
-	list.AddQuantity( "Trafficability", trafficability_->text().toDouble() );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_trafficability );
+	list.AddNumeric( "MaxWeight", maxWeight_->text().toDouble() );
 }

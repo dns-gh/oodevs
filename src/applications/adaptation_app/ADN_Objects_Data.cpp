@@ -364,9 +364,11 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::WriteArchive( xml::xostream& 
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Trafficability::ADN_CapacityInfos_Trafficability()
-    : limited_( false )
+    : limited_  ( false )
+    , maxWeight_( 0. )
 {
     limited_.SetParentNode( *this );
+    maxWeight_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,6 +379,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::ReadArchive( xml::xistr
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     limited_ = xis.attribute< bool >( "default" );
+    if( limited_.GetData() )
+        maxWeight_ = xis.attribute< double >( "max-weight" );
 }
 
 // -----------------------------------------------------------------------------
@@ -386,6 +390,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::ReadArchive( xml::xistr
 void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "default", limited_.GetData() );
+    if( limited_.GetData() )
+        xos << xml::attribute( "max-weight", maxWeight_.GetData() );
 }
 
 //! @name ADN_CapacityInfos_Attrition
