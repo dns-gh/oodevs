@@ -113,7 +113,12 @@ void ADN_SymbolWidget::DisplaySymbol() const
     if( currentSymbol_.empty() )
         return;
 
-    symbols_->PrintApp6( currentSymbol_, SvglRenderer::DefaultStyle(), viewPort_, (int)viewPort_.Width(), (int)viewPort_.Height());
+    try
+    {
+        symbols_->PrintApp6( currentSymbol_, SvglRenderer::DefaultStyle(), viewPort_, (int)viewPort_.Width(), (int)viewPort_.Height());
+    }
+    catch( ... )
+    {} // Don't crash if crappy graphics card.
 }
 
 // -----------------------------------------------------------------------------

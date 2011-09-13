@@ -397,7 +397,14 @@ void ADN_Drawings_Data::ReadCategory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& name )
 {
-    drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, name ) );
+    try
+    {
+        drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, name ) );
+    }
+    catch( std::runtime_error& e )
+    {
+        std::cout << "Error reading drawing template " << e.what() << std::endl;
+    }
 }
 
 // -----------------------------------------------------------------------------
