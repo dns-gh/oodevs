@@ -1829,12 +1829,14 @@ void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& c
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( &composante.GetType() == &composanteType && composante.GetState().IsUsable() )
+        if( &composante.GetType() == &composanteType && composante.GetState().IsUsable() && composante.GetState() != PHY_ComposanteState::repairableWithEvacuation_ )
         {
             composante.ReinitializeState( PHY_ComposanteState::repairableWithEvacuation_, breakdownType );
             --quantity;
         }
     }
+    if( quantity )
+        MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot create all the breakdowns in the magic action, " << quantity << " breakdowns for composante " << composanteType.GetName() << " remaining." );
 }
 
 // -----------------------------------------------------------------------------
@@ -1865,8 +1867,6 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
 {
     typedef std::pair< const PHY_ComposanteState*, unsigned int > T_Repartition;
     std::vector< T_Repartition > repartition;
-
-    std::string tmp = message.DebugString();
 
     repartition.push_back( T_Repartition( &PHY_ComposanteState::undamaged_,                   message.list( 1 ).quantity() ) );
     repartition.push_back( T_Repartition( &PHY_ComposanteState::dead_,                        message.list( 2 ).quantity() ) );
@@ -1917,5 +1917,5 @@ void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters&
         remaining += static_cast< unsigned int >( elem.list( 0 ).quantity() );
     }
     if( remaining )
-        MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining" );
+        MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining." );
 }

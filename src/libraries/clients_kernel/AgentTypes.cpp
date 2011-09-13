@@ -425,6 +425,8 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_equipment_state", sword::UnitMagicAction::change_equipment_state ) );
     RegisterActionType( *new MagicActionType( "change_human_state", sword::UnitMagicAction::change_human_state ) );
     RegisterActionType( *new MagicActionType( "change_dotation", sword::UnitMagicAction::change_dotation ) );
+    RegisterActionType( *new MagicActionType( "create_wounds", sword::UnitMagicAction::create_wounds ) );
+    RegisterActionType( *new MagicActionType( "create_breakdowns", sword::UnitMagicAction::create_breakdowns ) );
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::KnowledgeMagicAction::enable ) );
