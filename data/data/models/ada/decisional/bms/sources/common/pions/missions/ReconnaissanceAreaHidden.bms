@@ -3,6 +3,16 @@ require "math"
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/missions/ReconnaissanceAreaHidden.bms"] = true
 
+local exists = function( t, k )
+    for _,content in pairs( t ) do
+        if content == k then
+            return true
+        end
+    end
+    return false
+end
+
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_ReconnaissanceAreaHidden
 ]]--[[//
@@ -24,6 +34,8 @@ includedFiles["sources/common/pions/missions/ReconnaissanceAreaHidden.bms"] = tr
     create = function( self )
         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         DEC_SetMission( myself, self.params.mission )
+        self.encounteredEnemies = {}
+        self.ReportSent = false
     end,
 
     activate = function( self )
@@ -50,7 +62,9 @@ includedFiles["sources/common/pions/missions/ReconnaissanceAreaHidden.bms"] = tr
 
         if self.ePhase == ePreparerMission then
             --[[// 1) Preparation de la mission ]]
-            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+            if not self.ReportSent then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+            end
             local itinerary = DEC_Geometrie_ListePointsLocalisation( self.params.mission.zone_ or DEC_ConnaissanceObjet_Localisation( self.params.mission.knowledge_ ) )
             local myPosition = DEC_Agent_PositionPtr( myself )
             local minDistance = math.huge
@@ -71,10 +85,20 @@ includedFiles["sources/common/pions/missions/ReconnaissanceAreaHidden.bms"] = tr
             self.it = nearestItinerary
             self.ePhase = eProgresser
         elseif self.ePhase == eProgresser then
-            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+            if not self.ReportSent then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+            end
+
+            local enemiesInZone = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( DEC_Agent_PositionPtr( myself ), 500 )
+            for i = 1, #enemiesInZone do
+                if not exists( self.encounteredEnemies, enemiesInZone[ i ] ) then
+                    self.encounteredEnemies[ #self.encounteredEnemies ] = enemiesInZone[ i ]
+                    self.ePhase = ePreparerMission
+                    self.ReportSent = true
+                end
+            end
 
             Activate( self.activations.BEH_Dep_ProgressionAvecEscortePossibleSur, 1, { self.it, eProgressionDefaut, eTypeItiInfiltration } )
-
             self.done_BEH_Dep_ProgressionAvecEscortePossibleSur = function( self, _, v ) 
                 if not self.params.mission.repeat_ then
                     self.ePhase = eFinMission
