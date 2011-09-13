@@ -203,7 +203,7 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
-    <trafficability default="true"/>
+    <trafficability default="true" max-weight="0.1"/>
     <urban-destruction>
       <urban-modifier material-type="Wood" value="0.8"/>
       <urban-modifier material-type="Concrete" value="0.4"/>
@@ -521,4 +521,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1544442771" -->
+<!-- signature="1219711507" -->

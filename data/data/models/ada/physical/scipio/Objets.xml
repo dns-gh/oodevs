@@ -158,7 +158,7 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
-    <trafficability default="true"/>
+    <trafficability default="true" max-weight="0.1"/>
   </object>
   <object geometry="point" name="destruction route" symbol="G*MPORC---****X" type="road destruction">
     <activable/>
@@ -530,4 +530,4 @@
   </object>
   <object geometry="line" name="frontiere" symbol="Route" type="border"/>
 </objects>
-<!-- signature="1765252916" -->
+<!-- signature="2211662402" -->

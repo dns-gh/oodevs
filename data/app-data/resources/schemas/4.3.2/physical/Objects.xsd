@@ -279,6 +279,7 @@
 			<xs:element name="trafficability" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="default" type="xs:boolean"/>
+					<xs:attribute name="max-weight" type="xs:double" use="optional"/>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="population-filter" minOccurs="0">

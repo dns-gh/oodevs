@@ -212,7 +212,7 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
-    <trafficability default="true"/>
+    <trafficability default="true" max-weight="0.1"/>
   </object>
   <object geometry="point" name="Destruction de route" symbol="G*MPORC---****X" type="road destruction">
     <activable/>
@@ -394,4 +394,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="2321796514" -->
+<!-- signature="0515905715" -->
