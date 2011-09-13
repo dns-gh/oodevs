@@ -58,6 +58,7 @@ TeamsModel::~TeamsModel()
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
+    infiniteDotations_ = false;
     DeleteAll();
 }
 
