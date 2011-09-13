@@ -275,13 +275,15 @@ void PHY_WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourc
 // -----------------------------------------------------------------------------
 double PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
 {
+    if( !pDirectFireData_ )
+        return 0.;
     assert( pDotationCategory_ );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )//@TODO MGD See if it's possible to merge all HasDotation of this class
+    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )//@TODO MGD See if it's possible to merge all HasDotation of this class
         return 0.;
     return pDirectFireData_->GetDangerosity( firer, target, targetComposanteType, bUsePH );
 }
@@ -292,13 +294,15 @@ double PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Age
 // -----------------------------------------------------------------------------
 double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget ) const
 {
+    if( !pDirectFireData_ )
+        return 0.;
     assert( pDotationCategory_ );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetDangerosity( targetComposanteType, rDistBtwFirerAndTarget );
 }
@@ -309,6 +313,8 @@ double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_Com
 // -----------------------------------------------------------------------------
 double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation ) const
 {
+    if( !pDirectFireData_ )
+        return 0.;
     assert( pDotationCategory_ );
     if( dotation && dotation != pDotationCategory_ )
         return 0.;
@@ -317,7 +323,7 @@ double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PH
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
     localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )
+    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMaxRangeToFireOn( targetComposanteType, rWantedPH );
 }
@@ -328,13 +334,15 @@ double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PH
 // -----------------------------------------------------------------------------
 double PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
+    if( !pDirectFireData_ )
+        return std::numeric_limits< double >::max();
     assert( pDotationCategory_ );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< double >::max();
     return pDirectFireData_->GetMinRangeToFireOn( targetComposanteType, rWantedPH );
 }
@@ -356,13 +364,15 @@ double PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& /*pion*/, double 
 // -----------------------------------------------------------------------------
 double PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
+    if( !pDirectFireData_ )
+        return 0.;
     assert( pDotationCategory_ );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMaxRangeToFireOnWithPosture( targetComposanteType, firer, target, rWantedPH );
 }
@@ -373,13 +383,15 @@ double PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& fire
 // -----------------------------------------------------------------------------
 double PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
+    if( !pDirectFireData_ )
+        return 0.;
     assert( pDotationCategory_ );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMinRangeToFireOnWithPosture( targetComposanteType, firer, target, rWantedPH );
 }
@@ -393,11 +405,11 @@ double PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bo
     if( !pIndirectFireData_ )
         return -1.;
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( bCheckDotationsAvailability && !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( bCheckDotationsAvailability && !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return -1.;
 
     return pIndirectFireData_->GetMaxRange();
@@ -412,11 +424,11 @@ double PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bo
     if( !pIndirectFireData_ )
       return std::numeric_limits< double >::max();
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
+    dotation::DefaultDotationComputer dotationComputer;
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute( *dotationComputer );
+    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( bCheckDotationsAvailability && !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( bCheckDotationsAvailability && !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< double >::max();
 
     return pIndirectFireData_->GetMinRange();
