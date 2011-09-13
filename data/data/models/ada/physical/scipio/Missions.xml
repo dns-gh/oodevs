@@ -2517,7 +2517,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" id="2101" name="PION Melee Animer Poste De Controle">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" id="2101" name="PION MELEE Animer Poste De Controle">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2627,14 +2627,14 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" dia-type="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" id="2130" name="PION Melee Renseigner sur foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" dia-type="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" id="2130" name="PION MELEE Renseigner sur foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crowd" name="Foule" optional="false" type="CrowdKnowledge"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.stabilisation.tasks.ControlerFoule" dia-type="france.military.platoon.stabilisation.tasks.ControlerFoule" id="2131" name="PION Melee Controler foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.ControlerFoule" dia-type="france.military.platoon.stabilisation.tasks.ControlerFoule" id="2131" name="PION MELEE Controler foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2704,7 +2704,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.stabilisation.tasks.InterdireFoule" dia-type="france.military.platoon.stabilisation.tasks.InterdireFoule" id="2135" name="PION Melee Interdire foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.InterdireFoule" dia-type="france.military.platoon.stabilisation.tasks.InterdireFoule" id="2135" name="PION MELEE Interdire foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -4814,7 +4814,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.company.stabilisation.tasks.AnimerPosteDeControle" id="1042" mrt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" name="AUTOMATE Melee Animer Postes De Controle" package="support">
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.company.stabilisation.tasks.AnimerPosteDeControle" id="1042" mrt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" name="AUTOMATE MELEE Animer Postes De Controle" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4823,7 +4823,7 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
       <parameter dia-name="bodySearchStrength" name="Pourcentage de foule a desarmer" optional="false" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" dia-type="france.military.company.stabilisation.tasks.InterdireFoule" id="1043" mrt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" name="AUTOMATE Melee Interdire foules" package="support">
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" dia-type="france.military.company.stabilisation.tasks.InterdireFoule" id="1043" mrt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" name="AUTOMATE MELEE Interdire foules" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4831,7 +4831,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" dia-type="france.military.company.stabilisation.tasks.ControlerFoule" id="1044" mrt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" name="AUTOMATE Melee Controler foule" package="control">
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" dia-type="france.military.company.stabilisation.tasks.ControlerFoule" id="1044" mrt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" name="AUTOMATE MELEE Controler foule" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4839,7 +4839,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.CanaliserFoule" dia-type="france.military.company.stabilisation.tasks.CanaliserFoule" id="1045" mrt-dia-behavior="france.military.company.stabilisation.tasks.CanaliserFoule" name="AUTOMATE Melee Canaliser foule" package="support">
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.CanaliserFoule" dia-type="france.military.company.stabilisation.tasks.CanaliserFoule" id="1045" mrt-dia-behavior="france.military.company.stabilisation.tasks.CanaliserFoule" name="AUTOMATE MELEE Canaliser foule" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -5317,4 +5317,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3016448380" -->
+<!-- signature="1996509746" -->
