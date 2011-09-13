@@ -202,13 +202,14 @@ void Model::Update( const sword::SimToClient& wrapper )
         wrapper.message().has_control_global_weather_ack() ||
         wrapper.message().has_control_local_weather_ack() ||
         wrapper.message().has_control_checkpoint_save_begin() ||
-        wrapper.message().has_control_checkpoint_save_end() ||
         wrapper.message().has_control_checkpoint_set_frequency_ack() ||
         wrapper.message().has_control_checkpoint_save_now_ack() ||
         wrapper.message().has_control_send_current_state_begin() ||
         wrapper.message().has_control_send_current_state_end() )
         { // NOTHING // $$$$ AGE 2007-04-18: messages vides...
         }
+    else if( wrapper.message().has_control_checkpoint_save_end() )
+        ClearReports();
     else if( wrapper.message().has_control_checkpoint_save_delete() )
         DeleteCheckpoint( wrapper.message().control_checkpoint_save_delete().name() );
     else if( wrapper.message().has_unit_knowledge_creation() )
@@ -623,4 +624,13 @@ void Model::DeleteCheckpoint( const std::string& name )
     std::string oldName = config_.GetCheckpointDirectory( name );
     const boost::filesystem::path oldPath( oldName, boost::filesystem::native );
     boost::filesystem::remove_all( oldPath );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ClearReports
+// Created: LDC 2011-09-13
+// -----------------------------------------------------------------------------
+void Model::ClearReports()
+{
+    reports_.Clear();
 }
