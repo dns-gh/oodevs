@@ -170,7 +170,7 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
                             end
 
                             self.bAttenteEffectuee = true
-                            Activate( self.activations.BEH_Dep_Suivre, 1, { pionEnEscorte, 800, } )
+                            Activate( self.activations.BEH_Dep_Suivre, 1, { pionEnEscorte, 100, } )
                                                         do return end
 
                         end

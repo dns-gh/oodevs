@@ -35,6 +35,7 @@ include "bit.lua"
         self.maxStartDistance = 1000 -- to be read from XML file
         self.maxFollowDistance = 300 -- to be read from XML file
         self.minFollowDistance = 50
+        self.waitingDistance   = 500 -- /!\ must be less than the distance set in follow behavior activated by "BEH_Dep_ProgressionAvecEscortePossibleSur"
     end,
 
     activate = function( self )
@@ -68,15 +69,15 @@ include "bit.lua"
             self.ePhaseMission = eFinMission
             self.eEtat = eActionEnCours
             self.eEtatOrdreFinMission = eActionEnCours
---[[//-----------------------------------------------------------------------------
-]]--[[// Agressivite
-]]--[[//----------------------------------------------------------------------------- ]]
+            --[[//-----------------------------------------------------------------------------
+            ]]--[[// Agressivite
+            ]]--[[//----------------------------------------------------------------------------- ]]
         end
 
         Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { self._namedParams.rPH, } )
-        --[[//-----------------------------------------------------------------------------
-]]--[[// Pion detruit
-]]--[[//-----------------------------------------------------------------------------
+                --[[//-----------------------------------------------------------------------------
+        ]]--[[// Pion detruit
+        ]]--[[//-----------------------------------------------------------------------------
 ]]
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self:SendFeedback( eActionEffectuee )
@@ -95,17 +96,18 @@ include "bit.lua"
             elseif switch_1 == eRejoindre then
                 Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
                 --[[// Aller au plus vite
-]]--[[// se dépecher ]]
+                ]]--[[// se dépecher ]]
                 Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                 --[[// Escvorter l'unite à bonne distance ]]
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < self.maxFollowDistance ) then
+                if( DEC_Geometrie_Distance( DEC_Agent_Position(), 
+                    self._namedParams.pionAmi:DEC_Agent_Position() ) < self.maxFollowDistance ) then
                     self.ePhaseMission = eProgresser
                     do return end
                 end
---[[//-----------------------------------------------------------------------------
-]]--[[// Rejoindre unite
-]]--[[//-----------------------------------------------------------------------------      
-]]
+                --[[//-----------------------------------------------------------------------------
+                ]]--[[// Rejoindre unite
+                ]]--[[//-----------------------------------------------------------------------------      
+                ]]
                 Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, self.minFollowDistance, } )
                 --[[// Escorte ]]
             elseif switch_1 == eProgresser then
@@ -115,22 +117,29 @@ include "bit.lua"
                     Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for friendly unit to have a mission", } )
                     do return end
                 end
---[[//-----------------------------------------------------------------------------
-]]--[[// Reconnaissance sur l'axe 
-]]--[[//----------------------------------------------------------------------------- ]]
 
+                --[[//-----------------------------------------------------------------------------
+                ]]--[[// Reconnaissance sur l'axe 
+                ]]--[[//----------------------------------------------------------------------------- ]]
                 if( self.eEtat == eActionEffectuee ) then
                     self.eEtat = eActionEnCours
                     self.ePhaseMission = eFinMission
                     do return end
                 end
+                
+                -- Wait escorted units
+                if( DEC_Geometrie_Distance( DEC_Agent_Position(), 
+                    self._namedParams.pionAmi:DEC_Agent_Position() ) > self.waitingDistance ) then
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1.1, {} )
+                end
 
                 Activate( self.activations.BEH_Dep_Progresser, 1, { F_Pion_GetitMvt( self._namedParams.pionAmi ), eProgressionReco, } )
                 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
-                    --[[//-----------------------------------------------------------------------------
-]]--[[// Obstacle
-]]--[[//----------------------------------------------------------------------------- ]]
-                Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
+                
+                -- -----------------------------------------------------------------------------
+                -- Obstacle
+                -- ----------------------------------------------------------------------------- ]]
+                Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.2, {} )
                 --[[// Fin de la mission ]]
             elseif switch_1 == eFinMission then
                 StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { self._namedParams.pionAmi, } )
