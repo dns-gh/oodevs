@@ -185,7 +185,7 @@
         <knowledge-group id="61" name="Groupe de connaissance [61]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" id="66" name="Population standard [66]" position="31TCM0866089404" type="Population standard BM">
+        <population attitude="calme" id="66" name="Foule standard [66]" position="31TCM0866089404" type="Foule standard">
           <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -250,7 +250,7 @@
         <knowledge-group id="17" name="Groupe de connaissance [17]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" id="77" name="Population bad [77]" position="31TCM0866087404" type="Population standard BM">
+        <population attitude="calme" id="77" name="Population bad [77]" position="31TCM0866087404" type="Foule standard">
           <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -278,4 +278,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0486397811" -->
+<!-- signature="1388068029" -->

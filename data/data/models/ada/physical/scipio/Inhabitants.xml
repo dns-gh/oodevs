@@ -14,7 +14,7 @@
       <resource need="1" type="electricite"/>
     </consumption>
   </population>
-  <population associated-crowd="Population standard" id="1" name="popStandard">
+  <population associated-crowd="Foule standard" id="1" name="popStandard">
     <repartition children="0.3" female="0.3" male="0.4"/>
     <schedule transfer-time="40m">
       <event day="monday" from="00:00" motivation="Logement" to="07:59"/>
@@ -60,7 +60,7 @@
       <resource need="1" type="electricite"/>
     </consumption>
   </population>
-  <population associated-crowd="Refugie a pied" id="2" name="popRefugie">
+  <population associated-crowd="Refugies a pied" id="2" name="popRefugie">
     <repartition children="0.2" female="0.4" male="0.4"/>
     <schedule transfer-time="16m"/>
     <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
@@ -70,4 +70,4 @@
     </consumption>
   </population>
 </populations>
-<!-- signature="3717955239" -->
+<!-- signature="3665708020" -->

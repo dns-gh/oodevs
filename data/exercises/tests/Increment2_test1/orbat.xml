@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Camp Bleu" type="friend">
       <objects>
@@ -26,7 +26,7 @@
             <unit command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
             <unit command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
           </automat>
-          <automat engaged="true" id="34" knowledge-group="95" logistic-level="tc2" name="TC2 LOG [34]" type="LOG - TC2 LOG">
+          <automat engaged="true" id="34" knowledge-group="95" logistic-level="logistic-base" name="TC2 LOG [34]" type="LOG - TC2 LOG">
             <unit command-post="true" id="35" name="TC2 LOG" position="29TNF3111159270" type="LOG - TC2"/>
           </automat>
           <limit name="Limite 90">
@@ -63,10 +63,11 @@
         <knowledge-group id="95" name="KG INF [95]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics>
-        <tc2 id="34">
+        <logistic-base id="34">
           <subordinate id="34"/>
-        </tc2>
+        </logistic-base>
       </logistics>
     </party>
     <party id="2" name="Camp Rouge" type="enemy">
@@ -84,9 +85,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -97,9 +96,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="102" name="destruction pont [102]" type="bridge destruction">
@@ -109,9 +106,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="103" name="destruction pont [103]" type="bridge destruction">
@@ -121,9 +116,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="107" name="zone minee lineaire [107]" type="mined area (linear)">
@@ -138,9 +131,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -185,6 +176,7 @@
         <knowledge-group id="9" name="Poubelle Rouge" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="3" name="Camp Vert" type="neutral">
@@ -195,6 +187,7 @@
         <knowledge-group id="5" name="Poubelle Verte" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="93" name="Camp Bleu" type="friend">
@@ -225,7 +218,7 @@
             <unit command-post="false" id="123" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
             <unit command-post="false" id="124" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
           </automat>
-          <automat engaged="true" id="126" knowledge-group="98" name="TC2 LOG [34]" type="LOG - TC2 LOG">
+          <automat engaged="true" id="126" knowledge-group="98" logistic-level="logistic-base" name="TC2 LOG [34]" type="LOG - TC2 LOG">
             <unit command-post="true" id="127" name="TC2 LOG" position="29TNF3111159270" type="LOG - TC2"/>
           </automat>
           <limit name="Limite 90">
@@ -247,9 +240,8 @@
         <knowledge-group id="99" name="Poubelle Bleue" type="Standard"/>
       </communication>
       <populations/>
-      <logistics>
-        <automat id="126"/>
-      </logistics>
+      <inhabitants/>
+      <logistics/>
     </party>
     <party id="94" name="Camp Rouge" type="enemy">
       <objects/>
@@ -293,6 +285,7 @@
         <knowledge-group id="101" name="Poubelle Rouge" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="95" name="Camp Vert" type="neutral">
@@ -303,6 +296,7 @@
         <knowledge-group id="97" name="Poubelle Verte" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -351,4 +345,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2103524911" -->
+<!-- signature="4282209885" -->

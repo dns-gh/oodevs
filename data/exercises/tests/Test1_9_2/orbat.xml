@@ -347,7 +347,7 @@
         <knowledge-group id="270" name="Groupe de connaissance [270]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" id="3622" name="Population standard [3622]" position="31UBQ9527104949" type="Population standard">
+        <population attitude="calme" id="3622" name="Foule standard [3622]" position="31UBQ9527104949" type="Foule standard">
           <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -403,4 +403,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1882137851" -->
+<!-- signature="2770730234" -->
