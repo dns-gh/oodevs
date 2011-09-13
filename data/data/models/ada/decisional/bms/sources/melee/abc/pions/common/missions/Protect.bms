@@ -33,7 +33,7 @@ include "bit.lua"
         self._namedParams.rPH = self.params[2]
         self._namedParams.eNiveauIdentificationEni = self.params[3]
         self.maxStartDistance = 1000 -- to be read from XML file
-        self.maxFollowDistance = 300 -- to be read from XML file
+        self.maxFollowDistance = 300 -- to be read from XML file -- /!\ must be less than the distance set in follow behavior activated by "BEH_Dep_ProgressionAvecEscortePossibleSur"
         self.minFollowDistance = 50
         self.waitingDistance   = 500 -- /!\ must be less than the distance set in follow behavior activated by "BEH_Dep_ProgressionAvecEscortePossibleSur"
     end,
@@ -129,7 +129,7 @@ include "bit.lua"
                 
                 -- Wait escorted units
                 if( DEC_Geometrie_Distance( DEC_Agent_Position(), 
-                    self._namedParams.pionAmi:DEC_Agent_Position() ) > self.waitingDistance ) then
+                    self._namedParams.pionAmi:DEC_Agent_Position() ) > self.maxFollowDistance ) then
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1.1, {} )
                 end
 
