@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
-  <resources infinite="true"/>
   <parties>
     <party id="1" name="Interposition army" type="friend">
       <objects>
@@ -171,4 +170,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="1676228462" -->
+<!-- signature="3798225070" -->

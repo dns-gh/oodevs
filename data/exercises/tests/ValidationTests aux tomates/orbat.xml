@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
-  <resources infinite="true"/>
   <parties>
     <party id="1" name="Les Gentils" type="friend">
       <objects>
@@ -720,4 +719,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4078602759" -->
+<!-- signature="0682120780" -->
