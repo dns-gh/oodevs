@@ -47,7 +47,6 @@ namespace plugins
 namespace hla
 {
     class RemoteAgentSubject_ABC;
-    class ContextFactory_ABC;
     template< typename Response > class ContextHandler_ABC;
 
 // =============================================================================
@@ -67,7 +66,6 @@ public:
              RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                     dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
                                     dispatcher::SimulationPublisher_ABC& publisher, RemoteAgentSubject_ABC& agentSubject,
-                                    const ContextFactory_ABC& contextFactory,
                                     ContextHandler_ABC< sword::FormationCreation >& formationHandler,
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler );
@@ -116,7 +114,6 @@ private:
     dispatcher::SimulationPublisher_ABC& publisher_;
     RemoteAgentSubject_ABC& agentSubject_;
     const unsigned long automatType_;
-    const ContextFactory_ABC& contextFactory_;
     ContextHandler_ABC< sword::FormationCreation >& formationHandler_;
     ContextHandler_ABC< sword::AutomatCreation >& automatHandler_;
     ContextHandler_ABC< sword::UnitCreation >& unitHandler_;

@@ -104,7 +104,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pUnitHandler_          ( new UnitContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
     , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher, *pContextFactory_ ) )
     , pRemoteAgentController_( new RemoteAgentController( *pMessageController_, dynamicModel, staticModel.types_,
-                                                          publisher, *pFederate_, *pContextFactory_, *pFormationHandler_,
+                                                          publisher, *pFederate_, *pFormationHandler_,
                                                           *pAutomatHandler_, *pUnitHandler_ ) )
     , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
 {

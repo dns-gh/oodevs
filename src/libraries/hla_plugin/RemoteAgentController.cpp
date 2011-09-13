@@ -11,7 +11,6 @@
 #include "RemoteAgentController.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextHandler_ABC.h"
-#include "ContextFactory_ABC.h"
 #include "protocol/Simulation.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Model_ABC.h"
@@ -30,7 +29,6 @@ using namespace plugins::hla;
 RemoteAgentController::RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                               dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
                                               dispatcher::SimulationPublisher_ABC& publisher, RemoteAgentSubject_ABC& agentSubject,
-                                              const ContextFactory_ABC& contextFactory,
                                               ContextHandler_ABC< sword::FormationCreation >& formationHandler,
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                               ContextHandler_ABC< sword::UnitCreation >& unitHandler )
@@ -39,7 +37,6 @@ RemoteAgentController::RemoteAgentController( tools::MessageController_ABC< swor
     , publisher_        ( publisher )
     , agentSubject_     ( agentSubject )
     , automatType_      ( 230u ) // $$$$ _RC_ SLI 2011-09-07: hardcoded
-    , contextFactory_   ( contextFactory )
     , formationHandler_ ( formationHandler )
     , automatHandler_   ( automatHandler )
     , unitHandler_      ( unitHandler )
