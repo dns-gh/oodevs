@@ -10,6 +10,8 @@
 #ifndef plugins_hla_test_MockTeam_h
 #define plugins_hla_test_MockTeam_h
 
+#include "dispatcher/Team_ABC.h"
+
 namespace dispatcher
 {
 // =============================================================================

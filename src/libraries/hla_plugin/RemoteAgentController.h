@@ -12,6 +12,7 @@
 
 #include "tools/MessageObserver.h"
 #include "RemoteAgentListener_ABC.h"
+#include "ResponseObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
@@ -46,23 +47,8 @@ namespace plugins
 namespace hla
 {
     class RemoteAgentSubject_ABC;
-
-    template< typename Message >
-    class CreationObserver_ABC : private boost::noncopyable
-    {
-    public:
-                 CreationObserver_ABC() {}
-        virtual ~CreationObserver_ABC() {}
-        virtual void Notify( const Message& message, const std::string& identifier ) = 0;
-    };
-    class ContextHandler_ABC : private boost::noncopyable
-    {
-    public:
-                 ContextHandler_ABC() {}
-        virtual ~ContextHandler_ABC() {}
-        virtual int MakeContext( const std::string& identifier ) = 0;
-    };
-
+    class ContextFactory_ABC;
+    template< typename Response > class ContextHandler_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentController
@@ -71,9 +57,9 @@ namespace hla
 // Created: SLI 2011-09-01
 // =============================================================================
 class RemoteAgentController : private tools::MessageObserver< sword::ControlEndTick >
-                            , private CreationObserver_ABC< sword::FormationCreation >
-                            , private CreationObserver_ABC< sword::AutomatCreation >
-                            , private CreationObserver_ABC< sword::UnitCreation >
+                            , private ResponseObserver_ABC< sword::FormationCreation >
+                            , private ResponseObserver_ABC< sword::AutomatCreation >
+                            , private ResponseObserver_ABC< sword::UnitCreation >
                             , private RemoteAgentListener_ABC
 {
 public:
@@ -81,7 +67,11 @@ public:
     //@{
              RemoteAgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                     dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
-                                    dispatcher::SimulationPublisher_ABC& publisher, RemoteAgentSubject_ABC& agentSubject );
+                                    dispatcher::SimulationPublisher_ABC& publisher, RemoteAgentSubject_ABC& agentSubject,
+                                    const ContextFactory_ABC& contextFactory,
+                                    ContextHandler_ABC< sword::FormationCreation >& formationHandler,
+                                    ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
+                                    ContextHandler_ABC< sword::UnitCreation >& unitHandler );
     virtual ~RemoteAgentController();
     //@}
 
@@ -130,9 +120,10 @@ private:
     dispatcher::SimulationPublisher_ABC& publisher_;
     RemoteAgentSubject_ABC& agentSubject_;
     const unsigned long automatType_;
-    std::auto_ptr< ContextHandler_ABC > pFormationHandler_;
-    std::auto_ptr< ContextHandler_ABC > pAutomatHandler_;
-    std::auto_ptr< ContextHandler_ABC > pUnitHandler_;
+    const ContextFactory_ABC& contextFactory_;
+    ContextHandler_ABC< sword::FormationCreation >& formationHandler_;
+    ContextHandler_ABC< sword::AutomatCreation >& automatHandler_;
+    ContextHandler_ABC< sword::UnitCreation >& unitHandler_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Units units_;

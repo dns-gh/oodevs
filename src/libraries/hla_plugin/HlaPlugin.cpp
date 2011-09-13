@@ -18,11 +18,14 @@
 #include "ObjectResolver.h"
 #include "Stepper.h"
 #include "RemoteAgentController.h"
+#include "ContextFactory.h"
+#include "ContextHandler.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/StaticModel.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/Simulation.h"
 #include "rpr/EntityTypeResolver.h"
 #include <hla/HLAException.h>
@@ -41,6 +44,36 @@ namespace
                     >> xml::attribute( "step", step );
         return step;
     }
+    class FormationContextHandler : public ContextHandler< sword::FormationCreation >
+    {
+    public:
+        FormationContextHandler( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+                                 const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
+            : ContextHandler< sword::FormationCreation >( "formation", messageController, contextFactory, publisher )
+        {
+            CONNECT( messageController, *this, formation_creation );
+        }
+    };
+    class AutomatContextHandler : public ContextHandler< sword::AutomatCreation >
+    {
+    public:
+        AutomatContextHandler( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+                               const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
+            : ContextHandler< sword::AutomatCreation >( "automat", messageController, contextFactory, publisher )
+        {
+            CONNECT( messageController, *this, automat_creation );
+        }
+    };
+    class UnitContextHandler : public ContextHandler< sword::UnitCreation >
+    {
+    public:
+        UnitContextHandler( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+                            const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
+            : ContextHandler< sword::UnitCreation >( "unit", messageController, contextFactory, publisher )
+        {
+            CONNECT( messageController, *this, unit_creation );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +97,13 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
                                                    xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                    xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                    config.BuildPluginDirectory( "hla" ) ) )
-    , pRemoteAgentController_( new RemoteAgentController( *pMessageController_, dynamicModel, staticModel.types_, publisher, *pFederate_ ) )
+    , pContextFactory_       ( new ContextFactory() )
+    , pFormationHandler_     ( new FormationContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
+    , pAutomatHandler_       ( new AutomatContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
+    , pUnitHandler_          ( new UnitContextHandler( *pMessageController_, *pContextFactory_, publisher ) )
+    , pRemoteAgentController_( new RemoteAgentController( *pMessageController_, dynamicModel, staticModel.types_,
+                                                          publisher, *pFederate_, *pContextFactory_, *pFormationHandler_,
+                                                          *pAutomatHandler_, *pUnitHandler_ ) )
     , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
 {
     // NOTHING
