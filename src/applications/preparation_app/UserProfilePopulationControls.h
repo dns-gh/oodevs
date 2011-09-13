@@ -7,40 +7,40 @@
 //
 // *****************************************************************************
 
-#ifndef __UserProfilePopulationRights_h_
-#define __UserProfilePopulationRights_h_
+#ifndef __UserProfilePopulationControls_h_
+#define __UserProfilePopulationControls_h_
 
-#include "UserProfileRights_ABC.h"
+#include "UserProfileControls_ABC.h"
 #include "clients_gui/PopulationListView.h"
 
 // =============================================================================
-/** @class  UserProfilePopulationRights
-    @brief  UserProfilePopulationRights
+/** @class  UserProfilePopulationControls
+    @brief  User profile population controls
 */
-// Created: SBO 2007-01-18
+// Created: LGY 2011-09-12
 // =============================================================================
-class UserProfilePopulationRights : public gui::PopulationListView
-                                  , public UserProfileRights_ABC
+class UserProfilePopulationControls : public gui::PopulationListView
+                                    , public UserProfileControls_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfilePopulationRights( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
-    virtual ~UserProfilePopulationRights();
+             UserProfilePopulationControls( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+    virtual ~UserProfilePopulationControls();
     //@}
 
 signals:
     //! @name signals
     //@{
-    void ProfiledChanged( const kernel::Entity_ABC* entity, bool isWriteable );
+    void ProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable );
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    void OnProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable );
+    void OnProfiledChanged( const kernel::Entity_ABC* entity, bool isWriteable );
     //@}
 
 private slots:
@@ -52,16 +52,10 @@ private slots:
 private:
     //! @name Operations
     //@{
-    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable );
+    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfilePopulationRights( const UserProfilePopulationRights& );            //!< Copy constructor
-    UserProfilePopulationRights& operator=( const UserProfilePopulationRights& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void viewportResizeEvent( QResizeEvent* e );
@@ -69,4 +63,4 @@ private:
     //@}
 };
 
-#endif // __UserProfilePopulationRights_h_
+#endif // __UserProfilePopulationControls_h_

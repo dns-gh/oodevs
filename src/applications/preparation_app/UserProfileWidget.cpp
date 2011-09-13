@@ -12,6 +12,7 @@
 #include "moc_UserProfileWidget.cpp"
 #include "UserProfileUnitRights.h"
 #include "UserProfilePopulationRights.h"
+#include "UserProfilePopulationControls.h"
 #include "clients_kernel/AttributeType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
@@ -64,15 +65,24 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         Q3GroupBox* group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
         group->setMargin( 5 );
         Q3HBox* holder = new Q3HBox( group );
-        new QLabel( tr( "Supervisor actions:" ), holder );
+        supervisorLabel_ = new QLabel( tr( "Supervisor actions:" ), holder );
         supervisor_ = new QCheckBox( holder );
         QTabWidget* tabs = new QTabWidget( group );
+
         UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, factory, icons );
         tabs->addTab( unitRights, tr( "Units" ) );
         unitRights_ = unitRights;
+
+        pPopulations_ = new QStackedWidget( tabs );
         UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, factory );
-        tabs->addTab( populationRights, tr( "Crowds" ) );
-        populationRights_ = populationRights;
+        pPopulations_->addWidget( ( Q3ListView*) populationRights );
+        tabs->addTab( pPopulations_, tr( "Crowds" ) );
+
+        UserProfilePopulationControls* populationControls = new UserProfilePopulationControls( tabs, controllers, factory );
+        pPopulations_->addWidget( ( Q3ListView*) populationControls );
+        connect( populationControls, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ), populationRights, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ) );
+        connect( populationRights, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool ) ), populationControls, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool ) ) );
+
         addTab( box, tr( "Permissions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
         new QLabel( tr( "'Read' permission allows you to see an unit.\n"
@@ -149,11 +159,14 @@ void UserProfileWidget::Display( UserProfile& profile )
     {
         const std::string role = profile_->GetUserRole();
         userRoleGroup_->setChecked( ! role.empty() );
+        if( userRoleGroup_->isChecked() )
+            ActivateControls();
         if( !role.empty() )
             userRole_->setCurrentText( userRoleDico_->GetLabel( role, dicoKind_, dicoLanguage_ ).c_str() );
     }
     unitRights_->Display( profile );
-    populationRights_->Display( profile );
+    dynamic_cast< UserProfileRights_ABC* >( pPopulations_->widget( 0 ) )->Display( profile );
+    dynamic_cast< UserProfileControls_ABC* >( pPopulations_->widget( 1 ) )->Display( profile );
     SetEnabled( true );
 }
 
@@ -204,9 +217,15 @@ void UserProfileWidget::OnUserRoleActivation( bool enable )
     if( userRoleDico_ && profile_ )
     {
         if( enable && profile_->GetUserRole().empty() )
+        {
             profile_->SetUserRole( userRoleDico_->GetKey( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ ) );
+            ActivateControls();
+        }
         else if( !enable )
+        {
             profile_->SetUserRole( "" );
+            DeactivateControls();
+        }
         controllers_.controller_.Update( profile_ );
     }
 }
@@ -229,4 +248,26 @@ void UserProfileWidget::OnUserRole( const QString& role )
 void UserProfileWidget::SetEnabled( bool enabled )
 {
     setShown( enabled );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::ActivateControls
+// Created: LGY 2011-09-13
+// -----------------------------------------------------------------------------
+void UserProfileWidget::ActivateControls()
+{
+    supervisorLabel_->hide();
+    supervisor_->hide();
+    pPopulations_->setCurrentIndex( 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::DeactivateControls
+// Created: LGY 2011-09-13
+// -----------------------------------------------------------------------------
+void UserProfileWidget::DeactivateControls()
+{
+    supervisorLabel_->show();
+    supervisor_->show();
+    pPopulations_->setCurrentIndex( 0 );
 }

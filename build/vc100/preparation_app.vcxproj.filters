@@ -412,6 +412,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -569,6 +575,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.h">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -753,6 +762,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LogisticStockEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

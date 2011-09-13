@@ -45,6 +45,12 @@ private slots:
     //@}
 
 private:
+    //! @name Operations
+    //@{
+    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable );
+    //@}
+
+private:
     //! @name Copy/Assignment
     //@{
     UserProfileUnitRights( const UserProfileUnitRights& );            //!< Copy constructor

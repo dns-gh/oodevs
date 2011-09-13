@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __UserProfileRights_ABC_h_
-#define __UserProfileRights_ABC_h_
+#ifndef __UserProfileControls_ABC_h_
+#define __UserProfileControls_ABC_h_
+
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -23,19 +25,18 @@ namespace kernel
 class UserProfile;
 
 // =============================================================================
-/** @class  UserProfileRights_ABC
-    @brief  UserProfileRights_ABC
-    // $$$$ AGE 2007-04-18: ^c^v
+/** @class  UserProfileControls_ABC
+    @brief  User profile controls declaration
 */
-// Created: SBO 2007-01-18
+// Created: LGY 2011-09-12
 // =============================================================================
-class UserProfileRights_ABC
+class UserProfileControls_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UserProfileRights_ABC( Q3ListView* listView );
-    virtual ~UserProfileRights_ABC();
+    explicit UserProfileControls_ABC( Q3ListView* listView );
+    virtual ~UserProfileControls_ABC();
     //@}
 
     //! @name Operations
@@ -47,31 +48,23 @@ protected:
     //! @name Slots
     //@{
     void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
-    void SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
+    void SetStatus( gui::ValuedListItem* item, bool isControl, bool inheritsControllable );
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable ) = 0;
+    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable ) = 0;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileRights_ABC( const UserProfileRights_ABC& );            //!< Copy constructor
-    UserProfileRights_ABC& operator=( const UserProfileRights_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     enum Status
     {
         eNothing,
-        eReadOnly,
-        eReadInherited,
-        eWrite,
-        eWriteInherited
+        eControl,
+        eControlInherited
     };
     //@}
 
@@ -79,9 +72,9 @@ private:
     //@{
     void Commit();
     void Clear();
-    void SetStatus( Q3ListViewItem* item, Status status );
-    void SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable );
-    Status MakeStatus( bool read, bool write, bool inheritedRead, bool inheritedWrite );
+    void SetItem( Q3ListViewItem* item, Status status );
+    void SetStatus( gui::ValuedListItem* item, bool inheritsControllable );
+    Status MakeStatus( bool control, bool inheritedControl );
     //@}
 
 private:
@@ -93,4 +86,4 @@ private:
     //@}
 };
 
-#endif // __UserProfileRights_ABC_h_
+#endif // __UserProfileControls_ABC_h_

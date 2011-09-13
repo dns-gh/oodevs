@@ -77,6 +77,13 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ActivateControls();
+    void DeactivateControls();
+    //@}
+
+private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -84,15 +91,16 @@ private:
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
+    QLabel* supervisorLabel_;
     QCheckBox* supervisor_;
     Q3GroupBox* userRoleGroup_;
     QLabel* userRoleLabel_;
     QComboBox* userRole_;
     UserProfileRights_ABC* unitRights_;
-    UserProfileRights_ABC* populationRights_;
     kernel::DictionaryType* userRoleDico_;
     std::string dicoKind_;
     std::string dicoLanguage_;
+    QStackedWidget* pPopulations_;
     //@}
 };
 

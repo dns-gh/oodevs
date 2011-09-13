@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "UserProfileRights_ABC.h"
+#include "UserProfileControls_ABC.h"
 #include "icons.h"
 #include "preparation/Tools.h"
 #include "preparation/UserProfile.h"
@@ -18,38 +18,37 @@ using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC constructor
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC constructor
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-UserProfileRights_ABC::UserProfileRights_ABC( Q3ListView* listView )
-    : listView_( listView )
-    , profile_( 0 )
-    , check_( MAKE_PIXMAP( check ) )
+UserProfileControls_ABC::UserProfileControls_ABC( Q3ListView* listView )
+    : listView_  ( listView )
+    , profile_   ( 0 )
+    , check_     ( MAKE_PIXMAP( check ) )
     , check_grey_( MAKE_PIXMAP( check_grey ) )
 {
     listView_->header()->show();
-    listView_->addColumn( tools::translate( "UserProfileRights", "Read" ) , 40 );
-    listView_->addColumn( tools::translate( "UserProfileRights", "Write" ), 40 );
+    listView_->addColumn( tools::translate( "UserProfileControls", "Control" ), 60 );
     listView_->addColumn( "hidden", 0 );
     listView_->header()->setResizeEnabled( false );
-    listView_->hideColumn( 3 );
+    listView_->hideColumn( 2 );
     listView_->setDisabled( true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC destructor
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC destructor
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-UserProfileRights_ABC::~UserProfileRights_ABC()
+UserProfileControls_ABC::~UserProfileControls_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::Commit
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::Commit
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Commit()
+void UserProfileControls_ABC::Commit()
 {
     if( !profile_ )
         return;
@@ -57,20 +56,20 @@ void UserProfileRights_ABC::Commit()
         if( const ValuedListItem* item = static_cast< const ValuedListItem* >( *it ) )
         {
             const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
-            const Status status = Status( item->text( 3 ).toInt() );
-            const bool isWriteable = status == eWrite;
-            const bool isReadable  = status == eReadOnly;
-            profile_->SetReadable ( *entity, isReadable && !isWriteable );
+            const Status status = Status( item->text( 2 ).toInt() );
+            const bool isWriteable = status == eControl;
+            const bool isReadable = profile_->IsReadable( *entity );
+            profile_->SetReadable( *entity, isReadable && !isWriteable );
             profile_->SetWriteable( *entity, isWriteable );
-            ValueChanged( entity, isWriteable );
+            ValueChanged( entity, isReadable, isWriteable );
         }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::Display
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::Display
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Display( UserProfile& profile )
+void UserProfileControls_ABC::Display( UserProfile& profile )
 {
     Clear();
     listView_->setDisabled( false );
@@ -78,127 +77,98 @@ void UserProfileRights_ABC::Display( UserProfile& profile )
     ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
     while( value )
     {
-        SetStatus( value, false, false );
+        SetStatus( value, false );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::OnItemClicked
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::OnItemClicked
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&, int column )
+void UserProfileControls_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&, int column )
 {
     if( column == 0 || !item )
         return;
-
-    const Status status = Status( item->text( 3 ).toInt() );
-    if( status == eWriteInherited || ( column == 1 && status == eReadInherited ) )
+    const Status status = Status( item->text( 2 ).toInt() );
+    if( status == eControlInherited )
         return;
-    bool write = status == eWrite;
-    if( column == 2 )
-        write = !write;
-    bool read = status == eWrite || status == eReadOnly;
+    bool control = status == eControl;
     if( column == 1 )
-        read = !read;
-    SetStatus( static_cast< ValuedListItem* >( item ), read, write, false, false );
-    Commit(); // $$$$ SBO 2007-11-08: should not be done after every change...
+        control = !control;
+    SetStatus( static_cast< ValuedListItem* >( item ), control, false );
+    Commit();
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::Clear
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::Clear
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Clear()
+void UserProfileControls_ABC::Clear()
 {
     for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
     {
         (*it)->setPixmap( 1, QPixmap() );
-        (*it)->setPixmap( 2, QPixmap() );
         listView_->setOpen( *it, false );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::SetStatus
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::SetItem
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( Q3ListViewItem* item, Status status )
+void UserProfileControls_ABC::SetItem( Q3ListViewItem* item, Status status )
 {
-    item->setText( 3, QString::number( status ) );
+    item->setText( 2, QString::number( status ) );
     if( status == eNothing )
-    {
         item->setPixmap( 1, QPixmap() );
-        item->setPixmap( 2, QPixmap() );
-    }
-    else if( status == eReadOnly )
-    {
+    else if( status == eControl )
         item->setPixmap( 1, check_ );
-        item->setPixmap( 2, QPixmap() );
-    }
-    else if( status == eReadInherited )
-    {
+    else if( status == eControlInherited )
         item->setPixmap( 1, check_grey_ );
-        item->setPixmap( 2, QPixmap() );
-    }
-    else if( status == eWrite )
-    {
-        item->setPixmap( 1, check_ );
-        item->setPixmap( 2, check_ );
-    }
-    else if( status == eWriteInherited )
-    {
-        item->setPixmap( 1, check_grey_ );
-        item->setPixmap( 2, check_grey_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::SetStatus
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::SetStatus
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable )
+void UserProfileControls_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsControllable )
 {
     const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
     if( !entity )
         return;
     const bool isWriteable = profile_->IsWriteable( *entity );
-    const bool isReadable  = isWriteable || profile_->IsReadable( *entity );
-    SetStatus( item, isReadable, isWriteable, inheritsReadable, inheritsWriteable );
+    SetStatus( item, isWriteable, inheritsControllable );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::SetStatus
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::SetStatus
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable )
+void UserProfileControls_ABC::SetStatus( gui::ValuedListItem* item, bool isControl, bool inheritsControllable )
 {
-    SetStatus( item, MakeStatus( isReadable, isWriteable, inheritsReadable, inheritsWriteable ) );
-    if( isReadable || isWriteable )
+    SetItem( item, MakeStatus( isControl, inheritsControllable ) );
+    if( isControl )
         listView_->ensureItemVisible( item );
 
     ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
     while( value )
     {
-        SetStatus( value, isReadable || inheritsReadable, isWriteable || inheritsWriteable );
+        SetStatus( value, isControl || inheritsControllable );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::MakeStatus
-// Created: SBO 2007-01-18
+// Name: UserProfileControls_ABC::MakeStatus
+// Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-UserProfileRights_ABC::Status UserProfileRights_ABC::MakeStatus( bool read, bool write, bool inheritedRead, bool inheritedWrite )
+UserProfileControls_ABC::Status UserProfileControls_ABC::MakeStatus( bool control, bool inheritedControl )
 {
     Status status = eNothing;
-    if( write )
-        status = eWrite;
-    else if( read )
-        status = eReadOnly;
-    else if( inheritedWrite )
-        status = eWriteInherited;
-    else if( inheritedRead )
-        status = eReadInherited;
+    if( control )
+        status = eControl;
+    else if( inheritedControl )
+        status = eControlInherited;
     return status;
 }
