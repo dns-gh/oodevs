@@ -56,7 +56,6 @@ RemoteAgentController::RemoteAgentController( tools::MessageController_ABC< swor
 // -----------------------------------------------------------------------------
 RemoteAgentController::~RemoteAgentController()
 {
-    unitHandler_.Unregister( *this );
     automatHandler_.Unregister( *this );
     formationHandler_.Unregister( *this );
     agentSubject_.Unregister( *this );
@@ -71,7 +70,6 @@ void RemoteAgentController::Notify( const sword::ControlEndTick& /*message*/, in
     DISCONNECT( controller_, *this, control_end_tick );
     formationHandler_.Register( *this );
     automatHandler_.Register( *this );
-    unitHandler_.Register( *this );
     tools::Iterator< const dispatcher::Team_ABC& > it = model_.Sides().CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -96,15 +94,6 @@ void RemoteAgentController::Notify( const sword::FormationCreation& message, con
 void RemoteAgentController::Notify( const sword::AutomatCreation& message, const std::string& /*identifier*/ )
 {
     parties_[ message.party().id() ] = message.automat().id();
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Notify
-// Created: SLI 2011-09-08
-// -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::UnitCreation& message, const std::string& identifier )
-{
-    units_[ identifier ] = message.unit().id();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,21 +171,18 @@ void RemoteAgentController::Destroyed( const std::string& /*identifier*/ )
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Moved( const std::string& identifier, double latitude, double longitude )
 {
-    if( units_.find( identifier ) != units_.end() )
-        Teleport( identifier, latitude, longitude );
-    else if( unitCreations_.find( identifier ) != unitCreations_.end() )
+    if( unitCreations_.find( identifier ) == unitCreations_.end() )
+        return;
+    simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
+    sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
+    location->set_type( sword::Location::point );
+    sword::CoordLatLong* coordLatLong = location->mutable_coordinates()->add_elem();
+    coordLatLong->set_latitude( latitude );
+    coordLatLong->set_longitude( longitude );
+    if( message().has_tasker() )
     {
-        simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
-        sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
-        location->set_type( sword::Location::point );
-        sword::CoordLatLong* coordLatLong = location->mutable_coordinates()->add_elem();
-        coordLatLong->set_latitude( latitude );
-        coordLatLong->set_longitude( longitude );
-        if( message().has_tasker() )
-        {
-            unitHandler_.Send( message, identifier );
-            unitCreations_.erase( identifier );
-        }
+        unitHandler_.Send( message, identifier );
+        unitCreations_.erase( identifier );
     }
 }
 
@@ -250,23 +236,4 @@ unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) c
             return it->second;
     }
     return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Teleport
-// Created: SLI 2011-09-08
-// -----------------------------------------------------------------------------
-void RemoteAgentController::Teleport( const std::string& identifier, double latitude, double longitude )
-{
-    simulation::UnitMagicAction message;
-    message().mutable_tasker()->mutable_unit()->set_id( units_[ identifier ] );
-    message().set_type( sword::UnitMagicAction::move_to );
-    sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
-    parameter.set_null_value( false );
-    sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
-    location.set_type( sword::Location::point );
-    sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
-    coordinates.set_latitude( latitude );
-    coordinates.set_longitude( longitude );
-    message.Send( publisher_, contextFactory_.Create() );
 }

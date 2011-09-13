@@ -59,7 +59,6 @@ namespace hla
 class RemoteAgentController : private tools::MessageObserver< sword::ControlEndTick >
                             , private ResponseObserver_ABC< sword::FormationCreation >
                             , private ResponseObserver_ABC< sword::AutomatCreation >
-                            , private ResponseObserver_ABC< sword::UnitCreation >
                             , private RemoteAgentListener_ABC
 {
 public:
@@ -81,7 +80,6 @@ private:
     virtual void Notify( const sword::ControlEndTick& message, int context );
     virtual void Notify( const sword::FormationCreation& message, const std::string& identifier );
     virtual void Notify( const sword::AutomatCreation& message, const std::string& identifier );
-    virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
     //@}
 
     //! @name Operations
@@ -99,7 +97,6 @@ private:
     void AddAutomat( unsigned long formation, unsigned long knowledgeGroup );
     unsigned long FindKnowledgeGroup( unsigned long party ) const;
     unsigned long FindAutomat( rpr::ForceIdentifier ) const;
-    void Teleport( const std::string& identifier, double latitude, double longitude );
     //@}
 
 private:

@@ -45,7 +45,6 @@ namespace
             : controlEndTickHandler   ( 0 )
             , formationCreationHandler( 0 )
             , automatCreationHandler  ( 0 )
-            , unitCreationHandler     ( 0 )
             , remoteAgentListener     ( 0 )
         {
             MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( controlEndTickHandler ) );
@@ -83,7 +82,6 @@ namespace
         tools::MessageHandler_ABC< sword::SimToClient_Content >* controlEndTickHandler;
         ResponseObserver_ABC< sword::FormationCreation >* formationCreationHandler;
         ResponseObserver_ABC< sword::AutomatCreation >* automatCreationHandler;
-        ResponseObserver_ABC< sword::UnitCreation >* unitCreationHandler;
         MockContextHandler< sword::FormationCreation > formationCreation;
         MockContextHandler< sword::AutomatCreation > automatCreation;
         MockContextHandler< sword::UnitCreation > unitCreation;
@@ -103,12 +101,10 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_listen_to_control_end_tick_mess
     MOCK_EXPECT( messageController, Unregister ).once();
     MOCK_EXPECT( formationCreation, Register ).once();
     MOCK_EXPECT( automatCreation, Register ).once();
-    MOCK_EXPECT( unitCreation, Register ).once();
     controlEndTickHandler->Notify( MakeControlEndTickMessage(), 42 );
     mock::verify();
     MOCK_EXPECT( formationCreation, Unregister ).once();
     MOCK_EXPECT( automatCreation, Unregister ).once();
-    MOCK_EXPECT( unitCreation, Unregister ).once();
     MOCK_EXPECT( remoteSubject, Unregister ).once();
 }
 
@@ -134,13 +130,11 @@ namespace
             MOCK_EXPECT( messageController, Unregister ).once();
             MOCK_EXPECT( formationCreation, Register ).once().with( mock::retrieve( formationCreationHandler ) );
             MOCK_EXPECT( automatCreation, Register ).once().with( mock::retrieve( automatCreationHandler ) );
-            MOCK_EXPECT( unitCreation, Register ).once().with( mock::retrieve( unitCreationHandler ) );
         }
         virtual ~TickedFixture()
         {
             MOCK_EXPECT( formationCreation, Unregister ).once();
             MOCK_EXPECT( automatCreation, Unregister ).once();
-            MOCK_EXPECT( unitCreation, Unregister ).once();
             MOCK_EXPECT( remoteSubject, Unregister ).once();
         }
         RemoteAgentController remoteController;
@@ -294,46 +288,4 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_throws_if_distant_party_does_no
 {
     remoteAgentListener->Created( "identifier" );
     BOOST_CHECK_THROW( remoteAgentListener->SideChanged( "identifier", rpr::Opposing ), std::runtime_error );
-}
-
-namespace
-{
-    class UnitFixture : public AutomatFixture
-    {
-    public:
-        UnitFixture()
-            : unit( 37 )
-        {
-            remoteAgentListener->Created( "identifier" );
-            remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
-            MOCK_EXPECT( unitCreation, Send ).once().with( mock::retrieve( unitCreationRequest ), "identifier" );
-            remoteAgentListener->Moved( "identifier", latitude, longitude );
-            mock::verify();
-        }
-        simulation::UnitMagicAction unitCreationRequest;
-        const unsigned long unit;
-    };
-}
-
-BOOST_FIXTURE_TEST_CASE( remote_agent_controller_teleports_distant_units, UnitFixture )
-{
-    BOOST_REQUIRE( unitCreationHandler );
-    sword::UnitCreation message;
-    message.mutable_unit()->set_id( unit );
-    unitCreationHandler->Notify( message, "identifier" );
-    mock::verify();
-    sword::ClientToSim teleportMessage;
-    MOCK_EXPECT( contextFactory, Create ).once().returns( 1338 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( teleportMessage ) );
-    remoteAgentListener->Moved( "identifier", latitude + 1, longitude + 1 );
-    BOOST_CHECK( teleportMessage.message().has_unit_magic_action() );
-    const sword::UnitMagicAction& action = teleportMessage.message().unit_magic_action();
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::move_to );
-    BOOST_CHECK_EQUAL( action.tasker().unit().id(), unit );
-    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
-    const sword::Location& location = action.parameters().elem( 0 ).value( 0 ).point().location();
-    BOOST_CHECK_EQUAL( location.type(), sword::Location::point );
-    BOOST_CHECK_EQUAL( location.coordinates().elem_size(), 1 );
-    BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).latitude(), latitude + 1 );
-    BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).longitude(), longitude + 1 );
 }
