@@ -78,7 +78,6 @@ private:
     kernel::Controllers& controllers_;
     TeamFactory_ABC& factory_;
     bool infiniteDotations_;
-    std::map< std::string, unsigned int > undergroundNetworks_;
     //@}
 };
 
