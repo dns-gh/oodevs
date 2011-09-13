@@ -972,6 +972,9 @@
     <ClInclude Include="..\..\src\libraries\preparation\TimeLimitedAttribute.h">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\preparation\preparation_es.ts">

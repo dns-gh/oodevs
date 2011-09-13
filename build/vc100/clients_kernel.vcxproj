@@ -378,7 +378,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingArea_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingAreaVisitor_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Moveable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectExtensions.h" />

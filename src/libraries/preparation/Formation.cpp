@@ -12,7 +12,6 @@
 #include "IdManager.h"
 #include "LogisticBaseStates.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"

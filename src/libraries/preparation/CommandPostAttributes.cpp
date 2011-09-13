@@ -39,7 +39,7 @@ CommandPostAttributes::~CommandPostAttributes()
 void CommandPostAttributes::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     const kernel::Entity_ABC& superior = entity_.Get< kernel::TacticalHierarchies >().GetUp();
-    if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< kernel::LogisticHierarchiesBase >() ) )
+    if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< LogisticHierarchiesBase >() ) )
         bl->Draw( where, viewport, tools );
 }
 

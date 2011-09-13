@@ -23,7 +23,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ExtensionVisitor_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -31,6 +30,7 @@
 #include "clients_kernel/tools.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "preparation/Dotation.h"
+#include "preparation/LogisticHierarchiesBase.h"
 #include "preparation/StaticModel.h"
 #include "preparation/Stocks.h"
 #include "MT_Tools/MT_Logger.h"
@@ -172,7 +172,7 @@ void LogisticStockEditor::Update( const kernel::Entity_ABC& entity, kernel::Cont
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_ABC > entity )
 {
-    const kernel::LogisticHierarchiesBase* pLogHierarchy = entity->Retrieve< kernel::LogisticHierarchiesBase >();
+    const LogisticHierarchiesBase* pLogHierarchy = entity->Retrieve< LogisticHierarchiesBase >();
     if ( pLogHierarchy )
         SupplyLogisticBaseStocks( *pLogHierarchy );
 }
@@ -181,7 +181,7 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
 // Name: LogisticStockEditor::SupplyLogisticBaseStocks
 // Created: MMC 2011-08-10
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::SupplyLogisticBaseStocks( const kernel::LogisticHierarchiesBase& logHierarchy )
+void LogisticStockEditor::SupplyLogisticBaseStocks( const LogisticHierarchiesBase& logHierarchy )
 {
     QItemSelectionModel* pModel = category_->selectionModel();
     QModelIndexList indexList = pModel->selectedIndexes();
@@ -221,7 +221,7 @@ void LogisticStockEditor::SupplyBlLogisticBaseStock( const kernel::Entity_ABC& b
     FindAgentStocksInFormationLogisticBase( blLogBase, blLogBase, entStocks );
 
     std::set< const kernel::Entity_ABC* > logBases;
-    FindTc2LogisticBases( blLogBase.Get< kernel::LogisticHierarchiesBase >(), logBases );
+    FindTc2LogisticBases( blLogBase.Get< LogisticHierarchiesBase >(), logBases );
 
     std::map< const kernel::DotationType*, double > requirements;
     for ( std::set< const kernel::Entity_ABC* >::iterator it = logBases.begin(); it != logBases.end(); ++it )
@@ -286,7 +286,7 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
 // Name: LogisticStockEditor::FindTc2LogisticBases
 // Created: MMC 2011-08-10
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::FindTc2LogisticBases( const kernel::LogisticHierarchiesBase& logHierarchy, std::set< const kernel::Entity_ABC* >& logBases )
+void LogisticStockEditor::FindTc2LogisticBases( const LogisticHierarchiesBase& logHierarchy, std::set< const kernel::Entity_ABC* >& logBases )
 {
     const kernel::Hierarchies& hierarchy = static_cast< const kernel::Hierarchies &>( logHierarchy );
     const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &hierarchy.GetEntity() );
@@ -302,7 +302,7 @@ void LogisticStockEditor::FindTc2LogisticBases( const kernel::LogisticHierarchie
     while( logChildren.HasMoreElements() )
     {
         const kernel::Entity_ABC& entity = logChildren.NextElement();
-        const kernel::LogisticHierarchiesBase* pChildLogisticHierarchies = entity.Retrieve< kernel::LogisticHierarchiesBase >();
+        const LogisticHierarchiesBase* pChildLogisticHierarchies = entity.Retrieve< LogisticHierarchiesBase >();
         if ( pChildLogisticHierarchies && pChildLogisticHierarchies != &logHierarchy )
             FindTc2LogisticBases( *pChildLogisticHierarchies, logBases );
     }
@@ -370,7 +370,7 @@ void LogisticStockEditor::FindAgentStocksInTc2LogisticBase( const kernel::Entity
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::FindTc2AgentsToSupply( const kernel::Entity_ABC& logBase, std::set< const kernel::Agent_ABC* >& entToSupply )
 {
-    const kernel::LogisticHierarchiesBase* pLogHierarchies = logBase.Retrieve< kernel::LogisticHierarchiesBase >();
+    const LogisticHierarchiesBase* pLogHierarchies = logBase.Retrieve< LogisticHierarchiesBase >();
     if ( !pLogHierarchies )
         return;
 

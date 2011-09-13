@@ -14,6 +14,7 @@
 #include "TeamFactory_ABC.h"
 #include "Model.h"
 #include "FormationModel.h"
+#include "LogisticHierarchiesBase.h"
 #include "ObjectsModel.h"
 #include "AgentsModel.h"
 #include "Diplomacies.h"
@@ -25,7 +26,6 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/LogisticHierarchies.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;

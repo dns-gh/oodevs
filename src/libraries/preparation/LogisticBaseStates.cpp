@@ -28,7 +28,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& entity,
                                        const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico, bool canHaveQuotas )
-    : kernel::EntityHierarchies< kernel::LogisticHierarchiesBase >( controller, entity, 0 )
+    : kernel::EntityHierarchies< LogisticHierarchiesBase >( controller, entity, 0 )
     , controller_( controller )
     , resolver_( resolver )
     , item_( 0 )
@@ -53,7 +53,7 @@ LogisticBaseStates::~LogisticBaseStates()
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
 {
-    dico.Register( *(const kernel::LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetSuperior );
+    dico.Register( *(const LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetSuperior );
     if( canHaveQuotas_ )
     {
         item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *(Resolver< Dotation >*)this );
@@ -82,7 +82,7 @@ void LogisticBaseStates::Draw( const geometry::Point2f& where, const kernel::Vie
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticHierarchies::Load
+// Name: LogisticBaseStates::Load
 // Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::Load( xml::xistream& xis, const kernel::Entity_ABC* superior )
@@ -106,13 +106,13 @@ void LogisticBaseStates::ReadDotation( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticHierarchies::SetSuperiorInternal
+// Name: LogisticBaseStates::SetSuperiorInternal
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
     superior_ = superior;
-    kernel::EntityHierarchies< kernel::LogisticHierarchiesBase >::SetSuperiorInternal( superior );
+    kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperiorInternal( superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,11 +122,11 @@ void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 void LogisticBaseStates::SetSuperior( const LogisticBaseSuperior& superior )
 {
     const kernel::Entity_ABC* tmp = superior;
-    kernel::EntityHierarchies< kernel::LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
+    kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticHierarchies::DrawLink
+// Name: LogisticBaseStates::DrawLink
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
@@ -158,7 +158,7 @@ void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticHierarchies::SerializeLogistics
+// Name: LogisticBaseStates::SerializeLogistics
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
@@ -176,7 +176,7 @@ void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
                 << xml::attribute( "id", entity.GetId());
 
         //$$$ Ca me parait bien compliqué et bien foireux...
-        const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< kernel::LogisticHierarchiesBase >() );
+        const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
         if( subordinateLogHierarchy )
             subordinateLogHierarchy->SerializeQuotas( xos );
         xos << xml::end;

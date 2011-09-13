@@ -31,7 +31,7 @@ class ObjectList : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile  );
+             ObjectList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~ObjectList();
     //@}
 

@@ -97,7 +97,7 @@ private:
     const QPixmap                             basePixmap_;
     const QPixmap                             selectedPixmap_;
     const QPixmap                             recipientsPixmap_;
-    Q3PopupMenu                                popupMenu_;
+    Q3PopupMenu                               popupMenu_;
     QString                                   filterLine_;
     std::vector< QColor >                     filters_;
     EFilter                                   filter_;

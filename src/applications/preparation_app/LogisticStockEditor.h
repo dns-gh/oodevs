@@ -16,6 +16,7 @@
 #include "ENT/ENT_Enums_Gen.h"
 
 class Dotation;
+class LogisticHierarchiesBase;
 class StaticModel;
 class Stocks;
 
@@ -26,7 +27,6 @@ namespace kernel
     class Formation_ABC;
     class Agent_ABC;
     class Controllers;
-    class LogisticHierarchiesBase;
     class TacticalHierarchies;
     class DotationType;
 }
@@ -72,14 +72,14 @@ private:
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
 
     void SupplyHierarchy( kernel::SafePointer< kernel::Entity_ABC > entity );
-    void SupplyLogisticBaseStocks( const kernel::LogisticHierarchiesBase& logHierarchy );
+    void SupplyLogisticBaseStocks( const LogisticHierarchiesBase& logHierarchy );
     void SupplyBlLogisticBaseStock( const kernel::Entity_ABC& logBase, E_StockCategory logType );
     void SupplyTc2LogisticBaseStock( const kernel::Entity_ABC& logBase, E_StockCategory logType );
     void SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const std::map< const kernel::DotationType*, double >& requirements );
     void ComputeRequirements( const kernel::Agent_ABC& agent, E_StockCategory logType, std::map< const kernel::DotationType*, double >& requirements );
     void FindAgentStocksInFormationLogisticBase( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::set< const kernel::Agent_ABC* >& entStocks );
     void FindAgentStocksInTc2LogisticBase( const kernel::Entity_ABC& logBase, std::set< const kernel::Agent_ABC* >& entStocks );
-    void FindTc2LogisticBases( const kernel::LogisticHierarchiesBase& logHierarchy, std::set< const kernel::Entity_ABC* >& logBases );
+    void FindTc2LogisticBases( const LogisticHierarchiesBase& logHierarchy, std::set< const kernel::Entity_ABC* >& logBases );
     void FindTc2AgentsToSupply( const kernel::Entity_ABC& logBase, std::set< const kernel::Agent_ABC* >& entToSupply );
     bool IsStockValid(  const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation );
     E_StockCategory GetDotationLogisticType( const kernel::DotationType& dotationType );

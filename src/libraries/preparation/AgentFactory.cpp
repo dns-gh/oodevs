@@ -123,7 +123,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
 
     bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
     result->Attach( *new LogisticLevelAttritube( *result, isTC2, dico ) );
-    result->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
+    result->Attach< LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
@@ -249,7 +249,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 
     bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
     result->Attach( *new LogisticLevelAttritube( xis, *result, isTC2, dico ) );
-    result->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
+    result->Attach< LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );

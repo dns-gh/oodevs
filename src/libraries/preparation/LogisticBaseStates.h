@@ -12,7 +12,7 @@
 
 #include "Types.h"
 #include "tools/Resolver.h"
-#include "clients_kernel/LogisticHierarchies.h"
+#include "LogisticHierarchiesBase.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -35,7 +35,7 @@ class DotationsItem;
 */
 // Created: AHC 2010-09-29
 // =============================================================================
-class LogisticBaseStates : public kernel::EntityHierarchies< kernel::LogisticHierarchiesBase >
+class LogisticBaseStates : public kernel::EntityHierarchies< LogisticHierarchiesBase >
                          , public kernel::Serializable_ABC
                          , public kernel::Drawable_ABC
                          , public tools::Resolver< Dotation >

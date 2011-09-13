@@ -12,7 +12,6 @@
 #include "LogisticBaseStates.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/LogisticHierarchies.h"
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
@@ -80,7 +79,7 @@ void LogisticLevelAttritube::SetLogisticLevel( const EntityLogisticLevel& logist
 {
     if( (*logisticLevel) == kernel::LogisticLevel::none_ )
     {
-        const kernel::LogisticHierarchiesBase* logHierarchy = entity_.Retrieve< kernel::LogisticHierarchiesBase >();
+        const LogisticHierarchiesBase* logHierarchy = entity_.Retrieve< LogisticHierarchiesBase >();
         if( logHierarchy )
         {
             tools::Iterator< const kernel::Entity_ABC& > children = logHierarchy->CreateSubordinateIterator();
@@ -94,7 +93,7 @@ void LogisticLevelAttritube::SetLogisticLevel( const EntityLogisticLevel& logist
                 while( children.HasMoreElements() )
                 {
                     const kernel::Entity_ABC& entity = children.NextElement();
-                    LogisticBaseStates* logEntityHierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< kernel::LogisticHierarchiesBase >() ) );
+                    LogisticBaseStates* logEntityHierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) );
                     if( logEntityHierarchy )
                         logEntityHierarchy->SetSuperior( LogisticBaseSuperior() );
                 }
