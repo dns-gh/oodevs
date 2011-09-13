@@ -186,7 +186,7 @@ void RemoteAgentController::AddAutomat( unsigned long formation, unsigned long k
     message().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );        // type
     message().mutable_parameters()->add_elem()->add_value()->set_identifier( knowledgeGroup );      // knowledge group
     message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant automat" ); // name
-    message.Send( publisher_, pAutomatHandler_->MakeContext( boost::lexical_cast< std::string >( formation ) )  );
+    message.Send( publisher_, pAutomatHandler_->MakeContext( boost::lexical_cast< std::string >( formation ) ) );
 }
 
 // -----------------------------------------------------------------------------
