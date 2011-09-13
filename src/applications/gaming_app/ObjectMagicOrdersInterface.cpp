@@ -71,7 +71,7 @@ namespace
         }
     };
 
-	class InitializedDoubleLineEdit : public InitializedLineEdit
+    class InitializedDoubleLineEdit : public InitializedLineEdit
     {
     public:
         InitializedDoubleLineEdit( QWidget* parent, double initialValue )
@@ -117,8 +117,8 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
     Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     if( entity.GetType().IsUrban() )
     {
-		unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
-		AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), value );
+        unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
+        AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), value );
         AddMagic( tr( "Alert" ), SLOT( Alert() ), magicMenu );
         AddMagic( tr( "Stop alert" ), SLOT( StopAlert() ), magicMenu );
         AddMagic( tr( "Confine" ), SLOT( Confine() ), magicMenu );
@@ -158,11 +158,11 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
             else
                 AddMagic( tr( "Activate exit" ), SLOT( ActivateUndergroundExit() ), magicMenu );
         }
-		if( const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >() )
-		{
-			double value = static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue();
-	        AddDoubleValuedMagic( magicMenu, menu, tr( "Limit Trafficability" ), SLOT( ChangeTrafficability() ), value );
-		}
+        if( const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >() )
+        {
+            double value = static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue();
+            AddDoubleValuedMagic( magicMenu, menu, tr( "Limit Trafficability" ), SLOT( ChangeTrafficability() ), value );
+        }
     }
 }
 
