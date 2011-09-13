@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Inhabitants.xsd">
+  <population associated-crowd="Manifestants" id="0" name="popManifestant">
+    <repartition children="0.4" female="0.3" male="0.3"/>
+    <schedule transfer-time="40m">
+      <event day="tuesday" from="13:00" motivation="Travail" to="15:00"/>
+      <event day="tuesday" from="15:01" motivation="Loisir" to="17:00"/>
+      <event day="tuesday" from="17:01" motivation="Logement" to="19:00"/>
+    </schedule>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <health-need people-per-facility="1000"/>
+    <consumption>
+      <resource need="2" type="eau courante"/>
+      <resource need="1" type="electricite"/>
+    </consumption>
+  </population>
+  <population associated-crowd="Population standard" id="1" name="popStandard">
+    <repartition children="0.3" female="0.3" male="0.4"/>
+    <schedule transfer-time="40m">
+      <event day="monday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="monday" from="08:00" motivation="Travail" to="11:59"/>
+      <event day="monday" from="12:00" motivation="Loisir" to="13:59"/>
+      <event day="monday" from="14:00" motivation="Travail" to="17:59"/>
+      <event day="monday" from="18:00" motivation="Loisir" to="20:59"/>
+      <event day="monday" from="21:00" motivation="Logement" to="23:59"/>
+      <event day="tuesday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="tuesday" from="08:00" motivation="Travail" to="11:59"/>
+      <event day="tuesday" from="12:00" motivation="Loisir" to="13:59"/>
+      <event day="tuesday" from="14:00" motivation="Travail" to="17:59"/>
+      <event day="tuesday" from="18:56" motivation="Loisir" to="20:59"/>
+      <event day="tuesday" from="21:00" motivation="Logement" to="23:59"/>
+      <event day="wednesday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="wednesday" from="08:00" motivation="Travail" to="11:59"/>
+      <event day="wednesday" from="12:00" motivation="Loisir" to="13:59"/>
+      <event day="wednesday" from="14:00" motivation="Travail" to="17:59"/>
+      <event day="wednesday" from="18:00" motivation="Loisir" to="20:59"/>
+      <event day="wednesday" from="21:00" motivation="Logement" to="23:59"/>
+      <event day="thursday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="thursday" from="08:00" motivation="Travail" to="11:59"/>
+      <event day="thursday" from="12:00" motivation="Loisir" to="13:59"/>
+      <event day="thursday" from="14:00" motivation="Travail" to="17:59"/>
+      <event day="thursday" from="18:00" motivation="Loisir" to="20:59"/>
+      <event day="thursday" from="21:00" motivation="Logement" to="23:59"/>
+      <event day="friday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="friday" from="08:00" motivation="Travail" to="11:59"/>
+      <event day="friday" from="12:00" motivation="Loisir" to="13:59"/>
+      <event day="friday" from="14:00" motivation="Travail" to="17:59"/>
+      <event day="friday" from="18:00" motivation="Loisir" to="20:59"/>
+      <event day="friday" from="21:00" motivation="Logement" to="23:59"/>
+      <event day="saturday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="saturday" from="09:00" motivation="Loisir" to="23:59"/>
+      <event day="sunday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="sunday" from="11:00" motivation="Loisir" to="21:59"/>
+      <event day="sunday" from="22:00" motivation="Logement" to="23:59"/>
+    </schedule>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <health-need people-per-facility="1000"/>
+    <consumption>
+      <resource need="2" type="eau courante"/>
+      <resource need="1" type="electricite"/>
+    </consumption>
+  </population>
+  <population associated-crowd="Refugie a pied" id="2" name="popRefugie">
+    <repartition children="0.2" female="0.4" male="0.4"/>
+    <schedule transfer-time="16m"/>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <health-need people-per-facility="1000"/>
+    <consumption>
+      <resource need="5" type="eau courante"/>
+    </consumption>
+  </population>
+</populations>
+<!-- signature="3717955239" -->

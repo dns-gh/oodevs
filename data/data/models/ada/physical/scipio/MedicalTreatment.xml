@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<medical-treatments model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/MedicalTreatment.xsd">
+  <!-- If a death-threshold is set to "-1", the injury isn't deadly, even it gets worse -->
+  <medical-treatment death-threshold="95" id="1" name="Wound">
+    <injuries>
+      <injury category="UA" hospitalisation-time="72h" life-expectancy="2h" threshold="80" treatment-time="5h"/>
+      <injury category="UR" hospitalisation-time="24h" life-expectancy="8h" threshold="25" treatment-time="30m"/>
+    </injuries>
+  </medical-treatment>
+  <medical-treatment death-threshold="-1" id="2" name="Contaminate">
+    <injuries>
+      <injury category="UA" hospitalisation-time="72h" life-expectancy="144h" threshold="2" treatment-time="120m"/>
+      <injury category="UR" hospitalisation-time="3h" life-expectancy="144h" threshold="1" treatment-time="30m"/>
+    </injuries>
+  </medical-treatment>
+  <medical-treatment death-threshold="3" id="3" name="Poison">
+    <injuries>
+      <injury category="UA" hospitalisation-time="72h" life-expectancy="1h" threshold="2" treatment-time="120m"/>
+      <injury category="UR" hospitalisation-time="3h" life-expectancy="5h" threshold="1" treatment-time="30m"/>
+    </injuries>
+  </medical-treatment>
+  <medical-treatment death-threshold="100" id="4" name="Burn">
+    <injuries>
+      <injury category="UA" hospitalisation-time="72h" life-expectancy="1h" threshold="75" treatment-time="120m"/>
+      <injury category="UR" hospitalisation-time="3h" life-expectancy="5h" threshold="50" treatment-time="30m"/>
+    </injuries>
+  </medical-treatment>
+  <medical-treatment death-threshold="-1" id="5" name="MentalDisease">
+    <injuries>
+      <injury category="UA" hospitalisation-time="72h" life-expectancy="144h" threshold="150" treatment-time="120m"/>
+      <injury category="UR" hospitalisation-time="3h" life-expectancy="144h" threshold="100" treatment-time="30m"/>
+    </injuries>
+  </medical-treatment>
+</medical-treatments>
+<!-- signature="4179680797" -->

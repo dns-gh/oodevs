@@ -9,6 +9,6 @@
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
   <terrain name="Angers_x9"/>
-  <model dataset="ada" physical="scipio-1.9.2"/>
+  <model dataset="ada" physical="scipio"/>
 </exercise>
-<!-- signature="0395391357" -->
+<!-- signature="1389019650" -->

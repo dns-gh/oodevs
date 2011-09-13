@@ -9,6 +9,6 @@
   <urbanstate file="urbanstate.xml"/>
   <weather file="weather.xml"/>
   <terrain name="Drosoville"/>
-  <model dataset="ada" physical="scipio-1.9.2"/>
+  <model dataset="ada" physical="scipio"/>
 </exercise>
-<!-- signature="3673438158" -->
+<!-- signature="2803634273" -->

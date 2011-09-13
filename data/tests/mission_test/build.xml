@@ -8,7 +8,7 @@
     <property name="output" value="out"/>
     <property name="input" value="src"/>
     <property name="testName" value="testings"/>
-    <property name="data" value="../../data/models/ada/physical/scipio-1.9.2"/>
+    <property name="data" value="../../data/models/ada/physical/scipio"/>
     <property name="dataFrance" value="../../data/models/ada/physical/france"/>
     <property name="dataWorldWide" value="../../data/models/ada/physical/worldwide"/>
     <property name="reportDir" value="./reports"/>

@@ -1,0 +1,3581 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<weapons model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/WeaponSystems.xsd">
+  <weapon-system launcher="Mitrailleuse ALAT M621" munition="CART 20 AME 621">
+    <burst duration="2s" munition="8"/>
+    <reloading duration="30s" munition="240"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.85"/>
+        <hit-probability distance="1500" percentage="0.5"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0.5"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="1000" percentage="0.75"/>
+        <hit-probability distance="1200" percentage="0.68"/>
+        <hit-probability distance="1500" percentage="0.5"/>
+        <hit-probability distance="200" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.75"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="2200" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Rampe Lance Missiles MISTRAL Gazelle" munition="CHARGE A BILLE">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="6000" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="6000" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="6000" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Rampe Lance Missiles MISTRAL ASA" munition="CHARGE A BILLE">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse" munition="CART 12.7 SBP">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse" munition="Balle Classique 14,5">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="0.25"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="25"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.95"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.85"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Fusil Assaut AK 47" munition="CART 5.56 BAL ORD F1">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="250" percentage="0.6"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.95"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.85"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="MINIMI" munition="CART 5.56 BAL ORD F1">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="5s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="600" percentage="0.81"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="600" percentage="0.76"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="600" percentage="0.71"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="600" percentage="0.66"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Fusil Precision FRF2" munition="CART CAL 308 168 GRS">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.95"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.9"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette" munition="ROQ 84 EXPL ABLF1">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="MIS AC 136 ERYX F1">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="60" percentage="0.55"/>
+        <hit-probability distance="600" percentage="0.35"/>
+        <hit-probability distance="650" percentage="0.2"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="60" percentage="0.55"/>
+        <hit-probability distance="600" percentage="0.35"/>
+        <hit-probability distance="650" percentage="0.2"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="60" percentage="0.55"/>
+        <hit-probability distance="600" percentage="0.35"/>
+        <hit-probability distance="650" percentage="0.3"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="MIS AC HOT EXPL">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="2"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="3600" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.45"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="3200" percentage="0.45"/>
+        <hit-probability distance="3800" percentage="0.35"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="3200" percentage="0.4"/>
+        <hit-probability distance="3600" percentage="0.3"/>
+        <hit-probability distance="4000" percentage="0.2"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="MIS MILAN LEG AC F2">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="600" percentage="0.55"/>
+        <hit-probability distance="1900" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="1900" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="1900" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mortier 81 LLR" munition="CPLT 81 EXPL MLE F2">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="300" max-range="5600" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155" munition="OE JUPU 155 F2">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="23300" min-range="4200"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155" munition="OE CCR 155 MLE F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="23300" min-range="4200"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155" munition="O GR 155 F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="26900" min-range="5500"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155" munition="O 155 F1 AC EF DR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="26900" min-range="2500"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155" munition="O ECL 155 F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="21500" min-range="3700"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155" munition="CPLT FUM PH 155">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="23300" min-range="4200"/>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette LRM" munition="ROQ EXPL 298 M26">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1000" max-range="32000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse" munition="CART 7.62 N BD PAN">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon Stabilise" munition="CART 120 OECC F1">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="2400" percentage="0.6"/>
+        <hit-probability distance="2800" percentage="0.5"/>
+        <hit-probability distance="3200" percentage="0.3"/>
+        <hit-probability distance="3500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.95"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.65"/>
+        <hit-probability distance="2400" percentage="0.5"/>
+        <hit-probability distance="2800" percentage="0.2"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon Stabilise" munition="CART 120 OFL F1">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="1"/>
+        <hit-probability distance="1600" percentage="0.95"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2400" percentage="0.8"/>
+        <hit-probability distance="2800" percentage="0.7"/>
+        <hit-probability distance="3200" percentage="0.6"/>
+        <hit-probability distance="3600" percentage="0.4"/>
+        <hit-probability distance="4000" percentage="0.2"/>
+        <hit-probability distance="4500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.95"/>
+        <hit-probability distance="1600" percentage="0.9"/>
+        <hit-probability distance="2000" percentage="0.85"/>
+        <hit-probability distance="2400" percentage="0.75"/>
+        <hit-probability distance="2800" percentage="0.65"/>
+        <hit-probability distance="3200" percentage="0.5"/>
+        <hit-probability distance="3600" percentage="0.2"/>
+        <hit-probability distance="3800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.4"/>
+        <hit-probability distance="2800" percentage="0.2"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.4"/>
+        <hit-probability distance="600" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105 F3 OCC F3">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.2"/>
+        <hit-probability distance="2800" percentage="0.1"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0.1"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105  F3 OE F3">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.85"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0.05"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105  F3 OFL F3">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2500" percentage="0.4"/>
+        <hit-probability distance="2300" percentage="0.5"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.02"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 20 AME 621">
+    <burst duration="10s" munition="3"/>
+    <reloading duration="30s" munition="15"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="1800" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0.3"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Coaxiale" munition="CART 12.7 SBP">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.65"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.25"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Coaxiale" munition="CART 7.62 N BD PAN">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.35"/>
+        <hit-probability distance="1050" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Tourelleau" munition="CART 7.62 N BD PAN">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="200" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="600" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="800" percentage="0.75"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="200" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Tourelleau" munition="CART 12.7 SBP">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1100" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1050" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 90 F2 OCC 62">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.85"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2200" percentage="0.05"/>
+        <hit-probability distance="2300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1000" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1400" percentage="0.1"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 90 F2 OE F1">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1500" percentage="0.4"/>
+        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="1800" percentage="0.2"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.75"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1500" percentage="0.3"/>
+        <hit-probability distance="1700" percentage="0.15"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.35"/>
+        <hit-probability distance="1400" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="900" percentage="0.05"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 90 F1 OFLE F1">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.15"/>
+        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Fusil PGM" munition="CART 12.7 SBP">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="900" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="900" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="850" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Fusil PGM" munition="CART 12.7  BAL PF F2">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="900" percentage="0.95"/>
+        <hit-probability distance="1800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="900" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1800" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="850" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1800" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1800" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Pistolet Assaut PAMAS" munition="CART 9 BAL ORD F3">
+    <burst duration="10s" munition="10"/>
+    <reloading duration="10s" munition="10"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.6"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="45" percentage="0.2"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.55"/>
+        <hit-probability distance="45" percentage="0.15"/>
+        <hit-probability distance="50" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.5"/>
+        <hit-probability distance="45" percentage="0.08"/>
+        <hit-probability distance="50" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.4"/>
+        <hit-probability distance="45" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquettes 6812" munition="ROQ 68 FL CH F3">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 30 M 781" munition="CART 30/550  OSPEI">
+    <burst duration="15s" munition="6"/>
+    <reloading duration="40s" munition="6"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile HAWK" munition="MIS AAH HAWK EXPL NP">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="900s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="3000" percentage="1"/>
+        <hit-probability distance="38000" percentage="1"/>
+        <hit-probability distance="39000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="3000" percentage="1"/>
+        <hit-probability distance="38000" percentage="1"/>
+        <hit-probability distance="39000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="3000" percentage="1"/>
+        <hit-probability distance="38000" percentage="1"/>
+        <hit-probability distance="39000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette BM" munition="Roquette BM21">
+    <burst duration="20s" munition="40"/>
+    <reloading duration="10m" munition="40"/>
+    <indirect-fire average-speed="700" max-range="20380" min-range="500"/>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 30/550  OSPEI">
+    <burst duration="15s" munition="6"/>
+    <reloading duration="40s" munition="6"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Coaxiale" munition="Balle Classique 14,5">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1500" percentage="0.8"/>
+        <hit-probability distance="1800" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0.5"/>
+        <hit-probability distance="1800" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0.45"/>
+        <hit-probability distance="1700" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.65"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="Obus 73 OE">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0.3"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="400" percentage="0.9"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.3"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 152" munition="Obus 152 ACED">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152" munition="Obus 152 OE">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152" munition="Obus 152 OE MPA">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="24000" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon Stabilise" munition="Obus 125 OCC">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.95"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.15"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.25"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="100" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon Stabilise" munition="Obus 125 OFL">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="1"/>
+        <hit-probability distance="1600" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.55"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="500" percentage="0.95"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="Obus 125 OCC">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2800" percentage="0.15"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0.15"/>
+        <hit-probability distance="2800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="Obus 125 OFL">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.02"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="Missile AT7">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="60" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.75"/>
+        <hit-probability distance="700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="60" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.68"/>
+        <hit-probability distance="700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="60" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.65"/>
+        <hit-probability distance="700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Grenade" munition="Grenade AGS 17">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="1100" percentage="0"/>
+        <hit-probability distance="100" percentage="0.9"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1000" percentage="0.08"/>
+        <hit-probability distance="1100" percentage="0"/>
+        <hit-probability distance="100" percentage="0.9"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.8"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0.05"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.7"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="600" percentage="0.35"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Grenade" munition="GR 51  EXPL AP LGI">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="200" percentage="0.9"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="190" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="200" percentage="0.9"/>
+        <hit-probability distance="190" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="200" percentage="0.8"/>
+        <hit-probability distance="300" percentage="0.65"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="190" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="190" percentage="0"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="600" percentage="0.35"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="200" percentage="0.7"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon Stabilise ALAT" munition="Obus 23 mm">
+    <burst duration="15s" munition="6"/>
+    <reloading duration="40s" munition="6"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 122" munition="Obus 122 OE">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="15300" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 122" munition="Obus 122 OE MPA">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="21000" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 122" munition="Obus 122 ACED">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="15300" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Lanceur DREB" munition="ART FUM DREB">
+    <burst duration="30s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="100" min-range="20"/>
+  </weapon-system>
+  <weapon-system launcher="Fusil Mitrailleur RPK" munition="CART 7.62 N BD PAN">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="5s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="250" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="Obus 76 OE">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0.3"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="400" percentage="0.9"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.3"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105 OFL F1">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.02"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105 OCC F3 B">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.2"/>
+        <hit-probability distance="2800" percentage="0.1"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0.1"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105 F3A  OE F3">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.85"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0.05"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105 F1 OFUM PH">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.02"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105  F1 OECL F1">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.02"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon Stabilise" munition="CART 120 OFL F1A">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="1"/>
+        <hit-probability distance="1600" percentage="0.95"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2400" percentage="0.8"/>
+        <hit-probability distance="2800" percentage="0.7"/>
+        <hit-probability distance="3200" percentage="0.6"/>
+        <hit-probability distance="3600" percentage="0.55"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="4500" percentage="0.3"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.95"/>
+        <hit-probability distance="1600" percentage="0.9"/>
+        <hit-probability distance="2000" percentage="0.85"/>
+        <hit-probability distance="2400" percentage="0.75"/>
+        <hit-probability distance="2800" percentage="0.65"/>
+        <hit-probability distance="3200" percentage="0.5"/>
+        <hit-probability distance="3600" percentage="0.2"/>
+        <hit-probability distance="3800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.4"/>
+        <hit-probability distance="2800" percentage="0.2"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.4"/>
+        <hit-probability distance="600" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 90 F2 OFUM">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1500" percentage="0.4"/>
+        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="1800" percentage="0.2"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.75"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1500" percentage="0.3"/>
+        <hit-probability distance="1700" percentage="0.15"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.35"/>
+        <hit-probability distance="1400" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="900" percentage="0.05"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105 F3 OFUM PH">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.2"/>
+        <hit-probability distance="2800" percentage="0.1"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0.1"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Grenade" munition="GR 51 FUM INC LGI">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="200" max-range="2000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Lance Grenade" munition="GR 47  ECL LGI">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="200" percentage="0.9"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="190" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="200" percentage="0.9"/>
+        <hit-probability distance="190" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="200" percentage="0.8"/>
+        <hit-probability distance="300" percentage="0.65"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="190" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="190" percentage="0"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="600" percentage="0.35"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="200" percentage="0.7"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mortier 81 LLR" munition="CPLT 81 OFUM PH">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="300" max-range="5600" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Mortier 120" munition="CPLT 120 OFUM PH F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="7500" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Mortier 81 LLR" munition="CPLT 81 OECL F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="300" max-range="5600" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Mortier 120" munition="CPLT 120 OECL PRY F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="7500" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Rampe Lance Missiles HOT Gazelle" munition="MIS 150 F3 HOT">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="300s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="1500" percentage="1"/>
+        <hit-probability distance="3500" percentage="1"/>
+        <hit-probability distance="3750" percentage="0.9"/>
+        <hit-probability distance="4000" percentage="0"/>
+        <hit-probability distance="750" percentage="0.75"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="500" percentage="0.5"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="1000" percentage="0.75"/>
+        <hit-probability distance="3750" percentage="0.4"/>
+        <hit-probability distance="4000" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="1"/>
+        <hit-probability distance="3250" percentage="1"/>
+        <hit-probability distance="500" percentage="0.5"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="3750" percentage="0.4"/>
+        <hit-probability distance="4000" percentage="0"/>
+        <hit-probability distance="500" percentage="0.4"/>
+        <hit-probability distance="3000" percentage="1"/>
+        <hit-probability distance="3500" percentage="0.8"/>
+        <hit-probability distance="1000" percentage="0.75"/>
+        <hit-probability distance="1500" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 20 OEI OEIT SBP">
+    <burst duration="10s" munition="3"/>
+    <reloading duration="30s" munition="15"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="1800" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0.3"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 20 OPT">
+    <burst duration="10s" munition="3"/>
+    <reloading duration="30s" munition="15"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="1800" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0.3"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile ROLAND" munition="MIS S/A ROLAND F1">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="30s" munition="2"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lanceur Bombardier" munition="Munition CAS">
+    <burst duration="10s" munition="5"/>
+    <reloading duration="10s" munition="5"/>
+    <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="Missile AT5">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.3"/>
+        <hit-probability distance="4300" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="4000" percentage="0.25"/>
+        <hit-probability distance="800" percentage="0.45"/>
+        <hit-probability distance="4300" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="4000" percentage="0.2"/>
+        <hit-probability distance="4300" percentage="0"/>
+        <hit-probability distance="800" percentage="0.4"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 155 Animation" munition="OE CCR 155 MLE F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="500000" max-range="500000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155 Animation" munition="O ECL 155 F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="500000" max-range="500000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155 Animation" munition="CPLT FUM PH 155">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="500000" max-range="500000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155 Animation" munition="O 155 F1 AC EF DR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="500000" max-range="500000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155 Animation" munition="OE JUPU 155 F2">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="500000" max-range="500000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155 Animation" munition="O GR 155 F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="5000" max-range="500000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette LRM Animation" munition="ROQ EXPL 298 M26">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="5000" max-range="500000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Mortier 120" munition="CPLT 120 EXPL F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="7100" min-range="480"/>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="Obus 23 OE">
+    <burst duration="1s" munition="4"/>
+    <reloading duration="1s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="1900" percentage="0"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 9">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="600" percentage="0"/>
+        <hit-probability distance="650" percentage="1"/>
+        <hit-probability distance="6000" percentage="1"/>
+        <hit-probability distance="6500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="600" percentage="0"/>
+        <hit-probability distance="650" percentage="1"/>
+        <hit-probability distance="6000" percentage="1"/>
+        <hit-probability distance="6500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="600" percentage="0"/>
+        <hit-probability distance="650" percentage="1"/>
+        <hit-probability distance="6000" percentage="1"/>
+        <hit-probability distance="6500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 13">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="750" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="5800" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="750" percentage="1"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="700" percentage="0"/>
+        <hit-probability distance="750" percentage="1"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 16">
+    <burst duration="11s" munition="1"/>
+    <reloading duration="25s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4800" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4800" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4800" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette BM" munition="Roquette BM22">
+    <burst duration="60s" munition="16"/>
+    <reloading duration="20m" munition="16"/>
+    <indirect-fire average-speed="800" max-range="40000" min-range="500"/>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette BM" munition="Roquette BM30">
+    <burst duration="40s" munition="12"/>
+    <reloading duration="15m" munition="12"/>
+    <indirect-fire average-speed="900" max-range="70000" min-range="20000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon Stabilise" munition="Obus 125 OE">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1400" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.55"/>
+        <hit-probability distance="1600" percentage="0.35"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="900" percentage="0.3"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 6">
+    <burst duration="3s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.5"/>
+        <hit-probability distance="22000" percentage="0.5"/>
+        <hit-probability distance="24000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.5"/>
+        <hit-probability distance="22000" percentage="0.5"/>
+        <hit-probability distance="24000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.5"/>
+        <hit-probability distance="22000" percentage="0.5"/>
+        <hit-probability distance="24000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 11">
+    <burst duration="5s" munition="1"/>
+    <reloading duration="8s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3500" percentage="0"/>
+        <hit-probability distance="4000" percentage="0.9"/>
+        <hit-probability distance="28000" percentage="0.9"/>
+        <hit-probability distance="28500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3500" percentage="0"/>
+        <hit-probability distance="4000" percentage="0.9"/>
+        <hit-probability distance="28000" percentage="0.9"/>
+        <hit-probability distance="28500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3500" percentage="0"/>
+        <hit-probability distance="4000" percentage="0.9"/>
+        <hit-probability distance="28000" percentage="0.9"/>
+        <hit-probability distance="28500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Tourelleau" munition="CART 12.7 MLE 47">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette" munition="RO 80 EXPL AC">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 106 SR OCC M344">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1400" percentage="0.1"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1000" percentage="0.3"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1000" percentage="0.2"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Fusil Assaut AK 47" munition="Charg 7,62">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="250" percentage="0.6"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.95"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.85"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 115" munition="Obus 115 OE">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.85"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0.05"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 115" munition="Obus 115 OCC">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2400" percentage="0.2"/>
+        <hit-probability distance="2800" percentage="0.1"/>
+        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.1"/>
+        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.1"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 115" munition="Obus 115 OFL">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.02"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Coaxiale" munition="CART 7.62">
+    <burst duration="10s" munition="6"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.35"/>
+        <hit-probability distance="1050" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse Tourelleau" munition="CART 7.62">
+    <burst duration="10s" munition="5"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.35"/>
+        <hit-probability distance="1050" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mitrailleuse" munition="CART 12.7 MLE 47">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="Missile AT11">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0"/>
+        <hit-probability distance="150" percentage="0.5"/>
+        <hit-probability distance="3500" percentage="0.3"/>
+        <hit-probability distance="4000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0"/>
+        <hit-probability distance="150" percentage="0.5"/>
+        <hit-probability distance="3500" percentage="0.3"/>
+        <hit-probability distance="4000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0"/>
+        <hit-probability distance="150" percentage="0.5"/>
+        <hit-probability distance="3500" percentage="0.3"/>
+        <hit-probability distance="4000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 120" munition="Obus 120 OFL">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.01"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 14">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="Missile AT4">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0.45"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="1900" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="75" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0.45"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="1900" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="75" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0.45"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="1900" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="75" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="RPK74" munition="CART 7.62">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="5s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="0.6"/>
+        <hit-probability distance="300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="600" percentage="0.81"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="600" percentage="0.76"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="600" percentage="0.71"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="600" percentage="0.66"/>
+        <hit-probability distance="800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="LANCE MISSILE MANPAD" munition="Missile SA 7">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4100" percentage="1"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4100" percentage="1"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4100" percentage="1"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="LANCE MISSILE MANPAD" munition="Missile SA 14">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="LANCE MISSILE MANPAD" munition="Missile SA 16">
+    <burst duration="11s" munition="1"/>
+    <reloading duration="25s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4800" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4800" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4800" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mortier 120" munition="CPLT 120 OE PRY F2">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="12800" min-range="1100"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 130" munition="Obus 130 Ecl">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="18500" min-range="1100"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 130" munition="Obus 130  Fum">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="18500" min-range="1100"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 130" munition="Obus 130 OE">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="27000" min-range="1100"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 122" munition="Obus 122 OFUM">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="15300" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152" munition="Obus 152 FUM">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152 2S5" munition="Obus 152 OE">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="28000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152 2S5" munition="Obus 152 OE MPA">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="40000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 203" munition="Obus 203">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="37500" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 203" munition="Obus 203 OE MPA">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="50000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152 2A 36" munition="Obus 152 OE">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="27000" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152 2A 36" munition="Obus 152 OE MPA">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="40000" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 152 2A 36" munition="Obus 152 ACED">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="Lance roquette 57" munition="Roquette 57">
+    <burst duration="10s" munition="10"/>
+    <reloading duration="10s" munition="10"/>
+    <indirect-fire average-speed="200" max-range="3000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="O GR 155 F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="40000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="O 155 F1 AC EF DR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="40000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="CPLT FUM PH 155">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="40000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="O ECL 155 F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="40000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="OE CCR 155 MLE F1">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="40000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="OE JUPU 155 F2">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="40000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile AC" munition="Roquette RPG7">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.9"/>
+        <hit-probability distance="200" percentage="0.85"/>
+        <hit-probability distance="300" percentage="0.75"/>
+        <hit-probability distance="350" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.8"/>
+        <hit-probability distance="200" percentage="0.6"/>
+        <hit-probability distance="300" percentage="0.25"/>
+        <hit-probability distance="350" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.7"/>
+        <hit-probability distance="200" percentage="0.4"/>
+        <hit-probability distance="300" percentage="0.15"/>
+        <hit-probability distance="350" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette" munition="Roquette RPG7">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.9"/>
+        <hit-probability distance="200" percentage="0.85"/>
+        <hit-probability distance="300" percentage="0.75"/>
+        <hit-probability distance="350" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.8"/>
+        <hit-probability distance="200" percentage="0.6"/>
+        <hit-probability distance="300" percentage="0.25"/>
+        <hit-probability distance="350" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="0.7"/>
+        <hit-probability distance="200" percentage="0.4"/>
+        <hit-probability distance="300" percentage="0.15"/>
+        <hit-probability distance="350" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="Obus 100 OE">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.15"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0.7"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="1000" percentage="0.6"/>
+        <hit-probability distance="1500" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="900" percentage="0.55"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="500" percentage="0.7"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Mortier 82" munition="CPLT EXPL 82">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="5000" min-range="480"/>
+  </weapon-system>
+  <weapon-system launcher="Mortier 60" munition="CPLT EXPL 60">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="4000" min-range="480"/>
+  </weapon-system>
+  <weapon-system launcher="MAG_58" munition="CART 7,62 BD HOM">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="900" percentage="0"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.4"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Roquette GMLRS" munition="ROQ GMLRS">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1000" max-range="70000" min-range="15000"/>
+  </weapon-system>
+  <weapon-system launcher="lance Roquette LRU Animation" munition="ROQ GMLRS">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="500000" max-range="500000" min-range="15000"/>
+  </weapon-system>
+  <weapon-system launcher="Fusil Precision DRAGOUNOV" munition="Charg 7,62">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.95"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.9"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="OE F1 155 CAESAR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="23000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="OE F2 155 CAESAR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="28000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="OE F4 155 CAESAR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="38000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="ACED 155 CAESAR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1500" max-range="38000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155/52" munition="OE F5 155 CAESAR">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="2s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="28000" min-range="2000"/>
+  </weapon-system>
+  <weapon-system launcher="Canon ZSU" munition="Obus 23 OE">
+    <burst duration="1s" munition="4"/>
+    <reloading duration="1s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="1"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="1"/>
+        <hit-probability distance="2500" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Main" munition="Grenade offensive">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros"/>
+      <hit-probabilities target="Moyen"/>
+      <hit-probabilities target="Petit"/>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="20" percentage="0.9"/>
+        <hit-probability distance="25" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Main" munition="IED">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="20" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="20" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="20" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="20" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="20" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+      </hit-probabilities>
+    </direct-fire>
+    <indirect-fire average-speed="2000" max-range="50" min-range="0"/>
+  </weapon-system>
+</weapons>
+<!-- signature="3982048753" -->

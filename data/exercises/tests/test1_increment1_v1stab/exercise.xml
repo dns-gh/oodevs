@@ -14,6 +14,6 @@
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
   <terrain name="Mailly"/>
-  <model dataset="ada" physical="scipio-1.9.2"/>
+  <model dataset="ada" physical="scipio"/>
 </exercise>
-<!-- signature="0575469320" -->
+<!-- signature="1941042043" -->

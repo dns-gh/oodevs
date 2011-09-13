@@ -994,7 +994,7 @@
 
     <target name="scripts_test" description="run all script tests">
         <test-scripts dataset="ada" physical="france"/>
-        <test-scripts dataset="ada" physical="scipio-1.9.2"/>
+        <test-scripts dataset="ada" physical="scipio"/>
         <!--
         <test-scripts dataset="ada" physical="security-fr"/>
         -->
@@ -1089,7 +1089,7 @@
 
     <target name="adaptation_test" description="load and save adaptation main data then check that output is the same as input">
         <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
-        <test-adaptation input="${data.dir}/data/models/ada/physical/scipio-1.9.2"/>
+        <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/security-fr"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
     </target>
@@ -1479,7 +1479,7 @@
 
     <target name="package.otpack.defense.scipio" description="package du defense-scipio otpack">
         <pack name="defense-scipio" description="defense-scipio exercises package">
-            <include name="data/models/ada/physical/scipio-1.9.2/**"/>
+            <include name="data/models/ada/physical/scipio/**"/>
             <include name="data/models/ada/physical/scipioPIV3/**"/>            
             <include name="data/propagations/test/**"/>
             <include name="exercises/ValidationTests/Performance/**"/>
@@ -1539,7 +1539,7 @@
 
     <target name="package.otpack.validation" description="package de validation otpack">
         <pack name="validationsw" description="validation, performance and charge exercises package">
-            <include name="data/models/ada/physical/scipio-1.9.2/**"/>
+            <include name="data/models/ada/physical/scipio/**"/>
             <include name="data/models/ada/physical/scipioPIV3/**"/>            
             <include name="data/models/ada/physical/france/**"/>
             <include name="data/propagations/test/**"/>

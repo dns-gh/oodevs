@@ -10,6 +10,6 @@
   <urbanstate file="urbanstate.xml"/>
   <weather file="weather.xml"/>
   <terrain name="PortoV3Lite"/>
-  <model dataset="ada" physical="scipio-1.9.2"/>
+  <model dataset="ada" physical="scipio"/>
 </exercise>
-<!-- signature="3132482275" -->
+<!-- signature="0116722303" -->

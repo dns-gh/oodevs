@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<urban model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/UrbanTypes.xsd">
+  <urban-block-types>
+    <material-composition-types>
+      <material-composition-type name="Bois">
+        <attritions>
+          <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Beton">
+        <attritions>
+          <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Brique">
+        <attritions>
+          <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Metal">
+        <attritions>
+          <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Torchis">
+        <attritions>
+          <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Prefabrique">
+        <attritions>
+          <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Vegetation">
+        <attritions>
+          <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+    </material-composition-types>
+    <facade-types>
+      <facade-type name="Transparent"/>
+      <facade-type name="Semi-opaque"/>
+      <facade-type name="Opaque"/>
+    </facade-types>
+    <roof-shape-types>
+      <roof-shape-type name="Plat"/>
+      <roof-shape-type name="Pentu"/>
+      <roof-shape-type name="Aucun"/>
+    </roof-shape-types>
+  </urban-block-types>
+  <accommodations>
+    <accommodation max-capacity="1" nominal-capacity="0.1" role="default"/>
+    <accommodation max-capacity="0.7" nominal-capacity="0.5" role="Loisir"/>
+    <accommodation max-capacity="0.1" nominal-capacity="0.07" role="Logement"/>
+    <accommodation max-capacity="0.3" nominal-capacity="0.2" role="Travail"/>
+  </accommodations>
+  <infrastructures>
+    <infrastructure name="Ressources eau" symbol="resource-water">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Ressources electricite" symbol="resource-electricity">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Ressources carburant" symbol="resource-gas">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Ressources nourriture" symbol="resource-food">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Sports" symbol="sports">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Transport" symbol="transportation">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Transport air" symbol="transportation-air">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Hopital" symbol="hospital">
+      <capacities>
+        <medical night-doctors-rate="10">
+          <emergency-plan beds-rate="10" doctors-rate="10"/>
+        </medical>
+      </capacities>
+    </infrastructure>
+    <infrastructure name="Industrie" symbol="industry">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Logement" symbol="housing">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Media" symbol="media">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Monument" symbol="landmark">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Bureaux" symbol="office">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Caserne" symbol="barrack">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Caserne militaire" symbol="military-barrack">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Caserne pompier" symbol="fire-station">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Commerce" symbol="shops">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Edifice Religieux" symbol="religious">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Education" symbol="education">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Entrepot" symbol="warehouse">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Transport naval" symbol="transportation-naval">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Administration" symbol="administration">
+      <capacities/>
+    </infrastructure>
+  </infrastructures>
+</urban>
+<!-- signature="2254801038" -->

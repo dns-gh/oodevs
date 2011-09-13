@@ -8,5 +8,5 @@
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
   <terrain name="PoseidonVALite"/>
-  <model dataset="ada" physical="scipio-1.9.2"/>
+  <model dataset="ada" physical="scipio"/>
 </exercise>

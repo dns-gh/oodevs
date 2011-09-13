@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<breakdowns model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Breakdowns.xsd">
+  <diagnosis time="10m"/>
+  <category name="NTI1">
+    <breakdown average-repairing-time="1h" id="1" name="Panne MOB 1" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="2" name="Panne MOB 2" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="3" name="Panne MOB 2 Evac" type="M" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="4" name="Panne MOB 3" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="5" name="Panne MOB 3 Evac" type="M" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="6" name="Panne MOB 4" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="7" name="Panne MOB 4 Evac" type="M" variance="30m">
+      <part quantity="3" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="8" name="Panne MOB 1 EB" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="9" name="Panne MOB 2 EB" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="10" name="Panne MOB 2 EB Evac" type="M" variance="30m">
+      <part quantity="3" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="11" name="Panne MOB 3 EB" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="12" name="Panne MOB 3 EB Evac" type="M" variance="30m">
+      <part quantity="3" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="13" name="Panne MOB 4 EB" type="EA" variance="30m">
+      <part quantity="4" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="14" name="Panne MOB 4 EB Evac" type="M" variance="30m">
+      <part quantity="4" resource="Rechange  NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="15" name="Panne TCT 1" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="16" name="Panne TCT 2" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="17" name="Panne TCT 3" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="18" name="Panne TCT 4" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="19" name="Panne TRS 1" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="20" name="Panne TRS 2" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="21" name="Panne TRS 3" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="22" name="Panne TRS 4" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="23" name="Panne DEM 1" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="24" name="Panne DEM 2" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="25" name="Panne DEM 3" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="26" name="Panne DEM 4" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="27" name="Panne COTAC 1" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="28" name="Panne COTAC 2" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="29" name="Panne COTAC 3" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="30" name="Panne COTAC 4" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="31" name="Panne ALAT 1" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="32" name="Panne ALAT 2" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="33" name="Panne ALAT 3" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="34" name="Panne ALAT 4" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="35" name="Panne Glaise NTI" type="EA" variance="1h">
+      <part quantity="1" resource="Rechange NTI 1 glaise"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="36" name="Panne Glaise NTI 1 Evac" type="M" variance="1h">
+      <part quantity="1" resource="Rechange NTI 1 glaise"/>
+    </breakdown>
+  </category>
+  <category name="NTI2">
+    <breakdown average-repairing-time="10h" id="37" name="Panne MOB 10 Evac" type="M" variance="1h">
+      <part quantity="6" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="38" name="Panne MOB 12 Evac" type="M" variance="1h">
+      <part quantity="6" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="39" name="Panne MOB 16 Evac" type="M" variance="3h">
+      <part quantity="6" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="40" name="Panne MOB 10 EB Evac" type="M" variance="1h">
+      <part quantity="8" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="41" name="Panne MOB 12 EB Evac" type="M" variance="1h">
+      <part quantity="8" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="42" name="Panne MOB 16 EB Evac" type="M" variance="3h">
+      <part quantity="8" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="43" name="Panne MOB 5" type="EA" variance="30m">
+      <part quantity="4" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="44" name="Panne MOB 5 Evac" type="M" variance="30m">
+      <part quantity="4" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="45" name="Panne MOB 6" type="EA" variance="30m">
+      <part quantity="4" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="46" name="Panne MOB 6 Evac" type="M" variance="30m">
+      <part quantity="4" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="47" name="Panne MOB 7" type="EA" variance="30m">
+      <part quantity="5" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="48" name="Panne MOB 7 Evac" type="M" variance="30m">
+      <part quantity="5" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="49" name="Panne MOB 8 Evac" type="M" variance="30m">
+      <part quantity="6" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="50" name="Panne MOB 5 EB" type="EA" variance="30m">
+      <part quantity="5" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="51" name="Panne MOB 5 EB Evac" type="M" variance="30m">
+      <part quantity="5" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="52" name="Panne MOB 6 EB" type="EA" variance="30m">
+      <part quantity="5" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="53" name="Panne MOB 6 EB Evac" type="M" variance="30m">
+      <part quantity="5" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="54" name="Panne MOB 7 EB" type="EA" variance="30m">
+      <part quantity="6" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="55" name="Panne MOB 7 EB Evac" type="M" variance="30m">
+      <part quantity="6" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="56" name="Panne MOB 8 EB Evac" type="M" variance="30m">
+      <part quantity="8" resource="Rechange  NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="57" name="Panne TCT 5" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="58" name="Panne TCT 6" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="59" name="Panne TCT 7" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="60" name="Panne TCT 8" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="61" name="Panne TCT 10" type="EA" variance="1h">
+      <part quantity="3" resource="Rechange  NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="62" name="Panne TCT 12" type="EA" variance="1h">
+      <part quantity="4" resource="Rechange  NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="63" name="Panne TCT 16" type="EA" variance="3h">
+      <part quantity="4" resource="Rechange  NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="64" name="Panne TRS 5" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="65" name="Panne TRS 6" type="EA" variance="30m">
+      <part quantity="1" resource="Rechange  NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="66" name="Panne TRS 7" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="67" name="Panne TRS 8" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="68" name="Panne TRS 10" type="EA" variance="1h">
+      <part quantity="2" resource="Rechange  NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="69" name="Panne TRS 12" type="EA" variance="1h">
+      <part quantity="2" resource="Rechange  NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="70" name="Panne TRS 16" type="EA" variance="3h">
+      <part quantity="4" resource="Rechange  NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="71" name="Panne DEM 5" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="72" name="Panne DEM 6" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="73" name="Panne DEM 7" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="74" name="Panne DEM 8" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="75" name="Panne DEM 10" type="EA" variance="1h">
+      <part quantity="3" resource="Rechange  NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="76" name="Panne DEM 12" type="EA" variance="1h">
+      <part quantity="4" resource="Rechange  NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="77" name="Panne DEM 16" type="EA" variance="3h">
+      <part quantity="4" resource="Rechange  NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="78" name="Panne COTAC 5" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="79" name="Panne COTAC 6" type="EA" variance="30m">
+      <part quantity="2" resource="Rechange  NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="80" name="Panne COTAC 7" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="81" name="Panne COTAC 8" type="EA" variance="30m">
+      <part quantity="3" resource="Rechange  NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="82" name="Panne COTAC 10" type="EA" variance="1h">
+      <part quantity="3" resource="Rechange  NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="83" name="Panne COTAC 12" type="EA" variance="1h">
+      <part quantity="4" resource="Rechange  NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="84" name="Panne COTAC 16" type="EA" variance="3h">
+      <part quantity="4" resource="Rechange  NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="85" name="Panne ALAT 5" type="EA" variance="30m">
+      <part quantity="4" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="86" name="Panne ALAT 6" type="EA" variance="30m">
+      <part quantity="4" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="87" name="Panne ALAT 7" type="EA" variance="30m">
+      <part quantity="5" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="88" name="Panne ALAT 8" type="EA" variance="30m">
+      <part quantity="6" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="89" name="Panne ALAT 10" type="EA" variance="1h">
+      <part quantity="6" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="90" name="Panne ALAT 12" type="EA" variance="1h">
+      <part quantity="6" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="91" name="Panne ALAT 16" type="EA" variance="3h">
+      <part quantity="6" resource="Rechange  ALAT"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="92" name="Panne Glaise NTI 2" type="EA" variance="2h">
+      <part quantity="1" resource="Rechange NTI 2 glaise"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="93" name="Panne Glaise NTI2 Evac" type="M" variance="2h">
+      <part quantity="1" resource="Rechange NTI 2 glaise"/>
+    </breakdown>
+    <breakdown average-repairing-time="48h" id="94" name="Panne Glaise NTI 3 Evac" type="M" variance="24h">
+      <part quantity="1" resource="Rechange NTI 2 glaise"/>
+    </breakdown>
+  </category>
+  <category name="NTI3">
+    <breakdown average-repairing-time="150h" id="95" name="Panne MOB NTI3 Evac" type="M" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="96" name="Panne MOB NTI3 EB Evac" type="M" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="97" name="Panne TCT NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="98" name="Panne TRS NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="99" name="Panne DEM NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="100" name="Panne COTAC NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="101" name="Panne DIV NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="102" name="Panne ALAT NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="Rechange  NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="48h" id="103" name="Panne Glaise NTI 3" type="EA" variance="24h">
+      <part quantity="1" resource="Rechange NTI 3 glaise"/>
+    </breakdown>
+  </category>
+</breakdowns>
+<!-- signature="3361687148" -->

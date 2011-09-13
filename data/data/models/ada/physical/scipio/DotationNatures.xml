@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<natures model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/ResourceNatures.xsd">
+  <nature id="6" type="Electric"/>
+  <nature id="5" type="Liquid"/>
+  <nature id="4" type="Gaseous"/>
+  <nature id="1" type="Kerosene"/>
+  <nature id="2" type="Gasoil"/>
+  <nature id="3" type="Solide"/>
+</natures>
+<!-- signature="2037653220" -->
