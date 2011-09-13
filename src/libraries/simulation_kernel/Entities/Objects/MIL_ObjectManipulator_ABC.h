@@ -60,6 +60,7 @@ public:
     virtual bool CanBePerceived  () const = 0;
     virtual bool CanBeActivated  () const = 0;
     virtual bool CanBeOccupiedBy ( const MIL_Agent_ABC& agent ) const = 0;
+    virtual bool IsTrafficable   ( const MIL_Agent_ABC& agent ) const = 0;
     //@}
 
     //! @name Construction interface

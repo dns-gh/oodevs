@@ -218,6 +218,9 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
 
+    if( !object().IsTrafficable( pion_ ) )
+        return 0.;
+
     SpeedComputerStrategy strategy( false, true, object );
     std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     pion_.Execute( *computer );

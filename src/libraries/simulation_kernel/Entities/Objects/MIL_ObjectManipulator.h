@@ -54,14 +54,15 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool CanBeConstructed          () const;
-    virtual bool CanBeMined                () const;
-    virtual bool CanBeDemined              () const;
-    virtual bool CanBeDestroyed            () const;
-    virtual bool CanBeBypassed             () const;
-    virtual bool CanBePerceived            () const;
-    virtual bool CanBeActivated            () const;
-    virtual bool CanBeOccupiedBy           ( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanBeConstructed() const;
+    virtual bool CanBeMined      () const;
+    virtual bool CanBeDemined    () const;
+    virtual bool CanBeDestroyed  () const;
+    virtual bool CanBeBypassed   () const;
+    virtual bool CanBePerceived  () const;
+    virtual bool CanBeActivated  () const;
+    virtual bool CanBeOccupiedBy ( const MIL_Agent_ABC& agent ) const;
+    virtual bool IsTrafficable   ( const MIL_Agent_ABC& agent ) const;
     //@}
 
     //! @name

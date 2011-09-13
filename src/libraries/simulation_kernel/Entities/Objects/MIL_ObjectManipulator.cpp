@@ -27,12 +27,16 @@
 #include "MobilityCapacity.h"
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
+#include "TrafficabilityAttribute.h"
 #include "ResourceNetworkCapacity.h"
 #include "SpawnCapacity.h"
 #include "StructuralCapacity.h"
 #include "WorkableCapacity.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -309,6 +313,23 @@ bool MIL_ObjectManipulator::CanBeOccupiedBy( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManipulator::IsTrafficable
+// Created: CMA 2011-09-12
+// -----------------------------------------------------------------------------
+bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
+{
+    if( !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    {
+        if( const TrafficabilityAttribute* pTrafficability = object_.RetrieveAttribute< TrafficabilityAttribute >() )
+        {
+            double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+            return ( pTrafficability->GetMaxValue() > weight );
+        }
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::IsMined
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
@@ -354,7 +375,10 @@ bool MIL_ObjectManipulator::IsBuilt() const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::HasMobilityInfluence() const
 {
-    return !object_.IsMarkedForDestruction() && ( object_.Retrieve< MobilityCapacity >() != 0 || object_.Retrieve< CrowdCapacity >() != 0 );
+    return !object_.IsMarkedForDestruction() &&
+           ( object_.Retrieve< MobilityCapacity >() != 0 ||
+             object_.Retrieve< CrowdCapacity >() != 0 ||
+             object_.RetrieveAttribute< TrafficabilityAttribute >() != 0 );
 }
 
 // -----------------------------------------------------------------------------
