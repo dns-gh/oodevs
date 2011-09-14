@@ -9,16 +9,10 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/RemoteAgentController.h"
-#include "tools/Resolver_ABC.h"
-#include "dispatcher/Team_ABC.h"
-#include "dispatcher/KnowledgeGroup_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/AutomatType.h" // $$$$ _RC_ SLI 2011-09-08: refactor clients_kernel to remove this
-#include "MockModel.h"
 #include "MockResolver.h"
 #include "MockTeam.h"
-#include "MockKnowledgeGroup.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockContextHandler.h"
 #include <boost/shared_ptr.hpp>
@@ -32,23 +26,23 @@ namespace
     typedef std::vector< unsigned long > T_Identifiers;
     typedef boost::shared_ptr< dispatcher::MockTeam > T_Team;
     typedef std::vector< T_Team > T_Teams;
-    typedef boost::shared_ptr< dispatcher::MockKnowledgeGroup > T_KnowledgeGroup;
-    typedef std::vector< T_KnowledgeGroup > T_KnowledgeGroups;
 
     class Fixture
     {
     public:
         Fixture()
-            : formationCreationHandler( 0 )
-            , automatCreationHandler  ( 0 )
-            , remoteAgentListener     ( 0 )
+            : automatCreationHandler( 0 )
+            , remoteAgentListener   ( 0 )
+            , party                 ( 42u )
+            , latitude              ( 1. )
+            , longitude             ( 2. )
+            , automat               ( 1337 )
         {
-            MOCK_EXPECT( automatResolver, Find ).once().returns( reinterpret_cast< kernel::AutomatType* >( 1 ) );
             MOCK_EXPECT( remoteSubject, Register ).once().with( mock::retrieve( remoteAgentListener ) );
-            MOCK_EXPECT( formationCreation, Register ).once().with( mock::retrieve( formationCreationHandler ) );
             MOCK_EXPECT( automatCreation, Register ).once().with( mock::retrieve( automatCreationHandler ) );
-            MOCK_EXPECT( formationCreation, Unregister );
             MOCK_EXPECT( automatCreation, Unregister );
+            MOCK_EXPECT( remoteSubject, Unregister );
+            ConfigureTeams();
         }
         template< typename T_Result, typename T_Mock, typename T_Vector >
         tools::Iterator< const T_Result& > MakeIterator( const T_Identifiers& identifiers, T_Vector& elements )
@@ -62,146 +56,42 @@ namespace
         {
             return MakeIterator< dispatcher::Team_ABC, dispatcher::MockTeam, T_Teams >( identifiers, teams );
         }
-        tools::Iterator< const dispatcher::KnowledgeGroup_ABC& > MakeKnowledgeGroupIterator( const T_Identifiers& identifiers )
-        {
-            return MakeIterator< dispatcher::KnowledgeGroup_ABC, dispatcher::MockKnowledgeGroup, T_KnowledgeGroups >( identifiers, groups );
-        }
-        sword::SimToClient_Content MakeControlEndTickMessage()
-        {
-            sword::SimToClient_Content message;
-            message.mutable_control_end_tick()->set_current_tick( 3 );
-            return message;
-        }
-        dispatcher::MockModel model;
-        MockRemoteAgentSubject remoteSubject;
-        RemoteAgentListener_ABC* remoteAgentListener;
-        ResponseObserver_ABC< sword::FormationCreation >* formationCreationHandler;
-        ResponseObserver_ABC< sword::AutomatCreation >* automatCreationHandler;
-        MockContextHandler< sword::FormationCreation > formationCreation;
-        MockContextHandler< sword::AutomatCreation > automatCreation;
-        MockContextHandler< sword::UnitCreation > unitCreation;
-        tools::MockResolver< dispatcher::Team_ABC > teamResolver;
-        tools::MockResolver< kernel::AutomatType > automatResolver;
-        T_Teams teams;
-        T_KnowledgeGroups groups;
-    };
-}
-
-BOOST_FIXTURE_TEST_CASE( remote_agent_checks_remote_automat_type_id_existence, Fixture )
-{
-    automatResolver.reset();
-    remoteSubject.reset();
-    formationCreation.reset();
-    automatCreation.reset();
-    MOCK_EXPECT( automatResolver, Find ).once().returns( 0 );
-    BOOST_CHECK_THROW( RemoteAgentController remoteController( model, automatResolver, remoteSubject, formationCreation, automatCreation, unitCreation  ), std::runtime_error );
-}
-
-namespace
-{
-    class TickedFixture : public Fixture
-    {
-    public:
-        TickedFixture()
-            : remoteController( model, automatResolver, remoteSubject, formationCreation, automatCreation, unitCreation  )
-        {
-        }
-        virtual ~TickedFixture()
-        {
-            MOCK_EXPECT( remoteSubject, Unregister ).once();
-        }
-        RemoteAgentController remoteController;
-    };
-}
-
-namespace
-{
-    sword::FormationCreation MakeFormationCreationMessage( unsigned long party, unsigned long formation )
-    {
-        sword::FormationCreation message;
-        message.mutable_party()->set_id( party );
-        message.mutable_formation()->set_id( formation );
-        return message;
-    }
-    sword::AutomatCreation MakeAutomatCreationMessage( unsigned long party, unsigned long automat )
-    {
-        sword::AutomatCreation message;
-        message.mutable_party()->set_id( party );
-        message.mutable_automat()->set_id( automat );
-        return message;
-    }
-    class FormationFixture : public TickedFixture
-    {
-    public:
-        FormationFixture()
-            : party    ( 42u )
-            , formation( 43u )
-            , team     ( party )
-        {
-            BOOST_REQUIRE( formationCreationHandler );
-        }
-        void ConfigureKnowledgeGroups()
-        {
-            MOCK_EXPECT( model, KnowledgeGroups ).once().returns( boost::ref( knowledgeGroupResolver ) );
-            MOCK_EXPECT( knowledgeGroupResolver, CreateIterator ).once().returns( MakeKnowledgeGroupIterator( boost::assign::list_of( party ) ) );
-            BOOST_FOREACH( T_KnowledgeGroup group, groups )
-                MOCK_EXPECT( *group, GetTeam ).once().returns( boost::ref( team ) );
-        }
-        const unsigned long party;
-        const unsigned long formation;
-        simulation::UnitMagicAction formationCreationMessage;
-        tools::MockResolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroupResolver;
-        dispatcher::MockTeam team;
-    };
-}
-
-BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_distant_automat_when_receiving_formation_creation, FormationFixture )
-{
-    ConfigureKnowledgeGroups();
-    simulation::UnitMagicAction actual;
-    MOCK_EXPECT( automatCreation, Send ).once().with( mock::retrieve( actual ), mock::any );
-    formationCreationHandler->Notify( MakeFormationCreationMessage( party, formation ), "formation" );
-    mock::verify();
-    const sword::UnitMagicAction& action = actual();
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::automat_creation );
-    BOOST_CHECK_EQUAL( action.tasker().formation().id(), formation );
-    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 230u );  // $$$$ _RC_ SLI 2011-09-07: hardcoded
-    BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).identifier(), party );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA distant automat" );
-}
-
-namespace
-{
-    class AutomatFixture : public FormationFixture
-    {
-    public:
-        AutomatFixture()
-            : latitude ( 1. )
-            , longitude( 2. )
-            , automat  ( 1337 )
-        {
-            ConfigureKnowledgeGroups();
-            MOCK_EXPECT( automatCreation, Send ).once().with( mock::retrieve( automatCreationMessage ), mock::any );
-            formationCreationHandler->Notify( MakeFormationCreationMessage( party, formation ), "formation" );
-            mock::verify();
-            BOOST_REQUIRE( automatCreationHandler );
-            automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), "automat" );
-            ConfigureTeams();
-            BOOST_REQUIRE( remoteAgentListener );
-       }
         void ConfigureTeams()
         {
-            teams.clear();
-            MOCK_EXPECT( model, Sides ).once().returns( boost::ref( teamResolver ) );
             MOCK_EXPECT( teamResolver, CreateIterator ).once().returns( MakeTeamIterator( boost::assign::list_of( party ) ) );
             BOOST_FOREACH( T_Team team, teams )
                 MOCK_EXPECT( *team, GetKarma ).once().returns( kernel::Karma::friend_ );
         }
+        MockRemoteAgentSubject remoteSubject;
+        RemoteAgentListener_ABC* remoteAgentListener;
+        ResponseObserver_ABC< sword::AutomatCreation >* automatCreationHandler;
+        MockContextHandler< sword::AutomatCreation > automatCreation;
+        MockContextHandler< sword::UnitCreation > unitCreation;
+        tools::MockResolver< dispatcher::Team_ABC > teamResolver;
+        const unsigned long party;
         const double latitude;
         const double longitude;
         const unsigned long automat;
-        simulation::UnitMagicAction automatCreationMessage;
+        T_Teams teams;
+    };
+    class AutomatFixture : public Fixture
+    {
+    public:
+        AutomatFixture()
+            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver )
+        {
+            BOOST_REQUIRE( automatCreationHandler );
+            BOOST_REQUIRE( remoteAgentListener );
+            automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), "automat" );
+       }
+        sword::AutomatCreation MakeAutomatCreationMessage( unsigned long party, unsigned long automat )
+        {
+            sword::AutomatCreation message;
+            message.mutable_party()->set_id( party );
+            message.mutable_automat()->set_id( automat );
+            return message;
+        }
+        RemoteAgentController remoteController;
     };
 }
 

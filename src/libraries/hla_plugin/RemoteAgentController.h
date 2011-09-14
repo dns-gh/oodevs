@@ -18,20 +18,18 @@
 
 namespace dispatcher
 {
-    class Model_ABC;
+    class Team_ABC;
 }
 
 namespace kernel
 {
-    class AutomatType;
+    class Karma;
 }
 
 namespace sword
 {
     class AutomatCreation;
-    class FormationCreation;
     class UnitCreation;
-    class SimToClient_Content;
 }
 
 namespace simulation
@@ -52,25 +50,22 @@ namespace hla
 */
 // Created: SLI 2011-09-01
 // =============================================================================
-class RemoteAgentController : private ResponseObserver_ABC< sword::FormationCreation >
-                            , private ResponseObserver_ABC< sword::AutomatCreation >
+class RemoteAgentController : private ResponseObserver_ABC< sword::AutomatCreation >
                             , private RemoteAgentListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteAgentController( dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
-                                    RemoteAgentSubject_ABC& agentSubject,
-                                    ContextHandler_ABC< sword::FormationCreation >& formationHandler,
+             RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
-                                    ContextHandler_ABC< sword::UnitCreation >& unitHandler );
+                                    ContextHandler_ABC< sword::UnitCreation >& unitHandler,
+                                    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides );
     virtual ~RemoteAgentController();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void Notify( const sword::FormationCreation& message, const std::string& identifier );
     virtual void Notify( const sword::AutomatCreation& message, const std::string& identifier );
     //@}
 
@@ -85,8 +80,6 @@ private:
 private:
     //! @name Helpers
     //@{
-    void AddAutomat( unsigned long formation, unsigned long knowledgeGroup );
-    unsigned long FindKnowledgeGroup( unsigned long party ) const;
     unsigned long FindAutomat( rpr::ForceIdentifier ) const;
     //@}
 
@@ -96,21 +89,19 @@ private:
     typedef boost::shared_ptr< simulation::UnitMagicAction > T_UnitCreation;
     typedef std::map< std::string, T_UnitCreation > T_UnitCreations;
     typedef std::map< unsigned long, unsigned long > T_Parties;
-    typedef std::map< std::string, unsigned long > T_Units;
+    typedef std::map< kernel::Karma, unsigned long > T_Karmas;
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::Model_ABC& model_;
     RemoteAgentSubject_ABC& agentSubject_;
-    const unsigned long automatType_;
-    ContextHandler_ABC< sword::FormationCreation >& formationHandler_;
     ContextHandler_ABC< sword::AutomatCreation >& automatHandler_;
     ContextHandler_ABC< sword::UnitCreation >& unitHandler_;
+    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
-    T_Units units_;
+    T_Karmas karmas_;
     //@}
 };
 

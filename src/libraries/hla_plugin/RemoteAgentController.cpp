@@ -11,13 +11,9 @@
 #include "RemoteAgentController.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextHandler_ABC.h"
-#include "protocol/Simulation.h"
 #include "protocol/SimulationSenders.h"
-#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Team_ABC.h"
-#include "dispatcher/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Karma.h"
-#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -25,23 +21,22 @@ using namespace plugins::hla;
 // Name: RemoteAgentController constructor
 // Created: SLI 2011-09-01
 // -----------------------------------------------------------------------------
-RemoteAgentController::RemoteAgentController( dispatcher::Model_ABC& model, tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
-                                              RemoteAgentSubject_ABC& agentSubject,
-                                              ContextHandler_ABC< sword::FormationCreation >& formationHandler,
+RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
-                                              ContextHandler_ABC< sword::UnitCreation >& unitHandler )
-    : model_           ( model )
-    , agentSubject_    ( agentSubject )
-    , automatType_     ( 230u ) // $$$$ _RC_ SLI 2011-09-07: hardcoded
-    , formationHandler_( formationHandler )
-    , automatHandler_  ( automatHandler )
-    , unitHandler_     ( unitHandler )
+                                              ContextHandler_ABC< sword::UnitCreation >& unitHandler,
+                                              const tools::Resolver_ABC< dispatcher::Team_ABC >& sides )
+    : agentSubject_  ( agentSubject )
+    , automatHandler_( automatHandler )
+    , unitHandler_   ( unitHandler )
+    , sides_         ( sides )
 {
-    if( automatTypes.Find( automatType_ ) == 0 )
-        throw std::runtime_error( "Automat type identifier '" + boost::lexical_cast< std::string >( automatType_ ) + "' not found, please check your physical model." );
-    formationHandler_.Register( *this );
     automatHandler_.Register( *this );
     agentSubject_.Register( *this );
+    for( tools::Iterator< const dispatcher::Team_ABC& > it = sides.CreateIterator(); it.HasMoreElements(); )
+    {
+        const dispatcher::Team_ABC& team = it.NextElement();
+        karmas_[ team.GetKarma() ] = team.GetId();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -51,17 +46,7 @@ RemoteAgentController::RemoteAgentController( dispatcher::Model_ABC& model, tool
 RemoteAgentController::~RemoteAgentController()
 {
     automatHandler_.Unregister( *this );
-    formationHandler_.Unregister( *this );
     agentSubject_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Notify
-// Created: SLI 2011-09-01
-// -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::FormationCreation& message, const std::string& /*identifier*/ )
-{
-    AddAutomat( message.formation().id(), FindKnowledgeGroup( message.party().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,37 +56,6 @@ void RemoteAgentController::Notify( const sword::FormationCreation& message, con
 void RemoteAgentController::Notify( const sword::AutomatCreation& message, const std::string& /*identifier*/ )
 {
     parties_[ message.party().id() ] = message.automat().id();
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::AddAutomat
-// Created: SLI 2011-09-01
-// -----------------------------------------------------------------------------
-void RemoteAgentController::AddAutomat( unsigned long formation, unsigned long knowledgeGroup )
-{
-    simulation::UnitMagicAction message;
-    message().mutable_tasker()->mutable_formation()->set_id( formation );                           // parent
-    message().set_type( sword::UnitMagicAction::automat_creation );
-    message().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );        // type
-    message().mutable_parameters()->add_elem()->add_value()->set_identifier( knowledgeGroup );      // knowledge group
-    message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant automat" ); // name
-    automatHandler_.Send( message, boost::lexical_cast< std::string >( formation ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::FindKnowledgeGroup
-// Created: SLI 2011-09-01
-// -----------------------------------------------------------------------------
-unsigned long RemoteAgentController::FindKnowledgeGroup( unsigned long party ) const
-{
-    tools::Iterator< const dispatcher::KnowledgeGroup_ABC& > it = model_.KnowledgeGroups().CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const dispatcher::KnowledgeGroup_ABC& knowledgeGroup = it.NextElement();
-        if( knowledgeGroup.GetTeam().GetId() == party )
-            return knowledgeGroup.GetId();
-    }
-    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,14 +142,11 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
 // -----------------------------------------------------------------------------
 unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) const
 {
-    const kernel::Karma& karma = GetKarma( force );
-    tools::Iterator< const dispatcher::Team_ABC& > it = model_.Sides().CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const dispatcher::Team_ABC& team = it.NextElement();
-        T_Parties::const_iterator it = parties_.find( team.GetId() );
-        if( team.GetKarma() == karma && it != parties_.end() )
-            return it->second;
-    }
-    return 0;
+    T_Karmas::const_iterator itKarma = karmas_.find( GetKarma( force ) );
+    if( itKarma == karmas_.end() )
+        return 0;
+    T_Parties::const_iterator itParty = parties_.find( itKarma->second );
+    if( itParty == parties_.end() )
+        return 0;
+    return itParty->second;
 }

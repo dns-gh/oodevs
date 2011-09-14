@@ -10,6 +10,8 @@
 #ifndef plugins_hla_test_MockKnowledgeGroup_h
 #define plugins_hla_test_MockKnowledgeGroup_h
 
+#include "dispatcher/KnowledgeGroup_ABC.h"
+
 namespace dispatcher
 {
 // =============================================================================
