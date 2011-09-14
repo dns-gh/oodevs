@@ -32,6 +32,12 @@
     <Filter Include="Source Files\Classes\rpr">
       <UniqueIdentifier>{6220bd71-764b-454f-bb02-6d70e3324cb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dispatcher\Context">
+      <UniqueIdentifier>{55773d23-8e9a-4ff7-a2f2-ad61e7b65291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dispatcher\Simulation">
+      <UniqueIdentifier>{fcd167dc-d124-494d-9e30-4177258c2828}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
@@ -141,6 +147,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp">
       <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp">
+      <Filter>Source Files\Dispatcher\Context</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTeleporter.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +311,30 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h">
       <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ContextFactory.h">
+      <Filter>Source Files\Dispatcher\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ContextFactory_ABC.h">
+      <Filter>Source Files\Dispatcher\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ContextHandler.h">
+      <Filter>Source Files\Dispatcher\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ContextHandler_ABC.h">
+      <Filter>Source Files\Dispatcher\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ResponseObserver_ABC.h">
+      <Filter>Source Files\Dispatcher\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTeleporter.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
