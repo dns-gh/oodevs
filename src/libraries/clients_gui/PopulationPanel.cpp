@@ -33,7 +33,8 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
     , controllers_  ( controllers )
     , selected_     ( controllers )
 {
-    display_ = new DisplayBuilder( this, factory );
+    Q3VBox* box = new Q3VBox( this );
+    display_ = new DisplayBuilder( box, factory );
     display_->AddGroup( tools::translate( "gui::PopulationPanel", "Information" ) )
                 .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Name:" ), true )
                 .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Healthy people:" ) )
@@ -41,7 +42,7 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
                 .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Contaminated people:" ) )
                 .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Dead people:" ) );
 
-    pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this, factory );
+    pPartsListView_ = new ListDisplayer< PopulationPanel >( box, *this, factory );
     pPartsListView_->AddColumn( tools::translate( "gui::PopulationPanel", "Chunks" ) )
                     .AddColumn( tools::translate( "gui::PopulationPanel", "Healthy" ) )
                     .AddColumn( tools::translate( "gui::PopulationPanel", "Wounded" ) )

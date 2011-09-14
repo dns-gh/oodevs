@@ -86,6 +86,7 @@ ObjectCreationPanel.cpp \
 ObjectKnowledgePanel.cpp \
 ObjectKnowledgePanel.inl \
 ObjectMagicOrdersInterface.cpp \
+ObjectReportPanel.cpp \
 ObjectPanel.cpp \
 ObjectPrototype.cpp \
 ObjectsLayer.cpp \

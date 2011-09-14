@@ -66,7 +66,7 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
                 .AddLabel( tools::findTranslation( "Crowd", "Mood:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Perceived:" ) );
 
-setWidget( box );
+    setWidget( box );
 
     connect( knowledgeList_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
     connect( knowledgeList_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );

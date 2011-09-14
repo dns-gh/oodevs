@@ -67,12 +67,14 @@ void SummariesDisplayer::EndDisplay()
     if( !value )
     {
         QLabel* lbl = new QLabel( parent_ );
+        parent_->layout()->addWidget( lbl );
         QFont font;
         font.setBold( true );
         lbl->setFont( font );
         lbl->setText( currentItem_ );
         names_[currentItem_] = lbl;
         value = new QLabel( parent_ );
+        parent_->layout()->addWidget( value );
     }
     value->setText( message_ );
     names_[currentItem_]->show();

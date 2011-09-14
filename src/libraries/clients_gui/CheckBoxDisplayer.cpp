@@ -19,8 +19,9 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 CheckBoxDisplayer::CheckBoxDisplayer( QWidget* parent, const QString& name )
 {
-    new QLabel( name, parent );
+    parent->layout()->addWidget( new QLabel( name, parent ) );
     box_ = new QCheckBox( parent );
+    parent->layout()->addWidget( box_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -2398,6 +2398,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>ObjectReportPanel</name>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished">Reportes</translation>
+    </message>
+</context>
+<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>

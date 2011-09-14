@@ -2398,6 +2398,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>ObjectReportPanel</name>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished">Comptes-rendus</translation>
+    </message>
+</context>
+<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>

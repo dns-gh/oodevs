@@ -22,10 +22,11 @@ using namespace gui;
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
 GroupDisplayer::GroupDisplayer( QWidget* parent, const QString& name, ItemFactory_ABC& factory )
-    : Q3GroupBox( 2, Qt::Horizontal, name, parent )
+    : QGroupBox( name, parent )
     , factory_( factory )
 {
-    // NOTHING
+    setLayout( new QVBoxLayout() );
+    parent->layout()->addWidget( this );
 }
 
 // -----------------------------------------------------------------------------

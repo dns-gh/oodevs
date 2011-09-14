@@ -37,11 +37,11 @@ Panels::Panels( QWidget* pParent )
     combo_ = new QComboBox( box );
     combo_->setFocusPolicy( Qt::StrongFocus );
 
-    stack_ = new Q3WidgetStack( this );
+    stack_ = new QStackedWidget( this );
 
-    dummy_ = new QWidget( stack_ );
+    dummy_ = new QWidget();
     stack_->addWidget( dummy_ );
-    stack_->raiseWidget( dummy_ );
+    stack_->setCurrentWidget( dummy_ );
 
     CheckButtons();
 
@@ -68,6 +68,7 @@ void Panels::AddPanel( InfoPanel_ABC* panel )
     stack_->addWidget( panel );
     panelStates_[panel] = false;
     panels_.push_back( panel );
+    panel->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,13 +79,14 @@ void Panels::Select( int index )
 {
     if( index != -1 && index < int( currentPanels_.size() ) )
     {
-        stack_->raiseWidget( currentPanels_.at( index ) );
+        stack_->setCurrentWidget( currentPanels_.at( index ) );
         combo_->setCurrentItem( index );
-        SaveSelection( stack_->visibleWidget() );
+        SaveSelection( stack_->currentWidget() );
+        stack_->currentWidget()->show();
         CheckButtons();
     }
     else
-        stack_->raiseWidget( dummy_ );
+        stack_->setCurrentWidget( dummy_ );
 }
 
 // -----------------------------------------------------------------------------

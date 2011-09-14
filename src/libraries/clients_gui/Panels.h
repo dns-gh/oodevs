@@ -87,7 +87,7 @@ private:
     QPushButton*        previous_;
     QPushButton*        next_;
     QComboBox*          combo_;
-    Q3WidgetStack*       stack_;
+    QStackedWidget*     stack_;
     QWidget*            dummy_;
 
     T_SelectedWidgets   widgets_;

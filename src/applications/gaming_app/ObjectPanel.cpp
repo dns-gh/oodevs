@@ -15,6 +15,8 @@
 #include "actions/ParameterList.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/MedicalTreatmentType.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
@@ -29,14 +31,12 @@ using namespace actions;
 using namespace kernel;
 using namespace parameters;
 
-typedef gui::ObjectPanel MyParent;
-
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel constructor
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
 ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
-    : MyParent( parent, panel, controllers, factory )
+    : gui::ObjectPanel( parent, panel, controllers, factory )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -80,7 +80,10 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tools::findTranslation( "MedicalTreatment", "Total number of beds:" ) )
                 .AddLabel( tools::findTranslation( "MedicalTreatment", "Number of available beds:" ) )
                 .AddLabel( tools::findTranslation( "MedicalTreatment", "Total number of doctors:" ) )
-                .AddLabel( tools::findTranslation( "MedicalTreatment", "Number of available doctors:" ) );
+                .AddLabel( tools::findTranslation( "MedicalTreatment", "Number of available doctors:" ) )
+                .AddLabel( tools::findTranslation( "MedicalTreatment", "Hospital ID:" ) );
+
+    GetBuilder().AddGroup( tools::findTranslation( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Logistic route" ) )
                 .AddLabel( tools::findTranslation( "Object", "Equipped:" ) )
@@ -101,11 +104,8 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
     construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Construction:" ) ) );
     valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Mining:" ) ) );
     contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Bypass:" ) ) );
-
-    QWidget* pSpacer = new QWidget( this );
-    pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
-
-    Q3HBox* pHBox  = new Q3HBox( this );
+    
+    Q3HBox* pHBox  = new Q3HBox( pWidget_ );
     QPushButton* pApplyButton_  = new QPushButton( tools::translate( "CreationPanel", "Apply" ), pHBox );
     QPushButton* pCancelButton_ = new QPushButton( tools::translate( "CreationPanel", "Cancel" ), pHBox );
 

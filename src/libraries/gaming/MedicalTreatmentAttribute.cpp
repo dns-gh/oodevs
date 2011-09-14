@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "MedicalTreatmentAttribute.h"
+#include "clients_gui/GroupDisplayer.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
@@ -158,12 +159,27 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
     tools::translate( "MedicalTreatment", "Total number of beds:" );
     tools::translate( "MedicalTreatment", "Number of available beds:" );
 
-    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
+    kernel::Displayer_ABC& services = displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
     for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
     {
         if( it->second.type_ )
-            displayer.Display( std::string( it->second.name_ + ": " ).c_str(),
+        {
+            std::string name( it->second.name_ + ": " );
+            try
+            {
+                services.Display( name.c_str(),
                            std::string( boost::lexical_cast<std::string>( it->second.available_ ) + " (" + boost::lexical_cast<std::string>( it->second.baseline_ ) + ")" ) );
+            }
+            catch( std::runtime_error& e )
+            {
+                // Cannot display this stuff because it is dependant on the physical database and the displayer has been built before the database is loaded...
+                gui::GroupDisplayer* group = dynamic_cast< gui::GroupDisplayer* >( &services );
+                if( group )
+                    group->AddLabel( name.c_str() );
+                services.Display( name.c_str(),
+                           std::string( boost::lexical_cast<std::string>( it->second.available_ ) + " (" + boost::lexical_cast<std::string>( it->second.baseline_ ) + ")" ) );
+            }
+        }
     }
 }
 

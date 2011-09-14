@@ -20,8 +20,9 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 SpinBoxDisplayer::SpinBoxDisplayer( QWidget* parent, const QString& name, int min, int max, int step )
 {
-    new QLabel( name, parent );
+    parent->layout()->addWidget( new QLabel( name, parent ) );
     edit_ = new QSpinBox( min, max, step, parent );
+    parent->layout()->addWidget( edit_ );
 }
 
 // -----------------------------------------------------------------------------

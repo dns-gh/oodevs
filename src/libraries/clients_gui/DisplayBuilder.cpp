@@ -55,7 +55,7 @@ Displayer_ABC& DisplayBuilder::SubItem( const QString& name )
 {
     GroupDisplayer* group = groups_[ name ];
     if( ! group )
-        throw std::runtime_error( "Group '" + std::string( name.ascii() ) + "' does not exist" );
+        return AddGroup( name );
     return *group;
 }
 

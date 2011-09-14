@@ -23,7 +23,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 LabelDisplayer::LabelDisplayer( QWidget* parent, const QString& name, bool bold, ItemFactory_ABC& factory )
 {
-    new QLabel( name, parent );
+    parent->layout()->addWidget( new QLabel( name, parent ) );
     valueLabel_ = factory.CreateLabel( parent );
     if( bold )
     {
@@ -31,6 +31,7 @@ LabelDisplayer::LabelDisplayer( QWidget* parent, const QString& name, bool bold,
         boldFont.setBold( true );
         valueLabel_->setFont( boldFont );
     }
+    parent->layout()->addWidget( valueLabel_ );
 }
 
 // -----------------------------------------------------------------------------

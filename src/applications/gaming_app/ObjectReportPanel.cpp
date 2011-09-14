@@ -24,11 +24,12 @@ using namespace gui;
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
 ObjectReportPanel::ObjectReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, "Rapports" )
+    : InfoPanel_ABC( parent, panel, tr( "Reports" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {
     reports_ = new FireResultListView( this, controllers, factory );
+    setWidget( reports_ );
 
     controllers_.Register( *this );
 }
