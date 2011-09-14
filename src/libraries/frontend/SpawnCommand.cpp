@@ -26,12 +26,15 @@ struct SpawnCommand::InternalData
 // Name: SpawnCommand constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach )
-    : config_( config )
-    , internal_( new InternalData() )
-    , attach_( attach )
-    , workingDirectory_( "." )
-    , stopped_( false )
+SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach ,
+                            std::string commanderEndpoint /*= ""*/, std::string jobName /*= ""*/ )
+    : config_                   ( config )
+    , internal_                 ( new InternalData() )
+    , attach_                   ( attach )
+    , workingDirectory_         ( "." )
+    , stopped_                  ( false )
+    , networkCommanderEndpoint_ ( commanderEndpoint )
+    , jobName_                  ( jobName )
 {
     AddArgument( exe );
 }
@@ -89,7 +92,7 @@ void SpawnCommand::Start()
     std::string debug( commandLine_.local8Bit().data() ) ;
     if( !CreateProcessA( 0,                                     // lpApplicationName
                          commandLine_.local8Bit().data(),       // lpCommandLine
-                         0,                                     // lpProcessAttributes
+                         0,                    // lpProcessAttributes
                          0,                                     // lpThreadAttributes
                          TRUE,                                  // bInheritHandles
                          CREATE_NEW_CONSOLE,                    // dwCreationFlags
@@ -101,6 +104,9 @@ void SpawnCommand::Start()
         DWORD errCode = GetLastError();
         throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).ascii() );
     }
+     
+    if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, jobName_.c_str() ) )
+        AssignProcessToJobObject( jobObject, internal_->pid_.hProcess );
 }
 
 namespace
@@ -236,10 +242,37 @@ std::string SpawnCommand::GetStartedExercise() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SpawnCommand::GetExercise
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+std::string SpawnCommand::GetExercise() const
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::GetSession
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+std::string SpawnCommand::GetSession() const
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: SpawnCommand::SetWorkingDirectory
 // Created: SBO 2009-06-12
 // -----------------------------------------------------------------------------
 void SpawnCommand::SetWorkingDirectory( const QString& directory )
 {
     workingDirectory_ = directory.ascii();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::GetCommanderEndpoint
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+const std::string& SpawnCommand::GetCommanderEndpoint() const
+{
+    return networkCommanderEndpoint_;
 }

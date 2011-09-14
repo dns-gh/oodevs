@@ -13,6 +13,7 @@
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
 #include "frontend/Profile.h"
+#include "frontend/ProcessWrapper.h"
 #include "frontend/ProfileVisitor_ABC.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartDispatcher.h"
@@ -65,7 +66,7 @@ ProcessService::~ProcessService()
                 break;
             }
             else
-                it = processes_.erase(it);
+                it = processes_.erase( it );
         }
         if( process.get() )
             process->Stop();
@@ -80,7 +81,7 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 {
     const QStringList exercises = frontend::commands::ListExercises( config_ );
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
-        message.add_exercise( (*it).ascii() );
+        message.add_exercise( ( *it ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,6 +124,8 @@ namespace
     {
         SupervisorProfileCollector()
             : found_( false )
+            , supervisorProfile_( "" )
+            , supervisorPassword_( "" )
             {}
         void Visit( const frontend::Profile& profile )
         {
@@ -157,20 +160,20 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
-        for(int i=0; i<message.parameter().size() ; ++i)
+        for( int i = 0; i < message.parameter().size() ; ++i )
         {
-            const sword::SessionParameter& parameter = message.parameter(i);
+            const sword::SessionParameter& parameter = message.parameter( i );
             action.SetOption( parameter.key(), parameter.value() );
         }
         action.Commit();
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false ) );
+        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false, endpoint, "launcher-job" ) );
     else if( message.type() == sword::SessionStartRequest::dispatch )
-        command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str() ) );
+        command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, "launcher-job" ) );
     else
-        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true ) );
+        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true, endpoint, "launcher-job" ) );
 
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
@@ -200,6 +203,7 @@ sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::
     {
         boost::shared_ptr< SwordFacade > process( it->second );
         process->Stop();
+        processes_.erase( it );
         return sword::SessionStopResponse::success;
     }
     return frontend::commands::ExerciseExists( config_, name ) ? sword::SessionStopResponse::session_not_running
@@ -212,7 +216,7 @@ sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::
 // -----------------------------------------------------------------------------
 bool ProcessService::IsRunning( const std::string& exercise, const std::string& session ) const
 {
-    ProcessContainer::const_iterator it = processes_.find( std::make_pair(exercise, session) );
+    ProcessContainer::const_iterator it = processes_.find( std::make_pair( exercise, session ) );
     return it != processes_.end() && ( config_.GetTestMode() || it->second->IsRunning() );
 }
 
@@ -234,9 +238,26 @@ void ProcessService::NotifyStopped()
 // Name: ProcessService::NotifyError
 // Created: SBO 2010-12-09
 // -----------------------------------------------------------------------------
-void ProcessService::NotifyError( const std::string& /*error*/ )
+void ProcessService::NotifyError( const std::string& /*error*/, std::string commanderEndpoint /*= ""*/ )
 {
-    // $$$$ SBO 2010-12-09: Log error message
+    if ( !commanderEndpoint.empty() )
+{
+        LauncherPublisher& publisher = server_.ResolveClient( commanderEndpoint );
+        for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
+        {
+            const frontend::SpawnCommand* command = it->second->GetProcess()->GetCommand();
+            if( command && command->GetCommanderEndpoint() == commanderEndpoint )
+            {
+                SessionStatus statusMessage;
+                statusMessage().set_status( sword::SessionStatus::not_running );
+                statusMessage().set_exercise( command->GetExercise() );
+                statusMessage().set_session( command->GetSession() );
+                statusMessage.Send( publisher );
+                processes_.erase( it );
+                break;
+            }
+        }
+    }
     NotifyStopped();
 }
 
@@ -453,4 +474,29 @@ void ProcessService::SendConnectedProfiles( const std::string& endpoint, const s
     authentication::ConnectedProfilesRequest request;
     request.Send( *client, context );
     ++context;
+}
+// -----------------------------------------------------------------------------
+// Name: ProcessService::SendSessionsStatuses
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+void ProcessService::SendSessionsStatuses( const std::string& endpoint )
+{    
+    if ( !endpoint.empty() )
+    {
+        LauncherPublisher& publisher = server_.ResolveClient( endpoint );
+        for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
+        {
+            const frontend::SpawnCommand* command = it->second->GetProcess()->GetCommand();
+            if( command && command->GetCommanderEndpoint() == endpoint )
+            {
+                SessionStatus statusMessage;
+                std::string exercise = command->GetExercise();
+                std::string session = command->GetSession();
+                statusMessage().set_status( IsRunning( exercise, session )? sword::SessionStatus::running : sword::SessionStatus::not_running );
+                statusMessage().set_exercise( exercise );
+                statusMessage().set_session( session );
+                statusMessage.Send( publisher );
+            }
+        }
+    }
 }

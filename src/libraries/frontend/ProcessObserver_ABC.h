@@ -32,7 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyStopped() = 0;
-    virtual void NotifyError( const std::string& error ) = 0;
+    virtual void NotifyError( const std::string& error, std::string commanderEndpoint = "" ) = 0;
     //@}
 };
 

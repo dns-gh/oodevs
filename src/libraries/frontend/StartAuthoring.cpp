@@ -17,7 +17,7 @@ using namespace frontend;
 // Created: JSR 2010-06-10
 // -----------------------------------------------------------------------------
 StartAuthoring::StartAuthoring( const tools::GeneralConfig& config, bool attach /* = false*/ )
-    : SpawnCommand( config, "adaptation_app.exe", attach )
+    : SpawnCommand( config, "adaptation_app.exe", attach, "" )
 {
     // NOTHING
 }

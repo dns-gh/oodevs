@@ -126,6 +126,7 @@
 
     <target name="library.frontend" depends="library.clients_gui" description="build frontend static library">
         <build-lib name="frontend" depends="qt4" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd">
+            <defineset define="_WIN32_WINNT=0x0501"/>
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
@@ -645,6 +646,7 @@
             libs="launcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
             <syslibset libs="advapi32"/>
+            <defineset define="_WIN32_WINNT=0x0501"/>
         </build-app>
     </target>
 

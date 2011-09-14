@@ -107,9 +107,7 @@ void Utf8Converter::ConvertUtf8StringsToCP1252( Message& message )
                         ConvertUtf8StringsToCP1252( *reflection->MutableRepeatedMessage( &message, descriptor, index ) );
                 }
                 else if( reflection->HasField( message, descriptor ) )
-                {
                     ConvertUtf8StringsToCP1252( *reflection->MutableMessage( &message, descriptor ) );
-                }
                 break;
             }
         }
@@ -131,9 +129,7 @@ void Utf8Converter::CP1252ToUtf8( const std::string &cp1252String, std::string& 
     {
         unsigned int character = CP1252ToUnicode( *incoming );
         if( character < 0x80 )
-        {
             result[n++] = static_cast< unsigned char >( character );
-        }
         else if( character < 0x800 )
         {
             result[n++] = static_cast< unsigned char >( 0xC0 | ( character >> 6 ) );
@@ -179,39 +175,27 @@ void Utf8Converter::Utf8ToCP1252( const std::string& utf8String, std::string &cp
         if( character >= 0xF0 )
         {
             if( i >= 4 )   // four-byte encoded, 21 bits
-            {
                 character = ( ( incoming[0] & 0x07 ) << 18 ) | ( ( incoming[1] & 0x3F ) << 12 ) | ( ( incoming[2] & 0x3F ) << 6 ) | ( incoming[3] & 0x3F );
-            }
             else
-            {
                 character = '?';    //cp1252 conversion impossible
-            }
             incoming += 4;
             i -= 4;
         }
         else if( character >= 0xE0 )
         {
             if( i >= 3 )   // three-byte encoded, 16 bits
-            {
                 character = ( ( incoming[0] & 0x0F ) << 12 ) | ( ( incoming[1] & 0x3F ) << 6 ) | ( incoming[2] & 0x3F );
-            }
             else
-            {
                 character = '?';
-            }
             incoming += 3;
             i -= 3;
         }
         else if( character >= 0xC0 )
         {
             if( i >= 2 ) // two-byte encoded, 11 bits
-            {
                 character = ( ( incoming[0] & 0x1F ) << 6 ) | ( incoming[1] & 0x3F );
-            }
             else
-            {
                 character = '?';
-            }
             incoming += 2;
             i -= 2;
         }

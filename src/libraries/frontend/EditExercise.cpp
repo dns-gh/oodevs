@@ -17,7 +17,7 @@ using namespace frontend;
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 EditExercise::EditExercise( const tools::GeneralConfig& config, const QString& name, bool attach )
-    : SpawnCommand( config, "preparation_app.exe", attach )
+    : SpawnCommand( config, "preparation_app.exe", attach, "" )
 {
     AddRootDirArgument();
     AddExerciseArgument( name );

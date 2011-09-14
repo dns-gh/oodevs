@@ -27,16 +27,22 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded = true );
-             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded = true );
+    StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
+                    const QString& session, bool attach, bool launchDispatchedIfNotEmbedded = true,
+                    std::string commanderEndpoint = "", std::string processJobName = "" );
+    StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
+                    const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded = true,
+                    std::string commanderEndpoint = "", std::string processJobName = "" );
     virtual ~StartExercise();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Start();
+    virtual void         Start();
     virtual unsigned int GetPercentage() const;
-    virtual std::string GetStartedExercise() const;
+    virtual std::string  GetStartedExercise() const;
+    virtual std::string  GetExercise() const;
+    virtual std::string  GetSession() const;
     //@}
 
 private:

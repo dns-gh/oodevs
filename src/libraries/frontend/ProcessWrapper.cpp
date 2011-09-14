@@ -65,7 +65,7 @@ void ProcessWrapper::Run()
         catch( std::exception& e )
         {
             Stop();
-            observer_.NotifyError( e.what() );
+            observer_.NotifyError( e.what(), process_->GetCommanderEndpoint() );
             return;
         }
     }
@@ -99,7 +99,7 @@ void ProcessWrapper::RunBlockingMainThread()
         catch( std::exception& e )
         {
             Stop();
-            observer_.NotifyError( e.what() );
+            observer_.NotifyError( e.what(), process_->GetCommanderEndpoint() );
             return;
         }
     }
@@ -143,4 +143,32 @@ QString ProcessWrapper::GetStatus() const
 std::string ProcessWrapper::GetStartedExercise() const
 {
     return process_->GetStartedExercise();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::GetExercise
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+std::string ProcessWrapper::GetExercise() const
+{
+    return process_->GetExercise();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::GetSession
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+std::string ProcessWrapper::GetSession() const
+{
+    return process_->GetSession();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::GetProcess
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+const SpawnCommand* ProcessWrapper::GetCommand() const
+{
+    return process_.get();
 }

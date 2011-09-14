@@ -22,8 +22,13 @@ using namespace frontend;
 // Name: StartReplay constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartReplay::StartReplay( const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned port, bool attach )
-    : SpawnCommand( config, "replayer_app.exe", attach )
+StartReplay::StartReplay( const tools::GeneralConfig& config,
+                          const QString& exercise,
+                          const QString& session,
+                          unsigned port, bool attach,
+                          std::string commanderEndpoint /*= ""*/,
+                          std::string processJobName /*= ""*/  )
+                          : SpawnCommand( config, "replayer_app.exe", attach, commanderEndpoint, processJobName )
     , configManipulator_( new ConfigurationManipulator( config, exercise.ascii(), session.ascii() ) )
 {
     AddRootDirArgument();

@@ -11,7 +11,7 @@
 #define __frontend_pch_h_
 
 #pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
-
+#define _WIN32_WINNT 0x0501
 #include <exception>
 #include <memory>
 #pragma warning( push, 0 )

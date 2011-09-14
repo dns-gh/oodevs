@@ -35,8 +35,8 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, std::string processJobName /*= ""*/ )
+    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
@@ -57,8 +57,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, std::string processJobName /*= ""*/ )
+    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
@@ -108,7 +108,6 @@ void StartExercise::Start()
         boost::this_thread::sleep( boost::posix_time::milliseconds( 250 ) );
     }
     percentage_ = 100;
-
     edxl_->Start();
 }
 
@@ -140,4 +139,23 @@ std::string StartExercise::GetStartedExercise() const
 {
     return GetPercentage() == 100 ? exercise_ : std::string();
 }
+
+// -----------------------------------------------------------------------------
+// Name: StartExercise::GetExercise
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+std::string StartExercise::GetExercise() const
+{
+    return exercise_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartExercise::GetSession
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+std::string StartExercise::GetSession() const
+{
+    return session_;
+}
+
 

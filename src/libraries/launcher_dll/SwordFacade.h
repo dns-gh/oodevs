@@ -85,6 +85,7 @@ public:
     void Send( const sword::ClientToAuthentication& message ) const;
     bool IsRunning() const;
     void Update() const;
+    const frontend::ProcessWrapper* GetProcess();
     //@}
 
 private:

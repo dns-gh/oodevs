@@ -27,7 +27,10 @@ class StartReplay : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartReplay( const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned port, bool attach = false );
+             StartReplay( const tools::GeneralConfig& config,
+                          const QString& exercise, const QString& session,
+                          unsigned port, bool attach = false,
+                          std::string commanderEndpoint = "", std::string processJobName = "" );
     virtual ~StartReplay();
     //@}
 

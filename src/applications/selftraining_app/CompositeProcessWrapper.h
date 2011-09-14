@@ -41,10 +41,12 @@ public:
     //! @name Operations
     //@{
     virtual unsigned int GetPercentage() const;
-    virtual QString GetStatus() const;
-    virtual std::string GetStartedExercise() const;
-    void Start();
-    void Stop();
+    virtual QString      GetStatus() const;
+    virtual std::string  GetStartedExercise() const;
+    virtual std::string  GetExercise() const;
+    virtual std::string  GetSession() const;
+    void                 Start();
+    void                 Stop();
     //@}
 
 private:

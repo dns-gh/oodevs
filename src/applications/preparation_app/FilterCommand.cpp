@@ -200,7 +200,7 @@ void FilterCommand::NotifyStopped()
 // Name: FilterCommand::NotifyError
 // Created: ABR 2011-06-22
 // -----------------------------------------------------------------------------
-void FilterCommand::NotifyError( const std::string& error )
+void FilterCommand::NotifyError( const std::string& error, std::string /*commanderEndpoint*/  )
 {
     reloadExercise_ = false;
     QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterDialog", "Error on filter execution" ), error.c_str() );

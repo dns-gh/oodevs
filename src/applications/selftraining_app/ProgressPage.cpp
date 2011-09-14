@@ -100,7 +100,7 @@ void ProgressPage::NotifyStopped()
 // Name: ProgressPage::NotifyError
 // Created: SBO 2010-12-09
 // -----------------------------------------------------------------------------
-void ProgressPage::NotifyError( const std::string& error )
+void ProgressPage::NotifyError( const std::string& error, std::string /*commanderEndpoint = "" */ )
 {
     NotifyStopped();
     QString* message = new QString( error.c_str() );

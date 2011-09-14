@@ -34,21 +34,25 @@ class SpawnCommand : public Process_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false  );
+    SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false,
+                  std::string commanderEndpoint = "", std::string jobName = ""  );
     virtual ~SpawnCommand();
     //@}
 
     //! @name accessors
     //@{
-    bool IsRunning() const;
-    virtual void Start();
-    virtual bool Wait();
-    virtual void Stop();
+    bool                 IsRunning() const;
+    virtual void         Start();
+    virtual bool         Wait();
+    virtual void         Stop();
     virtual unsigned int GetPercentage() const;
-    virtual QString GetStatus() const;
-    virtual std::string GetStartedExercise() const;
-    void Attach( boost::shared_ptr< Process_ABC > process );
-    void SetWorkingDirectory( const QString& directory );
+    virtual QString      GetStatus() const;
+    virtual std::string  GetStartedExercise() const;
+    virtual std::string  GetExercise() const;
+    virtual std::string  GetSession() const;
+    void                 Attach( boost::shared_ptr< Process_ABC > process );
+    void                 SetWorkingDirectory( const QString& directory );
+    const std::string&   GetCommanderEndpoint() const;
     //@}
 
 protected:
@@ -80,12 +84,14 @@ protected:
 private:
     //! @name Member data
     //@{
-    QString                     commandLine_;
-    std::auto_ptr<InternalData> internal_; //!< obscure data structure to hide OS implementation
-    bool                        attach_;   //!< if set to true , kill the attached process on exit
-    std::string                 workingDirectory_;
-    bool stopped_;
+    QString                          commandLine_;
+    std::auto_ptr<InternalData>      internal_; //!< obscure data structure to hide OS implementation
+    bool                             attach_;   //!< if set to true , kill the attached process on exit
+    std::string                      workingDirectory_;
+    bool                             stopped_;
     boost::shared_ptr< Process_ABC > attachment_;
+    std::string                      networkCommanderEndpoint_;
+    std::string                      jobName_;
     //@}
 };
 

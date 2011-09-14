@@ -16,6 +16,7 @@
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <boost/filesystem.hpp>
+#define _WIN32_WINNT 0x0501
 
 namespace bpo = boost::program_options;
 namespace bfs = boost::filesystem;
@@ -51,9 +52,13 @@ int main( int argc, char* argv[] )
         bfs::path path = bfs::system_complete( bfs::path( argv[0] ) );
         MT_FileLogger fileLogger( bfs::path( path.parent_path() / "Launcher.log" ).string().c_str() );
         MT_LOG_REGISTER_LOGGER( fileLogger );
-
+        HANDLE launcherJob  = CreateJobObject( 0, "launcher-job" );
+        JOBOBJECT_EXTENDED_LIMIT_INFORMATION extendedJobInfo;;
+        QueryInformationJobObject( launcherJob, JobObjectExtendedLimitInformation, &extendedJobInfo, sizeof( extendedJobInfo ), 0 );
+        extendedJobInfo.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE | JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION;
+        if ( !SetInformationJobObject( launcherJob, JobObjectExtendedLimitInformation, &extendedJobInfo, sizeof( extendedJobInfo ) ) )
+            throw std::runtime_error( "Launcher Service not initialized" );
         LauncherService::Initialize( path );
-
         LauncherService& service = LauncherService::Instance();
         if( vm.count( "install" ) )
             service.Install();
@@ -67,6 +72,7 @@ int main( int argc, char* argv[] )
             service.ExecuteSubProcess();
 
         LauncherService::Terminate();
+        CloseHandle( launcherJob );
 
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         return EXIT_SUCCESS;

@@ -43,7 +43,7 @@ namespace
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
 StartTerrainWorkshop::StartTerrainWorkshop( const tools::GeneralConfig& config, bool attach /* = false*/ )
-    : SpawnCommand( config, GetExecutable().c_str(), attach )
+    : SpawnCommand( config, GetExecutable().c_str(), attach, "" )
 {
     SetWorkingDirectory( GetDirectory() );
 }

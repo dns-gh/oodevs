@@ -339,13 +339,14 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
 // -----------------------------------------------------------------------------
 bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::string userName /*= ""*/ )
 {
-    MT_LOG_INFO_MSG( "Begin save checkpoint " << name );
+    std::string checkpointName = userName.empty()? name : userName;
+    MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );
     client::ControlCheckPointSaveBegin().Send( NET_Publisher_ABC::Publisher() );
-    ::_mkdir( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", name ).c_str() );
-    const bool bNotOk = !SaveOrbatCheckPoint( name ) || !SaveFullCheckPoint( name, userName );
+    ::_mkdir( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", checkpointName ).c_str() );
+    const bool bNotOk = !SaveOrbatCheckPoint( checkpointName ) || !SaveFullCheckPoint( checkpointName, userName );
     MT_LOG_INFO_MSG( "End save checkpoint" );
     client::ControlCheckPointSaveEnd msg;
-    msg().set_name( name );
+    msg().set_name( checkpointName );
     msg.Send( NET_Publisher_ABC::Publisher() );
     return ! bNotOk;
 }

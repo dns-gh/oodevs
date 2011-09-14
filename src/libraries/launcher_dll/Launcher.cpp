@@ -97,6 +97,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecti
     response().set_error_code( valid ? sword::ConnectionResponse::success : sword::ConnectionResponse::incompatible_protocol_version );
     response().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
     response.Send( server_->ResolveClient( endpoint ) );
+    processes_->SendSessionsStatuses( endpoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,17 +122,17 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
     response().set_error_code( processes_->StartSession( endpoint, message ) );
-    switch(message.type())
+    switch( message.type() )
     {
-    case sword::SessionStartRequest::simulation:
-        response().set_type( sword::SessionStartResponse::simulation );
-        break;
-    case sword::SessionStartRequest::dispatch:
-        response().set_type( sword::SessionStartResponse::dispatch );
-        break;
-    case sword::SessionStartRequest::replay:
-        response().set_type( sword::SessionStartResponse::replay );
-        break;
+        case sword::SessionStartRequest::simulation:
+            response().set_type( sword::SessionStartResponse::simulation );
+            break;
+        case sword::SessionStartRequest::dispatch:
+            response().set_type( sword::SessionStartResponse::dispatch );
+            break;
+        case sword::SessionStartRequest::replay:
+            response().set_type( sword::SessionStartResponse::replay );
+            break;
     }
     response().set_checkpoint( message.has_checkpoint() ? message.checkpoint() : "" );
     response.Send( server_->ResolveClient( endpoint ) );

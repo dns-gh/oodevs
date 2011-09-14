@@ -42,7 +42,7 @@ public:
     //! @name ProcessObserver_ABC implementation
     //@{
     virtual void NotifyStopped();
-    virtual void NotifyError( const std::string& error );
+    virtual void NotifyError( const std::string& error, std::string /*commanderEndpoint*/ = ""  );
     //@}
 
 private:

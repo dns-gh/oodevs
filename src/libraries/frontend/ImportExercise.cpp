@@ -17,7 +17,7 @@ using namespace frontend;
 // Created: LDC 2010-07-06
 // -----------------------------------------------------------------------------
 ImportExercise::ImportExercise( const tools::GeneralConfig& config, const QString& inputScenario, const QString& outputScenario, bool attach /* = false*/ )
-    : SpawnCommand( config, "import_app.exe", attach )
+    : SpawnCommand( config, "import_app.exe", attach, "" )
 {
     AddRootDirArgument();
     AddExerciseArgument( outputScenario );

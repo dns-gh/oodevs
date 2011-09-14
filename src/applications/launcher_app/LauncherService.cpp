@@ -126,7 +126,7 @@ void LauncherService::Install() const
             SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, path_.string().c_str(), NULL,
             NULL, NULL, NULL, NULL
         );
-        if( IsValid( schService, MT_FormatString( "Failed to create service %s, error code = %d", GetLastError() ) ) )
+        if( IsValid( schService, MT_FormatString( "Failed to create service %s, error code = %d", name_.c_str(), GetLastError() ) ) )
         {
             LPTSTR desc = TEXT( "Launcher MASA Sword SCIPIO" );
             SERVICE_DESCRIPTION sd;

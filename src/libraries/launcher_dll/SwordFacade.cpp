@@ -26,8 +26,8 @@ using namespace launcher;
 SwordFacade::SwordFacade( bool isDispatcher )
     : isDispatcher_( isDispatcher )
     , isConnected_( false )
-    , isAuthenticated_ ( false)
-    , process_( )
+    , isAuthenticated_ ( false )
+    , process_()
 {
     // NOTHING
 }
@@ -45,21 +45,18 @@ SwordFacade::~SwordFacade()
 // Name: SwordFacade::Start
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::Start(frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
-                        const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode)
+void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
+                        const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode )
 {
     if( !testMode )
     {
-        boost::shared_ptr<frontend::ProcessWrapper> wrapper( new frontend::ProcessWrapper( observer, command) );
+        boost::shared_ptr<frontend::ProcessWrapper> wrapper( new frontend::ProcessWrapper( observer, command ) );
         wrapper->Start();
         process_ = wrapper;
     }
-    if(isDispatcher_)
-    {
-        client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), supervisorProfile, supervisorPassword ));
-        client_->RegisterMessageHandler(this);
-        client_->Connect(this);
-    }
+    client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), supervisorProfile, supervisorPassword ) );
+    client_->RegisterMessageHandler( this );
+    client_->Connect( this );
 }
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::Stop
@@ -72,7 +69,7 @@ void SwordFacade::Stop()
         if( IsConnected() && client_.get() )
         {
             client_->Disconnect();
-            client_->UnregisterMessageHandler(this);
+            client_->UnregisterMessageHandler( this );
             client_.reset();
         }
         process_.lock()->Stop();
@@ -219,4 +216,13 @@ void SwordFacade::Update() const
 {
     if( client_.get() )
         client_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::GetProcess
+// Created: RPD 2011-09-12
+// -----------------------------------------------------------------------------
+const frontend::ProcessWrapper* SwordFacade::GetProcess()
+{
+    return process_.lock().get();
 }

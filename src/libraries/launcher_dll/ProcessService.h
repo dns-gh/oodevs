@@ -63,8 +63,9 @@ public:
     void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
     void ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
     void SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
+    void SendSessionsStatuses( const std::string& endpoint );
     virtual void NotifyStopped();
-    virtual void NotifyError( const std::string& error );
+    virtual void NotifyError( const std::string& error, std::string commanderEndpoint = "" );
     void Update();
     void SendRunningExercices( const std::string& endpoint ) const;
     //@}

@@ -22,8 +22,10 @@ StartDispatcher::StartDispatcher( const tools::GeneralConfig& config,
                                   const QString& exercise,
                                   const QString& session,
                                   const QString& checkpoint /*= ""*/,
-                                  const QString& dispatcher_path /*= ""*/ )
-    : SpawnCommand( config, "dispatcher_app.exe", attach )
+                                  const QString& dispatcher_path /*= ""*/,
+                                  std::string commanderEndpoint /*= ""*/,
+                                  std::string processJobName /*= ""*/ )
+    : SpawnCommand( config, "dispatcher_app.exe", attach, commanderEndpoint, processJobName )
 {
     if( !dispatcher_path.isEmpty() )
         SetWorkingDirectory( dispatcher_path );
