@@ -444,8 +444,8 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Unite essence"/>
-			<xs:enumeration value="Unite feu TD"/>
-			<xs:enumeration value="Unite feu -TD"/>
+			<xs:enumeration value="Unite tranche D"/>
+			<xs:enumeration value="Unite non tranche D"/>
 			<xs:enumeration value="Unite vivre"/>
 			<xs:enumeration value="Pieces"/>
 		</xs:restriction>

@@ -378,11 +378,11 @@ ENT_Tr::T_ConverterInjuriesSeriousness ENT_Tr::InjuriesSeriousnessConverter_ [] 
 
 ENT_Tr::T_ConverterStockCategory ENT_Tr::stockCategoryConverter_[] =
 {
-    T_ConverterStockCategory( "Unite essence", QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Fuel"),       eStockCategory_UniteFuel ),
-    T_ConverterStockCategory( "Unite feu TD" , QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Ammos"),      eStockCategory_UniteFireDirect ),
-    T_ConverterStockCategory( "Unite feu -TD", QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Shells"),     eStockCategory_UniteFireNotDirect ),
-    T_ConverterStockCategory( "Unite vivre"  , QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Water/food"), eStockCategory_UniteSupply ),
-    T_ConverterStockCategory( "Pieces"       , QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Parts"),      eStockCategory_Piece ),
+    T_ConverterStockCategory( "Unite essence",          QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Fuel"),                 eStockCategory_UniteFuel ),
+    T_ConverterStockCategory( "Unite tranche D" ,       QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Field arty ammo"),      eStockCategory_UniteFieldArtyAmmo ),
+    T_ConverterStockCategory( "Unite non tranche D",    QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Not field arty ammo"),  eStockCategory_UniteNotFieldArtyAmmo ),
+    T_ConverterStockCategory( "Unite vivre"  ,          QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Water/food"),           eStockCategory_UniteSupply ),
+    T_ConverterStockCategory( "Pieces"       ,          QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Parts"),                eStockCategory_Piece ),
     T_ConverterStockCategory( "", "", (E_StockCategory)-1 )
 };
 

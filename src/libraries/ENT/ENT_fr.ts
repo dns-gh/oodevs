@@ -772,20 +772,20 @@
         <translation>Logistique - carburant</translation>
     </message>
     <message>
-        <source>Logistic - Ammos</source>
-        <translation>Logistique - munitions</translation>
-    </message>
-    <message>
-        <source>Logistic - Shells</source>
-        <translation>Logistique - obus</translation>
-    </message>
-    <message>
         <source>Logistic - Water/food</source>
         <translation>Logistique - eau/nourriture</translation>
     </message>
     <message>
         <source>Logistic - Parts</source>
         <translation>Logistique - pièces détachées</translation>
+    </message>
+    <message>
+        <source>Logistic - Field arty ammo</source>
+        <translation>Logistique - munitions tranche D</translation>
+    </message>
+    <message>
+        <source>Logistic - Not field arty ammo</source>
+        <translation>Logistique - munitions non tranche D</translation>
     </message>
 </context>
 </TS>

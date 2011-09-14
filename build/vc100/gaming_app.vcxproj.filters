@@ -778,6 +778,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions\Population</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1127,6 +1130,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.h">
       <Filter>Source Files\Dialogs\Magic actions\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

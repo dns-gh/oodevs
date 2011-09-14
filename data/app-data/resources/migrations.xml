@@ -127,5 +127,6 @@
   <migration from="4.3.1" to="4.3.2">
     <upgrade schema="schemas/4.3.1/physical/Pathfind.xsd" apply="schemas/4.3.2/xsl/Pathfind_4.3.1-4.3.2.xsl"/>
     <upgrade schema="schemas/4.3.1/exercise/weather.xsd" apply="schemas/4.3.2/xsl/weather_4.3.1-4.3.2.xsl"/>
+    <upgrade schema="schemas/4.3.1/physical/Units.xsd" apply="schemas/4.3.2/xsl/units_4.3.1-4.3.2.xsl"/>    
   </migration>
 </migrations>

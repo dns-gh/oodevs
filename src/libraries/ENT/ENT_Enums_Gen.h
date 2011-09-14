@@ -380,8 +380,8 @@ enum E_InjuriesSeriousness
 enum E_StockCategory
 {
     eStockCategory_UniteFuel,
-    eStockCategory_UniteFireDirect,
-    eStockCategory_UniteFireNotDirect,
+    eStockCategory_UniteFieldArtyAmmo,
+    eStockCategory_UniteNotFieldArtyAmmo,
     eStockCategory_UniteSupply,
     eStockCategory_Piece,
     eNbrStockCategory

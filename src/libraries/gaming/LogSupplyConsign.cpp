@@ -125,12 +125,19 @@ void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displa
     itemDisplayer.Display( tools::translate( "Logistic", "State:" ), nState_ );
 
     if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end in:" ), tools::translate( "Logistic", "Unknown" ) );
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end :" ), tools::translate( "Logistic", "Unknown" ) );
     else
     {
-//        QTime time;
-//        time.addSecs( simulation_.GetTickDuration() * ( currentStateEndTick_ - simulation_.GetCurrentTick() ) );
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end in:" ), currentStateEndTick_ );
+        unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
+        QDateTime endDate = QDateTime::	fromTime_t( endSeconds );
+        QDateTime curDate = simulation_.GetDateTime();
+
+        QString dateDisplay;
+        if ( endDate.date() != curDate.date() )
+            dateDisplay += endDate.date().toString() + " ";
+        dateDisplay += endDate.time().toString();
+
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end :" ), dateDisplay );
     }
 }
 

@@ -845,23 +845,23 @@
     </message>
     <message>
         <source>Transporters provider:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current state end in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fournisseur des transporteurs:</translation>
     </message>
     <message>
         <source>No recipients</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de destinataire</translation>
     </message>
     <message>
         <source>Multiple recipients</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinataires multiples</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Inconnu</translation>
+    </message>
+    <message>
+        <source>Current state end :</source>
+        <translation>Fin de l&apos;état courant :</translation>
     </message>
 </context>
 <context>

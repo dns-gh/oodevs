@@ -27,7 +27,7 @@ SupplyConsignsWidget::SupplyConsignsWidget( QWidget* parent, kernel::Controllers
     AddConsignColumn( tools::translate( "SupplyConsignsWidget", "Supplier:" ) );
     AddConsignColumn( tools::translate( "SupplyConsignsWidget", "Convoyer:" ) );
     AddConsignColumn( tools::translate( "SupplyConsignsWidget", "State:" ) );
-    AddConsignColumn( tools::translate( "SupplyConsignsWidget", "Current state end in:" ) );
+    AddConsignColumn( tools::translate( "SupplyConsignsWidget", "Current state end :" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -1471,10 +1471,6 @@ estacionado con motor encendido</translation>
         <translation>Tipo</translation>
     </message>
     <message>
-        <source>For indirect fire</source>
-        <translation>Para fuego indirecto</translation>
-    </message>
-    <message>
         <source>Attritions</source>
         <translation>Atriciones</translation>
     </message>
@@ -1601,6 +1597,10 @@ estacionado con motor encendido</translation>
     <message>
         <source>PKs</source>
         <translation>PKs</translation>
+    </message>
+    <message>
+        <source>FieldArtyAmmo</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

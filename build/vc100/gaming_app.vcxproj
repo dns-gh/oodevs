@@ -193,6 +193,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\ResourceLinksDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\TabWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\TimeTableRequestDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UnitStateDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableCrew.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.cpp" />
@@ -986,6 +987,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableCrew.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableResource.h" />

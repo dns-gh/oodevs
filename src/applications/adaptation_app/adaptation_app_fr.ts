@@ -1477,10 +1477,6 @@ Arrêt moteur allumé</translation>
         <translation>m3</translation>
     </message>
     <message>
-        <source>For indirect fire</source>
-        <translation>Tranche D</translation>
-    </message>
-    <message>
         <source>Attritions</source>
         <translation>Attritions</translation>
     </message>
@@ -1603,6 +1599,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>PKs</source>
         <translation>PKs</translation>
+    </message>
+    <message>
+        <source>FieldArtyAmmo</source>
+        <translation>Tranche D</translation>
     </message>
 </context>
 <context>

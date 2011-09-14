@@ -159,7 +159,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eNNOCode ] );
     builder.AddEnumField< E_MunitionType >( pHolder, tr( "Type" ), vConnectors[ eType ], ADN_Tr::ConvertFromMunitionType );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eNature ] );
-    builder.AddField< ADN_CheckBox >( pHolder, tr( "For indirect fire" ), vConnectors[ eTrancheD ] );
+    builder.AddField< ADN_CheckBox >( pHolder, tr( "FieldArtyAmmo" ), vConnectors[ eTrancheD ] );
 
     // Packaging
     Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
