@@ -67,9 +67,9 @@ void RemoteAgentController::Created( const std::string& identifier )
     unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitMagicAction() );
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     message().set_type( sword::UnitMagicAction::unit_creation );
-    message().mutable_parameters()->add_elem()->add_value()->set_identifier( 64 ); // $$$$ _RC_ VPR 2011-09-07: Hardcoded
-    message().mutable_parameters()->add_elem();                                                   // position
-    message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA_" + identifier ); // name
+    message().mutable_parameters()->add_elem()->add_value()->set_identifier( 64 ); // type // $$$$ _RC_ VPR 2011-09-07: Hardcoded
+    message().mutable_parameters()->add_elem();                                    // position
+    message().mutable_parameters()->add_elem();                                    // name
 }
 
 // -----------------------------------------------------------------------------
@@ -95,11 +95,7 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
     sword::CoordLatLong* coordLatLong = location->mutable_coordinates()->add_elem();
     coordLatLong->set_latitude( latitude );
     coordLatLong->set_longitude( longitude );
-    if( message().has_tasker() )
-    {
-        unitHandler_.Send( message, identifier );
-        unitCreations_.erase( identifier );
-    }
+    Send( message, identifier );
 }
 
 namespace
@@ -129,11 +125,7 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
     if( automat == 0 )
         throw std::runtime_error( "Army '" + GetKarma( side ).GetName().toStdString() + "' does not exist for remote agent '" + identifier + "'" );
     message().mutable_tasker()->mutable_automat()->set_id( automat );
-    if( message().parameters().elem( 1 ).value_size() > 0 )
-    {
-        unitHandler_.Send( message, identifier );
-        unitCreations_.erase( identifier );
-    }
+    Send( message, identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,4 +141,32 @@ unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) c
     if( itParty == parties_.end() )
         return 0;
     return itParty->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::NameChanged
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+void RemoteAgentController::NameChanged( const std::string& identifier, const std::string& name )
+{
+    if( unitCreations_.find( identifier ) == unitCreations_.end() )
+        return;
+    simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
+    message().mutable_parameters()->mutable_elem( 2 )->add_value()->set_acharstr( "HLA_" + name );
+    Send( message, identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::Send
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+void RemoteAgentController::Send( simulation::UnitMagicAction& message, const std::string& identifier )
+{
+    if( message().has_tasker() &&
+        message().parameters().elem( 1 ).value_size() > 0 &&
+        message().parameters().elem( 2 ).value_size() > 0 )
+    {
+        unitHandler_.Send( message, identifier );
+        unitCreations_.erase( identifier );
+    }
 }

@@ -42,3 +42,12 @@ BOOST_FIXTURE_TEST_CASE( aggregate_marking_truncates_name_over_31_characters, Se
         Read< int8 >( deserializer );
     BOOST_CHECK_EQUAL( 'b', Read< int8 >( deserializer ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( aggregate_marking_deserializes_to_string, SerializationFixture )
+{
+    const AggregateMarking serializedMarking( "name" );
+    ::hla::Deserializer deserializer = Serialize( serializedMarking, 32 * sizeof( int8 ) );
+    AggregateMarking deserializedMarking;
+    deserializedMarking.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( "name", deserializedMarking.str() );
+}

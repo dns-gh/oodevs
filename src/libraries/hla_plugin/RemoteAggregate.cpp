@@ -11,6 +11,7 @@
 #include "RemoteAggregate.h"
 #include "SerializationTools.h"
 #include "Spatial.h"
+#include "AggregateMarking.h"
 #include "RemoteAgentListener_ABC.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer.h>
@@ -63,5 +64,11 @@ void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier,
         int8 force;
         deserializer >> force;
         listener_.SideChanged( identifier_, static_cast< rpr::ForceIdentifier >( force ) );
+    }
+    else if( identifier == "AggregateMarking" )
+    {
+        AggregateMarking marking;
+        marking.Deserialize( deserializer );
+        listener_.NameChanged( identifier_, marking.str() );
     }
 }

@@ -98,3 +98,12 @@ void UnitTeleporter::Notify( const sword::UnitCreation& message, const std::stri
 {
     identifiers_[ identifier ] = message.unit().id();
 }
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::NameChanged
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+void UnitTeleporter::NameChanged( const std::string& /*identifier*/, const std::string& /*name*/ )
+{
+    // NOTHING
+}

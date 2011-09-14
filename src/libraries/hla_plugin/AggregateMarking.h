@@ -25,6 +25,7 @@ class AggregateMarking
 public:
     //! @name Constructors/Destructor
     //@{
+             AggregateMarking();
     explicit AggregateMarking( const std::string& name );
     virtual ~AggregateMarking();
     //@}
@@ -37,6 +38,13 @@ public:
         archive << markingType_
                 << markingData_;
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> markingType_
+                >> markingData_;
+    }
+    std::string str() const;
     //@}
 
 private:

@@ -38,6 +38,7 @@ public:
     virtual void Destroyed( const std::string& identifier ) = 0;
     virtual void Moved( const std::string& identifier, double latitude, double longitude ) = 0;
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side ) = 0;
+    virtual void NameChanged( const std::string& identifier, const std::string& name ) = 0;
     //@}
 };
 

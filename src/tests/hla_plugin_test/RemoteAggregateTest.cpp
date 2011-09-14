@@ -10,6 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/RemoteAggregate.h"
 #include "hla_plugin/Spatial.h"
+#include "hla_plugin/AggregateMarking.h"
 #include "hla_plugin/SerializationTools.h"
 #include "MockUpdateFunctor.h"
 #include "MockRemoteAgentListener.h"
@@ -57,4 +58,18 @@ BOOST_AUTO_TEST_CASE( remote_aggregate_deserializes_force_identifier_attribute_a
     const ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
     MOCK_EXPECT( listener, SideChanged ).once().with( "identifier", rpr::Friendly );
     aggregate.Deserialize( "ForceIdentifier", deserializer );
+}
+
+BOOST_AUTO_TEST_CASE( remote_aggregate_deserializes_aggregate_marking_attribute_and_notifies_listener )
+{
+    MockRemoteAgentListener listener;
+    RemoteAggregate aggregate( "identifier", listener );
+    ::hla::Serializer serializer;
+    const AggregateMarking marking( "name" );
+    marking.Serialize( serializer );
+    T_Buffer buffer( serializer.GetSize() );
+    serializer.CopyTo( &buffer[0] );
+    const ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+    MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name" );
+    aggregate.Deserialize( "AggregateMarking", deserializer );
 }

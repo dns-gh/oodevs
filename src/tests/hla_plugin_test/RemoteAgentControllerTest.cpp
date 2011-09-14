@@ -99,6 +99,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
 {
     remoteAgentListener->Created( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
+    remoteAgentListener->NameChanged( "identifier", "name" );
     simulation::UnitMagicAction actual;
     MOCK_EXPECT( unitCreation, Send ).once().with( mock::retrieve( actual ), "identifier" );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
@@ -113,13 +114,14 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     BOOST_CHECK_EQUAL( location.coordinates().elem_size(), 1 );
     BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).latitude(), latitude );
     BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).longitude(), longitude );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA_identifier" );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA_name" );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_second_moved_event, AutomatFixture )
 {
     remoteAgentListener->Created( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
+    remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitCreation, Send ).once();
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();

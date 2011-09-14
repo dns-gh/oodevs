@@ -90,3 +90,12 @@ void RemoteAgentListenerComposite::SideChanged( const std::string& identifier, r
         listener->SideChanged( identifier, side );
 }
 
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentListenerComposite::NameChanged
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+void RemoteAgentListenerComposite::NameChanged( const std::string& identifier, const std::string& name )
+{
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->NameChanged( identifier, name );
+}

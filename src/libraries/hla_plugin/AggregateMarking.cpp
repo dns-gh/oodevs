@@ -14,6 +14,16 @@ using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: AggregateMarking constructor
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+AggregateMarking::AggregateMarking()
+    : markingType_( 1 ) // ASCII
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateMarking constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 AggregateMarking::AggregateMarking( const std::string& name )
@@ -31,4 +41,13 @@ AggregateMarking::AggregateMarking( const std::string& name )
 AggregateMarking::~AggregateMarking()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateMarking::str
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+std::string AggregateMarking::str() const
+{
+    return std::string( reinterpret_cast< const char* >( markingData_ ) );
 }
