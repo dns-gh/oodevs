@@ -23,6 +23,7 @@
 #include "AutomatDisengager.h"
 #include "FormationCreater.h"
 #include "AutomatCreater.h"
+#include "UnitTeleporter.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "dispatcher/Config.h"
@@ -108,6 +109,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher, *pContextFactory_ ) )
     , pFormationCreater_     ( new FormationCreater( *pMessageController_, dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_       ( new AutomatCreater( *pFormationHandler_, *pAutomatHandler_, staticModel.types_, dynamicModel.KnowledgeGroups() ) )
+    , pUnitTeleporter_       ( new UnitTeleporter( *pFederate_, *pUnitHandler_, publisher, *pContextFactory_ ) )
     , pRemoteAgentController_( new RemoteAgentController( *pFederate_, *pAutomatHandler_, *pUnitHandler_, dynamicModel.Sides() ) )
     , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
 {

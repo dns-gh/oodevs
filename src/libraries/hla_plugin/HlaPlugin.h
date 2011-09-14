@@ -61,6 +61,7 @@ namespace hla
     class AutomatDisengager;
     class FormationCreater;
     class AutomatCreater;
+    class UnitTeleporter;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -108,6 +109,7 @@ private:
     std::auto_ptr< AutomatDisengager > pAutomatDisengager_;
     std::auto_ptr< FormationCreater > pFormationCreater_;
     std::auto_ptr< AutomatCreater > pAutomatCreater_;
+    std::auto_ptr< UnitTeleporter > pUnitTeleporter_;
     std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
     std::auto_ptr< Stepper > pStepper_;
     //@}
