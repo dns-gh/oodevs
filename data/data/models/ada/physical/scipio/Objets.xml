@@ -379,6 +379,7 @@
   <object geometry="polygon" name="zone interdite tir" symbol="G*FPAN----****X" type="firing forbidden area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <fire-forbidden/>
     <interaction-height height="6000"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
   </object>
@@ -528,6 +529,8 @@
     <mobility default-speed="30" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <universal/>
   </object>
-  <object geometry="line" name="frontiere" symbol="Route" type="border"/>
+  <object geometry="line" name="frontiere" symbol="Route" type="border">
+    <border/>
+  </object>
 </objects>
-<!-- signature="2211662402" -->
+<!-- signature="0638413062" -->
