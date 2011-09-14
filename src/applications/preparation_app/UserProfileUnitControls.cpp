@@ -8,11 +8,10 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "UserProfileUnitRights.h"
-#include "moc_UserProfileUnitRights.cpp"
+#include "UserProfileUnitControls.h"
+#include "moc_UserProfileUnitControls.cpp"
 #include "PreparationProfile.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
@@ -20,93 +19,83 @@ using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights constructor
-// Created: SBO 2007-01-16
+// Name: UserProfileUnitControls constructor
+// Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons )
-    : HierarchyListView< TacticalHierarchies >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
-    , UserProfileRights_ABC( this )
+UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons )
+    : HierarchyListView< ProfileHierarchies_ABC >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
+    , UserProfileControls_ABC( this )
 {
     controllers_.Register( *this );
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights destructor
-// Created: SBO 2007-01-16
+// Name: UserProfileUnitControls destructor
+// Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-UserProfileUnitRights::~UserProfileUnitRights()
+UserProfileUnitControls::~UserProfileUnitControls()
 {
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::viewportResizeEvent
-// Created: SBO 2006-11-30
+// Name: UserProfileUnitControls::viewportResizeEvent
+// Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::viewportResizeEvent( QResizeEvent* e )
+void UserProfileUnitControls::viewportResizeEvent( QResizeEvent* e )
 {
     Q3ScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::setColumnWidth
-// Created: SBO 2006-11-30
+// Name: UserProfileUnitControls::setColumnWidth
+// Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::setColumnWidth( int column, int w )
+void UserProfileUnitControls::setColumnWidth( int column, int w )
 {
     Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::OnItemClicked
-// Created: SBO 2007-01-17
+// Name: UserProfileUnitControls::OnItemClicked
+// Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column )
+void UserProfileUnitControls::OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column )
 {
-    UserProfileRights_ABC::OnItemClicked( item, point, column );
+    UserProfileControls_ABC::OnItemClicked( item, point, column );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::NotifyUpdated
-// Created: SBO 2008-08-26
+// Name: UserProfileUnitControls::NotifyUpdated
+// Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
+void UserProfileUnitControls::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
     if( gui::ValuedListItem* item = FindItem( &entity, firstChild() ) )
         item->SetNamed( entity );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::ValueChanged
-// Created: LGY 2011-09-13
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable )
-{
-    if( entity->GetTypeName() == "automat" || entity->GetTypeName() == "party" )
-        emit ProfiledChanged( entity, isWriteable );
-    else
-    {
-        tools::Iterator< const Entity_ABC& > children = entity->Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-        while( children.HasMoreElements() )
-        {
-            const kernel::Entity_ABC& child = children.NextElement();
-            ValueChanged( &child, isWriteable );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::OnProfiledChanged
+// Name: UserProfileUnitControls::OnProfiledChanged
 // Created: LGY 2011-09-14
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::OnProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable )
+void UserProfileUnitControls::OnProfiledChanged( const kernel::Entity_ABC* entity, bool isWriteable )
 {
     if( entity )
     {
         gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
         if( item )
-            SetStatus( item, isReadable, isWriteable, false, false );
+            SetStatus( item, isWriteable, false );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::ValueChanged
+// Created: LGY 2011-09-13
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::ValueChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable )
+{
+    emit ProfiledChanged( entity, isReadable, isWriteable );
 }

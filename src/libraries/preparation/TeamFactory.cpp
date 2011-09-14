@@ -22,6 +22,8 @@
 #include "Color.h"
 #include "Populations.h"
 #include "EntityIntelligences.h"
+#include "ProfileHierarchies.h"
+#include "ProfileHierarchies_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Color_ABC.h"
@@ -68,6 +70,7 @@ Team_ABC* TeamFactory::CreateTeam()
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
+    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, 0 ) );
     result->Polish();
     return result;
 }
@@ -89,6 +92,7 @@ Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
+    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, 0 ) );
     result->Polish();
     return result;
 }

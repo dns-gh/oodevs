@@ -1589,6 +1589,13 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>UserProfileControls</name>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
@@ -1664,6 +1671,10 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     </message>
     <message>
         <source>Role</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;Control&apos; permission allows you to control an unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

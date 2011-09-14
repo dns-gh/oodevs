@@ -54,6 +54,7 @@ TemplateListView.cpp \
 TemplatesPanel.cpp \
 UnitStateDialog.cpp \
 UserProfileList.cpp \
+UserProfileControls_ABC.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
 WeatherListView.cpp \

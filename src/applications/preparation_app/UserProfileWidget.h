@@ -96,11 +96,12 @@ private:
     Q3GroupBox* userRoleGroup_;
     QLabel* userRoleLabel_;
     QComboBox* userRole_;
-    UserProfileRights_ABC* unitRights_;
     kernel::DictionaryType* userRoleDico_;
     std::string dicoKind_;
     std::string dicoLanguage_;
     QStackedWidget* pPopulations_;
+    QStackedWidget* pUnits_;
+    QStackedWidget* pInformations_;
     //@}
 };
 

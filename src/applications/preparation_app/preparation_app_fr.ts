@@ -1589,6 +1589,13 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>UserProfileControls</name>
+    <message>
+        <source>Control</source>
+        <translation>Contrôle</translation>
+    </message>
+</context>
+<context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
@@ -1665,6 +1672,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Role</source>
         <translation>Rôle</translation>
+    </message>
+    <message>
+        <source>&apos;Control&apos; permission allows you to control an unit.</source>
+        <translation>&apos;Contrôle&apos; permet de contrôler une unité.</translation>
     </message>
 </context>
 <context>

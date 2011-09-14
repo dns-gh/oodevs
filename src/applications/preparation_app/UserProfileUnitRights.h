@@ -38,6 +38,18 @@ public:
     virtual ~UserProfileUnitRights();
     //@}
 
+signals:
+    //! @name signals
+    //@{
+    void ProfiledChanged( const kernel::Entity_ABC* entity, bool isWriteable );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
