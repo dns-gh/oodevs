@@ -12,11 +12,15 @@
 
 #include "rpr/ForceIdentifier.h"
 
+namespace rpr
+{
+    class EntityType;
+}
+
 namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  RemoteAgentListener_ABC
     @brief  Remote agent listener definition
@@ -39,6 +43,7 @@ public:
     virtual void Moved( const std::string& identifier, double latitude, double longitude ) = 0;
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side ) = 0;
     virtual void NameChanged( const std::string& identifier, const std::string& name ) = 0;
+    virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type ) = 0;
     //@}
 };
 

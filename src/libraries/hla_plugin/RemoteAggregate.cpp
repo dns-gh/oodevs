@@ -12,6 +12,7 @@
 #include "SerializationTools.h"
 #include "Spatial.h"
 #include "AggregateMarking.h"
+#include "rpr/EntityType.h"
 #include "RemoteAgentListener_ABC.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer.h>
@@ -70,5 +71,11 @@ void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier,
         AggregateMarking marking;
         marking.Deserialize( deserializer );
         listener_.NameChanged( identifier_, marking.str() );
+    }
+    else if( identifier == "EntityType" )
+    {
+        rpr::EntityType type;
+        type.Deserialize( deserializer );
+        listener_.TypeChanged( identifier_, type );
     }
 }

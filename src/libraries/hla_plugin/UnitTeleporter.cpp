@@ -107,3 +107,12 @@ void UnitTeleporter::NameChanged( const std::string& /*identifier*/, const std::
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::TypeChanged
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+void UnitTeleporter::TypeChanged( const std::string& /*identifier*/, const rpr::EntityType& /*type*/ )
+{
+    // NOTHING
+}

@@ -14,6 +14,7 @@
 #include "clients_kernel/ApproximativeMap.h"
 #include <boost/noncopyable.hpp>
 #include <map>
+#include <vector>
 
 namespace xml
 {
@@ -41,6 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual rpr::EntityType Find( const std::string& name ) const;
+    virtual std::string Resolve( const rpr::EntityType& type ) const;
     //@}
 
 private:
@@ -50,11 +52,30 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    struct T_Name
+    {
+        T_Name( const rpr::EntityType& type, const std::string& name )
+            : type_( type )
+            , name_( name )
+        {}
+        rpr::EntityType type_;
+        std::string name_;
+    };
+    typedef std::vector< T_Name > T_Names;
+    //@}
+
+private:
     //! @name Member data
     //@{
     kernel::ApproximativeMap< rpr::EntityType > types_;
-    mutable std::map< std::string, rpr::EntityType > resolved_;
-    rpr::EntityType default_;
+    T_Names names_;
+    mutable std::map< std::string, rpr::EntityType > resolvedTypes_;
+    mutable std::map< rpr::EntityType, std::string > resolvedNames_;
+    rpr::EntityType defaultType_;
+    std::string defaultName_;
+    rpr::EntityType threshold_;
     //@}
 };
 

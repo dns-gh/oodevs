@@ -11,6 +11,7 @@
 #include "RemoteAgentController.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextHandler_ABC.h"
+#include "UnitTypeResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Team_ABC.h"
 #include "clients_kernel/Karma.h"
@@ -24,11 +25,13 @@ using namespace plugins::hla;
 RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                               ContextHandler_ABC< sword::UnitCreation >& unitHandler,
-                                              const tools::Resolver_ABC< dispatcher::Team_ABC >& sides )
+                                              const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
+                                              const UnitTypeResolver_ABC& typeResolver )
     : agentSubject_  ( agentSubject )
     , automatHandler_( automatHandler )
     , unitHandler_   ( unitHandler )
     , sides_         ( sides )
+    , typeResolver_  ( typeResolver )
 {
     automatHandler_.Register( *this );
     agentSubject_.Register( *this );
@@ -67,9 +70,9 @@ void RemoteAgentController::Created( const std::string& identifier )
     unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitMagicAction() );
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     message().set_type( sword::UnitMagicAction::unit_creation );
-    message().mutable_parameters()->add_elem()->add_value()->set_identifier( 64 ); // type // $$$$ _RC_ VPR 2011-09-07: Hardcoded
-    message().mutable_parameters()->add_elem();                                    // position
-    message().mutable_parameters()->add_elem();                                    // name
+    message().mutable_parameters()->add_elem(); // type
+    message().mutable_parameters()->add_elem(); // position
+    message().mutable_parameters()->add_elem(); // name
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +156,19 @@ void RemoteAgentController::NameChanged( const std::string& identifier, const st
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     message().mutable_parameters()->mutable_elem( 2 )->add_value()->set_acharstr( "HLA_" + name );
+    Send( message, identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::TypeChanged
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+void RemoteAgentController::TypeChanged( const std::string& identifier, const rpr::EntityType& type )
+{
+    if( unitCreations_.find( identifier ) == unitCreations_.end() )
+        return;
+    simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
+    message().mutable_parameters()->mutable_elem( 0 )->add_value()->set_identifier( typeResolver_.Resolve( type ) );
     Send( message, identifier );
 }
 

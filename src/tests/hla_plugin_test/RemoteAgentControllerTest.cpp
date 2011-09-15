@@ -11,10 +11,12 @@
 #include "hla_plugin/RemoteAgentController.h"
 #include "protocol/SimulationSenders.h"
 #include "clients_kernel/Karma.h"
+#include "rpr/EntityType.h"
 #include "MockResolver.h"
 #include "MockTeam.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockContextHandler.h"
+#include "MockUnitTypeResolver.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
@@ -68,6 +70,7 @@ namespace
         MockContextHandler< sword::AutomatCreation > automatCreation;
         MockContextHandler< sword::UnitCreation > unitCreation;
         tools::MockResolver< dispatcher::Team_ABC > teamResolver;
+        MockUnitTypeResolver unitTypeResolver;
         const unsigned long party;
         const double latitude;
         const double longitude;
@@ -78,12 +81,12 @@ namespace
     {
     public:
         AutomatFixture()
-            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver )
+            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver, unitTypeResolver )
         {
             BOOST_REQUIRE( automatCreationHandler );
             BOOST_REQUIRE( remoteAgentListener );
             automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), "automat" );
-       }
+        }
         sword::AutomatCreation MakeAutomatCreationMessage( unsigned long party, unsigned long automat )
         {
             sword::AutomatCreation message;
@@ -97,9 +100,13 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_remote_creation_and_moved_events, AutomatFixture )
 {
+    const rpr::EntityType entityType( "1 2" );
+    const unsigned long agentTypeId = 4343;
     remoteAgentListener->Created( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
+    MOCK_EXPECT( unitTypeResolver, Resolve ).once().with( mock::same( entityType ) ).returns( agentTypeId );
+    remoteAgentListener->TypeChanged( "identifier", entityType );
     simulation::UnitMagicAction actual;
     MOCK_EXPECT( unitCreation, Send ).once().with( mock::retrieve( actual ), "identifier" );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
@@ -108,7 +115,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::unit_creation );
     BOOST_CHECK_EQUAL( action.tasker().automat().id(), automat );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 64u );  // $$$$ _RC_ SLI 2011-09-07: hardcoded
+    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), agentTypeId );
     const sword::Location& location = action.parameters().elem( 1 ).value( 0 ).point().location();
     BOOST_CHECK_EQUAL( location.type(), sword::Location::point );
     BOOST_CHECK_EQUAL( location.coordinates().elem_size(), 1 );

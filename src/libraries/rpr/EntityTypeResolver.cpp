@@ -11,6 +11,7 @@
 
 #include "EntityTypeResolver.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/foreach.hpp>
 
 using namespace rpr;
 
@@ -21,10 +22,14 @@ using namespace rpr;
 EntityTypeResolver::EntityTypeResolver( xml::xisubstream xis )
 {
     std::string defaultType;
+    std::string threshold;
     xis >> xml::start( "dis-mapping" )
-            >> xml::attribute( "default", defaultType )
+            >> xml::attribute( "default-type", defaultType )
+            >> xml::attribute( "default-name", defaultName_ )
+            >> xml::attribute( "threshold", threshold )
             >> xml::list( "entry", *this, &EntityTypeResolver::ReadEntry );
-    default_ = rpr::EntityType( defaultType );
+    defaultType_ = rpr::EntityType( defaultType );
+    threshold_ = rpr::EntityType( threshold );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,13 +47,35 @@ EntityTypeResolver::~EntityTypeResolver()
 // -----------------------------------------------------------------------------
 rpr::EntityType EntityTypeResolver::Find( const std::string& name ) const
 {
-    rpr::EntityType& type = resolved_[ name ];
+    rpr::EntityType& type = resolvedTypes_[ name ];
     if( type == rpr::EntityType() )
     {
         const rpr::EntityType* resolved = types_.Find( name );
-        type = resolved ? *resolved : default_;
+        type = resolved ? *resolved : defaultType_;
     }
     return type;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTypeResolver::Resolve
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+std::string EntityTypeResolver::Resolve( const rpr::EntityType& type ) const
+{
+    rpr::EntityType distance = type - rpr::EntityType( defaultType_ );
+    std::string result = defaultName_;
+    BOOST_FOREACH( const T_Name& name, names_ )
+    {
+        rpr::EntityType current = type - name.type_;
+        if( current <= distance )
+        {
+            distance = current;
+            result = name.name_;
+        }
+    }
+    if( distance <= threshold_ )
+        return result;
+    return defaultName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,5 +84,8 @@ rpr::EntityType EntityTypeResolver::Find( const std::string& name ) const
 // -----------------------------------------------------------------------------
 void EntityTypeResolver::ReadEntry( xml::xistream& xis )
 {
-    types_.Add( xis.attribute< std::string >( "name" ), rpr::EntityType( xis.attribute< std::string >( "dis" ) ) );
+    const std::string name = xis.attribute< std::string >( "name" );
+    const rpr::EntityType type( xis.attribute< std::string >( "dis" ) );
+    types_.Add( name, type );
+    names_.push_back( T_Name( type, name ) );
 }

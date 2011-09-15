@@ -99,3 +99,13 @@ void RemoteAgentListenerComposite::NameChanged( const std::string& identifier, c
     BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
         listener->NameChanged( identifier, name );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentListenerComposite::TypeChanged
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+void RemoteAgentListenerComposite::TypeChanged( const std::string& identifier, const rpr::EntityType& type )
+{
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->TypeChanged( identifier, type );
+}

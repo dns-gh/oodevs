@@ -145,9 +145,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp">
       <Filter>Source Files\Dispatcher\Context</Filter>
     </ClCompile>
@@ -162,6 +159,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,9 +315,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextFactory.h">
       <Filter>Source Files\Dispatcher\Context</Filter>
     </ClInclude>
@@ -341,6 +341,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListener_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.h">
+      <Filter>Source Files\Dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

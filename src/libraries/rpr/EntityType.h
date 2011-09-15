@@ -38,11 +38,32 @@ public:
         archive << entityKind_  << domain_   << countryCode_ << category_
                 << subcategory_ << specific_ << extra_;
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> entityKind_  >> domain_   >> countryCode_ >> category_
+                >> subcategory_ >> specific_ >> extra_;
+    }
+    
     std::string str() const;
     //@}
 
     //! @name Operators
     //@{
+    friend EntityType operator-( const EntityType& lhs, const EntityType& rhs )
+    {
+        EntityType result;
+        result.entityKind_  = static_cast< unsigned char >(  std::abs( lhs.entityKind_  - rhs.entityKind_ ) );
+        result.domain_      = static_cast< unsigned char >(  std::abs( lhs.domain_      - rhs.domain_ ) );
+        result.countryCode_ = static_cast< unsigned short >( std::abs( lhs.countryCode_ - rhs.countryCode_ ) );
+        result.category_    = static_cast< unsigned char >(  std::abs( lhs.category_    - rhs.category_ ) );
+        result.subcategory_ = static_cast< unsigned char >(  std::abs( lhs.subcategory_ - rhs.subcategory_ ) );
+        result.specific_    = static_cast< unsigned char >(  std::abs( lhs.specific_    - rhs.specific_ ) );
+        result.extra_       = static_cast< unsigned char >(  std::abs( lhs.extra_       - rhs.extra_ ) );
+        return result;
+    }
+
+    bool operator<=( const EntityType& rhs ) const;
     bool operator==( const EntityType& rhs ) const;
     //@}
 

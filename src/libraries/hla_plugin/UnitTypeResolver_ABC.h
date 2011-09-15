@@ -7,36 +7,42 @@
 //
 // *****************************************************************************
 
-#ifndef rpr_EntityTypeResolver_ABC_h
-#define rpr_EntityTypeResolver_ABC_h
+#ifndef plugins_hla_UnitTypeResolver_ABC_h
+#define plugins_hla_UnitTypeResolver_ABC_h
 
 #include <boost/noncopyable.hpp>
-#include "EntityType.h"
 
 namespace rpr
 {
+    class EntityType;
+}
+
+namespace plugins
+{
+namespace hla
+{
 // =============================================================================
-/** @class  EntityTypeResolver_ABC
-    @brief  Entity type resolver definition
+/** @class  UnitTypeResolver_ABC
+    @brief  UnitTypeResolver definition
 */
-// Created: SLI 2011-05-02
+// Created: SLI 2011-09-15
 // =============================================================================
-class EntityTypeResolver_ABC : private boost::noncopyable
+class UnitTypeResolver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityTypeResolver_ABC() {}
-    virtual ~EntityTypeResolver_ABC() {}
+             UnitTypeResolver_ABC() {}
+    virtual ~UnitTypeResolver_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual rpr::EntityType Find( const std::string& name ) const = 0;
-    virtual std::string Resolve( const rpr::EntityType& type ) const = 0;
+    virtual unsigned long Resolve( const rpr::EntityType& type ) const = 0;
     //@}
 };
 
 }
+}
 
-#endif // rpr_EntityTypeResolver_ABC_h
+#endif // plugins_hla_UnitTypeResolver_ABC_h

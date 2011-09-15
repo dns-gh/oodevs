@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DimensionTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EntityTypeResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationCreaterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -192,6 +193,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\SerializationFixture.h" />

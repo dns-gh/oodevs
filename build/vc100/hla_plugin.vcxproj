@@ -137,6 +137,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTeleporter.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory.h" />
@@ -163,6 +164,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory_ABC.h" />
@@ -198,6 +201,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionDetonation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTeleporter.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver_ABC.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="protocol.vcxproj">

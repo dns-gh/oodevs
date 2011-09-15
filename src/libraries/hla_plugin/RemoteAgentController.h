@@ -43,6 +43,7 @@ namespace hla
 {
     class RemoteAgentSubject_ABC;
     template< typename Response > class ContextHandler_ABC;
+    class UnitTypeResolver_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentController
@@ -59,7 +60,8 @@ public:
              RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler,
-                                    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides );
+                                    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
+                                    const UnitTypeResolver_ABC& typeResolver );
     virtual ~RemoteAgentController();
     //@}
 
@@ -76,6 +78,7 @@ private:
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );
+    virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type );
     //@}
 
 private:
@@ -101,6 +104,7 @@ private:
     ContextHandler_ABC< sword::AutomatCreation >& automatHandler_;
     ContextHandler_ABC< sword::UnitCreation >& unitHandler_;
     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides_;
+    const UnitTypeResolver_ABC& typeResolver_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Karmas karmas_;

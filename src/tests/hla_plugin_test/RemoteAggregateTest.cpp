@@ -12,6 +12,7 @@
 #include "hla_plugin/Spatial.h"
 #include "hla_plugin/AggregateMarking.h"
 #include "hla_plugin/SerializationTools.h"
+#include "rpr/EntityType.h"
 #include "MockUpdateFunctor.h"
 #include "MockRemoteAgentListener.h"
 #include <hla/Serializer.h>
@@ -20,56 +21,61 @@
 
 using namespace plugins::hla;
 
-BOOST_AUTO_TEST_CASE( remote_aggregate_cannot_be_serialized )
+namespace
 {
-    MockRemoteAgentListener listener;
-    RemoteAggregate aggregate( "identifier", listener );
+    typedef std::vector< int8 > T_Buffer;
+    class Fixture
+    {
+    public:
+        Fixture()
+            : aggregate( "identifier", listener )
+        {}
+        ::hla::Deserializer Deserialize()
+        {
+            buffer.resize( serializer.GetSize() );
+            serializer.CopyTo( &buffer[0] );
+            return ::hla::Deserializer( &buffer[0], buffer.size() );
+        }
+        MockRemoteAgentListener listener;
+        RemoteAggregate aggregate;
+        ::hla::Serializer serializer;
+        T_Buffer buffer;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_cannot_be_serialized, Fixture )
+{
     ::hla::MockUpdateFunctor functor;
     BOOST_CHECK_THROW( aggregate.Serialize( functor, true ), std::runtime_error );
 }
 
-namespace
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_spatial_attribute_and_notifies_listener, Fixture )
 {
-    typedef std::vector< int8 > T_Buffer;
-}
-
-BOOST_AUTO_TEST_CASE( remote_aggregate_deserializes_spatial_attribute_and_notifies_listener )
-{
-    MockRemoteAgentListener listener;
-    RemoteAggregate aggregate( "identifier", listener );
     Spatial spatial( true, 1., 2., 3., 4., 5. );
-    ::hla::Serializer serializer;
     spatial.Serialize( serializer );
-    T_Buffer buffer( serializer.GetSize() );
-    serializer.CopyTo( &buffer[0] );
-    const ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
     MOCK_EXPECT( listener, Moved ).once().with( "identifier", mock::close( 1., 0.001 ), mock::close( 2., 0.001 ) );
-    aggregate.Deserialize( "Spatial", deserializer );
+    aggregate.Deserialize( "Spatial", Deserialize() );
 }
 
-BOOST_AUTO_TEST_CASE( remote_aggregate_deserializes_force_identifier_attribute_and_notifies_listener )
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_force_identifier_attribute_and_notifies_listener, Fixture )
 {
-    MockRemoteAgentListener listener;
-    RemoteAggregate aggregate( "identifier", listener );
-    ::hla::Serializer serializer;
     serializer << static_cast< int8 >( rpr::Friendly );
-    T_Buffer buffer( serializer.GetSize() );
-    serializer.CopyTo( &buffer[0] );
-    const ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
     MOCK_EXPECT( listener, SideChanged ).once().with( "identifier", rpr::Friendly );
-    aggregate.Deserialize( "ForceIdentifier", deserializer );
+    aggregate.Deserialize( "ForceIdentifier", Deserialize() );
 }
 
-BOOST_AUTO_TEST_CASE( remote_aggregate_deserializes_aggregate_marking_attribute_and_notifies_listener )
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_aggregate_marking_attribute_and_notifies_listener, Fixture )
 {
-    MockRemoteAgentListener listener;
-    RemoteAggregate aggregate( "identifier", listener );
-    ::hla::Serializer serializer;
     const AggregateMarking marking( "name" );
     marking.Serialize( serializer );
-    T_Buffer buffer( serializer.GetSize() );
-    serializer.CopyTo( &buffer[0] );
-    const ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
     MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name" );
-    aggregate.Deserialize( "AggregateMarking", deserializer );
+    aggregate.Deserialize( "AggregateMarking", Deserialize() );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_entity_type_attribute_and_notifies_listener, Fixture )
+{
+    const rpr::EntityType type( "1 2 3" );
+    type.Serialize( serializer );
+    MOCK_EXPECT( listener, TypeChanged ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ) );
+    aggregate.Deserialize( "EntityType", Deserialize() );
 }

@@ -9,6 +9,7 @@
 
 #include "hla_plugin_test_pch.h"
 #include "rpr/Coordinates.h"
+#include "rpr/EntityType.h"
 #include "SerializationFixture.h"
 
 using namespace rpr;
@@ -47,4 +48,14 @@ BOOST_FIXTURE_TEST_CASE( orientation_deserialization, SerializationFixture )
     BOOST_CHECK_EQUAL( serializedOrientation.Psi()  , deserializedOrientation.Psi() );
     BOOST_CHECK_EQUAL( serializedOrientation.Theta(), deserializedOrientation.Theta() );
     BOOST_CHECK_EQUAL( serializedOrientation.Phi()  , deserializedOrientation.Phi() );
+}
+
+BOOST_FIXTURE_TEST_CASE( entity_type_deserialization, SerializationFixture )
+{
+    const std::string type( "1 2 3 4 5 6 7" );
+    const EntityType serializedType( type );
+    ::hla::Deserializer deserializer = Serialize( serializedType, 6 * sizeof( int8 ) + 1 * sizeof( int16 ) );
+    EntityType deserializedType;
+    deserializedType.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( type, deserializedType.str() );
 }

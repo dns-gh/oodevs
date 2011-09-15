@@ -62,6 +62,7 @@ namespace hla
     class FormationCreater;
     class AutomatCreater;
     class UnitTeleporter;
+    class UnitTypeResolver_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -99,6 +100,7 @@ private:
     std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
+    std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
