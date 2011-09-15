@@ -86,6 +86,12 @@
     <Filter Include="Source Files\Dialogs\Unit state">
       <UniqueIdentifier>{a5aa3f3b-c881-4675-8f00-ea9dfa99db35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Profiles\Controls">
+      <UniqueIdentifier>{a4802ccc-554f-4217-b550-9aa08116aba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Profiles\Rights">
+      <UniqueIdentifier>{ce4754c1-1256-4f35-ae16-34d0eda0e3a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -233,15 +239,6 @@
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileList.cpp">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.cpp">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.cpp">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileWidget.cpp">
@@ -412,11 +409,23 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitControls.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.cpp">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.cpp">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -522,9 +531,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ProfileEditor.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ScoreSyntaxHighlighter.h">
       <Filter>Source Files\Dialogs\Scores</Filter>
     </ClInclude>
@@ -577,7 +583,10 @@
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.h">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
+      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -629,12 +638,6 @@
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileList.h">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.h">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileWidget.h">
@@ -764,7 +767,16 @@
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.h">
-      <Filter>Source Files\Dialogs\Profiles</Filter>
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.h">
+      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
+      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

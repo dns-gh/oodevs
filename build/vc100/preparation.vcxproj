@@ -104,6 +104,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\EntityIntelligences.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\IdManager.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Model.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\ProfileHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\TacticalHierarchies.cpp" />
@@ -243,6 +244,8 @@
     <ClInclude Include="..\..\src\libraries\preparation\IdManager.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Model.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ModelChecker_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Symbol.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TacticalHierarchies.h" />

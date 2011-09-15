@@ -188,6 +188,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitControls.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\WeatherListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\WeatherPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PropertiesPanel.cpp" />
@@ -261,6 +262,14 @@
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\Config.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h" />
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\MainWindow.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>

@@ -49,6 +49,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_qt.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -62,6 +63,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_qt.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -75,6 +77,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_qt.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -88,6 +91,7 @@
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_qt.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -106,6 +110,9 @@
       <AdditionalDependencies>hla_d.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
@@ -124,13 +131,19 @@
     <PostBuildEvent />
     <ClCompile>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityClassTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateMarkingTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatCreaterTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatDisengagerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuilderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\ContextHandlerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DimensionTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\EntityTypeResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.cpp">
@@ -140,28 +153,56 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprDeserializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgent.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgentSubject.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregate.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregateFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAttributeFunctor.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextHandler.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionHandler.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectRegistration.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentListener.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentSubject.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAggregateFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResolver.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResponseObserver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassador.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\SerializationFixture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="clients_kernel.vcxproj">
+      <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="ENT.vcxproj">
+      <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
+    </ProjectReference>
     <ProjectReference Include="hla_plugin.vcxproj">
       <Project>{2dbd11a9-a85b-4cb3-99a1-364b2e93e4b5}</Project>
     </ProjectReference>

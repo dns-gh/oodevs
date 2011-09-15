@@ -295,9 +295,11 @@
   <object geometry="polygon" name="Landing Zone (helicopter)" symbol="G*GPGAL---****X" type="landing area (helicopter)"/>
   <object geometry="polygon" name="Forward Arming and Refueling Point (FARP)" symbol="G*SPAR----****X" type="logistic area"/>
   <object geometry="polygon" name="Detainee Holding Area" symbol="G*SPAD----****X" type="prisoners camp">
+    <lodging/>
     <logistic/>
   </object>
   <object geometry="polygon" name="Refugee Holding Area" symbol="G*SPAH----****X" type="refugees camp">
+    <lodging/>
     <logistic/>
   </object>
   <object geometry="point" name="Checkpoint" symbol="G*GPGPPK--****X" type="checkpoint">
@@ -521,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1219711507" -->
+<!-- signature="1937399647" -->

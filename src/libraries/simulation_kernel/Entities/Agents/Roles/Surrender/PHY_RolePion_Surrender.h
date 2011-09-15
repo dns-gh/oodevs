@@ -48,7 +48,10 @@ public:
     //@{
     virtual void Update    ( bool bIsDead );
     virtual void Clean     ();
+    virtual void UpdateLodging( unsigned int nbrHumansCampManaged );
     virtual void Execute(moving::MoveComputer_ABC& algorithm) const;
+    virtual unsigned int GetNbrHumansCampManaged() const;
+    virtual unsigned int GetNbrHumansCampUnmanaged() const;
     //@}
 
     //! @name Main
@@ -80,10 +83,11 @@ private:
     virtual bool HasChanged() const;
     //@}
 
-          MIL_AgentPion&       pion_;
-          bool                 bPrisoner_;
-    const MIL_Object_ABC*      pPrison_;
-          bool                 bHasChanged_;
+          MIL_AgentPion&        pion_;
+          bool                  bPrisoner_;
+    const MIL_Object_ABC*       pPrison_;
+          bool                  bHasChanged_;
+          unsigned int          nbrHumansLodgingManaged_;
 
           template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
           template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ );

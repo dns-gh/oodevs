@@ -334,6 +334,7 @@
   <object geometry="polygon" name="camp prisonniers" symbol="G*SPAD----****X" type="prisoners camp">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <lodging/>
     <logistic/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -533,4 +534,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="0638413062" -->
+<!-- signature="4097812272" -->

@@ -55,6 +55,39 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprDeserializationTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatCreaterTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatDisengagerTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuilderTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\ContextHandlerTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\EntityTypeResolverTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAggregateTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.h">
@@ -92,6 +125,54 @@
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\SerializationFixture.h">
       <Filter>Source Files\fixtures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregate.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregateFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAttributeFunctor.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextHandler.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectRegistration.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentListener.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentSubject.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAggregateFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResolver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResponseObserver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h">
+      <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

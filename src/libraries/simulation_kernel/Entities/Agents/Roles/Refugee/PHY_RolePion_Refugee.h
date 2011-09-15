@@ -45,7 +45,7 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    void UpdateLodgingSatisfaction( unsigned int nbrHumansLodgingManaged );
+    virtual void UpdateLodging( unsigned int nbrHumansLodgingManaged );
     //@}
 
     //! @name Event

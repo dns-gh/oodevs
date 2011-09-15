@@ -13,10 +13,12 @@
 #include "PHY_RolePion_Surrender.h"
 #include "SurrenderNotificationHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/MIL_Army.h"
+#include "Entities/Objects/LodgingAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Entities/MIL_Army.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
@@ -51,6 +53,7 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
     , bPrisoner_                 ( false )
     , pPrison_                   ( 0 )
     , bHasChanged_               ( true )
+    , nbrHumansLodgingManaged_   ( 0 )
 {
     // NOTHING
 }
@@ -77,7 +80,8 @@ void PHY_RolePion_Surrender::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
          & bPrisoner_
-         & const_cast< MIL_Object_ABC*& >( pPrison_ );
+         & const_cast< MIL_Object_ABC*& >( pPrison_ )
+         & nbrHumansLodgingManaged_;
 }
 
 // =============================================================================
@@ -91,7 +95,13 @@ void PHY_RolePion_Surrender::serialize( Archive& file, const unsigned int )
 void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
 {
     if( pPrison_ && pPrison_->IsMarkedForDestruction() )
+    {
+        LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pPrison_ )->RetrieveAttribute< LodgingAttribute >();
+        if ( pLodgingAttribute )
+            pLodgingAttribute->UnmanageResident( pion_ );
+
         pPrison_ = 0;
+    }
 
     if( HasChanged() )
     {
@@ -148,10 +158,18 @@ bool PHY_RolePion_Surrender::Release()
     if( !IsSurrendered() || !bPrisoner_ )
         return false;
 
+    if ( pPrison_ )
+    {
+        LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pPrison_ )->RetrieveAttribute< LodgingAttribute >();
+        if ( pLodgingAttribute )
+            pLodgingAttribute->UnmanageResident( pion_ );
+    }
+
     pPrison_     = 0;
     bPrisoner_   = false;
     bHasChanged_ = true;
     pion_.Apply(&SurrenderNotificationHandler_ABC::NotifyReleased);
+
     return pion_.GetAutomate().NotifyReleased();
 }
 
@@ -164,6 +182,11 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
     if( !IsSurrendered() || !bPrisoner_ )
         return false;
     pPrison_ = &camp;
+
+    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pPrison_ )->RetrieveAttribute< LodgingAttribute >();
+    if ( pLodgingAttribute )
+        pLodgingAttribute->ManageResident( pion_ );
+
     pion_.GetAutomate().NotifyImprisoned( camp );
     return true;
 }
@@ -230,6 +253,15 @@ void PHY_RolePion_Surrender::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::UpdateLodging
+// Created: MMC 2011-09-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Surrender::UpdateLodging( unsigned int nbrHumansCampManaged )
+{
+    nbrHumansLodgingManaged_ = nbrHumansCampManaged;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::HasChanged
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
@@ -256,4 +288,30 @@ void PHY_RolePion_Surrender::Execute(moving::MoveComputer_ABC& algorithm) const
     if(IsSurrendered())
         algorithm.NotifySurrendered();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::GetNbrHumansCampManaged
+// Created: MMC 2011-09-14
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Surrender::GetNbrHumansCampManaged() const
+{
+    return nbrHumansLodgingManaged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::GetNbrHumansCampUnmanaged
+// Created: MMC 2011-09-14
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Surrender::GetNbrHumansCampUnmanaged() const
+{
+    const PHY_RolePion_Composantes& composantes = pion_.GetRole< PHY_RolePion_Composantes >();
+    unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
+    if ( nbrUsableHumans == 0 )
+        return 0;
+    if ( nbrHumansLodgingManaged_ > nbrUsableHumans )
+        return nbrUsableHumans;
+
+    return (nbrUsableHumans - nbrHumansLodgingManaged_);
+}
+
 } // namespace surrender

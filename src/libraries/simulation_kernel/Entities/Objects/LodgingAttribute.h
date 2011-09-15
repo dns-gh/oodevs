@@ -68,8 +68,8 @@ public:
 
     //! @name Operations
     //@{
-    void ManageRefugee( MIL_AgentPion& pion );
-    void UnmanageRefugee( MIL_AgentPion& pion );
+    void ManageResident( MIL_AgentPion& pion );
+    void UnmanageResident( MIL_AgentPion& pion );
     //@}
 
 private:
@@ -81,22 +81,22 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_AgentPion* > T_RefugeesVector;
-    typedef T_RefugeesVector::const_iterator CIT_RefugeesVector;
-    typedef T_RefugeesVector::iterator IT_RefugeesVector;
+    typedef std::vector< MIL_AgentPion* > T_ResidentsVector;
+    typedef T_ResidentsVector::const_iterator CIT_ResidentsVector;
+    typedef T_ResidentsVector::iterator IT_ResidentsVector;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    unsigned int GetNbrManagedHumansRefugees() const;
+    unsigned int GetNbrManagedHumansResidents() const;
     //@}
 
 private:
     //! @name
     //@{
     unsigned int capacity_;
-    T_RefugeesVector refugees_;
+    T_ResidentsVector Residents_;
     //@}
 };
 

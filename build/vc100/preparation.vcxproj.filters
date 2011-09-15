@@ -523,6 +523,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\TimeLimitedAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\ProfileHierarchies.cpp">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -974,6 +977,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies_ABC.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

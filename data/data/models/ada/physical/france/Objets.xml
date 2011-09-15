@@ -293,9 +293,11 @@
   <object geometry="polygon" name="Zone de poser (hélicoptère)" symbol="G*GPGAL---****X" type="landing area (helicopter)"/>
   <object geometry="polygon" name="Aire logistique" symbol="G*SPAR----****X" type="logistic area"/>
   <object geometry="polygon" name="Camp de prisonniers" symbol="G*SPAD----****X" type="prisoners camp">
+    <lodging/>
     <logistic/>
   </object>
   <object geometry="polygon" name="Camp de réfugiés" symbol="G*SPAH----****X" type="refugees camp">
+    <lodging/>
     <logistic/>
   </object>
   <object geometry="point" name="Poste de contrôle" point-size="100" symbol="G*GPGPPK--****X" type="checkpoint">
@@ -394,4 +396,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="0515905715" -->
+<!-- signature="1016934561" -->

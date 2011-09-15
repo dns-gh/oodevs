@@ -92,6 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Aggregate_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />

@@ -223,10 +223,10 @@ void PHY_RolePion_Refugee::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Refugee::UpdateCampSatisfaction
+// Name: PHY_RolePion_Refugee::UpdateLodging
 // Created: MMC 2011-05-09
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Refugee::UpdateLodgingSatisfaction( unsigned int nbrHumansCampManaged )
+void PHY_RolePion_Refugee::UpdateLodging( unsigned int nbrHumansCampManaged )
 {
     float prevSatisf = lodgingSatisfaction_;
     nbrHumansLodgingManaged_ = nbrHumansCampManaged;
@@ -266,11 +266,11 @@ bool PHY_RolePion_Refugee::IsManaged() const
 void PHY_RolePion_Refugee::ManageLodgingCamp()
 {
     if ( !pCamp_ )
-        UpdateLodgingSatisfaction( 0 );
+        UpdateLodging( 0 );
 
     LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
     if ( pLodgingAttribute )
-        pLodgingAttribute->ManageRefugee( pion_ );
+        pLodgingAttribute->ManageResident( pion_ );
 
     UpdateHealthSatisfaction();
 }
@@ -286,7 +286,7 @@ void PHY_RolePion_Refugee::UnmanageLodgingCamp()
 
     LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
     if ( pLodgingAttribute )
-        pLodgingAttribute->UnmanageRefugee( pion_ );
+        pLodgingAttribute->UnmanageResident( pion_ );
 
     pCamp_ = 0;
     UpdateHealthSatisfaction();
