@@ -101,3 +101,20 @@ bool EntityType::operator==( const EntityType& rhs ) const
         && specific_    == rhs.specific_
         && extra_       == rhs.extra_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityType::str
+// Created: SLI 2011-09-14
+// -----------------------------------------------------------------------------
+std::string EntityType::str() const
+{
+    std::stringstream ss;
+    ss << static_cast< unsigned short >( entityKind_ )  << " "
+       << static_cast< unsigned short >( domain_ )      << " "
+       << countryCode_                                  << " "
+       << static_cast< unsigned short >( category_ )    << " "
+       << static_cast< unsigned short >( subcategory_ ) << " "
+       << static_cast< unsigned short >( specific_ )    << " "
+       << static_cast< unsigned short >( extra_ );
+    return ss.str();
+}

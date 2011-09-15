@@ -38,6 +38,7 @@ public:
         archive << entityKind_  << domain_   << countryCode_ << category_
                 << subcategory_ << specific_ << extra_;
     }
+    std::string str() const;
     //@}
 
     //! @name Operators
