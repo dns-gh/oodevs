@@ -119,7 +119,7 @@ void ADN_Units_GUI::Build()
     // Nature
     Q3GroupBox* pNatureGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Nature" ), pGroup );
 
-    Q3GroupBox* pNatureInternalGroup = new Q3GroupBox( 2, Qt::Vertical, pNatureGroup );
+    Q3GroupBox* pNatureInternalGroup = new Q3GroupBox( 3, Qt::Vertical, pNatureGroup );
     //pNatureInternalGroup->setFrameStyle( Q3Frame::NoFrame );
     Q3GroupBox* subLayout = new Q3GroupBox( 3, Qt::Horizontal, pNatureInternalGroup );
     subLayout->setInsideMargin( 0 );

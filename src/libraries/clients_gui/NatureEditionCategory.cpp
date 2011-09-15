@@ -32,7 +32,6 @@ NatureEditionCategory::NatureEditionCategory( QWidget* parent )
     box_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Preferred );
     setStretchFactor( label_, 1 );
     setStretchFactor( box_, 1 );
-    setStretchFactor( new QWidget( this ), 1 );
 
     connect( box_, SIGNAL( activated( int ) ), this, SLOT( OnComboChange() ) );
 }
