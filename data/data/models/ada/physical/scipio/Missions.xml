@@ -2383,16 +2383,13 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
       <parameter dia-name="retreatPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
-    </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="PION ASS Deploy">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Zones de tir" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="retreatPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="ObjectKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" dia-type="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" id="2047" name="PION GENIE Ouvrir Itineraire">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -5317,4 +5314,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="4176399407" -->
+<!-- signature="2498959860" -->
