@@ -557,7 +557,7 @@
   <report category="exceptional" id="387" message="Tactically destroyed"/>
   <report category="exceptional" id="388" message="Civilians or refugees encountered"/>
   <report category="exceptional" id="389" message="DPREs or prisoners unsupplied"/>
-  <report category="exceptional" id="390" message="Prisoners camp full"/>
+  <report category="exceptional" id="390" message="Camp capacity exceeded"/>
   <report category="operational" id="391" message="No positions found to destroy targets"/>
   <report category="operational" id="392" message="No positions found to neutralize targets"/>
   <report category="operational" id="393" message="No positions found to get cover from entities"/>
@@ -567,4 +567,4 @@
   <report category="operational" id="397" message="The target is not accessible"/>
   <report category="operational" id="398" message="No key positions found in area"/>
 </reports>
-<!-- signature="1689670764" -->
+<!-- signature="2641380585" -->
