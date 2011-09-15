@@ -10,11 +10,11 @@
 #ifndef __Intelligence_h_
 #define __Intelligence_h_
 
-#include "Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include "tools/Resolver_ABC.h"
 
 namespace xml
@@ -73,7 +73,7 @@ private:
 
     virtual void Delete();
     virtual void Rename( const QString& name );
-    void SetKarma( const IntelligenceKarma& karma );
+    void SetKarma( const kernel::IntelligenceKarma& karma );
     //@}
 
 private:
@@ -81,7 +81,7 @@ private:
     //@{
     std::string symbol_;
     const kernel::HierarchyLevel_ABC* level_;
-    IntelligenceKarma karma_;
+    kernel::IntelligenceKarma karma_;
     bool mounted_;
     const std::string levelSymbol_;
     //@}
