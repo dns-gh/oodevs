@@ -110,6 +110,7 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_destroys_remote_instances, Regis
 {
     MOCK_EXPECT( remoteFactory, Create ).once().returns( std::auto_ptr< Aggregate_ABC >( new MockAggregate() ) );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
+    MOCK_EXPECT( remoteListener, Created ).once().with( "name" );
     entity.Register( remoteListener );
     MOCK_EXPECT( remoteListener, Destroyed ).once().with( "name" );
     hlaClass->Destroy( 42u );

@@ -129,6 +129,8 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_s
     remoteAgentListener->Created( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
+    MOCK_EXPECT( unitTypeResolver, Resolve ).once().returns( 4242 );
+    remoteAgentListener->TypeChanged( "identifier", rpr::EntityType() );
     MOCK_EXPECT( unitCreation, Send ).once();
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();

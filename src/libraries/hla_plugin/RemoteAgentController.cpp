@@ -18,6 +18,20 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+    const kernel::Karma& GetKarma( rpr::ForceIdentifier force )
+    {
+        if( force == rpr::Friendly )
+            return kernel::Karma::friend_;
+        if( force == rpr::Neutral )
+            return kernel::Karma::neutral_;
+        if( force == rpr::Opposing )
+            return kernel::Karma::enemy_;
+        return kernel::Karma::unknown_;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController constructor
 // Created: SLI 2011-09-01
@@ -101,20 +115,6 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
     Send( message, identifier );
 }
 
-namespace
-{
-    const kernel::Karma& GetKarma( rpr::ForceIdentifier force )
-    {
-        if( force == rpr::Friendly )
-            return kernel::Karma::friend_;
-        if( force == rpr::Neutral )
-            return kernel::Karma::neutral_;
-        if( force == rpr::Opposing )
-            return kernel::Karma::enemy_;
-        return kernel::Karma::unknown_;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController::SideChanged
 // Created: VPR 2011-09-07
@@ -129,21 +129,6 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
         throw std::runtime_error( "Army '" + GetKarma( side ).GetName().toStdString() + "' does not exist for remote agent '" + identifier + "'" );
     message().mutable_tasker()->mutable_automat()->set_id( automat );
     Send( message, identifier );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteAgentController::FindAutomat
-// Created: VPR 2011-09-07
-// -----------------------------------------------------------------------------
-unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) const
-{
-    T_Karmas::const_iterator itKarma = karmas_.find( GetKarma( force ) );
-    if( itKarma == karmas_.end() )
-        return 0;
-    T_Parties::const_iterator itParty = parties_.find( itKarma->second );
-    if( itParty == parties_.end() )
-        return 0;
-    return itParty->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,10 +164,26 @@ void RemoteAgentController::TypeChanged( const std::string& identifier, const rp
 void RemoteAgentController::Send( simulation::UnitMagicAction& message, const std::string& identifier )
 {
     if( message().has_tasker() &&
+        message().parameters().elem( 0 ).value_size() > 0 &&
         message().parameters().elem( 1 ).value_size() > 0 &&
         message().parameters().elem( 2 ).value_size() > 0 )
     {
         unitHandler_.Send( message, identifier );
         unitCreations_.erase( identifier );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::FindAutomat
+// Created: VPR 2011-09-07
+// -----------------------------------------------------------------------------
+unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) const
+{
+    T_Karmas::const_iterator itKarma = karmas_.find( GetKarma( force ) );
+    if( itKarma == karmas_.end() )
+        return 0;
+    T_Parties::const_iterator itParty = parties_.find( itKarma->second );
+    if( itParty == parties_.end() )
+        return 0;
+    return itParty->second;
 }

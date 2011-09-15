@@ -107,6 +107,8 @@ void AggregateEntityClass::Destroy( Aggregate_ABC& object )
 void AggregateEntityClass::Register( RemoteAgentListener_ABC& listener )
 {
     pListeners_->Register( listener );
+    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
+        listener.Created( entity.first );
 }
 
 // -----------------------------------------------------------------------------
