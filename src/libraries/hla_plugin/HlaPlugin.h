@@ -35,9 +35,6 @@ namespace rpr
 namespace sword
 {
     class SimToClient_Content;
-    class FormationCreation;
-    class AutomatCreation;
-    class UnitCreation;
 }
 
 namespace tools
@@ -55,14 +52,8 @@ namespace hla
     class AgentSubject_ABC;
     class ObjectResolver_ABC;
     class Stepper;
-    class RemoteAgentController;
-    template< typename T > class ContextHandler_ABC;
-    class ContextFactory_ABC;
-    class AutomatDisengager;
-    class FormationCreater;
-    class AutomatCreater;
-    class UnitTeleporter;
     class UnitTypeResolver_ABC;
+    class SimulationFacade;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -104,15 +95,7 @@ private:
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
-    std::auto_ptr< ContextFactory_ABC > pContextFactory_;
-    std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
-    std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
-    std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;
-    std::auto_ptr< AutomatDisengager > pAutomatDisengager_;
-    std::auto_ptr< FormationCreater > pFormationCreater_;
-    std::auto_ptr< AutomatCreater > pAutomatCreater_;
-    std::auto_ptr< UnitTeleporter > pUnitTeleporter_;
-    std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
+    std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< Stepper > pStepper_;
     //@}
 };

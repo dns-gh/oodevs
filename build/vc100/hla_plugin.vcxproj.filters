@@ -166,6 +166,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp">
       <Filter>Source Files\Dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -356,6 +359,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.h">
       <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

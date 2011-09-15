@@ -10,14 +10,8 @@
 #ifndef plugins_hla_FormationCreater_h
 #define plugins_hla_FormationCreater_h
 
-#include "tools/MessageObserver.h"
 #include "tools/Resolver_ABC.h"
-#include <vector>
-
-namespace tools
-{
-    template< typename Category > class MessageController_ABC;
-}
+#include <boost/noncopyable.hpp>
 
 namespace dispatcher
 {
@@ -26,9 +20,7 @@ namespace dispatcher
 
 namespace sword
 {
-    class ControlEndTick;
     class FormationCreation;
-    class SimToClient_Content;
 }
 
 namespace plugins
@@ -43,35 +35,14 @@ namespace hla
 */
 // Created: SLI 2011-09-13
 // =============================================================================
-class FormationCreater : private tools::MessageObserver< sword::ControlEndTick >
+class FormationCreater : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationCreater( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
-                               const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
+             FormationCreater( const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
                                ContextHandler_ABC< sword::FormationCreation >& contextHandler );
     virtual ~FormationCreater();
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void Notify( const sword::ControlEndTick& message, int context );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned long > T_Sides;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
-    ContextHandler_ABC< sword::FormationCreation >& contextHandler_;
-    T_Sides sides_;
     //@}
 };
 
