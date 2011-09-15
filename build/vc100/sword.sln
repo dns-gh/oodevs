@@ -28,8 +28,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MT_Tools", "MT_Tools.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tools", "tools.vcxproj", "{C11D1C79-D437-4299-A75A-98DD97036D5B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "frontend_app", "frontend_app.vcxproj", "{E1274DD5-1C14-489C-9EF1-3E82F3D80A51}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "frontend", "frontend.vcxproj", "{B878605D-F426-451F-B852-2FEA60F02918}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "selftraining_app", "selftraining_app.vcxproj", "{967A7291-B8F8-484F-86A6-30E623811A7C}"

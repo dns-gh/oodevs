@@ -322,7 +322,6 @@ FunctionEnd
 
     !insertmacro OT._KillRunning "simulation_app.exe"
     !insertmacro OT._KillRunning "adaptation_app.exe"
-    !insertmacro OT._KillRunning "frontend_app.exe"
     !insertmacro OT._KillRunning "selftraining_app.exe"
     !insertmacro OT._KillRunning "gaming_app.exe"
     !insertmacro OT._KillRunning "preparation_app.exe"
