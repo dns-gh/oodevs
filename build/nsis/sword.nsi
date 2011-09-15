@@ -172,6 +172,7 @@ SectionEnd
 Function .onInit
     !insertmacro OT.CheckAdmin
     !insertmacro OT.CheckRunning
+    !insertmacro OT.ParseCommandLine
     !insertmacro OT.ChooseLanguage
 
     ; Set section names
@@ -186,7 +187,7 @@ Function .onInit
 
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
-    !insertmacro OT.ParseCommandLine
+
 FunctionEnd
 
 ; ------------------------------------------------------------------------------
