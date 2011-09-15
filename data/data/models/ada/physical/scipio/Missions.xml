@@ -2077,17 +2077,6 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.IlluminationTirIndirect" dia-type="france.military.platoon.combat.support.artillery.tasks.IlluminationTirIndirect" id="2068" name="PION ASS Coordonner le Tir et l'Ilumination">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Cible" optional="false" type="AgentKnowledge"/>
-      <parameter dia-name="position" name="Position de deploiement du tireur" optional="false" type="Point"/>
-      <parameter dia-name="munition" name="Munitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="interventionType" name="Type d'intervention" optional="false" type="Integer"/>
-      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="true" type="Agent"/>
-    </mission>
     <mission dia-behavior="france.military.platoon.tasks.Surveiller" dia-type="france.military.platoon.tasks.Surveiller" id="2070" name="PION MELEE Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4526,19 +4515,6 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a fixer" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Postions pour fixer" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1028" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="AUTOMATE ASS Illumination et Tir Synchronise">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="tireur" name="Tireur" optional="false" type="Agent"/>
-      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="false" type="Agent"/>
-      <parameter dia-name="objective" name="Cible" optional="false" type="AgentKnowledge"/>
-      <parameter dia-name="position" name="Position de deploiement tireur" optional="false" type="Point"/>
-      <parameter dia-name="munition" name="Munitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="interventionType" name="Type d'intervention" optional="false" type="Integer"/>
-    </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Harceler" dia-type="france.military.company.combat.tasks.Harceler" id="1029" mrt-dia-behavior="france.military.company.combat.tasks.Harceler" name="AUTOMATE MELEE Harceler" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -5314,4 +5290,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2498959860" -->
+<!-- signature="2180321342" -->

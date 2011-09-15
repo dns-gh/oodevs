@@ -315,7 +315,6 @@
         <mission name="PION ASS Assurer la Mise En Oeuvre">
           <fragorder name="Appliquer les feux"/>
         </mission>
-        <mission name="PION ASS Coordonner le Tir et l'Ilumination"/>
         <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -11010,7 +11009,6 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Artillerie">
       <missions>
-        <mission name="AUTOMATE ASS Illumination et Tir Synchronise"/>
         <mission name="AUTOMATE ASS SeDeployer"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
@@ -15054,4 +15052,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3693437822" -->
+<!-- signature="0479938800" -->
