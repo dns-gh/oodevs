@@ -74,6 +74,7 @@ message MsgUnitMagicAction {
         change_equipment_human_size       = 38;
         create_breakdowns                 = 39;
         create_wounds                     = 40;
+        log_finish_handlings              = 41;
     }
    required Common.Tasker               tasker     = 1;
    required Type                        type       = 2;

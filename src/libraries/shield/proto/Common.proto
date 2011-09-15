@@ -104,6 +104,8 @@ enum EnumDotationFamily {
    piece                                            = 5;
    ration                                           = 6;
    agent_extincteur                                 = 7;
+   energie                                          = 8;
+   funeraire                                        = 9;
 }
 
 enum EnumAmmunitionFamily {
@@ -467,6 +469,41 @@ message MsgLogMaintenancePriorities {
    repeated EquipmentType elem = 1;
 }
 
+message SupplyFlowResource
+{
+    required ResourceType resourceType = 1;
+    required uint32       quantity     = 2;
+}
+
+message SupplyFlowTransporter
+{
+    required EquipmentType equipmentType = 1;
+    required uint32        quantity      = 2;
+}
+
+message SupplyFlowRecipient
+{
+    required AutomatId          receiver  = 1;
+    repeated SupplyFlowResource resources = 2;
+    optional MsgPointList       path      = 3;
+}
+
+message PushFlowParameters
+{
+    repeated SupplyFlowRecipient   recipients   = 1;
+    repeated SupplyFlowTransporter transporters = 2;
+    optional MsgPointList          wayBackPath  = 3;
+}
+
+message PullFlowParameters
+{
+    required ParentEntity          supplier     = 1;
+    repeated SupplyFlowResource    resources    = 2;
+    repeated SupplyFlowTransporter transporters = 3;
+    optional MsgPointList          wayOutPath   = 4;
+    optional MsgPointList          wayBackPath  = 5;
+}
+
 message MsgMissionObjective {
    required MsgLocation localisation = 1;
    required MsgDateTime horaire      = 2;
@@ -584,9 +621,11 @@ message MsgMissionParameter {
         optional int32                       quantity                    = 42;
         optional KnowledgeGroupId            knowledgeGroup              = 43;
         optional Extension                   extensionList               = 44;
-        repeated Value                       list                        = 45;
+        optional PushFlowParameters          push_flow_parameters        = 45;
+        optional PullFlowParameters          pull_flow_parameters        = 46;
+        repeated Value                       list                        = 47;
         //
-        optional int32                       external_identifier         = 46;
+        optional int32                       external_identifier         = 48;
     }
     optional bool  null_value       = 1;
     repeated Value value   = 2;
@@ -638,8 +677,10 @@ message ClientObjectProperty {
 }
 
 message Diffusion {
-   optional AutomatId   automat   = 1;
-   optional FormationId formation = 2;
+   optional AutomatId        automat         = 1;
+   optional FormationId      formation       = 2;
+   repeated PartyId          party           = 3;
+   optional KnowledgeGroupId knowledge_group = 4;
 }
 
 message MsgShape {
