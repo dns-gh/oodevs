@@ -2615,6 +2615,7 @@
     </dictionary>
     <dictionary alias="Role" name="T_User_Role">
       <entry alias="SupEx" id="0" name="supervisor">
+        <control supervisor="true"/>
         <labels>
           <label kind="short" language="fr-FR" text="SUPEX"/>
           <label kind="long" language="fr-FR" text="Superviseur d'exercice"/>
@@ -2623,6 +2624,7 @@
         </labels>
       </entry>
       <entry alias="AniBas" id="1" name="anibas">
+        <control supervisor="false"/>
         <labels>
           <label kind="short" language="fr-FR" text="ANIBAS"/>
           <label kind="long" language="fr-FR" text="Animateur bas"/>
@@ -2631,6 +2633,7 @@
         </labels>
       </entry>
       <entry alias="EniEx" id="2" name="eniex">
+        <control supervisor="false"/>
         <labels>
           <label kind="short" language="fr-FR" text="ENIEX"/>
           <label kind="long" language="fr-FR" text="Animateur ennemi"/>
@@ -2639,6 +2642,7 @@
         </labels>
       </entry>
       <entry alias="DirEx" id="3" name="direx">
+        <control supervisor="true"/>
         <labels>
           <label kind="short" language="fr-FR" text="DIREX"/>
           <label kind="long" language="fr-FR" text="Directeur d'exercice"/>
@@ -2647,6 +2651,7 @@
         </labels>
       </entry>
       <entry alias="Env" id="4" name="environment">
+        <control supervisor="false"/>
         <labels>
           <label kind="short" language="fr-FR" text="ENV"/>
           <label kind="long" language="fr-FR" text="Environnement"/>
@@ -2655,6 +2660,7 @@
         </labels>
       </entry>
       <entry alias="Anal" id="5" name="analysis">
+        <control supervisor="true"/>
         <labels>
           <label kind="short" language="fr-FR" text="ANAL"/>
           <label kind="long" language="fr-FR" text="Analyste"/>
@@ -2663,6 +2669,7 @@
         </labels>
       </entry>
       <entry alias="GESTIM" id="6" name="service-gestim">
+        <control supervisor="true"/>
         <labels>
           <label kind="short" language="fr-FR" text="GESTIM"/>
           <label kind="long" language="fr-FR" text="Service GESTIM"/>
@@ -5144,4 +5151,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="1732256841" -->
+<!-- signature="3973285734" -->

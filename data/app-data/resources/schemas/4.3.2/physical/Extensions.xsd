@@ -35,6 +35,7 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="labels" type="Labels" minOccurs="0"/>
+      <xs:element name="control" type="Control" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="alias" type="xs:string" use="optional"/>
@@ -104,6 +105,9 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Control">
+    <xs:attribute name="supervisor" type="boolean" use="required"/>
   </xs:complexType>
   <xs:complexType name="OrbatAttributes">
     <xs:sequence>
