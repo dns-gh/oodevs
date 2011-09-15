@@ -55,7 +55,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( ApplyUrbanObjectCrumbling, 1 );
     MOCK_METHOD( ApplyBurn, 1 );
     MOCK_METHOD( ApplyFlood, 1 );
-    MOCK_METHOD( GetDangerosity, 2 );
+    MOCK_METHOD( GetDangerosity, 3 );
     MOCK_METHOD( GetOnlyLoadableMaxRangeToFireOn, 2 );
     MOCK_METHOD( GetMaxRangeToFireOn, 3 );
     MOCK_METHOD( GetMinRangeToFireOn, 2 );
