@@ -1216,7 +1216,7 @@ const AlgorithmsFactories& MIL_AgentPion::GetAlgorithms() const
 // Name: MIL_AgentPion::GetDangerosity
 // Created: MGD 2010-02-04
 // -----------------------------------------------------------------------------
-double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge,  boost::shared_ptr< MT_Vector2D > position ) const
+double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge,  boost::shared_ptr< MT_Vector2D > position, bool bUseAmmo ) const
 {
     if( pTargetKnowledge->GetMaxPerceptionLevel() < PHY_PerceptionLevel::recognized_
         ||  GetArmy().IsAFriend( *pTargetKnowledge->GetArmy() ) == eTristate_True
@@ -1232,7 +1232,7 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
     const MT_Vector3D sourcePosition( position->rX_, position->rY_, 0.);
     const MT_Vector3D targetPosition  ( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
     const float rDistBtwSourceAndTarget = static_cast< const float >( sourcePosition.Distance( targetPosition ) );
-    rDangerosity = GetRole< PHY_RoleInterface_Composantes >().GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget );
+    rDangerosity = GetRole< PHY_RoleInterface_Composantes >().GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget, bUseAmmo );
     //DegradeDangerosity( rDangerosity );//@TODO MGD before commit
     return rDangerosity;
 }

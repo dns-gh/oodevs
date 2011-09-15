@@ -117,7 +117,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
         if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
         {
-            rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent ) );
+            rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false ) );
             dangerousEnemies_.push_back( *it );
         }
 
@@ -127,7 +127,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
         {
             double rTotalDangerosity = 0.;
             for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy ) * ( *it )->GetOperationalState() );
+                rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true ) * ( *it )->GetOperationalState() );
             rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
         }
 

@@ -122,7 +122,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
         for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
         {
             PHY_Composante_ABC& compTarget = **itCompTarget;
-            const double rCurrentScore = pUnusedFirerWeapon->GetDangerosity( pion_, target, compTarget.GetType(), true ); // 'true' is for 'use ph'
+            const double rCurrentScore = pUnusedFirerWeapon->GetDangerosity( pion_, target, compTarget.GetType(), true, true ); // 'true' is for 'use ph' and true for 'use ammo'
             if( rCurrentScore > rBestScore )
             {
                 rBestScore = rCurrentScore;

@@ -1094,11 +1094,11 @@ const PHY_BreakdownType& PHY_ComposanteTypePion::GetBreakdownType( const T_Break
 // Name: PHY_ComposanteTypePion::GetDangerosity
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-double PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget ) const
+double PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget, bool bUseAmmo ) const
 {
     double rScore = 0.;
     for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
-        rScore = std::max( rScore, itWeapon->first->GetDangerosity( firer, target, rDistBtwSourceAndTarget ) );
+        rScore = std::max( rScore, itWeapon->first->GetDangerosity( firer, target, rDistBtwSourceAndTarget, bUseAmmo ) );
     return rScore;
 }
 

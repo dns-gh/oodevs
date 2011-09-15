@@ -273,18 +273,21 @@ void PHY_WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourc
 // Name: PHY_WeaponType::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
+double PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH, bool bUseAmmo ) const
 {
     if( !pDirectFireData_ )
         return 0.;
-    assert( pDotationCategory_ );
+    if( bUseAmmo)
+    {
+        assert( pDotationCategory_ );
 
-    dotation::DefaultDotationComputer dotationComputer;
-    MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
-    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+        dotation::DefaultDotationComputer dotationComputer;
+        MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
+        localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )//@TODO MGD See if it's possible to merge all HasDotation of this class
-        return 0.;
+        if( !dotationComputer.HasDotation( *pDotationCategory_ ) )//@TODO MGD See if it's possible to merge all HasDotation of this class
+            return 0.;
+    }
     return pDirectFireData_->GetDangerosity( firer, target, targetComposanteType, bUsePH );
 }
 
@@ -292,18 +295,21 @@ double PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Age
 // Name: PHY_WeaponType::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget ) const
+double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, bool bUseAmmo ) const
 {
     if( !pDirectFireData_ )
         return 0.;
-    assert( pDotationCategory_ );
+    if( bUseAmmo)
+    {
+        assert( pDotationCategory_ );
 
-    dotation::DefaultDotationComputer dotationComputer;
-    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+        dotation::DefaultDotationComputer dotationComputer;
+        MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
+        localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
-        return 0.;
+        if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
+            return 0.;
+    }
     return pDirectFireData_->GetDangerosity( targetComposanteType, rDistBtwFirerAndTarget );
 }
 

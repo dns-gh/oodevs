@@ -111,18 +111,18 @@ double PHY_Weapon::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_Co
 // Name: PHY_Weapon::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_Weapon::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget ) const
+double PHY_Weapon::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const
 {
-    return type_.GetDangerosity( firer, compTarget, rDistBtwFirerAndTarget );
+    return type_.GetDangerosity( firer, compTarget, rDistBtwFirerAndTarget, bUseAmmo );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Weapon::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
+double PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH, bool bUseAmmo ) const
 {
-    return type_.GetDangerosity( firer, target, targetComposanteType, bUsePH );
+    return type_.GetDangerosity( firer, target, targetComposanteType, bUsePH, bUseAmmo );
 }
 
 // -----------------------------------------------------------------------------

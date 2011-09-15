@@ -133,7 +133,7 @@ public:
 
     //! @name Operation on Knowledge
     //@{
-    double GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position  ) const;
+    double GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position, bool bUseAmmo ) const;
     //@}
 
     //! @name Network

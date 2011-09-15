@@ -138,8 +138,8 @@ public:
     //! @name Decisional operations
     //@{
     void SetCriticalIntelligenceFromAgentKnown();
-    double GetDangerosity( const DEC_Knowledge_Agent& target ) const;
-    double GetDangerosity( const MIL_Agent_ABC& target ) const;
+    double GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo ) const;
+    double GetDangerosity( const MIL_Agent_ABC& target, bool bUseAmmo ) const;
     double GetMaxRangeToFireOn( const MIL_Agent_ABC& target, double rWantedPH ) const;
     double GetMaterialComposantesAttritionLevel( UrbanObjectWrapper* pUrbanBlock ) const;
     void Lock();
@@ -178,7 +178,7 @@ private:
 
     //! @name Tools
     //@{
-    double GetDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante ) const;
+    double GetDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const;
     void DegradeDangerosity( double& rDangerosity ) const;
     void ChangeRelevance( double rNewRelevance );
     //@}

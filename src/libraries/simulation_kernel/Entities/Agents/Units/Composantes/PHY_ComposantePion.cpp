@@ -469,11 +469,11 @@ double PHY_ComposantePion::GetProtectionHumanWoundedRatio( const PHY_ComposanteS
 // Name: PHY_ComposantePion::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_ComposantePion::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget ) const
+double PHY_ComposantePion::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const
 {
     assert( pType_ );
     assert( pRole_ );
-    return CanFire() ? pType_->GetDangerosity( pRole_->GetPion(), compTarget.GetType(), rDistBtwFirerAndTarget ) : 0.;
+    return CanFire() ? pType_->GetDangerosity( pRole_->GetPion(), compTarget.GetType(), rDistBtwFirerAndTarget, bUseAmmo ) : 0.;
 }
 
 // -----------------------------------------------------------------------------

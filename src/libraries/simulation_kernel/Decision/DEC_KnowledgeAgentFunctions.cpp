@@ -47,7 +47,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< float >( pKnowledge->GetDangerosity( callerAgent ) + 1.f );
+        return static_cast< float >( pKnowledge->GetDangerosity( callerAgent, false ) + 1.f );
     return 0.f;
 }
 
@@ -58,7 +58,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 float DEC_KnowledgeAgentFunctions::GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< MT_Vector2D > position )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< float >( callerAgent.GetDangerosity( pKnowledge, position ) );
+        return static_cast< float >( callerAgent.GetDangerosity( pKnowledge, position, false ) );
     return 0.f;
 }
 
@@ -288,7 +288,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( boost::shared_ptr<
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pSource && pTarget && pSource->IsValid() && pTarget->IsValid() )
-        return static_cast< float >( pSource->GetDangerosity( *pTarget ) + 1. );
+        return static_cast< float >( pSource->GetDangerosity( *pTarget, false ) + 1. );
     return 0.f;
 }
 
@@ -301,7 +301,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( boost::shared_ptr< DEC_
     assert( pTarget );
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< float >( pKnowledge->GetDangerosity( pTarget->GetPion() ) + 1. );
+        return static_cast< float >( pKnowledge->GetDangerosity( pTarget->GetPion(), false ) + 1. );
     return 0.f;
 }
 

@@ -82,7 +82,7 @@ void DEC_Knowledge_RapForLocal::Update()
     for( CIT_KnowledgeAgentVector itEnemy = enemies.begin(); itEnemy != enemies.end(); ++itEnemy )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > knowledgeEnemy = *itEnemy;
-        double rDangerosity = knowledgeEnemy->GetDangerosity( *pPion_ ) * knowledgeEnemy->GetOperationalState();
+        double rDangerosity = knowledgeEnemy->GetDangerosity( *pPion_, false ) * knowledgeEnemy->GetOperationalState();
         if( rDangerosity != 0. )
         {
             rTotalFightScoreEnemy += rDangerosity;
@@ -100,7 +100,7 @@ void DEC_Knowledge_RapForLocal::Update()
             double rTotalDangerosity = 0.;
             double operationalState = knowledgeFriend.GetOperationalState();
             for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * operationalState );
+                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy, true ) * operationalState );
             rTotalFightScoreFriend += ( rTotalDangerosity / enemiesSize );
         }
     }

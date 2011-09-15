@@ -85,12 +85,12 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
 // Name: DEC_Knowledge_AgentComposante::GetDangerosity
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwSourceAndTarget ) const
+double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwSourceAndTarget, bool bUseAmmo ) const
 {
     assert( pType_ );
     if( !bCanFire_ )
         return 0.;
-    return pType_->GetDangerosity( firer, compTarget, rDistBtwSourceAndTarget );
+    return pType_->GetDangerosity( firer, compTarget, rDistBtwSourceAndTarget, bUseAmmo );
 }
 
 // -----------------------------------------------------------------------------

@@ -200,7 +200,7 @@ bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( double& rBestScore, 
     for( CIT_WeaponVector itWeapon = weaponsReady_.begin(); itWeapon != weaponsReady_.end(); ++itWeapon )
     {
         PHY_Weapon& weapon = **itWeapon;
-        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget.GetType(), true ); // 'true' = 'use PH'
+        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget.GetType(), true, true ); // 'true' = 'use PH', true = "use ammo"
         if( rCurrentScore >= rBestScore )
         {
             bUpdated = true;
@@ -225,7 +225,7 @@ bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPio
     for( std::size_t i = 0; i < weaponsReady_.size(); ++i )
     {
         PHY_Weapon& weapon = **it;
-        if( weapon.GetDangerosity( firer, target, compTarget.GetType(), false  ) > 0 ) // 'true' = 'don't use PH'
+        if( weapon.GetDangerosity( firer, target, compTarget.GetType(), false, true ) > 0 ) // 'false' = 'don't use PH' 'true' = 'use ammo'
         {
             pRandomWeapon = &weapon;
             return true;
