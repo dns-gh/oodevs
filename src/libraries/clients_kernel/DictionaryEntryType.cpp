@@ -71,6 +71,17 @@ unsigned int DictionaryEntryType::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DictionaryEntryType::GetAlias
+// Created: JSR 2011-09-13
+// -----------------------------------------------------------------------------
+std::string DictionaryEntryType::GetAlias() const
+{
+    if( alias_.IsSet() )
+        return alias_;
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DictionaryEntryType::ReadLabel
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------

@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "CommunicationListView.h"
+#include "LongNameHelper.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -51,7 +52,10 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
     gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
     if( item )
+    {
         item->SetNamed( entity );
+        item->setRenameEnabled( 0, !LongNameHelper::SetItemLongName( entity, *item ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +64,8 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
-    item->setRenameEnabled( 0, true );
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
+    item->setRenameEnabled( 0, !LongNameHelper::SetItemLongName( entity, *item ) );
 }
 
 // -----------------------------------------------------------------------------

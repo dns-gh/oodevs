@@ -427,6 +427,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -587,6 +590,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LongNameHelper.h">
+      <Filter>Source Files\Lists</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -768,6 +774,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LongNameEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>

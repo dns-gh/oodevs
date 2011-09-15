@@ -10,7 +10,6 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
-#include "Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"

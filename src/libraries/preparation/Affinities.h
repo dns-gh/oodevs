@@ -10,9 +10,9 @@
 #ifndef _Affinities_ABC_h
 #define _Affinities_ABC_h
 
-#include "Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include <boost/noncopyable.hpp>
 
 namespace xml

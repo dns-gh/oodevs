@@ -27,9 +27,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver, const Team_ABC& team, PropertiesDictionary& dico, TeamKarmas& karmas )
     : controller_( controller )
-    , resolver_( resolver )
-    , team_( team )
-    , karma_( &karmas.GetDefault() )
+    , resolver_  ( resolver )
+    , team_      ( team )
+    , karma_     ( &karmas.GetDefault() )
 {
     CreateDictionary( dico );
 }
@@ -38,15 +38,13 @@ Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Tea
 // Name: Diplomacies constructor
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas )
+Diplomacies::Diplomacies( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver, const Team_ABC& team, PropertiesDictionary& dico, TeamKarmas& karmas )
     : controller_( controller )
-    , resolver_( resolver )
-    , team_( team )
-    , karma_( 0 )
+    , resolver_  ( resolver )
+    , team_      ( team )
+    , karma_     ( 0 )
 {
-    std::string karma;
-    xis >> xml::attribute( "type", karma );
-    karma_ = &karmas.Get( karma.c_str() );
+    karma_ = &karmas.Get( xis.attribute< std::string >( "type" ).c_str() );
     CreateDictionary( dico );
 }
 
@@ -63,16 +61,16 @@ Diplomacies::~Diplomacies()
 // Name: Diplomacies::CreateDictionary
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
-void Diplomacies::CreateDictionary( kernel::PropertiesDictionary& dico )
+void Diplomacies::CreateDictionary( PropertiesDictionary& dico )
 {
-    dico.Register( (const Entity_ABC&)team_, tools::translate( "Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
+    dico.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacies::GetDiplomacy
 // Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-const kernel::Karma& Diplomacies::GetDiplomacy( const kernel::Entity_ABC& entity ) const
+const Karma& Diplomacies::GetDiplomacy( const Entity_ABC& entity ) const
 {
     // $$$$ SBO 2008-12-09: look into hierarchy
     return const_cast< T_Diplomacies& >( diplomacies_ )[ &entity.Get< Diplomacies_ABC >() ];
@@ -82,10 +80,10 @@ const kernel::Karma& Diplomacies::GetDiplomacy( const kernel::Entity_ABC& entity
 // Name: Diplomacies::SetDiplomacy
 // Created: SBO 2006-09-07
 // -----------------------------------------------------------------------------
-void Diplomacies::SetDiplomacy( const Team_ABC& team, const kernel::Karma& diplomacy )
+void Diplomacies::SetDiplomacy( const Team_ABC& team, const Karma& diplomacy )
 {
     diplomacies_[ &team.Get< Diplomacies_ABC >() ] = diplomacy;
-    controller_.Update( *(const Diplomacies_ABC*)this );
+    controller_.Update( *static_cast< const Diplomacies_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +92,7 @@ void Diplomacies::SetDiplomacy( const Team_ABC& team, const kernel::Karma& diplo
 // -----------------------------------------------------------------------------
 void Diplomacies::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", int( team_.GetId() ) );
+    xos << xml::attribute( "id", team_.GetId() );
     tools::Iterator< const Team_ABC& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -102,12 +100,12 @@ void Diplomacies::Serialize( xml::xostream& xos ) const
         if( &team == &team_ )
             continue;
         xos << xml::start( "relationship" )
-                << xml::attribute( "party", int( team.GetId() ) );
+                << xml::attribute( "party", team.GetId() );
         CIT_Diplomacies it = diplomacies_.find( &team.Get< Diplomacies_ABC >() );
         if( it != diplomacies_.end() )
             xos << xml::attribute( "diplomacy", it->second.GetId() );
         else
-            xos << xml::attribute( "diplomacy", kernel::Karma::neutral_.GetId() );
+            xos << xml::attribute( "diplomacy", Karma::neutral_.GetId() );
         xos << xml::end;
     }
 }
@@ -131,14 +129,14 @@ void Diplomacies::ReadRelationship( xml::xistream& xis )
     std::string diplomacy;
     xis >> xml::attribute( "party", id )
         >> xml::attribute( "diplomacy", diplomacy );
-    SetDiplomacy( resolver_.Get( id ), kernel::Karma::ResolveId( diplomacy.c_str() ) );
+    SetDiplomacy( resolver_.Get( id ), Karma::ResolveId( diplomacy.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacies::GetKarma
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
-const kernel::Karma& Diplomacies::GetKarma() const
+const Karma& Diplomacies::GetKarma() const
 {
     return *karma_;
 }
@@ -152,9 +150,9 @@ void Diplomacies::SetKarma( const TeamKarma& karma )
     karma_ = karma;
     // $$$$ SBO 2008-12-10: use notifications somehow
     Team_ABC& that = const_cast< Team_ABC& >( team_ );
-    that.Get< kernel::TacticalHierarchies >().UpdateSymbol( false );
-    that.Get< kernel::IntelligenceHierarchies >().UpdateSymbol( false );
-    controller_.Update( *(const Diplomacies_ABC*)this );
+    that.Get< TacticalHierarchies >().UpdateSymbol( false );
+    that.Get< IntelligenceHierarchies >().UpdateSymbol( false );
+    controller_.Update( *static_cast< const Diplomacies_ABC* >( this ) );
     controller_.Update( team_ );
 }
 

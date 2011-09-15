@@ -251,6 +251,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Settings_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StrongType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Styles.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SubTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />

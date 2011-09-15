@@ -14,6 +14,7 @@
 #include "AgentAffinitiesDialog.h"
 #include "PeopleAffinitiesDialog.h"
 #include "ColorEditor.h"
+#include "LongNameEditor.h"
 #include "SymbolEditor.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/StaticModel.h"
@@ -37,6 +38,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& 
     new ColorEditor( parent, controllers, colorStrategy, colorEditor );
     new SymbolEditor( parent, controllers, symbols, config );
     new LogisticStockEditor( parent, controllers, model );
+    new LongNameEditor( parent, controllers, model );
 }
 
 // -----------------------------------------------------------------------------

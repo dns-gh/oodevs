@@ -61,12 +61,12 @@ EditorFactory::~EditorFactory()
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( LogisticBaseSuperior* const& value )
+void EditorFactory::Call( kernel::LogisticBaseSuperior* const& value )
 {
     if( !selected_ )
         return;
     LogisticSuperiorEditor* editor = new LogisticSuperiorEditor( parent_, controllers_, model_.agents_, model_.formations_, *selected_ );
-    editor->SetCurrentItem( (LogisticBaseSuperior&)*value );
+    editor->SetCurrentItem( (kernel::LogisticBaseSuperior&)*value );
     result_ = editor;
 }
 
@@ -122,9 +122,9 @@ void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 // Name: EditorFactory::Call
 // Created: SBO 2007-11-02
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( TeamKarma* const& value )
+void EditorFactory::Call( kernel::TeamKarma* const& value )
 {
-    SimpleResolverEditor< kernel::Karma, TeamKarmas, TeamKarma >* editor = new SimpleResolverEditor< kernel::Karma, TeamKarmas, TeamKarma >( parent_, staticModel_.teamKarmas_ );
+    SimpleResolverEditor< kernel::Karma, TeamKarmas, kernel::TeamKarma >* editor = new SimpleResolverEditor< kernel::Karma, TeamKarmas, kernel::TeamKarma >( parent_, staticModel_.teamKarmas_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
@@ -133,9 +133,9 @@ void EditorFactory::Call( TeamKarma* const& value )
 // Name: EditorFactory::Call
 // Created: SBO 2007-11-02
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( IntelligenceKarma* const& value )
+void EditorFactory::Call( kernel::IntelligenceKarma* const& value )
 {
-    SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, IntelligenceKarma >* editor = new SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, IntelligenceKarma >( parent_, staticModel_.intelligenceKarmas_ );
+    SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, kernel::IntelligenceKarma >* editor = new SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, kernel::IntelligenceKarma >( parent_, staticModel_.intelligenceKarmas_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
@@ -144,9 +144,9 @@ void EditorFactory::Call( IntelligenceKarma* const& value )
 // Name: EditorFactory::Call
 // Created: SBO 2007-11-02
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( EntityLogisticLevel* const& value )
+void EditorFactory::Call( kernel::EntityLogisticLevel* const& value )
 {
-    SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, EntityLogisticLevel >* editor = new SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, EntityLogisticLevel >( parent_, staticModel_.logisticLevels_ );
+    SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, kernel::EntityLogisticLevel >* editor = new SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, kernel::EntityLogisticLevel >( parent_, staticModel_.logisticLevels_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

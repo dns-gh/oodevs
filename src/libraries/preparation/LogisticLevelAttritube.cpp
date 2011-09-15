@@ -75,7 +75,7 @@ LogisticLevelAttritube::~LogisticLevelAttritube()
 // Name: LogisticLevelAttritube::SetLogisticLevel
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-void LogisticLevelAttritube::SetLogisticLevel( const EntityLogisticLevel& logisticLevel )
+void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel& logisticLevel )
 {
     if( (*logisticLevel) == kernel::LogisticLevel::none_ )
     {
@@ -95,7 +95,7 @@ void LogisticLevelAttritube::SetLogisticLevel( const EntityLogisticLevel& logist
                     const kernel::Entity_ABC& entity = children.NextElement();
                     LogisticBaseStates* logEntityHierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) );
                     if( logEntityHierarchy )
-                        logEntityHierarchy->SetSuperior( LogisticBaseSuperior() );
+                        logEntityHierarchy->SetSuperior( kernel::LogisticBaseSuperior() );
                 }
             }
         }

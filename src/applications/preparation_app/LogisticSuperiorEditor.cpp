@@ -8,10 +8,11 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-
 #include "LogisticSuperiorEditor.h"
+#include "LongNameHelper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Object_ABC.h"
@@ -19,6 +20,17 @@
 #include "clients_gui/Tools.h"
 
 using namespace kernel;
+
+namespace
+{
+    QString GetDisplayName( const Entity_ABC& entity )
+    {
+        std::string longName = LongNameHelper::GetEntityLongName( entity );
+        if( longName.empty() )
+            return entity.GetName();
+        return longName.c_str();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperiorEditor constructor
@@ -39,7 +51,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
             const Automat_ABC& automat = it.NextElement();
             if  (   ( bObject && automat.GetLogisticLevel() != LogisticLevel::none_ )
                 ||  ( !bObject && IsValidSuperior( automat ) ) )
-                AddItem( automat.GetName(), &automat );
+                AddItem( GetDisplayName( automat ), &automat );
         }
     }
 
@@ -50,7 +62,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
             const Formation_ABC& formation = it.NextElement();
             if  (   ( bObject && formation.GetLogisticLevel() != LogisticLevel::none_ )
                 ||  ( !bObject && IsValidSuperior( formation ) ) )
-                AddItem( formation.GetName(), &formation );
+                AddItem( GetDisplayName( formation ), &formation );
         }
     }
 
@@ -75,7 +87,7 @@ void LogisticSuperiorEditor::NotifyCreated( const Automat_ABC& automat )
     if( GetItemIndex( &automat ) != -1 )
         return;
     if( IsValidSuperior( automat ) )
-        AddItem( automat.GetName(), &automat );
+        AddItem( GetDisplayName( automat ), &automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +108,7 @@ void LogisticSuperiorEditor::NotifyCreated( const Formation_ABC& formation )
     if( GetItemIndex( &formation ) != -1 )
         return;
     if( IsValidSuperior( formation ) )
-        AddItem( formation.GetName(), &formation );
+        AddItem( GetDisplayName( formation ), &formation );
 }
 
 // -----------------------------------------------------------------------------

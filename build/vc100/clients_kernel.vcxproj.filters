@@ -1047,6 +1047,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\SubTypes.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

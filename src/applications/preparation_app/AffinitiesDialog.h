@@ -10,8 +10,8 @@
 #ifndef _AffinitiesDialog_h
 #define _AffinitiesDialog_h
 
-#include "Preparation/Types.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/SubTypes.h"
 #include "tools/ElementObserver_ABC.h"
 #include <map>
 #include <vector>

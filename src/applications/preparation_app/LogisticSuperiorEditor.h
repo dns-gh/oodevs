@@ -15,7 +15,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "preparation/LogisticSuperior.h"
-//#include <boost/type_traits.hpp>
 
 namespace kernel
 {
@@ -24,31 +23,20 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
 }
-/*
-template <typename Superior>
-struct LogisticSuperiorTraits
-{
-    typedef typename Superior::BaseType BaseType;
-    typedef typename boost::remove_pointer<BaseType>::type BaseTypeNP;
-    typedef typename boost::remove_const<BaseTypeNP>::type BaseTypeNCNP;
-};
-*/
+
 // =============================================================================
 /** @class  LogisticSuperiorEditor
     @brief  LogisticSuperiorEditor
 */
 // Created: SBO 2006-10-25
 // =============================================================================
-//template< typename Superior >
 class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Entity_ABC* >
-                             , public kernel::ValueEditor< LogisticBaseSuperior >
+                             , public kernel::ValueEditor< kernel::LogisticBaseSuperior >
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                              , public tools::ElementObserver_ABC< kernel::Automat_ABC >
 {
 public:
-    //typedef typename LogisticSuperiorTraits<Superior>::BaseTypeNCNP SuperiorEntityType;
-
     //! @name Constructors/Destructor
     //@{
              LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Entity_ABC& selected );
@@ -57,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual LogisticBaseSuperior GetValue();
+    virtual kernel::LogisticBaseSuperior GetValue();
     //@}
 
 private:

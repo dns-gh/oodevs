@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __Preparation_Types_h_
-#define __Preparation_Types_h_
+#ifndef __SubTypes_h_
+#define __SubTypes_h_
 
-#include "clients_kernel/StrongType.h"
+#include "StrongType.h"
 
 namespace kernel
 {
@@ -19,17 +19,17 @@ namespace kernel
     class Entity_ABC;
     class Karma;
     class LogisticLevel;
+
+    #define DECLARE_SUBTYPE( name, base ) \
+    struct name##_{};\
+    typedef StrongType< base, name##_ > name;
+
+    DECLARE_SUBTYPE( LogisticBaseSuperior, const Entity_ABC* );
+
+    DECLARE_SUBTYPE( TeamKarma, const Karma* );
+    DECLARE_SUBTYPE( IntelligenceKarma, const Karma* );
+
+    DECLARE_SUBTYPE( EntityLogisticLevel, const LogisticLevel* );
 }
 
-#define DECLARE_SUBTYPE( name, base ) \
-struct name##_{};\
-typedef kernel::StrongType< base, name##_ > name;
-
-DECLARE_SUBTYPE( LogisticBaseSuperior, const kernel::Entity_ABC* );
-
-DECLARE_SUBTYPE( TeamKarma, const kernel::Karma* );
-DECLARE_SUBTYPE( IntelligenceKarma, const kernel::Karma* );
-
-DECLARE_SUBTYPE( EntityLogisticLevel, const kernel::LogisticLevel* );
-
-#endif // __Preparation_Types_h_
+#endif // __SubTypes_h_

@@ -252,7 +252,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\TimeLimitedAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Tools.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TrafficabilityAttribute.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\Types.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Team.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TeamFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TeamFactory_ABC.h" />

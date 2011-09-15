@@ -138,6 +138,25 @@ void ExtensionsPanel::NotifyDeleted( const Entity_ABC& element )
         DeleteWidgets();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::NotifyUpdated
+// Created: JSR 2011-09-13
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::NotifyUpdated( const kernel::DictionaryExtensions& extensions )
+{
+    if( selected_ && selected_->Retrieve< kernel::DictionaryExtensions >() == &extensions )
+    {
+        updating_ = true;
+        if( extensions.IsEnabled() && !pGroupBox_->isChecked() )
+            pGroupBox_->setChecked( true );
+        else if( !extensions.IsEnabled() && pGroupBox_->isChecked() )
+            pGroupBox_->setChecked( false );
+        updating_ = false;
+        UpdateDependencies();
+        UpdateDisplay();
+    }
+}
+
 namespace
 {
     class QMinMaxValidator : public QValidator
@@ -401,7 +420,7 @@ void ExtensionsPanel::Commit()
                     int pos = 0;
                     if( !edit->validator() || edit->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( ( *it )->name(), enabled ? text.ascii() : "" );
+                        ext->SetValue( edit->name(), enabled ? text.ascii() : "" );
                         edit->setPaletteBackgroundColor( Qt::white );
                     }
                     else
@@ -413,7 +432,7 @@ void ExtensionsPanel::Commit()
                     QComboBox* combo = static_cast< QComboBox* >( *it );
                     const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_ );
                     if( !key.empty() )
-                        ext->SetValue( ( *it )->name(), enabled ? key : "" );
+                        ext->SetValue( combo->name(), enabled ? key : "" );
                 }
                 break;
             case AttributeType::ETypeLoosyDictionary:

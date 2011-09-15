@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "Types.h"
+#include "clients_kernel/SubTypes.h"
 
 namespace kernel
 {
@@ -58,14 +58,14 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dictionary, bool active );
-    void SetLogisticLevel( const EntityLogisticLevel& logisticLevel );
+    void SetLogisticLevel( const kernel::EntityLogisticLevel& logisticLevel );
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
-    EntityLogisticLevel logisticLevel_;
+    kernel::EntityLogisticLevel logisticLevel_;
     //@}
 };
 

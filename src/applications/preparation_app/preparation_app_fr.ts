@@ -449,6 +449,13 @@
     </message>
 </context>
 <context>
+    <name>LongNameEditor</name>
+    <message>
+        <source>Generate long names</source>
+        <translation>Générer les noms longs</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Units</source>

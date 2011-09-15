@@ -11,7 +11,7 @@
 #define __AgentAffinities_h_
 
 #include "Affinities.h"
-#include "Types.h"
+#include "clients_kernel/SubTypes.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 

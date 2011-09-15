@@ -41,6 +41,7 @@ public:
     std::string  GetKey() const;
     unsigned int GetId() const;
     std::string  GetLabel( const std::string& kind, const std::string& language ) const;
+    std::string  GetAlias() const;
     //@}
 
 private:

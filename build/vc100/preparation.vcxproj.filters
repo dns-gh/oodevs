@@ -567,9 +567,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\Tools.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\Types.h">
-      <Filter>Source Files\Model</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\Team.h">
       <Filter>Source Files\Model\Team</Filter>
     </ClInclude>

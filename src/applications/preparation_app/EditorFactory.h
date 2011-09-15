@@ -13,8 +13,8 @@
 #include "clients_gui/EditorFactory.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/SubTypes.h"
 #include "tools/Resolver.h"
-#include "preparation/Types.h"
 #include "preparation/EnumTypes.h"
 
 namespace kernel
@@ -42,14 +42,14 @@ class PopulationRepartition;
 class EditorFactory : public gui::EditorFactory
                     , public tools::Observer_ABC
                     , public tools::SelectionObserver< kernel::Entity_ABC >
-                    , public tools::Caller< LogisticBaseSuperior* >
+                    , public tools::Caller< kernel::LogisticBaseSuperior* >
                     , public tools::Caller< kernel::KnowledgeGroupType** >
-                    , public tools::Caller< TeamKarma* >
-                    , public tools::Caller< IntelligenceKarma* >
+                    , public tools::Caller< kernel::TeamKarma* >
+                    , public tools::Caller< kernel::IntelligenceKarma* >
                     , public tools::Caller< kernel::NBCAgent** >
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
                     , public tools::Caller< kernel::LogisticLevel** >
-                    , public tools::Caller< EntityLogisticLevel* >
+                    , public tools::Caller< kernel::EntityLogisticLevel* >
                     , public tools::Caller< Enum_PopulationAttitude* >
                     , public tools::Caller< Enum_DemolitionTargetType* >
                     , public tools::Caller< DotationsItem** >
@@ -65,17 +65,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Call( LogisticBaseSuperior* const& value );
+    virtual void Call( kernel::LogisticBaseSuperior* const& value );
     virtual void Call( kernel::KnowledgeGroupType** const& value );
-    virtual void Call( TeamKarma* const& value );
-    virtual void Call( IntelligenceKarma* const& value );
+    virtual void Call( kernel::TeamKarma* const& value );
+    virtual void Call( kernel::IntelligenceKarma* const& value );
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );
     virtual void Call( Enum_DemolitionTargetType* const& value );
     virtual void Call( DotationsItem** const& value );
     virtual void Call( kernel::LogisticLevel** const& value );
-    virtual void Call( EntityLogisticLevel* const& value );
+    virtual void Call( kernel::EntityLogisticLevel* const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( PopulationRepartition** const& value );
     //@}

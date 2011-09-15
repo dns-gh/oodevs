@@ -10,17 +10,18 @@
 #ifndef gui_ExtensionsPanel_h_
 #define gui_ExtensionsPanel_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Agent_ABC;
     class AttributeType;
     class Controllers;
+    class DictionaryExtensions;
     class Entity_ABC;
     class ExtensionTypes;
     class Profile_ABC;
@@ -42,6 +43,7 @@ class ExtensionsPanel : public QDockWidget
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                      , public tools::ElementObserver_ABC< kernel::DictionaryExtensions >
                       , private boost::noncopyable
 {
     Q_OBJECT
@@ -59,6 +61,7 @@ protected:
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
+    virtual void NotifyUpdated( const kernel::DictionaryExtensions& extensions );
     void AddWidget( const kernel::AttributeType& attribute );
     void DeleteWidgets();
     void UpdateDisplay();
@@ -82,15 +85,15 @@ private:
 protected:
     //! @name Member data
     //@{
-    kernel::Controllers&                      controllers_;
+    kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    const kernel::ExtensionTypes&             extensions_;
-    DiffusionListDialog*                      diffusionDialog_;
-    Q3VBox*                                    pMainLayout_;
-    Q3VBox*                                    pExtensionLayout_;
-    Q3GroupBox*                                pGroupBox_;
-    T_Widgets                                 widgets_;
-    bool                                      updating_;
+    const kernel::ExtensionTypes& extensions_;
+    DiffusionListDialog* diffusionDialog_;
+    Q3VBox* pMainLayout_;
+    Q3VBox* pExtensionLayout_;
+    Q3GroupBox* pGroupBox_;
+    T_Widgets widgets_;
+    bool updating_;
     //@}
 };
 

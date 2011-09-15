@@ -10,7 +10,7 @@
 #ifndef __LogisticSuperior_h_
 #define __LogisticSuperior_h_
 
-#include "Types.h"
+#include "clients_kernel/SubTypes.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    bool IsValidSuperior( const LogisticBaseSuperior& superior ) const;
+    bool IsValidSuperior( const kernel::LogisticBaseSuperior& superior ) const;
     //@}
 
 private:

@@ -10,12 +10,12 @@
 #ifndef __LogisticBaseStates_h__
 #define __LogisticBaseStates_h__
 
-#include "Types.h"
 #include "tools/Resolver.h"
 #include "LogisticHierarchiesBase.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    void SetSuperior( const LogisticBaseSuperior& superior );
+    void SetSuperior( const kernel::LogisticBaseSuperior& superior );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
@@ -76,7 +76,7 @@ private:
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver_;
     DotationsItem* item_;
-    LogisticBaseSuperior superior_;
+    kernel::LogisticBaseSuperior superior_;
     const bool canHaveQuotas_;
     //@}
 };

@@ -33,6 +33,11 @@ public:
     virtual ~UserProfileUnitControls();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
+    //@}
+
 signals:
     //! @name signals
     //@{

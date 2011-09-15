@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "UserProfileUnitControls.h"
+#include "LongNameHelper.h"
 #include "moc_UserProfileUnitControls.cpp"
 #include "PreparationProfile.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -37,6 +38,16 @@ UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& 
 UserProfileUnitControls::~UserProfileUnitControls()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::Display
+// Created: JSR 2011-09-15
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
+{
+    HierarchyListView< ProfileHierarchies_ABC >::Display( entity, item );
+    LongNameHelper::SetItemLongName( entity, *item );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,21 +82,24 @@ void UserProfileUnitControls::OnItemClicked( Q3ListViewItem* item, const QPoint&
 // Name: UserProfileUnitControls::NotifyUpdated
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileUnitControls::NotifyUpdated( const kernel::Entity_ABC& entity )
+void UserProfileUnitControls::NotifyUpdated( const Entity_ABC& entity )
 {
-    if( gui::ValuedListItem* item = FindItem( &entity, firstChild() ) )
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
+    {
         item->SetNamed( entity );
+        LongNameHelper::SetItemLongName( entity, *item );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitControls::OnProfiledChanged
 // Created: LGY 2011-09-14
 // -----------------------------------------------------------------------------
-void UserProfileUnitControls::OnProfiledChanged( const kernel::Entity_ABC* entity, bool isWriteable )
+void UserProfileUnitControls::OnProfiledChanged( const Entity_ABC* entity, bool isWriteable )
 {
     if( entity )
     {
-        gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
+        ValuedListItem* item = FindItem( entity, firstChild() );
         if( item )
             SetStatus( item, isWriteable, false );
     }
@@ -95,7 +109,7 @@ void UserProfileUnitControls::OnProfiledChanged( const kernel::Entity_ABC* entit
 // Name: UserProfileUnitControls::ValueChanged
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileUnitControls::ValueChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable )
+void UserProfileUnitControls::ValueChanged( const Entity_ABC* entity, bool isReadable, bool isWriteable )
 {
     emit ProfiledChanged( entity, isReadable, isWriteable );
 }

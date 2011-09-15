@@ -11,9 +11,9 @@
 #define __Diplomacies_h_
 
 #include "clients_kernel/Diplomacies_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "Types.h"
+#include "clients_kernel/SubTypes.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -67,14 +67,14 @@ private:
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico );
     void ReadRelationship( xml::xistream& xis );
-    void SetKarma( const TeamKarma& karma );
+    void SetKarma( const kernel::TeamKarma& karma );
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
     //! @name Types
     //@{
     typedef std::map< const kernel::Diplomacies_ABC*, kernel::Karma > T_Diplomacies;
-    typedef T_Diplomacies::const_iterator                   CIT_Diplomacies;
+    typedef T_Diplomacies::const_iterator                           CIT_Diplomacies;
     //@}
 
 private:
@@ -84,7 +84,7 @@ private:
     const tools::Resolver_ABC< kernel::Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
     const kernel::Team_ABC& team_;
-    TeamKarma karma_;
+    kernel::TeamKarma karma_;
     //@}
 };
 

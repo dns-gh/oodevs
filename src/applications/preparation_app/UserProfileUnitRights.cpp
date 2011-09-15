@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "UserProfileUnitRights.h"
+#include "LongNameHelper.h"
 #include "moc_UserProfileUnitRights.cpp"
 #include "PreparationProfile.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -38,6 +39,16 @@ UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& cont
 UserProfileUnitRights::~UserProfileUnitRights()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::Display
+// Created: JSR 2011-09-15
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
+{
+    T_Parent::Display( entity, item);
+    LongNameHelper::SetItemLongName( entity, *item );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,26 +83,29 @@ void UserProfileUnitRights::OnItemClicked( Q3ListViewItem* item, const QPoint& p
 // Name: UserProfileUnitRights::NotifyUpdated
 // Created: SBO 2008-08-26
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
+void UserProfileUnitRights::NotifyUpdated( const Entity_ABC& entity )
 {
-    if( gui::ValuedListItem* item = FindItem( &entity, firstChild() ) )
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
+    {
         item->SetNamed( entity );
+        LongNameHelper::SetItemLongName( entity, *item );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights::ValueChanged
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable )
+void UserProfileUnitRights::ValueChanged( const Entity_ABC* entity, bool isWriteable )
 {
     if( entity->GetTypeName() == "automat" || entity->GetTypeName() == "party" )
         emit ProfiledChanged( entity, isWriteable );
     else
     {
-        tools::Iterator< const Entity_ABC& > children = entity->Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > children = entity->Get< TacticalHierarchies >().CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
-            const kernel::Entity_ABC& child = children.NextElement();
+            const Entity_ABC& child = children.NextElement();
             ValueChanged( &child, isWriteable );
         }
     }
@@ -101,11 +115,11 @@ void UserProfileUnitRights::ValueChanged( const kernel::Entity_ABC* entity, bool
 // Name: UserProfileUnitRights::OnProfiledChanged
 // Created: LGY 2011-09-14
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::OnProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable )
+void UserProfileUnitRights::OnProfiledChanged( const Entity_ABC* entity, bool isReadable, bool isWriteable )
 {
     if( entity )
     {
-        gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
+        ValuedListItem* item = FindItem( entity, firstChild() );
         if( item )
             SetStatus( item, isReadable, isWriteable, false, false );
     }

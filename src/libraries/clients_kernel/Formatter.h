@@ -14,8 +14,10 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qdatetime.h>
 #pragma warning( pop )
+#include "DictionaryExtensions.h"
 #include "Displayer_ABC.h"
 #include "Types.h"
+#include "SubTypes.h"
 
 namespace kernel
 {
@@ -123,12 +125,32 @@ template< typename T > class SafePointer;
 template< typename T >
 struct Formatter< SafePointer< T > > : public Formatter< const T* > {};
 
-template< typename T, typename U > class StrongType;
 template< typename T, typename U >
 struct Formatter< StrongType< T, U > > : public Formatter< const T* >
 {
     void operator()( const StrongType< T, U >& element, Displayer_ABC& displayer ) const
     {
+        displayer.AddToDisplay( (const T&)( element ) );
+    }
+};
+
+template< typename T >
+struct Formatter< StrongType< T, LogisticBaseSuperior_ > > : public Formatter< const T* >
+{
+    void operator()( const StrongType< T, LogisticBaseSuperior_ >& element, Displayer_ABC& displayer ) const
+    {
+        if( element )
+        {
+            if( const DictionaryExtensions* dico = element->Retrieve< DictionaryExtensions >() )
+            {
+                const std::string& value = dico->GetValue( "NomLong" );
+                if( !value.empty() )
+                {
+                    displayer.AddToDisplay( QString( value.c_str() ) );
+                    return;
+                }
+            }
+        }
         displayer.AddToDisplay( (const T&)( element ) );
     }
 };

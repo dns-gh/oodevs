@@ -22,6 +22,7 @@ InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
+LongNameEditor.cpp\
 LogisticStockEditor.cpp \
 MainWindow.cpp \
 Menu.cpp \

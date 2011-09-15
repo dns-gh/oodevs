@@ -11,11 +11,10 @@
 #define __LogisticAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/StrongType.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include "Types.h"
 
 namespace kernel
 {
@@ -84,7 +83,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    LogisticBaseSuperior logisticBase_;
+    kernel::LogisticBaseSuperior logisticBase_;
     const kernel::Object_ABC& object_;
     //@}
 };
