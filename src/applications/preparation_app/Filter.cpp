@@ -96,8 +96,8 @@ void Filter::ReadDescriptions( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Filter::ReadDescription( xml::xistream& xis )
 {
-    assert( xis.has_attribute( "xml:lang" ) && xis.has_attribute( "name" ) );
-    const std::string lang = xis.attribute< std::string >( "xml:lang" );
+    assert( ( xis.has_attribute( "xml:lang" ) || xis.has_attribute( "lang" ) ) && xis.has_attribute( "name" ) );
+    const std::string lang = xis.has_attribute( "xml:lang" ) ? xis.attribute< std::string >( "xml:lang" ) : xis.attribute< std::string >( "lang" );
     const std::string name = xis.attribute< std::string >( "name" );
     assert( !name.empty() && !lang.empty() );
     std::string description;
