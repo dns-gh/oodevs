@@ -30,6 +30,7 @@ namespace gui
 
 class UserProfile;
 class UserProfileRights_ABC;
+class ControlsChecker_ABC;
 
 // =============================================================================
 /** @class  UserProfileWidget
@@ -47,7 +48,9 @@ class UserProfileWidget : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, const kernel::ExtensionTypes& extensions );
+             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                gui::EntitySymbols& icons, const kernel::ExtensionTypes& extensions,
+                                ControlsChecker_ABC& checker );
     virtual ~UserProfileWidget();
     //@}
 
@@ -88,6 +91,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::ExtensionTypes& extensions_;
+    ControlsChecker_ABC& checker_;
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
@@ -102,6 +106,7 @@ private:
     QStackedWidget* pPopulations_;
     QStackedWidget* pUnits_;
     QStackedWidget* pInformations_;
+    std::vector< std::string > supervisors_;
     //@}
 };
 

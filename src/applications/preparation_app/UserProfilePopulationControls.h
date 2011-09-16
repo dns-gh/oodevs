@@ -13,6 +13,8 @@
 #include "UserProfileControls_ABC.h"
 #include "clients_gui/PopulationListView.h"
 
+class ControlsChecker_ABC;
+
 // =============================================================================
 /** @class  UserProfilePopulationControls
     @brief  User profile population controls
@@ -27,7 +29,8 @@ class UserProfilePopulationControls : public gui::PopulationListView
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfilePopulationControls( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             UserProfilePopulationControls( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                            ControlsChecker_ABC& checker );
     virtual ~UserProfilePopulationControls();
     //@}
 

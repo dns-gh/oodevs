@@ -12,15 +12,17 @@
 #include "moc_ProfileDialog.cpp"
 #include "UserProfileWidget.h"
 #include "UserProfileList.h"
+#include "ControlsChecker.h"
 #include "icons.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model, const kernel::ExtensionTypes& extensions )
+ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
+                              ProfilesModel& model, const kernel::ExtensionTypes& extensions )
     : QDialog( parent, "ProfileDialog" )
-    , model_( model )
+    , pChecher_( new ControlsChecker( controllers ) )
 {
     setCaption( tr( "User profiles" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2 );
@@ -46,13 +48,13 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, factory, icons, extensions );
+    pages_ = new UserProfileWidget( box, controllers, factory, icons, extensions,*pChecher_ );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    list_ = new UserProfileList( box, *pages_, controllers, model );
+    list_ = new UserProfileList( box, *pages_, controllers, model, *pChecher_ );
     grid->addWidget( box, 1, 0 );
 
     box = new Q3HBox( this );

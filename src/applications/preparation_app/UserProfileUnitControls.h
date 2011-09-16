@@ -29,7 +29,8 @@ class UserProfileUnitControls : public gui::HierarchyListView< ProfileHierarchie
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileUnitControls( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons );
+             UserProfileUnitControls( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                      gui::EntitySymbols& icons, ControlsChecker_ABC& checker );
     virtual ~UserProfileUnitControls();
     //@}
 

@@ -40,6 +40,7 @@ public:
     //@{
     std::string  GetKey() const;
     unsigned int GetId() const;
+    std::string GetOption() const;
     std::string  GetLabel( const std::string& kind, const std::string& language ) const;
     std::string  GetAlias() const;
     //@}
@@ -69,6 +70,7 @@ private:
     const std::string            key_;
     const unsigned int           id_;
     OptionalValue< std::string > alias_;
+    OptionalValue< std::string > option_;
     T_Labels                     labels_;
     //@}
 };

@@ -430,6 +430,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -593,6 +596,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LongNameHelper.h">
       <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker.h">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker_ABC.h">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

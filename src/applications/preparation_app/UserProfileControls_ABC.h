@@ -23,6 +23,7 @@ namespace kernel
 }
 
 class UserProfile;
+class ControlsChecker_ABC;
 
 // =============================================================================
 /** @class  UserProfileControls_ABC
@@ -35,13 +36,14 @@ class UserProfileControls_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UserProfileControls_ABC( Q3ListView* listView );
+             UserProfileControls_ABC( Q3ListView* listView, ControlsChecker_ABC& checker );
     virtual ~UserProfileControls_ABC();
     //@}
 
     //! @name Operations
     //@{
     void Display( UserProfile& profile );
+    void Update( bool supervisor );
     //@}
 
 protected:
@@ -68,6 +70,12 @@ private:
     };
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::pair< std::string, const kernel::Entity_ABC* > T_Error;
+    typedef std::vector< T_Error >                              T_Errors;
+    //@}
+
     //! @name Helpers
     //@{
     void Commit();
@@ -75,14 +83,21 @@ private:
     void SetItem( Q3ListViewItem* item, Status status );
     void SetStatus( gui::ValuedListItem* item, bool inheritsControllable );
     Status MakeStatus( bool control, bool inheritedControl );
+    void Check( gui::ValuedListItem* item, bool control );
+    T_Errors GetErrors( gui::ValuedListItem* item );
+    void CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors );
+    QString ConvertErrors( T_Errors& errors ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     Q3ListView* listView_;
+    ControlsChecker_ABC& checker_;
     UserProfile* profile_;
-    QPixmap check_, check_grey_;
+    QPixmap check_;
+    QPixmap check_grey_;
+    bool supervisor_;
     //@}
 };
 

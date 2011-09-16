@@ -45,6 +45,22 @@ void DictionaryType::GetStringList( QStringList& list, const std::string& kind, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DictionaryType::GetStringList
+// Created: LGY 2011-09-15
+// -----------------------------------------------------------------------------
+void DictionaryType::GetStringList( std::vector< std::string >& vector, const std::string& kind, const std::string& language,
+                                    const std::string& option ) const
+{
+    tools::Iterator< const DictionaryEntryType& > it = CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const DictionaryEntryType& entry = it.NextElement();
+        if( entry.GetOption() == option )
+            vector.push_back( entry.GetLabel( kind, language ).c_str() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DictionaryType::GetLabel
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------

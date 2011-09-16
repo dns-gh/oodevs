@@ -23,9 +23,10 @@ using namespace kernel;
 // Name: UserProfileUnitControls constructor
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons )
+UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory,
+                                                  EntitySymbols& icons, ControlsChecker_ABC& checker )
     : HierarchyListView< ProfileHierarchies_ABC >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
-    , UserProfileControls_ABC( this )
+    , UserProfileControls_ABC( this, checker )
 {
     controllers_.Register( *this );
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );

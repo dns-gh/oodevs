@@ -18,9 +18,10 @@
 // Name: UserProfilePopulationControls constructor
 // Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-UserProfilePopulationControls::UserProfilePopulationControls( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+UserProfilePopulationControls::UserProfilePopulationControls( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                                              ControlsChecker_ABC& checker )
     : gui::PopulationListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
-    , UserProfileControls_ABC( this )
+    , UserProfileControls_ABC( this, checker )
 {
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
     setResizeMode( Q3ListView::NoColumn );

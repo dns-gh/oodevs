@@ -12,6 +12,7 @@
 #include "moc_UserProfileList.cpp"
 #include "UserProfileWidget.h"
 #include "ProfileEditor.h"
+#include "ControlsChecker_ABC.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "clients_kernel/Controllers.h"
@@ -20,11 +21,13 @@
 // Name: UserProfileList constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers, ProfilesModel& model )
+UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
+                                  ProfilesModel& model, ControlsChecker_ABC& checker )
     : Q3VBox( parent, "UserProfileList" )
     , controllers_( controllers )
-    , pages_( pages )
-    , model_( model )
+    , pages_      ( pages )
+    , model_      ( model )
+    , checker_    ( checker )
 {
     list_ = new Q3ListBox( this );
     Q3HBox* box = new Q3HBox( this );
@@ -78,6 +81,7 @@ void UserProfileList::OnSelectionChanged()
         UserProfile*& editor = editors_[profile];
         if( !editor )
             editor = new ProfileEditor( *profile, controllers_.controller_, model_ );
+        checker_.Display( editors_ );
         pages_.Display( *editor );
     }
 }

@@ -1601,6 +1601,23 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Control</source>
         <translation>Contrôle</translation>
     </message>
+    <message>
+        <source>View</source>
+        <translation>Vue</translation>
+    </message>
+    <message>
+        <source>Do you want to proceed ?</source>
+        <translation>Voulez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Profil</translation>
+    </message>
+    <message>
+        <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
+</source>
+        <translation>L&apos;unité &apos;%1&apos; est déjà controlée par le profil &apos;%2&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>UserProfileList</name>

@@ -29,10 +29,13 @@ using namespace kernel;
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, const ExtensionTypes& extensions )
+UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                      gui::EntitySymbols& icons, const ExtensionTypes& extensions,
+                                      ControlsChecker_ABC& checker )
     : QTabWidget   ( parent, "UserProfileWidget" )
     , controllers_ ( controllers )
     , extensions_  ( extensions )
+    , checker_     ( checker )
     , profile_     ( 0 )
     , userRoleDico_( 0 )
 {
@@ -75,7 +78,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         pUnits_->addWidget( ( Q3ListView* ) unitRights );
         tabs->addTab( pUnits_, tr( "Units" ) );
 
-        UserProfileUnitControls* unitControls = new UserProfileUnitControls( tabs, controllers, factory, icons );
+        UserProfileUnitControls* unitControls = new UserProfileUnitControls( tabs, controllers, factory, icons, checker_ );
         pUnits_->addWidget( ( Q3ListView* ) unitControls );
         connect( unitControls, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ), unitRights, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ) );
         connect( unitRights, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool ) ), unitControls, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool ) ) );
@@ -85,7 +88,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         pPopulations_->addWidget( ( Q3ListView* ) populationRights );
         tabs->addTab( pPopulations_, tr( "Crowds" ) );
 
-        UserProfilePopulationControls* populationControls = new UserProfilePopulationControls( tabs, controllers, factory );
+        UserProfilePopulationControls* populationControls = new UserProfilePopulationControls( tabs, controllers, factory, checker_ );
         pPopulations_->addWidget( ( Q3ListView* ) populationControls );
         connect( populationControls, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ), populationRights, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ) );
         connect( populationRights, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool ) ), populationControls, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool ) ) );
@@ -138,6 +141,7 @@ void UserProfileWidget::NotifyUpdated( const kernel::ModelLoaded& )
                 {
                     QStringList list;
                     userRoleDico_->GetStringList( list, dicoKind_, dicoLanguage_ );
+                    userRoleDico_->GetStringList( supervisors_, dicoKind_, dicoLanguage_, "supervisor" );
                     userRole_->insertStringList( list );
                     userRoleGroup_->show();
                 }
@@ -250,7 +254,10 @@ void UserProfileWidget::OnUserRoleActivation( bool enable )
 void UserProfileWidget::OnUserRole( const QString& role )
 {
     if( userRoleDico_ && profile_ )
+    {
         profile_->SetUserRole( userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ ) );
+        ActivateControls();
+    }
     controllers_.controller_.Update( profile_ );
 }
 
@@ -274,6 +281,12 @@ void UserProfileWidget::ActivateControls()
     pPopulations_->setCurrentIndex( 1 );
     pUnits_->setCurrentIndex( 1 );
     pInformations_->setCurrentIndex( 1 );
+    if( profile_ )
+    {
+        bool supervisor = std::find( supervisors_.begin(), supervisors_.end(), profile_->GetUserRole() ) != supervisors_.end();
+        dynamic_cast< UserProfileControls_ABC* >( pUnits_->widget( 1 ) )->Update( supervisor );
+        dynamic_cast< UserProfileControls_ABC* >( pPopulations_->widget( 1 ) )->Update( supervisor );
+    }
 }
 
 // -----------------------------------------------------------------------------

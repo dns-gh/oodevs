@@ -25,6 +25,7 @@ namespace gui
 class UserProfileList;
 class UserProfileWidget;
 class ProfilesModel;
+class ControlsChecker_ABC;
 
 // =============================================================================
 /** @class  ProfileDialog
@@ -65,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const ProfilesModel& model_;
+    std::auto_ptr< ControlsChecker_ABC > pChecher_;
     UserProfileList* list_;
     UserProfileWidget* pages_;
     //@}

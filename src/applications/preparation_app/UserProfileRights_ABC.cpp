@@ -22,9 +22,9 @@ using namespace kernel;
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
 UserProfileRights_ABC::UserProfileRights_ABC( Q3ListView* listView )
-    : listView_( listView )
-    , profile_( 0 )
-    , check_( MAKE_PIXMAP( check ) )
+    : listView_  ( listView )
+    , profile_   ( 0 )
+    , check_     ( MAKE_PIXMAP( check ) )
     , check_grey_( MAKE_PIXMAP( check_grey ) )
 {
     listView_->header()->show();

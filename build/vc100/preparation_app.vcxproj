@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\main.cpp" />
@@ -262,6 +263,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\Config.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
