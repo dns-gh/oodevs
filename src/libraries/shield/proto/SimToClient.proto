@@ -389,7 +389,6 @@ message ResourceDotations {
     message ResourceDotation {
         required Common.ResourceType type                = 1;
         required int32               quantite_disponible = 2;
-        optional float               seuil_logistique    = 3;
     }
     repeated ResourceDotation elem = 1;
 }
@@ -433,8 +432,8 @@ message NBCAgents {
 }
 
 message Communication {
-    optional bool                     jammed          = 1;
-    optional Common.KnowledgeGroupId  knowledge_group = 2;
+    required bool                     jammed          = 1;
+    required Common.KnowledgeGroupId  knowledge_group = 2;
 }
 
 message MsgUnitAttributes {
@@ -516,7 +515,6 @@ message MsgUnitAttributes {
     optional Common.PartyAdhesions              adhesions                     = 49;
     optional EquipmentUpdate                    equipment_update              = 50;
     optional Common.Extension                   extension                     = 51;
-    optional int32                              transported_crowd             = 52;
 }
 
 message MsgUnitPathFind {
@@ -805,7 +803,8 @@ message MsgLogMedicalHandlingUpdate {
     optional bool                                blesse_mental          = 5;
     optional bool                                contamine_nbc          = 6;
     optional Common.EnumLogMedicalHandlingStatus etat                   = 7;
-    optional bool                                diagnostique_effectue  = 8;
+    optional int32                               current_state_end_tick = 8; // A implémenter ultérieurement - < When set, the tick when the current state will be finished
+    optional bool                                diagnostique_effectue  = 9;
 }
 
 message MsgLogMedicalHandlingDestruction {
@@ -849,7 +848,8 @@ message MsgLogMaintenanceHandlingUpdate {
    required Common.UnitId                           unit                    = 2;
    required Common.UnitId                           provider                = 3;
    optional Common.EnumLogMaintenanceHandlingStatus etat                    = 4;
-   optional bool                                    diagnostique_effectue   = 5;
+   optional int32                                   current_state_end_tick  = 5; // A implémenter ultérieurement - < When set, the tick when the current state will be finished
+   optional bool                                    diagnostique_effectue   = 6;
 }
 
 message MsgLogMaintenanceHandlingDestruction {
@@ -880,6 +880,13 @@ message MsgLogMaintenanceState {
    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
 }
 
+message MsgLogSupplyHandlingCreation {
+    required Common.SupplyRequestId request               = 1; //!< The request identifier
+    required Common.ParentEntity    supplier              = 2; //!< The supplier
+    required int32                  tick_creation         = 3; //!< The creation tick number
+    required Common.ParentEntity    transporters_provider = 4; //!< The logistic base which provides the transporters for the convoy
+}
+
 message SupplyResourceRequest {
     required Common.ResourceType resource  = 1; //!< The type of the resource @see ResourceType
     required int32               requested = 2; //!< The amount requested
@@ -898,19 +905,12 @@ message SupplyRecipientResourceRequests
     repeated SupplyRecipientResourcesRequest requests = 1;
 }
 
-message MsgLogSupplyHandlingCreation {
-    required Common.SupplyRequestId request               = 1; //!< The request identifier
-    required int32                  tick_creation         = 2; //!< The creation tick number
-    required Common.ParentEntity    supplier              = 3; //!< The supplier
-    required Common.ParentEntity    transporters_provider = 4; //!< The logistic base which provides the transporters for the convoy
-}
-
 message MsgLogSupplyHandlingUpdate {
-    optional Common.SupplyRequestId          request                = 1; //!< The request identifier    
-    optional Common.UnitId                   convoyer               = 2; //!< The convoyer
-    optional EnumLogSupplyHandlingStatus     state                  = 3; //!< The current state of the handling
-    optional int32                           current_state_end_tick = 4; //!< When set, the tick when the current state will be finished
-    optional SupplyRecipientResourceRequests requests               = 5; //!< The resources requested
+   optional Common.SupplyRequestId          request                = 1;
+   optional Common.UnitId                   convoying_unit         = 2;
+   optional EnumLogSupplyHandlingStatus     etat                   = 3;
+   optional int32                           current_state_end_tick = 4; // A implémenter ultérieurement - < When set, the tick when the current state will be finished
+   optional SupplyRecipientResourceRequests requests               = 5;
 }
 
 message MsgLogSupplyHandlingDestruction {
@@ -939,7 +939,39 @@ message MsgLogSupplyState {
 
 message MsgLogSupplyQuotas {
     required Common.ParentEntity       supplied = 1;
-    required Common.SeqOfDotationQuota quotas  = 2;
+    required Common.ParentEntity       supplier = 2;
+    required Common.SeqOfDotationQuota quotas   = 3;
+}
+
+enum EnumLogFuneralHandlingStatus {
+    en_attente_de_prise_en_charge  = 0;
+    transport_non_conditionne      = 1;
+    attente_moyen_conditionnement  = 2;
+    conditionnement                = 3;
+    attente_transporteur           = 4;
+    transport_conditionne          = 5;
+    sortie_de_chaine               = 6;
+}
+
+message MsgLogFuneralHandlingCreation {
+   required Common.FuneralRequestId  request            = 1;
+   required Common.UnitId            requesting_unit    = 2;
+   required int32                    tick_creation      = 3;
+   required Common.EnumHumanRank     rank               = 4;
+}
+
+message MsgLogFuneralHandlingUpdate {
+    required Common.FuneralRequestId        request               = 1;
+    required Common.UnitId                  requesting_unit       = 2;
+    optional Common.ParentEntity            handling_unit         = 3;
+    optional Common.UnitId                  convoying_unit        = 4;
+    optional EnumLogFuneralHandlingStatus   status                = 5;
+    optional Common.ResourceType            conditioning_resource = 6;
+}
+
+message MsgLogFuneralHandlingDestruction {
+   required Common.FuneralRequestId     request            = 1;
+   required Common.UnitId               requesting_unit    = 2;
 }
 
 message MsgCrowdCreation {
@@ -1415,6 +1447,9 @@ message MsgSimToClient {
         optional MsgUnitKnowledgeCreationRequestAck             unit_knowledge_creation_request_ack            = 137;
         optional MsgFormationUpdate                             formation_update                               = 138;
         optional MsgControlExportRequestAck                     control_export_request_ack                     = 139;
+        optional MsgLogFuneralHandlingCreation                  log_funeral_handling_creation                  = 140;
+        optional MsgLogFuneralHandlingUpdate                    log_funeral_handling_update                    = 141;
+        optional MsgLogFuneralHandlingDestruction               log_funeral_handling_destruction               = 142;
     }
     optional int32   context = 1;
     required Content message = 2;

@@ -1058,7 +1058,7 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_update_to_client_is_converted, Con
     content.mutable_log_medical_handling_update()->set_nbc_contaminated( true );
     content.mutable_log_medical_handling_update()->set_state( sword::LogMedicalHandlingUpdate::triaging );
     content.mutable_log_medical_handling_update()->set_diagnosed( true );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } blessure: mort blesse_mental: true contamine_nbc: true etat: tri diagnostique_effectue: true } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } blessure: mort blesse_mental: true contamine_nbc: true etat: tri current_state_end_tick: 1 diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1120,7 +1120,7 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_handling_update_to_client_is_converted,
     content.mutable_log_maintenance_handling_update()->mutable_provider()->set_id( 9 );
     content.mutable_log_maintenance_handling_update()->set_state( sword::LogMaintenanceHandlingUpdate::repairing );
     content.mutable_log_maintenance_handling_update()->set_diagnosed( true );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_maintenance_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } etat: reparation diagnostique_effectue: true } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_maintenance_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } etat: reparation current_state_end_tick: 1 diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1175,7 +1175,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_handling_creation_to_client_is_converted, Co
     content.mutable_log_supply_handling_creation()->set_tick( 9 );
     content.mutable_log_supply_handling_creation()->mutable_supplier()->mutable_automat()->set_id( 7 );
     content.mutable_log_supply_handling_creation()->mutable_transporters_provider()->mutable_formation()->set_id( 8 );    
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_creation { request { id: 7 } tick_creation: 9 supplier { automat { id: 7 } } transporters_provider { formation { id: 8 } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_creation { request { id: 7 } supplier { automat { id: 7 } } tick_creation: 9 transporters_provider { formation { id: 8 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1186,7 +1186,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_handling_update_to_client_is_converted, Cont
     FillSupplyRequest( *content.mutable_log_supply_handling_update()->mutable_requests()->add_requests() );
     content.mutable_log_supply_handling_update()->set_state( sword::LogSupplyHandlingUpdate::convoy_loading );
     content.mutable_log_supply_handling_update()->set_current_state_end_tick( 666 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_update { request { id: 7 } convoyer { id: 13 } state: convoi_chargement current_state_end_tick: 666 requests { requests { recipient { id: 34 } resources { resource { id: 10 } requested: 11 granted: 12 convoyed: 13 } resources { resource { id: 10 } requested: 11 granted: 12 convoyed: 13 } } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_update { request { id: 7 } convoying_unit { id: 13 } etat: convoi_chargement current_state_end_tick: 666 requests { requests { recipient { id: 34 } resources { resource { id: 10 } requested: 11 granted: 12 convoyed: 13 } resources { resource { id: 10 } requested: 11 granted: 12 convoyed: 13 } } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1245,7 +1245,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_quotas_to_client_is_converted, ContextFixtur
     content.mutable_log_supply_quotas()->mutable_supplier()->mutable_formation()->set_id( 8 );
     FillDotationQuota( content.mutable_log_supply_quotas()->mutable_quotas()->add_elem() );
     FillDotationQuota( content.mutable_log_supply_quotas()->mutable_quotas()->add_elem() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_quotas { supplied { automat { id: 7 } } quotas { elem { ressource_id { id: 10 } quota_disponible: 11 } elem { ressource_id { id: 10 } quota_disponible: 11 } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_quotas { supplied { automat { id: 7 } } supplier { formation { id: 8 } } quotas { elem { ressource_id { id: 10 } quota_disponible: 11 } elem { ressource_id { id: 10 } quota_disponible: 11 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

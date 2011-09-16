@@ -1002,8 +1002,10 @@ message ClientObjectProperty {
     @brief Defines the diffusion of a tactical line or a shape
 */
 message Diffusion {
-   optional AutomatId   automat   = 1; //!< The automat identifier
-   optional FormationId formation = 2; //!< The formation identifier
+   optional AutomatId		 automat	     = 1; //!< The automat identifier
+   optional FormationId		 formation		 = 2; //!< The formation identifier
+   repeated PartyId			 party           = 3; //!< The party identifier
+   optional KnowledgeGroupId knowledge_group = 4; //!< The knowledge group identifier
 }
 
 /** @struct TacticalLine

@@ -553,7 +553,7 @@ namespace
             dotation->set_nb_contamines_nbc             ( 0 );
             dotation->set_nb_dans_chaine_sante          ( 0 );
             dotation->set_nb_utilises_pour_maintenance  ( 0 );
-            dotation->set_nb_blesses_non_evacues        ( 0 ); //$$$ RPD TO IMPLEMENT
+            dotation->set_nb_blesses_non_evacues        ( 0 );
             dotation->set_nb_morts_dans_chaine_mortuaire( 0 );
         }
         for( int i = 0; i < from.human_dotations().elem().size(); ++i )
@@ -600,7 +600,7 @@ namespace
     {
         CONVERT_ID( type );
         CONVERT_TO( quantity, quantite_disponible );
-        //NB: Threshold doesn't exist in "to"
+        //NB: seuil_logistique / threshold doesn't exist in "to"
     }
     template< typename From, typename To >
     void ConvertLentEquipment( const From& from, To* to )
@@ -711,7 +711,6 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     if( from.has_adhesions() )
         for( int i = 0; i < from.adhesions().adhesion_size(); ++i )
             ConvertPartyAdhesion( from.adhesions().adhesion( i ), to->mutable_adhesions()->add_adhesion() );
-    CONVERT( transported_crowd );
 }
 
 // -----------------------------------------------------------------------------
@@ -1409,6 +1408,7 @@ void SimulationToClient::Convert( const sword::LogMedicalHandlingUpdate& from, M
                                   ( sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in, Common::ambulance_ramassage_deplacement_aller )
                                   ( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading, Common::ambulance_ramassage_dechargement )
                                   ( sword::LogMedicalHandlingUpdate::finished, Common::termine ) );
+    CONVERT_TO( diagnosed, current_state_end_tick );
     CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 
@@ -1486,6 +1486,7 @@ void SimulationToClient::Convert( const sword::LogMaintenanceHandlingUpdate& fro
                                   ( sword::LogMaintenanceHandlingUpdate::repairing, Common::reparation )
                                   ( sword::LogMaintenanceHandlingUpdate::moving_back, Common::retour_pion )
                                   ( sword::LogMaintenanceHandlingUpdate::finished, Common::termine_maintenance ) );
+    CONVERT_TO( diagnosed, current_state_end_tick );
     CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 
@@ -1555,8 +1556,8 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingCreation& from, 
 void SimulationToClient::Convert( const sword::LogSupplyHandlingUpdate& from, MsgsSimToClient::MsgLogSupplyHandlingUpdate* to )
 {
     CONVERT_ID( request );
-    CONVERT_ID( convoyer );
-    CONVERT_ENUM( state, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
+    CONVERT_ID_TO( convoyer, convoying_unit );
+    CONVERT_ENUM_TO( state, etat, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
                          ( sword::LogSupplyHandlingUpdate::convoy_setup, MsgsSimToClient::convoi_constitution )
                          ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point, MsgsSimToClient::convoi_deplacement_vers_point_chargement )
                          ( sword::LogSupplyHandlingUpdate::convoy_loading, MsgsSimToClient::convoi_chargement )
@@ -1626,8 +1627,8 @@ namespace
 void SimulationToClient::Convert( const sword::LogSupplyQuotas& from, MsgsSimToClient::MsgLogSupplyQuotas* to )
 {
     CONVERT_CB( supplied, ConvertParentEntity );
+    CONVERT_CB( supplier, ConvertParentEntity );
     CONVERT_LIST( quotas, elem, ConvertDotationQuota );
-    //NB: Supplier doesn't exist in "to"
 }
 
 // -----------------------------------------------------------------------------

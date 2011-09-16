@@ -113,6 +113,8 @@ namespace shield
     {
         CONVERT_ID( automat );
         CONVERT_ID( formation );
+        //CONVERT_SIMPLE_LIST( party );
+        CONVERT_ID( knowledge_group );
     }
     template< typename From, typename To >
     void ConvertPointsToLocation( const From& from, To* to )
@@ -306,8 +308,12 @@ namespace shield
         CONVERT( identifier );
         CONVERT( quantity );
         CONVERT_ID( knowledgegroup );
+        CONVERT_LIST( extensionlist, entries, ConvertExtensionEntry );
+        CONVERT_CB( push_flow_parameters, ConvertPushFlow );
+        CONVERT_CB( pull_flow_parameters, ConvertPullFlow );
         for( int i = 0; i < from.list().size(); ++i )
             ConvertValue( from.list( i ), to->add_list() );
+        CONVERT( external_identifier );
     }
     template< typename From, typename To >
     void ConvertMissionParameter( const From& from, To* to )
@@ -360,6 +366,41 @@ namespace shield
     {
         CONVERT( name );
         CONVERT( value );
+    }
+    template< typename From, typename To >
+    void ConvertSupplyResource( const From& from, To* to)
+    {
+        CONVERT_ID( resourcetype );
+        CONVERT( quantity );
+    }
+    template< typename From, typename To >
+    void ConvertSupplyTransporter( const From& from, To* to)
+    {
+        CONVERT_ID( equipmenttype );
+        CONVERT( quantity );
+    }
+    template< typename From, typename To >
+    void ConvertSupplyRecipient( const From& from, To* to)
+    {
+        CONVERT_ID( receiver );
+        CONVERT_SIMPLE_LIST( resources, ConvertSupplyResource );
+        CONVERT_LIST( path, elem, ConvertLocationElem );
+    }
+    template< typename From, typename To >
+    void ConvertPushFlow( const From& from, To* to)
+    {
+        CONVERT_SIMPLE_LIST( recipients, ConvertSupplyRecipient );
+        CONVERT_SIMPLE_LIST( transporters, ConvertSupplyTransporter );
+        CONVERT_LIST( waybackpath, elem, ConvertLocationElem );
+    }
+    template< typename From, typename To >
+    void ConvertPullFlow( const From& from, To* to)
+    {
+        CONVERT_CB( supplier, ConvertParentEntity );
+        CONVERT_SIMPLE_LIST( resources, ConvertSupplyResource );
+        CONVERT_SIMPLE_LIST( transporters, ConvertSupplyTransporter );
+        CONVERT_LIST( wayoutpath, elem, ConvertLocationElem );
+        CONVERT_LIST( waybackpath, elem, ConvertLocationElem );
     }
 }
 
