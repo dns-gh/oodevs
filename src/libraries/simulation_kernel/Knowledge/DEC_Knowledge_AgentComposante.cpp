@@ -24,6 +24,7 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
     : pType_               ( 0 )
     , bCanFire_            ( false )
     , bCanFireWhenUnloaded_( false )
+    , bMajor_              ( false )
     , nMajorScore_         ( 0 )
 {
     // NOTHING
@@ -37,6 +38,7 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_Composan
     : pType_               ( &composante.GetType() )
     , bCanFire_            ( composante.CanFire() )
     , bCanFireWhenUnloaded_( composante.CanFireWhenUnloaded() )
+    , bMajor_              ( composante.IsMajor() )
     , nMajorScore_         ( composante.GetMajorScore() )
 {
     // NOTHING
@@ -122,4 +124,13 @@ const PHY_ComposanteType_ABC& DEC_Knowledge_AgentComposante::GetType() const
 unsigned int DEC_Knowledge_AgentComposante::GetMajorScore() const
 {
     return nMajorScore_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentComposante::IsMajor
+// Created: LDC 2011-09-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentComposante::IsMajor() const
+{
+    return bMajor_;
 }

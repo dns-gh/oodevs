@@ -1135,6 +1135,7 @@ double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentCompos
 {
     double rDangerosity = 0.f;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( ( *it )->IsMajor() )
         rDangerosity = std::max( rDangerosity, ( *it )->GetDangerosity( compTarget, rDistBtwSourceAndTarget, bUseAmmo ) );
     return rDangerosity;
 }

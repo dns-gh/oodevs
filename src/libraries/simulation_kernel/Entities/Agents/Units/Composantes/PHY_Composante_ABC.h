@@ -58,6 +58,7 @@ public:
     virtual float GetReconnoissanceMaxRange() const = 0;
     virtual bool CanFire() const = 0;
     virtual bool CanFireWhenUnloaded() const = 0;
+    virtual bool IsMajor() const = 0;
     virtual unsigned int GetMajorScore() const = 0;
     //@}
 };

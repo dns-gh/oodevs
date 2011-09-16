@@ -607,6 +607,7 @@ double DEC_Knowledge_Agent::GetDangerosity( const MT_Vector3D& vTargetPosition, 
     const double    rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
+        if( itComposante->IsMajor() )
         rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, targetMajorComposante, rDistBtwSourceAndTarget, bUseAmmo ) );
     DegradeDangerosity( rDangerosity );
     return rDangerosity;

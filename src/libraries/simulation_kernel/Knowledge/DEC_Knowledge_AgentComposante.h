@@ -48,6 +48,7 @@ public:
     //@{
     const PHY_ComposanteType_ABC& GetType() const;
     unsigned int GetMajorScore() const;
+    bool IsMajor() const;
     //@}
 
     //! @name Operations
@@ -62,6 +63,7 @@ private:
     const PHY_ComposanteType_ABC* pType_;
     bool bCanFire_;
     bool bCanFireWhenUnloaded_;
+    bool bMajor_;
     unsigned int nMajorScore_;
     //@}
 };
