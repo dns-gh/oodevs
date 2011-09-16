@@ -17,6 +17,8 @@ namespace kernel
     class Controllers;
 }
 
+class Model;
+
 // =============================================================================
 /** @class  ControlsChecker
     @brief  Controls checker
@@ -28,27 +30,30 @@ class ControlsChecker : public ControlsChecker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ControlsChecker( kernel::Controllers& controllers );
+    explicit ControlsChecker( kernel::Controllers& controllers, Model& model );
     virtual ~ControlsChecker();
     //@}
 
     //! @name Operations
     //@{
     virtual void Display( const T_ProfileEditors& editors );
+    virtual QString Validate();
     virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity );
-    virtual std::string CheckControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const;
+    virtual std::string GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void UpdateProfile( UserProfile& profile, const kernel::Entity_ABC& entity, bool control );
+    void ValidateSide( );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    Model& model_;
     T_ProfileEditors editors_;
     //@}
 };

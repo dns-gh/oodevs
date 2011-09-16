@@ -5,6 +5,7 @@ AgentAffinitiesDialog.cpp \
 Application.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \
+ControlsChecker.cpp \
 DotationsEditor.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \

@@ -24,7 +24,7 @@ namespace gui
 
 class UserProfileList;
 class UserProfileWidget;
-class ProfilesModel;
+class Model;
 class ControlsChecker_ABC;
 
 // =============================================================================
@@ -40,7 +40,8 @@ class ProfileDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model, const kernel::ExtensionTypes& extensions );
+             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                            gui::EntitySymbols& icons, Model& model, const kernel::ExtensionTypes& extensions );
     virtual ~ProfileDialog();
     //@}
 

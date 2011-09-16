@@ -57,6 +57,12 @@ public:
     virtual ~ProfilesModel();
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::set< std::string >               T_Profiles;
+    typedef std::map< unsigned long, T_Profiles > T_Units;
+    //@}
+
     //! @name Operations
     //@{
     void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
@@ -67,6 +73,7 @@ public:
     void CreateProfile();
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
     void DeleteProfile( const UserProfile& profile );
+    void Visit( T_Units& units ) const;
 
     bool Exists( const QString& login ) const;
     const UserProfile* Find( const QString& name ) const;

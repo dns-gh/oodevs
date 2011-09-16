@@ -14,15 +14,16 @@
 #include "UserProfileList.h"
 #include "ControlsChecker.h"
 #include "icons.h"
+#include "preparation/Model.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
-                              ProfilesModel& model, const kernel::ExtensionTypes& extensions )
+                              Model& model, const kernel::ExtensionTypes& extensions )
     : QDialog( parent, "ProfileDialog" )
-    , pChecher_( new ControlsChecker( controllers ) )
+    , pChecher_( new ControlsChecker( controllers, model ) )
 {
     setCaption( tr( "User profiles" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2 );
@@ -54,7 +55,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    list_ = new UserProfileList( box, *pages_, controllers, model, *pChecher_ );
+    list_ = new UserProfileList( box, *pages_, controllers, model.profiles_, *pChecher_ );
     grid->addWidget( box, 1, 0 );
 
     box = new Q3HBox( this );

@@ -56,6 +56,15 @@ void UserProfileList::Save()
 {
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
         *const_cast< UserProfile* >( it->first ) = *it->second;
+    QString result = checker_.Validate();
+    if( result != "" )
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle( tr( "Profile" ) );
+        msgBox.setText( result );
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -10,17 +10,25 @@
 #include "preparation_app_pch.h"
 #include "ControlsChecker.h"
 #include "preparation/ProfileHierarchies_ABC.h"
+#include "preparation/Model.h"
 #include "preparation/UserProfile.h"
+#include "preparation/ProfilesModel.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
+#include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ControlsChecker constructor
 // Created: LGY 2011-09-15
 // -----------------------------------------------------------------------------
-ControlsChecker::ControlsChecker( kernel::Controllers& controllers )
+ControlsChecker::ControlsChecker( kernel::Controllers& controllers, Model& model )
     : controllers_( controllers )
+    , model_      ( model )
 {
     // NOTHING
 }
@@ -45,10 +53,10 @@ void ControlsChecker::Display( const T_ProfileEditors& editors )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ControlsChecker::CheckControl
+// Name: ControlsChecker::GetProfileControl
 // Created: LGY 2011-09-15
 // -----------------------------------------------------------------------------
-std::string ControlsChecker::CheckControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const
+std::string ControlsChecker::GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const
 {
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
         if( it->second )
@@ -93,4 +101,29 @@ void ControlsChecker::UpdateProfile( UserProfile& profile, const kernel::Entity_
 {
     profile.SetWriteable( entity, control );
     profile.SetReadable( entity, control );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::Validate
+// Created: LGY 2011-09-16
+// -----------------------------------------------------------------------------
+QString ControlsChecker::Validate()
+{
+    ProfilesModel::T_Units units;
+    model_.profiles_.Visit( units );
+    QString result;
+    BOOST_FOREACH( const ProfilesModel::T_Units::value_type& element, units )
+        if( element.second.size() > 1 )
+        {
+            const kernel::Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );
+            if( !entity )
+                entity = model_.GetAutomatResolver().Find( element.first );
+            if( !entity )
+                entity = model_.GetPopulationResolver().Find( element.first );
+            result += QString( tools::translate( "ControlsChecker", "Unit '%1' is associated with multiple profiles:" ) ).arg( entity->GetName().ascii() );
+            BOOST_FOREACH( const std::string& profile, element.second )
+                result += QString( " '%1 '" ).arg( profile.c_str() );
+            result += "\n";
+        }
+    return result;
 }

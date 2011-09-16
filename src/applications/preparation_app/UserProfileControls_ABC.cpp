@@ -250,7 +250,7 @@ UserProfileControls_ABC::T_Errors UserProfileControls_ABC::GetErrors( gui::Value
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors )
 {
-    std::string login = checker_.CheckControl( *profile_, entity );
+    std::string login = checker_.GetProfileControl( *profile_, entity );
     if( login != "" )
         errors.push_back( std::make_pair( login, &entity ) );
 }

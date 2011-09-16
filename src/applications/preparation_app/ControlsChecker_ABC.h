@@ -45,8 +45,9 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const T_ProfileEditors& editors ) = 0;
-    virtual std::string CheckControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const = 0;
+    virtual std::string GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const = 0;
     virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity ) = 0;
+    virtual QString Validate() = 0;
     //@}
 };
 

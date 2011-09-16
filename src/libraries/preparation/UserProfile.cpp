@@ -383,3 +383,14 @@ void UserProfile::NotifyPopulationDeleted( unsigned long populationId )
     SetRight( populationId, readPopulations_, false );
     SetRight( populationId, writePopulations_, false );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::Visit
+// Created: LGY 2011-09-16
+// -----------------------------------------------------------------------------
+void UserProfile::Visit( std::vector< unsigned long >& elements ) const
+{
+    elements.insert( elements.begin(), writeSides_.begin(), writeSides_.end() );
+    elements.insert( elements.begin(), writeAutomats_.begin(), writeAutomats_.end() );
+    elements.insert( elements.begin(), writePopulations_.begin(), writePopulations_.end() );
+}

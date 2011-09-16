@@ -49,6 +49,7 @@ public:
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     std::string GetUserRole() const;
+    void Visit( std::vector< unsigned long >& elements ) const;
     //@}
 
     //! @name Setters

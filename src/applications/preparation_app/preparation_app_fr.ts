@@ -74,6 +74,13 @@
     </message>
 </context>
 <context>
+    <name>ControlsChecker</name>
+    <message>
+        <source>Unit &apos;%1&apos; is associated with multiple profiles:</source>
+        <translation type="unfinished">L'unité &apos;%1&apos; est associé à plusieurs profils :</translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -1628,6 +1635,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Profil</translation>
     </message>
 </context>
 <context>
