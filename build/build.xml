@@ -1466,25 +1466,14 @@
     <target name="package.otpack.defense.scipio" description="package du defense-scipio otpack">
         <pack name="defense-scipio" description="defense-scipio exercises package">
             <include name="data/models/ada/physical/scipio/**"/>
-            <include name="data/models/ada/physical/scipioPIV3/**"/>            
             <include name="data/propagations/test/**"/>
-            <include name="exercises/ValidationTests/Performance/**"/>
-            <include name="exercises/ValidationTests/Validation/**"/>            
-            <include name="exercises/ValidationTests/ValidationLight/**"/>            
-            <include name="exercises/Poseidon VA/**"/>
-            <include name="exercises/Poseidon VA LOG/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Missions Communes/**"/>
             <include name="exercises/exercisesVA/Poseidon VA pions/**"/>
             <include name="exercises/exercisesVA/Poseidon VA AppuiCombat/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Acteurs Civils/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Soutien/**"/>
-            <include name="data/terrains/Performance/500_1000/**"/>
-            <include name="data/terrains/Performance/500_500/**"/>
-            <include name="data/terrains/Performance/500_500_light/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
-            <include name="data/terrains/Porto/**"/>
-            <include name="data/terrains/PortoV3/**"/>
         </pack>
     </target>
 
