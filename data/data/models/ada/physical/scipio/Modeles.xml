@@ -39,7 +39,6 @@
         <mission name="PION MELEE Harceler">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION MELEE Illuminer"/>
         <mission name="PION MELEE Intercepter">
           <fragorder name="Abandonner travaux"/>
         </mission>
@@ -15052,4 +15051,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0479938800" -->
+<!-- signature="1244611047" -->
