@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.7.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+  <xs:include schemaLocation="tools.xsd"/>
   <xs:element name="sections">
     <xs:annotation>
       <xs:documentation xml:lang="en">Root element, describes the list of section.</xs:documentation>
@@ -36,6 +37,7 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
+	  <xs:attribute name="model-version" type="T_Version"/>
     </xs:complexType>
   </xs:element>
   <xs:complexType name="T_Filter">
@@ -171,9 +173,9 @@
       <xs:documentation xml:lang="fr">Définit la liste des sections de filtres.</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Export"/>
-      <xs:enumeration value="Import"/>
-      <xs:enumeration value="Tools"/>
+	  <xs:enumeration value="export"/>
+	  <xs:enumeration value="import"/>
+	  <xs:enumeration value="tools"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="T_SectionMenu">
