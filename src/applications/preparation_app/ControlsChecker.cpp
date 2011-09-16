@@ -71,17 +71,17 @@ void ControlsChecker::Update( const UserProfile& profile, const kernel::Entity_A
     for( IT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
         if( it->second && profile.GetLogin().ascii() != it->second->GetLogin() )
         {
-            UserProfile* profile = it->second;
+            UserProfile* userProfile = it->second;
             const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior();
-            if( parent && profile->IsWriteable( *parent ) )
+            if( parent && userProfile->IsWriteable( *parent ) )
             {
                 tools::Iterator< const kernel::Entity_ABC& > it = parent->Get< ProfileHierarchies_ABC >().CreateSubordinateIterator();
                 while( it.HasMoreElements() )
-                    UpdateProfile( *profile, it.NextElement(), true );
-                UpdateProfile( *profile, *parent, false );
+                    UpdateProfile( *userProfile, it.NextElement(), true );
+                UpdateProfile( *userProfile, *parent, false );
             }
-            UpdateProfile( *profile, entity, false );
-            controllers_.controller_.Update( it->second );
+            UpdateProfile( *userProfile, entity, false );
+            controllers_.controller_.Update( userProfile );
         }
 }
 
