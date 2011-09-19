@@ -12,6 +12,31 @@
 // ADN_ComboBox_Drawings
 // -----------------------------------------------------------------------------
 
+
+namespace
+{
+    static const int drawingsIconSize_ = 50;
+
+    class DrawingsStyle : public QProxyStyle
+    {
+    public:
+        DrawingsStyle()
+        {
+            // NOTHING
+        }
+        ~DrawingsStyle()
+        {
+            // NOTHING
+        }
+        virtual int pixelMetric( PixelMetric metric, const QStyleOption* option = 0, const QWidget * widget = 0 ) const
+        {
+            if( metric == PM_SmallIconSize )
+                return drawingsIconSize_;
+            return QProxyStyle::pixelMetric( metric, option, widget );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Drawings constructor
 // Created: ABR 2011-04-19
@@ -20,6 +45,8 @@ template< typename T >
 inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
     : ADN_ComboBox( pParent, szName )
 {
+    setIconSize( QSize( drawingsIconSize_, drawingsIconSize_ ) );
+    setStyle( new DrawingsStyle() );
     pConnector_ = new ADN_ComboBox_Drawings_Connector< T >( *this );
 }
 

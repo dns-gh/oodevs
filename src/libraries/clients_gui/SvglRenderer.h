@@ -80,18 +80,22 @@ private:
     //@{
     std::auto_ptr< svg::Color >             current_;
     std::auto_ptr< svg::Opacity >           opacity_;
-    std::auto_ptr< svg::TextRenderer >      renderer_;
     std::auto_ptr< svg::References >        references_;
     std::auto_ptr< svg::RenderingContext >  renderingContext_;
     std::auto_ptr< svg::ListLengthFactory > listLenghts_;
 
     T_Lists lists_;
-    unsigned int colorList_;
     geometry::Rectangle2f previousViewport_;
     unsigned int previousWidth_;
     unsigned int previousHeight_;
     float r_, g_, b_, a_;
     bool colorDirty_;
+    //@}
+
+    //! @name Static data
+    //@{
+    static std::auto_ptr< svg::TextRenderer > renderer_;
+    static unsigned int colorList_;
     //@}
 };
 

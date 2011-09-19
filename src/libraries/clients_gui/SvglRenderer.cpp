@@ -22,6 +22,9 @@ using namespace geometry;
 using namespace gui;
 using namespace svg;
 
+std::auto_ptr< TextRenderer > SvglRenderer::renderer_( new TextRenderer() );
+unsigned int SvglRenderer::colorList_ = 0;
+
 // -----------------------------------------------------------------------------
 // Name: SvglRenderer constructor
 // Created: AGE 2007-05-31
@@ -29,11 +32,9 @@ using namespace svg;
 SvglRenderer::SvglRenderer()
     : current_         ( new Color( "black" ) )
     , opacity_         ( new Opacity() )
-    , renderer_        ( new TextRenderer() )
     , references_      ( new References() )
     , renderingContext_( new RenderingContext() )
     , listLenghts_     ( new ListLengthFactory() )
-    , colorList_       ( 0 )
     , colorDirty_      ( true )
 {
     r_ = g_ = b_ = a_ = 1;
