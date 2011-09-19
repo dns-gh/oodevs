@@ -24,6 +24,7 @@
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
@@ -171,9 +172,16 @@ void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
 {
-    xis >> xml::optional >> xml::start( "stocks" )
-                          >> xml::list( "resource", *this, &PHY_DotationStockContainer::ReadStock )
-                      >> xml::end;
+    try
+    {
+        xis >> xml::optional >> xml::start( "stocks" )
+                                 >> xml::list( "resource", *this, &PHY_DotationStockContainer::ReadStock )
+                             >> xml::end;
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +195,7 @@ void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
-        xis.error( "Unknown dotation type" );
+        xis.error( "Unknown dotation type '" + strType + "'" );
 
     AddStock( *pDotationCategory, xis );
 }
