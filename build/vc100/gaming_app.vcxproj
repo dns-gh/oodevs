@@ -154,6 +154,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LoggerProxy.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\main.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MainWindow.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventToolbar.cpp" />
@@ -888,6 +889,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ResourceLinksDialog.h" />

@@ -34,16 +34,20 @@ namespace kernel
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
-                     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                     const kernel::LogisticLevel& currentLevel, PropertiesDictionary& dictionary )
+LogisticLinks::LogisticLinks( Controller& controller,
+                              const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                              const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+                              const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                              const kernel::LogisticLevel& currentLevel,
+                              PropertiesDictionary& dictionary,
+                              const kernel::Entity_ABC& entity )
     : controller_       ( controller )
     , dictionary_       ( dictionary )
     , automatResolver_  ( automatResolver )
     , formationResolver_( formationResolver )
     , dotationResolver_ ( dotationResolver )
     , currentLevel_     ( currentLevel )
+    , entity_           ( entity )
 {
     CreateDictionary( dictionary );
 }
@@ -170,6 +174,11 @@ const kernel::Entity_ABC* LogisticLinks::GetCurrentSuperior() const
     if( superiorLinks_.empty() )
         return 0;
     return &superiorLinks_.back()->GetSuperior();
+}
+
+const kernel::Entity_ABC& LogisticLinks::GetEntity() const
+{
+    return entity_;
 }
 
 // --------------------------------------------------   ---------------------------

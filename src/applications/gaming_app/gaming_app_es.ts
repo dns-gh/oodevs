@@ -1394,6 +1394,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>LogisticListView</name>
+    <message>
+        <source>Change Logistic Links</source>
+        <translation type="unfinished">Cambiar enlace logístico</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1717,6 +1724,10 @@ Motivo: %3
     <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - No conectado</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

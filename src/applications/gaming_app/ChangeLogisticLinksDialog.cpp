@@ -38,7 +38,7 @@ using namespace gui;
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const Time_ABC& simulation, const Profile_ABC& profile )
     : QDialog( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -46,7 +46,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     , simulation_( simulation)
     , profile_( profile )
     , selected_( controllers )
-    , selectedLevel_( &kernel::LogisticLevel::none_ )
+    , selectedLevel_( &LogisticLevel::none_ )
 {
     setCaption( tr( "Logistic links edition" ) );
     Q3VBoxLayout* layout = new Q3VBoxLayout( this );
@@ -121,7 +121,7 @@ void ChangeLogisticLinksDialog::Show()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
         return;
     nominalSuperiorCombo_->AddItem( agent.GetName(), &agent );
     currentSuperiorCombo_->AddItem( agent.GetName(), &agent );
@@ -133,7 +133,7 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
         return;
     nominalSuperiorCombo_->RemoveItem( &agent );
     currentSuperiorCombo_->RemoveItem( &agent );
@@ -145,7 +145,7 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyCreated( const Formation_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
         return;
     nominalSuperiorCombo_->AddItem( agent.GetName(), &agent );
     currentSuperiorCombo_->AddItem( agent.GetName(), &agent );
@@ -157,7 +157,7 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Formation_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyDeleted( const Formation_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
         return;
     nominalSuperiorCombo_->RemoveItem( &agent );
     currentSuperiorCombo_->RemoveItem( &agent );
@@ -166,7 +166,7 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Formation_ABC& agent )
 namespace
 {
     template < typename T >
-    actions::Parameter_ABC& Serialize( ValuedComboBox< const T* >& combo, const kernel::OrderParameter& orderParameter )
+    actions::Parameter_ABC& Serialize( ValuedComboBox< const T* >& combo, const OrderParameter& orderParameter )
     {
         const T* tmp = combo.GetValue();
         if( tmp )

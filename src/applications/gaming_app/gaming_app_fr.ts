@@ -1394,6 +1394,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticListView</name>
+    <message>
+        <source>Change Logistic Links</source>
+        <translation>Changer les Liens Logistiques</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1717,6 +1724,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - Non connecté</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
     </message>
 </context>
 <context>

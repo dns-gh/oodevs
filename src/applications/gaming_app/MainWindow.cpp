@@ -36,6 +36,7 @@
 #include "LinkInterpreter.h"
 #include "LoggerProxy.h"
 #include "LoginDialog.h"
+#include "LogisticListView.h"
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
 #include "MessagePanel.h"
@@ -128,6 +129,7 @@
 #include "clients_gui/ElevationPainter.h"
 #include "clients_gui/SimpleFilter.h"
 #include "clients_gui/UrbanFilter.h"
+#include "clients_gui/LogisticList.h"
 #include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
@@ -256,6 +258,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
     pListsTabWidget->addTab( new AgentList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
+    pListsTabWidget->addTab( new gui::LogisticList< ::LogisticListView >( controllers, *factory, profile, *icons, model_.actions_, staticModel, simulation ), tr( "Logistic" ) );
     pListsTabWidget->addTab( new gui::ObjectList( controllers, *factory, profile ), tr( "Objects" ) );
     pListsTabWidget->addTab( new gui::PopulationList( controllers, *factory, profile ), tr( "Crowds" ) );
     pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, profile ), tr( "Populations" ) );

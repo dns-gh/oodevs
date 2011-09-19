@@ -781,6 +781,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.cpp">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1133,6 +1136,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.h">
       <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticListView.h">
+      <Filter>Source Files\Lists</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -55,9 +55,13 @@ class LogisticLinks : public kernel::LogisticLinks_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLinks( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::LogisticLevel& currentLevel,
-                     kernel::PropertiesDictionary& dictionary );
+             LogisticLinks( kernel::Controller& controller,
+                            const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                            const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+                            const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                            const kernel::LogisticLevel& currentLevel,
+                            kernel::PropertiesDictionary& dictionary,
+                            const kernel::Entity_ABC& entity );
     virtual ~LogisticLinks();
     //@}
 
@@ -71,6 +75,7 @@ public:
 
     const kernel::Entity_ABC* GetNominalSuperior() const;
     const kernel::Entity_ABC* GetCurrentSuperior() const;
+    const kernel::Entity_ABC& GetEntity() const;
     //@}
 
 private:
@@ -101,6 +106,7 @@ private:
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     T_SuperiorLinks superiorLinks_;
     std::vector< const kernel::Entity_ABC* > superiors_;
+    const kernel::Entity_ABC& entity_;
     //@}
 };
 
