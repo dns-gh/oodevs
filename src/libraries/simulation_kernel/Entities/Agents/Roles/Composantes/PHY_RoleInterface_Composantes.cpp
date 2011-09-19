@@ -16,6 +16,7 @@ double PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_         
 double PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_                = 0.;
 double PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = 0.;
 double PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByOpState_          = 0.;
+double PHY_RoleInterface_Composantes::rOpStateDecisionalThreshold_                  = 0.;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Composantes constructor

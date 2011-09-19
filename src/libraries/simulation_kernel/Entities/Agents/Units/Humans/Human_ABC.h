@@ -65,6 +65,7 @@ public:
     virtual bool IsUsable() const = 0;
     virtual bool IsDead() const = 0;
     virtual bool IsWounded() const = 0;
+    virtual bool IsSeriouslyPhysicallyWounded() const = 0;
     virtual bool IsContaminated() const = 0;
     virtual bool IsMentalDiseased() const = 0;
     virtual bool IsAnEmergency() const = 0;

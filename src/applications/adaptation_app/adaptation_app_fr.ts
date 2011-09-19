@@ -193,6 +193,10 @@ Voulez vous sauvegarder malgré tout ?</translation>
         <source>Equipment state on power indicators</source>
         <translation>Effet état équipement sur indicateurs de puissance</translation>
     </message>
+    <message>
+        <source>Decisional threshold</source>
+        <translation>Seuil Décisionnel</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
@@ -5885,6 +5889,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
         <translation>Facteurs Op. - Calcul du statut opérationnel - Le poids de l&apos;équipage doit être &gt;=0 et &lt;=1</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid threshold (must be &gt;=0 and &lt;= 1)</source>
+        <translation>Facteurs Op. - Calcul du statut opérationnel - Le seuil décisionnel doit être &gt;=0 et &lt;=1</translation>
     </message>
 </context>
 <context>

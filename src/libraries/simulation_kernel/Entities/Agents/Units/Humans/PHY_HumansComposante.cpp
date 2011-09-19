@@ -72,6 +72,15 @@ bool PHY_HumansComposante::IsViable() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::IsEmpty
+// Created: JSR 2011-09-15
+// -----------------------------------------------------------------------------
+bool PHY_HumansComposante::IsEmpty() const
+{
+    return humans_.empty();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::ChangeHumanRank
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
@@ -406,7 +415,11 @@ double PHY_HumansComposante::GetOperationalState() const
 {
     if( humans_.empty() )
         return 1.;
-    return static_cast< float >( nNbrUsableHumans_ ) / static_cast< float >( humans_.size() );
+    unsigned int state = 0;
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+        if( !( **it ).IsSeriouslyPhysicallyWounded() && !( **it ).IsDead() )
+            ++state;
+    return static_cast< double >( state ) / humans_.size();
 }
 
 // -----------------------------------------------------------------------------

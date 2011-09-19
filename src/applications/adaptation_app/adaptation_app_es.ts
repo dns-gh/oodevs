@@ -191,6 +191,10 @@
         <source>Equipment state on power indicators</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Decisional threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
@@ -5874,6 +5878,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
         <translation>Indicadores Op.  – Gestor de cálculos  - El peso de la tripulación es inválido (debe ser &gt;=0 y &lt;= 1)</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid threshold (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

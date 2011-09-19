@@ -253,6 +253,10 @@
         <source>Assigned to maintenance</source>
         <translation>Assigné à la maintenance</translation>
     </message>
+    <message>
+        <source>Wounded not evacuated</source>
+        <translation>Blessé non évacué</translation>
+    </message>
 </context>
 <context>
     <name>E_WeatherType</name>

@@ -121,6 +121,7 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
                       >> xml::attribute( "component", PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ )
                       >> xml::attribute( "major-component", PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ )
                       >> xml::attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
+                      >> xml::attribute( "threshold", PHY_RoleInterface_Composantes::rOpStateDecisionalThreshold_ )
                   >> xml::end;
 
     xisDecisional >> xml::optional() >> xml::start( "urban-combat" )

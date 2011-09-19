@@ -421,7 +421,7 @@ void MIL_AgentPion::SetPionAsPostCommand()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateDecision( float duration )
 {
-    if( IsDead() )
+    if( GetRole< PHY_RolePion_Composantes >().IsImmobilized() )
         pOrderManager_->CancelMission();
     try
     {
@@ -1273,6 +1273,15 @@ const std::string& MIL_AgentPion::GetCriticalIntelligence() const
 float MIL_AgentPion::GetAffinity( unsigned long teamID ) const
 {
     return pAffinities_->GetAffinity( teamID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsImmobilized
+// Created: JSR 2011-09-15
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsImmobilized() const
+{
+    return  GetRole< PHY_RolePion_Composantes >().IsImmobilized();
 }
 
 // -----------------------------------------------------------------------------

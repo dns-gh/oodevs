@@ -169,6 +169,7 @@ public:
     static double rOpStateWeightMajorComposante_;
     static double rMaxDangerosityDegradationByNeutralizedState_;
     static double rMaxDangerosityDegradationByOpState_;
+    static double rOpStateDecisionalThreshold_;
 
 private:
     //! @name Serialization

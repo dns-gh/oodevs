@@ -575,11 +575,12 @@ namespace
                 dotationTo->set_nb_blesses_mentaux( dotationTo->nb_blesses_mentaux() + quantity );
             if( dotationFrom.contaminated() )
                 dotationTo->set_nb_contamines_nbc( dotationTo->nb_contamines_nbc() + quantity );
-            if( location == sword::medical )
+            if( state != sword::deadly && location == sword::medical )
                 dotationTo->set_nb_dans_chaine_sante( dotationTo->nb_dans_chaine_sante() + quantity );
             if( location == sword::maintenance )
                 dotationTo->set_nb_utilises_pour_maintenance( dotationTo->nb_utilises_pour_maintenance() + quantity );
-            dotationTo->set_nb_blesses_non_evacues( 0 );
+            if( state == sword::injured && location == sword::battlefield )
+                dotationTo->set_nb_blesses_non_evacues( dotationTo->nb_blesses_non_evacues() + quantity );
             dotationTo->set_nb_morts_dans_chaine_mortuaire( 0 );
         }
     }

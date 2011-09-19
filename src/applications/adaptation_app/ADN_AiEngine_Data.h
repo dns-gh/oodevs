@@ -49,6 +49,7 @@ public:
     ADN_Type_Double rMinorEquipmentWeight_;
     ADN_Type_Double rMajorEquipmentWeight_;
     ADN_Type_Double rHumanWeight_;
+    ADN_Type_Double rDecisionalThreshold_;
     ADN_Type_Double rUrbanCombatWeight_;
     ADN_Type_Time rDefaultFeedbackTime_;
     ADN_Type_Time rMinimumAffinity_;

@@ -781,6 +781,8 @@ double PHY_ComposantePion::GetOperationalState() const
     if( *pState_ != PHY_ComposanteState::undamaged_ )
         return 0.;
     assert( pHumans_ );
+    if( pHumans_->IsEmpty() )
+        return 1.;
     return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * pHumans_->GetOperationalState();
 }
 

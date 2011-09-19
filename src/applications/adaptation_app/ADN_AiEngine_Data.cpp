@@ -30,6 +30,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rMinorEquipmentWeight_       ( 0.f )
     , rMajorEquipmentWeight_       ( 1.f )
     , rHumanWeight_                ( 0.f )
+    , rDecisionalThreshold_        ( 0.f )
     , rUrbanCombatWeight_          ( 100.f )
     , rDefaultFeedbackTime_        ( "1s" )
     , rMinimumAffinity_            ( "1s" )
@@ -45,6 +46,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
     rMajorEquipmentWeight_.SetUndoAvailable( false );
     rHumanWeight_         .SetDataName( "Poids du personnel." );
+    rDecisionalThreshold_ .SetDataName( "Seuil décisionnel." );
 
     rPertinenceMaxDecrease_.SetDataName( "la dégradation de la dangerosité par la pertinence" );
     rOperationalStateMaxDecrease_.SetDataName( "la dégradation de la dangerosité par l'état opérationnel" );
@@ -102,6 +104,7 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "component", rMinorEquipmentWeight_ )
             >> xml::attribute( "major-component", rMajorEquipmentWeight_ )
             >> xml::attribute( "crew", rHumanWeight_ )
+            >> xml::attribute( "threshold", rDecisionalThreshold_ )
           >> xml::end;
 
     if( rMinorEquipmentWeight_.GetData() < 0.f || rMinorEquipmentWeight_.GetData() > 1.f )
@@ -112,6 +115,9 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 
     if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.f )
         throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
+
+    if( rDecisionalThreshold_.GetData() < 0.f || rDecisionalThreshold_.GetData() > 1.f )
+        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid threshold (must be >=0 and <= 1)" ).ascii() );
 
     if( rHumanWeight_.GetData() < 0.f || rHumanWeight_.GetData() > 1.f )
         throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).ascii() );
@@ -164,6 +170,7 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
                 << xml::attribute( "component", rMinorEquipmentWeight_ )
                 << xml::attribute( "major-component", rMajorEquipmentWeight_ )
                 << xml::attribute( "crew", rHumanWeight_ )
+                << xml::attribute( "threshold", rDecisionalThreshold_ )
             << xml::end
             << xml::start( "force-ratio" )
                 << xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )

@@ -69,7 +69,8 @@ public:
     void ChangeHumanState( sword::MissionParameters& msg );
 
     double GetOperationalState() const;
-    bool IsViable () const;
+    bool IsViable() const;
+    bool IsEmpty() const;
     //@}
 
     //! @name Composante notifications

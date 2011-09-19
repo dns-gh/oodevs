@@ -103,6 +103,7 @@ public:
     virtual const std::string& GetCriticalIntelligence() const;
     virtual float GetAffinity( unsigned long teamID ) const;
 
+    bool IsImmobilized() const;
     bool IsAutonomous() const; // Drones
     //@}
 

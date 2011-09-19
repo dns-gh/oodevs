@@ -74,6 +74,7 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Non major equipments state weight" ), data_.rMinorEquipmentWeight_, 0, eZeroOne );
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Major equipments state weight" ), data_.rMajorEquipmentWeight_, 0, eZeroOne );
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Crew state weight" ), data_.rHumanWeight_, 0, eZeroOne );
+    builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Decisional threshold" ), data_.rDecisionalThreshold_, 0, eZeroOne );
 
     // Urban area effect on fire
     Q3GroupBox* pUrbanStateBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Urban combat computation" ), pMainWidget_ );

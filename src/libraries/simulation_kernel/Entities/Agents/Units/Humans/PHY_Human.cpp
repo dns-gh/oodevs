@@ -477,6 +477,16 @@ bool PHY_Human::IsDead() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::IsSeriouslyPhysicallyWounded
+// Created: JSR 2011-09-15
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsSeriouslyPhysicallyWounded() const
+{
+    assert( pWound_ );
+    return *pWound_ == PHY_HumanWound::woundedU2_ || *pWound_ == PHY_HumanWound::woundedU3_ || *pWound_ == PHY_HumanWound::woundedUE_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::IsAvailable
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------

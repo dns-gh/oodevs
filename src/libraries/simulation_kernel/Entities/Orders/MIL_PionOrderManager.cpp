@@ -53,6 +53,8 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
+    if( pion_.IsImmobilized() )
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_surrendered );
     // Instanciate and check the new mission

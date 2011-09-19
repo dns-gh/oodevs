@@ -55,11 +55,11 @@ namespace
     }
     inline google::protobuf::int32 GetMaintenance( const HumanDotations_HumanDotation& humans )
     {
-        return ( humans.location() == sword::maintenance ) ? humans.quantity() : 0;
+        return ( humans.location() == sword::maintenance && humans.state() != sword::dead ) ? humans.quantity() : 0;
     }
-    inline google::protobuf::int32 GetUnevacuatedWounded( const HumanDotations_HumanDotation& /*humans*/ )
+    inline google::protobuf::int32 GetUnevacuatedWounded( const HumanDotations_HumanDotation& humans )
     {
-        return 0; //$$$ RPD TO IMPLEMENT
+        return ( humans.location() == sword::battlefield && humans.state() == sword::injured ) ? humans.quantity() : 0;
     }
 
     const unsigned nHumanStates = 9;

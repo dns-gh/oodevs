@@ -78,10 +78,12 @@ void TroopsCompatibilityVersion::DoUpdate( const sword::UnitAttributes& message 
             current[ eTroopHealthStateMentalWounds ].*Rank( rank ) += quantity;
         if( elem.contaminated() )
             current[ eTroopHealthStateContaminated ].*Rank( rank ) += quantity;
-        if( location == sword::medical )
+        if( state != sword::deadly && location == sword::medical )
             current[ eTroopHealthStateInTreatment ].*Rank( rank ) += quantity;
         if( location == sword::maintenance )
             current[ eTroopHealthStateUsedForMaintenance ].*Rank( rank ) += quantity;
+        if( state == sword::injured && location == sword::battlefield )
+            current[ eTroopHealthStateWoundedNotEvacuated ].*Rank( rank ) += quantity;
     }
     Humans differences[ kernel::eTroopHealthStateNbrStates ];
     for( int i = 0; i < eTroopHealthStateNbrStates; ++i )

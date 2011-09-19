@@ -66,6 +66,7 @@ public:
     virtual PHY_InjuredHuman* GetInjury() = 0;
     virtual double GetOperationalState() const = 0;
     virtual bool IsViable() const = 0;
+    virtual bool IsEmpty() const = 0;
     //@}
 
     //! @name Composante notifications

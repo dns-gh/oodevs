@@ -66,6 +66,7 @@ public:
     E_Location GetLocation() const;
     bool IsUsable() const;
     bool IsDead() const;
+    bool IsSeriouslyPhysicallyWounded() const;
     bool IsWounded() const;
     bool IsContaminated() const;
     bool IsMentalDiseased() const;

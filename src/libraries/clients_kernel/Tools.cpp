@@ -60,7 +60,8 @@ QString tools::ToString( E_TroopHealthState nState )
         tools::translate( "E_TroopHealthState", "Mentally injured" ),
         tools::translate( "E_TroopHealthState", "Contaminated" ),
         tools::translate( "E_TroopHealthState", "Under treatment " ),
-        tools::translate( "E_TroopHealthState", "Assigned to maintenance" )
+        tools::translate( "E_TroopHealthState", "Assigned to maintenance" ),
+        tools::translate( "E_TroopHealthState", "Wounded not evacuated" )
     };
     if( nState >= 0 && nState < eTroopHealthStateNbrStates )
         return healthStates[ nState ];

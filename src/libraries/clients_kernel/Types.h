@@ -34,6 +34,7 @@ enum E_TroopHealthState // $$$$ ABR 2011-08-30: Here to preserve old troops disp
     eTroopHealthStateContaminated,
     eTroopHealthStateInTreatment,
     eTroopHealthStateUsedForMaintenance,
+    eTroopHealthStateWoundedNotEvacuated,
     eTroopHealthStateNbrStates
 };
 

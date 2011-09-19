@@ -32,6 +32,7 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( OverloadHumans, 5 );
     MOCK_METHOD( GetOperationalState, 0 );
     MOCK_METHOD( IsViable, 0 );
+    MOCK_METHOD( IsEmpty, 0 );
     MOCK_METHOD( NotifyComposanteHandledByMaintenance, 0 );
     MOCK_METHOD( NotifyComposanteBackFromMaintenance, 0 );
     MOCK_METHOD( NotifyComposanteTransfered, 2 );
