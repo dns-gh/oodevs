@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<resource-networks model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/ResourceNetworks.xsd">
+<resource-networks model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/ResourceNetworks.xsd">
   <resource-network name="électricité">
     <resource id="143"/>
     <color rgb="0xffff7f"/>
@@ -11,4 +11,4 @@
     <defaults production="100"/>
   </resource-network>
 </resource-networks>
-<!-- signature="0070816587" -->
+<!-- signature="0409810049" -->

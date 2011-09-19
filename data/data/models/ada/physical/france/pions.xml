@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<units model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/Units.xsd">
+<units model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Units.xsd">
   <unit can-fly="true" decisional-model="Patrouille AIR Assaut" id="1" name="Patrouille CAS" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
@@ -12128,4 +12128,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1745591393" -->
+<!-- signature="1177799490" -->

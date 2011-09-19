@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<medical-treatments model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/physical/MedicalTreatment.xsd">
+<medical-treatments model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/MedicalTreatment.xsd">
   <!-- If a death-threshold is set to "-1", the injury isn't deadly, even it gets worse -->
   <medical-treatment death-threshold="95" id="1" name="Wound">
     <injuries>
@@ -32,4 +32,4 @@
     </injuries>
   </medical-treatment>
 </medical-treatments>
-<!-- signature="4179680797" -->
+<!-- signature="0263502184" -->
