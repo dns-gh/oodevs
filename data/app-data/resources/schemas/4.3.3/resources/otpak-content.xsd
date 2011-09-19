@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="content">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Root element, defines otpak meta data.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" nillable="false">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the display name for the package.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string" nillable="false">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines a package description displayed on installation.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
