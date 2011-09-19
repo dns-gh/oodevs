@@ -35,7 +35,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual const kernel::Hierarchies* RetrieveHierarchy( const kernel::Entity_ABC& entity );
+    virtual const kernel::Hierarchies* RetrieveHierarchy( const kernel::Entity_ABC& entity ) const;
     using HierarchyListView_ABC::NotifyCreated;
     using HierarchyListView_ABC::NotifyUpdated;
     using HierarchyListView_ABC::NotifyDeleted;

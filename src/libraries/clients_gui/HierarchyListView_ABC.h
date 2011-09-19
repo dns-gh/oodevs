@@ -78,7 +78,7 @@ protected slots:
 protected:
     //! @name Helpers
     //@{
-    virtual const kernel::Hierarchies* RetrieveHierarchy( const kernel::Entity_ABC& entity ) = 0;
+    virtual const kernel::Hierarchies* RetrieveHierarchy( const kernel::Entity_ABC& entity ) const = 0;
     virtual void NotifyCreated( const kernel::Hierarchies& hierarchies );
     virtual void NotifyUpdated( const kernel::Hierarchies& hierarchies );
     virtual void NotifyDeleted( const kernel::Hierarchies& hierarchies );
@@ -90,32 +90,37 @@ protected:
     virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
     static void SetVisible( Q3ListViewItem* item, bool visible );
     void ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func );
+    void UpdateItem( ValuedListItem* item );
     //@}
 
 private:
     //! @name Helpers
     //@{
     ValuedListItem* FindOrCreate( const kernel::Entity_ABC* entity );
-    void UpdateItem( ValuedListItem* item );
     virtual Q3DragObject* dragObject();
     virtual void dropEvent( QDropEvent* pEvent );
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
     virtual void dragEnterEvent( QDragEnterEvent* pEvent );
-    bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
+    virtual bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     bool HasAnyChildVisible( gui::ValuedListItem* item, boost::function< bool ( gui::ValuedListItem* ) > func );
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    kernel::Controllers&                      controllers_;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                      controllers_;
     ItemFactory_ABC&                          factory_;
     const kernel::Profile_ABC&                profile_;
     const EntitySymbols&                      symbols_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QTimer*                                   timer_;
-    QPoint                                   dragStartPosition_;
+    QPoint                                    dragStartPosition_;
     //@}
 };
 

@@ -961,6 +961,21 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::LogisticListView</name>
+    <message id="false">
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Unsupported units</source>
+        <translation>Unités non soutenues</translation>
+    </message>
+    <message>
+        <source>Supported units</source>
+        <translation>Unités soutenues</translation>
+    </message>
+</context>
+<context>
     <name>gui::LogisticPrototype_ABC</name>
     <message>
         <source>Camp</source>

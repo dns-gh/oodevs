@@ -37,7 +37,7 @@ HierarchyListView< H >::~HierarchyListView()
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
 template< typename H >
-const kernel::Hierarchies* HierarchyListView< H >::RetrieveHierarchy( const kernel::Entity_ABC& entity )
+const kernel::Hierarchies* HierarchyListView< H >::RetrieveHierarchy( const kernel::Entity_ABC& entity ) const
 {
     return entity.Retrieve< H >();
 }

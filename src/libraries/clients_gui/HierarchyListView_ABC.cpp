@@ -59,7 +59,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     connect( this,   SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this,   SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
     connect( this,   SIGNAL( selectionChanged    ( Q3ListViewItem* ) ),                     this, SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
-    connect( timer_, SIGNAL( timeout() ),                                                  this, SLOT( Update() ) );
+    connect( timer_, SIGNAL( timeout() ),                                                   this, SLOT( Update() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void HierarchyListView_ABC::SetVisible( Q3ListViewItem* item, bool visible )
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::function< bool
+// Name: HierarchyListView_ABC::ApplyFilter
 // Created: ABR 2011-05-09
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func )
@@ -181,7 +181,7 @@ void HierarchyListView_ABC::ApplyFilter( boost::function< bool ( gui::ValuedList
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::function< bool
+// Name: HierarchyListView_ABC::HasAnyChildVisible
 // Created: ABR 2011-05-09
 // -----------------------------------------------------------------------------
 bool HierarchyListView_ABC::HasAnyChildVisible( gui::ValuedListItem* item, boost::function< bool ( gui::ValuedListItem* ) > func )
@@ -313,9 +313,8 @@ void HierarchyListView_ABC::UpdateItem( ValuedListItem* root )
         if( root->IsA< const Entity_ABC >() )
         {
             const Entity_ABC& entity = *root->GetValue< const Entity_ABC >();
-            const bool isVisible = profile_.IsVisible( entity );
             DisplayIcon( entity, root );
-            SetVisible( root, isVisible );
+            SetVisible( root, profile_.IsVisible( entity ) );
         }
         root = static_cast< ValuedListItem* >( root->nextSibling() );
     }

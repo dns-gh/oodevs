@@ -850,6 +850,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LogisticListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1364,6 +1367,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticList.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
