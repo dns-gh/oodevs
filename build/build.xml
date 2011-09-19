@@ -118,7 +118,7 @@
         </build-lib>
     </target>
 
-    <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood" description="build preparation static library">    
+    <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood" description="build preparation static library">
         <build-lib name="preparation" depends="qt4" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
@@ -146,7 +146,7 @@
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
-    
+
     <target name="library.crossbow_plugin_dll" depends="library.crossbow_plugin" description="build crossbow_plugin dynamic library">
         <build-lib name="crossbow_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="gdal_i,Qt3Support4,
@@ -681,7 +681,7 @@
             <includepath path="${out.dir}/release/libraries/protocol"/>
         </build-app>
     </target>
-    
+
     <target name="application.launcher_test_app" depends="library.protocol,library.frontend,library.shield" description="build application">
         <build-app name="launcher_test_app" subsystem="console" depends="qt4,boost,xerces,protobuf"
             libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -1284,7 +1284,7 @@
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>
-    
+
     <target name="package.plugin.dis" description="create dis plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -1293,7 +1293,7 @@
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>
-    
+
     <target name="package.plugin.timeline" description="create timeline plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -1302,7 +1302,7 @@
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>
-    
+
     <target name="package.plugin.crossbow" description="create crossbow plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -1311,7 +1311,7 @@
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>
-    
+
     <!-- Package misc -->
     <target name="package.patch" description="create a patch installer">
         <nsis name="sword-patch" script="patchs/sword-patch.nsi" license="true">
@@ -1376,7 +1376,7 @@
             <delete file="${out.dir}/content.xml"/>
         </sequential>
     </macrodef>
- 
+
     <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.tutorials,package.otpack.defense.france,
                                             package.otpack.defense.scipio,package.otpack.security.worldwide,package.otpack.security.masa,
                                             package.otpack.lossc,package.otpack.tutosw,package.otpack.validation,package.otpack.trainingML, package.otpack.decisional"
@@ -1394,7 +1394,7 @@
             <include name="data/terrains/Angers_x9/**"/>
         </pack>
     </target>
-        
+
     <target name="package.otpack.defense.tutorials" description="package du defense-tutorials otpack">
         <pack name="defense-tutorials" description="tutorials exercises package">
             <include name="data/models/ada/physical/france/**"/>
@@ -1515,13 +1515,13 @@
     <target name="package.otpack.validation" description="package de validation otpack">
         <pack name="validationsw" description="validation, performance and charge exercises package">
             <include name="data/models/ada/physical/scipio/**"/>
-            <include name="data/models/ada/physical/scipioPIV3/**"/>            
+            <include name="data/models/ada/physical/scipioPIV3/**"/>
             <include name="data/models/ada/physical/france/**"/>
             <include name="data/propagations/test/**"/>
             <include name="exercises/ValidationTests/Charge/**"/>
             <include name="exercises/ValidationTests/Performance/**"/>
-            <include name="exercises/ValidationTests/Validation/**"/>            
-            <include name="exercises/ValidationTests/ValidationLight/**"/>            
+            <include name="exercises/ValidationTests/Validation/**"/>
+            <include name="exercises/ValidationTests/ValidationLight/**"/>
             <include name="data/terrains/Performance/500_1000/**"/>
             <include name="data/terrains/Performance/500_500/**"/>
             <include name="data/terrains/Performance/500_500_light/**"/>
@@ -1533,10 +1533,10 @@
     <target name="package.otpack.trainingML" description="package de training MasaLife">
         <pack name="trainingML" description="package de training MasaLife">
             <include name="data/models/training/physical/worldwide/**"/>
-            <include name="data/models/training/decisional/**"/>            
+            <include name="data/models/training/decisional/**"/>
             <include name="exercises/Training/**"/>
             <include name="exercises/Training Porto/**"/>
-            <include name="exercises/MLTraining/**"/>          
+            <include name="exercises/MLTraining/**"/>
             <include name="data/terrains/PortoV3Lite - worldwide/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
