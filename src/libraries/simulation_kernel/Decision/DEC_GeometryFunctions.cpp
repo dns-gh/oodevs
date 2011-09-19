@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -541,6 +542,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
+        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+            pResult.reset();
     }
     return pResult;
 }
@@ -576,16 +579,23 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStaticSafetyPosit
         {
             boost::shared_ptr< MT_Vector2D > pResult(new MT_Vector2D( vSafetyPos ));
             buffer.insert( std::pair< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > >( key, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D >(pResult, vEnemyPos) ) );
-            return pResult;
+
+            if( callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+                return pResult;
         }
         else if( vEnemyPos.SquareDistance( search->second.second ) > 10000. && vSafetyPos.SquareDistance( search->second.second ) > 10000. )
         {
             search->second.first.reset( new MT_Vector2D( vSafetyPos ) );
             search->second.second = vEnemyPos;
-            return search->second.first;
+
+            if( callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( search->second.first ) )
+                return search->second.first;
         }
         else
-            return search->second.first;
+        {
+            if( callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( search->second.first ) )
+                return search->second.first;
+        }
     }
     return boost::shared_ptr< MT_Vector2D >();
 }
@@ -601,7 +611,11 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     boost::shared_ptr< MT_Vector2D > pResult;
     DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nPopulationKnowledgeID );
     if( pKnowledge )
+    {
         pResult.reset( new MT_Vector2D( pKnowledge->GetSafetyPosition( callerAgent, rMinDistance ) ) );
+        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+            pResult.reset();
+    }
     return pResult;
 }
 
@@ -636,6 +650,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
+        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+            pResult.reset();
     }
     return pResult;
 }
