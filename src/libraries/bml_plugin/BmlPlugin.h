@@ -11,6 +11,7 @@
 #define __BmlPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
+#include <memory>
 
 namespace sword
 {
