@@ -16,6 +16,7 @@
 
 namespace kernel
 {
+    class Controller;
     class PropertiesDictionary;
 }
 
@@ -36,9 +37,9 @@ class LogisticLevelAttritube: public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLevelAttritube( const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
-             LogisticLevelAttritube( const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
-             LogisticLevelAttritube( xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
+             LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
+             LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
+             LogisticLevelAttritube( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
     virtual ~LogisticLevelAttritube();
     //@}
 
@@ -46,6 +47,7 @@ public:
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     const kernel::LogisticLevel& GetLogisticLevel() const;
+    const kernel::Entity_ABC& GetEntity() const;
     //@}
 
 private:
@@ -64,6 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::Entity_ABC& entity_;
     kernel::EntityLogisticLevel logisticLevel_;
     //@}

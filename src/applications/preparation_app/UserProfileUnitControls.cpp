@@ -9,9 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "UserProfileUnitControls.h"
-#include "LongNameHelper.h"
 #include "moc_UserProfileUnitControls.cpp"
 #include "PreparationProfile.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Entity_ABC.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list

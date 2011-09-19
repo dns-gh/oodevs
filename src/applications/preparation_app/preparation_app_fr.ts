@@ -578,6 +578,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

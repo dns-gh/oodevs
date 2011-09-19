@@ -9,9 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "CommunicationListView.h"
-#include "LongNameHelper.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/ValuedDragObject.h" // LTO
@@ -54,7 +54,7 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
     if( item )
     {
         item->SetNamed( entity );
-        item->setRenameEnabled( 0, !LongNameHelper::SetItemLongName( entity, *item ) );
+        item->setRenameEnabled( 0, !gui::LongNameHelper::SetItemLongName( entity, *item ) );
     }
 }
 
@@ -65,7 +65,7 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
-    item->setRenameEnabled( 0, !LongNameHelper::SetItemLongName( entity, *item ) );
+    item->setRenameEnabled( 0, !gui::LongNameHelper::SetItemLongName( entity, *item ) );
 }
 
 // -----------------------------------------------------------------------------

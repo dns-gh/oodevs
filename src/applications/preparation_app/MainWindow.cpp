@@ -23,6 +23,7 @@
 #include "FilterOrbatReIndexer.h"
 #include "IntelligencesLayer.h"
 #include "LimitsLayer.h"
+#include "LogisticListView.h"
 #include "Menu.h"
 #include "ModelBuilder.h"
 #include "ObjectCreationPanel.h"
@@ -64,6 +65,7 @@
 #include "clients_gui/IntelligenceList.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
+#include "clients_gui/LogisticList.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/MetricsLayer.h"
@@ -230,6 +232,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
         new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
         pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
+
+        pAgentsTabWidget->addTab( new gui::LogisticList< ::LogisticListView >( controllers, *factory, PreparationProfile::GetProfile(), *icons, *modelBuilder_ ), tr( "Logistic" ) );
         pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
     }
     {

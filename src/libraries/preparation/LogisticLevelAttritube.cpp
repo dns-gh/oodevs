@@ -20,8 +20,9 @@
 // Name: LogisticLevelAttritube constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
-    : entity_       ( entity )
+LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+    : controller_   ( controller )
+    , entity_       ( entity )
     , logisticLevel_( active ? &kernel::LogisticLevel::logistic_base_ : &kernel::LogisticLevel::none_ ) // Logistic brain is enabled by default for type "tc2"
 {
     CreateDictionary( dictionary, active );
@@ -31,8 +32,9 @@ LogisticLevelAttritube::LogisticLevelAttritube( const kernel::Entity_ABC& entity
 // Name: LogisticLevelAttritube constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
-    : entity_       ( entity )
+LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
+    : controller_   ( controller )
+    , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
 {
     CreateDictionary( dictionary, true );
@@ -42,8 +44,9 @@ LogisticLevelAttritube::LogisticLevelAttritube( const kernel::Entity_ABC& entity
 // Name: LogisticLevelAttritube constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
-    : entity_       ( entity )
+LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+    : controller_   ( controller )
+    , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
 {
     std::string logLevelName = "none";
@@ -101,6 +104,7 @@ void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel
         }
     }
     logisticLevel_ = logisticLevel;
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,4 +124,13 @@ void LogisticLevelAttritube::SerializeAttributes( xml::xostream& xos ) const
 const kernel::LogisticLevel& LogisticLevelAttritube::GetLogisticLevel() const
 {
     return *logisticLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLevelAttritube::GetEntity
+// Created: ABR 2011-09-15
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC& LogisticLevelAttritube::GetEntity() const
+{
+    return entity_;
 }

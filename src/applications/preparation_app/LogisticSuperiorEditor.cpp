@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "LogisticSuperiorEditor.h"
-#include "LongNameHelper.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
@@ -25,7 +25,7 @@ namespace
 {
     QString GetDisplayName( const Entity_ABC& entity )
     {
-        std::string longName = LongNameHelper::GetEntityLongName( entity );
+        std::string longName = gui::LongNameHelper::GetEntityLongName( entity );
         if( longName.empty() )
             return entity.GetName();
         return longName.c_str();

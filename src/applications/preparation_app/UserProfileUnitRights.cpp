@@ -9,9 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "UserProfileUnitRights.h"
-#include "LongNameHelper.h"
 #include "moc_UserProfileUnitRights.cpp"
 #include "PreparationProfile.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 

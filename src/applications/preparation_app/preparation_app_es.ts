@@ -578,6 +578,10 @@ Do you want to save anyway?</source>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

@@ -123,6 +123,7 @@ void LogisticBaseStates::SetSuperior( const LogisticBaseSuperior& superior )
 {
     const kernel::Entity_ABC* tmp = superior;
     kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

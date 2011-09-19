@@ -433,6 +433,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -594,14 +597,14 @@
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\LongNameHelper.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker_ABC.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">
+      <Filter>Source Files\Lists</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
