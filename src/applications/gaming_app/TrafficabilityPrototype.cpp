@@ -41,5 +41,5 @@ void TrafficabilityPrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "Trafficability" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_trafficability );
-	list.AddNumeric( "MaxWeight", maxWeight_->text().toDouble() );
+    list.AddNumeric( "MaxWeight", maxWeight_->text().toFloat() );
 }

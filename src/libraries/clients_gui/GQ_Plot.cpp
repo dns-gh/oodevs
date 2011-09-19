@@ -352,7 +352,8 @@ GQ_PlotData& GQ_Plot::GetPlotData( T_DataIndex dataIndex ) const
 // -----------------------------------------------------------------------------
 void GQ_Plot::paintEvent( QPaintEvent* )
 {
-    Draw( QPainter( this ), !isEnabled() ? palette().disabled() : ( hasFocus() ? palette().active() : palette().inactive() ) );
+    QPainter painter( this );
+    Draw( painter, !isEnabled() ? palette().disabled() : ( hasFocus() ? palette().active() : palette().inactive() ) );
 }
 
 // -----------------------------------------------------------------------------

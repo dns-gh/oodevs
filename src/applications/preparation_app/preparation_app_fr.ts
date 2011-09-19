@@ -77,7 +77,7 @@
     <name>ControlsChecker</name>
     <message>
         <source>Unit &apos;%1&apos; is associated with multiple profiles:</source>
-        <translation type="unfinished">L'unité &apos;%1&apos; est associé à plusieurs profils :</translation>
+        <translation type="unfinished">L&apos;unité &apos;%1&apos; est associé à plusieurs profils :</translation>
     </message>
 </context>
 <context>

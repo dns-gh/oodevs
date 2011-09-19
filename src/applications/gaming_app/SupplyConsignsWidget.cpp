@@ -77,7 +77,7 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
 // Name: SupplyConsignsWidget::Display
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
-void SupplyConsignsWidget::Display( const SupplyRecipientResourcesRequest& request, kernel::Displayer_ABC& displayer, gui::ValuedListItem* child )
+void SupplyConsignsWidget::Display( const SupplyRecipientResourcesRequest& request, kernel::Displayer_ABC& /*displayer*/, gui::ValuedListItem* child )
 {
     child->setText( 0, tools::translate( "SupplyConsignsWidget", "Recipient %1" ).arg( request.recipient_.GetName() ) );
     child->setText( 1, tools::translate( "SupplyConsignsWidget", "Resources requested/granted/convoyed" ) );
