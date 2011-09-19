@@ -1,0 +1,15 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <missions>
+ <mission scipio="ABC GTIA Attaquer" worldwide="Battalion - Attack" jc3iedm="ATTACK">
+ <mission scipio="ABC GTIA DonnerCoupArret" worldwide="Battalion - conduct a blocking action" jc3iedm="BLOCK">
+ <mission scipio="ABC GTIA Freiner" worldwide="Battalion - delay" jc3iedm="DELAY">
+ <mission scipio="ABC Reconnaitre" worldwide="Armor - reconnoiter" jc3iedm="RECCE">
+ <mission scipio="INF Reconnaissance Offensive" worldwide="Infantry - reconnoiter" jc3iedm="RECCEF">
+ <mission scipio="ABC Semparer" worldwide="Armor - seize" jc3iedm="SEIZE">
+ <mission scipio="INF Semparer" worldwide="Infantry - seize" jc3iedm="SEIZNG">
+ <mission scipio="ABC Tenir" worldwide="Armor - hold" jc3iedm="HLDDEF">
+ <mission scipio="INF Defendre Ferme" worldwide="Infantry - defend (until the end)" jc3iedm="HLDOFF">
+ <mission scipio="Faire Mouvement" worldwide="move" jc3iedm="MOVE">
+ <mission scipio="ABC Soutenir" worldwide="Armor - support (dynamic)" jc3iedm="FOLASS">
+ <mission scipio="INF Appuyer" worldwide="Infantry - support" jc3iedm="FOLSPT">
+ </missions>
