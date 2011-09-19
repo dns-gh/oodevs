@@ -1236,19 +1236,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_Generique" dia-type="T_Mission_Pion_Generique" id="147" name="PION Generique">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Zones" optional="false" type="Polygon"/>
-      <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Points" optional="false" type="Point"/>
-      <parameter dia-name="itineraires_" max-occurs="unbounded" min-occurs="1" name="Itineraires" optional="false" type="Path"/>
-      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
-      <parameter dia-name="automates_" max-occurs="unbounded" min-occurs="1" name="Automates" optional="false" type="Automat"/>
-      <parameter dia-name="connaissancesAgents_" max-occurs="unbounded" min-occurs="1" name="Connaissances agents" optional="false" type="AgentKnowledge"/>
-      <parameter dia-name="connaissancesObjets_" max-occurs="unbounded" min-occurs="1" name="Connaissances objets" optional="false" type="ObjectKnowledge"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_MILICE_Provoquer" dia-type="T_Mission_Pion_MILICE_Provoquer" id="148" name="PION MILICE Provoquer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2061,14 +2048,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Unite a escorter" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="sword.military.platoon.individual.tasks.Ambush" dia-type="sword.military.platoon.individual.tasks.Ambush" id="2067" name="PION Embuscade" package="attack">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
-    </mission>
     <mission dia-behavior="france.military.platoon.tasks.Surveiller" dia-type="france.military.platoon.tasks.Surveiller" id="2070" name="PION MELEE Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2487,13 +2466,6 @@
         <value id="0" name="continu"/>
         <value id="1" name="discontinu"/>
       </parameter>
-    </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Animer" dia-type="france.military.platoon.tasks.Animer" id="2077" name="PION Animer">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" id="2101" name="PION MELEE Animer Poste De Controle">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4112,19 +4084,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Zones" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_Generique" dia-type="T_Mission_Automate_Generique" id="314" mrt-dia-behavior="MIS_Automate_MRT_Generique" name="AUTOMATE Generique">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Zones" optional="false" type="Polygon"/>
-      <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Points" optional="false" type="Point"/>
-      <parameter dia-name="itineraires_" max-occurs="unbounded" min-occurs="1" name="Itineraires" optional="false" type="Path"/>
-      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
-      <parameter dia-name="automates_" max-occurs="unbounded" min-occurs="1" name="Automates" optional="false" type="Automat"/>
-      <parameter dia-name="connaissancesAgents_" max-occurs="unbounded" min-occurs="1" name="Connaissances agents" optional="false" type="AgentKnowledge"/>
-      <parameter dia-name="connaissancesObjets_" max-occurs="unbounded" min-occurs="1" name="Connaissances objets" optional="false" type="ObjectKnowledge"/>
-    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" id="315" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" name="AUTOMATE NBC Reconnaitre Un Axe">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4246,40 +4205,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="compagnie_" name="compagnie" optional="false" type="Automat"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automat_CDT_Dumb" dia-type="T_Mission_Automat_Dumb" id="1000" mrt-dia-behavior="MIS_Automat_MRT_Dumb" name="AUTOMATE Dumb Automat Mission">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="bool_" name="BoolParam" optional="true" type="Boolean"/>
-      <parameter dia-name="numeric_" name="NumericParam" optional="true" type="Integer"/>
-      <parameter dia-name="Enumeration_" name="EnumerationParam" optional="true" type="Enumeration">
-        <value id="0" name="regime_1"/>
-        <value id="1" name="regime_2"/>
-      </parameter>
-      <parameter dia-name="Path_" name="PathParam" optional="true" type="Path"/>
-      <parameter dia-name="PathList_" max-occurs="unbounded" min-occurs="1" name="PathListParam" optional="true" type="Path"/>
-      <parameter dia-name="Point_" name="PointParam" optional="true" type="Point"/>
-      <parameter dia-name="PointList_" max-occurs="unbounded" min-occurs="1" name="PointListParam" optional="true" type="Point"/>
-      <parameter dia-name="Polygon_" name="PolygonParam" optional="true" type="Polygon"/>
-      <parameter dia-name="PolygonList_" max-occurs="unbounded" min-occurs="1" name="PolygonListParam" optional="true" type="Polygon"/>
-      <parameter dia-name="Direction_" name="DirectionParam" optional="true" type="Heading"/>
-      <parameter dia-name="NatureAtlas_" name="NatureAtlasParam" optional="true" type="NatureAtlas"/>
-      <parameter dia-name="Agent_" name="AgentParam" optional="true" type="Agent"/>
-      <parameter dia-name="AgentList_" max-occurs="unbounded" min-occurs="1" name="AgentListParam" optional="true" type="Agent"/>
-      <parameter dia-name="Automate_" name="AutomateParam" optional="true" type="Automat"/>
-      <parameter dia-name="AutomateList_" max-occurs="unbounded" min-occurs="1" name="AutomateListParam" optional="true" type="Automat"/>
-      <parameter dia-name="AgentKnowledge_" name="AgentKnowledgeParam" optional="true" type="AgentKnowledge"/>
-      <parameter dia-name="AgentKnowledgeList_" max-occurs="unbounded" min-occurs="1" name="AgentKnowledgeListParam" optional="true" type="AgentKnowledge"/>
-      <parameter dia-name="ObjectKnowledge_" name="ObjectKnowledgeParam" optional="true" type="ObjectKnowledge"/>
-      <parameter dia-name="ObjectKnowledgeList_" max-occurs="unbounded" min-occurs="1" name="ObjectKnowledgeListParam" optional="true" type="ObjectKnowledge"/>
-      <parameter dia-name="PopulationKnowledge_" name="PopulationKnowledgeParam" optional="true" type="CrowdKnowledge"/>
-      <parameter dia-name="GenObject_" name="GenObjectParam" optional="true" type="PlannedWork"/>
-      <parameter dia-name="GenObjectList_" max-occurs="unbounded" min-occurs="1" name="GenObjectListParam" optional="true" type="PlannedWork"/>
-      <parameter dia-name="MaintenancePriorities_" name="MaintenancePrioritiesParam" optional="true" type="MaintenancePriorities"/>
-      <parameter dia-name="MedicalPriorities_" name="MedicalPrioritiesParam" optional="true" type="MedicalPriorities"/>
-      <parameter dia-name="ObjectiveList_" max-occurs="unbounded" min-occurs="1" name="ObjectiveListParam" optional="true" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.FaireMouvement" dia-type="france.military.company.tasks.FaireMouvement" id="1010" mrt-dia-behavior="france.military.company.tasks.FaireMouvement" name="AUTOMATE COMMUNES Faire Mouvement" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -5282,4 +5207,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1657613087" -->
+<!-- signature="1957974411" -->

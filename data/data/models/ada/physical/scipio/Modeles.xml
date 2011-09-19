@@ -521,7 +521,6 @@
         <mission name="PION GENIE Valoriser">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION Animer"/>
         <mission name="PION Detruire point du reseau"/>
         <mission name="PION Activer reseau souterrain"/>
         <mission name="PION Desactiver reseau souterrain"/>
@@ -1089,7 +1088,6 @@
     </unit>
     <unit dia-type="france.military.platoon.terrorism.roles.Terroriste" file="BMPion.bms" masalife="true" name="Masalife.Sniper">
       <missions>
-        <mission name="PION Embuscade"/>
         <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -15048,4 +15046,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0557482630" -->
+<!-- signature="0270383223" -->
