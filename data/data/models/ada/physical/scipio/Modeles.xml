@@ -1064,10 +1064,10 @@
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION Detruire point du reseau"/>
-        <mission name="PION Reparer point du reseau"/>
         <mission name="PION Activer reseau souterrain"/>
         <mission name="PION Desactiver reseau souterrain"/>
         <mission name="PION Produire et alimenter"/>
+        <mission name="PION GENIE Retablir Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1151,7 +1151,6 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Detruire point du reseau"/>
-        <mission name="PION Reparer point du reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1276,7 +1275,6 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION Detruire point du reseau"/>
-        <mission name="PION Reparer point du reseau"/>
         <mission name="PION Activer reseau souterrain"/>
         <mission name="PION Desactiver reseau souterrain"/>
         <mission name="PION Entrer dans un reseau souterrain"/>
@@ -8455,11 +8453,11 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION Reparer point du reseau"/>
         <mission name="PION Activer reseau souterrain"/>
         <mission name="PION Desactiver reseau souterrain"/>
         <mission name="PION Produire et alimenter"/>
         <mission name="PION COMMUNES Renforcer"/>
+        <mission name="PION GENIE Retablir Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -10945,9 +10943,9 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
         <mission name="AUTOMATE GENIE Reconnaitre"/>
-        <mission name="AUTOMATE GENIE Retablir point du reseau"/>
         <mission name="AUTOMATE Produire et alimenter"/>
         <mission name="AUTOMATE GENIE Se Deployer"/>
+        <mission name="AUTOMATE GENIE Retablir Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -10981,7 +10979,6 @@
         <mission name="AUTOMATE GENIE Retablir Itineraire"/>
         <mission name="AUTOMATE GENIE Reparer"/>
         <mission name="AUTOMATE Produire et alimenter"/>
-        <mission name="AUTOMATE GENIE Retablir point du reseau"/>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
         <mission name="AUTOMATE LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
@@ -10990,6 +10987,7 @@
         <mission name="AUTOMATE LOGISTIQUE Transporter"/>
         <mission name="AUTOMATE LOGISTIQUE Transporter Foule"/>
         <mission name="AUTOMATE GENIE Realiser Camps"/>
+        <mission name="AUTOMATE GENIE Retablir Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -14993,7 +14991,6 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE Detruire point du reseau"/>
-        <mission name="AUTOMATE GENIE Retablir point du reseau"/>
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Harceler"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
@@ -15051,4 +15048,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2726594555" -->
+<!-- signature="0557482630" -->

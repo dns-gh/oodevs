@@ -2737,7 +2737,7 @@
       <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.ReparerReseau" dia-type="france.military.platoon.tasks.ReparerReseau" id="2144" name="PION Reparer point du reseau">
+    <mission dia-behavior="france.military.platoon.tasks.ReparerReseau" dia-type="france.military.platoon.tasks.ReparerReseau" id="2144" name="PION GENIE Retablir Point Du Reseau">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -4835,7 +4835,7 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.ReparerReseau" dia-type="france.military.company.tasks.ReparerReseau" id="1048" mrt-dia-behavior="france.military.company.tasks.ReparerReseau" name="AUTOMATE GENIE Retablir point du reseau">
+    <mission cdt-dia-behavior="france.military.company.tasks.ReparerReseau" dia-type="france.military.company.tasks.ReparerReseau" id="1048" mrt-dia-behavior="france.military.company.tasks.ReparerReseau" name="AUTOMATE GENIE Retablir Point Du Reseau">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -5282,4 +5282,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3210621963" -->
+<!-- signature="1657613087" -->
