@@ -5122,7 +5122,7 @@
         <label language="fr" text="Id 64 bits"/>
       </labels>
     </attribute>
-    <attribute extends="unit;crowd" name="Information" type="string">
+    <attribute extends="unit;crowd;population" name="Information" type="string">
       <labels>
         <label language="fr" text="Information"/>
       </labels>
@@ -5144,4 +5144,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="0154583039" -->
+<!-- signature="0300545613" -->
