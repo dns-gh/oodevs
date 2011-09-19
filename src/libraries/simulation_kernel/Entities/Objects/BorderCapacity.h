@@ -18,6 +18,8 @@ namespace xml
 class xistream;
 }
 
+class MIL_Population;
+
 // =============================================================================
 /** @class  BorderCapacity
     @brief  BorderCapacity
@@ -41,6 +43,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    virtual void Update( MIL_Object_ABC& object, unsigned int time );
     //@}
 
     //! @name From MIL_InteractiveContainer_ABC
@@ -54,6 +57,13 @@ private:
     //@{
     BorderCapacity( const BorderCapacity& );            //!< Copy constructor
     BorderCapacity& operator=( const BorderCapacity& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::set< MIL_Population* > populationsInside_;
+    std::set< MIL_Population* > populationsNotified_;
     //@}
 };
 

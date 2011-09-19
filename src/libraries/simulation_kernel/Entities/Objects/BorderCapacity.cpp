@@ -74,6 +74,31 @@ void BorderCapacity::Instanciate( MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: BorderCapacity::Update
+// Created: JSR 2011-09-16
+// -----------------------------------------------------------------------------
+void BorderCapacity::Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ )
+{
+    std::set< MIL_Population* >::const_iterator it;
+    if( !populationsNotified_.empty() )
+    {
+        std::set< MIL_Population* > toErase;
+        for( it = populationsNotified_.begin(); it != populationsNotified_.end(); ++it )
+            if( populationsInside_.find( *it ) == populationsInside_.end() )
+                toErase.insert( *it );
+        for( it = toErase.begin(); it != toErase.end(); ++it )
+            populationsNotified_.erase( *it );
+    }
+    for( it = populationsInside_.begin(); it != populationsInside_.end(); ++it )
+        if( populationsNotified_.find( *it ) == populationsNotified_.end() )
+        {
+            MIL_Report::PostEvent( **it, MIL_Report::eReport_BorderCrossed );
+            populationsNotified_.insert( *it );
+        }
+    populationsInside_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: BorderCapacity::Register
 // Created: JSR 2011-08-31
 // -----------------------------------------------------------------------------
@@ -98,5 +123,5 @@ void BorderCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent
 // -----------------------------------------------------------------------------
 void BorderCapacity::ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& population )
 {
-    MIL_Report::PostEvent( population.GetPopulation(), MIL_Report::eReport_BorderCrossed );
+    populationsInside_.insert( &population.GetPopulation() );
 }
