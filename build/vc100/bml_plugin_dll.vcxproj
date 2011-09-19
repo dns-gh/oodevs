@@ -115,12 +115,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>bml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\bml\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\bml\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <ClCompile>
-      <PreprocessorDefinitions>bml_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BML_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
