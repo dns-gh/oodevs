@@ -10,7 +10,6 @@
 #include "DispatcherFacade.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Dispatcher.h"
-#include "bml_plugin/BmlPluginFactory.h"
 #include "positions_plugin/PositionsPluginFactory.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
@@ -33,7 +32,6 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     try
     {
         dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );
-        dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new positions::PositionsPluginFactory() );
         dispatcher_->CreatePlugins();
     }
