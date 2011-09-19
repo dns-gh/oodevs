@@ -169,9 +169,6 @@
     <ProjectReference Include="actions.vcxproj">
       <Project>{f8eb9126-da8e-4166-8d1d-4d0f76198a93}</Project>
     </ProjectReference>
-    <ProjectReference Include="bml_plugin.vcxproj">
-      <Project>{22bf4c12-a16a-4fdb-bc1d-eb14c1f0d2ff}</Project>
-    </ProjectReference>
     <ProjectReference Include="clients_kernel.vcxproj">
       <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
     </ProjectReference>
@@ -201,6 +198,9 @@
     </ProjectReference>
     <ProjectReference Include="positions_plugin.vcxproj">
       <Project>{b35507ee-6644-47df-9e2f-469cd09751a1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
     </ProjectReference>
     <ProjectReference Include="reports.vcxproj">
       <Project>{7a4771dc-54fd-4642-ac32-700b665df543}</Project>

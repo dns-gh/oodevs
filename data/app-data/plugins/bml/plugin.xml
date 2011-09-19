@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="bml" version="1.0" library="bml_plugin-vc100-mt.dll"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="OpenBML"><![CDATA[OpenBML communication plugin.]]></description>
+	</descriptions>
+	<settings>
+	
+		<group>
+			<descriptions>
+				<description lang="en" name="Webserver"><![CDATA[OpenBML Webserver]]></description>
+				<description lang="fr" name="Webserveur"><![CDATA[OpenBML Webserver]]></description>
+			</descriptions>
+			
+			<settings>
+				<setting attribute="@url" type="string" default="">
+					<descriptions>
+						<description name="URL :                        " lang="en"><![CDATA[Webserver URL]]></description>
+						<description name="URL :                        " lang="fr"><![CDATA[Webserver URL]]></description>
+					</descriptions>
+				</setting>
+			</settings>
+			
+			
+		</group>
+		
+		<!-- reports !-->
+		<group>
+			<descriptions>
+				<description lang="en" name="Reports"><![CDATA[OpenBML Reports]]></description>
+				<description lang="fr" name="Reports"><![CDATA[OpenBML Reports]]></description>
+			</descriptions>
+			
+			<settings>
+				<setting attribute="@activate" type="boolean" default="true">
+					<descriptions>
+						<description name="Activate Reports	:" lang="en"><![CDATA[Activate Reports]]></description>
+						<description name="Activer l'envoi de reports:" lang="fr"><![CDATA[Activate Reports]]></description>
+					</descriptions>
+				</setting>
+				
+				<setting attribute="@frequency" type="integer" default="30">
+					<descriptions>
+						<description name="Frequency:" lang="en"><![CDATA[Flat database (manage no geometry information).]]></description>
+						<description name="Frequence:" lang="fr"><![CDATA[Flat database (manage no geometry information).]]></description>
+					</descriptions>
+				</setting>
+				
+			</settings>
+
+		</group>
+	</settings>
+</plugin>
