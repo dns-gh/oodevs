@@ -23,6 +23,7 @@ InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
+LivingAreaEditor.cpp \
 LongNameEditor.cpp\
 LogisticStockEditor.cpp \
 MainWindow.cpp \

@@ -436,6 +436,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -798,6 +801,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

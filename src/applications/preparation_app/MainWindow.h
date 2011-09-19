@@ -54,6 +54,7 @@ class ObjectCreationPanel;
 class ScoreDialog;
 class StaticModel;
 class ColorController;
+class LivingAreaEditor;
 
 // =============================================================================
 /** @class  MainWindow
@@ -110,7 +111,10 @@ private:
     //! @name Helpers
     //@{
     void LoadExercise();
-    void CreateLayers( const CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
+    void CreateLayers( const CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
+                       gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
+                       gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker,
+                       LivingAreaEditor& livingAreaEditor );
     void closeEvent( QCloseEvent* pEvent );
     void WriteOptions();
     void ReadOptions();

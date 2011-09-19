@@ -981,6 +981,9 @@
     <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies_ABC.h">
       <Filter>Source Files\Model\Automat\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions_ABC.h">
+      <Filter>Source Files\Model\Inhabitants\Extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\preparation\preparation_es.ts">

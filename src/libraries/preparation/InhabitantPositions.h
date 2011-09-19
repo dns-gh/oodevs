@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Positions.h"
+#include "InhabitantPositions_ABC.h"
 #include "geometry/types.h"
 #include <boost/tuple/tuple.hpp>
 
@@ -43,7 +43,7 @@ class UrbanModel;
 */
 // Created: SLG 2010-11-25
 // =============================================================================
-class InhabitantPositions : public kernel::Positions
+class InhabitantPositions : public InhabitantPositions_ABC
                           , public kernel::Serializable_ABC
                           , public kernel::Drawable_ABC
 {
@@ -59,8 +59,10 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
-             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico  );
+             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
+                                  const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
+             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
+                                  kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
     virtual ~InhabitantPositions();
     //@}
 
@@ -76,27 +78,28 @@ public:
     virtual bool IsAggregated() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Add( const kernel::Location_ABC& location );
+    virtual void Remove( const kernel::Location_ABC& location );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantPositions( const InhabitantPositions& );            //!< Copy constructor
-    InhabitantPositions& operator=( const InhabitantPositions& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void ReadLocation( xml::xistream& xis, const UrbanModel& urbanModel );
-    void ReadLivingUrbanBlock( xml::xistream& xis, const UrbanModel& urbanModel );
+    void ReadLivingUrbanBlock( xml::xistream& xis );
     void ComputePosition();
-    void UpdateDico( kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico );
+    void UpdateDictionary();
+    void Add( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon );
+    void Remove( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon );
+    bool Exists( unsigned long id ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    const UrbanModel& urbanModel_;
+    kernel::Inhabitant_ABC& inhabitant_;
+    kernel::PropertiesDictionary& dictionary_;
     geometry::Point2f position_;
     T_UrbanObjectVector livingUrbanObject_;
     //@}

@@ -144,6 +144,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp" />
@@ -340,6 +341,14 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaEditor.h">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

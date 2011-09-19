@@ -233,6 +233,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\LocationSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h" />
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Color.h" />

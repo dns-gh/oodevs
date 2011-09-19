@@ -18,15 +18,17 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 namespace
 {
     class IntersectionVisitor : public kernel::LocationVisitor_ABC
     {
     public:
-        IntersectionVisitor( const UrbanModel& model, InhabitantPositions::T_UrbanObjectVector& vector )
-            : model_ ( model )
-            , vector_( vector )
+        IntersectionVisitor( const UrbanModel& model, boost::function< void( const gui::TerrainObjectProxy&, const geometry::Polygon2f& ) > fun )
+            : model_( model )
+            , fun_  ( fun )
         {
             // NOTHING
         }
@@ -36,22 +38,17 @@ namespace
         }
         virtual void VisitPolygon( const T_PointVector& points )
         {
-            geometry::Polygon2f poly( points );
+            const geometry::Polygon2f poly( points );
             tools::Iterator< const gui::TerrainObjectProxy& > it = model_.tools::Resolver< gui::TerrainObjectProxy >::CreateIterator();
             while( it.HasMoreElements() )
-            {
-                const gui::TerrainObjectProxy& object = it.NextElement();
-                if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-                    if( poly.IsInside( positions->Barycenter() ) )
-                        vector_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
-            }
+                fun_( it.NextElement(), poly );
         }
 
-        virtual void VisitLines     ( const T_PointVector& ) {}
-        virtual void VisitRectangle ( const T_PointVector& ) {}
-        virtual void VisitCircle    ( const geometry::Point2f& , float  ) {}
-        virtual void VisitPoint     ( const geometry::Point2f&  ) {}
-        virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector&  ) {}
+        virtual void VisitLines    ( const T_PointVector& ) {}
+        virtual void VisitRectangle( const T_PointVector& ) {}
+        virtual void VisitCircle   ( const geometry::Point2f& , float ) {}
+        virtual void VisitPoint    ( const geometry::Point2f& ) {}
+        virtual void VisitPath     ( const geometry::Point2f& , const T_PointVector& ) {}
 
     private :
         IntersectionVisitor( const IntersectionVisitor& );            //!< Copy constructor
@@ -59,7 +56,7 @@ namespace
 
     private :
         const UrbanModel& model_;
-        InhabitantPositions::T_UrbanObjectVector& vector_;
+        boost::function< void( const gui::TerrainObjectProxy&, const geometry::Polygon2f& ) > fun_;
     };
 }
 
@@ -67,27 +64,37 @@ namespace
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico )
+InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
+                                          const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary )
     : converter_ ( converter )
-    , position_( 0, 0 )
+    , urbanModel_( urbanModel )
+    , inhabitant_( inhabitant )
+    , dictionary_( dictionary )
+    , position_  ( 0, 0 )
 {
-    IntersectionVisitor visitor( urbanModel, livingUrbanObject_ );
+    IntersectionVisitor visitor( urbanModel, boost::bind( &InhabitantPositions::Add, this, _1, _2 ) );
     location.Accept( visitor );
     ComputePosition();
-    UpdateDico( inhabitant, dico );
+    UpdateDictionary();
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant , kernel::PropertiesDictionary& dico )
+InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
+                                          kernel::Inhabitant_ABC& inhabitant , kernel::PropertiesDictionary& dictionary )
     : converter_ ( converter )
-    , position_( 0, 0 )
+    , urbanModel_( urbanModel )
+    , inhabitant_( inhabitant )
+    , dictionary_( dictionary )
+    , position_  ( 0, 0 )
 {
-    ReadLocation( xis, urbanModel );
+    xis >> xml::start( "living-area" )
+            >> xml::list( "urban-block" , *this, &InhabitantPositions::ReadLivingUrbanBlock )
+        >> xml::end;
     ComputePosition();
-    UpdateDico( inhabitant, dico );
+    UpdateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,23 +107,12 @@ InhabitantPositions::~InhabitantPositions()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantPositions::ReadLocation
-// Created: SLG 2010-11-25
-// -----------------------------------------------------------------------------
-void InhabitantPositions::ReadLocation( xml::xistream& xis, const UrbanModel& urbanModel )
-{
-    xis >> xml::start( "living-area" )
-        >> xml::list( "urban-block" , *this, &InhabitantPositions::ReadLivingUrbanBlock, urbanModel )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
 // Name: InhabitantPositions::ReadLivingUrbanBlock
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis, const UrbanModel& urbanModel )
+void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
 {
-    gui::TerrainObjectProxy* pObject = urbanModel.tools::Resolver< gui::TerrainObjectProxy >::Find( xis.attribute< unsigned long >( "id" ) );
+    gui::TerrainObjectProxy* pObject = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::Find( xis.attribute< unsigned long >( "id" ) );
     if( !pObject )
         xis.error( "error in loading living urban block for population" );
     else
@@ -145,11 +141,9 @@ void InhabitantPositions::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "living-area" );
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-    {
         xos << xml::start( "urban-block" )
                 << xml::attribute( "id", ( *it ).get< 0 >() )
             << xml::end;
-    }
     xos << xml::end;
 }
 
@@ -232,19 +226,87 @@ bool InhabitantPositions::IsAggregated() const
 void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-    {
-        const gui::TerrainObjectProxy& object = *( *it ).get< 2 >();
-        if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+        if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )
             tools.DrawPolygon( positions->Vertices() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::UpdateDictionary
+// Created: SLG 2011-02-15
+// -----------------------------------------------------------------------------
+void InhabitantPositions::UpdateDictionary()
+{
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Add
+// Created: LGY 2011-09-19
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Add( const kernel::Location_ABC& location )
+{
+    IntersectionVisitor visitor( urbanModel_, boost::bind( &InhabitantPositions::Add, this, _1, _2 ) );
+    location.Accept( visitor );
+    ComputePosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Remove
+// Created: LGY 2011-09-19
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Remove( const kernel::Location_ABC& location )
+{
+    IntersectionVisitor visitor( urbanModel_, boost::bind( &InhabitantPositions::Remove, this, _1, _2 ) );
+    location.Accept( visitor );
+    ComputePosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Add
+// Created: LGY 2011-09-19
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Add( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon )
+{
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
+    if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+        if( polygon.IsInside( positions->Barycenter() ) && !Exists( object.GetId() ) )
+            livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+    UpdateDictionary();
+}
+
+namespace
+{
+    bool Check( InhabitantPositions::T_UrbanObject& urbanObject, const gui::TerrainObjectProxy& object )
+    {
+        return urbanObject.get< 2 >()->GetId() == object.GetId();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantPositions::UpdateDico
-// Created: SLG 2011-02-15
+// Name: InhabitantPositions::Remove
+// Created: LGY 2011-09-19
 // -----------------------------------------------------------------------------
-void InhabitantPositions::UpdateDico( kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico )
+void InhabitantPositions::Remove( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon )
 {
-    for ( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dico.Register( inhabitant, tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >() );
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
+    if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+        if( polygon.IsInside( positions->Barycenter() ) && Exists( object.GetId() ) )
+            livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
+                                                      boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
+    UpdateDictionary();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Exists
+// Created: LGY 2011-09-19
+// -----------------------------------------------------------------------------
+bool InhabitantPositions::Exists( unsigned long id ) const
+{
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        if( (*it).get< 2 >()->GetId() == id )
+            return true;
+    return false;
 }

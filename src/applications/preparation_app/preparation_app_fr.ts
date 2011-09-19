@@ -433,6 +433,41 @@
     </message>
 </context>
 <context>
+    <name>LivingAreaEditor</name>
+    <message>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation>Position:</translation>
+    </message>
+    <message>
+        <source>---</source>
+        <translation>---</translation>
+    </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Blocs urbains</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Add urban blocks</source>
+        <translation>Ajouter des blocs urbains</translation>
+    </message>
+    <message>
+        <source>Remove urban blocks</source>
+        <translation>Supprimer des blocs urbains</translation>
+    </message>
+</context>
+<context>
     <name>LogisticStockEditor</name>
     <message>
         <source>Cancel</source>

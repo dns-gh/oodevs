@@ -42,6 +42,7 @@
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "TacticalListView.h"
+#include "LivingAreaEditor.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
@@ -305,6 +306,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
 
+    LivingAreaEditor* pLivingAreaEditor = new LivingAreaEditor( this, controllers, *paramLayer, *glProxy_ );
+
     addToolBar( fileToolBar_ );
     addToolBar( new DisplayToolbar( this, controllers ) );
     addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
@@ -319,7 +322,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_ );
 
     // Layers
-    CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker );
+    CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer,
+                  *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, *pLivingAreaEditor );
 
     // Status bar
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
@@ -354,7 +358,8 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations, 
                                gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
-                               PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker )
+                               PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
+                               LivingAreaEditor& livingAreaEditor )
 {
     TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
     AutomatsLayer& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
@@ -362,6 +367,7 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( creationPanels.GetObjectCreationPanel() );
     Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( creationPanels.GetInhabitantCreationPanel() );
     Layer_ABC& indicatorCreationLayer   = *new MiscLayer< ScoreDialog >( *pScoreDialog_ );
+    Layer_ABC& livingAreaEditorLayer    = *new MiscLayer< LivingAreaEditor >( livingAreaEditor );
     Elevation2dLayer& elevation2d       = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster                   = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& watershed                = *new WatershedLayer( controllers_, staticModel_.detection_ );
@@ -391,6 +397,7 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
     glProxy_->Register( indicatorCreationLayer );
+    glProxy_->Register( livingAreaEditorLayer );                                                                    livingAreaEditorLayer.SetPasses( "main" );
     glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main" );
     glProxy_->Register( inhabitantLayer );          preferences.AddLayer( tr( "Populations" ), inhabitantLayer );   inhabitantLayer     .SetPasses( "main" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
