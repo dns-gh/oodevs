@@ -210,33 +210,23 @@ void InitialState::Initialize()
     FillResources( agent.CreateResourcesIterator() );
     tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent.CreateIterator();
     int nbrTotalOfficers = 0;
-
     for( unsigned nPos = 0; agentCompositionIterator.HasMoreElements(); ++nPos )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
         const std::string& agentName = agentComposition.GetType().GetName();
-        tools::Iterator< const kernel::EquipmentType& > equipmentTypeIterator = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::CreateIterator();
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+        tools::Iterator< const kernel::BreakdownOriginType& > breakdownIterator = equipmentType.CreateBreakdownsIterator();
         QStringList breakdowns;
-        nbrTotalOfficers += agentComposition.GetCount() * agentComposition.GetCrew();
-        while( equipmentTypeIterator.HasMoreElements() )
+        while( breakdownIterator.HasMoreElements() )
         {
-            const kernel::EquipmentType& equipmentType = equipmentTypeIterator.NextElement();
-            if( equipmentType.GetName() == agentName )
-            {
-                tools::Iterator< const kernel::BreakdownOriginType& > breakdownIterator = equipmentType.CreateBreakdownsIterator();
-
-                while( breakdownIterator.HasMoreElements() )
-                {
-                    const kernel::BreakdownOriginType& breakdown = breakdownIterator.NextElement();
-                    if( breakdowns.find( breakdown.GetName().c_str() ) == breakdowns.end() )
-                        breakdowns << breakdown.GetName().c_str();
-                }
-                FillResources( equipmentType.CreateResourcesIterator(), agentComposition.GetCount() );
-                break;
-            }
+            const kernel::BreakdownOriginType& breakdown = breakdownIterator.NextElement();
+            if( breakdowns.find( breakdown.GetName().c_str() ) == breakdowns.end() )
+                breakdowns << breakdown.GetName().c_str();
         }
+        FillResources( equipmentType.CreateResourcesIterator(), agentComposition.GetCount() );
         for( unsigned i = 0; i < agentComposition.GetCount(); ++i )
             originalEquipments_.push_back( InitialStateEquipment( agentName.c_str(), eEquipmentState_Available, breakdowns ) );
+        nbrTotalOfficers += agentComposition.GetCount() * agentComposition.GetCrew();
     }
     originalCrews_.push_back( InitialStateCrew( eHumanRank_Officier,    eHumanState_Healthy, eInjuriesSeriousness_U1, false, false, agent.GetNbrOfficers() ) );
     originalCrews_.push_back( InitialStateCrew( eHumanRank_SousOfficer, eHumanState_Healthy, eInjuriesSeriousness_U1, false, false, agent.GetNbrWarrantOfficers() ) );
