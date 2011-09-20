@@ -102,14 +102,14 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< boost::asio::io_service >    service_;
-    std::auto_ptr< BufferedConnectionCallback > connectionBuffer_;
-    std::auto_ptr< BufferedMessageCallback >    messageBuffer_;
-    std::auto_ptr< SocketManager >              sockets_;
-    std::auto_ptr< ObjectMessageService >       messageService_;
-    std::auto_ptr< Acceptor >                   acceptor_;
-    bool                                        stopped_;
-    boost::thread                               thread_;
+    std::auto_ptr< boost::asio::io_service >        service_;
+    boost::shared_ptr< BufferedConnectionCallback > connectionBuffer_;
+    boost::shared_ptr< BufferedMessageCallback >    messageBuffer_;
+    std::auto_ptr< SocketManager >                  sockets_;
+    std::auto_ptr< ObjectMessageService >           messageService_;
+    std::auto_ptr< Acceptor >                       acceptor_;
+    bool                                            stopped_;
+    boost::thread                                   thread_;
     //@}
 };
 

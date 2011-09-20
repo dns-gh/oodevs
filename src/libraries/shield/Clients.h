@@ -3,17 +3,19 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef shield_Server_h
-#define shield_Server_h
+#ifndef shield_Clients_h
+#define shield_Clients_h
 
-#include "ClientListener_ABC.h"
-#include "Clients.h"
-#include "tools/ServerNetworker.h"
+#include "tools/asio.h"
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#pragma warning( push, 0 )
+#include <boost/thread.hpp>
+#pragma warning( pop )
 #include <map>
 
 namespace MsgsClientToAar
@@ -46,45 +48,40 @@ namespace MsgsAdminToLauncher
     class MsgAdminToLauncher;
 }
 
+namespace tools
+{
+    class MessageSender_ABC;
+}
+
 namespace shield
 {
+    class ClientListener_ABC;
     class Listener_ABC;
     class Client;
 
 // =============================================================================
-/** @class  Server
-    @brief  Server
+/** @class  Clients
+    @brief  Clients
 */
-// Created: MCO 2010-11-29
+// Created: MCO 2011-09-20
 // =============================================================================
-class Server : private tools::ServerNetworker, private ClientListener_ABC
+class Clients : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Server( unsigned short port, const std::string& host, Listener_ABC& listener, bool encodeStringsInUtf8 );
-    virtual ~Server();
+    explicit Clients( const std::string& host, tools::MessageSender_ABC& sender,
+                      ClientListener_ABC& listener, bool encodeStringsInUtf8 );
+    virtual ~Clients();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update();
-    //@}
+    void Add( const std::string& from );
+    void Remove( const std::string& from );
 
-private:
-    //! @name Operations
-    //@{
-    virtual void ConnectionSucceeded( const std::string& from );
-    virtual void ConnectionFailed( const std::string& from, const std::string& error );
-    virtual void ConnectionError( const std::string& from, const std::string& error );
+    void Update();
 
-    virtual void Info( const std::string& message );
-    virtual void Error( const std::string& from, const std::string& message );
-    virtual void Debug( const DebugInfo_ABC& info );
-    //@}
-
-    //! @name Helpers
-    //@{
     void ReceiveClientToAar           ( const std::string& from, const MsgsClientToAar::MsgClientToAar& msg );
     void ReceiveClientToAuthentication( const std::string& from, const MsgsClientToAuthentication::MsgClientToAuthentication& msg );
     void ReceiveClientToMessenger     ( const std::string& from, const MsgsClientToMessenger::MsgClientToMessenger& msg );
@@ -94,21 +91,33 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void Run();
+    void Stop();
+    //@}
+
+private:
     //! @name Types
     //@{
-    typedef std::vector< std::string > T_Errors;
-    typedef T_Errors::const_iterator CIT_Errors;
+    typedef std::map< std::string, boost::shared_ptr< Client > > T_Clients;
+    typedef T_Clients::const_iterator                          CIT_Clients;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Listener_ABC& listener_;
-    Clients clients_;
-    T_Errors errors_;
+    const std::string host_;
+    tools::MessageSender_ABC& sender_;
+    ClientListener_ABC& listener_;
+    bool utf8StringEncoding_;
+    boost::asio::io_service service_;
+    T_Clients clients_;
+    bool stopped_;
+    boost::thread thread_;
     //@}
 };
 
 }
 
-#endif // shield_Server_h
+#endif // shield_Clients_h

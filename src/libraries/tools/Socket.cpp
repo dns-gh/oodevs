@@ -19,10 +19,12 @@ using namespace tools;
 // Name: Socket constructor
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-Socket::Socket( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const std::string& endpoint, MessageCallback_ABC& message )
+Socket::Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
+                boost::shared_ptr< MessageCallback_ABC > message,
+                const std::string& endpoint )
     : socket_  ( socket )
-    , endpoint_( endpoint )
     , message_ ( message )
+    , endpoint_( endpoint )
 {
     // NOTHING
 }
@@ -66,7 +68,7 @@ void Socket::Sent( const Message& , const boost::system::error_code& error )
     if( error && error != boost::asio::error::operation_aborted && error != previous_)
     {
         previous_ = error;
-        message_.OnError( endpoint_, error.message() );
+        message_->OnError( endpoint_, error.message() );
     }
 }
 
@@ -98,7 +100,7 @@ void Socket::HeaderRead( Message& header, const boost::system::error_code& error
                                               message, boost::asio::placeholders::error ) );
     }
     else
-        message_.OnError( endpoint_, error.message() );
+        message_->OnError( endpoint_, error.message() );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,8 +112,8 @@ void Socket::Read( Message& message, const boost::system::error_code& error )
     if( ! error )
     {
         StartReading();
-        message_.OnMessage( endpoint_, message );
+        message_->OnMessage( endpoint_, message );
     }
     else
-        message_.OnError( endpoint_, error.message() );
+        message_->OnError( endpoint_, error.message() );
 }

@@ -11,6 +11,7 @@
 #define __SocketManager_h_
 
 #include "MessageSender_ABC.h"
+#include "asio.h"
 #include <map>
 
 namespace tools
@@ -31,7 +32,8 @@ class SocketManager : public MessageSender_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SocketManager( MessageCallback_ABC& message, ConnectionCallback_ABC& connection );
+             SocketManager( boost::shared_ptr< MessageCallback_ABC > message,
+                            boost::shared_ptr< ConnectionCallback_ABC > connection );
     virtual ~SocketManager();
     //@}
 
@@ -66,8 +68,8 @@ private:
 private:
     //! @name Member data
     //@{
-    MessageCallback_ABC& message_;
-    ConnectionCallback_ABC& connection_;
+    boost::shared_ptr< MessageCallback_ABC > message_;
+    boost::shared_ptr< ConnectionCallback_ABC > connection_;
     T_Sockets sockets_;
     unsigned long nbMessagesSent_;
     //@}

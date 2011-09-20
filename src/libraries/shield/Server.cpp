@@ -28,6 +28,8 @@
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
+#pragma warning( disable : 4355 )
+
 using namespace shield;
 
 namespace
@@ -47,9 +49,8 @@ namespace
 // -----------------------------------------------------------------------------
 Server::Server( unsigned short port, const std::string& host, Listener_ABC& listener, bool encodeStringsInUtf8 )
     : tools::ServerNetworker( port )
-    , host_    ( host )
-    , listener_( listener )
-    , utf8StringEncoding_ ( encodeStringsInUtf8 )
+    , listener_          ( listener )
+    , clients_           ( host, *this, *this, encodeStringsInUtf8 )
 {
     listener_.Info( "Starting shield server on port " + boost::lexical_cast< std::string >( port ) );
     RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToAar ) );
@@ -77,10 +78,9 @@ Server::~Server()
 void Server::Update()
 {
     tools::ServerNetworker::Update();
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        it->second->Update();
+    clients_.Update();
     for( CIT_Errors it = errors_.begin(); it != errors_.end(); ++it )
-        clients_.erase( *it );
+        clients_.Remove( *it );
     errors_.clear();
 }
 
@@ -90,9 +90,7 @@ void Server::Update()
 // -----------------------------------------------------------------------------
 void Server::ConnectionSucceeded( const std::string& from )
 {
-    clients_.erase( from );
-    boost::shared_ptr< Client > client( new Client( host_, from, *this, *this, utf8StringEncoding_ ) );
-    clients_.insert( std::make_pair( from, client ) );
+    clients_.Add( from );
     listener_.Info( "Shield proxy received connection from " + from );
     tools::ServerNetworker::ConnectionSucceeded( from );
 }
@@ -115,7 +113,7 @@ void Server::ConnectionError( const std::string& from, const std::string& error 
 {
     if( std::find( errors_.begin(), errors_.end(), from ) != errors_.end() )
         return;
-    clients_.erase( from );
+    clients_.Remove( from );
     listener_.Error( "Shield proxy connection from " + from + " aborted : " + error );
     tools::ServerNetworker::ConnectionError( from, error );
 }
@@ -155,9 +153,7 @@ void Server::Debug( const DebugInfo_ABC& info )
 // -----------------------------------------------------------------------------
 void Server::ReceiveClientToAar( const std::string& from, const MsgsClientToAar::MsgClientToAar& msg )
 {
-    CIT_Clients it = clients_.find( from );
-    if( it != clients_.end() )
-        it->second->ReceiveClientToAar( msg );
+    clients_.ReceiveClientToAar( from, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,9 +162,7 @@ void Server::ReceiveClientToAar( const std::string& from, const MsgsClientToAar:
 // -----------------------------------------------------------------------------
 void Server::ReceiveClientToAuthentication( const std::string& from, const MsgsClientToAuthentication::MsgClientToAuthentication& msg )
 {
-    CIT_Clients it = clients_.find( from );
-    if( it != clients_.end() )
-        it->second->ReceiveClientToAuthentication( msg );
+    clients_.ReceiveClientToAuthentication( from, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,9 +171,7 @@ void Server::ReceiveClientToAuthentication( const std::string& from, const MsgsC
 // -----------------------------------------------------------------------------
 void Server::ReceiveClientToMessenger( const std::string& from, const MsgsClientToMessenger::MsgClientToMessenger& msg )
 {
-    CIT_Clients it = clients_.find( from );
-    if( it != clients_.end() )
-        it->second->ReceiveClientToMessenger( msg );
+    clients_.ReceiveClientToMessenger( from, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,9 +180,7 @@ void Server::ReceiveClientToMessenger( const std::string& from, const MsgsClient
 // -----------------------------------------------------------------------------
 void Server::ReceiveClientToReplay( const std::string& from, const MsgsClientToReplay::MsgClientToReplay& msg )
 {
-    CIT_Clients it = clients_.find( from );
-    if( it != clients_.end() )
-        it->second->ReceiveClientToReplay( msg );
+    clients_.ReceiveClientToReplay( from, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,9 +189,7 @@ void Server::ReceiveClientToReplay( const std::string& from, const MsgsClientToR
 // -----------------------------------------------------------------------------
 void Server::ReceiveClientToSim( const std::string& from, const MsgsClientToSim::MsgClientToSim& msg )
 {
-    CIT_Clients it = clients_.find( from );
-    if( it != clients_.end() )
-        it->second->ReceiveClientToSim( msg );
+    clients_.ReceiveClientToSim( from, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +198,5 @@ void Server::ReceiveClientToSim( const std::string& from, const MsgsClientToSim:
 // -----------------------------------------------------------------------------
 void Server::ReceiveAdminToLauncher( const std::string& from, const MsgsAdminToLauncher::MsgAdminToLauncher& msg )
 {
-    CIT_Clients it = clients_.find( from );
-    if( it != clients_.end() )
-        it->second->ReceiveAdminToLauncher( msg );
+    clients_.ReceiveAdminToLauncher( from, msg );
 }

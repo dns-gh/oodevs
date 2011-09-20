@@ -18,7 +18,8 @@ using namespace tools;
 // Name: SocketManager constructor
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-SocketManager::SocketManager( MessageCallback_ABC& message, ConnectionCallback_ABC& connection )
+SocketManager::SocketManager( boost::shared_ptr< MessageCallback_ABC > message,
+                              boost::shared_ptr< ConnectionCallback_ABC > connection )
     : message_       ( message )
     , connection_    ( connection )
     , nbMessagesSent_( 0 )
@@ -76,10 +77,10 @@ void SocketManager::Disconnect( const std::string& endpoint )
 void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket )
 {
     const std::string address = ToString( socket->remote_endpoint() );
-    boost::shared_ptr< Socket > pSocket( new Socket( socket, address, message_ ) );
+    boost::shared_ptr< Socket > pSocket( new Socket( socket, message_, address ) );
     pSocket->StartReading();
     sockets_.insert( std::make_pair( address, pSocket ) );
-    connection_.ConnectionSucceeded( address );
+    connection_->ConnectionSucceeded( address );
 }
 
 // -----------------------------------------------------------------------------

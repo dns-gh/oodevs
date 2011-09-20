@@ -13,7 +13,28 @@
 #include "Converter.h"
 #include "Server_ABC.h"
 #include "Client_ABC.h"
-#include "tools/ClientNetworker.h"
+#include "tools/ConnectionCallback_ABC.h"
+#include "tools/MessageSender_ABC.h"
+#include "tools/MessageDispatcher_ABC.h"
+#include <string>
+#include <memory>
+
+namespace boost
+{
+namespace asio
+{
+    class io_service;
+}
+}
+
+namespace tools
+{
+    class ObjectMessageService;
+    class BufferedMessageCallback;
+    class BufferedConnectionCallback;
+    class SocketManager;
+    class Connector;
+}
 
 namespace shield
 {
@@ -25,12 +46,13 @@ namespace shield
 */
 // Created: MCO 2010-09-30
 // =============================================================================
-class Client : public tools::ClientNetworker, private Server_ABC, private Client_ABC
+class Client : public tools::MessageDispatcher_ABC , public tools::MessageSender_ABC
+             , private tools::ConnectionCallback_ABC, private Server_ABC, private Client_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( const std::string& host, const std::string& from,
+             Client( boost::asio::io_service& service, const std::string& from,
                      tools::MessageSender_ABC& sender, ClientListener_ABC& listener, bool encodeStringsInUtf8 );
     virtual ~Client();
     //@}
@@ -43,6 +65,23 @@ public:
     void ReceiveClientToReplay        ( const MsgsClientToReplay::MsgClientToReplay& msg );
     void ReceiveClientToSim           ( const MsgsClientToSim::MsgClientToSim& msg );
     void ReceiveAdminToLauncher       ( const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
+    //@}
+
+    //! @name Operations
+    //@{
+    void Update();
+
+    void Connect( const std::string& host );
+    void Disconnect();
+
+    using MessageSender_ABC::Send;
+    using MessageDispatcher_ABC::RegisterMessage;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual unsigned long GetNbMessagesReceived() const; // $$$$ MCO : make a proxy on MessageDispatcher_ABC instead
+    virtual unsigned long GetNbMessagesSent() const; // $$$$ MCO : make a proxy on MessageSender_ABC instead
     //@}
 
 private:
@@ -68,6 +107,13 @@ private:
     virtual void Send( MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Send( const std::string& endpoint, unsigned long tag, const tools::Message& message );
+    virtual void Register( unsigned long id, std::auto_ptr< tools::ObjectMessageCallback_ABC > callback );
+    virtual tools::ObjectMessageCallback_ABC* Retrieve( unsigned long id );
+    //@}
+
     //! @name Helpers
     //@{
     template< typename T >
@@ -90,6 +136,11 @@ private:
     ClientListener_ABC& listener_;
     Converter converter_;
     bool encodeStringsInUtf8_;
+    boost::shared_ptr< tools::BufferedConnectionCallback > connectionBuffer_;
+    boost::shared_ptr< tools::BufferedMessageCallback >    messageBuffer_;
+    std::auto_ptr< tools::SocketManager >                  sockets_;
+    std::auto_ptr< tools::ObjectMessageService >           messageService_;
+    std::auto_ptr< tools::Connector >                      connector_;
     //@}
 };
 

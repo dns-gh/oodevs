@@ -29,7 +29,8 @@ class Socket : public boost::enable_shared_from_this< Socket >
 public:
     //! @name Constructors/Destructor
     //@{
-             Socket( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const std::string& endpoint, MessageCallback_ABC& message );
+             Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
+                     boost::shared_ptr< MessageCallback_ABC > message, const std::string& endpoint );
     virtual ~Socket();
     //@}
 
@@ -58,8 +59,8 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< boost::asio::ip::tcp::socket > socket_;
+    boost::shared_ptr< MessageCallback_ABC > message_;
     std::string endpoint_;
-    MessageCallback_ABC& message_;
     boost::system::error_code previous_;
     //@}
 };

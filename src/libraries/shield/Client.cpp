@@ -25,6 +25,11 @@
 #include "proto/SimToClient.pb.h"
 #include "proto/LauncherToAdmin.pb.h"
 #pragma warning( pop )
+#include "tools/SocketManager.h"
+#include "tools/Connector.h"
+#include "tools/BufferedMessageCallback.h"
+#include "tools/BufferedConnectionCallback.h"
+#include "tools/ObjectMessageService.h"
 
 #pragma warning( disable: 4355 )
 
@@ -45,15 +50,20 @@ namespace
 // Name: Client constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Client::Client( const std::string& host, const std::string& from,
+Client::Client( boost::asio::io_service& service, const std::string& from,
                 tools::MessageSender_ABC& sender, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
-    : tools::ClientNetworker( host )
-    , from_                ( from )
-    , sender_              ( sender )
-    , listener_            ( listener )
-    , converter_           ( *this, *this, listener )
-    , encodeStringsInUtf8_ ( encodeStringsInUtf8 )
+    : from_               ( from )
+    , sender_             ( sender )
+    , listener_           ( listener )
+    , converter_          ( *this, *this, listener )
+    , encodeStringsInUtf8_( encodeStringsInUtf8 )
+    , connectionBuffer_   ( new tools::BufferedConnectionCallback() )
+    , messageBuffer_      ( new tools::BufferedMessageCallback() )
+    , sockets_            ( new tools::SocketManager( messageBuffer_, connectionBuffer_ ) )
+    , messageService_     ( new tools::ObjectMessageService() )
+    , connector_          ( new tools::Connector( service, *sockets_, *connectionBuffer_ ) )
 {
+    messageService_->RegisterErrorCallback( boost::bind( &Client::ConnectionError, this, _1, _2 ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveSimToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAuthenticationToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveDispatcherToClient ) );
@@ -70,6 +80,79 @@ Client::Client( const std::string& host, const std::string& from,
 Client::~Client()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Connect
+// Created: SBO 2007-01-26
+// -----------------------------------------------------------------------------
+void Client::Connect( const std::string& host )
+{
+    connector_->Connect( host );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Disconnect
+// Created: SBO 2007-01-26
+// -----------------------------------------------------------------------------
+void Client::Disconnect()
+{
+    sockets_->Disconnect();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Update
+// Created: NLD 2007-01-24
+// -----------------------------------------------------------------------------
+void Client::Update()
+{
+    connectionBuffer_->Commit( *this );
+    messageBuffer_->Commit( *messageService_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void Client::Send( const std::string& endpoint, unsigned long tag, const tools::Message& message )
+{
+    sockets_->Send( endpoint, tag, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Register
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void Client::Register( unsigned long id, std::auto_ptr< tools::ObjectMessageCallback_ABC > callback )
+{
+    messageService_->Register( id, callback );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Retrieve
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+tools::ObjectMessageCallback_ABC* Client::Retrieve( unsigned long id )
+{
+    return messageService_->Retrieve( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::GetNbMessagesReceived
+// Created: NLD 2010-10-20
+// -----------------------------------------------------------------------------
+unsigned long Client::GetNbMessagesReceived() const
+{
+    return messageService_->GetNbMessagesReceived();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::GetNbMessagesSent
+// Created: NLD 2010-10-20
+// -----------------------------------------------------------------------------
+unsigned long Client::GetNbMessagesSent() const
+{
+    return sockets_->GetNbMessagesSent();
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +216,6 @@ void Client::ReceiveAdminToLauncher( const MsgsAdminToLauncher::MsgAdminToLaunch
 void Client::ConnectionSucceeded( const std::string& host )
 {
     host_ = host;
-    tools::ClientNetworker::ConnectionSucceeded( host );
     listener_.Info( "Shield proxy connected to " + host );
     std::for_each( callbacks_.begin(), callbacks_.end(), boost::apply< void >() );
     callbacks_.clear();
@@ -145,7 +227,6 @@ void Client::ConnectionSucceeded( const std::string& host )
 // -----------------------------------------------------------------------------
 void Client::ConnectionFailed( const std::string& host, const std::string& error )
 {
-    tools::ClientNetworker::ConnectionFailed( host, error );
     listener_.Error( from_, "Shield proxy connection to " + host + " failed : " + error );
 }
 
@@ -155,7 +236,6 @@ void Client::ConnectionFailed( const std::string& host, const std::string& error
 // -----------------------------------------------------------------------------
 void Client::ConnectionError( const std::string& host, const std::string& error )
 {
-    tools::ClientNetworker::ConnectionError( host, error );
     listener_.Error( from_, "Shield proxy connection to " + host + " aborted : " + error );
 }
 
@@ -167,14 +247,12 @@ template< typename T >
 void Client::DoSend( T& message )
 {
     listener_.Debug( DebugInfo< T >( "Shield sent : ", message ) );
+    if( encodeStringsInUtf8_ )
+        Utf8Converter::ConvertUtf8StringsToCP1252( message );
     if( host_.empty() )
         callbacks_.push_back( boost::bind( &tools::MessageSender_ABC::Send< T >, this, boost::cref( host_ ), message ) );
     else
-    {
-        if( encodeStringsInUtf8_ )
-            Utf8Converter::ConvertUtf8StringsToCP1252( message );
         tools::MessageSender_ABC::Send( host_, message );
-    }
 }
 
 // -----------------------------------------------------------------------------

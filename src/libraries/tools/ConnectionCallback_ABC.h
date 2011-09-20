@@ -25,8 +25,8 @@ class ConnectionCallback_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectionCallback_ABC() {};
-    virtual ~ConnectionCallback_ABC() {};
+             ConnectionCallback_ABC() {}
+    virtual ~ConnectionCallback_ABC() {}
     //@}
 
     //! @name Operations
