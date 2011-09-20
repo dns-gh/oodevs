@@ -1406,7 +1406,7 @@
 
     <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.tutorials,package.otpack.defense.france,
                                             package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
-                                            package.otpack.lossc,package.otpack.tutosw,package.otpack.validation,package.otpack.trainingML, package.otpack.decisional"
+                                            package.otpack.lossc,package.otpack.tutosw,package.otpack.validation,package.otpack.trainingML, package.otpack.decisional3, package.otpack.decisional4, package.otpack.decisional5"
                                             description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1576,10 +1576,25 @@
             <include name="data/terrains/Paris_Est/**"/>
         </pack>
     </target>
+    
+    <target name="package.otpack.decisional3" description="decisional package DIA3">
+        <pack name="decisional3" description="decisional package DIA3">
+            <include name="data/models/ada/decisional/Sources/**"/>
+            <include name="data/models/ada/decisional/decisional.xml"/>
+        </pack>
+    </target>
 
-    <target name="package.otpack.decisional" description="decisional package">
-        <pack name="decisional" description="decisional package">
+    <target name="package.otpack.decisional4" description="decisional package DIA4">
+        <pack name="decisional4" description="decisional package DIA4">
             <include name="data/models/ada/decisional/bms/**"/>
+            <include name="data/models/ada/decisional/directia5/**"/>
+            <exclude name="data/models/ada/decisional/directia5/models/src/france/**"/>
+            <include name="data/models/ada/decisional/decisional.xml"/>
+        </pack>
+    </target>
+    
+    <target name="package.otpack.decisional5" description="decisional package DIA5">
+        <pack name="decisional5" description="decisional package DIA5">
             <include name="data/models/ada/decisional/directia5/**"/>
             <include name="data/models/ada/decisional/decisional.xml"/>
         </pack>
