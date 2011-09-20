@@ -50,6 +50,14 @@
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
+    <message>
+        <source>The signatures for the following files do not exist or are invalid : </source>
+        <translation>Les signatures des fichiers suivants n'existent pas ou sont invalides : </translation>
+    </message>
+    <message>
+        <source>The following files do not match their xsd : </source>
+        <translation>Les fichiers suivants ne respectent pas leur xsd : </translation>
+    </message>
 </context>
 <context>
     <name>ColorEditor</name>
