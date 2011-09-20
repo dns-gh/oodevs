@@ -231,11 +231,12 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject.GetName(), urbanObject.GetId(), objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
     pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
-    if( const urban::ColorAttribute* pColorAttribute = urbanObject.Retrieve< urban::ColorAttribute >() )
-        pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( *pColorAttribute ) );
+    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( urbanObject.Retrieve< urban::ColorAttribute >() ) );
+    UrbanPositions_ABC* urbanPositions = 0;
     if( const urban::GeometryAttribute* pGeometryAttribute = urbanObject.Retrieve< urban::GeometryAttribute >() )
     {
-        pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( urbanObject, pTerrainObject->Retrieve< kernel::UrbanColor_ABC >() ) );
+        urbanPositions = new UrbanPositions( urbanObject, pTerrainObject->Retrieve< kernel::UrbanColor_ABC >() );
+        pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *urbanPositions );
         const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
         pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), *this, objects_, objectTypes_ ) );
     }
@@ -249,6 +250,8 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
             pTerrainObject->Attach< Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, *infraType, dictionary ) );
             if( infraType->FindCapacity( "medical" ) )
                 pTerrainObject->Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes_, dictionary ) );
+            if( urbanPositions )
+                urbanPositions->SetInfrastructurePresent();
         }
     pTerrainObject->Polish();
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )

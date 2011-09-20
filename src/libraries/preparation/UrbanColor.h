@@ -28,7 +28,7 @@ class UrbanColor : public kernel::UrbanColor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanColor( const urban::ColorAttribute& colorAttribute );
+    explicit UrbanColor( const urban::ColorAttribute* colorAttribute );
     virtual ~UrbanColor();
     //@}
 

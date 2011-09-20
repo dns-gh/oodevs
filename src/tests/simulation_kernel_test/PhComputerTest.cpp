@@ -60,7 +60,8 @@ namespace
             , vertices     ( boost::assign::list_of( geometry::Point2f( 0, 0 ) )( geometry::Point2f( 0, 2 ) )
                                                    ( geometry::Point2f( 2, 2 ) )( geometry::Point2f( 2, 0 ) ) )
             , poly         ( vertices )
-            , urbanBlock   ( 0, "test", &poly, 0, coord )
+            , urbanBlockParent( 1, "parent", coord )
+            , urbanBlock   ( 0, "test", poly, urbanBlockParent, coord )
             , xis          ( "<objects>"
                              "    <object type='urban block'/>"
                              "</objects>" )
@@ -73,6 +74,7 @@ namespace
         std::vector< geometry::Point2f > vertices;
         geometry::Polygon2f poly;
         urban::CoordinateConverter coord;
+        urban::UrbanObject urbanBlockParent;
         urban::UrbanObject urbanBlock;
         xml::xistringstream xis;
         MIL_ObjectLoader loader;

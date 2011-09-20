@@ -42,6 +42,7 @@ public:
     virtual float ComputeArea() const = 0;
     virtual const std::vector< geometry::Point2f >& Vertices() const = 0;
     virtual bool IsInside( const geometry::Point2f& point ) const = 0;
+    virtual void SetInfrastructurePresent() = 0;
     //@}
 };
 

@@ -19,10 +19,11 @@
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( const sword::Location& location, const sword::UrbanAttributes& attributes,
                                 const kernel::CoordinateConverter_ABC& converter, const std::string& name, const kernel::UrbanColor_ABC& color )
-    : name_    ( name )
-    , color_   ( color )
-    , selected_( false )
-    , height_  ( 0u )
+    : name_             ( name )
+    , color_            ( color )
+    , selected_         ( false )
+    , height_           ( 0u )
+    , hasInfrastructure_( false )
 {
     std::vector< geometry::Point2f > positions;
     for( int i = 0; i < location.coordinates().elem_size(); ++i )
@@ -78,7 +79,7 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( polygon_, color_, name_, height_, selected_ );
+    tools.DrawDecoratedPolygon( polygon_, color_, hasInfrastructure_ ? name_ : std::string(), height_, selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +98,15 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 void UrbanPositions::ToggleSelection()
 {
     selected_ = !selected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::SetInfrastructurePresent
+// Created: JSR 2011-09-19
+// -----------------------------------------------------------------------------
+void UrbanPositions::SetInfrastructurePresent()
+{
+    hasInfrastructure_ = true;
 }
 
 // -----------------------------------------------------------------------------

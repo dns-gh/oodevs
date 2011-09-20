@@ -16,14 +16,17 @@
 // Name: UrbanColor constructor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( const urban::ColorAttribute& colorAttribute )
+UrbanColor::UrbanColor( const urban::ColorAttribute* colorAttribute )
     : initial_( 200u, 200u, 200u )
     , current_( 200u, 200u, 200u )
     , alpha_  ( 0.7f )
 {
-    initial_ = Color( colorAttribute.Red(), colorAttribute.Green(), colorAttribute.Blue() );
-    alpha_ = colorAttribute.Alpha();
-    current_ = initial_;
+    if( colorAttribute )
+    {
+        initial_ = Color( colorAttribute->Red(), colorAttribute->Green(), colorAttribute->Blue() );
+        alpha_ = colorAttribute->Alpha();
+        current_ = initial_;
+    }
 }
 
 // -----------------------------------------------------------------------------
