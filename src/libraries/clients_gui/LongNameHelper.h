@@ -38,7 +38,10 @@ public:
     {
         std::string longName = GetEntityLongName( entity );
         if( longName.empty() )
+        {
+            item.setText( 0, entity.GetName() );
             return false;
+        }
         item.setText( 0, longName.c_str() );
         return true;
     }
