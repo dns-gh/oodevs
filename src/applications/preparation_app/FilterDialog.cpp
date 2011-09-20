@@ -68,7 +68,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
     // Dialog setting
     {
         setCaption( filterManager_->GetName().c_str() );
-        setMinimumSize( 400, 400 );
+        setMinimumSize( 500, 500 );
         connect( this, SIGNAL( reloadExercise() ), parent, SLOT( ReloadExercise() ) );
         hide();
     }

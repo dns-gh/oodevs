@@ -52,7 +52,7 @@
     </message>
     <message>
         <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation>Les signatures des fichiers suivants n'existent pas ou sont invalides : </translation>
+        <translation>Les signatures des fichiers suivants n&apos;existent pas ou sont invalides : </translation>
     </message>
     <message>
         <source>The following files do not match their xsd : </source>
@@ -350,10 +350,6 @@
         <translation>Foule</translation>
     </message>
     <message>
-        <source>Parties overview:</source>
-        <translation>Aperçu des armées:</translation>
-    </message>
-    <message>
         <source>Error loading the new orbat file</source>
         <translation>Erreur de chargement du nouveau fichier orbat</translation>
     </message>
@@ -376,6 +372,26 @@
     <message>
         <source>Import an order of battle into current exercise.&lt;br&gt;May import the populations and the objects if relative checkbox are checked.</source>
         <translation>Importer un ordre de bataille dans l&apos;exercice actuel.&lt;br&gt;Peut importer les populations et les objets si les cases relatives sont cochées.</translation>
+    </message>
+    <message>
+        <source>Initial state</source>
+        <translation>Etat initial</translation>
+    </message>
+    <message>
+        <source>Logistic links</source>
+        <translation>Liens logistique</translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
+    </message>
+    <message>
+        <source>Diplomacy</source>
+        <translation>Diplomacie</translation>
+    </message>
+    <message>
+        <source>Parties:</source>
+        <translation>Armées:</translation>
     </message>
 </context>
 <context>

@@ -51,18 +51,28 @@ public:
    //@}
 
 private:
+    //! @name Types
+    //@{
+    enum E_Column { eCheckbox = 0, eHiddenCheckbox = 1, eHiddenPartyID = 2, ePartyName  = 3 };
+    //@}
+
     //! @name Helpers
     //@{
     void LoadPreview();
     void ReadTeam( xml::xistream& xis );
     void ReadField( const std::string& name, xml::xistream& xis, xml::xostream& xos );
     void ReadAttribute( const std::string& name, xml::xistream& xis, xml::xostream& xos );
+
+    void ReadDiplomacy( xml::xistream& xis, xml::xostream& xos );
+    void ReadDiplomacyLink( xml::xistream& xis, xml::xostream& xos );
+    bool IsPartyChecked( unsigned long partyID ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnBrowse();
+    void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
     //@}
 
 private:
@@ -71,10 +81,19 @@ private:
     Model&             model_;
     const std::string  orbatFile_;
     QLineEdit*         filename_;
+
     QCheckBox*         objectsCheckBox_;
     QCheckBox*         populationsCheckBox_;
-    Q3ListView*         preview_;
-    unsigned int       shift_;
+    QCheckBox*         initialStateCheckBox_;
+    QCheckBox*         logisticLinksCheckBox_;
+    QCheckBox*         stocksCheckBox_;
+    QCheckBox*         diplomacyCheckBox_;
+
+    Q3ListView*        partiesListView_;
+    QPixmap            checkedPixmap_;
+    QPixmap            uncheckedPixmap_;
+
+    unsigned long      shift_;
     //@}
 };
 

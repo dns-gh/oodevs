@@ -362,10 +362,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Parties overview:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error loading the new orbat file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -375,6 +371,26 @@
     </message>
     <message>
         <source>Import an order of battle into current exercise.&lt;br&gt;May import the populations and the objects if relative checkbox are checked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diplomacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parties:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
