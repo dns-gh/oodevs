@@ -46,6 +46,16 @@ TrafficabilityAttribute::TrafficabilityAttribute( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TrafficabilityAttribute constructor
+// Created: LGY 2011-09-20
+// -----------------------------------------------------------------------------
+TrafficabilityAttribute::TrafficabilityAttribute( double max )
+    : max_( max )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: TrafficabilityAttribute::operator=
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
@@ -119,7 +129,7 @@ void TrafficabilityAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void TrafficabilityAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-	asn.mutable_trafficability()->set_value( max_ );
+    asn.mutable_trafficability()->set_value( max_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,8 +153,8 @@ bool TrafficabilityAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void TrafficabilityAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
 {
-	max_ = attribute.list( 1 ).areal();
-	NotifyAttributeUpdated( eOnUpdate );
+    max_ = attribute.list( 1 ).areal();
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------

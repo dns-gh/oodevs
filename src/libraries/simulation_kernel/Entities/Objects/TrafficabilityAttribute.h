@@ -39,6 +39,7 @@ public:
     //@{
              TrafficabilityAttribute();
     explicit TrafficabilityAttribute( const sword::MissionParameter_Value& attributes );
+    explicit TrafficabilityAttribute( double max );
     explicit TrafficabilityAttribute( xml::xistream& xis );
     virtual ~TrafficabilityAttribute();
     //@}
