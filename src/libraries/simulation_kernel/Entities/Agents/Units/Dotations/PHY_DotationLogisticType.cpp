@@ -16,8 +16,8 @@
 PHY_DotationLogisticType::T_DotationLogisticTypeMap PHY_DotationLogisticType::dotationLogisticTypes_;
 
 PHY_DotationLogisticType PHY_DotationLogisticType::uniteEssence_  ( "Unite essence", eUniteEssence   );
-PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuTD_    ( "Unite feu TD" , eUniteFeuTD     );
-PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuSansTD_( "Unite feu -TD", eUniteFeuSansTD );
+PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuTD_    ( "Unite tranche D" , eUniteFeuTD     );
+PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuSansTD_( "Unite non tranche D", eUniteFeuSansTD );
 PHY_DotationLogisticType PHY_DotationLogisticType::uniteVivre_    ( "Unite vivre"  , eUniteVivre     );
 PHY_DotationLogisticType PHY_DotationLogisticType::pieces_        ( "Pieces"       , ePieces         );
 
