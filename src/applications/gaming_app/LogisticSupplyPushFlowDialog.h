@@ -69,6 +69,9 @@ private slots:
     void Reject();
     void OnSelectionChanged();
     void OnValueChanged( int row, int col );
+    void OnRecipientValueChanged( int row, int /*col*/ );
+    void OnRecipientSelectionChanged( int row, int /*col*/ );
+    void OnResourcesValueChanged( int row, int /*col*/ );
     //@}
 
 private:
@@ -83,11 +86,39 @@ private:
     void AddItem();
     void AddDotation( const SupplyStates& states );
     void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
+
+    void AddRecipientItem();
+    void AddResourceItem();
+    void AddResourceItem( QString dotationName, int Available, int qtySupply );
+    void AddCarrierItem();
+    void AddWaypoint();
+
+    void clearRecipientsTable();
+    void clearRecipientsData();
+    void clearResourcesTable();
+    void clearResourcesData();
+    void computeAvailableRecipients( QStringList& recipientsNames );
+    void insertNewRecipientData( int index, const kernel::Automat_ABC* pRecipient );
+    void eraseRecipientData( int index );
     //@}
 
     //! @name Types
     //@{
     typedef std::map< QString, Dotation > T_Supplies;
+
+    struct dotationQuantity 
+    {
+        QString dotationName_;
+        int quantity_;
+        dotationQuantity(): quantity_(0) {}
+        dotationQuantity( const QString& dotationName, int quantity ): dotationName_( dotationName ), quantity_( quantity ) {}
+    };
+
+    typedef std::vector< dotationQuantity > T_SuppliesVector;
+
+    typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;    
+    typedef std::vector< const kernel::Automat_ABC* > T_Recipients;
+    typedef QMap< QString, const kernel::Automat_ABC* > T_RecipientsNames;
     //@}
 
 private:
@@ -105,6 +136,17 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
+
+    Q3Table* recipientsTable_;
+    Q3Table* resourcesTable_;
+    Q3Table* carriersTable_;
+    QListView* waypointList_;
+
+    T_Recipients recipients_;
+    T_RecipientSupplies recipientSupplies_;
+    T_RecipientsNames recipientsNames_;
+
+    const kernel::Automat_ABC* pRecipientSelected_;
     //@}
 };
 

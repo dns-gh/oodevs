@@ -1367,6 +1367,45 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>Logistic : Push supply flow</name>
+    <message>
+        <source>Resources</source>
+        <translation>Dotations</translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation>Vecteurs</translation>
+    </message>
+    <message>
+        <source>Route</source>
+        <translation>Itinéraire</translation>
+    </message>
+    <message>
+        <source>Recipients</source>
+        <translation>Destinataires</translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation>Dotation</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Manual selection of transport carriers</source>
+        <translation>Sélection manuelle des vecteurs de transport</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+</context>
+<context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <source>Logistic requests</source>
@@ -1391,13 +1430,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Handler:</source>
         <translation>Gestionnaire:</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticListView</name>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation>Changer les Liens Logistiques</translation>
     </message>
 </context>
 <context>
@@ -1477,22 +1509,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Pousser un flux de ravitaillement</translation>
     </message>
     <message>
-        <source>Target:</source>
-        <translation>Cible:</translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantité</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -1501,8 +1517,8 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Log Supply Push Flow</source>
-        <translation>Pousser un flux de ravitaillement</translation>
+        <source>Add Waypoint</source>
+        <translation>Ajouter point de passage</translation>
     </message>
 </context>
 <context>
@@ -1724,10 +1740,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - Non connecté</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
     </message>
 </context>
 <context>
@@ -2864,7 +2876,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Recipients</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Destinataires</translation>
     </message>
     <message>
         <source>Recipient %1</source>

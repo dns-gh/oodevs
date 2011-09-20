@@ -46,7 +46,11 @@ public:
             if( r != row() && !text.isEmpty() )
                 list.remove( text );
         }
-        const_cast< ExclusiveComboTableItem* >( this )->setStringList( list );
+
+        QString current = currentText();
+        const_cast< ExclusiveComboTableItem* >( this )->setStringList( list );        
+        if ( list.contains( current ) )
+            const_cast< ExclusiveComboTableItem* >( this )->setCurrentItem( current );
         return Q3ComboTableItem::createEditor();
     }
     //@}

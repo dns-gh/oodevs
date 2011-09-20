@@ -1367,6 +1367,45 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>Logistic : Push supply flow</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">Dotaciones</translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">Disponible</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Cantidad</translation>
+    </message>
+    <message>
+        <source>Manual selection of transport carriers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <source>Logistic requests</source>
@@ -1391,13 +1430,6 @@ Motivo: %3
     <message>
         <source>Handler:</source>
         <translation>Gestor:</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticListView</name>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation type="unfinished">Cambiar enlace logístico</translation>
     </message>
 </context>
 <context>
@@ -1477,22 +1509,6 @@ Motivo: %3
         <translation>Forzar flujo de abastecimiento</translation>
     </message>
     <message>
-        <source>Target:</source>
-        <translation>Blanco:</translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation>Dotación</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Cantidad</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -1501,8 +1517,8 @@ Motivo: %3
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Log Supply Push Flow</source>
-        <translation>Forzamiento de flujos de abastecimiento</translation>
+        <source>Add Waypoint</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1724,10 +1740,6 @@ Motivo: %3
     <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - No conectado</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
