@@ -260,7 +260,7 @@
     <interaction-height height="100"/>
     <intoxication max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <propagation model="input"/>
+    <propagation model="cloud"/>
   </object>
   <object geometry="point polygon" name="plot ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
     <bypassable bypass-speed="-1"/>
@@ -286,6 +286,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <spawnObject object="nbc cloud"/>
   </object>
   <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
     <bypassable bypass-speed="-1"/>
@@ -422,7 +423,11 @@
   </object>
   <object geometry="polygon" name="feu sauvage" symbol="O*VPA-----*****" type="surface fire">
     <burn/>
+    <fire-propagation-modifier>
+      <modifier fire-class="Classe A" ignition-threshold="0" max-combustion-energy="50000"/>
+    </fire-propagation-modifier>
     <propagation model="fire"/>
+    <universal/>
   </object>
   <object geometry="point" name="inondation" symbol="G*MPORC---****X" type="flood">
     <flood>
@@ -534,4 +539,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3155479539" -->
+<!-- signature="1838197815" -->

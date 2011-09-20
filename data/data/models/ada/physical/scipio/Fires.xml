@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <fires model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Fires.xsd">
-  <cell-size value="10"/>
+  <cell-size value="100"/>
   <fire decrease-rate="10" increase-rate="20" initial-heat="100" max-heat="1000" name="Classe A">
     <extinguisher-agents>
       <extinguisher-agent agent="h2o" heat-decrease-rate="30"/>
@@ -62,4 +62,4 @@
     </surfaces>
   </fire>
 </fires>
-<!-- signature="1325387472" -->
+<!-- signature="2758143112" -->
