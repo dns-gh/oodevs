@@ -2055,7 +2055,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Peloton Transport Blindes" id="73" name="GLAISE - CIRCU - PL FAP 2026B" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="PL FAP 2026BS"/>
     </equipments>
@@ -4503,7 +4503,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="155" name="INF - GTIA  AMX10P AV 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" type="VTC P4"/>
       <equipment count="1" crew="2" type="TRM 2000"/>
@@ -4535,7 +4535,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="156" name="INF - GTIA  AMX10P MR 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="5" crew="2" type="VTC P4"/>
       <equipment count="1" crew="2" type="TRM 2000"/>
@@ -4815,7 +4815,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="165" name="INF - GTIA  VAB AV 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="5" crew="2" type="VTC P4"/>
       <equipment count="1" crew="1" type="TRM 4000"/>
@@ -4845,7 +4845,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="166" name="INF - GTIA  VAB MR 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="5" crew="2" type="VTC P4"/>
       <equipment count="1" crew="1" type="TRM 4000"/>
@@ -8186,7 +8186,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="292" name="LOG - Section Reparation Mob BLIAT MOB" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Eqp Rep BLIAT"/>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
@@ -17224,7 +17224,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="615" name="TRANS - PC BDE AV" type="Pion TRANS">
-    <nature atlas-nature="PC" level="x" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
       <equipment count="1" crew="1" major="true" type="FH Simple"/>
@@ -21231,7 +21231,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="751" name="ABC . Groupe Appui Direct EEI" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB T20 APP DIR"/>
       <equipment count="4" crew="1" loadable="true" type="Fantassin"/>
@@ -21445,7 +21445,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PC" id="759" name="ABC . Groupe CDT Appui Direct EEI" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL CDT"/>
       <equipment count="1" crew="2" type="GBC 8 KT 12.7"/>
@@ -21673,7 +21673,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille Tigre" id="767" name="ALAT - Patrouille Tigre 2HAD" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Tigre_HAD"/>
     </equipments>
@@ -21702,7 +21702,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille Tigre" id="768" name="ALAT - Patrouille Tigre 3HAD" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Tigre_HAD"/>
     </equipments>
@@ -21731,7 +21731,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille Tigre" id="769" name="ALAT - Patrouille Tigre 2HAP" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Tigre_HAP"/>
     </equipments>
@@ -21760,7 +21760,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille Tigre" id="770" name="ALAT - Patrouille Tigre 3HAP" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Tigre_HAP"/>
     </equipments>
@@ -21789,7 +21789,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HAH" id="771" name="ALAT - Patrouille HAV" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="o" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="o" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Helicoptere HAV"/>
     </equipments>
@@ -21817,7 +21817,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HAH" id="772" name="ALAT - Patrouille 2HAV" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Helicoptere HAV"/>
     </equipments>
@@ -21846,7 +21846,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HAH" id="773" name="ALAT - Patrouille 3HAV" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Helicoptere HAV"/>
     </equipments>
@@ -21875,7 +21875,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HAC" id="774" name="ALAT - Patrouille HAC" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="o" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="o" nature-app6="combat/aviation/rotary wing/scout"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Gazelle HAC CN20"/>
     </equipments>
@@ -21903,7 +21903,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HAM" id="775" name="ALAT - Patrouille HAM" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="o" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="o" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Gazelle HA MISTRAL"/>
     </equipments>
@@ -21931,7 +21931,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HAM" id="776" name="ALAT - Patrouille 3HAM" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Gazelle HA MISTRAL"/>
     </equipments>
@@ -21960,7 +21960,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HM" id="777" name="ALAT - Patrouille HM" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="o" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="o" nature-app6="combat/aviation/rotary wing/utility/medium"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Puma HM"/>
     </equipments>
@@ -21988,7 +21988,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HM" id="778" name="ALAT - Patrouille 2HM" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/utility/medium"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Puma HM"/>
     </equipments>
@@ -22017,7 +22017,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HM Log" id="779" name="ALAT - Patrouille IMEX" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing/utility/medium"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Puma HM"/>
     </equipments>
@@ -22046,7 +22046,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC INF" id="780" name="ALAT -  ECL PROTERRE" type="Pion INF">
-    <nature atlas-nature="Helicoptere" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin"/>
       <equipment count="1" crew="1" major="true" type="GBC 180 12,7"/>
@@ -22077,7 +22077,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC Alat" id="781" name="ALAT - PC ALAT" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/utility"/>
     <equipments>
       <equipment count="1" crew="5" major="true" type="GBC 180CSIR"/>
     </equipments>
@@ -22105,7 +22105,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC ASS Tir" id="782" name="ART - PC Batterie CAESAR" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="2" crew="2" type="TRM 2000 7,62"/>
@@ -22135,7 +22135,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="783" name="LOG - BLOG PCMR" type="Pion TRANS">
-    <nature atlas-nature="Log" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ii" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="8" crew="1" type="VTC P4"/>
       <equipment count="10" crew="1" major="true" type="GBC 180"/>
@@ -22158,7 +22158,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="784" name="LOG - ZFMAINT PCMR" type="Pion TRANS">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -22181,7 +22181,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="785" name="LOG - ZFSAN PCMR" type="Pion TRANS">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -22204,7 +22204,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="786" name="LOG - ZFRAV PCMR" type="Pion TRANS">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -22227,7 +22227,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="787" name="LOG - BLOG PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ii" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="8" crew="1" type="VTC P4"/>
       <equipment count="10" crew="1" major="true" type="GBC 180"/>
@@ -22250,7 +22250,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="788" name="LOG - ZFMAINT PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -22273,7 +22273,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="789" name="LOG - ZFRAV PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -22296,7 +22296,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="790" name="LOG - ZFSAN PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -22319,7 +22319,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="791" name="GEN - PC RG - AV 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="PC" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="6" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -22350,7 +22350,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="792" name="GEN - PC RG - AV 3 + 1" type="Pion TRANS">
-    <nature atlas-nature="PC" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="6" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -22381,7 +22381,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="793" name="GEN - PC RG - MR 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="PC" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -22411,7 +22411,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="794" name="GEN - PC RG - MR 3 + 1" type="Pion TRANS">
-    <nature atlas-nature="PC" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="1" crew="1" major="true" type="GBC 180"/>
@@ -22441,7 +22441,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="795" name="ART - DAFA" type="Pion TRANS">
-    <nature atlas-nature="PC" level="c" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="c" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="1" crew="1" major="true" type="GBC 180"/>
@@ -22463,7 +22463,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="796" name="ART - DAFV" type="Pion TRANS">
-    <nature atlas-nature="PC" level="c" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="c" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="1" crew="1" major="true" type="GBC 180"/>
@@ -22485,7 +22485,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="797" name="ART - PCRA" type="Pion TRANS">
-    <nature atlas-nature="PC" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -22507,7 +22507,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="798" name="ART - PCRV" type="Pion TRANS">
-    <nature atlas-nature="PC" level="ii" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -22529,7 +22529,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="799" name="TRANS - PC BDE MR" type="Pion TRANS">
-    <nature atlas-nature="PC" level="x" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="x" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Eqp CMAI"/>
       <equipment count="1" crew="1" major="true" type="FH Simple"/>
@@ -22556,7 +22556,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="800" name="TRANS - MOA BDE PC" type="Pion TRANS">
-    <nature atlas-nature="PC" level="x" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="VAB PC 7.62"/>
     </equipments>
@@ -22577,7 +22577,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="GLAISE ASA PC" id="801" name="GLAISE - ASA - PC SA14" type="Pion ASA">
-    <nature atlas-nature="ASA" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="BRDM 2"/>
     </equipments>
@@ -22604,7 +22604,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HM" id="802" name="ALAT - PC Patrouille HM" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="o" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="o" nature-app6="combat/aviation/rotary wing/utility/medium"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Puma HM"/>
     </equipments>
@@ -22632,7 +22632,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC Log" id="803" name="LOG - PC LOG BLD secteur appro" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -22654,7 +22654,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC Log" id="804" name="LOG - PC LOG BLD secteur munition" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -22676,7 +22676,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC Log" id="805" name="LOG - PC LOG BLD secteur sea" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -22698,7 +22698,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC Log" id="806" name="LOG - PC BLD secteur sh" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -22720,7 +22720,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="807" name="LOG - Section Reparation Mob Feu BLIAT SRMF" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -22745,7 +22745,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="808" name="LOG - Section Reparation EA BLIAT SREAT" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
       <equipment count="2" crew="2" type="VTC P4"/>
@@ -22770,7 +22770,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC ASS Tir" id="809" name="ART - PC Batterie TRF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="2" crew="2" type="TRM 2000 7,62"/>
@@ -22800,7 +22800,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="GLAISE ABC PC" id="810" name="GLAISE - ABC - PC Escadron T72" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/wheeled/medium"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Char T72"/>
     </equipments>
@@ -22828,7 +22828,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="GLAISE ABC section char lourd" id="811" name="GLAISE - ABC - Section T72" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Char T72"/>
     </equipments>
@@ -22914,7 +22914,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Section LRU" id="814" name="ART - Section de Tir LRU CDS OFF" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" type="VAB ATLAS"/>
@@ -22944,7 +22944,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Section LRU" id="815" name="ART - Section de Tir LRU CDS SOFF" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" type="VAB ATLAS"/>
@@ -22974,7 +22974,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Section CAESAR Pour SIC" id="816" name="ART - Section de Tir CAESAR pour FOB" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="2" crew="3" major="true" type="CAESAR 155"/>
@@ -23005,7 +23005,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Patrouille Milan" id="817" name="ABC - Groupe Appui Direct EEI" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB T20 APP DIR"/>
       <equipment count="4" crew="1" loadable="true" type="Fantassin"/>
@@ -23034,7 +23034,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC ABC" id="818" name="ABC - Groupe CDT Appui Direct EEI" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL CDT"/>
       <equipment count="1" crew="2" type="GBC 8 KT 12.7"/>
@@ -23063,7 +23063,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="819" name="RENS - Section CDT et TC1 BRB" type="Pion TRANS">
-    <nature atlas-nature="Log" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="1" type="VTC P4"/>
       <equipment count="1" crew="2" major="true" type="Lot 7"/>
@@ -23095,7 +23095,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Patrouille EI" id="820" name="ABC - Patrouille EI PAD" type="Pion ABC">
-    <nature atlas-nature="PC" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 12,7"/>
       <equipment count="1" crew="3" major="true" type="VBL APILAS"/>
@@ -23117,7 +23117,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC ASS Tir" id="821" name="ART - PC Batterie AUF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="2" crew="2" type="TRM 2000 7,62"/>
@@ -24054,7 +24054,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="851" name="ABC . Patrouille EI PAD" type="Pion ABC">
-    <nature atlas-nature="PC" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 12,7"/>
       <equipment count="1" crew="3" major="true" type="VBL APILAS"/>
@@ -24720,7 +24720,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.PC" id="878" name="LOG . PC LOG BLD secteur appro" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -24742,7 +24742,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.PC" id="879" name="LOG . PC BLD secteur sh" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -24764,7 +24764,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.PC" id="880" name="LOG . PC LOG BLD secteur sea" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -24786,7 +24786,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.PC" id="881" name="LOG . PC LOG BLD secteur munition" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -24873,7 +24873,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.Section Maintenance" id="885" name="LOG . Section Reparation Mob Feu BLIAT SRMF" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -24898,7 +24898,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.Section Maintenance" id="886" name="LOG . Section Reparation EA BLIAT SREAT" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
       <equipment count="2" crew="2" type="VTC P4"/>
@@ -25073,7 +25073,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.Section Maintenance" id="893" name="LOG . Section Reparation Mob BLIAT MOB" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="ooo" nature-app6="undefined"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Eqp Rep BLIAT"/>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
@@ -27216,7 +27216,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="970" name="ALAT . ECL PROTERRE" type="Pion INF">
-    <nature atlas-nature="Helicoptere" level="i" nature-app6="undefined"/>
+    <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin"/>
       <equipment count="1" crew="1" major="true" type="GBC 180 12,7"/>
@@ -27299,4 +27299,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0444242290" -->
+<!-- signature="0999121900" -->
