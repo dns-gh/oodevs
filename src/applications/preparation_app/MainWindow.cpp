@@ -627,7 +627,6 @@ void MainWindow::LoadExercise()
 // -----------------------------------------------------------------------------
 void MainWindow::ReloadExercise()
 {
-    assert( model_.IsLoaded() && !needsSaving_ );
     Close();
     DoLoad( config_.GetExerciseFile().c_str() );
 }
