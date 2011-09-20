@@ -73,15 +73,14 @@ private:
 
     bool IsLogisticBase( const kernel::Entity_ABC& rootEntity );
     void SupplyHierarchy( kernel::SafePointer< kernel::Entity_ABC > entity );
-    void SupplyLogisticBaseStocks( const kernel::Entity_ABC& logBase, E_StockCategory logType );
+    void SupplyLogisticBaseStocks( const kernel::Entity_ABC& logBase, E_StockCategory logType, std::map< const kernel::DotationType*, double >& requirements );
     void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::set< const kernel::Agent_ABC* >& entStocks );
-    void FindLogisticBases( const LogisticHierarchiesBase& logHierarchy, std::set< const kernel::Entity_ABC* >& logBases );
-    void FindAgentsToSupply( const kernel::Entity_ABC& logBase, std::set< const kernel::Agent_ABC* >& entToSupply );
     void ComputeRequirements( const kernel::Agent_ABC& agent, E_StockCategory logType, std::map< const kernel::DotationType*, double >& requirements );
     void SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const std::map< const kernel::DotationType*, double >& requirements );
     bool IsStockValid(  const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation );
     E_StockCategory GetDotationLogisticType( const kernel::DotationType& dotationType );
-    unsigned int CountAvalaibleStockBases( const std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& requirement );
+    unsigned int CountAvailableStockBases( const std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& requirement );
+    void FillSupplyRequirements( const kernel::Entity_ABC& entity, E_StockCategory logType, std::map< const kernel::DotationType*, double >& requirements );
     //@}
 
     private slots:

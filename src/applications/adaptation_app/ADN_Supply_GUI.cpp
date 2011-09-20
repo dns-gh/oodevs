@@ -65,6 +65,10 @@ void ADN_Supply_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), missionConnector_ );
     ConnectMission( true );
 
+    Q3GroupBox* pTypeGroup = new Q3VGroupBox( tr( "Convoy type" ), pGroup );
+    builder.AddEnumField<E_SupplyConvoyType>( pTypeGroup, tr( "Between logistic bases" ), data_.infos_.dotationSupplyConvoyType_, ADN_Tr::ConvertFromSupplyConvoyType );
+    builder.AddEnumField<E_SupplyConvoyType>( pTypeGroup, tr( "For final unit supply " ), data_.infos_.stockSupplyConvoyType_, ADN_Tr::ConvertFromSupplyConvoyType );
+
     Q3HGroupBox* pTrucksGroup = new Q3HGroupBox( tr( "Convoy setup duration" ), pGroup );
     ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
     pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoySetupInfos_ );

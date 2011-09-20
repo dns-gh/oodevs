@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "SupplyStockPushFlowRequestBuilder.h"
 #include "SupplyRequestContainer_ABC.h"
-#include "SupplyConvoyRealFactory.h"
+#include "SupplyConvoyConfig.h"
 #include "Entities/Automates/MIL_Automate.h" //$$$ A GICLER
 #include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Network/NET_ASN_Tools.h"
@@ -72,5 +72,5 @@ void SupplyStockPushFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
     }
     container.SetTransportersProvider( &supplier_ );
     SetTransporters( pushFlowParameters_.transporters(), container );
-    container.SetConvoyFactory( SupplyConvoyRealFactory::Instance() );
+    container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
 }

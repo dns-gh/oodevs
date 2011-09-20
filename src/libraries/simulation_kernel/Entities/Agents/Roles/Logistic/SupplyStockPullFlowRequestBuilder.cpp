@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "SupplyStockPullFlowRequestBuilder.h"
 #include "SupplyRequestContainer_ABC.h"
-#include "SupplyConvoyRealFactory.h"
+#include "SupplyConvoyConfig.h"
 #include "Entities/Automates/MIL_Automate.h" //$$$ A GICLER
 #include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h" //$$$ A GICLER
@@ -67,5 +67,5 @@ void SupplyStockPullFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
     }
     container.SetTransportersProvider( recipient_.FindLogisticManager() );
     SetTransporters( pullFlowParameters_.transporters(), container );
-    container.SetConvoyFactory( SupplyConvoyRealFactory::Instance() );
+    container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
 }

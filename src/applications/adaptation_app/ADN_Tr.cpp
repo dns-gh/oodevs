@@ -218,6 +218,13 @@ ADN_Tr::T_ConverterBreakdownNTI ADN_Tr::breakdownNTIConverter_[] =
     T_ConverterBreakdownNTI( "", "", (E_BreakdownNTI)-1 )
 };
 
+ADN_Tr::T_ConverterSupplyConvoyType ADN_Tr::supplyConvoyTypeConverter_[] =
+{
+    T_ConverterSupplyConvoyType( "real", QT_TRANSLATE_NOOP( "ADN_Tr", "Real" ), eSupplyConvoy_Real ),
+    T_ConverterSupplyConvoyType( "virtual", QT_TRANSLATE_NOOP( "ADN_Tr", "Virtual" ), eSupplyConvoy_Virtual ),
+    T_ConverterSupplyConvoyType( "", "", (E_SupplyConvoyType)-1 )
+};
+
 ADN_Tr::T_ConverterMunitionType ADN_Tr::munitionTypeConverter_[] =
 {
     T_ConverterMunitionType( "Obus",       QT_TRANSLATE_NOOP( "ADN_Tr", "Shell" ),       eMunitionType_Obus ),
@@ -470,6 +477,15 @@ const std::string& ADN_Tr::ConvertFromMissionParameterType( E_MissionParameterTy
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromSupplyConvoyType
+// Created: SBO 2006-12-04
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromSupplyConvoyType( E_SupplyConvoyType nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( supplyConvoyTypeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToLocation
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -658,6 +674,15 @@ E_MissionParameterType ADN_Tr::ConvertToMissionParameterType( const std::string&
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToMissionParameterType
+// Created: SBO 2006-12-04
+// -----------------------------------------------------------------------------
+E_SupplyConvoyType ADN_Tr::ConvertToSupplyConvoyType( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( supplyConvoyTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -682,4 +707,5 @@ void ADN_Tr::InitTranslations()
     InitTr( equipmentStateConverter_, "ADN_Tr" );
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
     InitTr( missionParameterTypeConverter_, "ADN_Tr" );
+    InitTr( supplyConvoyTypeConverter_, "ADN_Tr" );
 }

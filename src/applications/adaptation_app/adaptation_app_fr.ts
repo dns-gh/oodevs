@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ADNDatabaseWarnings</name>
     <message>
@@ -218,7 +218,7 @@ Voulez vous sauvegarder malgré tout ?</translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
-        <translation>Conso. normale</translation>
+        <translation>Conso. normalisée</translation>
     </message>
     <message>
         <source>Consumption
@@ -281,7 +281,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
-        <translation>Conso. normale</translation>
+        <translation>Conso. normalisée</translation>
     </message>
     <message>
         <source>Consumption
@@ -4275,6 +4275,18 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Conveyors availability warnings</source>
         <translation>Alertes de disponibilité des convois</translation>
     </message>
+    <message>
+        <source>Convoy type</source>
+        <translation>Types de convoi</translation>
+    </message>
+    <message>
+        <source>Between logistic bases</source>
+        <translation>Entre bases logistiques</translation>
+    </message>
+    <message>
+        <source>For final unit supply </source>
+        <translation>Vers unités TTA</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksDoubleTable</name>
@@ -5022,6 +5034,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>ResourceNetwork</source>
         <translation>reseau de ressource</translation>
+    </message>
+    <message>
+        <source>Real</source>
+        <translation>Réel</translation>
+    </message>
+    <message>
+        <source>Virtual</source>
+        <translation>Virtuel</translation>
     </message>
 </context>
 <context>
@@ -5934,6 +5954,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
         <translation>Pannes - Type de panne invalide &apos;%1&apos; </translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid supply convoy type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

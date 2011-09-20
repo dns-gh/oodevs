@@ -103,12 +103,12 @@ void ADN_AutomatLog_ListView::BuildBody()
             ADN_Rich_ListViewItem* pUnitItem = new ADN_Rich_ListViewItem( pAutomatItem, true );
 
             uint nUnit = 0;
-            if( nUnitInAutomat == 0 )
+            /*if( nUnitInAutomat == 0 )
             {
                 pUnit = automaton.ptrUnit_.GetData();
                 ++nUnit;
             }
-            else
+            else*/
             {
                 pUnitInfos = *it2;
                 assert( pUnitInfos->ptrUnit_.GetData() != 0 );
@@ -117,9 +117,9 @@ void ADN_AutomatLog_ListView::BuildBody()
                 nUnit += pUnitInfos->min_.GetData();
             }
             ADN_Units_Data::UnitInfos& unit = *pUnit;
-            if( nUnitInAutomat == 0 )
+            /*if( nUnitInAutomat == 0 )
                 pUnitItem->setText( eColumnTarget, QString( "[PC] - " ) + unit.strName_.GetData().c_str() );
-            else
+            else*/
                 pUnitItem->setText( eColumnTarget, unit.strName_.GetData().c_str() );
             pUnitItem->setText( eColumnNbrUnit, QString::number( nUnit ) );
             nUnitInAutomat += nUnit;
@@ -150,6 +150,8 @@ void ADN_AutomatLog_ListView::BuildBody()
                     if( itCategory != categories.end() )
                         InsertCategory( *pCompItem, **itCategory, **itCompCons );
                 }
+                for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
+                    InsertCategory( *pCompItem, **it );
                 pCompItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
                 pCompItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, GetMinEngineStoppedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
                 pCompItem->SetValueGreaterThan( eColumnEngineStartedAutonomy, GetMinEngineStartedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
@@ -216,6 +218,7 @@ void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                   
         compTotal_[ conso.ptrCategory_.GetData() ] = new ADN_AutomatLog_Entry();
 
     compTotal_[ conso.ptrCategory_.GetData() ]->rNbr_ = category.rNbr_.GetData();
+    compTotal_[ conso.ptrCategory_.GetData() ]->rNormalizedConsumption_ = category.rNormalizedConsumption_.GetData();
 
     if( conso.nConsumptionType_ == eMoving )
     {
@@ -238,6 +241,40 @@ void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                   
         compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedAutonomy_ = std::min( compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedAutonomy_, rAutonomy );
         compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_AutomatLog_ListView::InsertCategory
+// Created: SBO 2006-01-05
+// -----------------------------------------------------------------------------
+void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                         parent,
+                                              ADN_Composantes_Data::CategoryInfos&   category )
+{
+    ADN_Rich_ListViewItem* pItem = 0;
+    // try to find existing item
+    for( Q3ListViewItem* pTmpItem = parent.firstChild(); pTmpItem != 0; )
+    {
+        if( std::string( pTmpItem->text( eColumnTarget ) ) == category.ptrCategory_.GetData()->strName_.GetData() )
+        {
+            pItem = static_cast< ADN_Rich_ListViewItem* >( pTmpItem );
+            break;
+        }
+        pTmpItem = pTmpItem->nextSibling();
+    }
+
+    if( pItem == 0 )
+    {
+        pItem = new ADN_Rich_ListViewItem( &parent, true );
+        pItem->setText( eColumnTarget         , category.ptrCategory_.GetData()->strName_.GetData().c_str() );
+        pItem->setText( eColumnContenance     , QString::number( category.rNbr_.GetData() ) );
+        pItem->setText( eColumnNormalizedConso, QString::number( category.rNormalizedConsumption_.GetData() ) );
+    }
+
+    if( compTotal_[ category.ptrCategory_.GetData() ] == 0 )
+        compTotal_[ category.ptrCategory_.GetData() ] = new ADN_AutomatLog_Entry();
+
+    compTotal_[ category.ptrCategory_.GetData() ]->rNbr_ = category.rNbr_.GetData();
+    compTotal_[ category.ptrCategory_.GetData() ]->rNormalizedConsumption_ = category.rNormalizedConsumption_.GetData();
 }
 
 // -----------------------------------------------------------------------------

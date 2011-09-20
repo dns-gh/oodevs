@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="es">
 <context>
     <name>ADNDatabaseWarnings</name>
     <message>
@@ -4273,6 +4273,18 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <source>Conveyors availability warnings</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Convoy type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Between logistic bases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For final unit supply </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksDoubleTable</name>
@@ -5017,6 +5029,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>ResourceNetwork</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Virtual</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5923,6 +5943,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
         <translation>Fallas - tipo de falla inválido  &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid supply convoy type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

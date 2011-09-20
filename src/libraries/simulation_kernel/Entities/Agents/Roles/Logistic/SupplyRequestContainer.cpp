@@ -27,7 +27,7 @@ using namespace logistic;
 SupplyRequestContainer::SupplyRequestContainer( boost::shared_ptr< SupplyRequestBuilder_ABC > builder )
     : builder_             ( builder )
     , transportersProvider_( 0 )
-    , convoyFactory_       ( &SupplyConvoyVirtualFactory::Instance() )
+    , convoyFactory_       ( 0 )
 {
 }
 

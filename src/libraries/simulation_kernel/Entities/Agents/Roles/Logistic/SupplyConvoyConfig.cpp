@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyConvoyConfig.h"
+#include "SupplyConvoyRealFactory.h"
+#include "SupplyConvoyVirtualFactory.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "MT_Tools/MT_Logger.h"
@@ -25,6 +27,8 @@ MT_InterpolatedFunction< double > SupplyConvoyConfig::unloadingTime_;
 MT_InterpolatedFunction< double > SupplyConvoyConfig::coefSpeedModificator_;
 const MIL_AgentTypePion* SupplyConvoyConfig::convoyAgentType_ = 0;
 const MIL_MissionType_ABC* SupplyConvoyConfig::convoyMissionType_ = 0;
+const SupplyConvoyFactory_ABC* SupplyConvoyConfig::stockSupplyConvoyFactory_    = &SupplyConvoyRealFactory::Instance();
+const SupplyConvoyFactory_ABC* SupplyConvoyConfig::dotationSupplyConvoyFactory_ = &SupplyConvoyVirtualFactory::Instance();
 
 // =============================================================================
 // Ugly static initialization
@@ -53,6 +57,7 @@ void SupplyConvoyConfig::Initialize( xml::xistream& xis )
             >> xml::start( "convoys" );
     InitializeConvoyUnitType( xis );
     InitializeConvoyMission ( xis );
+    InitializeConvoyType    ( xis );
     InitializeInterpolatedTime ( xis, "constitution-times", setupTime_   );
     InitializeInterpolatedTime ( xis, "loading-times"     , loadingTime_   );
     InitializeInterpolatedTime ( xis, "unloading-times"   , unloadingTime_ );
@@ -89,6 +94,42 @@ void SupplyConvoyConfig::InitializeConvoyMission( xml::xistream& xis )
     assert( convoyAgentType_ );
     if( !convoyAgentType_->GetModel().IsMissionAvailable( *convoyMissionType_ ) )
         xis.error( "Convoy type pion cannot receive convoy mission" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyConfig::InitializeConvoyType
+// Created: NLD 2005-02-09
+// -----------------------------------------------------------------------------
+const SupplyConvoyFactory_ABC& SupplyConvoyConfig::GetConvoyFactory( xml::xistream& xis, const std::string& type )
+{
+    if( type == "real" )
+        return SupplyConvoyRealFactory::Instance();
+    else if( type == "virtual" )
+        return SupplyConvoyVirtualFactory::Instance();
+    xis.error( "Invalid convoy type" ); // Throw
+    return SupplyConvoyVirtualFactory::Instance(); //$$ Stupid warning
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyConfig::InitializeConvoyType
+// Created: NLD 2005-02-09
+// -----------------------------------------------------------------------------
+void SupplyConvoyConfig::InitializeConvoyType( xml::xistream& xis )
+{
+    if( xis.has_child( "type" ) )
+    {
+        std::string convoyType;
+        xis >> xml::start( "type" )
+                >> xml::start( "dotation-supply" )
+                    >> xml::attribute( "type", convoyType );
+        dotationSupplyConvoyFactory_ = &GetConvoyFactory( xis, convoyType );
+        xis     >> xml::end
+                >> xml::start( "stock-supply" )
+                    >> xml::attribute( "type", convoyType );
+        stockSupplyConvoyFactory_ = &GetConvoyFactory( xis, convoyType );
+        xis     >> xml::end
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -186,4 +227,24 @@ void SupplyConvoyConfig::ReadSpeedModifier( xml::xistream& xis, std::pair< unsig
 void SupplyConvoyConfig::Terminate()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyConfig::GetStockSupplyConvoyFactory
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+const SupplyConvoyFactory_ABC& SupplyConvoyConfig::GetStockSupplyConvoyFactory()
+{
+    assert( stockSupplyConvoyFactory_ );
+    return *stockSupplyConvoyFactory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyConfig::GetDotationSupplyConvoyFactory
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+const SupplyConvoyFactory_ABC& SupplyConvoyConfig::GetDotationSupplyConvoyFactory()
+{
+    assert( dotationSupplyConvoyFactory_ );
+    return *dotationSupplyConvoyFactory_;
 }

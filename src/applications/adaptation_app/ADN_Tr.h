@@ -46,6 +46,7 @@ public:
     static const std::string& ConvertFromEquipmentState( E_EquipmentState_ADN, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionParameterType( E_MissionParameterType, E_Conversion = eToSim );
+    static const std::string& ConvertFromSupplyConvoyType( E_SupplyConvoyType, E_Conversion = eToSim );
     //@}
 
     //! @name Convert To functions
@@ -70,6 +71,7 @@ public:
     static E_EquipmentState_ADN  ConvertToEquipmentState( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_MissionParameterType ConvertToMissionParameterType( const std::string& );
+    static E_SupplyConvoyType   ConvertToSupplyConvoyType( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -97,6 +99,7 @@ public:
     typedef converter<E_EquipmentState_ADN>         T_ConverterEquipmentState;
     typedef converter<E_TypeMunitionTirIndirect>    T_ConverterTypeMunitionTirIndirect;
     typedef converter<E_MissionParameterType>       T_ConverterMissionParameterType;
+    typedef converter<E_SupplyConvoyType>           T_ConverterSupplyConvoyType;
     //@}
 
     //! @name Convertors
@@ -120,6 +123,7 @@ public:
     static T_ConverterEquipmentState    equipmentStateConverter_[];
     static T_ConverterTypeMunitionTirIndirect munitionTirIndirectConverter_ [];
     static T_ConverterMissionParameterType missionParameterTypeConverter_ [];
+    static T_ConverterSupplyConvoyType  supplyConvoyTypeConverter_[];
     //@}
 };
 

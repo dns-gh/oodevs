@@ -39,6 +39,8 @@ private:
     void InsertCategory( Q3ListViewItem&                         parent,
                          ADN_Composantes_Data::CategoryInfos&   category,
                          ADN_Composantes_Data::ConsumptionItem& conso );
+    void InsertCategory( Q3ListViewItem&                         parent,
+                         ADN_Composantes_Data::CategoryInfos&   category );
     //@}
 
 private:

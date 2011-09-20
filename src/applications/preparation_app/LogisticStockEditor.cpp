@@ -198,37 +198,58 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
     QModelIndexList indexList = pModel->selectedIndexes();
 
     if ( IsLogisticBase( *entity ) )
+    {
+        std::set< const kernel::Agent_ABC* > entStocks;
+        FindStocks( *entity, *entity, entStocks );
+        std::map< const kernel::DotationType*, double > requirements;
         for ( int i=0; i < indexList.count(); ++i )
         {
             E_StockCategory logType = static_cast< E_StockCategory >( indexList[i].row() );
-            SupplyLogisticBaseStocks( pLogHierarchy->GetEntity(), logType );
+            SupplyLogisticBaseStocks( pLogHierarchy->GetEntity(), logType, requirements );
         }
+        SupplyStocks( entStocks, requirements );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::FillSupplyRequirements
+// Created: MMC 2011-08-31
+// -----------------------------------------------------------------------------
+void LogisticStockEditor::FillSupplyRequirements( const kernel::Entity_ABC& entity, E_StockCategory logType, std::map< const kernel::DotationType*, double >& requirements )
+{
+    const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity );
+    if( pAgent )
+        ComputeRequirements( *pAgent, logType, requirements );
+    const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+    if( pTacticalHierarchies )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > children = pTacticalHierarchies->CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& childrenEntity = children.NextElement();
+            FillSupplyRequirements( childrenEntity, logType, requirements );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticStockEditor::SupplyLogisticBaseStocks
 // Created: MMC 2011-08-31
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::SupplyLogisticBaseStocks( const kernel::Entity_ABC& blLogBase, E_StockCategory logType )
+void LogisticStockEditor::SupplyLogisticBaseStocks( const kernel::Entity_ABC& blLogBase, E_StockCategory logType, std::map< const kernel::DotationType*, double >& requirements )
 {
-    std::set< const kernel::Agent_ABC* > entStocks;
-    FindStocks( blLogBase, blLogBase, entStocks );
-
-    std::set< const kernel::Entity_ABC* > logBases;
-    FindLogisticBases( blLogBase.Get< LogisticHierarchiesBase >(), logBases );
-
-    std::map< const kernel::DotationType*, double > requirements;
-    for ( std::set< const kernel::Entity_ABC* >::iterator it = logBases.begin(); it != logBases.end(); ++it )
+    tools::Iterator< const kernel::Entity_ABC& > logChildren = blLogBase.Get< LogisticHierarchiesBase >().CreateSubordinateIterator();
+    while( logChildren.HasMoreElements() )
     {
-        const kernel::Entity_ABC* pLogBase= *it; assert( pLogBase );
-        std::set< const kernel::Agent_ABC* > entToSupply;
-        FindAgentsToSupply( *pLogBase, entToSupply );
-
-        for ( std::set< const kernel::Agent_ABC* >::iterator itEnt = entToSupply.begin(); itEnt != entToSupply.end(); ++itEnt )
-            ComputeRequirements( *(*itEnt), logType, requirements );
+        const kernel::Entity_ABC& entity = logChildren.NextElement();
+        if( IsLogisticBase( entity ) )
+            SupplyLogisticBaseStocks( entity, logType, requirements );
+        else
+            FillSupplyRequirements( entity, logType, requirements );
     }
-
-    SupplyStocks( entStocks, requirements );
+    const kernel::Automat_ABC* pTC2 = dynamic_cast< const kernel::Automat_ABC* >( &blLogBase );
+    if( pTC2 && pTC2->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        FillSupplyRequirements( blLogBase, logType, requirements );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,72 +272,18 @@ void LogisticStockEditor::FindStocks( const kernel::Entity_ABC& rootEntity , con
         const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &childrenEntity );
         if ( pAgent )
         {
-            if ( pAgent->GetType().IsLogisticSupply() && pAgent->Retrieve< Stocks >() )
-                entStocks.insert( pAgent );
-        }
-        else
-            FindStocks( rootEntity, childrenEntity, entStocks );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStockEditor::FindLogisticBases
-// Created: MMC 2011-08-10
-// -----------------------------------------------------------------------------
-void LogisticStockEditor::FindLogisticBases( const LogisticHierarchiesBase& logHierarchy, std::set< const kernel::Entity_ABC* >& logBases )
-{
-    const kernel::Hierarchies& hierarchy = static_cast< const kernel::Hierarchies &>( logHierarchy );
-    const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &hierarchy.GetEntity() );
-    if ( pAutomat && pAutomat->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
-    {
-        std::set< const kernel::Agent_ABC* > entStocks;
-        FindStocks( *pAutomat, *pAutomat, entStocks );
-        if ( !entStocks.empty() )
-            logBases.insert( &logHierarchy.GetEntity() );
-    }
-
-    tools::Iterator< const kernel::Entity_ABC& > logChildren = logHierarchy.CreateSubordinateIterator();
-    while( logChildren.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& entity = logChildren.NextElement();
-        const LogisticHierarchiesBase* pChildLogisticHierarchies = entity.Retrieve< LogisticHierarchiesBase >();
-        if ( pChildLogisticHierarchies && pChildLogisticHierarchies != &logHierarchy )
-            FindLogisticBases( *pChildLogisticHierarchies, logBases );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStockEditor::FindAgentsToSupply
-// Created: MMC 2011-08-10
-// -----------------------------------------------------------------------------
-void LogisticStockEditor::FindAgentsToSupply( const kernel::Entity_ABC& logBase, std::set< const kernel::Agent_ABC* >& entToSupply )
-{
-    const LogisticHierarchiesBase* pLogHierarchies = logBase.Retrieve< LogisticHierarchiesBase >();
-    if ( !pLogHierarchies )
-        return;
-
-    const kernel::Agent_ABC* pLogBase = dynamic_cast< const kernel::Agent_ABC* >( &logBase );
-    if ( pLogBase )
-        entToSupply.insert( pLogBase );
-
-    tools::Iterator< const kernel::Entity_ABC& > logChildren = pLogHierarchies->CreateSubordinateIterator();
-    while( logChildren.HasMoreElements() )
-    {
-        const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &logChildren.NextElement() );
-        if ( pAutomat )
-        {
-            const kernel::TacticalHierarchies* pTacticalHierarchies = pAutomat->Retrieve< kernel::TacticalHierarchies >();
-            if ( pTacticalHierarchies )
+            if ( pAgent->GetType().IsLogisticSupply() )
             {
-                tools::Iterator< const kernel::Entity_ABC& > automatChildren = pTacticalHierarchies->CreateSubordinateIterator();
-                while( automatChildren.HasMoreElements() )
+                Stocks* stocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() );
+                if( stocks )
                 {
-                    const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &automatChildren.NextElement() );
-                    if ( pAgent )
-                        entToSupply.insert( pAgent );
+                    stocks->DeleteAll();
+                    entStocks.insert( pAgent );
                 }
             }
         }
+        else
+            FindStocks( rootEntity, childrenEntity, entStocks );
     }
 }
 
@@ -331,54 +298,37 @@ void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, E
     for( unsigned nPos = 0; agentCompositionIterator.HasMoreElements(); ++nPos )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-        const std::string& agentName = agentComposition.GetType().GetName();
-        tools::Iterator< const kernel::EquipmentType& > equipmentTypeIterator = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::CreateIterator();
-        while( equipmentTypeIterator.HasMoreElements() )
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+        tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator = equipmentType.CreateResourcesIterator();
+        while( resourcesIterator.HasMoreElements() )
         {
-            const kernel::EquipmentType& equipmentType = equipmentTypeIterator.NextElement();
-            if( equipmentType.GetName() == agentName )
+            const kernel::DotationCapacityType& dotationCapa = resourcesIterator.NextElement();
+            const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( dotationCapa.GetName() );
+            if ( GetDotationLogisticType( category ) == logType )
             {
-                tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator = equipmentType.CreateResourcesIterator();
-                while( resourcesIterator.HasMoreElements() )
-                {
-                    const kernel::DotationCapacityType& dotationCapa = resourcesIterator.NextElement();
-                    const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( dotationCapa.GetName() );
-                    if ( GetDotationLogisticType( category ) ==  logType )
-                    {
-                        double normConso = dotationCapa.GetNormalizedConsumption();
-                        std::map< const kernel::DotationType*, double >::iterator itRequired = requirements.find( &category );
-                        if ( itRequired == requirements.end() )
-                            requirements[ &category ] = normConso;
-                        else
-                            itRequired->second += normConso;
-                    }
-                }
+                const double normConso = dotationCapa.GetNormalizedConsumption();
+                requirements[ &category ] += normConso * agentComposition.GetCount();
             }
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStockEditor::SupplyStocks
+// Name: LogisticStockEditor::'
 // Created: MMC 2011-08-31
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const std::map< const kernel::DotationType*, double >& requirements )
 {
-    std::map< const kernel::DotationType*, unsigned int > availableStockBasesCount;
-    for ( std::map< const kernel::DotationType*, double >::const_iterator itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
-        availableStockBasesCount[ itRequired->first ] = CountAvalaibleStockBases( entStocks, *itRequired->first );
-
-    for ( std::map< const kernel::DotationType*, double >::const_iterator itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
+    for( std::map< const kernel::DotationType*, double >::const_iterator itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
     {
-        std::map< const kernel::DotationType*, unsigned int >::iterator itAvailable = availableStockBasesCount.find( itRequired->first );
-        if ( itAvailable != availableStockBasesCount.end() && itAvailable->second > 0 )
+        const kernel::DotationType& dotationType = *itRequired->first;
+        const double quantity = factor_->value() * itRequired->second / CountAvailableStockBases( entStocks, dotationType );
+        for ( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
         {
-            const kernel::DotationType& dotation = *itRequired->first;
-            double suppply = itRequired->second * double( factor_->value() ) / double( itAvailable->second );
-            for ( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
+            if( IsStockValid( **itEnt, dotationType ) )
             {
                 Stocks& stocks = const_cast< Stocks& >( (*itEnt)->Get< Stocks >() );
-                stocks.AddDotation( new Dotation( dotation, static_cast< unsigned int >( ceil( suppply ) ) ) );
+                stocks.AddDotation( new Dotation( dotationType, (unsigned int)quantity ) );
             }
         }
     }
@@ -430,10 +380,10 @@ bool LogisticStockEditor::IsStockValid( const kernel::Agent_ABC& stockUnit, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStockEditor::CountAvalaibleStockBases
+// Name: LogisticStockEditor::CountAvailableStockBases
 // Created: MMC 2011-08-30
 // -----------------------------------------------------------------------------
-unsigned int LogisticStockEditor::CountAvalaibleStockBases( const std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& requirement )
+unsigned int LogisticStockEditor::CountAvailableStockBases( const std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& requirement )
 {
     unsigned int count = 0;
     for ( std::set< const kernel::Agent_ABC* >::const_iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
