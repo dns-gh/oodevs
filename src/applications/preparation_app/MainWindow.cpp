@@ -125,35 +125,6 @@ namespace bfs = boost::filesystem;
 using namespace kernel;
 using namespace gui;
 
-namespace
-{
-    class LoadingDialog
-    {
-    public:
-        LoadingDialog( QWidget* parent, const QString& text )
-        {
-            loadingDialog_ = new QDialog( parent, Qt::SplashScreen );
-            loadingDialog_->setModal( true );
-            QLabel* label = new QLabel( loadingDialog_ );
-            label->setFrameStyle( QFrame::Box | QFrame::Raised );
-            label->setText( text );
-            label->setStyleSheet( "font-size: 20pt;text-align: center;background-color: rgb( 165, 193, 221);" );
-            label->setAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
-            loadingDialog_->resize( label->sizeHint() );
-            loadingDialog_->open();
-        }
-
-        virtual ~LoadingDialog()
-        {
-            loadingDialog_->close();
-            delete loadingDialog_;
-        }
-
-    private:
-        QDialog* loadingDialog_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
@@ -193,6 +164,18 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
             MigrateExercises();
         return;
     }
+
+    // Progress dialog
+    progressDialog_ = new QProgressDialog( this, Qt::SplashScreen );
+    progressDialog_->setAutoClose( true );
+    progressDialog_->setMinimum( 0 );
+    progressDialog_->setMaximum( 100 );
+    progressDialog_->setCancelButton( 0 );
+    QLabel* label = new QLabel( "", this );
+    label->setMargin( 5 );
+    progressDialog_->setLabel( label );
+    SetProgression( 0, tr( "Initialize data ..." ) );
+
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
 
     lighting_ = new LightingProxy( this );
@@ -313,8 +296,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
     addToolBar( LocEditToolBar );
 
-    LoadingDialog loadingDialog( this, tr( "Loading..." ) );
-
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
@@ -339,6 +320,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         LoadExercise();
 
     restoreState(settings.value("mainWindowState").toByteArray());
+    SetProgression( 100, tr( "Loading complete" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -453,15 +435,11 @@ void MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::DoLoad( QString filename )
 {
-    LoadingDialog loadingDialog( this, tr( "Loading..." ) );
-    qApp->processEvents();
-
+    SetProgression( 0, tr( "Initialize data ..." ) );
     if( filename.isEmpty() )
         return;
-
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
-
     config_.LoadExercise( filename.ascii() );
     pCreationPanel_->Load( config_ );
     pScoreDialog_->Load();
@@ -470,6 +448,7 @@ void MainWindow::DoLoad( QString filename )
         SetWindowTitle( true );
         LoadExercise();
     }
+    SetProgression( 100, tr( "Loading complete" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -531,13 +510,17 @@ bool MainWindow::Load()
 {
     try
     {
+        SetProgression( 10, tr( "Loading configuration ..." ) );
         WriteOptions();
         model_.Purge();
         selector_->Close();
         selector_->Load();
+        SetProgression( 20, tr( "Loading physical model ..." ) );
         staticModel_.Load( config_ );
+        SetProgression( 50, tr( "Loading filters ..." ) );
         filterDialogs_->Purge();
         filterDialogs_->Load();
+        SetProgression( 60, tr( "Loading options ..." ) );
         pExtensionsPanel_->hide();
         SetWindowTitle( false );
     }
@@ -591,6 +574,7 @@ void MainWindow::LoadExercise()
     {
         loading_ = true;
         std::string loadingErrors;
+        SetProgression( 70, tr( "Loading exercise ..." ) );
         model_.Load( config_, loadingErrors );
         if( config_.HasGenerateScores() )
         {
@@ -841,4 +825,19 @@ void MainWindow::ToggleDocks()
         if ( restoreState( toolbars_ ) )
             toolbars_ = 0;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::SetProgression
+// Created: ABR 2011-09-20
+// -----------------------------------------------------------------------------
+void MainWindow::SetProgression( int value, const QString& text )
+{
+    if( !progressDialog_ )
+        return;
+    if( !value )
+        progressDialog_->show();
+    progressDialog_->setLabelText( text );
+    progressDialog_->setValue( value );
+    qApp->processEvents();
 }

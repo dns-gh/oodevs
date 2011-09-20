@@ -634,12 +634,36 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Création</translation>
     </message>
     <message>
-        <source>Loading...</source>
-        <translation>Chargement...</translation>
-    </message>
-    <message>
         <source>Logistic</source>
         <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Loading configuration ...</source>
+        <translation>Chargement de la configuration ...</translation>
+    </message>
+    <message>
+        <source>Loading physical model ...</source>
+        <translation>Chargement du modèle physique ...</translation>
+    </message>
+    <message>
+        <source>Loading filters ...</source>
+        <translation>Chargement des filtres ...</translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation>Chargement des options ...</translation>
+    </message>
+    <message>
+        <source>Loading exercise ...</source>
+        <translation>Chargement de l&apos;exercice ...</translation>
+    </message>
+    <message>
+        <source>Loading complete</source>
+        <translation>Chargement terminé</translation>
+    </message>
+    <message>
+        <source>Initialize data ...</source>
+        <translation>Initialisation des données ...</translation>
     </message>
 </context>
 <context>

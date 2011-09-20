@@ -127,6 +127,7 @@ private:
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
     void EnableWorkspace( bool enabled );
+    void SetProgression( int value, const QString& text );
     //@}
 
 private:
@@ -160,6 +161,7 @@ private:
     CreationPanels* pCreationPanel_;
     ScoreDialog* pScoreDialog_;
     FilterDialogs* filterDialogs_;
+    QProgressDialog* progressDialog_;
     //@}
 };
 

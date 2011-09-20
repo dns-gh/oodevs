@@ -634,11 +634,35 @@ Do you want to save anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading...</source>
+        <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic</source>
+        <source>Loading configuration ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading physical model ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading filters ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading exercise ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initialize data ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
