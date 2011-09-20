@@ -172,6 +172,7 @@ SectionEnd
 Function .onInit
     !insertmacro OT.CheckAdmin
     !insertmacro OT.CheckRunning
+	!insertmacro MULTIUSER_INIT
     !insertmacro OT.ParseCommandLine
     !insertmacro OT.ChooseLanguage
 
@@ -185,7 +186,7 @@ Function .onInit
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
 
-    !insertmacro MULTIUSER_INIT
+
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 
 FunctionEnd
