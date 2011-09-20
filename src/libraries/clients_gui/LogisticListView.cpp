@@ -74,7 +74,7 @@ ValuedListItem* LogisticListView::FindOrCreateOrReplace( const Entity_ABC* entit
     ValuedListItem* superiorItem = ( superior ) ? FindItem( superior, firstChild() ) : 0;
     if( !item )
         item = ( superiorItem ) ? CreateItem( *superiorItem, *entity ) : CreateItem( typeItem, *entity );
-    else
+    else if( item != superiorItem )
     {
         ValuedListItem* parentItem = static_cast< ValuedListItem* >( item->parent() );
         if( superiorItem && parentItem != superiorItem )
