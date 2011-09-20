@@ -92,6 +92,7 @@ InfoReportsTab::~InfoReportsTab()
 // Name: InfoReportsTab::NotifySelected
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void InfoReportsTab::NotifySelected( const kernel::Entity_ABC* entity )
+void InfoReportsTab::NotifySelected( const kernel::Entity_ABC* /*entity*/ )
 {
+    // NOTHING
 }

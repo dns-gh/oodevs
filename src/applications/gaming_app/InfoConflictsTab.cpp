@@ -40,6 +40,7 @@ InfoConflictsTab::~InfoConflictsTab()
 // Name: InfoConflictsTab::NotifySelected
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void InfoConflictsTab::NotifySelected( const kernel::Entity_ABC* entity )
+void InfoConflictsTab::NotifySelected( const kernel::Entity_ABC* /*entity*/ )
 {
+    // NOTHING
 }
