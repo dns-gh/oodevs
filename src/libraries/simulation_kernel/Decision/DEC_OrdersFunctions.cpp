@@ -88,7 +88,11 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission(
     assert( pPion );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
-    assert( pMissionType );
+    if( !pMissionType )
+    {
+        MT_LOG_ERROR( "Mission '" << mission << "' does not exist", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
+        throw std::runtime_error( mission + " does not exist" );
+    }
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
