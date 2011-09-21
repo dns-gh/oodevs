@@ -1535,7 +1535,7 @@
     </target>
 
     <target name="package.otpack.validation" description="package de validation otpack">
-        <pack name="validations" description="validation, performance and charge exercises package">
+        <pack name="validationsw" description="validation, performance and charge exercises package">
             <include name="data/models/ada/physical/scipio/**"/>
             <include name="data/models/ada/physical/scipioPIV3/**"/>
             <include name="data/models/ada/physical/france/**"/>
