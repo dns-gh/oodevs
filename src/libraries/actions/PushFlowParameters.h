@@ -20,6 +20,7 @@ namespace kernel {
     class DotationType;
     class Automat_ABC;
     class EntityResolver_ABC;
+    class EquipmentType;
 }
 
 namespace actions {
@@ -37,13 +38,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit PushFlowParameters( const kernel::OrderParameter& parameter );
-             PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, xml::xistream& xis );
+             PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis );
     virtual ~PushFlowParameters();
     //@}
 
     //! @name Operations
     //@{
-    void AddResource( const kernel::DotationType& type, unsigned long quantity, const kernel::Automat_ABC& recipient );
+    void AddResource   ( const kernel::DotationType& type, unsigned long quantity, const kernel::Automat_ABC& recipient );
+    void AddTransporter( const kernel::EquipmentType& type, unsigned long quantity );
 
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
@@ -53,9 +55,9 @@ public:
 private:
     //! @name Types
     //@{
-    //typedef std::vector< E_HumanWound > T_Priorities;
     typedef std::map< const kernel::DotationType*, unsigned long > T_Resources;
     typedef std::map< const kernel::Automat_ABC*, T_Resources >    T_Recipients;
+    typedef std::map< const kernel::EquipmentType*, unsigned long > T_Equipments;
     //@}
 
     //! @name Copy/Assignment
@@ -69,14 +71,16 @@ private:
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
 
-    void ReadRecipient( xml::xistream& xis, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver );
-    void ReadResource ( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, T_Resources& resources );
+    void ReadRecipient  ( xml::xistream& xis, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver );
+    void ReadResource   ( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, T_Resources& resources );
+    void ReadTransporter( xml::xistream& xis, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver );
     //@}
 
 private:
     //! @name Member data
     //@{
     T_Recipients recipients_;
+    T_Equipments transporters_;
     //@}
 };
 

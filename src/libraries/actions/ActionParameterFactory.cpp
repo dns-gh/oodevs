@@ -328,9 +328,9 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *extensionList );
     }
     else if( type == "pushflowparameters" )
-        param.reset( new parameters::PushFlowParameters( parameter, entities_, staticModel_.objectTypes_, xis ) );
+        param.reset( new parameters::PushFlowParameters( parameter, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
     else if( type == "pullflowparameters" )
-        param.reset( new parameters::PullFlowParameters( parameter, entities_, staticModel_.objectTypes_, xis ) );
+        param.reset( new parameters::PullFlowParameters( parameter, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
     else
         return false;
     return true;

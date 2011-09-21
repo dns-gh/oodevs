@@ -36,6 +36,7 @@ public:
     //@{
     virtual double   Convoy               ( SupplyConvoyEventsObserver_ABC& eventsObserver, const PHY_DotationCategory& dotationCategory, double quantity );
     virtual bool     IsFull               () const;
+    virtual bool     IsEmpty              () const;
     virtual void     LendTo               ( MIL_AgentPion& convoyPion );
     virtual unsigned ApproximateTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
     virtual double   Supply               ( const PHY_DotationCategory& dotationCategory, double quantity );

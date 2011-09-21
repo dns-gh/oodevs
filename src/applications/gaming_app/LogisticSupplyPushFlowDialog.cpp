@@ -222,8 +222,6 @@ void LogisticSupplyPushFlowDialog::Validate()
     if( !selected_ )
         return;
 
-    accept();
-
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( dynamic_cast< const Automat_ABC* >( static_cast< const Entity_ABC* >( selected_ ) ) ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
@@ -239,6 +237,8 @@ void LogisticSupplyPushFlowDialog::Validate()
             pushFlowParameters->AddResource( *dotationType, resource.quantity_, *recipientSupply.first );
         }
     }
+    BOOST_FOREACH( const ObjectQuantity& carrier, carriers_ )
+        pushFlowParameters->AddTransporter( *carriersTypeNames_[ carrier.objectName_ ], carrier.quantity_ );
 
     action->AddParameter( *pushFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -252,6 +252,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     ClearCarriersTable();
     ClearCarriersData();
     accept();
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------

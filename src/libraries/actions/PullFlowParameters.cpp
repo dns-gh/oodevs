@@ -12,6 +12,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -37,7 +38,7 @@ PullFlowParameters::PullFlowParameters( const OrderParameter& parameter )
 // Name: PullFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, xml::xistream& xis )
+PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis )
     : Parameter< QString >( parameter )
     , supplierFormation_  ( 0 )
     , supplierAutomat_    ( 0 )
@@ -51,7 +52,8 @@ PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
     if( !supplierAutomat_ )
         supplierFormation_ = &entityResolver.GetFormation( idTmp) ;
 
-    xis >> xml::list( "resource", *this, &PullFlowParameters::ReadResource, dotationTypeResolver );
+    xis >> xml::list( "resource", *this, &PullFlowParameters::ReadResource, dotationTypeResolver )
+        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,6 +75,18 @@ void PullFlowParameters::ReadResource( xml::xistream& xis, const tools::Resolver
     const DotationType& dotationType = dotationTypeResolver.Get( idTmp );
     const unsigned int quantity = xis.attribute< unsigned int >("quantity" );
     resources_[ &dotationType ] += quantity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PullFlowParameters::ReadTransporter
+// Created: SBO 2007-06-26
+// -----------------------------------------------------------------------------
+void PullFlowParameters::ReadTransporter( xml::xistream& xis, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver )
+{
+    const unsigned int idTmp = xis.attribute< unsigned int >( "id" );
+    const EquipmentType& type = equipmentTypeResolver.Get( idTmp );
+    const unsigned int quantity = xis.attribute< unsigned int >( "quantity" );
+    transporters_[ &type ] += quantity;
 }
 
 // -----------------------------------------------------------------------------
@@ -131,6 +145,12 @@ void PullFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
         msgResource->mutable_resourcetype()->set_id( resource.first->GetId() );
         msgResource->set_quantity( resource.second );
     }
+    BOOST_FOREACH( const T_Equipments::value_type& equipment, transporters_ )
+    {
+        sword::SupplyFlowTransporter* msg = msgPullFlow->add_transporters();
+        msg->mutable_equipmenttype()->set_id( equipment.first->GetId() );
+        msg->set_quantity( equipment.second );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +171,13 @@ void PullFlowParameters::Serialize( xml::xostream& xos ) const
         xos << xml::attribute( "id", resource.first->GetId() );
         xos << xml::attribute( "quantity", resource.second );
         xos << xml::end;
+    }
+    BOOST_FOREACH( const T_Equipments::value_type& equipment, transporters_ )
+    {
+        xos << xml::start( "transporter" )
+                << xml::attribute( "id", equipment.first->GetId() )
+                << xml::attribute( "quantity", equipment.second )
+            << xml::end;
     }
 }
 
