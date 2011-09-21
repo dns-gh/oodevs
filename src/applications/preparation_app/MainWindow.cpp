@@ -147,6 +147,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , fileToolBar_    ( 0 )
     , needsSaving_    ( false )
     , loading_        ( false )
+    , progressDialog_ ( 0 )
 {
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
